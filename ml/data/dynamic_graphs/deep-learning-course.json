@@ -1,0 +1,2013 @@
+{
+  "subject_id": "deep-learning-course",
+  "title": "deep-learning-course",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {},
+  "concepts": [
+    {
+      "id": "deep-learning-course::ai-definition",
+      "label": "AI Definition",
+      "subject_id": "deep-learning-course",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "deep-learning-course::ml-definition",
+      "label": "ML Definition",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ai-definition"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::history-of-ai",
+      "label": "History Of AI",
+      "subject_id": "deep-learning-course",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "deep-learning-course::nobel-prizes",
+      "label": "Nobel Prizes",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::history-of-ai"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::key-figures",
+      "label": "Key Figures",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::history-of-ai"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::ai-branches",
+      "label": "AI Branches",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ai-definition"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::symbolic-ai",
+      "label": "Symbolic AI",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ai-branches"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-driven-ai",
+      "label": "Data-Driven AI",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ai-branches"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::nn-origins",
+      "label": "NN Origins",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::history-of-ai",
+        "deep-learning-course::data-driven-ai"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::biological-inspiration",
+      "label": "Biological Inspiration",
+      "subject_id": "deep-learning-course",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "deep-learning-course::python-setup",
+      "label": "Python Setup",
+      "subject_id": "deep-learning-course",
+      "dependencies": [],
+      "taxonomy_id": "3",
+      "level": "foundational"
+    },
+    {
+      "id": "deep-learning-course::conda-environment",
+      "label": "Conda Environment",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::python-setup"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::jupyter-notebooks",
+      "label": "Jupyter Notebooks",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::python-setup"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::numpy-basics",
+      "label": "NumPy Basics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::python-setup"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::pandas-basics",
+      "label": "Pandas Basics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::python-setup"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::matplotlib-basics",
+      "label": "Matplotlib Basics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::python-setup"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::scipy-basics",
+      "label": "SciPy Basics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::python-setup"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::scikit-learn-overview",
+      "label": "Scikit-Learn Overview",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::numpy-basics",
+        "deep-learning-course::pandas-basics",
+        "deep-learning-course::matplotlib-basics",
+        "deep-learning-course::scipy-basics"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::pytorch-intro",
+      "label": "PyTorch Intro",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::python-setup",
+        "deep-learning-course::numpy-basics"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::tensorflow-intro",
+      "label": "TensorFlow Intro",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::python-setup",
+        "deep-learning-course::numpy-basics"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::supervised-vs-unsupervised",
+      "label": "Supervised Vs Unsupervised",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ml-definition"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::regression-vs-classification",
+      "label": "Regression Vs Classification",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::supervised-vs-unsupervised"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::overfitting-vs-underfitting",
+      "label": "Overfitting Vs Underfitting",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::regression-vs-classification"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::training-validation-test",
+      "label": "Training-Validation-Test",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::overfitting-vs-underfitting"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::bias-variance-tradeoff",
+      "label": "Bias-Variance Tradeoff",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::overfitting-vs-underfitting"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::regularization-overview",
+      "label": "Regularization Overview",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::bias-variance-tradeoff"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::cross-validation",
+      "label": "Cross-Validation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::training-validation-test"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::evaluation-metrics",
+      "label": "Evaluation Metrics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::regression-vs-classification"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::loss-functions",
+      "label": "Loss Functions",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::overfitting-vs-underfitting"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::gradient-descent",
+      "label": "Gradient Descent",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::loss-functions"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-preprocessing",
+      "label": "Data Preprocessing",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ml-definition"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::scaling-and-normalization",
+      "label": "Scaling And Normalization",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-preprocessing"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-augmentation",
+      "label": "Data Augmentation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-preprocessing"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::feature-engineering",
+      "label": "Feature Engineering",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-preprocessing"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::dimensionality-concepts",
+      "label": "Dimensionality Concepts",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::feature-engineering"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-splits",
+      "label": "Data Splits",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::training-validation-test"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::pandas-basics",
+        "deep-learning-course::matplotlib-basics"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-cleaning",
+      "label": "Data Cleaning",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-preprocessing"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-imbalance",
+      "label": "Data Imbalance",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-cleaning"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-ethics",
+      "label": "Data Ethics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-imbalance"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::perceptron-model",
+      "label": "Perceptron Model",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::nn-origins"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::multi-layer-perceptron",
+      "label": "Multi-Layer Perceptron",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::perceptron-model"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::activation-functions",
+      "label": "Activation Functions",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::multi-layer-perceptron"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::forward-propagation",
+      "label": "Forward Propagation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::activation-functions"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::backpropagation",
+      "label": "Backpropagation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::forward-propagation"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::weights-and-biases",
+      "label": "Weights And Biases",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::perceptron-model"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::batch-training",
+      "label": "Batch Training",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::backpropagation"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::mini-batch-training",
+      "label": "Mini-Batch Training",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::batch-training"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::stochastic-training",
+      "label": "Stochastic Training",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::mini-batch-training"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::learning-rate",
+      "label": "Learning Rate",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gradient-descent"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::loss-surface",
+      "label": "Loss Surface",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::loss-functions"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::local-minima",
+      "label": "Local Minima",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::loss-surface"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::vanishing-gradients",
+      "label": "Vanishing Gradients",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::backpropagation"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::exploding-gradients",
+      "label": "Exploding Gradients",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::vanishing-gradients"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::initialization-methods",
+      "label": "Initialization Methods",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::multi-layer-perceptron"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::he-initialization",
+      "label": "He Initialization",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::initialization-methods"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::xavier-initialization",
+      "label": "Xavier Initialization",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::initialization-methods"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::momentum-optimizer",
+      "label": "Momentum Optimizer",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gradient-descent"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::adagrad",
+      "label": "AdaGrad",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gradient-descent"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::adam-optimizer",
+      "label": "Adam Optimizer",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::momentum-optimizer",
+        "deep-learning-course::adagrad"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::convolution-operation",
+      "label": "Convolution Operation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::nn-origins"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::filters-and-kernels",
+      "label": "Filters And Kernels",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::convolution-operation"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::pooling-layers",
+      "label": "Pooling Layers",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::convolution-operation"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::stride-and-padding",
+      "label": "Stride And Padding",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::convolution-operation"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::fully-connected-layers",
+      "label": "Fully Connected Layers",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::multi-layer-perceptron"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::batch-normalization",
+      "label": "Batch Normalization",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::batch-training"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::cnn-architectures",
+      "label": "CNN Architectures",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::filters-and-kernels",
+        "deep-learning-course::pooling-layers"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::imagenet",
+      "label": "ImageNet",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::cnn-architectures"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::transfer-learning-basics",
+      "label": "Transfer Learning Basics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::cnn-architectures"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::object-detection",
+      "label": "Object Detection",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::transfer-learning-basics"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::sequence-modeling",
+      "label": "Sequence Modeling",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::multi-layer-perceptron"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::vanilla-rnn",
+      "label": "Vanilla RNN",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::sequence-modeling"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::lstm-units",
+      "label": "LSTM Units",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::vanilla-rnn"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::gru-units",
+      "label": "GRU Units",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::vanilla-rnn"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::backprop-through-time-bptt",
+      "label": "Backprop Through Time (BPTT)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::backpropagation",
+        "deep-learning-course::vanilla-rnn"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::exploding-gradient-control",
+      "label": "Exploding Gradient Control",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::exploding-gradients"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::language-modeling",
+      "label": "Language Modeling",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::sequence-modeling"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::text-generation",
+      "label": "Text Generation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::language-modeling"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::time-series-forecasting",
+      "label": "Time-Series Forecasting",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::vanilla-rnn"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::attention-mechanism",
+      "label": "Attention Mechanism",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::sequence-modeling"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::deep-architecture",
+      "label": "Deep Architecture",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::multi-layer-perceptron"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::layer-stacking",
+      "label": "Layer Stacking",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::deep-architecture"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::depth-vs-width",
+      "label": "Depth Vs Width",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::layer-stacking"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::residual-networks-resnet",
+      "label": "Residual Networks (ResNet)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::depth-vs-width"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::inception-modules",
+      "label": "Inception Modules",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::depth-vs-width"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::densenet",
+      "label": "DenseNet",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::residual-networks-resnet"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::skip-connections",
+      "label": "Skip Connections",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::residual-networks-resnet"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::dropout",
+      "label": "Dropout",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::regularization-overview"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::batchnorm",
+      "label": "BatchNorm",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::batch-normalization"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::weight-decay",
+      "label": "Weight Decay",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::regularization-overview"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::capsule-networks",
+      "label": "Capsule Networks",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::cnn-architectures"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::graph-neural-networks-gnns",
+      "label": "Graph Neural Networks (GNNs)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::nn-origins"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::transformers-intro",
+      "label": "Transformers Intro",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::attention-mechanism"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::vision-transformers-vit",
+      "label": "Vision Transformers (ViT)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::transformers-intro",
+        "deep-learning-course::convolution-operation"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::self-attention",
+      "label": "Self-Attention",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::transformers-intro"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::positional-encoding",
+      "label": "Positional Encoding",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::transformers-intro"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::bert-overview",
+      "label": "BERT Overview",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::transformers-intro"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::gpt-overview",
+      "label": "GPT Overview",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::transformers-intro"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::sequence-to-sequence",
+      "label": "Sequence-To-Sequence",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::vanilla-rnn",
+        "deep-learning-course::transformers-intro"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::neural-machine-translation",
+      "label": "Neural Machine Translation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::sequence-to-sequence"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::generative-models",
+      "label": "Generative Models",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::multi-layer-perceptron"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::autoencoders-ae",
+      "label": "Autoencoders (AE)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::generative-models"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::variational-autoencoders-vae",
+      "label": "Variational Autoencoders (VAE)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::autoencoders-ae"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::gan-basics",
+      "label": "GAN Basics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::generative-models"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::generator-vs-discriminator",
+      "label": "Generator Vs Discriminator",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gan-basics"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::latent-space",
+      "label": "Latent Space",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::variational-autoencoders-vae",
+        "deep-learning-course::gan-basics"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::conditional-gan",
+      "label": "Conditional GAN",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gan-basics"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::cyclegan",
+      "label": "CycleGAN",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gan-basics"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::style-transfer",
+      "label": "Style Transfer",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gan-basics"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::text-to-image",
+      "label": "Text-To-Image",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gan-basics"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::diffusion-models",
+      "label": "Diffusion Models",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::generative-models"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::denoising-diffusion",
+      "label": "Denoising Diffusion",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::diffusion-models"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::score-matching",
+      "label": "Score Matching",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::diffusion-models"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::likelihood-estimation",
+      "label": "Likelihood Estimation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::generative-models"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::energy-based-models",
+      "label": "Energy-Based Models",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::generative-models"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::flow-based-models",
+      "label": "Flow-Based Models",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::generative-models"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gpt-overview"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::text-generation-models",
+      "label": "Text Generation Models",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::transformers-intro"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::large-language-models-llms",
+      "label": "Large Language Models (LLMs)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::transformers-intro"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::chatgpt-concept",
+      "label": "ChatGPT Concept",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::large-language-models-llms"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::pca",
+      "label": "PCA",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::dimensionality-concepts"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::t-sne",
+      "label": "t-SNE",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::dimensionality-concepts"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::umap",
+      "label": "UMAP",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::dimensionality-concepts"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::autoencoder-dr",
+      "label": "Autoencoder DR",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::autoencoders-ae"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::manifold-hypothesis",
+      "label": "Manifold Hypothesis",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::dimensionality-concepts"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::feature-space",
+      "label": "Feature Space",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::feature-engineering"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::principal-components",
+      "label": "Principal Components",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::pca"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::nonlinear-embeddings",
+      "label": "Nonlinear Embeddings",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::t-sne"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::high-dimensional-data",
+      "label": "High-Dimensional Data",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::pca"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-visualization-tools",
+      "label": "Data Visualization Tools",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-visualization"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::rl-definition",
+      "label": "RL Definition",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ai-definition"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::markov-decision-process-mdp",
+      "label": "Markov Decision Process (MDP)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::rl-definition"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::value-functions",
+      "label": "Value Functions",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::markov-decision-process-mdp"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::policy-gradient",
+      "label": "Policy Gradient",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::value-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::q-learning",
+      "label": "Q-Learning",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::markov-decision-process-mdp"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::deep-q-network-dqn",
+      "label": "Deep Q-Network (DQN)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::q-learning"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::actor-critic",
+      "label": "Actor-Critic",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::policy-gradient"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::reward-shaping",
+      "label": "Reward Shaping",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::value-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::exploration-vs-exploitation",
+      "label": "Exploration Vs Exploitation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::rl-definition"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::baseline-algorithms",
+      "label": "Baseline Algorithms",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::actor-critic"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::model-interpretability",
+      "label": "Model Interpretability",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::explainable-ai-xai",
+      "label": "Explainable AI (XAI)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::model-interpretability"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::shap",
+      "label": "SHAP",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::explainable-ai-xai"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::lime",
+      "label": "LIME",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::explainable-ai-xai"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::fairness",
+      "label": "Fairness",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::explainable-ai-xai"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::bias-mitigation",
+      "label": "Bias Mitigation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::fairness"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::privacy",
+      "label": "Privacy",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-ethics"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::security",
+      "label": "Security",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::privacy"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::adversarial-examples",
+      "label": "Adversarial Examples",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::security"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::responsible-ai",
+      "label": "Responsible AI",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::fairness",
+        "deep-learning-course::adversarial-examples"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::gpu-acceleration",
+      "label": "GPU Acceleration",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::deep-architecture"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::tpu-acceleration",
+      "label": "TPU Acceleration",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gpu-acceleration"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::memory-management",
+      "label": "Memory Management",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gpu-acceleration"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::model-compression",
+      "label": "Model Compression",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::memory-management"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::quantization",
+      "label": "Quantization",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::model-compression"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::pruning",
+      "label": "Pruning",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::model-compression"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::edge-deployment",
+      "label": "Edge Deployment",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::model-compression"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::cloud-services",
+      "label": "Cloud Services",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::model-compression"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::automl",
+      "label": "AutoML",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::scikit-learn-overview"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::mlops",
+      "label": "MLOps",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::automl"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::hyperparameter-tuning",
+      "label": "Hyperparameter Tuning",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::mlops"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::grid-search",
+      "label": "Grid Search",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::hyperparameter-tuning"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::random-search",
+      "label": "Random Search",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::hyperparameter-tuning"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::bayesian-optimization",
+      "label": "Bayesian Optimization",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::hyperparameter-tuning"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::early-stopping",
+      "label": "Early Stopping",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::regularization-overview"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::learning-rate-scheduling",
+      "label": "Learning Rate Scheduling",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::learning-rate"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-parallelism",
+      "label": "Data Parallelism",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gpu-acceleration"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::model-parallelism",
+      "label": "Model Parallelism",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::gpu-acceleration"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::checkpointing",
+      "label": "Checkpointing",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::training-validation-test"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::version-control",
+      "label": "Version Control",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::team-collaboration"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::accuracy",
+      "label": "Accuracy",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::precision",
+      "label": "Precision",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::recall",
+      "label": "Recall",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::f1-score",
+      "label": "F1 Score",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::auc-roc",
+      "label": "AUC-ROC",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::confusion-matrix",
+      "label": "Confusion Matrix",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::top-1-vs-top-5-accuracy",
+      "label": "Top-1 Vs Top-5 Accuracy",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::bleu-score",
+      "label": "BLEU Score",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::text-generation"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::perplexity",
+      "label": "Perplexity",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::language-modeling"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::mean-squared-error-mse",
+      "label": "Mean Squared Error (MSE)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::evaluation-metrics"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::computer-vision",
+      "label": "Computer Vision",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::cnn-architectures"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::natural-language-processing-nlp",
+      "label": "Natural Language Processing (NLP)",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::sequence-modeling"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::speech-recognition",
+      "label": "Speech Recognition",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::sequence-modeling"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::medical-imaging",
+      "label": "Medical Imaging",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::cnn-architectures"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::drug-discovery",
+      "label": "Drug Discovery",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ml-definition"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::protein-folding",
+      "label": "Protein Folding",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::drug-discovery"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::autonomous-driving",
+      "label": "Autonomous Driving",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::computer-vision"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::robotics",
+      "label": "Robotics",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ml-definition"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::financial-forecasting",
+      "label": "Financial Forecasting",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::time-series-forecasting"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::recommender-systems",
+      "label": "Recommender Systems",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::ml-definition"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::project-scoping",
+      "label": "Project Scoping",
+      "subject_id": "deep-learning-course",
+      "dependencies": [],
+      "taxonomy_id": "10",
+      "level": "foundational"
+    },
+    {
+      "id": "deep-learning-course::requirement-analysis",
+      "label": "Requirement Analysis",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::project-scoping"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-acquisition",
+      "label": "Data Acquisition",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::requirement-analysis"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::data-annotation",
+      "label": "Data Annotation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::data-acquisition"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::resource-allocation",
+      "label": "Resource Allocation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::requirement-analysis"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::team-collaboration",
+      "label": "Team Collaboration",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::resource-allocation"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::version-control-workflow",
+      "label": "Version Control Workflow",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::version-control"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::agile-methods",
+      "label": "Agile Methods",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::team-collaboration"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::code-review",
+      "label": "Code Review",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::version-control"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "deep-learning-course::documentation",
+      "label": "Documentation",
+      "subject_id": "deep-learning-course",
+      "dependencies": [
+        "deep-learning-course::code-review"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,4246 @@
+{
+  "subject_id": "biology",
+  "title": "college placement Biology: An Interactive Course",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Scientific Foundations",
+      "color": "Honeydew"
+    },
+    "CHEM": {
+      "classifier_name": "Chemistry of Life",
+      "color": "PaleTurquoise"
+    },
+    "MACRO": {
+      "classifier_name": "Macromolecules",
+      "color": "SteelBlue"
+    },
+    "CELL": {
+      "classifier_name": "Cell Biology",
+      "color": "Lavender"
+    },
+    "ENRG": {
+      "classifier_name": "Cellular Energetics",
+      "color": "MintCream"
+    },
+    "COMM": {
+      "classifier_name": "Cell Communication and Division",
+      "color": "LightYellow"
+    },
+    "GENET": {
+      "classifier_name": "Heredity and Genetics",
+      "color": "LightCoral"
+    },
+    "MOLBIO": {
+      "classifier_name": "Molecular Biology",
+      "color": "LavenderBlush"
+    },
+    "BIOTECH": {
+      "classifier_name": "Gene Regulation and Biotechnology",
+      "color": "PeachPuff"
+    },
+    "EVOL": {
+      "classifier_name": "Evolution",
+      "color": "Thistle"
+    },
+    "POPECO": {
+      "classifier_name": "Population and Community Ecology",
+      "color": "MistyRose"
+    },
+    "ECOSYS": {
+      "classifier_name": "Ecosystem and Global Ecology",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "biology::scientific-method",
+      "label": "Scientific Method",
+      "subject_id": "biology",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "biology::hypothesis-testing",
+      "label": "Hypothesis Testing",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::controlled-experiments",
+      "label": "Controlled Experiments",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::scientific-method",
+        "biology::hypothesis-testing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::independent-and-dependent-variables",
+      "label": "Independent and Dependent Variables",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::scientific-method",
+        "biology::hypothesis-testing",
+        "biology::controlled-experiments"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::atomic-structure",
+      "label": "Atomic Structure",
+      "subject_id": "biology",
+      "dependencies": [],
+      "taxonomy_id": "CHEM",
+      "level": "foundational"
+    },
+    {
+      "id": "biology::elements-of-life",
+      "label": "Elements of Life",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::atomic-structure"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::chemical-bonds",
+      "label": "Chemical Bonds",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::atomic-structure",
+        "biology::elements-of-life"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::ionic-bonds",
+      "label": "Ionic Bonds",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chemical-bonds"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::covalent-bonds",
+      "label": "Covalent Bonds",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chemical-bonds"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::hydrogen-bonds",
+      "label": "Hydrogen Bonds",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chemical-bonds",
+        "biology::covalent-bonds"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::van-der-waals-forces",
+      "label": "Van der Waals Forces",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chemical-bonds"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::water-polarity",
+      "label": "Water Polarity",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::covalent-bonds",
+        "biology::hydrogen-bonds"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::cohesion-and-adhesion",
+      "label": "Cohesion and Adhesion",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::water-polarity"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::surface-tension",
+      "label": "Surface Tension",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::water-polarity",
+        "biology::cohesion-and-adhesion"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::specific-heat-capacity",
+      "label": "Specific Heat Capacity",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::water-polarity"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::water-as-universal-solvent",
+      "label": "Water as Universal Solvent",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::water-polarity"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::hydrophilic-and-hydrophobic",
+      "label": "Hydrophilic and Hydrophobic",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::water-polarity"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::acid-base-chemistry",
+      "label": "Acid-Base Chemistry",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::water-polarity",
+        "biology::water-as-universal-solvent"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::ph-scale",
+      "label": "pH Scale",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::acid-base-chemistry"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::buffers",
+      "label": "Buffers",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::acid-base-chemistry",
+        "biology::ph-scale"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::organic-chemistry-basics",
+      "label": "Organic Chemistry Basics",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::atomic-structure",
+        "biology::chemical-bonds",
+        "biology::covalent-bonds"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::functional-groups",
+      "label": "Functional Groups",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::organic-chemistry-basics",
+        "biology::covalent-bonds"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::polymers-and-monomers",
+      "label": "Polymers and Monomers",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::organic-chemistry-basics",
+        "biology::functional-groups"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::condensation-reactions",
+      "label": "Condensation Reactions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::organic-chemistry-basics",
+        "biology::functional-groups",
+        "biology::polymers-and-monomers"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::hydrolysis-reactions",
+      "label": "Hydrolysis Reactions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::organic-chemistry-basics",
+        "biology::functional-groups",
+        "biology::polymers-and-monomers"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "biology::carbohydrates",
+      "label": "Carbohydrates",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::functional-groups",
+        "biology::polymers-and-monomers",
+        "biology::condensation-reactions",
+        "biology::hydrolysis-reactions"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::monosaccharides",
+      "label": "Monosaccharides",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::carbohydrates"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::disaccharides",
+      "label": "Disaccharides",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::carbohydrates",
+        "biology::monosaccharides",
+        "biology::condensation-reactions"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::polysaccharides",
+      "label": "Polysaccharides",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::carbohydrates",
+        "biology::monosaccharides",
+        "biology::disaccharides"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::glycosidic-bonds",
+      "label": "Glycosidic Bonds",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::monosaccharides",
+        "biology::condensation-reactions"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::lipids",
+      "label": "Lipids",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::functional-groups",
+        "biology::polymers-and-monomers",
+        "biology::condensation-reactions",
+        "biology::hydrolysis-reactions"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::fatty-acids",
+      "label": "Fatty Acids",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::lipids",
+        "biology::functional-groups"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::saturated-and-unsaturated-fats",
+      "label": "Saturated and Unsaturated Fats",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::lipids",
+        "biology::fatty-acids",
+        "biology::covalent-bonds"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::triglycerides",
+      "label": "Triglycerides",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::lipids",
+        "biology::fatty-acids",
+        "biology::condensation-reactions"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::phospholipids",
+      "label": "Phospholipids",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::lipids",
+        "biology::fatty-acids",
+        "biology::functional-groups"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::sterols-and-cholesterol",
+      "label": "Sterols and Cholesterol",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::lipids"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::proteins",
+      "label": "Proteins",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::functional-groups",
+        "biology::polymers-and-monomers",
+        "biology::condensation-reactions",
+        "biology::hydrolysis-reactions"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::amino-acids",
+      "label": "Amino Acids",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::proteins",
+        "biology::functional-groups"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::peptide-bonds",
+      "label": "Peptide Bonds",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::amino-acids",
+        "biology::condensation-reactions"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::primary-protein-structure",
+      "label": "Primary Protein Structure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::proteins",
+        "biology::amino-acids",
+        "biology::peptide-bonds"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::secondary-protein-structure",
+      "label": "Secondary Protein Structure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::primary-protein-structure",
+        "biology::hydrogen-bonds"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::tertiary-protein-structure",
+      "label": "Tertiary Protein Structure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::secondary-protein-structure",
+        "biology::functional-groups"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::quaternary-protein-structure",
+      "label": "Quaternary Protein Structure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::tertiary-protein-structure"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::protein-denaturation",
+      "label": "Protein Denaturation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::tertiary-protein-structure",
+        "biology::quaternary-protein-structure",
+        "biology::acid-base-chemistry"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::nucleic-acids",
+      "label": "Nucleic Acids",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::functional-groups",
+        "biology::polymers-and-monomers",
+        "biology::condensation-reactions",
+        "biology::hydrolysis-reactions"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::nucleotides",
+      "label": "Nucleotides",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nucleic-acids",
+        "biology::functional-groups",
+        "biology::monosaccharides"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::dna-structure",
+      "label": "DNA Structure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nucleic-acids",
+        "biology::nucleotides",
+        "biology::hydrogen-bonds"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::rna-structure",
+      "label": "RNA Structure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nucleic-acids",
+        "biology::nucleotides",
+        "biology::hydrogen-bonds"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "biology::cell-theory",
+      "label": "Cell Theory",
+      "subject_id": "biology",
+      "dependencies": [],
+      "taxonomy_id": "CELL",
+      "level": "foundational"
+    },
+    {
+      "id": "biology::prokaryotic-cells",
+      "label": "Prokaryotic Cells",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-theory"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::eukaryotic-cells",
+      "label": "Eukaryotic Cells",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-theory"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::cell-size-and-surface-area-ratio",
+      "label": "Cell Size and Surface Area Ratio",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-theory",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::plasma-membrane",
+      "label": "Plasma Membrane",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::phospholipids",
+        "biology::hydrophilic-and-hydrophobic",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::fluid-mosaic-model",
+      "label": "Fluid Mosaic Model",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::plasma-membrane",
+        "biology::proteins",
+        "biology::sterols-and-cholesterol"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::phospholipid-bilayer",
+      "label": "Phospholipid Bilayer",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::phospholipids",
+        "biology::plasma-membrane"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::membrane-proteins",
+      "label": "Membrane Proteins",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::proteins",
+        "biology::plasma-membrane"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::cholesterol-in-membranes",
+      "label": "Cholesterol in Membranes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::sterols-and-cholesterol",
+        "biology::plasma-membrane"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::selective-permeability",
+      "label": "Selective Permeability",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::plasma-membrane",
+        "biology::fluid-mosaic-model",
+        "biology::phospholipid-bilayer",
+        "biology::membrane-proteins"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::passive-transport",
+      "label": "Passive Transport",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::selective-permeability"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::diffusion",
+      "label": "Diffusion",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::passive-transport"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::osmosis",
+      "label": "Osmosis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::passive-transport",
+        "biology::diffusion"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::water-potential",
+      "label": "Water Potential",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::osmosis",
+        "biology::water-polarity"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::turgor-pressure",
+      "label": "Turgor Pressure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::water-potential",
+        "biology::osmosis"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::facilitated-diffusion",
+      "label": "Facilitated Diffusion",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::passive-transport",
+        "biology::diffusion",
+        "biology::membrane-proteins"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::active-transport",
+      "label": "Active Transport",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::passive-transport",
+        "biology::facilitated-diffusion"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::sodium-potassium-pump",
+      "label": "Sodium-Potassium Pump",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::active-transport",
+        "biology::amino-acids"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::endocytosis",
+      "label": "Endocytosis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::active-transport",
+        "biology::plasma-membrane"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::exocytosis",
+      "label": "Exocytosis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::active-transport",
+        "biology::plasma-membrane"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::phagocytosis",
+      "label": "Phagocytosis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::endocytosis"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::pinocytosis",
+      "label": "Pinocytosis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::endocytosis"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::nucleus",
+      "label": "Nucleus",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::nuclear-envelope",
+      "label": "Nuclear Envelope",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nucleus",
+        "biology::plasma-membrane"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::nucleolus",
+      "label": "Nucleolus",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nucleus"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::endoplasmic-reticulum",
+      "label": "Endoplasmic Reticulum",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells",
+        "biology::nucleus"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::rough-er",
+      "label": "Rough ER",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::endoplasmic-reticulum",
+        "biology::proteins"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::smooth-er",
+      "label": "Smooth ER",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::endoplasmic-reticulum"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::golgi-apparatus",
+      "label": "Golgi Apparatus",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells",
+        "biology::rough-er"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::lysosomes",
+      "label": "Lysosomes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::golgi-apparatus",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::vacuoles",
+      "label": "Vacuoles",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::mitochondria",
+      "label": "Mitochondria",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::chloroplasts",
+      "label": "Chloroplasts",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::peroxisomes",
+      "label": "Peroxisomes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::cytoskeleton",
+      "label": "Cytoskeleton",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::microfilaments",
+      "label": "Microfilaments",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cytoskeleton",
+        "biology::amino-acids"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::microtubules",
+      "label": "Microtubules",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cytoskeleton"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::intermediate-filaments",
+      "label": "Intermediate Filaments",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cytoskeleton"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::cilia-and-flagella",
+      "label": "Cilia and Flagella",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::microtubules",
+        "biology::cytoskeleton"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::cell-wall",
+      "label": "Cell Wall",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::prokaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::plasmodesmata",
+      "label": "Plasmodesmata",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-wall",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::extracellular-matrix",
+      "label": "Extracellular Matrix",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::proteins",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::cell-junctions",
+      "label": "Cell Junctions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::plasma-membrane",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "CELL",
+      "level": "core"
+    },
+    {
+      "id": "biology::thermodynamics",
+      "label": "Thermodynamics",
+      "subject_id": "biology",
+      "dependencies": [],
+      "taxonomy_id": "ENRG",
+      "level": "foundational"
+    },
+    {
+      "id": "biology::first-law-of-thermodynamics",
+      "label": "First Law of Thermodynamics",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::thermodynamics"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::second-law-of-thermodynamics",
+      "label": "Second Law of Thermodynamics",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::thermodynamics"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::entropy",
+      "label": "Entropy",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::second-law-of-thermodynamics"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::free-energy-gibbs",
+      "label": "Free Energy (Gibbs)",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::thermodynamics",
+        "biology::first-law-of-thermodynamics",
+        "biology::second-law-of-thermodynamics",
+        "biology::entropy"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::exergonic-reactions",
+      "label": "Exergonic Reactions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::free-energy-gibbs"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::endergonic-reactions",
+      "label": "Endergonic Reactions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::free-energy-gibbs"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::atp-structure",
+      "label": "ATP Structure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nucleotides",
+        "biology::nucleic-acids"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::atp-hydrolysis",
+      "label": "ATP Hydrolysis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::atp-structure",
+        "biology::free-energy-gibbs",
+        "biology::exergonic-reactions"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::coupled-reactions",
+      "label": "Coupled Reactions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::atp-hydrolysis",
+        "biology::exergonic-reactions",
+        "biology::endergonic-reactions"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::redox-reactions",
+      "label": "Redox Reactions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chemical-bonds",
+        "biology::covalent-bonds",
+        "biology::atomic-structure"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::enzymes",
+      "label": "Enzymes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::proteins",
+        "biology::tertiary-protein-structure"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::active-site",
+      "label": "Active Site",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::enzymes",
+        "biology::tertiary-protein-structure"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::enzyme-substrate-complex",
+      "label": "Enzyme-Substrate Complex",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::enzymes",
+        "biology::active-site"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::activation-energy",
+      "label": "Activation Energy",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::free-energy-gibbs",
+        "biology::enzyme-substrate-complex"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::transition-state",
+      "label": "Transition State",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::activation-energy",
+        "biology::enzyme-substrate-complex"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::induced-fit-model",
+      "label": "Induced Fit Model",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::active-site",
+        "biology::enzyme-substrate-complex"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::enzyme-cofactors-and-coenzymes",
+      "label": "Enzyme Cofactors and Coenzymes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::enzymes",
+        "biology::amino-acids"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::competitive-inhibition",
+      "label": "Competitive Inhibition",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::enzymes",
+        "biology::active-site",
+        "biology::enzyme-substrate-complex"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::noncompetitive-inhibition",
+      "label": "Noncompetitive Inhibition",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::enzymes",
+        "biology::active-site",
+        "biology::allosteric-regulation"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::allosteric-regulation",
+      "label": "Allosteric Regulation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::enzymes",
+        "biology::active-site",
+        "biology::induced-fit-model"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::feedback-inhibition",
+      "label": "Feedback Inhibition",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::allosteric-regulation"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::temperature-and-enzyme-activity",
+      "label": "Temperature and Enzyme Activity",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::enzymes",
+        "biology::thermodynamics"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::ph-and-enzyme-activity",
+      "label": "pH and Enzyme Activity",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::enzymes",
+        "biology::ph-scale"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::photosynthesis-overview",
+      "label": "Photosynthesis Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chloroplasts",
+        "biology::thermodynamics"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::chlorophyll-and-pigments",
+      "label": "Chlorophyll and Pigments",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::photosynthesis-overview",
+        "biology::proteins"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::absorption-spectrum",
+      "label": "Absorption Spectrum",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chlorophyll-and-pigments"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::photosystems-i-and-ii",
+      "label": "Photosystems I and II",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chlorophyll-and-pigments",
+        "biology::absorption-spectrum"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::light-dependent-reactions",
+      "label": "Light-Dependent Reactions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::photosystems-i-and-ii",
+        "biology::redox-reactions"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::photolysis-of-water",
+      "label": "Photolysis of Water",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::light-dependent-reactions",
+        "biology::water-polarity"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::electron-transport-chain-chloroplast",
+      "label": "Electron Transport Chain (Chloroplast)",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::light-dependent-reactions",
+        "biology::redox-reactions",
+        "biology::atp-structure"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::atp-synthase",
+      "label": "ATP Synthase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::electron-transport-chain-chloroplast",
+        "biology::atp-structure",
+        "biology::atp-hydrolysis"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::proton-gradient",
+      "label": "Proton Gradient",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::atp-synthase",
+        "biology::second-law-of-thermodynamics",
+        "biology::entropy"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::calvin-cycle",
+      "label": "Calvin Cycle",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::light-dependent-reactions",
+        "biology::atp-synthase"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::carbon-fixation",
+      "label": "Carbon Fixation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::calvin-cycle"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::rubisco",
+      "label": "RuBisCO",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::carbon-fixation",
+        "biology::enzymes",
+        "biology::proteins"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::g3p-and-sugar-production",
+      "label": "G3P and Sugar Production",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::carbon-fixation",
+        "biology::rubisco",
+        "biology::calvin-cycle"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::c3-plants",
+      "label": "C3 Plants",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::calvin-cycle",
+        "biology::g3p-and-sugar-production"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::photorespiration",
+      "label": "Photorespiration",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::rubisco",
+        "biology::c3-plants"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::c4-plants",
+      "label": "C4 Plants",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::c3-plants",
+        "biology::photorespiration"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::cam-plants",
+      "label": "CAM Plants",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::c3-plants",
+        "biology::photorespiration"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::cellular-respiration-overview",
+      "label": "Cellular Respiration Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mitochondria",
+        "biology::thermodynamics"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::glycolysis",
+      "label": "Glycolysis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cellular-respiration-overview",
+        "biology::monosaccharides",
+        "biology::atp-structure",
+        "biology::redox-reactions"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::substrate-level-phosphorylation",
+      "label": "Substrate-Level Phosphorylation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::glycolysis",
+        "biology::atp-structure"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::pyruvate-oxidation",
+      "label": "Pyruvate Oxidation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::glycolysis",
+        "biology::redox-reactions"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::acetyl-coa",
+      "label": "Acetyl-CoA",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::pyruvate-oxidation"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::krebs-cycle",
+      "label": "Krebs Cycle",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::acetyl-coa",
+        "biology::redox-reactions",
+        "biology::atp-structure"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::electron-transport-chain-mitochond",
+      "label": "Electron Transport Chain (Mitochond.)",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::krebs-cycle",
+        "biology::redox-reactions",
+        "biology::enzyme-cofactors-and-coenzymes"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::oxidative-phosphorylation",
+      "label": "Oxidative Phosphorylation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::electron-transport-chain-mitochond",
+        "biology::atp-structure",
+        "biology::atp-synthase"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::chemiosmosis",
+      "label": "Chemiosmosis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::oxidative-phosphorylation",
+        "biology::proton-gradient",
+        "biology::atp-synthase"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::nadh-and-fadh2",
+      "label": "NADH and FADH2",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::redox-reactions",
+        "biology::krebs-cycle",
+        "biology::glycolysis"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::atp-yield-of-respiration",
+      "label": "ATP Yield of Respiration",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::glycolysis",
+        "biology::krebs-cycle",
+        "biology::oxidative-phosphorylation",
+        "biology::atp-structure"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::fermentation",
+      "label": "Fermentation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::glycolysis",
+        "biology::cellular-respiration-overview"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::lactic-acid-fermentation",
+      "label": "Lactic Acid Fermentation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::fermentation"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::alcoholic-fermentation",
+      "label": "Alcoholic Fermentation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::fermentation"
+      ],
+      "taxonomy_id": "ENRG",
+      "level": "core"
+    },
+    {
+      "id": "biology::cell-signaling-overview",
+      "label": "Cell Signaling Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells",
+        "biology::plasma-membrane"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::signal-transduction",
+      "label": "Signal Transduction",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-signaling-overview"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::ligand-receptor-binding",
+      "label": "Ligand-Receptor Binding",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-signaling-overview",
+        "biology::membrane-proteins",
+        "biology::proteins"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::cell-surface-receptors",
+      "label": "Cell Surface Receptors",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::plasma-membrane",
+        "biology::ligand-receptor-binding"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::g-protein-coupled-receptors",
+      "label": "G Protein-Coupled Receptors",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-surface-receptors"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::receptor-tyrosine-kinases",
+      "label": "Receptor Tyrosine Kinases",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-surface-receptors"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::intracellular-receptors",
+      "label": "Intracellular Receptors",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::ligand-receptor-binding",
+        "biology::nucleus"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::second-messengers",
+      "label": "Second Messengers",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::signal-transduction",
+        "biology::g-protein-coupled-receptors"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::camp-signaling",
+      "label": "cAMP Signaling",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::second-messengers"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::phosphorylation-cascades",
+      "label": "Phosphorylation Cascades",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::receptor-tyrosine-kinases",
+        "biology::second-messengers",
+        "biology::enzymes"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::signal-amplification",
+      "label": "Signal Amplification",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::phosphorylation-cascades",
+        "biology::signal-transduction"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::negative-feedback-loops",
+      "label": "Negative Feedback Loops",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::signal-transduction",
+        "biology::signal-amplification"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::positive-feedback-loops",
+      "label": "Positive Feedback Loops",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::negative-feedback-loops"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::apoptosis",
+      "label": "Apoptosis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::signal-transduction"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::cell-cycle-overview",
+      "label": "Cell Cycle Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells",
+        "biology::cytoskeleton",
+        "biology::microtubules"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::g1-phase",
+      "label": "G1 Phase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-cycle-overview"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::s-phase",
+      "label": "S Phase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-cycle-overview"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::g2-phase",
+      "label": "G2 Phase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-cycle-overview",
+        "biology::s-phase"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::mitosis",
+      "label": "Mitosis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-cycle-overview",
+        "biology::cytoskeleton",
+        "biology::microtubules"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::prophase",
+      "label": "Prophase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mitosis"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::metaphase",
+      "label": "Metaphase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::prophase",
+        "biology::microtubules"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::anaphase",
+      "label": "Anaphase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::metaphase",
+        "biology::microfilaments"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::telophase",
+      "label": "Telophase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::anaphase"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::cytokinesis",
+      "label": "Cytokinesis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mitosis",
+        "biology::telophase",
+        "biology::microfilaments"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::cell-cycle-checkpoints",
+      "label": "Cell Cycle Checkpoints",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-cycle-overview",
+        "biology::g1-phase",
+        "biology::s-phase",
+        "biology::g2-phase"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::cyclins-and-cdks",
+      "label": "Cyclins and CDKs",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-cycle-checkpoints",
+        "biology::enzymes"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::proto-oncogenes",
+      "label": "Proto-Oncogenes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cyclins-and-cdks"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::tumor-suppressor-genes",
+      "label": "Tumor Suppressor Genes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cyclins-and-cdks",
+        "biology::proto-oncogenes"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::cancer-biology",
+      "label": "Cancer Biology",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::proto-oncogenes",
+        "biology::tumor-suppressor-genes",
+        "biology::cell-cycle-checkpoints"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::contact-inhibition",
+      "label": "Contact Inhibition",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cell-signaling-overview",
+        "biology::cancer-biology"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "biology::meiosis-overview",
+      "label": "Meiosis Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mitosis",
+        "biology::haploid-and-diploid-cells"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::meiosis-i",
+      "label": "Meiosis I",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::meiosis-overview"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::meiosis-ii",
+      "label": "Meiosis II",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::meiosis-i"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::synapsis-and-tetrad-formation",
+      "label": "Synapsis and Tetrad Formation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::meiosis-i"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::crossing-over",
+      "label": "Crossing Over",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::synapsis-and-tetrad-formation"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::chiasmata",
+      "label": "Chiasmata",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::crossing-over"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::genetic-recombination",
+      "label": "Genetic Recombination",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::crossing-over",
+        "biology::chiasmata"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::haploid-and-diploid-cells",
+      "label": "Haploid and Diploid Cells",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::eukaryotic-cells",
+        "biology::cell-cycle-overview"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::gametes",
+      "label": "Gametes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::meiosis-overview",
+        "biology::haploid-and-diploid-cells"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::fertilization",
+      "label": "Fertilization",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::gametes"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::chromosomal-theory-of-inheritance",
+      "label": "Chromosomal Theory of Inheritance",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::haploid-and-diploid-cells",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::mendel-s-law-of-segregation",
+      "label": "Mendel's Law of Segregation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chromosomal-theory-of-inheritance"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::mendel-s-law-of-indep-assortment",
+      "label": "Mendel's Law of Indep. Assortment",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::chromosomal-theory-of-inheritance",
+        "biology::mendel-s-law-of-segregation"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::dominant-and-recessive-alleles",
+      "label": "Dominant and Recessive Alleles",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mendel-s-law-of-segregation"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::genotype-and-phenotype",
+      "label": "Genotype and Phenotype",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dominant-and-recessive-alleles"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::homozygous-and-heterozygous",
+      "label": "Homozygous and Heterozygous",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dominant-and-recessive-alleles",
+        "biology::genotype-and-phenotype"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::monohybrid-crosses",
+      "label": "Monohybrid Crosses",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mendel-s-law-of-segregation",
+        "biology::dominant-and-recessive-alleles",
+        "biology::homozygous-and-heterozygous"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::dihybrid-crosses",
+      "label": "Dihybrid Crosses",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mendel-s-law-of-indep-assortment",
+        "biology::monohybrid-crosses"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::punnett-squares",
+      "label": "Punnett Squares",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::monohybrid-crosses",
+        "biology::dihybrid-crosses"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::test-crosses",
+      "label": "Test Crosses",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::monohybrid-crosses",
+        "biology::punnett-squares"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::incomplete-dominance",
+      "label": "Incomplete Dominance",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::monohybrid-crosses",
+        "biology::dominant-and-recessive-alleles"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::codominance",
+      "label": "Codominance",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::monohybrid-crosses",
+        "biology::dominant-and-recessive-alleles"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::multiple-alleles",
+      "label": "Multiple Alleles",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dominant-and-recessive-alleles",
+        "biology::monohybrid-crosses"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::sex-determination",
+      "label": "Sex Determination",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::haploid-and-diploid-cells",
+        "biology::chromosomal-theory-of-inheritance"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::sex-linked-traits",
+      "label": "Sex-Linked Traits",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::sex-determination",
+        "biology::homozygous-and-heterozygous"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::x-linked-inheritance",
+      "label": "X-Linked Inheritance",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::sex-linked-traits",
+        "biology::punnett-squares"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::polygenic-inheritance",
+      "label": "Polygenic Inheritance",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::monohybrid-crosses",
+        "biology::genotype-and-phenotype"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::epistasis",
+      "label": "Epistasis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mendel-s-law-of-indep-assortment",
+        "biology::monohybrid-crosses",
+        "biology::genotype-and-phenotype"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::pleiotropy",
+      "label": "Pleiotropy",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::genotype-and-phenotype",
+        "biology::monohybrid-crosses"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::genetic-linkage",
+      "label": "Genetic Linkage",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::genetic-recombination",
+        "biology::mendel-s-law-of-indep-assortment"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::recombination-frequency",
+      "label": "Recombination Frequency",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::genetic-recombination",
+        "biology::genetic-linkage"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::chromosomal-abnormalities",
+      "label": "Chromosomal Abnormalities",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::haploid-and-diploid-cells"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::nondisjunction",
+      "label": "Nondisjunction",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::meiosis-overview",
+        "biology::meiosis-i",
+        "biology::meiosis-ii",
+        "biology::haploid-and-diploid-cells"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::aneuploidy",
+      "label": "Aneuploidy",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nondisjunction",
+        "biology::chromosomal-abnormalities"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::pedigree-analysis",
+      "label": "Pedigree Analysis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::monohybrid-crosses",
+        "biology::punnett-squares",
+        "biology::test-crosses",
+        "biology::sex-linked-traits"
+      ],
+      "taxonomy_id": "GENET",
+      "level": "core"
+    },
+    {
+      "id": "biology::chi-square-statistical-test",
+      "label": "Chi-Square Statistical Test",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::monohybrid-crosses",
+        "biology::punnett-squares",
+        "biology::scientific-method",
+        "biology::controlled-experiments"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::standard-deviation",
+      "label": "Standard Deviation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::scientific-method",
+        "biology::controlled-experiments",
+        "biology::independent-and-dependent-variables"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::data-interpretation",
+      "label": "Data Interpretation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::scientific-method",
+        "biology::controlled-experiments",
+        "biology::independent-and-dependent-variables",
+        "biology::standard-deviation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::graph-construction-and-analysis",
+      "label": "Graph Construction and Analysis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::independent-and-dependent-variables",
+        "biology::standard-deviation",
+        "biology::data-interpretation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::dna-double-helix",
+      "label": "DNA Double Helix",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-structure",
+        "biology::hydrogen-bonds",
+        "biology::covalent-bonds"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::base-pairing-rules",
+      "label": "Base Pairing Rules",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-double-helix",
+        "biology::nucleotides",
+        "biology::dna-structure"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::dna-replication",
+      "label": "DNA Replication",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-double-helix",
+        "biology::base-pairing-rules"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::dna-polymerase",
+      "label": "DNA Polymerase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-replication",
+        "biology::enzymes"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::semiconservative-replication",
+      "label": "Semiconservative Replication",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-replication",
+        "biology::dna-polymerase"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::leading-and-lagging-strands",
+      "label": "Leading and Lagging Strands",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-replication",
+        "biology::dna-polymerase",
+        "biology::semiconservative-replication"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::okazaki-fragments",
+      "label": "Okazaki Fragments",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::leading-and-lagging-strands"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::dna-proofreading-and-repair",
+      "label": "DNA Proofreading and Repair",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-polymerase",
+        "biology::dna-replication"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::telomeres",
+      "label": "Telomeres",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-double-helix",
+        "biology::dna-replication"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::transcription-overview",
+      "label": "Transcription Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-double-helix",
+        "biology::base-pairing-rules",
+        "biology::rna-structure"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::rna-polymerase",
+      "label": "RNA Polymerase",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::transcription-overview",
+        "biology::enzymes"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::promoter-regions",
+      "label": "Promoter Regions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-double-helix",
+        "biology::transcription-overview",
+        "biology::rna-polymerase"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::transcription-termination",
+      "label": "Transcription Termination",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::transcription-overview",
+        "biology::promoter-regions"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::mrna-processing",
+      "label": "mRNA Processing",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::transcription-overview",
+        "biology::rna-structure"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::5-prime-cap-and-poly-a-tail",
+      "label": "5-Prime Cap and Poly-A Tail",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mrna-processing"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::rna-splicing",
+      "label": "RNA Splicing",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mrna-processing"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::introns-and-exons",
+      "label": "Introns and Exons",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::mrna-processing"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::alternative-splicing",
+      "label": "Alternative Splicing",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::rna-splicing",
+        "biology::introns-and-exons"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::translation-overview",
+      "label": "Translation Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::rna-structure",
+        "biology::ribosomes",
+        "biology::codons-and-anticodons",
+        "biology::start-and-stop-codons"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::ribosomes",
+      "label": "Ribosomes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nucleolus",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::codons-and-anticodons",
+      "label": "Codons and Anticodons",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::base-pairing-rules",
+        "biology::nucleotides",
+        "biology::rna-structure"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::trna-structure",
+      "label": "tRNA Structure",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::rna-structure",
+        "biology::nucleotides",
+        "biology::codons-and-anticodons"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::aminoacyl-trna-synthetases",
+      "label": "Aminoacyl-tRNA Synthetases",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::trna-structure",
+        "biology::enzymes"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::start-and-stop-codons",
+      "label": "Start and Stop Codons",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::codons-and-anticodons"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::genetic-code",
+      "label": "Genetic Code",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::codons-and-anticodons",
+        "biology::start-and-stop-codons"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::polysomes",
+      "label": "Polysomes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::translation-overview",
+        "biology::ribosomes"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::point-mutations",
+      "label": "Point Mutations",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-replication",
+        "biology::base-pairing-rules"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::frameshift-mutations",
+      "label": "Frameshift Mutations",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::point-mutations",
+        "biology::leading-and-lagging-strands"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::silent-mutations",
+      "label": "Silent Mutations",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::point-mutations",
+        "biology::genetic-code"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::missense-mutations",
+      "label": "Missense Mutations",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::point-mutations",
+        "biology::genetic-code"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::nonsense-mutations",
+      "label": "Nonsense Mutations",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::point-mutations",
+        "biology::genetic-code",
+        "biology::start-and-stop-codons"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::mutagens-and-dna-damage",
+      "label": "Mutagens and DNA Damage",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::point-mutations",
+        "biology::frameshift-mutations",
+        "biology::dna-proofreading-and-repair"
+      ],
+      "taxonomy_id": "MOLBIO",
+      "level": "core"
+    },
+    {
+      "id": "biology::gene-regulation-prokaryotes",
+      "label": "Gene Regulation (Prokaryotes)",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::transcription-overview",
+        "biology::prokaryotic-cells"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::operons",
+      "label": "Operons",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::gene-regulation-prokaryotes"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::lac-operon",
+      "label": "Lac Operon",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::operons",
+        "biology::gene-regulation-prokaryotes"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::trp-operon",
+      "label": "Trp Operon",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::operons",
+        "biology::gene-regulation-prokaryotes",
+        "biology::feedback-inhibition"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::gene-regulation-eukaryotes",
+      "label": "Gene Regulation (Eukaryotes)",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::transcription-overview",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::transcription-factors",
+      "label": "Transcription Factors",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::gene-regulation-eukaryotes",
+        "biology::rna-polymerase",
+        "biology::proteins"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::enhancers-and-silencers",
+      "label": "Enhancers and Silencers",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::gene-regulation-eukaryotes",
+        "biology::transcription-factors",
+        "biology::dna-double-helix"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::epigenetic-regulation",
+      "label": "Epigenetic Regulation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::gene-regulation-eukaryotes"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::dna-methylation",
+      "label": "DNA Methylation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::epigenetic-regulation"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::histone-modification",
+      "label": "Histone Modification",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::epigenetic-regulation"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::chromatin-remodeling",
+      "label": "Chromatin Remodeling",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::epigenetic-regulation",
+        "biology::histone-modification",
+        "biology::nucleus"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::micrornas",
+      "label": "MicroRNAs",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::rna-structure",
+        "biology::mrna-processing",
+        "biology::translation-overview"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::biotechnology-overview",
+      "label": "Biotechnology Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-double-helix",
+        "biology::dna-replication"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::restriction-enzymes",
+      "label": "Restriction Enzymes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biotechnology-overview",
+        "biology::enzymes",
+        "biology::base-pairing-rules"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::gel-electrophoresis",
+      "label": "Gel Electrophoresis",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::restriction-enzymes",
+        "biology::dna-replication"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::pcr",
+      "label": "PCR",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-replication",
+        "biology::dna-polymerase",
+        "biology::biotechnology-overview"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::dna-cloning",
+      "label": "DNA Cloning",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::restriction-enzymes",
+        "biology::pcr"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::recombinant-dna-technology",
+      "label": "Recombinant DNA Technology",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::restriction-enzymes",
+        "biology::dna-cloning"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::crispr-cas9",
+      "label": "CRISPR-Cas9",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::base-pairing-rules",
+        "biology::dna-replication",
+        "biology::recombinant-dna-technology",
+        "biology::biotechnology-overview"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::gene-therapy-concepts",
+      "label": "Gene Therapy Concepts",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::crispr-cas9",
+        "biology::missense-mutations",
+        "biology::recombinant-dna-technology"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::dna-sequencing",
+      "label": "DNA Sequencing",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::pcr",
+        "biology::gel-electrophoresis",
+        "biology::biotechnology-overview"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::genomics-overview",
+      "label": "Genomics Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::dna-sequencing",
+        "biology::biotechnology-overview"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::bioinformatics-basics",
+      "label": "Bioinformatics Basics",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::genomics-overview",
+        "biology::dna-sequencing"
+      ],
+      "taxonomy_id": "BIOTECH",
+      "level": "core"
+    },
+    {
+      "id": "biology::history-of-evolutionary-thought",
+      "label": "History of Evolutionary Thought",
+      "subject_id": "biology",
+      "dependencies": [],
+      "taxonomy_id": "EVOL",
+      "level": "foundational"
+    },
+    {
+      "id": "biology::darwin-s-observations",
+      "label": "Darwin's Observations",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::history-of-evolutionary-thought"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::natural-selection",
+      "label": "Natural Selection",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::darwin-s-observations",
+        "biology::variation-in-populations",
+        "biology::heritability"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::variation-in-populations",
+      "label": "Variation in Populations",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::genotype-and-phenotype",
+        "biology::homozygous-and-heterozygous",
+        "biology::genetic-recombination"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::heritability",
+      "label": "Heritability",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::variation-in-populations",
+        "biology::chromosomal-theory-of-inheritance",
+        "biology::mendel-s-law-of-segregation"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::relative-fitness",
+      "label": "Relative Fitness",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::genotype-and-phenotype"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::artificial-selection",
+      "label": "Artificial Selection",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::relative-fitness"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::fossil-record-evidence",
+      "label": "Fossil Record Evidence",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::history-of-evolutionary-thought"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::relative-and-absolute-dating",
+      "label": "Relative and Absolute Dating",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::fossil-record-evidence"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::comparative-anatomy",
+      "label": "Comparative Anatomy",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::history-of-evolutionary-thought",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::homologous-structures",
+      "label": "Homologous Structures",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::comparative-anatomy"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::analogous-structures",
+      "label": "Analogous Structures",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::comparative-anatomy"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::vestigial-structures",
+      "label": "Vestigial Structures",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::homologous-structures",
+        "biology::natural-selection"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::comparative-embryology",
+      "label": "Comparative Embryology",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::comparative-anatomy",
+        "biology::history-of-evolutionary-thought"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::molecular-evidence-for-evolution",
+      "label": "Molecular Evidence for Evolution",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::genomics-overview",
+        "biology::dna-double-helix",
+        "biology::history-of-evolutionary-thought"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::biogeography",
+      "label": "Biogeography",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::history-of-evolutionary-thought",
+        "biology::darwin-s-observations"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::population-genetics",
+      "label": "Population Genetics",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::variation-in-populations"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::allele-frequency",
+      "label": "Allele Frequency",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::population-genetics"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::hardy-weinberg-equilibrium",
+      "label": "Hardy-Weinberg Equilibrium",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::allele-frequency",
+        "biology::population-genetics"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::hardy-weinberg-assumptions",
+      "label": "Hardy-Weinberg Assumptions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::hardy-weinberg-equilibrium"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::genetic-drift",
+      "label": "Genetic Drift",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::hardy-weinberg-equilibrium",
+        "biology::hardy-weinberg-assumptions",
+        "biology::variation-in-populations"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::founder-effect",
+      "label": "Founder Effect",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::genetic-drift"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::bottleneck-effect",
+      "label": "Bottleneck Effect",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::genetic-drift"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::gene-flow",
+      "label": "Gene Flow",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::population-genetics",
+        "biology::hardy-weinberg-equilibrium"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::mutation-and-evolution",
+      "label": "Mutation and Evolution",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::point-mutations",
+        "biology::population-genetics",
+        "biology::natural-selection"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::sexual-selection",
+      "label": "Sexual Selection",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::relative-fitness",
+        "biology::genotype-and-phenotype"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::stabilizing-selection",
+      "label": "Stabilizing Selection",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::relative-fitness",
+        "biology::allele-frequency"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::directional-selection",
+      "label": "Directional Selection",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::relative-fitness",
+        "biology::allele-frequency"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::disruptive-selection",
+      "label": "Disruptive Selection",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::relative-fitness",
+        "biology::allele-frequency"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::biological-species-concept",
+      "label": "Biological Species Concept",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::variation-in-populations"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::speciation-overview",
+      "label": "Speciation Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::hardy-weinberg-equilibrium",
+        "biology::biological-species-concept"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::reproductive-isolation",
+      "label": "Reproductive Isolation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::speciation-overview",
+        "biology::biological-species-concept"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::prezygotic-barriers",
+      "label": "Prezygotic Barriers",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::reproductive-isolation"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::postzygotic-barriers",
+      "label": "Postzygotic Barriers",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::reproductive-isolation"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::allopatric-speciation",
+      "label": "Allopatric Speciation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::reproductive-isolation",
+        "biology::prezygotic-barriers",
+        "biology::postzygotic-barriers",
+        "biology::gene-flow"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::sympatric-speciation",
+      "label": "Sympatric Speciation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::reproductive-isolation",
+        "biology::prezygotic-barriers",
+        "biology::postzygotic-barriers"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::adaptive-radiation",
+      "label": "Adaptive Radiation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::allopatric-speciation",
+        "biology::sympatric-speciation",
+        "biology::speciation-overview"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::convergent-evolution",
+      "label": "Convergent Evolution",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::analogous-structures",
+        "biology::speciation-overview",
+        "biology::adaptive-radiation"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::coevolution",
+      "label": "Coevolution",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::natural-selection",
+        "biology::relative-fitness"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::phylogenetics",
+      "label": "Phylogenetics",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::speciation-overview",
+        "biology::cladistics"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::cladistics",
+      "label": "Cladistics",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::speciation-overview"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::cladograms",
+      "label": "Cladograms",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cladistics",
+        "biology::phylogenetics"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::shared-derived-characters",
+      "label": "Shared Derived Characters",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::cladistics",
+        "biology::comparative-anatomy"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::molecular-clocks",
+      "label": "Molecular Clocks",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::molecular-evidence-for-evolution",
+        "biology::phylogenetics",
+        "biology::cladograms"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::macroevolution",
+      "label": "Macroevolution",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::speciation-overview",
+        "biology::adaptive-radiation",
+        "biology::cladograms"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::mass-extinctions",
+      "label": "Mass Extinctions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::macroevolution",
+        "biology::fossil-record-evidence"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::endosymbiotic-theory",
+      "label": "Endosymbiotic Theory",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::prokaryotic-cells",
+        "biology::mitochondria",
+        "biology::chloroplasts",
+        "biology::molecular-evidence-for-evolution"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::origin-of-eukaryotes",
+      "label": "Origin of Eukaryotes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::endosymbiotic-theory",
+        "biology::eukaryotic-cells"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::three-domains-of-life",
+      "label": "Three Domains of Life",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::origin-of-eukaryotes",
+        "biology::prokaryotic-cells",
+        "biology::eukaryotic-cells",
+        "biology::phylogenetics"
+      ],
+      "taxonomy_id": "EVOL",
+      "level": "core"
+    },
+    {
+      "id": "biology::ecology-overview",
+      "label": "Ecology Overview",
+      "subject_id": "biology",
+      "dependencies": [],
+      "taxonomy_id": "POPECO",
+      "level": "foundational"
+    },
+    {
+      "id": "biology::levels-of-ecological-organization",
+      "label": "Levels of Ecological Organization",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::ecology-overview"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::abiotic-and-biotic-factors",
+      "label": "Abiotic and Biotic Factors",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::levels-of-ecological-organization"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::population-ecology",
+      "label": "Population Ecology",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::levels-of-ecological-organization",
+        "biology::abiotic-and-biotic-factors"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::population-density",
+      "label": "Population Density",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::population-ecology"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::dispersion-patterns",
+      "label": "Dispersion Patterns",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::population-ecology",
+        "biology::population-density"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::exponential-population-growth",
+      "label": "Exponential Population Growth",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::population-ecology",
+        "biology::population-density"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::logistic-population-growth",
+      "label": "Logistic Population Growth",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::exponential-population-growth",
+        "biology::carrying-capacity"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::carrying-capacity",
+      "label": "Carrying Capacity",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::exponential-population-growth"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::limiting-factors",
+      "label": "Limiting Factors",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::carrying-capacity",
+        "biology::abiotic-and-biotic-factors"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::density-dependent-regulation",
+      "label": "Density-Dependent Regulation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::limiting-factors",
+        "biology::logistic-population-growth"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::density-independent-factors",
+      "label": "Density-Independent Factors",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::limiting-factors"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::survivorship-curves",
+      "label": "Survivorship Curves",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::population-ecology",
+        "biology::population-density",
+        "biology::data-interpretation"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::life-history-strategies",
+      "label": "Life History Strategies",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::survivorship-curves",
+        "biology::relative-fitness"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::r-selection-and-k-selection",
+      "label": "r-Selection and K-Selection",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::life-history-strategies",
+        "biology::carrying-capacity"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::community-ecology",
+      "label": "Community Ecology",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::levels-of-ecological-organization",
+        "biology::population-ecology"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::interspecific-interactions",
+      "label": "Interspecific Interactions",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::community-ecology",
+        "biology::abiotic-and-biotic-factors"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::predation",
+      "label": "Predation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::interspecific-interactions"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::herbivory",
+      "label": "Herbivory",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::interspecific-interactions"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::competition",
+      "label": "Competition",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::interspecific-interactions"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::competitive-exclusion-principle",
+      "label": "Competitive Exclusion Principle",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::competition"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::resource-partitioning",
+      "label": "Resource Partitioning",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::competitive-exclusion-principle"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::ecological-niches",
+      "label": "Ecological Niches",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::resource-partitioning",
+        "biology::competition",
+        "biology::levels-of-ecological-organization"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::mutualism",
+      "label": "Mutualism",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::interspecific-interactions",
+        "biology::coevolution"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::commensalism",
+      "label": "Commensalism",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::interspecific-interactions"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::parasitism",
+      "label": "Parasitism",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::interspecific-interactions"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::keystone-species",
+      "label": "Keystone Species",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::interspecific-interactions",
+        "biology::predation",
+        "biology::competition"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::trophic-cascades",
+      "label": "Trophic Cascades",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::keystone-species",
+        "biology::trophic-levels",
+        "biology::food-chains-and-food-webs"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::ecological-succession",
+      "label": "Ecological Succession",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::community-ecology"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::primary-succession",
+      "label": "Primary Succession",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::ecological-succession"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::secondary-succession",
+      "label": "Secondary Succession",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::ecological-succession"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::climax-community",
+      "label": "Climax Community",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::primary-succession",
+        "biology::secondary-succession"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::ecosystem-ecology",
+      "label": "Ecosystem Ecology",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::levels-of-ecological-organization",
+        "biology::community-ecology"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::trophic-levels",
+      "label": "Trophic Levels",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::ecosystem-ecology"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::food-chains-and-food-webs",
+      "label": "Food Chains and Food Webs",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::trophic-levels",
+        "biology::predation",
+        "biology::herbivory"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::energy-flow-in-ecosystems",
+      "label": "Energy Flow in Ecosystems",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::food-chains-and-food-webs",
+        "biology::cellular-respiration-overview"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::ten-percent-energy-rule",
+      "label": "Ten Percent Energy Rule",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::energy-flow-in-ecosystems",
+        "biology::trophic-levels"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::primary-productivity",
+      "label": "Primary Productivity",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::ecosystem-ecology",
+        "biology::photosynthesis-overview",
+        "biology::cellular-respiration-overview"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::net-primary-productivity",
+      "label": "Net Primary Productivity",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::primary-productivity"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::biogeochemical-cycles",
+      "label": "Biogeochemical Cycles",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::ecosystem-ecology",
+        "biology::levels-of-ecological-organization"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::carbon-cycle",
+      "label": "Carbon Cycle",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biogeochemical-cycles",
+        "biology::photosynthesis-overview",
+        "biology::cellular-respiration-overview"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::nitrogen-cycle",
+      "label": "Nitrogen Cycle",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biogeochemical-cycles"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::phosphorus-cycle",
+      "label": "Phosphorus Cycle",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biogeochemical-cycles"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::water-cycle",
+      "label": "Water Cycle",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biogeochemical-cycles",
+        "biology::water-polarity"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::nitrogen-fixation",
+      "label": "Nitrogen Fixation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::nitrogen-cycle",
+        "biology::prokaryotic-cells",
+        "biology::enzymes"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::biomes-overview",
+      "label": "Biomes Overview",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::levels-of-ecological-organization",
+        "biology::abiotic-and-biotic-factors"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::terrestrial-biomes",
+      "label": "Terrestrial Biomes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biomes-overview",
+        "biology::abiotic-and-biotic-factors"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::aquatic-biomes",
+      "label": "Aquatic Biomes",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biomes-overview",
+        "biology::abiotic-and-biotic-factors"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::biodiversity",
+      "label": "Biodiversity",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::levels-of-ecological-organization",
+        "biology::community-ecology"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::species-richness-and-evenness",
+      "label": "Species Richness and Evenness",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biodiversity"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::habitat-fragmentation",
+      "label": "Habitat Fragmentation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biodiversity",
+        "biology::population-ecology",
+        "biology::community-ecology"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::invasive-species",
+      "label": "Invasive Species",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::community-ecology",
+        "biology::competition",
+        "biology::biodiversity"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::climate-change-and-ecology",
+      "label": "Climate Change and Ecology",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biogeochemical-cycles",
+        "biology::carbon-cycle",
+        "biology::biodiversity",
+        "biology::climate-change"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::conservation-biology",
+      "label": "Conservation Biology",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biodiversity",
+        "biology::habitat-fragmentation",
+        "biology::invasive-species",
+        "biology::climate-change-and-ecology",
+        "biology::hardy-weinberg-equilibrium"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::island-biogeography",
+      "label": "Island Biogeography",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::population-ecology",
+        "biology::community-ecology",
+        "biology::adaptive-radiation"
+      ],
+      "taxonomy_id": "POPECO",
+      "level": "core"
+    },
+    {
+      "id": "biology::ecological-footprint",
+      "label": "Ecological Footprint",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::energy-flow-in-ecosystems",
+        "biology::conservation-biology",
+        "biology::climate-change-and-ecology"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::scientific-method",
+        "biology::hypothesis-testing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::detecting-misinformation",
+      "label": "Detecting Misinformation",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::critical-thinking",
+        "biology::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "biology::climate-change",
+      "label": "Climate Change",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::biogeochemical-cycles",
+        "biology::carbon-cycle"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    },
+    {
+      "id": "biology::global-warming",
+      "label": "Global Warming",
+      "subject_id": "biology",
+      "dependencies": [
+        "biology::climate-change",
+        "biology::carbon-cycle"
+      ],
+      "taxonomy_id": "ECOSYS",
+      "level": "core"
+    }
+  ]
+}

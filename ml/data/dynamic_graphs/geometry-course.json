@@ -1,0 +1,2191 @@
+{
+  "subject_id": "geometry-course",
+  "title": "Geometry",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "red"
+    },
+    "LOGIC": {
+      "classifier_name": "Logic and Reasoning",
+      "color": "#e67e22"
+    },
+    "ANGLE": {
+      "classifier_name": "Angle Relationships",
+      "color": "#f39c12"
+    },
+    "CONST": {
+      "classifier_name": "Constructions",
+      "color": "#f1c40f"
+    },
+    "TRANS": {
+      "classifier_name": "Transformations",
+      "color": "#2ecc71"
+    },
+    "LINES": {
+      "classifier_name": "Lines and Planes",
+      "color": "#1abc9c"
+    },
+    "TRI": {
+      "classifier_name": "Triangles",
+      "color": "#3498db"
+    },
+    "POLY": {
+      "classifier_name": "Polygons",
+      "color": "#9b59b6"
+    },
+    "SIM": {
+      "classifier_name": "Similarity and Right Triangles",
+      "color": "#e91e63"
+    },
+    "CIRC": {
+      "classifier_name": "Circles",
+      "color": "#00bcd4"
+    },
+    "AREA": {
+      "classifier_name": "Area and Volume",
+      "color": "#607d8b"
+    },
+    "APP": {
+      "classifier_name": "Applications",
+      "color": "#795548"
+    }
+  },
+  "concepts": [
+    {
+      "id": "geometry-course::point",
+      "label": "Point",
+      "subject_id": "geometry-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "geometry-course::line",
+      "label": "Line",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::plane",
+      "label": "Plane",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::ray",
+      "label": "Ray",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point",
+        "geometry-course::line"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::line-segment",
+      "label": "Line Segment",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point",
+        "geometry-course::line"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::angle",
+      "label": "Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::ray",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::vertex",
+      "label": "Vertex",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::collinear-points",
+      "label": "Collinear Points",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point",
+        "geometry-course::line"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::coplanar-points",
+      "label": "Coplanar Points",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point",
+        "geometry-course::plane"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::intersection",
+      "label": "Intersection",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line",
+        "geometry-course::plane"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::parallel-lines",
+      "label": "Parallel Lines",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::perpendicular-lines",
+      "label": "Perpendicular Lines",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::skew-lines",
+      "label": "Skew Lines",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line",
+        "geometry-course::plane"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::inductive-reasoning",
+      "label": "Inductive Reasoning",
+      "subject_id": "geometry-course",
+      "dependencies": [],
+      "taxonomy_id": "LOGIC",
+      "level": "foundational"
+    },
+    {
+      "id": "geometry-course::deductive-reasoning",
+      "label": "Deductive Reasoning",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::inductive-reasoning"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::conjecture",
+      "label": "Conjecture",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::inductive-reasoning"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::counterexample",
+      "label": "Counterexample",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::conjecture"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::conditional-statement",
+      "label": "Conditional Statement",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::deductive-reasoning"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::hypothesis",
+      "label": "Hypothesis",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::conditional-statement"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::conclusion",
+      "label": "Conclusion",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::conditional-statement"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::converse",
+      "label": "Converse",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::conditional-statement"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::inverse",
+      "label": "Inverse",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::conditional-statement"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::contrapositive",
+      "label": "Contrapositive",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::conditional-statement",
+        "geometry-course::converse"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::biconditional-statement",
+      "label": "Biconditional Statement",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::conditional-statement",
+        "geometry-course::converse"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::postulate",
+      "label": "Postulate",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::deductive-reasoning"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::theorem",
+      "label": "Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::postulate"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::proof",
+      "label": "Proof",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::deductive-reasoning",
+        "geometry-course::theorem"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::two-column-proof",
+      "label": "Two-Column Proof",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::proof"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::paragraph-proof",
+      "label": "Paragraph Proof",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::proof"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::flow-chart-proof",
+      "label": "Flow Chart Proof",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::proof"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::indirect-proof",
+      "label": "Indirect Proof",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::proof",
+        "geometry-course::counterexample"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::acute-angle",
+      "label": "Acute Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::right-angle",
+      "label": "Right Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::obtuse-angle",
+      "label": "Obtuse Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::straight-angle",
+      "label": "Straight Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::complementary-angles",
+      "label": "Complementary Angles",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle",
+        "geometry-course::acute-angle",
+        "geometry-course::right-angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::supplementary-angles",
+      "label": "Supplementary Angles",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle",
+        "geometry-course::straight-angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::adjacent-angles",
+      "label": "Adjacent Angles",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::vertical-angles",
+      "label": "Vertical Angles",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle",
+        "geometry-course::intersection"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::linear-pair",
+      "label": "Linear Pair",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle",
+        "geometry-course::adjacent-angles"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::angle-bisector",
+      "label": "Angle Bisector",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::midpoint",
+      "label": "Midpoint",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::segment-bisector",
+      "label": "Segment Bisector",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line-segment",
+        "geometry-course::midpoint"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::perpendicular-bisector",
+      "label": "Perpendicular Bisector",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::perpendicular-lines",
+        "geometry-course::segment-bisector"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::distance-formula",
+      "label": "Distance Formula",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::midpoint-formula",
+      "label": "Midpoint Formula",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::midpoint"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::compass-construction",
+      "label": "Compass Construction",
+      "subject_id": "geometry-course",
+      "dependencies": [],
+      "taxonomy_id": "CONST",
+      "level": "foundational"
+    },
+    {
+      "id": "geometry-course::straightedge-construction",
+      "label": "Straightedge Construction",
+      "subject_id": "geometry-course",
+      "dependencies": [],
+      "taxonomy_id": "CONST",
+      "level": "foundational"
+    },
+    {
+      "id": "geometry-course::copying-a-segment",
+      "label": "Copying a Segment",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::compass-construction",
+        "geometry-course::straightedge-construction",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::copying-an-angle",
+      "label": "Copying an Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::compass-construction",
+        "geometry-course::straightedge-construction",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::bisecting-a-segment",
+      "label": "Bisecting a Segment",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::compass-construction",
+        "geometry-course::straightedge-construction",
+        "geometry-course::midpoint"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::bisecting-an-angle",
+      "label": "Bisecting an Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::compass-construction",
+        "geometry-course::straightedge-construction",
+        "geometry-course::angle-bisector"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::constructing-perpendiculars",
+      "label": "Constructing Perpendiculars",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::compass-construction",
+        "geometry-course::straightedge-construction",
+        "geometry-course::perpendicular-lines"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::constructing-parallels",
+      "label": "Constructing Parallels",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::compass-construction",
+        "geometry-course::straightedge-construction",
+        "geometry-course::parallel-lines"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::translation",
+      "label": "Translation",
+      "subject_id": "geometry-course",
+      "dependencies": [],
+      "taxonomy_id": "TRANS",
+      "level": "foundational"
+    },
+    {
+      "id": "geometry-course::rotation",
+      "label": "Rotation",
+      "subject_id": "geometry-course",
+      "dependencies": [],
+      "taxonomy_id": "TRANS",
+      "level": "foundational"
+    },
+    {
+      "id": "geometry-course::reflection",
+      "label": "Reflection",
+      "subject_id": "geometry-course",
+      "dependencies": [],
+      "taxonomy_id": "TRANS",
+      "level": "foundational"
+    },
+    {
+      "id": "geometry-course::dilation",
+      "label": "Dilation",
+      "subject_id": "geometry-course",
+      "dependencies": [],
+      "taxonomy_id": "TRANS",
+      "level": "foundational"
+    },
+    {
+      "id": "geometry-course::rigid-motion",
+      "label": "Rigid Motion",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::translation",
+        "geometry-course::rotation",
+        "geometry-course::reflection"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::image",
+      "label": "Image",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::translation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::pre-image",
+      "label": "Pre-Image",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::translation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::composition-of-transformations",
+      "label": "Composition of Transformations",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::translation",
+        "geometry-course::rotation",
+        "geometry-course::reflection"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::congruent-figures",
+      "label": "Congruent Figures",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::rigid-motion"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::corresponding-parts",
+      "label": "Corresponding Parts",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::congruent-figures"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::triangle-congruence",
+      "label": "Triangle Congruence",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::congruent-figures",
+        "geometry-course::triangle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::sss-congruence",
+      "label": "SSS Congruence",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle-congruence",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::sas-congruence",
+      "label": "SAS Congruence",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle-congruence",
+        "geometry-course::line-segment",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::asa-congruence",
+      "label": "ASA Congruence",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle-congruence",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::aas-congruence",
+      "label": "AAS Congruence",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle-congruence",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::hl-congruence",
+      "label": "HL Congruence",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle-congruence",
+        "geometry-course::right-triangle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::cpctc",
+      "label": "CPCTC",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle-congruence",
+        "geometry-course::corresponding-parts"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::transversal",
+      "label": "Transversal",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line",
+        "geometry-course::parallel-lines"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::corresponding-angles",
+      "label": "Corresponding Angles",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::transversal",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::alternate-interior-angles",
+      "label": "Alternate Interior Angles",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::transversal",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::alternate-exterior-angles",
+      "label": "Alternate Exterior Angles",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::transversal",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::same-side-interior-angles",
+      "label": "Same-Side Interior Angles",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::transversal",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "ANGLE",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::parallel-postulate",
+      "label": "Parallel Postulate",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::parallel-lines",
+        "geometry-course::postulate"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::slope",
+      "label": "Slope",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::line"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::slope-intercept-form",
+      "label": "Slope-Intercept Form",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::slope",
+        "geometry-course::line"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::point-slope-form",
+      "label": "Point-Slope Form",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::slope",
+        "geometry-course::point"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::equations-of-parallel-lines",
+      "label": "Equations of Parallel Lines",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::parallel-lines",
+        "geometry-course::slope-intercept-form"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::equations-of-perpendicular-lines",
+      "label": "Equations of Perpendicular Lines",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::perpendicular-lines",
+        "geometry-course::slope"
+      ],
+      "taxonomy_id": "LINES",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::coordinate-proof",
+      "label": "Coordinate Proof",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::proof",
+        "geometry-course::slope"
+      ],
+      "taxonomy_id": "LOGIC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::triangle",
+      "label": "Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point",
+        "geometry-course::line",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::scalene-triangle",
+      "label": "Scalene Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::isosceles-triangle",
+      "label": "Isosceles Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::equilateral-triangle",
+      "label": "Equilateral Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::acute-triangle",
+      "label": "Acute Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::acute-angle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::right-triangle",
+      "label": "Right Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::right-angle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::obtuse-triangle",
+      "label": "Obtuse Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::obtuse-angle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::triangle-sum-theorem",
+      "label": "Triangle Sum Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::theorem"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::exterior-angle-theorem",
+      "label": "Exterior Angle Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::theorem"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::third-angle-theorem",
+      "label": "Third Angle Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle-sum-theorem"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::base-angles-theorem",
+      "label": "Base Angles Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::isosceles-triangle",
+        "geometry-course::theorem"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::triangle-inequality-theorem",
+      "label": "Triangle Inequality Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::theorem"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::hinge-theorem",
+      "label": "Hinge Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::theorem"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::median-of-a-triangle",
+      "label": "Median of a Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::midpoint"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::altitude-of-a-triangle",
+      "label": "Altitude of a Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::perpendicular-lines"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::perpendicular-bisector-triangle",
+      "label": "Perpendicular Bisector Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::perpendicular-bisector"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::angle-bisector-of-triangle",
+      "label": "Angle Bisector of Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle",
+        "geometry-course::angle-bisector"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::centroid",
+      "label": "Centroid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::median-of-a-triangle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::orthocenter",
+      "label": "Orthocenter",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::altitude-of-a-triangle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::circumcenter",
+      "label": "Circumcenter",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::perpendicular-bisector-triangle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::incenter",
+      "label": "Incenter",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle-bisector-of-triangle"
+      ],
+      "taxonomy_id": "TRI",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::polygon",
+      "label": "Polygon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point",
+        "geometry-course::line"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::regular-polygon",
+      "label": "Regular Polygon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::interior-angles-of-polygon",
+      "label": "Interior Angles of Polygon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::exterior-angles-of-polygon",
+      "label": "Exterior Angles of Polygon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::quadrilateral",
+      "label": "Quadrilateral",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::parallelogram",
+      "label": "Parallelogram",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::quadrilateral",
+        "geometry-course::parallel-lines"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::rectangle",
+      "label": "Rectangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::parallelogram",
+        "geometry-course::right-angle"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::rhombus",
+      "label": "Rhombus",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::parallelogram",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::square",
+      "label": "Square",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::rectangle",
+        "geometry-course::rhombus"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::trapezoid",
+      "label": "Trapezoid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::quadrilateral",
+        "geometry-course::parallel-lines"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::isosceles-trapezoid",
+      "label": "Isosceles Trapezoid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::trapezoid",
+        "geometry-course::isosceles-triangle"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::kite",
+      "label": "Kite",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::quadrilateral"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::pentagon",
+      "label": "Pentagon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::hexagon",
+      "label": "Hexagon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::octagon",
+      "label": "Octagon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::tessellation",
+      "label": "Tessellation",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::regular-polygon"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::similar-figures",
+      "label": "Similar Figures",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::dilation"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::scale-factor",
+      "label": "Scale Factor",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::dilation",
+        "geometry-course::similar-figures"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::similarity-ratio",
+      "label": "Similarity Ratio",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::scale-factor"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::aa-similarity",
+      "label": "AA Similarity",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::sas-similarity",
+      "label": "SAS Similarity",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::line-segment",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::sss-similarity",
+      "label": "SSS Similarity",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::proportional-segments",
+      "label": "Proportional Segments",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::geometric-mean",
+      "label": "Geometric Mean",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::altitude-to-hypotenuse",
+      "label": "Altitude to Hypotenuse",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::right-triangle",
+        "geometry-course::altitude-of-a-triangle",
+        "geometry-course::geometric-mean"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::pythagorean-theorem",
+      "label": "Pythagorean Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::right-triangle",
+        "geometry-course::theorem"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::pythagorean-triple",
+      "label": "Pythagorean Triple",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::pythagorean-theorem"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::converse-pythagorean-theorem",
+      "label": "Converse Pythagorean Theorem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::pythagorean-theorem",
+        "geometry-course::converse"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::distance-in-coordinate-plane",
+      "label": "Distance in Coordinate Plane",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::distance-formula",
+        "geometry-course::pythagorean-theorem"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::sine-ratio",
+      "label": "Sine Ratio",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::right-triangle"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::cosine-ratio",
+      "label": "Cosine Ratio",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::right-triangle"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::tangent-ratio",
+      "label": "Tangent Ratio",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::right-triangle"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::inverse-trigonometric-functions",
+      "label": "Inverse Trigonometric Functions",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::sine-ratio",
+        "geometry-course::cosine-ratio",
+        "geometry-course::tangent-ratio"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::angle-of-elevation",
+      "label": "Angle of Elevation",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle",
+        "geometry-course::sine-ratio"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::angle-of-depression",
+      "label": "Angle of Depression",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::angle",
+        "geometry-course::sine-ratio"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::indirect-measurement",
+      "label": "Indirect Measurement",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::sine-ratio"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::circle",
+      "label": "Circle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::point"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::center-of-circle",
+      "label": "Center of Circle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::point"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::radius",
+      "label": "Radius",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::diameter",
+      "label": "Diameter",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::line-segment",
+        "geometry-course::radius"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::chord",
+      "label": "Chord",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::secant",
+      "label": "Secant",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::line"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::tangent-to-circle",
+      "label": "Tangent to Circle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::line",
+        "geometry-course::perpendicular-lines"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::point-of-tangency",
+      "label": "Point of Tangency",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::tangent-to-circle",
+        "geometry-course::point"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::central-angle",
+      "label": "Central Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::inscribed-angle",
+      "label": "Inscribed Angle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::angle"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::intercepted-arc",
+      "label": "Intercepted Arc",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::central-angle",
+        "geometry-course::inscribed-angle"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::major-arc",
+      "label": "Major Arc",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::intercepted-arc"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::minor-arc",
+      "label": "Minor Arc",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::intercepted-arc"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::semicircle",
+      "label": "Semicircle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::diameter"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::arc-length",
+      "label": "Arc Length",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::intercepted-arc"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::sector",
+      "label": "Sector",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::central-angle"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::segment-of-circle",
+      "label": "Segment of Circle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::chord"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::inscribed-polygon",
+      "label": "Inscribed Polygon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::polygon"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::circumscribed-polygon",
+      "label": "Circumscribed Polygon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::polygon",
+        "geometry-course::tangent-to-circle"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::equation-of-circle",
+      "label": "Equation of Circle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::slope"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-rectangle",
+      "label": "Area of Rectangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::rectangle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-square",
+      "label": "Area of Square",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::square"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-parallelogram",
+      "label": "Area of Parallelogram",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::parallelogram"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-triangle",
+      "label": "Area of Triangle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::triangle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-trapezoid",
+      "label": "Area of Trapezoid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::trapezoid"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-rhombus",
+      "label": "Area of Rhombus",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::rhombus"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-kite",
+      "label": "Area of Kite",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::kite"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-regular-polygon",
+      "label": "Area of Regular Polygon",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::regular-polygon"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::area-of-circle",
+      "label": "Area of Circle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::circumference",
+      "label": "Circumference",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::pi",
+      "label": "Pi",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::radius"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::perimeter",
+      "label": "Perimeter",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::prism",
+      "label": "Prism",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon",
+        "geometry-course::plane"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::pyramid",
+      "label": "Pyramid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon",
+        "geometry-course::triangle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::cylinder",
+      "label": "Cylinder",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::prism"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::cone",
+      "label": "Cone",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle",
+        "geometry-course::pyramid"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::sphere",
+      "label": "Sphere",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::circle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::polyhedron",
+      "label": "Polyhedron",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polygon",
+        "geometry-course::plane"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::face",
+      "label": "Face",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polyhedron",
+        "geometry-course::polygon"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::edge",
+      "label": "Edge",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polyhedron",
+        "geometry-course::line-segment"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::lateral-face",
+      "label": "Lateral Face",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::prism",
+        "geometry-course::face"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::lateral-edge",
+      "label": "Lateral Edge",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::prism",
+        "geometry-course::edge"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::base-of-solid",
+      "label": "Base of Solid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::prism"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::height-of-solid",
+      "label": "Height of Solid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::prism",
+        "geometry-course::perpendicular-lines"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::surface-area",
+      "label": "Surface Area",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::prism"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::lateral-surface-area",
+      "label": "Lateral Surface Area",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::surface-area",
+        "geometry-course::lateral-face"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::volume-of-prism",
+      "label": "Volume of Prism",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::prism",
+        "geometry-course::area-of-rectangle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::volume-of-pyramid",
+      "label": "Volume of Pyramid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::pyramid",
+        "geometry-course::area-of-triangle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::volume-of-cylinder",
+      "label": "Volume of Cylinder",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::cylinder",
+        "geometry-course::area-of-circle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::volume-of-cone",
+      "label": "Volume of Cone",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::cone",
+        "geometry-course::area-of-circle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::volume-of-sphere",
+      "label": "Volume of Sphere",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::sphere",
+        "geometry-course::area-of-circle"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::cross-section",
+      "label": "Cross-Section",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::prism",
+        "geometry-course::plane"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::cavalieri-s-principle",
+      "label": "Cavalieri's Principle",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::cross-section",
+        "geometry-course::surface-area"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::net-of-solid",
+      "label": "Net of Solid",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::polyhedron",
+        "geometry-course::face"
+      ],
+      "taxonomy_id": "AREA",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::scale-drawing",
+      "label": "Scale Drawing",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::scale-factor"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::scale-model",
+      "label": "Scale Model",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::scale-factor"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::optimization-problem",
+      "label": "Optimization Problem",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::surface-area",
+        "geometry-course::volume-of-prism"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::modeling-with-geometry",
+      "label": "Modeling with Geometry",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::similar-figures",
+        "geometry-course::scale-drawing"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::design-challenge",
+      "label": "Design Challenge",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::modeling-with-geometry",
+        "geometry-course::optimization-problem"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "geometry-course::geometric-proof-portfolio",
+      "label": "Geometric Proof Portfolio",
+      "subject_id": "geometry-course",
+      "dependencies": [
+        "geometry-course::proof",
+        "geometry-course::two-column-proof",
+        "geometry-course::paragraph-proof",
+        "geometry-course::flow-chart-proof"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    }
+  ]
+}

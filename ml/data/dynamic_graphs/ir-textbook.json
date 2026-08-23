@@ -1,0 +1,3178 @@
+{
+  "subject_id": "ir-textbook",
+  "title": "AI for Investor Relations Transformation",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "AGENTIC": {
+      "classifier_name": "AGENTIC",
+      "color": "#6366f1"
+    },
+    "AI-CONT": {
+      "classifier_name": "AI-CONT",
+      "color": "#8b5cf6"
+    },
+    "AI-GOV": {
+      "classifier_name": "AI-GOV",
+      "color": "#a855f7"
+    },
+    "AI-TECH": {
+      "classifier_name": "AI-TECH",
+      "color": "#ec4899"
+    },
+    "ANLYT": {
+      "classifier_name": "ANLYT",
+      "color": "#06b6d4"
+    },
+    "DATA-GOV": {
+      "classifier_name": "DATA-GOV",
+      "color": "#10b981"
+    },
+    "INVEST": {
+      "classifier_name": "INVEST",
+      "color": "#f59e0b"
+    },
+    "IR-FOUND": {
+      "classifier_name": "IR-FOUND",
+      "color": "#ef4444"
+    },
+    "IR-OPS": {
+      "classifier_name": "IR-OPS",
+      "color": "#f97316"
+    },
+    "REG-COMP": {
+      "classifier_name": "REG-COMP",
+      "color": "#84cc16"
+    },
+    "TRANSFORM": {
+      "classifier_name": "TRANSFORM",
+      "color": "#3b82f6"
+    },
+    "VALMET": {
+      "classifier_name": "VALMET",
+      "color": "#eab308"
+    }
+  },
+  "concepts": [
+    {
+      "id": "ir-textbook::investor-relations-function",
+      "label": "Investor Relations Function",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "IR-FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::corporate-valuation-strategy",
+      "label": "Corporate Valuation Strategy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::market-communication-strategy",
+      "label": "Market Communication Strategy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::earnings-reporting-process",
+      "label": "Earnings Reporting Process",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::market-communication-strategy"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::investor-targeting-methods",
+      "label": "Investor Targeting Methods",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::institutional-investors"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::q-a-preparation-techniques",
+      "label": "Q&A Preparation Techniques",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::earnings-reporting-process"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::institutional-investors",
+      "label": "Institutional Investors",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "INVEST",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::retail-investors",
+      "label": "Retail Investors",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "INVEST",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::hedge-funds",
+      "label": "Hedge Funds",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::institutional-investors"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::mutual-funds",
+      "label": "Mutual Funds",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::institutional-investors"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::pension-funds",
+      "label": "Pension Funds",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::institutional-investors"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sovereign-wealth-funds",
+      "label": "Sovereign Wealth Funds",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::institutional-investors"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::buy-side-analysts",
+      "label": "Buy-Side Analysts",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::institutional-investors"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sell-side-analysts",
+      "label": "Sell-Side Analysts",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::institutional-investors"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::investment-bank-relations",
+      "label": "Investment Bank Relations",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::sell-side-analysts"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::shareholder-engagement",
+      "label": "Shareholder Engagement",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::institutional-investors",
+        "ir-textbook::retail-investors"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::proxy-season-management",
+      "label": "Proxy Season Management",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::shareholder-engagement"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::annual-general-meetings",
+      "label": "Annual General Meetings",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::shareholder-engagement"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::investor-presentations",
+      "label": "Investor Presentations",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::market-communication-strategy"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::roadshow-planning",
+      "label": "Roadshow Planning",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::investor-presentations"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::earnings-call-scripts",
+      "label": "Earnings Call Scripts",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-reporting-process",
+        "ir-textbook::q-a-preparation-techniques"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::press-release-drafting",
+      "label": "Press Release Drafting",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::market-communication-strategy",
+        "ir-textbook::earnings-reporting-process"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::material-information",
+      "label": "Material Information",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "REG-COMP",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::nonpublic-information",
+      "label": "Nonpublic Information",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::material-information"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::regulation-fair-disclosure",
+      "label": "Regulation Fair Disclosure",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::material-information",
+        "ir-textbook::nonpublic-information"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::reg-fd-compliance",
+      "label": "Reg FD Compliance",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::regulation-fair-disclosure"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::preventing-selective-disclosure",
+      "label": "Preventing Selective Disclosure",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::regulation-fair-disclosure",
+        "ir-textbook::reg-fd-compliance"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sarbanes-oxley-act",
+      "label": "Sarbanes-Oxley Act",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "REG-COMP",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::sox-section-302",
+      "label": "SOX Section 302",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sarbanes-oxley-act"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sox-section-404",
+      "label": "SOX Section 404",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sarbanes-oxley-act"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::internal-control-systems",
+      "label": "Internal Control Systems",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sarbanes-oxley-act",
+        "ir-textbook::sox-section-404"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::disclosure-controls",
+      "label": "Disclosure Controls",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sarbanes-oxley-act",
+        "ir-textbook::internal-control-systems"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sec-filing-requirements",
+      "label": "SEC Filing Requirements",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "REG-COMP",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::form-10-k-overview",
+      "label": "Form 10-K Overview",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sec-filing-requirements"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::form-10-q-essentials",
+      "label": "Form 10-Q Essentials",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sec-filing-requirements"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::form-8-k-summary",
+      "label": "Form 8-K Summary",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sec-filing-requirements"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::xbrl-reporting-standards",
+      "label": "XBRL Reporting Standards",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sec-filing-requirements"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::md-a-requirements",
+      "label": "MD&A Requirements",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::form-10-k-overview"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::risk-factor-disclosures",
+      "label": "Risk Factor Disclosures",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::form-10-k-overview"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::forward-looking-statements",
+      "label": "Forward-Looking Statements",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::form-10-k-overview"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::safe-harbor-provisions",
+      "label": "Safe Harbor Provisions",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::forward-looking-statements"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::materiality-assessment",
+      "label": "Materiality Assessment",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::material-information",
+        "ir-textbook::sec-filing-requirements"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::disclosure-timing-rules",
+      "label": "Disclosure Timing Rules",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::regulation-fair-disclosure",
+        "ir-textbook::sec-filing-requirements"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::quiet-period-guidelines",
+      "label": "Quiet Period Guidelines",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::regulation-fair-disclosure",
+        "ir-textbook::disclosure-timing-rules"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::trading-window-rules",
+      "label": "Trading Window Rules",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::disclosure-timing-rules"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::blackout-period-management",
+      "label": "Blackout Period Management",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::trading-window-rules"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::insider-trading-rules",
+      "label": "Insider Trading Rules",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::nonpublic-information",
+        "ir-textbook::trading-window-rules"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::stock-price-volatility",
+      "label": "Stock Price Volatility",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "VALMET",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::market-liquidity-trends",
+      "label": "Market Liquidity Trends",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stock-price-volatility"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::trading-volume-metrics",
+      "label": "Trading Volume Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stock-price-volatility"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ownership-concentration",
+      "label": "Ownership Concentration",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::institutional-investors",
+        "ir-textbook::retail-investors"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::shareholder-base-analysis",
+      "label": "Shareholder Base Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ownership-concentration"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::peer-benchmarking-tools",
+      "label": "Peer Benchmarking Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::corporate-valuation-strategy"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::valuation-multiples",
+      "label": "Valuation Multiples",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::corporate-valuation-strategy"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::p-e-ratio-insights",
+      "label": "P/E Ratio Insights",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::valuation-multiples"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::enterprise-value-metrics",
+      "label": "Enterprise Value Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::valuation-multiples"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::shareholder-return-metrics",
+      "label": "Shareholder Return Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::corporate-valuation-strategy"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::market-capitalization",
+      "label": "Market Capitalization",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::corporate-valuation-strategy"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::analyst-coverage-review",
+      "label": "Analyst Coverage Review",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::buy-side-analysts",
+        "ir-textbook::sell-side-analysts"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::consensus-estimates",
+      "label": "Consensus Estimates",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::analyst-coverage-review"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::earnings-guidance-strategy",
+      "label": "Earnings Guidance Strategy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-reporting-process",
+        "ir-textbook::consensus-estimates"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::guidance-withdrawal-risks",
+      "label": "Guidance Withdrawal Risks",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-guidance-strategy"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::setting-guidance-ranges",
+      "label": "Setting Guidance Ranges",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-guidance-strategy"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::beat-and-raise-tactics",
+      "label": "Beat-and-Raise Tactics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-guidance-strategy"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-fundamentals",
+      "label": "AI Fundamentals",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "AI-TECH",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::machine-learning-basics",
+      "label": "Machine Learning Basics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-fundamentals"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::large-language-models",
+      "label": "Large Language Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::generative-ai-tools",
+      "label": "Generative AI Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::large-language-models"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::prompt-engineering-skills",
+      "label": "Prompt Engineering Skills",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-for-content-creation",
+      "label": "AI for Content Creation",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools"
+      ],
+      "taxonomy_id": "AI-CONT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::genai-earnings-reports",
+      "label": "GenAI Earnings Reports",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-for-content-creation",
+        "ir-textbook::earnings-reporting-process"
+      ],
+      "taxonomy_id": "AI-CONT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-enhanced-press-releases",
+      "label": "AI-Enhanced Press Releases",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-for-content-creation",
+        "ir-textbook::press-release-drafting"
+      ],
+      "taxonomy_id": "AI-CONT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::drafting-investor-memos",
+      "label": "Drafting Investor Memos",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-for-content-creation",
+        "ir-textbook::market-communication-strategy"
+      ],
+      "taxonomy_id": "AI-CONT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::narrative-consistency",
+      "label": "Narrative Consistency",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::market-communication-strategy",
+        "ir-textbook::ai-for-content-creation"
+      ],
+      "taxonomy_id": "AI-CONT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::tone-analysis-tools",
+      "label": "Tone Analysis Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools",
+        "ir-textbook::narrative-consistency"
+      ],
+      "taxonomy_id": "AI-CONT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::compliance-review-tools",
+      "label": "Compliance Review Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools",
+        "ir-textbook::reg-fd-compliance"
+      ],
+      "taxonomy_id": "AI-CONT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-governance-models",
+      "label": "AI Governance Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-fundamentals"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::developing-ai-policy",
+      "label": "Developing AI Policy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-governance-models"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::responsible-ai-practices",
+      "label": "Responsible AI Practices",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-governance-models",
+        "ir-textbook::developing-ai-policy"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-ethics-for-finance",
+      "label": "AI Ethics for Finance",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-governance-models"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::recognizing-hallucinations",
+      "label": "Recognizing Hallucinations",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::detecting-hallucinations",
+      "label": "Detecting Hallucinations",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::recognizing-hallucinations"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::reducing-hallucinations",
+      "label": "Reducing Hallucinations",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::detecting-hallucinations"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::recognizing-ai-bias",
+      "label": "Recognizing AI Bias",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::bias-in-financial-data",
+      "label": "Bias in Financial Data",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::recognizing-ai-bias"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::mitigating-ai-bias",
+      "label": "Mitigating AI Bias",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::recognizing-ai-bias",
+        "ir-textbook::bias-in-financial-data"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::algorithmic-bias-risk",
+      "label": "Algorithmic Bias Risk",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::recognizing-ai-bias",
+        "ir-textbook::mitigating-ai-bias"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::detecting-model-drift",
+      "label": "Detecting Model Drift",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::managing-model-drift",
+      "label": "Managing Model Drift",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::detecting-model-drift"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::monitoring-ai-models",
+      "label": "Monitoring AI Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::detecting-model-drift",
+        "ir-textbook::managing-model-drift"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sentiment-analysis-tools",
+      "label": "Sentiment Analysis Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::natural-language-processing",
+      "label": "Natural Language Processing",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::text-mining-methods",
+      "label": "Text Mining Methods",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::natural-language-processing"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::monitoring-social-media",
+      "label": "Monitoring Social Media",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sentiment-analysis-tools",
+        "ir-textbook::text-mining-methods"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::news-sentiment-analysis",
+      "label": "News Sentiment Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sentiment-analysis-tools",
+        "ir-textbook::text-mining-methods"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::analyst-report-insights",
+      "label": "Analyst Report Insights",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sentiment-analysis-tools",
+        "ir-textbook::text-mining-methods"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::analyzing-feedback",
+      "label": "Analyzing Feedback",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sentiment-analysis-tools",
+        "ir-textbook::shareholder-engagement"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sentiment-scoring-models",
+      "label": "Sentiment Scoring Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sentiment-analysis-tools"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::real-time-sentiment-data",
+      "label": "Real-Time Sentiment Data",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sentiment-analysis-tools",
+        "ir-textbook::sentiment-scoring-models"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::predictive-analytics",
+      "label": "Predictive Analytics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::forecasting-investor-behavior",
+      "label": "Forecasting Investor Behavior",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::predicting-market-response",
+      "label": "Predicting Market Response",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::modeling-investor-behavior",
+      "label": "Modeling Investor Behavior",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::predictive-analytics",
+        "ir-textbook::forecasting-investor-behavior"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::trading-pattern-analysis",
+      "label": "Trading Pattern Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::trading-volume-metrics",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::algorithmic-trading-impact",
+      "label": "Algorithmic Trading Impact",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::trading-pattern-analysis"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::high-frequency-trading",
+      "label": "High-Frequency Trading",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::algorithmic-trading-impact"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::market-microstructure",
+      "label": "Market Microstructure",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stock-price-volatility",
+        "ir-textbook::algorithmic-trading-impact"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::providing-liquidity",
+      "label": "Providing Liquidity",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::market-microstructure"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::analyzing-order-flow",
+      "label": "Analyzing Order Flow",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::market-microstructure"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::time-sensitive-disclosures",
+      "label": "Time-Sensitive Disclosures",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::disclosure-timing-rules",
+        "ir-textbook::algorithmic-trading-impact"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::agentic-ai-systems",
+      "label": "Agentic AI Systems",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::autonomous-ai-agents",
+      "label": "Autonomous AI Agents",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::agentic-ai-systems"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::agent-orchestration",
+      "label": "Agent Orchestration",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::autonomous-ai-agents"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::multi-agent-coordination",
+      "label": "Multi-Agent Coordination",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::agent-orchestration"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::agent-based-ir-workflows",
+      "label": "Agent-Based IR Workflows",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::agent-orchestration",
+        "ir-textbook::investor-relations-function"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::model-context-protocol",
+      "label": "Model Context Protocol",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::agentic-ai-systems"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::mcp-architecture-overview",
+      "label": "MCP Architecture Overview",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::model-context-protocol"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::mcp-security-standards",
+      "label": "MCP Security Standards",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::mcp-architecture-overview"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::mcp-integration-paths",
+      "label": "MCP Integration Paths",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::mcp-architecture-overview"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::agents-for-data-retrieval",
+      "label": "Agents for Data Retrieval",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::autonomous-ai-agents"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::integrating-live-data",
+      "label": "Integrating Live Data",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::agents-for-data-retrieval"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-briefing-generation",
+      "label": "AI Briefing Generation",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::autonomous-ai-agents",
+        "ir-textbook::integrating-live-data"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::automated-report-tools",
+      "label": "Automated Report Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::autonomous-ai-agents",
+        "ir-textbook::ai-briefing-generation"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-driven-dashboards",
+      "label": "AI-Driven Dashboards",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools",
+        "ir-textbook::key-performance-indicators"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::designing-dashboards",
+      "label": "Designing Dashboards",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-driven-dashboards"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::key-performance-indicators",
+      "label": "Key Performance Indicators",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ir-engagement-metrics",
+      "label": "IR Engagement Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::key-performance-indicators",
+        "ir-textbook::shareholder-engagement"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::tracking-investor-outreach",
+      "label": "Tracking Investor Outreach",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ir-engagement-metrics"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::meeting-effectiveness",
+      "label": "Meeting Effectiveness",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ir-engagement-metrics",
+        "ir-textbook::tracking-investor-outreach"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::response-time-analytics",
+      "label": "Response Time Analytics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ir-engagement-metrics",
+        "ir-textbook::tracking-investor-outreach"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::data-governance-basics",
+      "label": "Data Governance Basics",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "DATA-GOV",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::managing-data-quality",
+      "label": "Managing Data Quality",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::data-governance-basics"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::tracking-data-lineage",
+      "label": "Tracking Data Lineage",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::data-governance-basics",
+        "ir-textbook::managing-data-quality"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::financial-data-privacy",
+      "label": "Financial Data Privacy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::data-governance-basics"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::protecting-personal-data",
+      "label": "Protecting Personal Data",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::financial-data-privacy"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::data-security-standards",
+      "label": "Data Security Standards",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::data-governance-basics"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::encryption-best-practices",
+      "label": "Encryption Best Practices",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::data-security-standards"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::access-control-models",
+      "label": "Access Control Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::data-security-standards"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::role-based-access",
+      "label": "Role-Based Access",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::access-control-models"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::audit-trail-requirements",
+      "label": "Audit Trail Requirements",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sarbanes-oxley-act",
+        "ir-textbook::data-governance-basics"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::managing-audit-logs",
+      "label": "Managing Audit Logs",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::audit-trail-requirements"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::compliance-monitoring",
+      "label": "Compliance Monitoring",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::reg-fd-compliance",
+        "ir-textbook::data-governance-basics"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::regtech-applications",
+      "label": "RegTech Applications",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::compliance-monitoring"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::compliance-automation",
+      "label": "Compliance Automation",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::regtech-applications"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::automated-risk-monitoring",
+      "label": "Automated Risk Monitoring",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::regtech-applications",
+        "ir-textbook::risk-management-frameworks"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::risk-management-frameworks",
+      "label": "Risk Management Frameworks",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "DATA-GOV",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::assessing-risk-exposure",
+      "label": "Assessing Risk Exposure",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::risk-management-frameworks"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::mitigating-ir-risk",
+      "label": "Mitigating IR Risk",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::risk-management-frameworks",
+        "ir-textbook::assessing-risk-exposure"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::third-party-risk-strategy",
+      "label": "Third-Party Risk Strategy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::risk-management-frameworks"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::vendor-risk-controls",
+      "label": "Vendor Risk Controls",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::third-party-risk-strategy"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::evaluating-ai-vendors",
+      "label": "Evaluating AI Vendors",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::third-party-risk-strategy",
+        "ir-textbook::ai-fundamentals"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::vendor-due-diligence",
+      "label": "Vendor Due Diligence",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::vendor-risk-controls",
+        "ir-textbook::evaluating-ai-vendors"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::procuring-ai-solutions",
+      "label": "Procuring AI Solutions",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::vendor-due-diligence"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::build-vs-buy-choices",
+      "label": "Build vs. Buy Choices",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::procuring-ai-solutions"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::selecting-ai-tools",
+      "label": "Selecting AI Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::build-vs-buy-choices"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::proof-of-concept-design",
+      "label": "Proof of Concept Design",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::selecting-ai-tools"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::designing-pilot-programs",
+      "label": "Designing Pilot Programs",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::proof-of-concept-design"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::change-management-plans",
+      "label": "Change Management Plans",
+      "subject_id": "ir-textbook",
+      "dependencies": [],
+      "taxonomy_id": "TRANSFORM",
+      "level": "foundational"
+    },
+    {
+      "id": "ir-textbook::change-management-models",
+      "label": "Change Management Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::change-management-plans"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::stakeholder-identification",
+      "label": "Stakeholder Identification",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::change-management-plans"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::stakeholder-mapping",
+      "label": "Stakeholder Mapping",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stakeholder-identification"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::cross-functional-teams",
+      "label": "Cross-Functional Teams",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stakeholder-identification",
+        "ir-textbook::stakeholder-mapping"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::c-suite-communications",
+      "label": "C-Suite Communications",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::market-communication-strategy",
+        "ir-textbook::change-management-plans"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::storytelling-with-data",
+      "label": "Storytelling with Data",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::c-suite-communications"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::developing-narratives",
+      "label": "Developing Narratives",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::storytelling-with-data"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::building-a-business-case",
+      "label": "Building a Business Case",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::storytelling-with-data"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::calculating-ai-roi",
+      "label": "Calculating AI ROI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::building-a-business-case"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::building-a-business-case",
+        "ir-textbook::calculating-ai-roi"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::tracking-value-realization",
+      "label": "Tracking Value Realization",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::calculating-ai-roi",
+        "ir-textbook::cost-benefit-analysis"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-transformation-strategy",
+      "label": "AI Transformation Strategy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-fundamentals",
+        "ir-textbook::ai-governance-models",
+        "ir-textbook::change-management-plans"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::roadmap-prioritization",
+      "label": "Roadmap Prioritization",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-transformation-strategy"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::phased-implementation",
+      "label": "Phased Implementation",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-transformation-strategy",
+        "ir-textbook::roadmap-prioritization"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::identifying-quick-wins",
+      "label": "Identifying Quick Wins",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::roadmap-prioritization"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::milestone-planning",
+      "label": "Milestone Planning",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::roadmap-prioritization",
+        "ir-textbook::phased-implementation"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::defining-success-metrics",
+      "label": "Defining Success Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::key-performance-indicators",
+        "ir-textbook::ai-transformation-strategy"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::operating-model-design",
+      "label": "Operating Model Design",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::ai-transformation-strategy"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ir-operating-framework",
+      "label": "IR Operating Framework",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::operating-model-design"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::process-redesign-plans",
+      "label": "Process Redesign Plans",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::operating-model-design",
+        "ir-textbook::ir-operating-framework"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::workflow-automation",
+      "label": "Workflow Automation",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::process-redesign-plans"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::identifying-automation-gains",
+      "label": "Identifying Automation Gains",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::workflow-automation"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::human-in-the-loop-models",
+      "label": "Human-in-the-Loop Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::autonomous-ai-agents",
+        "ir-textbook::workflow-automation"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::review-workflows",
+      "label": "Review Workflows",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::human-in-the-loop-models"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::escalation-workflows",
+      "label": "Escalation Workflows",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::review-workflows"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::handling-exceptions",
+      "label": "Handling Exceptions",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::review-workflows",
+        "ir-textbook::escalation-workflows"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::talent-strategy-planning",
+      "label": "Talent Strategy Planning",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-transformation-strategy"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::skills-gap-evaluation",
+      "label": "Skills Gap Evaluation",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::talent-strategy-planning"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::designing-training-programs",
+      "label": "Designing Training Programs",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::skills-gap-evaluation"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::building-ai-literacy",
+      "label": "Building AI Literacy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::designing-training-programs",
+        "ir-textbook::ai-fundamentals"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::launching-upskilling-plans",
+      "label": "Launching Upskilling Plans",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::designing-training-programs",
+        "ir-textbook::building-ai-literacy"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::boosting-digital-fluency",
+      "label": "Boosting Digital Fluency",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::building-ai-literacy",
+        "ir-textbook::launching-upskilling-plans"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::understanding-tech-adoption",
+      "label": "Understanding Tech Adoption",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::change-management-plans"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::user-acceptance-testing",
+      "label": "User Acceptance Testing",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::understanding-tech-adoption"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::feedback-loop-design",
+      "label": "Feedback Loop Design",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::user-acceptance-testing"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::driving-improvement-cycles",
+      "label": "Driving Improvement Cycles",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::feedback-loop-design"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::capturing-lessons-learned",
+      "label": "Capturing Lessons Learned",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::driving-improvement-cycles"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::documenting-best-practices",
+      "label": "Documenting Best Practices",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::capturing-lessons-learned"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::knowledge-sharing-systems",
+      "label": "Knowledge Sharing Systems",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::documenting-best-practices"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::selecting-ir-platforms",
+      "label": "Selecting IR Platforms",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::selecting-ai-tools"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::integrating-enterprise-ai",
+      "label": "Integrating Enterprise AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::mcp-architecture-overview",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ir-transformation-plan",
+      "label": "IR Transformation Plan",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-transformation-strategy",
+        "ir-textbook::operating-model-design",
+        "ir-textbook::talent-strategy-planning",
+        "ir-textbook::integrating-enterprise-ai"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::trading-volume-analysis",
+      "label": "Trading Volume Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stock-price-volatility",
+        "ir-textbook::trading-volume-metrics"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::analyst-coverage-metrics",
+      "label": "Analyst Coverage Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::analyst-coverage-review"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::peer-valuation-benchmark",
+      "label": "Peer Valuation Benchmark",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::peer-benchmarking-tools",
+        "ir-textbook::valuation-multiples"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::market-cap-fluctuations",
+      "label": "Market Cap Fluctuations",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::market-capitalization"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::beta-risk-measurement",
+      "label": "Beta Risk Measurement",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stock-price-volatility"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::dividend-yield-trends",
+      "label": "Dividend Yield Trends",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::shareholder-return-metrics"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::price-to-earnings-ratio",
+      "label": "Price To Earnings Ratio",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::p-e-ratio-insights"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::earnings-per-share-growth",
+      "label": "Earnings Per Share Growth",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-reporting-process",
+        "ir-textbook::shareholder-return-metrics"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::return-on-equity-targets",
+      "label": "Return On Equity Targets",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::corporate-valuation-strategy",
+        "ir-textbook::valuation-multiples"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ai-sentiment-tracking",
+      "label": "AI Sentiment Tracking",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sentiment-analysis-tools",
+        "ir-textbook::news-sentiment-analysis"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::predictive-ir-analytics",
+      "label": "Predictive IR Analytics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::predictive-analytics",
+        "ir-textbook::forecasting-investor-behavior"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ml-model-calibration",
+      "label": "ML Model Calibration",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::nlp-for-transcripts",
+      "label": "NLP For Transcripts",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::natural-language-processing",
+        "ir-textbook::text-mining-methods"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::big-data-aggregation",
+      "label": "Big Data Aggregation",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::managing-data-quality"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::q4-platform-features",
+      "label": "Q4 Platform Features",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::nasdaq-ir-tools",
+      "label": "Nasdaq IR Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::alphasense-search",
+      "label": "AlphaSense Search",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::text-mining-methods",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::enterprise-llm-usage",
+      "label": "Enterprise LLM Usage",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::large-language-models",
+        "ir-textbook::integrating-enterprise-ai"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sentiment-vendor-tools",
+      "label": "Sentiment Vendor Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sentiment-analysis-tools",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::compliance-ai-monitors",
+      "label": "Compliance AI Monitors",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::compliance-review-tools",
+        "ir-textbook::regtech-applications"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::crisis-ai-assistance",
+      "label": "Crisis AI Assistance",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools",
+        "ir-textbook::mitigating-ir-risk"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::earnings-surprise-ai",
+      "label": "Earnings Surprise AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::predictive-analytics",
+        "ir-textbook::earnings-reporting-process"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::esg-automation-tools",
+      "label": "ESG Automation Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools",
+        "ir-textbook::automated-report-tools"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::proxy-ai-support",
+      "label": "Proxy AI Support",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools",
+        "ir-textbook::proxy-season-management"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::investor-targeting-ai",
+      "label": "Investor Targeting AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-targeting-methods",
+        "ir-textbook::autonomous-ai-agents"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::roadshow-optimization",
+      "label": "Roadshow Optimization",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::roadshow-planning",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::earnings-prep-simulators",
+      "label": "Earnings Prep Simulators",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-call-scripts",
+        "ir-textbook::generative-ai-tools"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::guidance-ai-forecasting",
+      "label": "Guidance AI Forecasting",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-guidance-strategy",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::reg-fd-compliance-ai",
+      "label": "Reg FD Compliance AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::reg-fd-compliance",
+        "ir-textbook::compliance-review-tools"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::materiality-ai-assessment",
+      "label": "Materiality AI Assessment",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::materiality-assessment",
+        "ir-textbook::compliance-review-tools"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::disclosure-ai-policies",
+      "label": "Disclosure AI Policies",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::disclosure-controls",
+        "ir-textbook::developing-ai-policy"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::quiet-period-monitoring",
+      "label": "Quiet Period Monitoring",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::quiet-period-guidelines",
+        "ir-textbook::compliance-review-tools"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::shareholder-activism-ai",
+      "label": "Shareholder Activism AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::shareholder-engagement",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::proxy-firm-simulations",
+      "label": "Proxy Firm Simulations",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::proxy-season-management",
+        "ir-textbook::autonomous-ai-agents"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::iss-recommendation-ai",
+      "label": "ISS Recommendation AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::proxy-season-management",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::glass-lewis-analysis",
+      "label": "Glass Lewis Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::proxy-season-management",
+        "ir-textbook::text-mining-methods"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::vote-solicitation-bots",
+      "label": "Vote Solicitation Bots",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::proxy-season-management",
+        "ir-textbook::autonomous-ai-agents"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::annual-meeting-ai",
+      "label": "Annual Meeting AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::annual-general-meetings",
+        "ir-textbook::autonomous-ai-agents"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::chatbot-query-handling",
+      "label": "Chatbot Query Handling",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools",
+        "ir-textbook::natural-language-processing"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::automated-ir-reports",
+      "label": "Automated IR Reports",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::automated-report-tools"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::real-time-data-alerts",
+      "label": "Real-Time Data Alerts",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::real-time-sentiment-data",
+        "ir-textbook::integrating-live-data"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::anomaly-detection-ai",
+      "label": "Anomaly Detection AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::fraud-prevention-models",
+      "label": "Fraud Prevention Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::predictive-analytics",
+        "ir-textbook::risk-management-frameworks"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::valuation-ai-modeling",
+      "label": "Valuation AI Modeling",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::valuation-multiples",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::scenario-ai-simulation",
+      "label": "Scenario AI Simulation",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::predictive-analytics",
+        "ir-textbook::predicting-market-response"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::risk-assessment-ai",
+      "label": "Risk Assessment AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::risk-management-frameworks",
+        "ir-textbook::assessing-risk-exposure"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::portfolio-ai-optimization",
+      "label": "Portfolio AI Optimization",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::modeling-investor-behavior",
+        "ir-textbook::algorithmic-trading-impact"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::benchmarking-algorithms",
+      "label": "Benchmarking Algorithms",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::peer-benchmarking-tools",
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::sec-filing-analytics",
+      "label": "SEC Filing Analytics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sec-filing-requirements",
+        "ir-textbook::text-mining-methods"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::edgar-data-mining",
+      "label": "EDGAR Data Mining",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::sec-filing-requirements",
+        "ir-textbook::text-mining-methods"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::bloomberg-ir-integration",
+      "label": "Bloomberg IR Integration",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::integrating-live-data",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::factset-benchmarking",
+      "label": "FactSet Benchmarking",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::peer-benchmarking-tools",
+        "ir-textbook::integrating-live-data"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::thomson-reuters-feeds",
+      "label": "Thomson Reuters Feeds",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::integrating-live-data",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::social-media-analytics",
+      "label": "Social Media Analytics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::monitoring-social-media",
+        "ir-textbook::news-sentiment-analysis"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::news-aggregation-ai",
+      "label": "News Aggregation AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::news-sentiment-analysis",
+        "ir-textbook::agents-for-data-retrieval"
+      ],
+      "taxonomy_id": "AGENTIC",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::web-scraping-guidelines",
+      "label": "Web Scraping Guidelines",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::text-mining-methods",
+        "ir-textbook::data-governance-basics"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::gdpr-data-compliance",
+      "label": "GDPR Data Compliance",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::financial-data-privacy",
+        "ir-textbook::protecting-personal-data"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::cybersecurity-protocols",
+      "label": "Cybersecurity Protocols",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::data-security-standards",
+        "ir-textbook::encryption-best-practices"
+      ],
+      "taxonomy_id": "DATA-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::free-float-metrics",
+      "label": "Free Float Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ownership-concentration",
+        "ir-textbook::shareholder-base-analysis"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::institutional-share-trends",
+      "label": "Institutional Share Trends",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::institutional-investors",
+        "ir-textbook::shareholder-base-analysis"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::retail-investor-metrics",
+      "label": "Retail Investor Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::retail-investors",
+        "ir-textbook::shareholder-base-analysis"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::short-interest-tracking",
+      "label": "Short Interest Tracking",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stock-price-volatility",
+        "ir-textbook::ownership-concentration"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::implied-volatility-ai",
+      "label": "Implied Volatility AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stock-price-volatility",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::cost-of-capital-models",
+      "label": "Cost Of Capital Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::corporate-valuation-strategy",
+        "ir-textbook::valuation-multiples"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::wacc-ai-calculations",
+      "label": "WACC AI Calculations",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::cost-of-capital-models",
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::dcf-valuation-tools",
+      "label": "DCF Valuation Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::corporate-valuation-strategy",
+        "ir-textbook::valuation-multiples"
+      ],
+      "taxonomy_id": "VALMET",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::comparable-company-ai",
+      "label": "Comparable Company AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::peer-benchmarking-tools",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::multiples-analysis-ai",
+      "label": "Multiples Analysis AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::valuation-multiples",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::ipreo-ir-solutions",
+      "label": "Ipreo IR Solutions",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::broadridge-proxy-tools",
+      "label": "Broadridge Proxy Tools",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::proxy-season-management",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::computershare-services",
+      "label": "Computershare Services",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::intralinks-data-rooms",
+      "label": "Intralinks Data Rooms",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::data-security-standards",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::dealcloud-ir-crm",
+      "label": "DealCloud IR CRM",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::tracking-investor-outreach",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::salesforce-ir-dashboards",
+      "label": "Salesforce IR Dashboards",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-driven-dashboards",
+        "ir-textbook::selecting-ir-platforms"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::tableau-ir-visuals",
+      "label": "Tableau IR Visuals",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-driven-dashboards",
+        "ir-textbook::storytelling-with-data"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::power-bi-metrics",
+      "label": "Power BI Metrics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-driven-dashboards",
+        "ir-textbook::key-performance-indicators"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::python-data-scripts",
+      "label": "Python Data Scripts",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::big-data-aggregation"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::r-statistical-analysis",
+      "label": "R Statistical Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::tesla-ir-case-study",
+      "label": "Tesla IR Case Study",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::investor-relations-function",
+        "ir-textbook::market-communication-strategy"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::apple-earnings-strategy",
+      "label": "Apple Earnings Strategy",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::earnings-reporting-process",
+        "ir-textbook::earnings-guidance-strategy"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::amazon-letter-insights",
+      "label": "Amazon Letter Insights",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::market-communication-strategy",
+        "ir-textbook::storytelling-with-data"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::berkshire-agm-lessons",
+      "label": "Berkshire AGM Lessons",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::annual-general-meetings"
+      ],
+      "taxonomy_id": "IR-OPS",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::enron-detection-failures",
+      "label": "Enron Detection Failures",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::materiality-assessment",
+        "ir-textbook::mitigating-ir-risk"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::vw-scandal-response",
+      "label": "VW Scandal Response",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::mitigating-ir-risk",
+        "ir-textbook::storytelling-with-data"
+      ],
+      "taxonomy_id": "TRANSFORM",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::theranos-ir-ethics",
+      "label": "Theranos IR Ethics",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::material-information",
+        "ir-textbook::ai-ethics-for-finance"
+      ],
+      "taxonomy_id": "REG-COMP",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::wework-ipo-analysis",
+      "label": "WeWork IPO Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::corporate-valuation-strategy",
+        "ir-textbook::mitigating-ir-risk"
+      ],
+      "taxonomy_id": "IR-FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::gamestop-squeeze-ai",
+      "label": "GameStop Squeeze AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::stock-price-volatility",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::bitcoin-etf-monitoring",
+      "label": "Bitcoin ETF Monitoring",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::predictive-analytics",
+        "ir-textbook::time-sensitive-disclosures"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::generative-script-ai",
+      "label": "Generative Script AI",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::generative-ai-tools",
+        "ir-textbook::earnings-call-scripts"
+      ],
+      "taxonomy_id": "AI-CONT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::voice-tone-analysis",
+      "label": "Voice Tone Analysis",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::tone-analysis-tools",
+        "ir-textbook::natural-language-processing"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::facial-ethics-in-ir",
+      "label": "Facial Ethics In IR",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::ai-ethics-for-finance",
+        "ir-textbook::storytelling-with-data"
+      ],
+      "taxonomy_id": "AI-GOV",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::deep-learning-forecasts",
+      "label": "Deep Learning Forecasts",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::neural-net-predictions",
+      "label": "Neural Net Predictions",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::reinforcement-ir-learning",
+      "label": "Reinforcement IR Learning",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::forecasting-investor-behavior"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::supervised-data-models",
+      "label": "Supervised Data Models",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::unsupervised-clustering",
+      "label": "Unsupervised Clustering",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::feature-engineering-ir",
+      "label": "Feature Engineering IR",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::predictive-analytics"
+      ],
+      "taxonomy_id": "ANLYT",
+      "level": "core"
+    },
+    {
+      "id": "ir-textbook::model-training-datasets",
+      "label": "Model Training Datasets",
+      "subject_id": "ir-textbook",
+      "dependencies": [
+        "ir-textbook::machine-learning-basics",
+        "ir-textbook::managing-data-quality"
+      ],
+      "taxonomy_id": "AI-TECH",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,2889 @@
+{
+  "subject_id": "graph-data-modeling-course",
+  "title": "Graph Data Modeling",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "KNOWL": {
+      "classifier_name": "Knowledge Representation",
+      "color": "PeachPuff"
+    },
+    "CUST": {
+      "classifier_name": "Customer Domain",
+      "color": "LightYellow"
+    },
+    "PROD": {
+      "classifier_name": "Product Domain",
+      "color": "Honeydew"
+    },
+    "SPACE": {
+      "classifier_name": "Spatial Modeling",
+      "color": "PaleTurquoise"
+    },
+    "TIME": {
+      "classifier_name": "Temporal Modeling",
+      "color": "LavenderBlush"
+    },
+    "LANG": {
+      "classifier_name": "Language and NLP",
+      "color": "Thistle"
+    },
+    "HEALTH": {
+      "classifier_name": "Healthcare Domain",
+      "color": "MistyRose"
+    },
+    "SECUR": {
+      "classifier_name": "Security and Rules",
+      "color": "PowderBlue"
+    },
+    "PROC": {
+      "classifier_name": "Process and Events",
+      "color": "PaleGreen"
+    },
+    "ADV": {
+      "classifier_name": "Advanced Analytics",
+      "color": "Lavender"
+    },
+    "AIML": {
+      "classifier_name": "Future and AI",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "graph-data-modeling-course::graph-data-model",
+      "label": "Graph Data Model",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "graph-data-modeling-course::world-models",
+      "label": "World Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graphrag-pattern",
+      "label": "GraphRAG Pattern",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::world-models"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::vector-stores",
+      "label": "Vector Stores",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::semantic-indexes",
+      "label": "Semantic Indexes",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::vector-stores"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::real-time-systems",
+      "label": "Real-Time Systems",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::world-models"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::knowledge-triangle",
+      "label": "Knowledge Triangle",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::data-layer",
+      "label": "Data Layer",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-triangle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::information-layer",
+      "label": "Information Layer",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-triangle",
+        "graph-data-modeling-course::data-layer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::knowledge-layer",
+      "label": "Knowledge Layer",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-triangle",
+        "graph-data-modeling-course::information-layer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::sensor-data",
+      "label": "Sensor Data",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::data-layer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::page-rank-algorithm",
+      "label": "Page Rank Algorithm",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::relational-models",
+      "label": "Relational Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::analytical-models",
+      "label": "Analytical Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::relational-models"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::key-value-stores",
+      "label": "Key-Value Stores",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::document-models",
+      "label": "Document Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::iso-gql-standard",
+      "label": "ISO GQL Standard",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-and-llm-integration",
+      "label": "Graph and LLM Integration",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::graphrag-pattern",
+        "graph-data-modeling-course::vector-stores"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::nodes",
+      "label": "Nodes",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::edges",
+      "label": "Edges",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::nodes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::properties",
+      "label": "Properties",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::simple-data-types",
+      "label": "Simple Data Types",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::complex-data-types",
+      "label": "Complex Data Types",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::properties",
+        "graph-data-modeling-course::simple-data-types"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::paths",
+      "label": "Paths",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::dependencies",
+      "label": "Dependencies",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-quality",
+      "label": "Graph Quality",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::quality-measures",
+      "label": "Quality Measures",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-quality"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-constraints",
+      "label": "Graph Constraints",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-quality",
+        "graph-data-modeling-course::quality-measures"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::quality-assertions",
+      "label": "Quality Assertions",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-quality",
+        "graph-data-modeling-course::graph-constraints"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::quality-scores",
+      "label": "Quality Scores",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::quality-measures",
+        "graph-data-modeling-course::quality-assertions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::quality-dashboards",
+      "label": "Quality Dashboards",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::quality-scores"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::customer-definition",
+      "label": "Customer Definition",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::individual-customers",
+      "label": "Individual Customers",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::customer-definition"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::customer-locations",
+      "label": "Customer Locations",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::customer-definition",
+        "graph-data-modeling-course::individual-customers"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::customer-addresses",
+      "label": "Customer Addresses",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::customer-locations"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::household-modeling",
+      "label": "Household Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::individual-customers",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::family-relationships",
+      "label": "Family Relationships",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::household-modeling",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::corporate-customers",
+      "label": "Corporate Customers",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::customer-definition"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::organization-customers",
+      "label": "Organization Customers",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::customer-definition",
+        "graph-data-modeling-course::corporate-customers"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::license-modeling",
+      "label": "License Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::customer-definition",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::abuse-detection",
+      "label": "Abuse Detection",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::customer-definition",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::ip-address-tracking",
+      "label": "IP Address Tracking",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::abuse-detection",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "CUST",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::product-lists",
+      "label": "Product Lists",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::product-groupings",
+      "label": "Product Groupings",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::product-lists",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::product-taxonomies",
+      "label": "Product Taxonomies",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::product-lists",
+        "graph-data-modeling-course::product-groupings"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::multiple-taxonomies",
+      "label": "Multiple Taxonomies",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::product-taxonomies"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::classification-tools",
+      "label": "Classification Tools",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::product-taxonomies",
+        "graph-data-modeling-course::multiple-taxonomies"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::product-similarity",
+      "label": "Product Similarity",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::product-lists",
+        "graph-data-modeling-course::vector-stores"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::product-embeddings",
+      "label": "Product Embeddings",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::product-similarity",
+        "graph-data-modeling-course::vector-stores"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::product-metadata",
+      "label": "Product Metadata",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::product-lists",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::spatial-challenges",
+      "label": "Spatial Challenges",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::location-modeling",
+      "label": "Location Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::properties",
+        "graph-data-modeling-course::spatial-challenges"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::longitude-and-latitude",
+      "label": "Longitude and Latitude",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::location-modeling"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::distance-calculations",
+      "label": "Distance Calculations",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::longitude-and-latitude"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::address-modeling",
+      "label": "Address Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::location-modeling",
+        "graph-data-modeling-course::customer-addresses"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::city-county-state-model",
+      "label": "City/County/State Model",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::location-modeling",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::metropolitan-regions",
+      "label": "Metropolitan Regions",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::city-county-state-model"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::sales-regions",
+      "label": "Sales Regions",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::city-county-state-model",
+        "graph-data-modeling-course::metropolitan-regions"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::urban-rural-regions",
+      "label": "Urban/Rural Regions",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::city-county-state-model"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::social-determinants",
+      "label": "Social Determinants",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::urban-rural-regions"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::road-modeling",
+      "label": "Road Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::location-modeling",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::shortest-path",
+      "label": "Shortest Path",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::road-modeling",
+        "graph-data-modeling-course::paths",
+        "graph-data-modeling-course::distance-calculations"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::traveling-salesperson",
+      "label": "Traveling Salesperson",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::shortest-path"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::bus-routes",
+      "label": "Bus Routes",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::road-modeling",
+        "graph-data-modeling-course::shortest-path"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::provider-distance",
+      "label": "Provider Distance",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::distance-calculations",
+        "graph-data-modeling-course::road-modeling"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::geospatial-models",
+      "label": "Geospatial Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::location-modeling",
+        "graph-data-modeling-course::longitude-and-latitude",
+        "graph-data-modeling-course::distance-calculations",
+        "graph-data-modeling-course::road-modeling"
+      ],
+      "taxonomy_id": "SPACE",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::datetime-structure",
+      "label": "DateTime Structure",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::time-trees",
+      "label": "Time Trees",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::datetime-structure"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::year-month-day-hierarchy",
+      "label": "Year/Month/Day Hierarchy",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::time-trees"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::hour-minute-second",
+      "label": "Hour/Minute/Second",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::year-month-day-hierarchy"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::millisecond-precision",
+      "label": "Millisecond Precision",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::hour-minute-second"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::financial-time",
+      "label": "Financial Time",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::datetime-structure",
+        "graph-data-modeling-course::time-trees"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::organization-calendar",
+      "label": "Organization Calendar",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::time-trees",
+        "graph-data-modeling-course::financial-time"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::time-exceptions",
+      "label": "Time Exceptions",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::datetime-structure",
+        "graph-data-modeling-course::time-trees"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::daylight-savings-time",
+      "label": "Daylight Savings Time",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::time-exceptions"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::knowledge-graphs",
+      "label": "Knowledge Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::knowledge-layer",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::the-semantic-spectrum",
+      "label": "The Semantic Spectrum",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::skos-standard",
+      "label": "SKOS Standard",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::the-semantic-spectrum"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::skos-in-lpg",
+      "label": "SKOS in LPG",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::skos-standard",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::acronyms-and-abbreviations",
+      "label": "Acronyms and Abbreviations",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::business-glossaries",
+      "label": "Business Glossaries",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::skos-standard"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::taxonomies",
+      "label": "Taxonomies",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::skos-standard",
+        "graph-data-modeling-course::product-taxonomies"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::ontologies",
+      "label": "Ontologies",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::taxonomies"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::concept-nodes",
+      "label": "Concept Nodes",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::knowledge-graphs"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::concept-labels",
+      "label": "Concept Labels",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::concept-nodes",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::preferred-labels",
+      "label": "Preferred Labels",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::concept-labels"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::alternate-labels",
+      "label": "Alternate Labels",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::concept-labels",
+        "graph-data-modeling-course::preferred-labels"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::broader-narrower",
+      "label": "Broader/Narrower",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::concept-nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::semantic-variability",
+      "label": "Semantic Variability",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::alternate-labels"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::concept-schemas",
+      "label": "Concept Schemas",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::ontologies"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graphrag-challenges",
+      "label": "GraphRAG Challenges",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graphrag-pattern",
+        "graph-data-modeling-course::knowledge-graphs"
+      ],
+      "taxonomy_id": "KNOWL",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::language-in-graphs",
+      "label": "Language in Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::words-in-graphs",
+      "label": "Words in Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::language-in-graphs"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::wordnet",
+      "label": "WordNet",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::words-in-graphs"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::nlp-basics",
+      "label": "NLP Basics",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::language-in-graphs",
+        "graph-data-modeling-course::words-in-graphs"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::entity-extraction",
+      "label": "Entity Extraction",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nlp-basics"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::sentence-modeling",
+      "label": "Sentence Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::words-in-graphs",
+        "graph-data-modeling-course::nlp-basics"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::paragraph-modeling",
+      "label": "Paragraph Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::sentence-modeling"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::document-modeling",
+      "label": "Document Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::paragraph-modeling"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::document-pipelines",
+      "label": "Document Pipelines",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::document-modeling",
+        "graph-data-modeling-course::entity-extraction"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::synonyms",
+      "label": "Synonyms",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::words-in-graphs",
+        "graph-data-modeling-course::wordnet"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::synonym-rings",
+      "label": "Synonym Rings",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::synonyms"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::antonyms",
+      "label": "Antonyms",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::words-in-graphs",
+        "graph-data-modeling-course::wordnet"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::fraud-waste-abuse",
+      "label": "Fraud/Waste/Abuse",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::anti-money-laundering",
+      "label": "Anti-Money Laundering",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fraud-waste-abuse"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::unusual-relationships",
+      "label": "Unusual Relationships",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fraud-waste-abuse",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::investigations",
+      "label": "Investigations",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fraud-waste-abuse",
+        "graph-data-modeling-course::unusual-relationships"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::patient-modeling",
+      "label": "Patient Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::customer-definition",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::clinical-data",
+      "label": "Clinical Data",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::patient-modeling",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::claims",
+      "label": "Claims",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::patient-modeling",
+        "graph-data-modeling-course::clinical-data"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::providers",
+      "label": "Providers",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::patient-modeling",
+        "graph-data-modeling-course::nodes"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::population-health",
+      "label": "Population Health",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::patient-modeling",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::disease-spread",
+      "label": "Disease Spread",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::population-health",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::benefit-plans",
+      "label": "Benefit Plans",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::patient-modeling",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::plan-coverage",
+      "label": "Plan Coverage",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::benefit-plans"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::healthcare-costs",
+      "label": "Healthcare Costs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::claims",
+        "graph-data-modeling-course::plan-coverage"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::value-based-care",
+      "label": "Value-Based Care",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::healthcare-costs"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::patient-similarity",
+      "label": "Patient Similarity",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::patient-modeling",
+        "graph-data-modeling-course::vector-stores",
+        "graph-data-modeling-course::product-similarity"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::care-paths",
+      "label": "Care Paths",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::patient-modeling",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::fhir",
+      "label": "FHIR",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::patient-modeling",
+        "graph-data-modeling-course::clinical-data"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::clinical-decision-support",
+      "label": "Clinical Decision Support",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fhir",
+        "graph-data-modeling-course::care-paths"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::modeling-healthcare-knowledge",
+      "label": "Modeling Healthcare Knowledge",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::patient-modeling"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::fhir-approach",
+      "label": "FHIR Approach",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fhir"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::fhir-four-level-model",
+      "label": "FHIR Four Level Model",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fhir-approach"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::l1-narrative",
+      "label": "L1: Narrative",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fhir-four-level-model"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::l2-semi-structures",
+      "label": "L2: Semi-Structures",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fhir-four-level-model",
+        "graph-data-modeling-course::l1-narrative"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::l3-structure",
+      "label": "L3: Structure",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fhir-four-level-model",
+        "graph-data-modeling-course::l2-semi-structures"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::l4-executable",
+      "label": "L4: Executable",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::fhir-four-level-model",
+        "graph-data-modeling-course::l3-structure"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::clinical-quality-language",
+      "label": "Clinical Quality Language",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::l4-executable",
+        "graph-data-modeling-course::clinical-decision-support"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::data-connection",
+      "label": "Data Connection",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::identical-attributes",
+      "label": "Identical Attributes",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::data-connection",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::similar-attributes",
+      "label": "Similar Attributes",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::identical-attributes"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::soundex-algorithm",
+      "label": "SoundEx Algorithm",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::similar-attributes"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::nickname-matching",
+      "label": "Nickname Matching",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::similar-attributes",
+        "graph-data-modeling-course::soundex-algorithm"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::similarity-metrics",
+      "label": "Similarity Metrics",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::similar-attributes"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::embeddings",
+      "label": "Embeddings",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::vector-stores",
+        "graph-data-modeling-course::similarity-metrics"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::vector-stores-er",
+      "label": "Vector Stores ER",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::embeddings",
+        "graph-data-modeling-course::vector-stores"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-advantage-for-er",
+      "label": "Graph Advantage for ER",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::data-connection",
+        "graph-data-modeling-course::vector-stores-er"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::digital-twins",
+      "label": "Digital Twins",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::world-models",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::building-models",
+      "label": "Building Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::digital-twins",
+        "graph-data-modeling-course::location-modeling"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::manufacturing-models",
+      "label": "Manufacturing Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::digital-twins",
+        "graph-data-modeling-course::product-lists"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::supply-chain-models",
+      "label": "Supply Chain Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::digital-twins",
+        "graph-data-modeling-course::product-lists",
+        "graph-data-modeling-course::location-modeling"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::real-time-updates",
+      "label": "Real-time Updates",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::digital-twins",
+        "graph-data-modeling-course::real-time-systems"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-advantages-dt",
+      "label": "Graph Advantages DT",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::digital-twins",
+        "graph-data-modeling-course::real-time-updates"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::scene-graphs",
+      "label": "Scene Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::location-modeling"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::pixel-classification",
+      "label": "Pixel Classification",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::scene-graphs"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::movement-prediction",
+      "label": "Movement Prediction",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::scene-graphs",
+        "graph-data-modeling-course::pixel-classification"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::autonomous-vehicles",
+      "label": "Autonomous Vehicles",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::scene-graphs",
+        "graph-data-modeling-course::movement-prediction",
+        "graph-data-modeling-course::road-modeling"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::robotics-applications",
+      "label": "Robotics Applications",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::scene-graphs",
+        "graph-data-modeling-course::movement-prediction"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::rule-engines",
+      "label": "Rule Engines",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::context-transfer-challenge",
+      "label": "Context Transfer Challenge",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-engines"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::in-graph-rules",
+      "label": "In-Graph Rules",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-engines",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::rules-and-workflows",
+      "label": "Rules and Workflows",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-engines",
+        "graph-data-modeling-course::in-graph-rules"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::rule-modeling",
+      "label": "Rule Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-engines",
+        "graph-data-modeling-course::in-graph-rules"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::bpmn-notation",
+      "label": "BPMN Notation",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rules-and-workflows",
+        "graph-data-modeling-course::rule-modeling"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::decision-trees",
+      "label": "Decision Trees",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-engines",
+        "graph-data-modeling-course::rule-modeling"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::validation-rules",
+      "label": "Validation Rules",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-engines",
+        "graph-data-modeling-course::graph-constraints"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::data-mining",
+      "label": "Data Mining",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::process-mining",
+      "label": "Process Mining",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::data-mining",
+        "graph-data-modeling-course::rules-and-workflows"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::rule-execution",
+      "label": "Rule Execution",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-engines",
+        "graph-data-modeling-course::in-graph-rules"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::rule-exchange",
+      "label": "Rule Exchange",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-modeling",
+        "graph-data-modeling-course::rule-execution"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::performance-advantage",
+      "label": "Performance Advantage",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::rule-engines",
+        "graph-data-modeling-course::in-graph-rules",
+        "graph-data-modeling-course::rule-execution"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::code-graphs",
+      "label": "Code Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::nodes-as-functions",
+      "label": "Nodes as Functions",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::nodes"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::edges-as-dependencies",
+      "label": "Edges as Dependencies",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::dependencies"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::directed-graphs",
+      "label": "Directed Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::undirected-graphs",
+      "label": "Undirected Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::directed-graphs"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::weighted-edges",
+      "label": "Weighted Edges",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::call-graphs",
+      "label": "Call Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::nodes-as-functions",
+        "graph-data-modeling-course::edges-as-dependencies"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::dead-code-detection",
+      "label": "Dead Code Detection",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::call-graphs"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::recursive-functions",
+      "label": "Recursive Functions",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::call-graphs"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::circular-dependencies",
+      "label": "Circular Dependencies",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::call-graphs",
+        "graph-data-modeling-course::dependencies"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::text-coverage-graphs",
+      "label": "Text Coverage Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::document-modeling"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::test-code-mapping",
+      "label": "Test-Code Mapping",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::text-coverage-graphs"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::hybrid-graphs",
+      "label": "Hybrid Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::call-graphs",
+        "graph-data-modeling-course::text-coverage-graphs"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::cyclomatic-complexity",
+      "label": "Cyclomatic Complexity",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::call-graphs"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::code-churn",
+      "label": "Code Churn",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::time-trees"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::code-hotspots",
+      "label": "Code Hotspots",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::call-graphs",
+        "graph-data-modeling-course::cyclomatic-complexity"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::static-analysis",
+      "label": "Static Analysis",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::call-graphs"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::dynamic-analysis",
+      "label": "Dynamic Analysis",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::call-graphs"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::ci-cd-integration",
+      "label": "CI/CD Integration",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::code-graphs",
+        "graph-data-modeling-course::static-analysis",
+        "graph-data-modeling-course::dynamic-analysis"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::server-modeling",
+      "label": "Server Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::network-modeling",
+      "label": "Network Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::server-modeling"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::threat-modeling",
+      "label": "Threat Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::network-modeling",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::threat-prioritization",
+      "label": "Threat Prioritization",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::threat-modeling"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::vulnerability-assessment",
+      "label": "Vulnerability Assessment",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::threat-modeling",
+        "graph-data-modeling-course::threat-prioritization"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::person-roles",
+      "label": "Person Roles",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::role-based-access-control",
+      "label": "Role-Based Access Control",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::person-roles",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::rbac-and-performance",
+      "label": "RBAC and Performance",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::role-based-access-control"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::monitoring-agents",
+      "label": "Monitoring Agents",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::network-modeling",
+        "graph-data-modeling-course::threat-modeling"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::event-modeling",
+      "label": "Event Modeling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::datetime-structure"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::event-mining",
+      "label": "Event Mining",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::event-modeling",
+        "graph-data-modeling-course::data-mining"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::events-and-workflows",
+      "label": "Events and Workflows",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::event-modeling",
+        "graph-data-modeling-course::rules-and-workflows"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::event-logs",
+      "label": "Event Logs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::event-modeling"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::event-dashboards",
+      "label": "Event Dashboards",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::event-logs",
+        "graph-data-modeling-course::quality-dashboards"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::learning-graphs",
+      "label": "Learning Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::knowledge-graphs",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::dependencies"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::concept-dependencies",
+      "label": "Concept Dependencies",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::learning-graphs",
+        "graph-data-modeling-course::dependencies"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::concept-models",
+      "label": "Concept Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::learning-graphs",
+        "graph-data-modeling-course::concept-nodes"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::content-models",
+      "label": "Content Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::learning-graphs",
+        "graph-data-modeling-course::document-modeling"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::learning-paths",
+      "label": "Learning Paths",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::learning-graphs",
+        "graph-data-modeling-course::paths",
+        "graph-data-modeling-course::concept-dependencies"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::path-recommendations",
+      "label": "Path Recommendations",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::learning-paths"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::content-recommendations",
+      "label": "Content Recommendations",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::content-models",
+        "graph-data-modeling-course::path-recommendations"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::intelligent-textbooks",
+      "label": "Intelligent Textbooks",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::learning-graphs",
+        "graph-data-modeling-course::content-recommendations"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::correlation-vs-causation",
+      "label": "Correlation vs Causation",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::causal-graphs",
+      "label": "Causal Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::correlation-vs-causation",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::correlation-vs-causation",
+        "graph-data-modeling-course::causal-graphs"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::causality-data-flows",
+      "label": "Causality Data Flows",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::causal-graphs",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::causal-loop-diagrams",
+      "label": "Causal Loop Diagrams",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::causal-graphs",
+        "graph-data-modeling-course::systems-thinking"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::consumer-preference-models",
+      "label": "Consumer Preference Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::causal-graphs",
+        "graph-data-modeling-course::customer-definition"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::bayesian-network-analysis",
+      "label": "Bayesian Network Analysis",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::causal-graphs",
+        "graph-data-modeling-course::directed-graphs"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::lineage-and-provenance",
+      "label": "Lineage and Provenance",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::entity-definition",
+      "label": "Entity Definition",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::lineage-and-provenance",
+        "graph-data-modeling-course::nodes"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::activity-definition",
+      "label": "Activity Definition",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::lineage-and-provenance",
+        "graph-data-modeling-course::event-modeling"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::agent-definition",
+      "label": "Agent Definition",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::lineage-and-provenance",
+        "graph-data-modeling-course::person-roles"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::dm-prov-model",
+      "label": "DM-Prov Model",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::lineage-and-provenance",
+        "graph-data-modeling-course::entity-definition",
+        "graph-data-modeling-course::activity-definition",
+        "graph-data-modeling-course::agent-definition"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::w3c-provenance",
+      "label": "W3C Provenance",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::dm-prov-model"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::metadata-definition",
+      "label": "Metadata Definition",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::properties"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::data-governance",
+      "label": "Data Governance",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::metadata-definition"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::data-stewards",
+      "label": "Data Stewards",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::data-governance"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::data-domains",
+      "label": "Data Domains",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::metadata-definition",
+        "graph-data-modeling-course::data-governance"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::data-matching",
+      "label": "Data Matching",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::data-connection",
+        "graph-data-modeling-course::metadata-definition"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::schema-matching",
+      "label": "Schema Matching",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::data-matching"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::data-mapping",
+      "label": "Data Mapping",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::data-matching",
+        "graph-data-modeling-course::schema-matching"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::inventory-management",
+      "label": "Inventory Management",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::product-lists",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::alternate-suppliers",
+      "label": "Alternate Suppliers",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::inventory-management",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::supply-chain-disruption",
+      "label": "Supply Chain Disruption",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::inventory-management",
+        "graph-data-modeling-course::alternate-suppliers"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::transportation-networks",
+      "label": "Transportation Networks",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::road-modeling",
+        "graph-data-modeling-course::inventory-management"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::bitemporal-graphs",
+      "label": "Bitemporal Graphs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::datetime-structure",
+        "graph-data-modeling-course::time-trees",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::real-world-time",
+      "label": "Real World Time",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::bitemporal-graphs",
+        "graph-data-modeling-course::datetime-structure"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::system-time",
+      "label": "System Time",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::bitemporal-graphs",
+        "graph-data-modeling-course::datetime-structure"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::tradeoff-analysis",
+      "label": "Tradeoff Analysis",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::graph-quality"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-training",
+      "label": "Graph Training",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::graph-and-llm-integration"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-performance",
+      "label": "Graph Performance",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::graph-quality",
+        "graph-data-modeling-course::paths"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::transactional-integrity",
+      "label": "Transactional Integrity",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::graph-quality"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::scalability",
+      "label": "Scalability",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-performance",
+        "graph-data-modeling-course::transactional-integrity"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::sustainability",
+      "label": "Sustainability",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::scalability"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-storytelling",
+      "label": "Graph Storytelling",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::knowledge-graphs"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::model-expansion",
+      "label": "Model Expansion",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::tradeoff-analysis"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::complex-adaptive-systems",
+      "label": "Complex Adaptive Systems",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::systems-thinking"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::edge-of-chaos",
+      "label": "Edge of Chaos",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::complex-adaptive-systems"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::model-complexity",
+      "label": "Model Complexity",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::model-expansion",
+        "graph-data-modeling-course::tradeoff-analysis"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::tradeoff-analysis",
+        "graph-data-modeling-course::model-complexity"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::initial-project-costs",
+      "label": "Initial Project Costs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::cost-benefit-analysis"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::ongoing-project-costs",
+      "label": "Ongoing Project Costs",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::cost-benefit-analysis",
+        "graph-data-modeling-course::initial-project-costs"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::network-effects",
+      "label": "Network Effects",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::edges",
+        "graph-data-modeling-course::ongoing-project-costs"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::brain-architecture",
+      "label": "Brain Architecture",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::1000-brains-theory",
+      "label": "1000 Brains Theory",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::brain-architecture"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::cortical-columns",
+      "label": "Cortical Columns",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::1000-brains-theory"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::grid-cells",
+      "label": "Grid Cells",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::cortical-columns",
+        "graph-data-modeling-course::location-modeling"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::place-cells",
+      "label": "Place Cells",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::cortical-columns",
+        "graph-data-modeling-course::grid-cells"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::multiple-representations",
+      "label": "Multiple Representations",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::1000-brains-theory",
+        "graph-data-modeling-course::cortical-columns"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::voting-mechanisms",
+      "label": "Voting Mechanisms",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::1000-brains-theory",
+        "graph-data-modeling-course::multiple-representations"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::sensory-motor-networks",
+      "label": "Sensory-Motor Networks",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::1000-brains-theory",
+        "graph-data-modeling-course::cortical-columns"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::reference-frames",
+      "label": "Reference Frames",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::grid-cells",
+        "graph-data-modeling-course::place-cells",
+        "graph-data-modeling-course::multiple-representations"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::monty-framework",
+      "label": "Monty Framework",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::1000-brains-theory",
+        "graph-data-modeling-course::reference-frames"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-ai-future",
+      "label": "Graph AI Future",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-data-model",
+        "graph-data-modeling-course::graph-and-llm-integration",
+        "graph-data-modeling-course::monty-framework"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::world-models-257",
+      "label": "World Models",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::world-models",
+        "graph-data-modeling-course::brain-architecture",
+        "graph-data-modeling-course::reference-frames"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::ai-and-graph-future",
+      "label": "AI and Graph Future",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::graph-ai-future",
+        "graph-data-modeling-course::world-models-257"
+      ],
+      "taxonomy_id": "AIML",
+      "level": "core"
+    },
+    {
+      "id": "graph-data-modeling-course::graph-query-language",
+      "label": "Graph Query Language",
+      "subject_id": "graph-data-modeling-course",
+      "dependencies": [
+        "graph-data-modeling-course::iso-gql-standard",
+        "graph-data-modeling-course::nodes",
+        "graph-data-modeling-course::edges"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    }
+  ]
+}

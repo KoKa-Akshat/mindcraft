@@ -44,15 +44,56 @@ def test_loads_real_euclid_graph():
 
 
 def test_loads_all_real_book_graphs_in_directory():
-    graphs = load_dynamic_concept_graphs(DYNAMIC_GRAPHS_DIR)
-    assert len(graphs) == 4
+    """Every graph in the live directory must load under strict validation —
+    a file that only survives strict=False's log-and-skip is a broken file
+    shipping to production. The directory now holds the 4 original
+    book_ingestion.py-derived graphs plus the McCreary corpus converted by
+    ml/scripts/convert_mccreary_graphs.py, and will keep growing, so this
+    iterates the directory instead of hardcoding filenames."""
+    json_files = sorted(DYNAMIC_GRAPHS_DIR.glob("*.json"))
+    graphs = load_dynamic_concept_graphs(DYNAMIC_GRAPHS_DIR, strict=True)
+    assert len(graphs) == len(json_files)
+    assert len(graphs) >= 96  # 4 originals + 92 converted McCreary graphs
     subjects = {g.domain for g in graphs}
-    assert subjects == {
+    assert len(subjects) == len(graphs)  # no duplicate subject ids
+    # The 4 original book graphs are still there, untouched by conversion.
+    assert {
         "euclid_elements",
         "adam_smith_wealth_of_nations",
         "darwin_origin_of_species",
         "marcus_aurelius_meditations",
-    }
+    } <= subjects
+    # Filename convention holds: {subject_id}.json, and every concept in
+    # every graph is namespaced under its own subject.
+    for path, graph in zip(json_files, graphs):
+        assert path.stem == graph.domain
+        assert all(c.id.startswith(f"{graph.domain}::") for c in graph.concepts)
+
+
+def test_loads_real_mccreary_algebra_graph():
+    """One converted McCreary graph checked closely, mirroring the Euclid
+    test above — proof the convert_mccreary_graphs.py output is the same
+    first-class format, not a lookalike."""
+    ontology = load_dynamic_concept_graph(DYNAMIC_GRAPHS_DIR / "algebra-1.json")
+    assert ontology.domain == "algebra-1"
+    assert len(ontology.concepts) == 200
+    assert all(c.id.startswith("algebra-1::") for c in ontology.concepts)
+    assert all(e.relation == "prerequisite" for e in ontology.edges)
+    # Real content, not placeholders.
+    assert any("variable" in c.name.lower() for c in ontology.concepts)
+    # Real prerequisite structure, not a flat concept list.
+    assert len(ontology.edges) > 0
+
+
+def test_mccreary_numeric_taxonomy_codes_survive_as_string_tags():
+    """Five McCreary exports use bare JSON integers as taxonomy group codes;
+    the converter coerces them to strings (Concept.tags is string-typed).
+    This pins that a re-run of the converter keeps doing so — before the
+    fix, this file failed to load at all."""
+    ontology = load_dynamic_concept_graph(DYNAMIC_GRAPHS_DIR / "deep-learning-course.json")
+    tagged = [c for c in ontology.concepts if c.tags]
+    assert tagged, "expected taxonomy tags to survive conversion"
+    assert all(isinstance(tag, str) for c in tagged for tag in c.tags)
 
 
 def test_missing_directory_yields_empty_list_not_error():
@@ -177,7 +218,7 @@ def test_merge_raises_on_concept_id_collision(tmp_path):
         merge_ontology(base, [addition])
 
 
-def test_merge_of_all_four_real_book_graphs_has_no_collisions():
+def test_merge_of_all_real_book_graphs_has_no_collisions():
     graphs = load_dynamic_concept_graphs(DYNAMIC_GRAPHS_DIR)
     base, _ = load_complete_ontology(STANDARDIZED_ONTOLOGY_PATH)
     merged = merge_ontology(base, graphs)
@@ -185,8 +226,9 @@ def test_merge_of_all_four_real_book_graphs_has_no_collisions():
     assert len(merged.concepts) == len(base.concepts) + total_added
     # Every book concept resolves through the SAME registry the live
     # 42-concept ontology's own concepts do - proof this is one graph, not
-    # four separate systems living side by side.
+    # dozens of separate systems living side by side.
     assert merged.canonical_concept_id("euclid_elements::point-line-plane-def") == "euclid_elements::point-line-plane-def"
+    assert merged.canonical_concept_id("algebra-1::variable") == "algebra-1::variable"
 
 
 # ── Classification-cache invalidation (Greptile PR review catch, confirmed

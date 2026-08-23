@@ -1,0 +1,2295 @@
+{
+  "subject_id": "neurodiversity-course",
+  "title": "neurodiversity-course",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {},
+  "concepts": [
+    {
+      "id": "neurodiversity-course::neurodiversity-definition",
+      "label": "Neurodiversity Definition",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "neurodiversity-course::neurotypical-definition",
+      "label": "Neurotypical Definition",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodivergent-definition",
+      "label": "Neurodivergent Definition",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition",
+        "neurodiversity-course::neurotypical-definition"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::normal-distribution-of-cognitive-traits",
+      "label": "Normal Distribution Of Cognitive Traits",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::natural-variation-in-human-cognition",
+      "label": "Natural Variation In Human Cognition",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition",
+        "neurodiversity-course::normal-distribution-of-cognitive-traits"
+      ],
+      "taxonomy_id": "1",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::history-of-neurodiversity-movement",
+      "label": "History Of Neurodiversity Movement",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition",
+        "neurodiversity-course::neurodivergent-definition"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::judy-singer-s-contributions",
+      "label": "Judy Singer's Contributions",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::history-of-neurodiversity-movement"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::medical-model-of-disability",
+      "label": "Medical Model Of Disability",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition",
+        "neurodiversity-course::neurodivergent-definition"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::social-model-of-disability",
+      "label": "Social Model Of Disability",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition",
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::medical-model-of-disability"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurological-pluralism",
+      "label": "Neurological Pluralism",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition",
+        "neurodiversity-course::natural-variation-in-human-cognition",
+        "neurodiversity-course::social-model-of-disability"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::basic-brain-structure",
+      "label": "Basic Brain Structure",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "neurodiversity-course::neuroplasticity",
+      "label": "Neuroplasticity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::basic-brain-structure"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neural-pathways",
+      "label": "Neural Pathways",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::basic-brain-structure",
+        "neurodiversity-course::neuroplasticity"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::synaptic-connections",
+      "label": "Synaptic Connections",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::basic-brain-structure",
+        "neurodiversity-course::neural-pathways"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cognitive-development-timelines",
+      "label": "Cognitive Development Timelines",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neuroplasticity",
+        "neurodiversity-course::neural-pathways",
+        "neurodiversity-course::synaptic-connections"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::genetic-factors-in-neurodevelopment",
+      "label": "Genetic Factors In Neurodevelopment",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::basic-brain-structure",
+        "neurodiversity-course::cognitive-development-timelines"
+      ],
+      "taxonomy_id": "1",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::environmental-influences-on-neurodevelopment",
+      "label": "Environmental Influences On Neurodevelopment",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::cognitive-development-timelines",
+        "neurodiversity-course::genetic-factors-in-neurodevelopment"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::executive-functions",
+      "label": "Executive Functions",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neural-pathways",
+        "neurodiversity-course::synaptic-connections",
+        "neurodiversity-course::cognitive-development-timelines"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::working-memory",
+      "label": "Working Memory",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cognitive-flexibility",
+      "label": "Cognitive Flexibility",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::working-memory"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::inhibitory-control",
+      "label": "Inhibitory Control",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::cognitive-flexibility"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::task-initiation",
+      "label": "Task Initiation",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::inhibitory-control"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::planning-and-organization",
+      "label": "Planning And Organization",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::working-memory",
+        "neurodiversity-course::task-initiation"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::time-management",
+      "label": "Time Management",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::planning-and-organization"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::emotional-regulation",
+      "label": "Emotional Regulation",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::inhibitory-control"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-processing",
+      "label": "Visual Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::basic-brain-structure",
+        "neurodiversity-course::neural-pathways"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::auditory-processing",
+      "label": "Auditory Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::basic-brain-structure",
+        "neurodiversity-course::neural-pathways"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::tactile-processing",
+      "label": "Tactile Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::basic-brain-structure",
+        "neurodiversity-course::neural-pathways"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::proprioceptive-sensing",
+      "label": "Proprioceptive Sensing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::basic-brain-structure",
+        "neurodiversity-course::neural-pathways"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::sensory-integration",
+      "label": "Sensory Integration",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::auditory-processing",
+        "neurodiversity-course::tactile-processing",
+        "neurodiversity-course::proprioceptive-sensing"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::sensory-sensitivity",
+      "label": "Sensory Sensitivity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::sensory-integration"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::sensory-seeking-behaviors",
+      "label": "Sensory Seeking Behaviors",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::sensory-integration",
+        "neurodiversity-course::sensory-sensitivity"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::asd-characteristics",
+      "label": "ASD Characteristics",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::sensory-integration",
+        "neurodiversity-course::sensory-sensitivity"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::adhd-characteristics",
+      "label": "ADHD Characteristics",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::working-memory",
+        "neurodiversity-course::inhibitory-control",
+        "neurodiversity-course::task-initiation",
+        "neurodiversity-course::time-management"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::dyslexia-characteristics",
+      "label": "Dyslexia Characteristics",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::visual-processing"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::dyscalculia-characteristics",
+      "label": "Dyscalculia Characteristics",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::visual-processing"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::dyspraxia-characteristics",
+      "label": "Dyspraxia Characteristics",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::proprioceptive-sensing",
+        "neurodiversity-course::sensory-integration"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::tourette-s-characteristics",
+      "label": "Tourette's Characteristics",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::inhibitory-control"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::synesthesia",
+      "label": "Synesthesia",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::auditory-processing",
+        "neurodiversity-course::sensory-integration"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::hyperlexia",
+      "label": "Hyperlexia",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::auditory-processing"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-spatial-processing-strengths",
+      "label": "Visual-Spatial Processing Strengths",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::sensory-integration"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::visual-spatial-processing-strengths"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::cognitive-flexibility",
+        "neurodiversity-course::pattern-recognition"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::global-processing",
+      "label": "Global Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::systems-thinking"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::local-processing",
+      "label": "Local Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::visual-spatial-processing-strengths"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::bottom-up-processing",
+      "label": "Bottom-Up Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::global-processing",
+        "neurodiversity-course::local-processing"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::top-down-processing",
+      "label": "Top-Down Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::global-processing",
+        "neurodiversity-course::local-processing"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-learning-styles",
+      "label": "Visual Learning Styles",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::visual-spatial-processing-strengths"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::auditory-learning-styles",
+      "label": "Auditory Learning Styles",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::auditory-processing"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::kinesthetic-learning-styles",
+      "label": "Kinesthetic Learning Styles",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::tactile-processing",
+        "neurodiversity-course::proprioceptive-sensing"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::multiple-intelligences-theory",
+      "label": "Multiple Intelligences Theory",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-learning-styles",
+        "neurodiversity-course::auditory-learning-styles",
+        "neurodiversity-course::kinesthetic-learning-styles"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::linguistic-intelligence",
+      "label": "Linguistic Intelligence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::auditory-learning-styles",
+        "neurodiversity-course::multiple-intelligences-theory"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::logical-mathematical-intelligence",
+      "label": "Logical-Mathematical Intelligence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::pattern-recognition",
+        "neurodiversity-course::systems-thinking",
+        "neurodiversity-course::multiple-intelligences-theory"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::spatial-intelligence",
+      "label": "Spatial Intelligence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::pattern-recognition",
+        "neurodiversity-course::multiple-intelligences-theory"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::musical-intelligence",
+      "label": "Musical Intelligence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::auditory-processing",
+        "neurodiversity-course::multiple-intelligences-theory"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::bodily-kinesthetic-intelligence",
+      "label": "Bodily-Kinesthetic Intelligence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::proprioceptive-sensing",
+        "neurodiversity-course::kinesthetic-learning-styles",
+        "neurodiversity-course::multiple-intelligences-theory"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::naturalistic-intelligence",
+      "label": "Naturalistic Intelligence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::pattern-recognition",
+        "neurodiversity-course::multiple-intelligences-theory"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::interpersonal-intelligence",
+      "label": "Interpersonal Intelligence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::multiple-intelligences-theory"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::intrapersonal-intelligence",
+      "label": "Intrapersonal Intelligence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::multiple-intelligences-theory"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::convergent-thinking",
+      "label": "Convergent Thinking",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::logical-mathematical-intelligence"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::divergent-thinking",
+      "label": "Divergent Thinking",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::cognitive-flexibility",
+        "neurodiversity-course::spatial-intelligence"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::lateral-thinking",
+      "label": "Lateral Thinking",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::cognitive-flexibility",
+        "neurodiversity-course::divergent-thinking"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::mind-mapping-techniques",
+      "label": "Mind Mapping Techniques",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::pattern-recognition",
+        "neurodiversity-course::divergent-thinking"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-note-taking",
+      "label": "Visual Note-Taking",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::visual-learning-styles",
+        "neurodiversity-course::mind-mapping-techniques"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::concept-mapping",
+      "label": "Concept Mapping",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::systems-thinking",
+        "neurodiversity-course::mind-mapping-techniques"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::sketchnoting",
+      "label": "Sketchnoting",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::visual-learning-styles",
+        "neurodiversity-course::visual-note-taking"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::information-visualization",
+      "label": "Information Visualization",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::pattern-recognition",
+        "neurodiversity-course::concept-mapping"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-hierarchy",
+      "label": "Visual Hierarchy",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::information-visualization"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::gestalt-principles",
+      "label": "Gestalt Principles",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::global-processing",
+        "neurodiversity-course::visual-hierarchy"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::design-thinking-process",
+      "label": "Design Thinking Process",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::divergent-thinking",
+        "neurodiversity-course::lateral-thinking",
+        "neurodiversity-course::information-visualization"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::engineering-problem-solving",
+      "label": "Engineering Problem-Solving",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::convergent-thinking",
+        "neurodiversity-course::design-thinking-process"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::complementary-cognitive-profiles",
+      "label": "Complementary Cognitive Profiles",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-definition",
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::natural-variation-in-human-cognition"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::team-cognitive-diversity",
+      "label": "Team Cognitive Diversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::complementary-cognitive-profiles"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cognitive-bias",
+      "label": "Cognitive Bias",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::cognitive-flexibility"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::perspective-taking",
+      "label": "Perspective-Taking",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::cognitive-flexibility",
+        "neurodiversity-course::interpersonal-intelligence"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cognitive-empathy",
+      "label": "Cognitive Empathy",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::interpersonal-intelligence",
+        "neurodiversity-course::perspective-taking"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::weak-central-coherence-theory",
+      "label": "Weak Central Coherence Theory",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::local-processing"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::enhanced-perceptual-functioning",
+      "label": "Enhanced Perceptual Functioning",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::pattern-recognition"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::monotropism-vs-polytropic-attention",
+      "label": "Monotropism vs. Polytropic Attention",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::adhd-characteristics"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::hyperfocus",
+      "label": "Hyperfocus",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::working-memory",
+        "neurodiversity-course::monotropism-vs-polytropic-attention"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::flow-state",
+      "label": "Flow State",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::hyperfocus"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::interest-based-nervous-system",
+      "label": "Interest-Based Nervous System",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::adhd-characteristics",
+        "neurodiversity-course::hyperfocus"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::special-interests-and-expertise",
+      "label": "Special Interests And Expertise",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::interest-based-nervous-system"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::asynchronous-development",
+      "label": "Asynchronous Development",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::cognitive-development-timelines",
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::adhd-characteristics",
+        "neurodiversity-course::dyslexia-characteristics",
+        "neurodiversity-course::dyscalculia-characteristics"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::twice-exceptional-learners",
+      "label": "Twice-Exceptional Learners",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::adhd-characteristics",
+        "neurodiversity-course::dyslexia-characteristics",
+        "neurodiversity-course::dyscalculia-characteristics",
+        "neurodiversity-course::dyspraxia-characteristics"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::compensatory-strategies",
+      "label": "Compensatory Strategies",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::adhd-characteristics",
+        "neurodiversity-course::dyslexia-characteristics",
+        "neurodiversity-course::dyscalculia-characteristics",
+        "neurodiversity-course::dyspraxia-characteristics",
+        "neurodiversity-course::tourette-s-characteristics"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::assistive-technologies",
+      "label": "Assistive Technologies",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::compensatory-strategies"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::universal-design",
+      "label": "Universal Design",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::natural-variation-in-human-cognition",
+        "neurodiversity-course::social-model-of-disability",
+        "neurodiversity-course::complementary-cognitive-profiles"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::universal-design-for-learning-udl",
+      "label": "Universal Design For Learning (UDL)",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::universal-design"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::accommodation-vs-modification",
+      "label": "Accommodation vs. Modification",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::social-model-of-disability",
+        "neurodiversity-course::universal-design"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::inclusive-education-practices",
+      "label": "Inclusive Education Practices",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::universal-design-for-learning-udl",
+        "neurodiversity-course::accommodation-vs-modification"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::strength-based-approaches",
+      "label": "Strength-Based Approaches",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::natural-variation-in-human-cognition",
+        "neurodiversity-course::complementary-cognitive-profiles",
+        "neurodiversity-course::compensatory-strategies"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::collaborative-problem-solving",
+      "label": "Collaborative Problem-Solving",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::team-cognitive-diversity",
+        "neurodiversity-course::engineering-problem-solving"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::communication-differences",
+      "label": "Communication Differences",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::adhd-characteristics"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::literal-language-processing",
+      "label": "Literal Language Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::communication-differences"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::figurative-language-processing",
+      "label": "Figurative Language Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::literal-language-processing"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-communication-tools",
+      "label": "Visual Communication Tools",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::visual-note-taking",
+        "neurodiversity-course::information-visualization"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::aac-augmentative-and-alternative-communication",
+      "label": "AAC (Augmentative and Alternative Communication)",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::communication-differences",
+        "neurodiversity-course::visual-communication-tools"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::social-cognition",
+      "label": "Social Cognition",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::interpersonal-intelligence",
+        "neurodiversity-course::cognitive-empathy"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::theory-of-mind",
+      "label": "Theory Of Mind",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::social-cognition"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::masking-and-camouflaging",
+      "label": "Masking And Camouflaging",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::adhd-characteristics",
+        "neurodiversity-course::theory-of-mind"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::autistic-burnout",
+      "label": "Autistic Burnout",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::masking-and-camouflaging"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::adhd-and-time-blindness",
+      "label": "ADHD And Time Blindness",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::adhd-characteristics",
+        "neurodiversity-course::time-management"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::rejection-sensitive-dysphoria",
+      "label": "Rejection Sensitive Dysphoria",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::adhd-characteristics",
+        "neurodiversity-course::emotional-regulation"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::autism-and-pattern-thinking",
+      "label": "Autism And Pattern Thinking",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::asd-characteristics",
+        "neurodiversity-course::pattern-recognition",
+        "neurodiversity-course::systems-thinking"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-thinking-in-engineering",
+      "label": "Visual Thinking In Engineering",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::spatial-intelligence",
+        "neurodiversity-course::engineering-problem-solving"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-thinking-in-art",
+      "label": "Visual Thinking In Art",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::spatial-intelligence",
+        "neurodiversity-course::divergent-thinking"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-thinking-in-science",
+      "label": "Visual Thinking In Science",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::spatial-intelligence",
+        "neurodiversity-course::pattern-recognition",
+        "neurodiversity-course::systems-thinking"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-thinking-in-mathematics",
+      "label": "Visual Thinking In Mathematics",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::spatial-intelligence",
+        "neurodiversity-course::logical-mathematical-intelligence"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-spatial-reasoning",
+      "label": "Visual-Spatial Reasoning",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::spatial-intelligence"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-literacy",
+      "label": "Visual Literacy",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::information-visualization",
+        "neurodiversity-course::visual-communication-tools"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::graphic-facilitation",
+      "label": "Graphic Facilitation",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-note-taking",
+        "neurodiversity-course::sketchnoting",
+        "neurodiversity-course::visual-communication-tools"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::information-design",
+      "label": "Information Design",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::information-visualization",
+        "neurodiversity-course::visual-hierarchy",
+        "neurodiversity-course::gestalt-principles"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::information-visualization",
+        "neurodiversity-course::information-design"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cognitive-load-theory",
+      "label": "Cognitive Load Theory",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::working-memory"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::dual-coding-theory",
+      "label": "Dual Coding Theory",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::auditory-processing",
+        "neurodiversity-course::visual-learning-styles",
+        "neurodiversity-course::auditory-learning-styles"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::imagery-and-verbal-processing",
+      "label": "Imagery And Verbal Processing",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-processing",
+        "neurodiversity-course::auditory-processing",
+        "neurodiversity-course::dual-coding-theory"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::mental-rotation-skills",
+      "label": "Mental Rotation Skills",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::spatial-intelligence",
+        "neurodiversity-course::visual-spatial-reasoning"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::spatial-reasoning",
+      "label": "Spatial Reasoning",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::spatial-intelligence",
+        "neurodiversity-course::visual-spatial-reasoning",
+        "neurodiversity-course::mental-rotation-skills"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::diversity-in-problem-solving-approaches",
+      "label": "Diversity In Problem-Solving Approaches",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::complementary-cognitive-profiles",
+        "neurodiversity-course::collaborative-problem-solving"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::interdisciplinary-collaboration",
+      "label": "Interdisciplinary Collaboration",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::team-cognitive-diversity",
+        "neurodiversity-course::collaborative-problem-solving",
+        "neurodiversity-course::diversity-in-problem-solving-approaches"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cross-functional-teams",
+      "label": "Cross-Functional Teams",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::team-cognitive-diversity",
+        "neurodiversity-course::interdisciplinary-collaboration"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::psychological-safety",
+      "label": "Psychological Safety",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::team-cognitive-diversity",
+        "neurodiversity-course::cross-functional-teams"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::inclusive-leadership",
+      "label": "Inclusive Leadership",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::team-cognitive-diversity",
+        "neurodiversity-course::psychological-safety"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cognitive-accessibility",
+      "label": "Cognitive Accessibility",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::universal-design",
+        "neurodiversity-course::universal-design-for-learning-udl"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::digital-accessibility",
+      "label": "Digital Accessibility",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::cognitive-accessibility"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::environmental-sensory-considerations",
+      "label": "Environmental Sensory Considerations",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::sensory-sensitivity",
+        "neurodiversity-course::sensory-seeking-behaviors",
+        "neurodiversity-course::universal-design"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::workplace-accommodations",
+      "label": "Workplace Accommodations",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::accommodation-vs-modification",
+        "neurodiversity-course::environmental-sensory-considerations"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::disclosure-decisions",
+      "label": "Disclosure Decisions",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::masking-and-camouflaging"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::self-advocacy-skills",
+      "label": "Self-Advocacy Skills",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::disclosure-decisions"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::identity-development",
+      "label": "Identity Development",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::neurological-pluralism"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-affirming-support",
+      "label": "Neurodiversity-Affirming Support",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::strength-based-approaches"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::trauma-informed-approaches",
+      "label": "Trauma-Informed Approaches",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-affirming-support"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::intersectionality-with-neurodiversity",
+      "label": "Intersectionality With Neurodiversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::identity-development"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::stigma-and-discrimination",
+      "label": "Stigma And Discrimination",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::medical-model-of-disability",
+        "neurodiversity-course::social-model-of-disability",
+        "neurodiversity-course::intersectionality-with-neurodiversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-employment-initiatives",
+      "label": "Neurodiversity Employment Initiatives",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::workplace-accommodations",
+        "neurodiversity-course::self-advocacy-skills",
+        "neurodiversity-course::neurodiversity-affirming-support"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::historical-contributions-of-neurodivergent-individuals",
+      "label": "Historical Contributions Of Neurodivergent Individuals",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::history-of-neurodiversity-movement"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::famous-neurodivergent-innovators",
+      "label": "Famous Neurodivergent Innovators",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::historical-contributions-of-neurodivergent-individuals"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::case-studies-of-successful-teams",
+      "label": "Case Studies Of Successful Teams",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::team-cognitive-diversity",
+        "neurodiversity-course::collaborative-problem-solving",
+        "neurodiversity-course::cross-functional-teams"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::innovation-through-cognitive-diversity",
+      "label": "Innovation Through Cognitive Diversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::team-cognitive-diversity",
+        "neurodiversity-course::interdisciplinary-collaboration",
+        "neurodiversity-course::case-studies-of-successful-teams"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-in-tech-industry",
+      "label": "Neurodiversity In Tech Industry",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-employment-initiatives",
+        "neurodiversity-course::innovation-through-cognitive-diversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-in-creative-industries",
+      "label": "Neurodiversity In Creative Industries",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-thinking-in-art",
+        "neurodiversity-course::neurodiversity-employment-initiatives",
+        "neurodiversity-course::innovation-through-cognitive-diversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-in-stem-fields",
+      "label": "Neurodiversity In STEM Fields",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-thinking-in-engineering",
+        "neurodiversity-course::visual-thinking-in-science",
+        "neurodiversity-course::neurodiversity-employment-initiatives",
+        "neurodiversity-course::innovation-through-cognitive-diversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-in-education",
+      "label": "Neurodiversity In Education",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::inclusive-education-practices",
+        "neurodiversity-course::strength-based-approaches",
+        "neurodiversity-course::neurodiversity-affirming-support"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cognitive-diversity-roi-return-on-investment",
+      "label": "Cognitive Diversity ROI (Return On Investment)",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::innovation-through-cognitive-diversity",
+        "neurodiversity-course::neurodiversity-in-tech-industry",
+        "neurodiversity-course::neurodiversity-in-creative-industries",
+        "neurodiversity-course::neurodiversity-in-stem-fields"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::hiring-for-cognitive-diversity",
+      "label": "Hiring For Cognitive Diversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::inclusive-leadership",
+        "neurodiversity-course::neurodiversity-employment-initiatives"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::interview-accommodations",
+      "label": "Interview Accommodations",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::workplace-accommodations",
+        "neurodiversity-course::hiring-for-cognitive-diversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::onboarding-neurodivergent-team-members",
+      "label": "Onboarding Neurodivergent Team Members",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::workplace-accommodations",
+        "neurodiversity-course::hiring-for-cognitive-diversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::mentoring-across-cognitive-styles",
+      "label": "Mentoring Across Cognitive Styles",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::complementary-cognitive-profiles",
+        "neurodiversity-course::neurodiversity-affirming-support",
+        "neurodiversity-course::onboarding-neurodivergent-team-members"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::giving-and-receiving-feedback",
+      "label": "Giving And Receiving Feedback",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::communication-differences",
+        "neurodiversity-course::psychological-safety",
+        "neurodiversity-course::mentoring-across-cognitive-styles"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::conflict-resolution-across-cognitive-differences",
+      "label": "Conflict Resolution Across Cognitive Differences",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::complementary-cognitive-profiles",
+        "neurodiversity-course::communication-differences",
+        "neurodiversity-course::psychological-safety"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::meeting-design-for-neurodiversity",
+      "label": "Meeting Design For Neurodiversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::environmental-sensory-considerations",
+        "neurodiversity-course::workplace-accommodations"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::document-design-for-accessibility",
+      "label": "Document Design For Accessibility",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::cognitive-accessibility",
+        "neurodiversity-course::digital-accessibility"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::project-management-adaptations",
+      "label": "Project Management Adaptations",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::planning-and-organization",
+        "neurodiversity-course::workplace-accommodations",
+        "neurodiversity-course::meeting-design-for-neurodiversity"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::remote-work-considerations",
+      "label": "Remote Work Considerations",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::workplace-accommodations",
+        "neurodiversity-course::meeting-design-for-neurodiversity",
+        "neurodiversity-course::document-design-for-accessibility"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-and-ai-systems",
+      "label": "Neurodiversity And AI Systems",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodivergent-definition",
+        "neurodiversity-course::assistive-technologies"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::ai-as-assistive-technology",
+      "label": "AI As Assistive Technology",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::assistive-technologies",
+        "neurodiversity-course::neurodiversity-and-ai-systems"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::generative-ai-tools",
+      "label": "Generative AI Tools",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-and-ai-systems",
+        "neurodiversity-course::ai-as-assistive-technology"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-programming-languages",
+      "label": "Visual Programming Languages",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::visual-communication-tools",
+        "neurodiversity-course::digital-accessibility"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::low-code-development-platforms",
+      "label": "Low-Code Development Platforms",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-programming-languages"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::ai-human-cognitive-partnerships",
+      "label": "AI-Human Cognitive Partnerships",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::complementary-cognitive-profiles",
+        "neurodiversity-course::neurodiversity-and-ai-systems",
+        "neurodiversity-course::generative-ai-tools"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cognitive-offloading-to-technology",
+      "label": "Cognitive Offloading To Technology",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::executive-functions",
+        "neurodiversity-course::assistive-technologies",
+        "neurodiversity-course::ai-as-assistive-technology"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::ai-bias-and-neurodiversity",
+      "label": "AI Bias And Neurodiversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::stigma-and-discrimination",
+        "neurodiversity-course::neurodiversity-and-ai-systems"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodivergent-user-experience-ux",
+      "label": "Neurodivergent User Experience (UX)",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::information-design",
+        "neurodiversity-course::cognitive-accessibility",
+        "neurodiversity-course::digital-accessibility",
+        "neurodiversity-course::neurodiversity-and-ai-systems"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::ethical-considerations-in-ai-development",
+      "label": "Ethical Considerations In AI Development",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-and-ai-systems",
+        "neurodiversity-course::ai-bias-and-neurodiversity"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::future-of-work-and-neurodiversity",
+      "label": "Future Of Work And Neurodiversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-employment-initiatives",
+        "neurodiversity-course::innovation-through-cognitive-diversity",
+        "neurodiversity-course::remote-work-considerations",
+        "neurodiversity-course::ai-human-cognitive-partnerships"
+      ],
+      "taxonomy_id": "12",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-in-leadership-roles",
+      "label": "Neurodiversity In Leadership Roles",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::inclusive-leadership",
+        "neurodiversity-course::innovation-through-cognitive-diversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::systems-change-for-inclusion",
+      "label": "Systems Change For Inclusion",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::social-model-of-disability",
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::inclusive-leadership",
+        "neurodiversity-course::neurodiversity-in-education"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::community-building",
+      "label": "Community Building",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::inclusive-leadership",
+        "neurodiversity-course::neurodiversity-affirming-support",
+        "neurodiversity-course::neurodiversity-in-education"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::peer-support-networks",
+      "label": "Peer Support Networks",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-affirming-support",
+        "neurodiversity-course::community-building"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::family-systems-and-neurodiversity",
+      "label": "Family Systems And Neurodiversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-affirming-support",
+        "neurodiversity-course::intersectionality-with-neurodiversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-affirming-therapy",
+      "label": "Neurodiversity-Affirming Therapy",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-affirming-support",
+        "neurodiversity-course::trauma-informed-approaches"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::intergenerational-neurodiversity",
+      "label": "Intergenerational Neurodiversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::genetic-factors-in-neurodevelopment",
+        "neurodiversity-course::intersectionality-with-neurodiversity",
+        "neurodiversity-course::family-systems-and-neurodiversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::global-perspectives-on-neurodiversity",
+      "label": "Global Perspectives On Neurodiversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::intersectionality-with-neurodiversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cultural-influences-on-neurodiversity-acceptance",
+      "label": "Cultural Influences On Neurodiversity Acceptance",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::intersectionality-with-neurodiversity",
+        "neurodiversity-course::global-perspectives-on-neurodiversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-rights-movement",
+      "label": "Neurodiversity Rights Movement",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::history-of-neurodiversity-movement",
+        "neurodiversity-course::social-model-of-disability",
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::intersectionality-with-neurodiversity"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::self-determination",
+      "label": "Self-Determination",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::self-advocacy-skills",
+        "neurodiversity-course::identity-development"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::quality-of-life-outcomes",
+      "label": "Quality Of Life Outcomes",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-affirming-support",
+        "neurodiversity-course::self-determination"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::measuring-inclusion-impact",
+      "label": "Measuring Inclusion Impact",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::psychological-safety",
+        "neurodiversity-course::inclusive-leadership",
+        "neurodiversity-course::cognitive-diversity-roi-return-on-investment",
+        "neurodiversity-course::systems-change-for-inclusion"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::organizational-change-management",
+      "label": "Organizational Change Management",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::inclusive-leadership",
+        "neurodiversity-course::systems-change-for-inclusion"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::policy-development",
+      "label": "Policy Development",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-rights-movement",
+        "neurodiversity-course::organizational-change-management"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::legal-protections",
+      "label": "Legal Protections",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-rights-movement",
+        "neurodiversity-course::policy-development"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-and-innovation-research",
+      "label": "Neurodiversity And Innovation Research",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::innovation-through-cognitive-diversity",
+        "neurodiversity-course::cognitive-diversity-roi-return-on-investment"
+      ],
+      "taxonomy_id": "12",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::mixed-methods-research-approaches",
+      "label": "Mixed Methods Research Approaches",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-and-innovation-research"
+      ],
+      "taxonomy_id": "12",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::participatory-research-with-neurodivergent-communities",
+      "label": "Participatory Research With Neurodivergent Communities",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::self-determination",
+        "neurodiversity-course::neurodiversity-and-innovation-research",
+        "neurodiversity-course::mixed-methods-research-approaches"
+      ],
+      "taxonomy_id": "12",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::visual-methods-in-research",
+      "label": "Visual Methods In Research",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::visual-spatial-processing-strengths",
+        "neurodiversity-course::information-visualization",
+        "neurodiversity-course::visual-communication-tools",
+        "neurodiversity-course::mixed-methods-research-approaches"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::knowledge-translation",
+      "label": "Knowledge Translation",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-and-innovation-research",
+        "neurodiversity-course::visual-methods-in-research"
+      ],
+      "taxonomy_id": "12",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::implementation-science",
+      "label": "Implementation Science",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::organizational-change-management",
+        "neurodiversity-course::knowledge-translation"
+      ],
+      "taxonomy_id": "12",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::emerging-technologies-impact",
+      "label": "Emerging Technologies Impact",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-and-ai-systems",
+        "neurodiversity-course::ai-as-assistive-technology",
+        "neurodiversity-course::generative-ai-tools",
+        "neurodiversity-course::ai-human-cognitive-partnerships"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::ar-vr-for-cognitive-differences",
+      "label": "AR/VR For Cognitive Differences",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::assistive-technologies",
+        "neurodiversity-course::ai-as-assistive-technology",
+        "neurodiversity-course::emerging-technologies-impact"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::brain-computer-interfaces",
+      "label": "Brain-Computer Interfaces",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::assistive-technologies",
+        "neurodiversity-course::ai-as-assistive-technology",
+        "neurodiversity-course::emerging-technologies-impact"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurotechnology-ethics",
+      "label": "Neurotechnology Ethics",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::ethical-considerations-in-ai-development",
+        "neurodiversity-course::emerging-technologies-impact",
+        "neurodiversity-course::ar-vr-for-cognitive-differences",
+        "neurodiversity-course::brain-computer-interfaces"
+      ],
+      "taxonomy_id": "11",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::future-of-neurodiversity-studies",
+      "label": "Future Of Neurodiversity Studies",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-and-innovation-research",
+        "neurodiversity-course::participatory-research-with-neurodivergent-communities",
+        "neurodiversity-course::emerging-technologies-impact"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::interdisciplinary-curriculum-development",
+      "label": "Interdisciplinary Curriculum Development",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::inclusive-education-practices",
+        "neurodiversity-course::neurodiversity-in-stem-fields",
+        "neurodiversity-course::neurodiversity-in-education"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::professional-development-for-educators",
+      "label": "Professional Development For Educators",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-in-education",
+        "neurodiversity-course::interdisciplinary-curriculum-development"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::cross-sector-collaboration",
+      "label": "Cross-Sector Collaboration",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::interdisciplinary-collaboration",
+        "neurodiversity-course::innovation-through-cognitive-diversity",
+        "neurodiversity-course::systems-change-for-inclusion"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::neurodiversity-movement-critiques",
+      "label": "Neurodiversity Movement Critiques",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::history-of-neurodiversity-movement",
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::neurodiversity-rights-movement"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::balancing-support-and-independence",
+      "label": "Balancing Support And Independence",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurodiversity-affirming-support",
+        "neurodiversity-course::self-determination"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::moving-beyond-labels",
+      "label": "Moving Beyond Labels",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::self-determination"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "neurodiversity-course::celebrating-cognitive-biodiversity",
+      "label": "Celebrating Cognitive Biodiversity",
+      "subject_id": "neurodiversity-course",
+      "dependencies": [
+        "neurodiversity-course::natural-variation-in-human-cognition",
+        "neurodiversity-course::neurological-pluralism",
+        "neurodiversity-course::complementary-cognitive-profiles",
+        "neurodiversity-course::innovation-through-cognitive-diversity",
+        "neurodiversity-course::moving-beyond-labels"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    }
+  ]
+}

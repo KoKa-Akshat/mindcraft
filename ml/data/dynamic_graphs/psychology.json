@@ -1,0 +1,4127 @@
+{
+  "subject_id": "psychology",
+  "title": "AP Psychology",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation and Research Methods",
+      "color": "SteelBlue"
+    },
+    "BIO": {
+      "classifier_name": "Biological Bases of Behavior",
+      "color": "DarkGreen"
+    },
+    "CHEM": {
+      "classifier_name": "Neurochemistry and Psychopharmacology",
+      "color": "Teal"
+    },
+    "SEN": {
+      "classifier_name": "Sensation and Perception",
+      "color": "DodgerBlue"
+    },
+    "COG": {
+      "classifier_name": "Cognition and Thinking",
+      "color": "Gold"
+    },
+    "MEM": {
+      "classifier_name": "Memory",
+      "color": "DarkGoldenrod"
+    },
+    "DEV": {
+      "classifier_name": "Development Across the Lifespan",
+      "color": "MediumPurple"
+    },
+    "LEARN": {
+      "classifier_name": "Learning and Conditioning",
+      "color": "LimeGreen"
+    },
+    "SOC": {
+      "classifier_name": "Social Psychology",
+      "color": "Crimson"
+    },
+    "PERS": {
+      "classifier_name": "Personality and Motivation",
+      "color": "DarkOrchid"
+    },
+    "HLTH": {
+      "classifier_name": "Health Psychology and Well-Being",
+      "color": "Coral"
+    },
+    "CLIN": {
+      "classifier_name": "Clinical Psychology",
+      "color": "DarkSlateBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "psychology::psychology-as-a-science",
+      "label": "Psychology as a Science",
+      "subject_id": "psychology",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "psychology::scientific-method-in-psychology",
+      "label": "Scientific Method in Psychology",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::nature-vs-nurture",
+      "label": "Nature vs. Nurture",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::heredity-and-behavior",
+      "label": "Heredity and Behavior",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::nature-vs-nurture"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::twin-studies",
+      "label": "Twin Studies",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::heredity-and-behavior"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::family-studies",
+      "label": "Family Studies",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::heredity-and-behavior"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::adoption-studies",
+      "label": "Adoption Studies",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::heredity-and-behavior"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::evolutionary-perspective",
+      "label": "Evolutionary Perspective",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::nature-vs-nurture",
+        "psychology::heredity-and-behavior"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::natural-selection",
+      "label": "Natural Selection",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::evolutionary-perspective"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::central-nervous-system",
+      "label": "Central Nervous System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::peripheral-nervous-system",
+      "label": "Peripheral Nervous System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::autonomic-nervous-system",
+      "label": "Autonomic Nervous System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::peripheral-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sympathetic-nervous-system",
+      "label": "Sympathetic Nervous System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::autonomic-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::parasympathetic-nervous-system",
+      "label": "Parasympathetic Nervous System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::autonomic-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::somatic-nervous-system",
+      "label": "Somatic Nervous System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::peripheral-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::spinal-cord",
+      "label": "Spinal Cord",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::reflex-arc",
+      "label": "Reflex Arc",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::spinal-cord",
+        "psychology::sensory-neurons",
+        "psychology::motor-neurons",
+        "psychology::interneurons"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::neuron-structure",
+      "label": "Neuron Structure",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::glial-cells",
+      "label": "Glial Cells",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neuron-structure"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sensory-neurons",
+      "label": "Sensory Neurons",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neuron-structure"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::motor-neurons",
+      "label": "Motor Neurons",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neuron-structure"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::interneurons",
+      "label": "Interneurons",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neuron-structure"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::neural-transmission",
+      "label": "Neural Transmission",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neuron-structure",
+        "psychology::all-or-none-principle"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::all-or-none-principle",
+      "label": "All-or-None Principle",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neuron-structure"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::resting-potential",
+      "label": "Resting Potential",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neuron-structure",
+        "psychology::neural-transmission"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::depolarization",
+      "label": "Depolarization",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::resting-potential"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::action-potential",
+      "label": "Action Potential",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::depolarization"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::refractory-period",
+      "label": "Refractory Period",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::action-potential"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::reuptake",
+      "label": "Reuptake",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::action-potential",
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::synaptic-threshold",
+      "label": "Synaptic Threshold",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::all-or-none-principle",
+        "psychology::resting-potential"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::neurotransmitters",
+      "label": "Neurotransmitters",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neural-transmission",
+        "psychology::action-potential"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::dopamine",
+      "label": "Dopamine",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::serotonin",
+      "label": "Serotonin",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::norepinephrine",
+      "label": "Norepinephrine",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::glutamate",
+      "label": "Glutamate",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::gaba",
+      "label": "GABA",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::endorphins",
+      "label": "Endorphins",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::acetylcholine",
+      "label": "Acetylcholine",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::substance-p",
+      "label": "Substance P",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::hormones-and-behavior",
+      "label": "Hormones and Behavior",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system",
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::adrenaline-epinephrine",
+      "label": "Adrenaline (Epinephrine)",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hormones-and-behavior"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::leptin",
+      "label": "Leptin",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hormones-and-behavior"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::ghrelin",
+      "label": "Ghrelin",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hormones-and-behavior"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::melatonin",
+      "label": "Melatonin",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hormones-and-behavior"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::oxytocin",
+      "label": "Oxytocin",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hormones-and-behavior"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::psychoactive-drugs",
+      "label": "Psychoactive Drugs",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::agonists",
+      "label": "Agonists",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychoactive-drugs",
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::antagonists",
+      "label": "Antagonists",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychoactive-drugs",
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::reuptake-inhibitors",
+      "label": "Reuptake Inhibitors",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychoactive-drugs",
+        "psychology::reuptake"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::stimulants",
+      "label": "Stimulants",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychoactive-drugs"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::depressants",
+      "label": "Depressants",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychoactive-drugs"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::hallucinogens",
+      "label": "Hallucinogens",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychoactive-drugs"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::opioids",
+      "label": "Opioids",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychoactive-drugs"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::drug-tolerance",
+      "label": "Drug Tolerance",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychoactive-drugs"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::addiction",
+      "label": "Addiction",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::drug-tolerance"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::withdrawal-symptoms",
+      "label": "Withdrawal Symptoms",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::addiction"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::brain-stem",
+      "label": "Brain Stem",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::medulla-oblongata",
+      "label": "Medulla Oblongata",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::brain-stem"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::reticular-activating-system",
+      "label": "Reticular Activating System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::brain-stem"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cerebellum",
+      "label": "Cerebellum",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::limbic-system",
+      "label": "Limbic System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::thalamus",
+      "label": "Thalamus",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::limbic-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::hypothalamus",
+      "label": "Hypothalamus",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::limbic-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::hippocampus",
+      "label": "Hippocampus",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::limbic-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::amygdala",
+      "label": "Amygdala",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::limbic-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::pituitary-gland",
+      "label": "Pituitary Gland",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hypothalamus"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::corpus-callosum",
+      "label": "Corpus Callosum",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cerebral-cortex",
+      "label": "Cerebral Cortex",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::frontal-lobe",
+      "label": "Frontal Lobe",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cerebral-cortex"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::parietal-lobe",
+      "label": "Parietal Lobe",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cerebral-cortex"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::temporal-lobe",
+      "label": "Temporal Lobe",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cerebral-cortex"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::occipital-lobe",
+      "label": "Occipital Lobe",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cerebral-cortex"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::hemispheric-lateralization",
+      "label": "Hemispheric Lateralization",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cerebral-cortex",
+        "psychology::corpus-callosum"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::split-brain-research",
+      "label": "Split-Brain Research",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hemispheric-lateralization"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::brain-imaging-methods",
+      "label": "Brain Imaging Methods",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sleep-stages",
+      "label": "Sleep Stages",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::rem-sleep",
+      "label": "REM Sleep",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::sleep-stages"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::non-rem-sleep",
+      "label": "Non-REM Sleep",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::sleep-stages"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::circadian-rhythms",
+      "label": "Circadian Rhythms",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::melatonin",
+        "psychology::sleep-stages"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sleep-deprivation",
+      "label": "Sleep Deprivation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::sleep-stages"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sleep-disorders",
+      "label": "Sleep Disorders",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::sleep-stages",
+        "psychology::sleep-deprivation"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::dreams-and-their-functions",
+      "label": "Dreams and Their Functions",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::rem-sleep"
+      ],
+      "taxonomy_id": "BIO",
+      "level": "core"
+    },
+    {
+      "id": "psychology::absolute-threshold",
+      "label": "Absolute Threshold",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::difference-threshold",
+      "label": "Difference Threshold",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::weber-s-law",
+      "label": "Weber's Law",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::difference-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::signal-detection-theory",
+      "label": "Signal Detection Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sensory-adaptation",
+      "label": "Sensory Adaptation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::vision-and-the-eye",
+      "label": "Vision and the Eye",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::audition-and-the-ear",
+      "label": "Audition and the Ear",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::olfaction",
+      "label": "Olfaction",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::gustation",
+      "label": "Gustation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::somatosensation",
+      "label": "Somatosensation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::gate-control-theory-of-pain",
+      "label": "Gate-Control Theory of Pain",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::somatosensation"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::vestibular-sense",
+      "label": "Vestibular Sense",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::kinesthesia",
+      "label": "Kinesthesia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::bottom-up-processing",
+      "label": "Bottom-Up Processing",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::top-down-processing",
+      "label": "Top-Down Processing",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::schemas",
+        "psychology::bottom-up-processing"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::perceptual-sets",
+      "label": "Perceptual Sets",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::top-down-processing",
+        "psychology::schemas"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::schemas",
+      "label": "Schemas",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::gestalt-principles",
+      "label": "Gestalt Principles",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::bottom-up-processing"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::figure-and-ground",
+      "label": "Figure and Ground",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::gestalt-principles"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::selective-attention",
+      "label": "Selective Attention",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::bottom-up-processing",
+        "psychology::top-down-processing"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cocktail-party-effect",
+      "label": "Cocktail Party Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::selective-attention"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::change-blindness",
+      "label": "Change Blindness",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::selective-attention"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::binocular-depth-cues",
+      "label": "Binocular Depth Cues",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::vision-and-the-eye",
+        "psychology::bottom-up-processing"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::monocular-depth-cues",
+      "label": "Monocular Depth Cues",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::vision-and-the-eye",
+        "psychology::bottom-up-processing"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::perceptual-constancy",
+      "label": "Perceptual Constancy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::bottom-up-processing",
+        "psychology::top-down-processing"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::apparent-movement",
+      "label": "Apparent Movement",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::bottom-up-processing"
+      ],
+      "taxonomy_id": "SEN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::concepts-and-prototypes",
+      "label": "Concepts and Prototypes",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::assimilation-and-accommodation",
+      "label": "Assimilation and Accommodation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::schemas",
+        "psychology::concepts-and-prototypes"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::algorithms",
+      "label": "Algorithms",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::heuristics",
+      "label": "Heuristics",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::algorithms"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::representativeness-heuristic",
+      "label": "Representativeness Heuristic",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::heuristics"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::availability-heuristic",
+      "label": "Availability Heuristic",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::heuristics"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::framing-effect",
+      "label": "Framing Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::heuristics",
+        "psychology::cognitive-biases"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::mental-set",
+      "label": "Mental Set",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::heuristics"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cognitive-biases",
+      "label": "Cognitive Biases",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::heuristics"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::gambler-s-fallacy",
+      "label": "Gambler's Fallacy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cognitive-biases"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sunk-cost-fallacy",
+      "label": "Sunk-Cost Fallacy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cognitive-biases"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::executive-functions",
+      "label": "Executive Functions",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::frontal-lobe",
+        "psychology::concepts-and-prototypes"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::creativity-and-divergent-thinking",
+      "label": "Creativity and Divergent Thinking",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::executive-functions",
+        "psychology::concepts-and-prototypes"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::functional-fixedness",
+      "label": "Functional Fixedness",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::mental-set",
+        "psychology::creativity-and-divergent-thinking"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::explicit-memory",
+      "label": "Explicit Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system",
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::implicit-memory",
+      "label": "Implicit Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system",
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::episodic-memory",
+      "label": "Episodic Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::explicit-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::semantic-memory",
+      "label": "Semantic Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::explicit-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::procedural-memory",
+      "label": "Procedural Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::implicit-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::prospective-memory",
+      "label": "Prospective Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::explicit-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::long-term-potentiation",
+      "label": "Long-Term Potentiation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hippocampus",
+        "psychology::neural-transmission"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::working-memory-model",
+      "label": "Working Memory Model",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::short-term-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::multi-store-memory-model",
+      "label": "Multi-Store Memory Model",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::absolute-threshold"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sensory-memory",
+      "label": "Sensory Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::absolute-threshold",
+        "psychology::multi-store-memory-model"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::short-term-memory",
+      "label": "Short-Term Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::sensory-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::long-term-memory",
+      "label": "Long-Term Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::short-term-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::levels-of-processing",
+      "label": "Levels of Processing",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::multi-store-memory-model"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::encoding-strategies",
+      "label": "Encoding Strategies",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::multi-store-memory-model",
+        "psychology::levels-of-processing"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::mnemonic-devices",
+      "label": "Mnemonic Devices",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::encoding-strategies"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::chunking",
+      "label": "Chunking",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::encoding-strategies"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::spacing-effect",
+      "label": "Spacing Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::encoding-strategies"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::serial-position-effect",
+      "label": "Serial Position Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::multi-store-memory-model",
+        "psychology::encoding-strategies"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::primacy-effect",
+      "label": "Primacy Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::serial-position-effect"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::recency-effect",
+      "label": "Recency Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::serial-position-effect"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::memory-storage",
+      "label": "Memory Storage",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::long-term-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::maintenance-rehearsal",
+      "label": "Maintenance Rehearsal",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::short-term-memory",
+        "psychology::memory-storage"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::elaborative-rehearsal",
+      "label": "Elaborative Rehearsal",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::levels-of-processing",
+        "psychology::memory-storage"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::retrieval-cues",
+      "label": "Retrieval Cues",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::long-term-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::recall-vs-recognition",
+      "label": "Recall vs. Recognition",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::retrieval-cues"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::context-dependent-memory",
+      "label": "Context-Dependent Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::retrieval-cues",
+        "psychology::recall-vs-recognition"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::state-dependent-memory",
+      "label": "State-Dependent Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::retrieval-cues",
+        "psychology::recall-vs-recognition"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::forgetting-curve",
+      "label": "Forgetting Curve",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::long-term-memory",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::proactive-interference",
+      "label": "Proactive Interference",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::forgetting-curve"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::retroactive-interference",
+      "label": "Retroactive Interference",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::forgetting-curve"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::tip-of-the-tongue-phenomenon",
+      "label": "Tip-of-the-Tongue Phenomenon",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::retrieval-cues",
+        "psychology::forgetting-curve"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::repression",
+      "label": "Repression",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::forgetting-curve"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::misinformation-effect",
+      "label": "Misinformation Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::forgetting-curve",
+        "psychology::top-down-processing"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::constructive-memory",
+      "label": "Constructive Memory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::misinformation-effect",
+        "psychology::schemas"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::anterograde-amnesia",
+      "label": "Anterograde Amnesia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hippocampus",
+        "psychology::long-term-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::retrograde-amnesia",
+      "label": "Retrograde Amnesia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::hippocampus",
+        "psychology::long-term-memory"
+      ],
+      "taxonomy_id": "MEM",
+      "level": "core"
+    },
+    {
+      "id": "psychology::intelligence-and-the-g-factor",
+      "label": "Intelligence and the g Factor",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::multiple-intelligences",
+      "label": "Multiple Intelligences",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::intelligence-and-the-g-factor"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::iq-and-mental-age",
+      "label": "IQ and Mental Age",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::intelligence-and-the-g-factor"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::standardized-testing",
+      "label": "Standardized Testing",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::iq-and-mental-age",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::test-validity",
+      "label": "Test Validity",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::standardized-testing"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::test-reliability",
+      "label": "Test Reliability",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::standardized-testing"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::flynn-effect",
+      "label": "Flynn Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::iq-and-mental-age",
+        "psychology::nature-vs-nurture"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::stereotype-threat",
+      "label": "Stereotype Threat",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::standardized-testing",
+        "psychology::stereotypes"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::fixed-vs-growth-mindset",
+      "label": "Fixed vs. Growth Mindset",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::intelligence-and-the-g-factor",
+        "psychology::self-efficacy"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::achievement-vs-aptitude-tests",
+      "label": "Achievement vs. Aptitude Tests",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::standardized-testing"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "psychology::developmental-psychology-themes",
+      "label": "Developmental Psychology Themes",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::nature-vs-nurture"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cross-sectional-research-design",
+      "label": "Cross-Sectional Research Design",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::longitudinal-research-design",
+      "label": "Longitudinal Research Design",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::prenatal-development",
+      "label": "Prenatal Development",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::teratogens",
+      "label": "Teratogens",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::prenatal-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::infant-physical-development",
+      "label": "Infant Physical Development",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::prenatal-development",
+        "psychology::developmental-psychology-themes"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::adolescent-development",
+      "label": "Adolescent Development",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::infant-physical-development",
+        "psychology::developmental-psychology-themes"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::adult-and-aging-development",
+      "label": "Adult and Aging Development",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::adolescent-development",
+        "psychology::developmental-psychology-themes"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::piaget-s-cognitive-stages",
+      "label": "Piaget's Cognitive Stages",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sensorimotor-stage",
+      "label": "Sensorimotor Stage",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::piaget-s-cognitive-stages"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::preoperational-stage",
+      "label": "Preoperational Stage",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::sensorimotor-stage"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::concrete-operational-stage",
+      "label": "Concrete Operational Stage",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::preoperational-stage"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::formal-operational-stage",
+      "label": "Formal Operational Stage",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::concrete-operational-stage"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::object-permanence",
+      "label": "Object Permanence",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::sensorimotor-stage"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::conservation",
+      "label": "Conservation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::preoperational-stage"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::egocentrism",
+      "label": "Egocentrism",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::preoperational-stage"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::theory-of-mind",
+      "label": "Theory of Mind",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::egocentrism",
+        "psychology::preoperational-stage"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::vygotsky-s-sociocultural-theory",
+      "label": "Vygotsky's Sociocultural Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::piaget-s-cognitive-stages"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::zone-of-proximal-development",
+      "label": "Zone of Proximal Development",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::vygotsky-s-sociocultural-theory"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::scaffolding",
+      "label": "Scaffolding",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::zone-of-proximal-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::fluid-vs-crystallized-intelligence",
+      "label": "Fluid vs. Crystallized Intelligence",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::intelligence-and-the-g-factor",
+        "psychology::adult-and-aging-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::language-acquisition",
+      "label": "Language Acquisition",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::critical-period-for-language",
+      "label": "Critical Period for Language",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::language-acquisition",
+        "psychology::adolescent-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::linguistic-relativity",
+      "label": "Linguistic Relativity",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::language-acquisition"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::babbling-and-early-speech",
+      "label": "Babbling and Early Speech",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::language-acquisition"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::attachment-theory",
+      "label": "Attachment Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes",
+        "psychology::infant-physical-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::secure-attachment",
+      "label": "Secure Attachment",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attachment-theory"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::insecure-attachment",
+      "label": "Insecure Attachment",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attachment-theory"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::temperament",
+      "label": "Temperament",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes",
+        "psychology::nature-vs-nurture"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::parenting-styles",
+      "label": "Parenting Styles",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attachment-theory",
+        "psychology::temperament"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::erikson-s-psychosocial-stages",
+      "label": "Erikson's Psychosocial Stages",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::identity-vs-role-confusion",
+      "label": "Identity vs. Role Confusion",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::erikson-s-psychosocial-stages",
+        "psychology::adolescent-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::kohlberg-s-moral-development",
+      "label": "Kohlberg's Moral Development",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes",
+        "psychology::concrete-operational-stage"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::gilligan-s-ethics-of-care",
+      "label": "Gilligan's Ethics of Care",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::kohlberg-s-moral-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-clock",
+      "label": "Social Clock",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::erikson-s-psychosocial-stages",
+        "psychology::adult-and-aging-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::k-bler-ross-grief-stages",
+      "label": "Kübler-Ross Grief Stages",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes",
+        "psychology::adult-and-aging-development"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::classical-conditioning",
+      "label": "Classical Conditioning",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::unconditioned-stimulus",
+      "label": "Unconditioned Stimulus",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::classical-conditioning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::conditioned-stimulus",
+      "label": "Conditioned Stimulus",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::unconditioned-stimulus"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::conditioned-response",
+      "label": "Conditioned Response",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::conditioned-stimulus"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::acquisition",
+      "label": "Acquisition",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::classical-conditioning",
+        "psychology::conditioned-stimulus"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::extinction",
+      "label": "Extinction",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::acquisition"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::spontaneous-recovery",
+      "label": "Spontaneous Recovery",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::extinction"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::stimulus-generalization",
+      "label": "Stimulus Generalization",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::acquisition"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::stimulus-discrimination",
+      "label": "Stimulus Discrimination",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stimulus-generalization"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::conditioned-emotional-response",
+      "label": "Conditioned Emotional Response",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::conditioned-response",
+        "psychology::amygdala"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::taste-aversion",
+      "label": "Taste Aversion",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::classical-conditioning",
+        "psychology::olfaction"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::operant-conditioning",
+      "label": "Operant Conditioning",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::classical-conditioning",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::positive-reinforcement",
+      "label": "Positive Reinforcement",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::operant-conditioning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::negative-reinforcement",
+      "label": "Negative Reinforcement",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::operant-conditioning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::positive-punishment",
+      "label": "Positive Punishment",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::operant-conditioning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::negative-punishment",
+      "label": "Negative Punishment",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::operant-conditioning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::schedules-of-reinforcement",
+      "label": "Schedules of Reinforcement",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::positive-reinforcement",
+        "psychology::negative-reinforcement"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::shaping-behavior",
+      "label": "Shaping Behavior",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::operant-conditioning",
+        "psychology::positive-reinforcement"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::learned-helplessness",
+      "label": "Learned Helplessness",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::operant-conditioning",
+        "psychology::positive-punishment"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-learning-theory",
+      "label": "Social Learning Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::classical-conditioning",
+        "psychology::operant-conditioning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::observational-learning",
+      "label": "Observational Learning",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-learning-theory"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::bobo-doll-study",
+      "label": "Bobo Doll Study",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::observational-learning",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::self-efficacy",
+      "label": "Self-Efficacy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-learning-theory",
+        "psychology::observational-learning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cognitive-maps",
+      "label": "Cognitive Maps",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-learning-theory"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::latent-learning",
+      "label": "Latent Learning",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cognitive-maps"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::neuroplasticity",
+      "label": "Neuroplasticity",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system",
+        "psychology::classical-conditioning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::attribution-theory",
+      "label": "Attribution Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::schemas"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::fundamental-attribution-error",
+      "label": "Fundamental Attribution Error",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attribution-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::actor-observer-bias",
+      "label": "Actor-Observer Bias",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attribution-theory",
+        "psychology::fundamental-attribution-error"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::self-serving-bias",
+      "label": "Self-Serving Bias",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attribution-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::locus-of-control",
+      "label": "Locus of Control",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attribution-theory",
+        "psychology::self-efficacy"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::mere-exposure-effect",
+      "label": "Mere Exposure Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attribution-theory",
+        "psychology::top-down-processing"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::self-fulfilling-prophecy",
+      "label": "Self-Fulfilling Prophecy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::mere-exposure-effect",
+        "psychology::attribution-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-comparison",
+      "label": "Social Comparison",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::attribution-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::stereotypes",
+      "label": "Stereotypes",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::schemas",
+        "psychology::social-comparison"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::prejudice-and-discrimination",
+      "label": "Prejudice and Discrimination",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stereotypes"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::implicit-attitudes",
+      "label": "Implicit Attitudes",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stereotypes",
+        "psychology::prejudice-and-discrimination"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::just-world-phenomenon",
+      "label": "Just-World Phenomenon",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::implicit-attitudes",
+        "psychology::attribution-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::in-group-bias",
+      "label": "In-Group Bias",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::prejudice-and-discrimination",
+        "psychology::stereotypes"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::out-group-homogeneity-bias",
+      "label": "Out-Group Homogeneity Bias",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stereotypes",
+        "psychology::in-group-bias"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cognitive-dissonance",
+      "label": "Cognitive Dissonance",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cognitive-biases",
+        "psychology::attribution-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::belief-perseverance",
+      "label": "Belief Perseverance",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cognitive-dissonance",
+        "psychology::cognitive-biases"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::belief-perseverance",
+        "psychology::cognitive-biases"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-norms",
+      "label": "Social Norms",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-influence-theory",
+      "label": "Social Influence Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-norms"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::persuasion",
+      "label": "Persuasion",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-influence-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::elaboration-likelihood-model",
+      "label": "Elaboration Likelihood Model",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::persuasion"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::conformity",
+      "label": "Conformity",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-norms",
+        "psychology::social-influence-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::obedience",
+      "label": "Obedience",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-norms",
+        "psychology::social-influence-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::milgram-obedience-study",
+      "label": "Milgram Obedience Study",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::obedience",
+        "psychology::scientific-method-in-psychology",
+        "psychology::apa-ethical-guidelines"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::asch-conformity-study",
+      "label": "Asch Conformity Study",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::conformity",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::foot-in-the-door-technique",
+      "label": "Foot-in-the-Door Technique",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::persuasion"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::door-in-the-face-technique",
+      "label": "Door-in-the-Face Technique",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::persuasion"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::group-polarization",
+      "label": "Group Polarization",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::conformity",
+        "psychology::social-norms"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::groupthink",
+      "label": "Groupthink",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::group-polarization"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::diffusion-of-responsibility",
+      "label": "Diffusion of Responsibility",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-norms",
+        "psychology::conformity"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-loafing",
+      "label": "Social Loafing",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::diffusion-of-responsibility"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::deindividuation",
+      "label": "Deindividuation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::conformity",
+        "psychology::social-norms"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-facilitation",
+      "label": "Social Facilitation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-norms"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::bystander-effect",
+      "label": "Bystander Effect",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::diffusion-of-responsibility",
+        "psychology::social-facilitation"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::altruism",
+      "label": "Altruism",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-norms",
+        "psychology::bystander-effect"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::industrial-organizational-psychology",
+      "label": "Industrial-Organizational Psychology",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-norms",
+        "psychology::attribution-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::psychodynamic-personality-theory",
+      "label": "Psychodynamic Personality Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::ego-defense-mechanisms",
+      "label": "Ego Defense Mechanisms",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychodynamic-personality-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::denial",
+      "label": "Denial",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::ego-defense-mechanisms"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::projection",
+      "label": "Projection",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::ego-defense-mechanisms"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::rationalization",
+      "label": "Rationalization",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::ego-defense-mechanisms"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::repression-personality",
+      "label": "Repression (Personality)",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::ego-defense-mechanisms"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::displacement",
+      "label": "Displacement",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::ego-defense-mechanisms"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sublimation",
+      "label": "Sublimation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::ego-defense-mechanisms"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::projective-tests",
+      "label": "Projective Tests",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychodynamic-personality-theory",
+        "psychology::standardized-testing"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::humanistic-personality-theory",
+      "label": "Humanistic Personality Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychodynamic-personality-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::unconditional-positive-regard",
+      "label": "Unconditional Positive Regard",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::humanistic-personality-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::self-actualization",
+      "label": "Self-Actualization",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::humanistic-personality-theory",
+        "psychology::self-concept"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::self-concept",
+      "label": "Self-Concept",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::humanistic-personality-theory",
+        "psychology::attribution-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-cognitive-theory",
+      "label": "Social-Cognitive Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-learning-theory",
+        "psychology::self-concept"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::reciprocal-determinism",
+      "label": "Reciprocal Determinism",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-cognitive-theory",
+        "psychology::self-efficacy"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::big-five-personality-traits",
+      "label": "Big Five Personality Traits",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::test-reliability"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::personality-inventories",
+      "label": "Personality Inventories",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::big-five-personality-traits",
+        "psychology::standardized-testing"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::drive-reduction-theory",
+      "label": "Drive-Reduction Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::arousal-theory",
+      "label": "Arousal Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::drive-reduction-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::yerkes-dodson-law",
+      "label": "Yerkes-Dodson Law",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::arousal-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::self-determination-theory",
+      "label": "Self-Determination Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::drive-reduction-theory",
+        "psychology::social-cognitive-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::intrinsic-vs-extrinsic-motivation",
+      "label": "Intrinsic vs. Extrinsic Motivation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::self-determination-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::incentive-theory",
+      "label": "Incentive Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::drive-reduction-theory",
+        "psychology::positive-reinforcement"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::motivational-conflicts",
+      "label": "Motivational Conflicts",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::drive-reduction-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sensation-seeking",
+      "label": "Sensation Seeking",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::arousal-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::hunger-and-eating-behavior",
+      "label": "Hunger and Eating Behavior",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::leptin",
+        "psychology::ghrelin",
+        "psychology::hypothalamus",
+        "psychology::drive-reduction-theory"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::theories-of-emotion",
+      "label": "Theories of Emotion",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::neurotransmitters"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::facial-feedback-hypothesis",
+      "label": "Facial-Feedback Hypothesis",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::theories-of-emotion"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::broaden-and-build-theory",
+      "label": "Broaden-and-Build Theory",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::theories-of-emotion"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::universal-basic-emotions",
+      "label": "Universal Basic Emotions",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::theories-of-emotion"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::display-rules-for-emotion",
+      "label": "Display Rules for Emotion",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::theories-of-emotion",
+        "psychology::social-norms"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "psychology::health-psychology",
+      "label": "Health Psychology",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::stress-and-behavior",
+      "label": "Stress and Behavior",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::health-psychology",
+        "psychology::sympathetic-nervous-system"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::eustress-vs-distress",
+      "label": "Eustress vs. Distress",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stress-and-behavior"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::adverse-childhood-experiences",
+      "label": "Adverse Childhood Experiences",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stress-and-behavior",
+        "psychology::prenatal-development"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::general-adaptation-syndrome",
+      "label": "General Adaptation Syndrome",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stress-and-behavior",
+        "psychology::sympathetic-nervous-system",
+        "psychology::parasympathetic-nervous-system"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::fight-flight-freeze-response",
+      "label": "Fight-Flight-Freeze Response",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::sympathetic-nervous-system",
+        "psychology::adrenaline-epinephrine",
+        "psychology::amygdala"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::tend-and-befriend-response",
+      "label": "Tend-and-Befriend Response",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::general-adaptation-syndrome",
+        "psychology::oxytocin"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::problem-focused-coping",
+      "label": "Problem-Focused Coping",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stress-and-behavior",
+        "psychology::eustress-vs-distress"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::emotion-focused-coping",
+      "label": "Emotion-Focused Coping",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::stress-and-behavior",
+        "psychology::theories-of-emotion"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::positive-psychology",
+      "label": "Positive Psychology",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::health-psychology",
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::well-being-and-resilience",
+      "label": "Well-Being and Resilience",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::positive-psychology"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::gratitude-and-subjective-well-being",
+      "label": "Gratitude and Subjective Well-Being",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::well-being-and-resilience",
+        "psychology::positive-psychology"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::signature-strengths",
+      "label": "Signature Strengths",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::positive-psychology",
+        "psychology::well-being-and-resilience"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::posttraumatic-growth",
+      "label": "Posttraumatic Growth",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::positive-psychology",
+        "psychology::ptsd"
+      ],
+      "taxonomy_id": "HLTH",
+      "level": "core"
+    },
+    {
+      "id": "psychology::defining-psychological-disorders",
+      "label": "Defining Psychological Disorders",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychology-as-a-science",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::dsm-classification-system",
+      "label": "DSM Classification System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::icd-classification-system",
+      "label": "ICD Classification System",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::biopsychosocial-model",
+      "label": "Biopsychosocial Model",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::nature-vs-nurture"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::diathesis-stress-model",
+      "label": "Diathesis-Stress Model",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::biopsychosocial-model",
+        "psychology::heredity-and-behavior",
+        "psychology::stress-and-behavior"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::stigma-in-mental-health",
+      "label": "Stigma in Mental Health",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::prejudice-and-discrimination"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::behavioral-perspective-on-disorders",
+      "label": "Behavioral Perspective on Disorders",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::classical-conditioning",
+        "psychology::defining-psychological-disorders"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cognitive-perspective-on-disorders",
+      "label": "Cognitive Perspective on Disorders",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cognitive-biases",
+        "psychology::defining-psychological-disorders"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::biological-perspective-on-disorders",
+      "label": "Biological Perspective on Disorders",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::central-nervous-system",
+        "psychology::defining-psychological-disorders"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::sociocultural-perspective-on-disorders",
+      "label": "Sociocultural Perspective on Disorders",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::social-norms",
+        "psychology::defining-psychological-disorders"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::adhd",
+      "label": "ADHD",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::prenatal-development"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::autism-spectrum-disorder",
+      "label": "Autism Spectrum Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::prenatal-development"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::schizophrenia",
+      "label": "Schizophrenia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::positive-symptoms-of-schizophrenia",
+      "label": "Positive Symptoms of Schizophrenia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::schizophrenia"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::negative-symptoms-of-schizophrenia",
+      "label": "Negative Symptoms of Schizophrenia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::schizophrenia"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::dopamine-hypothesis",
+      "label": "Dopamine Hypothesis",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::dopamine",
+        "psychology::schizophrenia"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::major-depressive-disorder",
+      "label": "Major Depressive Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::serotonin"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::persistent-depressive-disorder",
+      "label": "Persistent Depressive Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::major-depressive-disorder"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::bipolar-i-disorder",
+      "label": "Bipolar I Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::major-depressive-disorder"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::bipolar-ii-disorder",
+      "label": "Bipolar II Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::bipolar-i-disorder"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::mania",
+      "label": "Mania",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::bipolar-i-disorder"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::specific-phobia",
+      "label": "Specific Phobia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::classical-conditioning"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::agoraphobia",
+      "label": "Agoraphobia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::panic-disorder",
+      "label": "Panic Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::fight-flight-freeze-response"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::social-anxiety-disorder",
+      "label": "Social Anxiety Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::stereotypes"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::generalized-anxiety-disorder",
+      "label": "Generalized Anxiety Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::stress-and-behavior"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::culture-bound-anxiety-disorders",
+      "label": "Culture-Bound Anxiety Disorders",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::panic-disorder",
+        "psychology::social-anxiety-disorder",
+        "psychology::sociocultural-perspective-on-disorders"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::obsessive-compulsive-disorder",
+      "label": "Obsessive-Compulsive Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::hoarding-disorder",
+      "label": "Hoarding Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::obsessive-compulsive-disorder"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::dissociative-amnesia",
+      "label": "Dissociative Amnesia",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::anterograde-amnesia"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::dissociative-identity-disorder",
+      "label": "Dissociative Identity Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::dissociative-amnesia"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::ptsd",
+      "label": "PTSD",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system",
+        "psychology::adverse-childhood-experiences"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::feeding-and-eating-disorders",
+      "label": "Feeding and Eating Disorders",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::anorexia-nervosa",
+      "label": "Anorexia Nervosa",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::feeding-and-eating-disorders",
+        "psychology::hunger-and-eating-behavior"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::bulimia-nervosa",
+      "label": "Bulimia Nervosa",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::feeding-and-eating-disorders",
+        "psychology::hunger-and-eating-behavior"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::personality-disorder-clusters",
+      "label": "Personality Disorder Clusters",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::dsm-classification-system"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::antisocial-personality-disorder",
+      "label": "Antisocial Personality Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::personality-disorder-clusters"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::borderline-personality-disorder",
+      "label": "Borderline Personality Disorder",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::personality-disorder-clusters"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::evidence-based-psychotherapy",
+      "label": "Evidence-Based Psychotherapy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::defining-psychological-disorders",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::psychodynamic-therapy",
+      "label": "Psychodynamic Therapy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychodynamic-personality-theory",
+        "psychology::evidence-based-psychotherapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cognitive-therapy",
+      "label": "Cognitive Therapy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cognitive-perspective-on-disorders",
+        "psychology::evidence-based-psychotherapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::behavioral-therapy",
+      "label": "Behavioral Therapy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::classical-conditioning",
+        "psychology::evidence-based-psychotherapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::cognitive-behavioral-therapy",
+      "label": "Cognitive-Behavioral Therapy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::cognitive-therapy",
+        "psychology::behavioral-therapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::humanistic-person-centered-therapy",
+      "label": "Humanistic (Person-Centered) Therapy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::humanistic-personality-theory",
+        "psychology::evidence-based-psychotherapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::group-therapy",
+      "label": "Group Therapy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::evidence-based-psychotherapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::systematic-desensitization",
+      "label": "Systematic Desensitization",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::behavioral-therapy",
+        "psychology::classical-conditioning",
+        "psychology::specific-phobia"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::biofeedback",
+      "label": "Biofeedback",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::behavioral-therapy",
+        "psychology::general-adaptation-syndrome"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::hypnosis-in-treatment",
+      "label": "Hypnosis in Treatment",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::evidence-based-psychotherapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::psychotropic-medications",
+      "label": "Psychotropic Medications",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::neurotransmitters",
+        "psychology::evidence-based-psychotherapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::antidepressants",
+      "label": "Antidepressants",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychotropic-medications",
+        "psychology::major-depressive-disorder",
+        "psychology::serotonin"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::antianxiety-medications",
+      "label": "Antianxiety Medications",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychotropic-medications",
+        "psychology::generalized-anxiety-disorder",
+        "psychology::gaba"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::antipsychotic-medications",
+      "label": "Antipsychotic Medications",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychotropic-medications",
+        "psychology::schizophrenia",
+        "psychology::dopamine"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::electroconvulsive-therapy",
+      "label": "Electroconvulsive Therapy",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychotropic-medications",
+        "psychology::major-depressive-disorder"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::transcranial-magnetic-stimulation",
+      "label": "Transcranial Magnetic Stimulation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::psychotropic-medications",
+        "psychology::brain-imaging-methods"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::experimental-research-design",
+      "label": "Experimental Research Design",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::independent-and-dependent-variables",
+      "label": "Independent and Dependent Variables",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::experimental-research-design"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::control-and-experimental-groups",
+      "label": "Control and Experimental Groups",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::experimental-research-design",
+        "psychology::independent-and-dependent-variables"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::random-assignment",
+      "label": "Random Assignment",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::control-and-experimental-groups"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::operational-definitions",
+      "label": "Operational Definitions",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::experimental-research-design",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::confounding-variables",
+      "label": "Confounding Variables",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::control-and-experimental-groups",
+        "psychology::random-assignment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::non-experimental-methods",
+      "label": "Non-Experimental Methods",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::case-studies",
+      "label": "Case Studies",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::non-experimental-methods"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::correlational-research",
+      "label": "Correlational Research",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::non-experimental-methods",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::naturalistic-observation",
+      "label": "Naturalistic Observation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::non-experimental-methods"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::surveys-and-sampling",
+      "label": "Surveys and Sampling",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::non-experimental-methods"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::measures-of-central-tendency",
+      "label": "Measures of Central Tendency",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::standard-deviation",
+      "label": "Standard Deviation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::measures-of-central-tendency"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::percentile-rank",
+      "label": "Percentile Rank",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::measures-of-central-tendency"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::statistical-significance",
+      "label": "Statistical Significance",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::measures-of-central-tendency",
+        "psychology::standard-deviation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::apa-ethical-guidelines",
+      "label": "APA Ethical Guidelines",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::scientific-method-in-psychology",
+        "psychology::psychology-as-a-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::informed-consent",
+      "label": "Informed Consent",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::apa-ethical-guidelines"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::debriefing-in-research",
+      "label": "Debriefing in Research",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::apa-ethical-guidelines",
+        "psychology::informed-consent"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "psychology::positive-and-negative-reinforcement-contrast",
+      "label": "Positive and Negative Reinforcement Contrast",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::positive-reinforcement",
+        "psychology::negative-reinforcement"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "psychology::gender-and-sexual-orientation",
+      "label": "Gender and Sexual Orientation",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::developmental-psychology-themes",
+        "psychology::nature-vs-nurture"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "psychology::ethnocentrism",
+      "label": "Ethnocentrism",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::prejudice-and-discrimination",
+        "psychology::social-norms",
+        "psychology::sociocultural-perspective-on-disorders"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "psychology::replicability-and-generalizability",
+      "label": "Replicability and Generalizability",
+      "subject_id": "psychology",
+      "dependencies": [
+        "psychology::statistical-significance",
+        "psychology::scientific-method-in-psychology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    }
+  ]
+}

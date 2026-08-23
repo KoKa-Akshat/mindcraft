@@ -1,0 +1,5040 @@
+{
+  "subject_id": "bioinformatics",
+  "title": "Bioinformatics with Graph-Based Data Modeling",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "lightcoral"
+    },
+    "DBAS": {
+      "classifier_name": "Biological Databases",
+      "color": "peachpuff"
+    },
+    "DFMT": {
+      "classifier_name": "Data Formats",
+      "color": "thistle"
+    },
+    "GRTH": {
+      "classifier_name": "Graph Theory",
+      "color": "powderblue"
+    },
+    "GRDB": {
+      "classifier_name": "Graph Databases",
+      "color": "lightsteelblue"
+    },
+    "SEQA": {
+      "classifier_name": "Sequence Analysis",
+      "color": "palegreen"
+    },
+    "PHYL": {
+      "classifier_name": "Phylogenetics",
+      "color": "honeydew"
+    },
+    "STRU": {
+      "classifier_name": "Structural Bioinformatics",
+      "color": "lightpink"
+    },
+    "PPIS": {
+      "classifier_name": "Protein Interactions",
+      "color": "lavender"
+    },
+    "GENO": {
+      "classifier_name": "Genomics",
+      "color": "lightyellow"
+    },
+    "TRNS": {
+      "classifier_name": "Transcriptomics",
+      "color": "paleturquoise"
+    },
+    "PATH": {
+      "classifier_name": "Pathways and Disease",
+      "color": "mistyrose"
+    },
+    "KNOW": {
+      "classifier_name": "Knowledge Graphs",
+      "color": "aquamarine"
+    },
+    "TOOL": {
+      "classifier_name": "Tools and Capstone",
+      "color": "gainsboro"
+    }
+  },
+  "concepts": [
+    {
+      "id": "bioinformatics::bioinformatics",
+      "label": "Bioinformatics",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::computational-biology",
+      "label": "Computational Biology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::bioinformatics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::central-dogma",
+      "label": "Central Dogma",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::bioinformatics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::dna-structure",
+      "label": "DNA Structure",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::central-dogma"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::rna-structure",
+      "label": "RNA Structure",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::central-dogma"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-structure",
+      "label": "Protein Structure",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::central-dogma"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::amino-acids",
+      "label": "Amino Acids",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::nucleotides",
+      "label": "Nucleotides",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::dna-structure",
+        "bioinformatics::rna-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::codons",
+      "label": "Codons",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nucleotides",
+        "bioinformatics::genetic-code"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gene",
+      "label": "Gene",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::dna-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genome",
+      "label": "Genome",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::transcription",
+      "label": "Transcription",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::dna-structure",
+        "bioinformatics::rna-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::translation",
+      "label": "Translation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rna-structure",
+        "bioinformatics::protein-structure",
+        "bioinformatics::codons"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gene-expression",
+      "label": "Gene Expression",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::transcription",
+        "bioinformatics::translation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequence-data",
+      "label": "Sequence Data",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::dna-structure",
+        "bioinformatics::rna-structure",
+        "bioinformatics::protein-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::molecular-biology",
+      "label": "Molecular Biology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::central-dogma"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cell-biology-basics",
+      "label": "Cell Biology Basics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::bioinformatics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genetic-code",
+      "label": "Genetic Code",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::central-dogma"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::open-reading-frame",
+      "label": "Open Reading Frame",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene",
+        "bioinformatics::genetic-code"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::complementary-base-pairing",
+      "label": "Complementary Base Pairing",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::dna-structure",
+        "bioinformatics::nucleotides"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::chromosomes",
+      "label": "Chromosomes",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::dna-structure",
+        "bioinformatics::genome"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::mutations",
+      "label": "Mutations",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::dna-structure",
+        "bioinformatics::gene"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::single-nucleotide-polymorphism",
+      "label": "Single Nucleotide Polymorphism",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::mutations"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::insertion-and-deletion",
+      "label": "Insertion and Deletion",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::mutations"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::structural-variant",
+      "label": "Structural Variant",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::mutations",
+        "bioinformatics::chromosomes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::copy-number-variation",
+      "label": "Copy Number Variation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::structural-variant"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::epigenetics",
+      "label": "Epigenetics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-expression"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::dna-methylation",
+      "label": "DNA Methylation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::epigenetics",
+        "bioinformatics::dna-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::histone-modification",
+      "label": "Histone Modification",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::epigenetics",
+        "bioinformatics::chromosomes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::central-dogma-exceptions",
+      "label": "Central Dogma Exceptions",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::central-dogma",
+        "bioinformatics::transcription",
+        "bioinformatics::translation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::biological-databases",
+      "label": "Biological Databases",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-data"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ncbi",
+      "label": "NCBI",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genbank-database",
+      "label": "GenBank Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::ncbi"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::uniprot",
+      "label": "UniProt",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases",
+        "bioinformatics::protein-structure"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::swiss-prot",
+      "label": "Swiss-Prot",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::uniprot"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::trembl",
+      "label": "TrEMBL",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::uniprot"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-data-bank",
+      "label": "Protein Data Bank",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases",
+        "bioinformatics::protein-structure"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ensembl",
+      "label": "Ensembl",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases",
+        "bioinformatics::genome"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::kegg-database",
+      "label": "KEGG Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::reactome-database",
+      "label": "Reactome Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::biogrid-database",
+      "label": "BioGRID Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::string-database",
+      "label": "STRING Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::intact-database",
+      "label": "IntAct Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cosmic-database",
+      "label": "COSMIC Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases",
+        "bioinformatics::mutations"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gene-ontology-database",
+      "label": "Gene Ontology Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases",
+        "bioinformatics::gene"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::disease-ontology-database",
+      "label": "Disease Ontology Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::human-phenotype-ontology-db",
+      "label": "Human Phenotype Ontology DB",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::biocyc-database",
+      "label": "BioCyc Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::omim-database",
+      "label": "OMIM Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases",
+        "bioinformatics::mutations"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::hetionet-database",
+      "label": "Hetionet Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::database-cross-references",
+      "label": "Database Cross-References",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::programmatic-database-access",
+      "label": "Programmatic Database Access",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::rest-apis-for-biology",
+      "label": "REST APIs for Biology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::programmatic-database-access"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::batch-data-download",
+      "label": "Batch Data Download",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::programmatic-database-access"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::data-provenance",
+      "label": "Data Provenance",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "DBAS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::fasta-format",
+      "label": "FASTA Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-data"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::fastq-format",
+      "label": "FASTQ Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genbank-format",
+      "label": "GenBank Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genbank-database",
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gff3-format",
+      "label": "GFF3 Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format",
+        "bioinformatics::gene"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::owl-format",
+      "label": "OWL Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pdb-file-format",
+      "label": "PDB File Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-data-bank",
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::vcf-format",
+      "label": "VCF Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format",
+        "bioinformatics::mutations"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sam-and-bam-format",
+      "label": "SAM and BAM Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::bed-format",
+      "label": "BED Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sbml-format",
+      "label": "SBML Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::biopax-format",
+      "label": "BioPAX Format",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::csv-for-bioinformatics",
+      "label": "CSV for Bioinformatics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::json-for-bioinformatics",
+      "label": "JSON for Bioinformatics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::data-format-conversion",
+      "label": "Data Format Conversion",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::data-quality-control",
+      "label": "Data Quality Control",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::fasta-format",
+        "bioinformatics::fastq-format"
+      ],
+      "taxonomy_id": "DFMT",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-theory",
+      "label": "Graph Theory",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "GRTH",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::nodes-and-edges",
+      "label": "Nodes and Edges",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-theory"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::directed-graphs",
+      "label": "Directed Graphs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::undirected-graphs",
+      "label": "Undirected Graphs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::weighted-graphs",
+      "label": "Weighted Graphs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::bipartite-graphs",
+      "label": "Bipartite Graphs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::labeled-property-graph",
+      "label": "Labeled Property Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::multigraph",
+      "label": "Multigraph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::hypergraph",
+      "label": "Hypergraph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::subgraph",
+      "label": "Subgraph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-properties",
+      "label": "Graph Properties",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::degree-distribution",
+      "label": "Degree Distribution",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-properties"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::in-degree",
+      "label": "In-Degree",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::directed-graphs",
+        "bioinformatics::degree-distribution"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::out-degree",
+      "label": "Out-Degree",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::directed-graphs",
+        "bioinformatics::degree-distribution"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::clustering-coefficient",
+      "label": "Clustering Coefficient",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-properties"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::centrality-measures",
+      "label": "Centrality Measures",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-properties"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::degree-centrality",
+      "label": "Degree Centrality",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::centrality-measures",
+        "bioinformatics::degree-distribution"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::betweenness-centrality",
+      "label": "Betweenness Centrality",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::centrality-measures",
+        "bioinformatics::shortest-path-algorithms"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::closeness-centrality",
+      "label": "Closeness Centrality",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::centrality-measures",
+        "bioinformatics::shortest-path-algorithms"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::eigenvector-centrality",
+      "label": "Eigenvector Centrality",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::centrality-measures"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pagerank",
+      "label": "PageRank",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::directed-graphs",
+        "bioinformatics::eigenvector-centrality"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::connected-components",
+      "label": "Connected Components",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-properties"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::strongly-connected-comp",
+      "label": "Strongly Connected Comp",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::directed-graphs",
+        "bioinformatics::connected-components"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-traversal",
+      "label": "Graph Traversal",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::breadth-first-search",
+      "label": "Breadth-First Search",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-traversal"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::depth-first-search",
+      "label": "Depth-First Search",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-traversal"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::shortest-path-algorithms",
+      "label": "Shortest Path Algorithms",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-traversal"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::dijkstra-algorithm",
+      "label": "Dijkstra Algorithm",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::shortest-path-algorithms",
+        "bioinformatics::weighted-graphs"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-density",
+      "label": "Graph Density",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-properties"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-diameter",
+      "label": "Graph Diameter",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::shortest-path-algorithms"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::scale-free-networks",
+      "label": "Scale-Free Networks",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::degree-distribution",
+        "bioinformatics::power-law-distribution"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::small-world-networks",
+      "label": "Small-World Networks",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::clustering-coefficient",
+        "bioinformatics::graph-diameter"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::power-law-distribution",
+      "label": "Power-Law Distribution",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::degree-distribution"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::random-graph-models",
+      "label": "Random Graph Models",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-properties"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::erdos-renyi-model",
+      "label": "Erdos-Renyi Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::random-graph-models"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::barabasi-albert-model",
+      "label": "Barabasi-Albert Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::random-graph-models",
+        "bioinformatics::scale-free-networks"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-motifs",
+      "label": "Network Motifs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::subgraph",
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-isomorphism",
+      "label": "Graph Isomorphism",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::adjacency-matrix",
+      "label": "Adjacency Matrix",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::edge-list-representation",
+      "label": "Edge List Representation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-database",
+      "label": "Graph Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::relational-database",
+      "label": "Relational Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "GRDB",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::graph-vs-relational-model",
+      "label": "Graph vs Relational Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database",
+        "bioinformatics::relational-database"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::neo4j",
+      "label": "Neo4j",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::memgraph",
+      "label": "Memgraph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cypher-query-language",
+      "label": "Cypher Query Language",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::neo4j"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gql-query-language",
+      "label": "GQL Query Language",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::match-clause",
+      "label": "MATCH Clause",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cypher-query-language"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::where-clause",
+      "label": "WHERE Clause",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cypher-query-language"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::return-clause",
+      "label": "RETURN Clause",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cypher-query-language"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::create-clause",
+      "label": "CREATE Clause",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cypher-query-language"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::merge-clause",
+      "label": "MERGE Clause",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cypher-query-language"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-pattern-matching",
+      "label": "Graph Pattern Matching",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cypher-query-language",
+        "bioinformatics::match-clause"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::variable-length-paths",
+      "label": "Variable-Length Paths",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-pattern-matching"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::path-queries",
+      "label": "Path Queries",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-pattern-matching",
+        "bioinformatics::shortest-path-algorithms"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::aggregation-in-cypher",
+      "label": "Aggregation in Cypher",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::return-clause"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-schema-design",
+      "label": "Graph Schema Design",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database",
+        "bioinformatics::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::node-labels",
+      "label": "Node Labels",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::relationship-types",
+      "label": "Relationship Types",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::property-keys",
+      "label": "Property Keys",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::index-and-constraints",
+      "label": "Index and Constraints",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::rdf-triple-model",
+      "label": "RDF Triple Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-theory"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::subject-predicate-object",
+      "label": "Subject-Predicate-Object",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rdf-triple-model"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sparql-query-language",
+      "label": "SPARQL Query Language",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rdf-triple-model"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::lpg-vs-rdf-comparison",
+      "label": "LPG vs RDF Comparison",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::labeled-property-graph",
+        "bioinformatics::rdf-triple-model"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-data-loading",
+      "label": "Graph Data Loading",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database",
+        "bioinformatics::fasta-format"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::csv-import-to-graph-db",
+      "label": "CSV Import to Graph DB",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-data-loading",
+        "bioinformatics::csv-for-bioinformatics"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::etl-for-graph-databases",
+      "label": "ETL for Graph Databases",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-data-loading"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-query-optimization",
+      "label": "Graph Query Optimization",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cypher-query-language",
+        "bioinformatics::query-profiling"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::query-profiling",
+      "label": "Query Profiling",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cypher-query-language"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::distributed-graph-databases",
+      "label": "Distributed Graph Databases",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database",
+        "bioinformatics::graph-scalability"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-partitioning",
+      "label": "Graph Partitioning",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::distributed-graph-databases"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-scalability",
+      "label": "Graph Scalability",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-transactions",
+      "label": "Graph Transactions",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-access-control",
+      "label": "Graph Access Control",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-database"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequence-alignment",
+      "label": "Sequence Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-data"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pairwise-alignment",
+      "label": "Pairwise Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::global-alignment",
+      "label": "Global Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::pairwise-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::local-alignment",
+      "label": "Local Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::pairwise-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::smith-waterman-algorithm",
+      "label": "Smith-Waterman Algorithm",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::local-alignment",
+        "bioinformatics::dynamic-programming"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::needleman-wunsch-algorithm",
+      "label": "Needleman-Wunsch Algorithm",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::global-alignment",
+        "bioinformatics::dynamic-programming"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::dynamic-programming",
+      "label": "Dynamic Programming",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "SEQA",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::scoring-matrices",
+      "label": "Scoring Matrices",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::blosum-matrix",
+      "label": "BLOSUM Matrix",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::scoring-matrices"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pam-matrix",
+      "label": "PAM Matrix",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::scoring-matrices"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::substitution-model",
+      "label": "Substitution Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::scoring-matrices"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gap-penalties",
+      "label": "Gap Penalties",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::affine-gap-penalty",
+      "label": "Affine Gap Penalty",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gap-penalties"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::blast",
+      "label": "BLAST",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::local-alignment",
+        "bioinformatics::scoring-matrices"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::blast-e-value",
+      "label": "BLAST E-Value",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::blast"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::blast-heuristics",
+      "label": "BLAST Heuristics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::blast"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::psi-blast",
+      "label": "PSI-BLAST",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::blast",
+        "bioinformatics::sequence-profile"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequence-homology",
+      "label": "Sequence Homology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::orthologs",
+      "label": "Orthologs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-homology"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::paralogs",
+      "label": "Paralogs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-homology"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequence-identity",
+      "label": "Sequence Identity",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequence-similarity",
+      "label": "Sequence Similarity",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-alignment",
+        "bioinformatics::scoring-matrices"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequence-similarity-network",
+      "label": "Sequence Similarity Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-similarity",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-similarity",
+      "label": "Graph Model for Similarity",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-similarity-network",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::multiple-sequence-alignment",
+      "label": "Multiple Sequence Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::clustal",
+      "label": "Clustal",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multiple-sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::muscle-aligner",
+      "label": "MUSCLE Aligner",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multiple-sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::progressive-alignment",
+      "label": "Progressive Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multiple-sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::consensus-sequence",
+      "label": "Consensus Sequence",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multiple-sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequence-profile",
+      "label": "Sequence Profile",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multiple-sequence-alignment"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::hidden-markov-model",
+      "label": "Hidden Markov Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "SEQA",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::profile-hmm",
+      "label": "Profile HMM",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::hidden-markov-model",
+        "bioinformatics::sequence-profile"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequence-motif",
+      "label": "Sequence Motif",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::consensus-sequence"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::regular-expressions",
+      "label": "Regular Expressions",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "SEQA",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::motif-discovery",
+      "label": "Motif Discovery",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-motif",
+        "bioinformatics::regular-expressions"
+      ],
+      "taxonomy_id": "SEQA",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::phylogenetic-tree",
+      "label": "Phylogenetic Tree",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multiple-sequence-alignment",
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::phylogenetics",
+      "label": "Phylogenetics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::molecular-phylogenetics",
+      "label": "Molecular Phylogenetics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetics",
+        "bioinformatics::sequence-homology"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::distance-matrix",
+      "label": "Distance Matrix",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-similarity"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::neighbor-joining-method",
+      "label": "Neighbor-Joining Method",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::distance-matrix"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::upgma-method",
+      "label": "UPGMA Method",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::distance-matrix"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::maximum-parsimony",
+      "label": "Maximum Parsimony",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::maximum-likelihood-method",
+      "label": "Maximum Likelihood Method",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree",
+        "bioinformatics::substitution-model"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::bayesian-inference",
+      "label": "Bayesian Inference",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::markov-chain-monte-carlo",
+      "label": "Markov Chain Monte Carlo",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::bayesian-inference"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::bootstrap-analysis",
+      "label": "Bootstrap Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::branch-support-values",
+      "label": "Branch Support Values",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::bootstrap-analysis"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::molecular-clock",
+      "label": "Molecular Clock",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::substitution-rate"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::substitution-rate",
+      "label": "Substitution Rate",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::substitution-model"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::trees-as-dags",
+      "label": "Trees as DAGs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree",
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::phylogenetic-networks",
+      "label": "Phylogenetic Networks",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::reticulate-evolution",
+      "label": "Reticulate Evolution",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-networks"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::horizontal-gene-transfer",
+      "label": "Horizontal Gene Transfer",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::reticulate-evolution"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::recombination",
+      "label": "Recombination",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::reticulate-evolution"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::incomplete-lineage-sorting",
+      "label": "Incomplete Lineage Sorting",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-tree-vs-species-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-evolution",
+      "label": "Graph Model for Evolution",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-networks",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cladogram",
+      "label": "Cladogram",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::phylogram",
+      "label": "Phylogram",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::monophyletic-group",
+      "label": "Monophyletic Group",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::paraphyletic-group",
+      "label": "Paraphyletic Group",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::monophyletic-group"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::outgroup",
+      "label": "Outgroup",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::rooted-vs-unrooted-trees",
+      "label": "Rooted vs Unrooted Trees",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::tree-topology-comparison",
+      "label": "Tree Topology Comparison",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::robinson-foulds-distance",
+      "label": "Robinson-Foulds Distance",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tree-topology-comparison"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ancestral-reconstruction",
+      "label": "Ancestral Reconstruction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree",
+        "bioinformatics::bayesian-inference"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::divergence-time-estimation",
+      "label": "Divergence Time Estimation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::molecular-clock",
+        "bioinformatics::maximum-likelihood-method"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gene-tree-vs-species-tree",
+      "label": "Gene Tree vs Species Tree",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetic-tree",
+        "bioinformatics::gene"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::coalescent-theory",
+      "label": "Coalescent Theory",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-tree-vs-species-tree"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::phylogenomics",
+      "label": "Phylogenomics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenetics",
+        "bioinformatics::genome"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::comparative-genomics",
+      "label": "Comparative Genomics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::phylogenomics",
+        "bioinformatics::genome"
+      ],
+      "taxonomy_id": "PHYL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::primary-structure",
+      "label": "Primary Structure",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::amino-acids"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::secondary-structure",
+      "label": "Secondary Structure",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::primary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::alpha-helix",
+      "label": "Alpha Helix",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::secondary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::beta-sheet",
+      "label": "Beta Sheet",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::secondary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::tertiary-structure",
+      "label": "Tertiary Structure",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::secondary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::quaternary-structure",
+      "label": "Quaternary Structure",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-folding",
+      "label": "Protein Folding",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-folding-problem",
+      "label": "Protein Folding Problem",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-folding"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::homology-modeling",
+      "label": "Homology Modeling",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-homology",
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::threading",
+      "label": "Threading",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ab-initio-prediction",
+      "label": "Ab Initio Prediction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::alphafold",
+      "label": "AlphaFold",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-folding",
+        "bioinformatics::profile-hmm"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::alphafold-database",
+      "label": "AlphaFold Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::alphafold"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-contact-map",
+      "label": "Protein Contact Map",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::contact-map-as-graph",
+      "label": "Contact Map as Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-contact-map",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::residue-interaction-network",
+      "label": "Residue Interaction Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::contact-map-as-graph"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-contacts",
+      "label": "Graph Model for Contacts",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::residue-interaction-network",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::structural-alignment",
+      "label": "Structural Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::rmsd",
+      "label": "RMSD",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::structural-alignment"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-domain",
+      "label": "Protein Domain",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::domain-classification",
+      "label": "Domain Classification",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-domain"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::scop-database",
+      "label": "SCOP Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::domain-classification"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pfam-database",
+      "label": "Pfam Database",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::domain-classification",
+        "bioinformatics::profile-hmm"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-surface-analysis",
+      "label": "Protein Surface Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::binding-site-prediction",
+      "label": "Binding Site Prediction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-surface-analysis"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::molecular-docking",
+      "label": "Molecular Docking",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::binding-site-prediction",
+        "bioinformatics::ligand-protein-interaction"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ligand-protein-interaction",
+      "label": "Ligand-Protein Interaction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-structure"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::drug-likeness",
+      "label": "Drug-Likeness",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::ligand-protein-interaction"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::admet-properties",
+      "label": "ADMET Properties",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::drug-likeness"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-ligand-graph",
+      "label": "Protein-Ligand Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::ligand-protein-interaction",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::molecular-fingerprints",
+      "label": "Molecular Fingerprints",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::ligand-protein-interaction"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::chemical-similarity",
+      "label": "Chemical Similarity",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::molecular-fingerprints"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::structure-activity-relation",
+      "label": "Structure-Activity Relation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::chemical-similarity"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-function-inference",
+      "label": "Protein Function Inference",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-domain",
+        "bioinformatics::sequence-homology"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::structural-genomics",
+      "label": "Structural Genomics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::tertiary-structure",
+        "bioinformatics::genome"
+      ],
+      "taxonomy_id": "STRU",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-interaction-network",
+      "label": "Protein Interaction Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::scale-free-networks",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::interactome",
+      "label": "Interactome",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::yeast-two-hybrid",
+      "label": "Yeast Two-Hybrid",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::co-immunoprecipitation",
+      "label": "Co-Immunoprecipitation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::affinity-purification-ms",
+      "label": "Affinity Purification MS",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cross-linking-mass-spec",
+      "label": "Cross-Linking Mass Spec",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ppi-confidence-scoring",
+      "label": "PPI Confidence Scoring",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::binary-vs-complex-ppis",
+      "label": "Binary vs Complex PPIs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-hubs",
+      "label": "Network Hubs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::degree-centrality"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-bottlenecks",
+      "label": "Network Bottlenecks",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::betweenness-centrality"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-modules",
+      "label": "Network Modules",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::connected-components"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-ppis",
+      "label": "Graph Model for PPIs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::hub-and-spoke-topology",
+      "label": "Hub-and-Spoke Topology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-hubs"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::date-hubs-vs-party-hubs",
+      "label": "Date Hubs vs Party Hubs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-hubs"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::essential-proteins",
+      "label": "Essential Proteins",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-hubs",
+        "bioinformatics::network-bottlenecks"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-complex-detection",
+      "label": "Protein Complex Detection",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-modules"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::clique-detection",
+      "label": "Clique Detection",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-modules"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::dense-subgraph-mining",
+      "label": "Dense Subgraph Mining",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-modules",
+        "bioinformatics::subgraph"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-rewiring",
+      "label": "Network Rewiring",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::dynamic-ppi-networks",
+      "label": "Dynamic PPI Networks",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::network-rewiring"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::tissue-specific-ppis",
+      "label": "Tissue-Specific PPIs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::gene-expression"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::host-pathogen-ppis",
+      "label": "Host-Pathogen PPIs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::viral-interactome",
+      "label": "Viral Interactome",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::host-pathogen-ppis"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ppi-prediction-methods",
+      "label": "PPI Prediction Methods",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::hidden-markov-model"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::interaction-domain-pairs",
+      "label": "Interaction Domain Pairs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-domain",
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::co-evolution-analysis",
+      "label": "Co-Evolution Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::sequence-similarity"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-alignment",
+      "label": "Network Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::graph-isomorphism"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-comparison",
+      "label": "Network Comparison",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::network-alignment"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graphlet-analysis",
+      "label": "Graphlet Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::network-motifs"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-centrality-in-ppis",
+      "label": "Network Centrality in PPIs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::centrality-measures"
+      ],
+      "taxonomy_id": "PPIS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genome-assembly",
+      "label": "Genome Assembly",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome",
+        "bioinformatics::sequence-data"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::de-bruijn-graph",
+      "label": "De Bruijn Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome-assembly",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::k-mer",
+      "label": "K-mer",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::de-bruijn-graph"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::k-mer-spectrum",
+      "label": "K-mer Spectrum",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::k-mer"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::contig",
+      "label": "Contig",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome-assembly"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::scaffold",
+      "label": "Scaffold",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::contig"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::n50-metric",
+      "label": "N50 Metric",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome-assembly"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::assembly-quality-metrics",
+      "label": "Assembly Quality Metrics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::n50-metric"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::reference-genome",
+      "label": "Reference Genome",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome-assembly"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::reference-bias",
+      "label": "Reference Bias",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::reference-genome"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pangenome",
+      "label": "Pangenome",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::reference-genome"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pangenome-graph",
+      "label": "Pangenome Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::pangenome",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::variation-graph",
+      "label": "Variation Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::pangenome-graph"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::vg-toolkit",
+      "label": "VG Toolkit",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::variation-graph"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-variants",
+      "label": "Graph Model for Variants",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::variation-graph",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::read-mapping-to-graphs",
+      "label": "Read Mapping to Graphs",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::variation-graph",
+        "bioinformatics::sam-and-bam-format"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genome-annotation",
+      "label": "Genome Annotation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::reference-genome",
+        "bioinformatics::gene"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gene-prediction",
+      "label": "Gene Prediction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome-annotation"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::next-gen-sequencing",
+      "label": "Next-Gen Sequencing",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequence-data"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::short-reads",
+      "label": "Short Reads",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::long-reads",
+      "label": "Long Reads",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::sequencing-depth",
+      "label": "Sequencing Depth",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::coverage",
+      "label": "Coverage",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::sequencing-depth"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::variant-calling",
+      "label": "Variant Calling",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::reference-genome",
+        "bioinformatics::vcf-format"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::snp-calling",
+      "label": "SNP Calling",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::variant-calling",
+        "bioinformatics::single-nucleotide-polymorphism"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::structural-variant-calling",
+      "label": "Structural Variant Calling",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::variant-calling",
+        "bioinformatics::structural-variant"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genotyping",
+      "label": "Genotyping",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::variant-calling"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::haplotype",
+      "label": "Haplotype",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genotyping"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::phasing",
+      "label": "Phasing",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::haplotype"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::population-reference-graph",
+      "label": "Population Reference Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::pangenome-graph",
+        "bioinformatics::genotyping"
+      ],
+      "taxonomy_id": "GENO",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::transcriptome",
+      "label": "Transcriptome",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-expression",
+        "bioinformatics::rna-structure"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::rna-seq-pipeline",
+      "label": "RNA-Seq Pipeline",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::transcriptome",
+        "bioinformatics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::read-quality-trimming",
+      "label": "Read Quality Trimming",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rna-seq-pipeline",
+        "bioinformatics::data-quality-control"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::read-alignment",
+      "label": "Read Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rna-seq-pipeline",
+        "bioinformatics::reference-genome"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::transcript-quantification",
+      "label": "Transcript Quantification",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::read-alignment"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::differential-expression",
+      "label": "Differential Expression",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::transcript-quantification"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::fold-change",
+      "label": "Fold Change",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::differential-expression"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::statistical-testing-for-de",
+      "label": "Statistical Testing for DE",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::differential-expression"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::false-discovery-rate",
+      "label": "False Discovery Rate",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::statistical-testing-for-de"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::transcription-factor",
+      "label": "Transcription Factor",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-expression",
+        "bioinformatics::dna-structure"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::promoter-region",
+      "label": "Promoter Region",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::transcription-factor"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::enhancer-region",
+      "label": "Enhancer Region",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::transcription-factor"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cis-regulatory-element",
+      "label": "Cis-Regulatory Element",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::promoter-region",
+        "bioinformatics::enhancer-region"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::operon",
+      "label": "Operon",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::promoter-region"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gene-regulatory-network",
+      "label": "Gene Regulatory Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::transcription-factor",
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::co-expression-network",
+      "label": "Co-Expression Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::differential-expression",
+        "bioinformatics::undirected-graphs"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::wgcna",
+      "label": "WGCNA",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::co-expression-network"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::aracne",
+      "label": "ARACNE",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-regulatory-network",
+        "bioinformatics::mutual-information"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genie3",
+      "label": "GENIE3",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-regulatory-network"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::mutual-information",
+      "label": "Mutual Information",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "TRNS",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::network-inference-methods",
+      "label": "Network Inference Methods",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-regulatory-network",
+        "bioinformatics::co-expression-network"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::boolean-network-model",
+      "label": "Boolean Network Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-regulatory-network"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::bayesian-network-model",
+      "label": "Bayesian Network Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-regulatory-network",
+        "bioinformatics::bayesian-inference"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-regulation",
+      "label": "Graph Model for Regulation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-regulatory-network",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::single-cell-rna-seq",
+      "label": "Single-Cell RNA-Seq",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rna-seq-pipeline"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cell-type-clustering",
+      "label": "Cell Type Clustering",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::single-cell-rna-seq"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::trajectory-analysis",
+      "label": "Trajectory Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cell-type-clustering"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::spatial-transcriptomics",
+      "label": "Spatial Transcriptomics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::single-cell-rna-seq"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::alternative-splicing",
+      "label": "Alternative Splicing",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rna-structure",
+        "bioinformatics::transcription"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::non-coding-rna",
+      "label": "Non-Coding RNA",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rna-structure",
+        "bioinformatics::transcription"
+      ],
+      "taxonomy_id": "TRNS",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolic-network",
+      "label": "Metabolic Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::bipartite-graphs",
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolite",
+      "label": "Metabolite",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::enzyme",
+      "label": "Enzyme",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network",
+        "bioinformatics::protein-structure"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::enzyme-kinetics",
+      "label": "Enzyme Kinetics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::enzyme"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolic-pathway",
+      "label": "Metabolic Pathway",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::bipartite-metabolic-graph",
+      "label": "Bipartite Metabolic Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network",
+        "bioinformatics::bipartite-graphs"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::kegg-pathways",
+      "label": "KEGG Pathways",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::kegg-database",
+        "bioinformatics::metabolic-pathway"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::reactome-pathways",
+      "label": "Reactome Pathways",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::reactome-database",
+        "bioinformatics::metabolic-pathway"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::biocyc-pathways",
+      "label": "BioCyc Pathways",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biocyc-database",
+        "bioinformatics::metabolic-pathway"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::flux-balance-analysis",
+      "label": "Flux Balance Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network",
+        "bioinformatics::stoichiometric-matrix"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::constraint-based-modeling",
+      "label": "Constraint-Based Modeling",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::flux-balance-analysis"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::stoichiometric-matrix",
+      "label": "Stoichiometric Matrix",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network",
+        "bioinformatics::adjacency-matrix"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::objective-function",
+      "label": "Objective Function",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::flux-balance-analysis"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolic-flux",
+      "label": "Metabolic Flux",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::flux-balance-analysis"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-metabolism",
+      "label": "Graph Model for Metabolism",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::bipartite-metabolic-graph",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genome-scale-model",
+      "label": "Genome-Scale Model",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network",
+        "bioinformatics::genome"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::essential-reaction",
+      "label": "Essential Reaction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome-scale-model",
+        "bioinformatics::flux-balance-analysis"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::minimal-growth-medium",
+      "label": "Minimal Growth Medium",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::essential-reaction"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolic-engineering",
+      "label": "Metabolic Engineering",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome-scale-model"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::synthetic-biology",
+      "label": "Synthetic Biology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-engineering"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pathway-enrichment",
+      "label": "Pathway Enrichment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-pathway",
+        "bioinformatics::go-term-enrichment"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolomics",
+      "label": "Metabolomics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolite"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::mass-spec-for-metabolomics",
+      "label": "Mass Spec for Metabolomics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolomics"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolic-network-compare",
+      "label": "Metabolic Network Compare",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network",
+        "bioinformatics::network-comparison"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolic-graph-alignment",
+      "label": "Metabolic Graph Alignment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-network-compare",
+        "bioinformatics::network-alignment"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cell-signaling-cascade",
+      "label": "Cell Signaling Cascade",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::directed-graphs",
+        "bioinformatics::cell-biology-basics"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::signal-transduction",
+      "label": "Signal Transduction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cell-signaling-cascade"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::receptor",
+      "label": "Receptor",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::signal-transduction"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::kinase-cascade",
+      "label": "Kinase Cascade",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::signal-transduction"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::second-messenger",
+      "label": "Second Messenger",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::signal-transduction"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::directed-signaling-graph",
+      "label": "Directed Signaling Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cell-signaling-cascade",
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::directed-signaling-graph",
+        "bioinformatics::network-motifs"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::feed-forward-loop",
+      "label": "Feed-Forward Loop",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::directed-signaling-graph",
+        "bioinformatics::network-motifs"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-medicine",
+      "label": "Network Medicine",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::disease-module"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::disease-module",
+      "label": "Disease Module",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-interaction-network",
+        "bioinformatics::network-modules"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-proximity",
+      "label": "Network Proximity",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-medicine",
+        "bioinformatics::shortest-path-algorithms"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::guilt-by-association",
+      "label": "Guilt by Association",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-medicine"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::drug-target",
+      "label": "Drug Target",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-medicine",
+        "bioinformatics::ligand-protein-interaction"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::drug-target-validation",
+      "label": "Drug Target Validation",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::drug-target"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::drug-repurposing",
+      "label": "Drug Repurposing",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::drug-target",
+        "bioinformatics::link-prediction"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::drug-target-disease-graph",
+      "label": "Drug-Target-Disease Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::drug-target",
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-repurposing",
+      "label": "Graph Model for Repurposing",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::drug-target-disease-graph",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pharmacogenomics",
+      "label": "Pharmacogenomics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::drug-repurposing",
+        "bioinformatics::gene-expression"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cancer-driver-genes",
+      "label": "Cancer Driver Genes",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::mutations",
+        "bioinformatics::cosmic-database"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::tumor-suppressor-gene",
+      "label": "Tumor Suppressor Gene",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cancer-driver-genes",
+        "bioinformatics::gene"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::oncogene",
+      "label": "Oncogene",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cancer-driver-genes",
+        "bioinformatics::gene"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cancer-network-analysis",
+      "label": "Cancer Network Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cancer-driver-genes",
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::precision-medicine",
+      "label": "Precision Medicine",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::pharmacogenomics",
+        "bioinformatics::network-medicine"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::biomarker-discovery",
+      "label": "Biomarker Discovery",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::precision-medicine",
+        "bioinformatics::differential-expression"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::clinical-network-analysis",
+      "label": "Clinical Network Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-medicine"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::side-effect-prediction",
+      "label": "Side Effect Prediction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::drug-repurposing"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::drug-drug-interaction-graph",
+      "label": "Drug-Drug Interaction Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::drug-repurposing",
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::adverse-event-network",
+      "label": "Adverse Event Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::side-effect-prediction",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::comorbidity-network",
+      "label": "Comorbidity Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-medicine",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::disease-gene-prioritization",
+      "label": "Disease Gene Prioritization",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::network-medicine",
+        "bioinformatics::guilt-by-association"
+      ],
+      "taxonomy_id": "PATH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges",
+        "bioinformatics::heterogeneous-data"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::biomedical-knowledge-graph",
+      "label": "Biomedical Knowledge Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::knowledge-graph",
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gene-ontology",
+      "label": "Gene Ontology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-ontology-database",
+        "bioinformatics::ontology-structure"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::go-molecular-function",
+      "label": "GO Molecular Function",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-ontology"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::go-biological-process",
+      "label": "GO Biological Process",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-ontology"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::go-cellular-component",
+      "label": "GO Cellular Component",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-ontology"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::go-term-enrichment",
+      "label": "GO Term Enrichment",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::gene-ontology"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::disease-ontology",
+      "label": "Disease Ontology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::disease-ontology-database",
+        "bioinformatics::ontology-structure"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::human-phenotype-ontology",
+      "label": "Human Phenotype Ontology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::human-phenotype-ontology-db",
+        "bioinformatics::ontology-structure"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ontology-structure",
+      "label": "Ontology Structure",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::directed-graphs"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::ontology-reasoning",
+      "label": "Ontology Reasoning",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::ontology-structure"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::semantic-similarity",
+      "label": "Semantic Similarity",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::ontology-structure"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::heterogeneous-data",
+      "label": "Heterogeneous Data",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::data-integration",
+      "label": "Data Integration",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::heterogeneous-data"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::schema-mapping",
+      "label": "Schema Mapping",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::data-integration"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::entity-resolution",
+      "label": "Entity Resolution",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::data-integration"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-embeddings",
+      "label": "Graph Embeddings",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::knowledge-graph"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::node2vec",
+      "label": "Node2Vec",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-embeddings",
+        "bioinformatics::graph-traversal"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::transe",
+      "label": "TransE",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-embeddings"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::knowledge-graph-embedding",
+      "label": "Knowledge Graph Embedding",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-embeddings",
+        "bioinformatics::knowledge-graph"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::link-prediction",
+      "label": "Link Prediction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-embeddings"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::triple-classification",
+      "label": "Triple Classification",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::knowledge-graph-embedding"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::relation-extraction",
+      "label": "Relation Extraction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::text-mining-for-biology"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::named-entity-recognition",
+      "label": "Named Entity Recognition",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::text-mining-for-biology"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::text-mining-for-biology",
+      "label": "Text Mining for Biology",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-neural-networks",
+      "label": "Graph Neural Networks",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-embeddings",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::message-passing",
+      "label": "Message Passing",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-neural-networks"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::gnn-for-molecules",
+      "label": "GNN for Molecules",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-neural-networks",
+        "bioinformatics::ligand-protein-interaction"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-knowledge",
+      "label": "Graph Model for Knowledge",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biomedical-knowledge-graph",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::hetionet",
+      "label": "Hetionet",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biomedical-knowledge-graph",
+        "bioinformatics::hetionet-database"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::multi-omics-integration",
+      "label": "Multi-Omics Integration",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::data-integration",
+        "bioinformatics::unified-omics-graph"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::genomics-layer",
+      "label": "Genomics Layer",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multi-omics-integration",
+        "bioinformatics::genome"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::transcriptomics-layer",
+      "label": "Transcriptomics Layer",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multi-omics-integration",
+        "bioinformatics::transcriptome"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::proteomics-layer",
+      "label": "Proteomics Layer",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multi-omics-integration",
+        "bioinformatics::protein-interaction-network"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolomics-layer",
+      "label": "Metabolomics Layer",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multi-omics-integration",
+        "bioinformatics::metabolomics"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::unified-omics-graph",
+      "label": "Unified Omics Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::data-integration",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-model-for-multi-omics",
+      "label": "Graph Model for Multi-Omics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::unified-omics-graph",
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "GRDB",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::community-detection",
+      "label": "Community Detection",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::connected-components"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::louvain-algorithm",
+      "label": "Louvain Algorithm",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::community-detection"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::leiden-algorithm",
+      "label": "Leiden Algorithm",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::community-detection"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::modularity-score",
+      "label": "Modularity Score",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::community-detection"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-clustering",
+      "label": "Graph Clustering",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::community-detection"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::spectral-clustering",
+      "label": "Spectral Clustering",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-clustering",
+        "bioinformatics::adjacency-matrix"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-visualization",
+      "label": "Graph Visualization",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::vis-network-library",
+      "label": "Vis-Network Library",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-visualization"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cytoscape-tool",
+      "label": "Cytoscape Tool",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-visualization"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::force-directed-layout",
+      "label": "Force-Directed Layout",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-visualization"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::hierarchical-layout",
+      "label": "Hierarchical Layout",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-visualization"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-layout-algorithms",
+      "label": "Network Layout Algorithms",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-visualization"
+      ],
+      "taxonomy_id": "GRTH",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::patient-similarity-network",
+      "label": "Patient Similarity Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multi-omics-integration",
+        "bioinformatics::undirected-graphs"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::clinical-data-graph",
+      "label": "Clinical Data Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::patient-similarity-network"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::survival-analysis",
+      "label": "Survival Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::clinical-data-graph"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::patient-stratification",
+      "label": "Patient Stratification",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::patient-similarity-network",
+        "bioinformatics::community-detection"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::network-based-biomarkers",
+      "label": "Network-Based Biomarkers",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::patient-stratification",
+        "bioinformatics::biomarker-discovery"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::python-for-bioinformatics",
+      "label": "Python for Bioinformatics",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "TOOL",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::biopython",
+      "label": "Biopython",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::python-for-bioinformatics",
+        "bioinformatics::biological-databases"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::networkx",
+      "label": "NetworkX",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::python-for-bioinformatics",
+        "bioinformatics::nodes-and-edges"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::pandas-for-bioinformatics",
+      "label": "Pandas for Bioinformatics",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::python-for-bioinformatics"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::scikit-learn",
+      "label": "Scikit-Learn",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::python-for-bioinformatics"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::jupyter-notebooks",
+      "label": "Jupyter Notebooks",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::python-for-bioinformatics"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::matplotlib",
+      "label": "Matplotlib",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::python-for-bioinformatics"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::seaborn",
+      "label": "Seaborn",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::matplotlib"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::neo4j-python-driver",
+      "label": "Neo4j Python Driver",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::python-for-bioinformatics",
+        "bioinformatics::neo4j"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cytoscape-api",
+      "label": "Cytoscape API",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::cytoscape-tool",
+        "bioinformatics::python-for-bioinformatics"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::data-wrangling",
+      "label": "Data Wrangling",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::pandas-for-bioinformatics"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::reproducible-analysis",
+      "label": "Reproducible Analysis",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::jupyter-notebooks",
+        "bioinformatics::version-control-for-science"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::version-control-for-science",
+      "label": "Version Control for Science",
+      "subject_id": "bioinformatics",
+      "dependencies": [],
+      "taxonomy_id": "TOOL",
+      "level": "foundational"
+    },
+    {
+      "id": "bioinformatics::workflow-managers",
+      "label": "Workflow Managers",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::reproducible-analysis"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::conda-environments",
+      "label": "Conda Environments",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::python-for-bioinformatics"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::capstone-project-design",
+      "label": "Capstone Project Design",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-data-model-design"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-data-model-design",
+      "label": "Graph Data Model Design",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-schema-design"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::antibiotic-resistance-graph",
+      "label": "Antibiotic Resistance Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biomedical-knowledge-graph",
+        "bioinformatics::horizontal-gene-transfer"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::resistance-gene-network",
+      "label": "Resistance Gene Network",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::antibiotic-resistance-graph"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::mobile-genetic-elements",
+      "label": "Mobile Genetic Elements",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::horizontal-gene-transfer",
+        "bioinformatics::antibiotic-resistance-graph"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::rare-disease-knowledge-graph",
+      "label": "Rare Disease Knowledge Graph",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::biomedical-knowledge-graph",
+        "bioinformatics::human-phenotype-ontology"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::phenotype-gene-mapping",
+      "label": "Phenotype-Gene Mapping",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::rare-disease-knowledge-graph"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::metabolic-model-comparison",
+      "label": "Metabolic Model Comparison",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::genome-scale-model",
+        "bioinformatics::metabolic-network-compare"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::cross-species-graph-align",
+      "label": "Cross-Species Graph Align",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::metabolic-model-comparison",
+        "bioinformatics::metabolic-graph-alignment"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::protein-function-predict",
+      "label": "Protein Function Predict",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-embeddings",
+        "bioinformatics::protein-function-inference"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::go-annotation-prediction",
+      "label": "GO Annotation Prediction",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::protein-function-predict",
+        "bioinformatics::gene-ontology"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::multi-omics-stratification",
+      "label": "Multi-Omics Stratification",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::patient-stratification",
+        "bioinformatics::multi-omics-integration"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::patient-subgroup-discovery",
+      "label": "Patient Subgroup Discovery",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::multi-omics-stratification",
+        "bioinformatics::community-detection"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::graph-based-discovery",
+      "label": "Graph-Based Discovery",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::link-prediction",
+        "bioinformatics::knowledge-graph"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::bench-to-bedside-pipeline",
+      "label": "Bench to Bedside Pipeline",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::precision-medicine",
+        "bioinformatics::graph-based-discovery"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "bioinformatics::future-of-graph-bioinform",
+      "label": "Future of Graph Bioinform",
+      "subject_id": "bioinformatics",
+      "dependencies": [
+        "bioinformatics::graph-based-discovery"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    }
+  ]
+}

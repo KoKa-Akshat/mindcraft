@@ -1,0 +1,2295 @@
+{
+  "subject_id": "economics-course",
+  "title": "Introduction to Economics",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "MICRO": {
+      "classifier_name": "Microeconomics",
+      "color": "PeachPuff"
+    },
+    "MKSTR": {
+      "classifier_name": "Market Structures",
+      "color": "LightYellow"
+    },
+    "PUBEC": {
+      "classifier_name": "Public Economics",
+      "color": "Honeydew"
+    },
+    "MACRO": {
+      "classifier_name": "Macroeconomics",
+      "color": "PaleTurquoise"
+    },
+    "MONEY": {
+      "classifier_name": "Money and Banking",
+      "color": "PowderBlue"
+    },
+    "POLICY": {
+      "classifier_name": "Economic Policy",
+      "color": "Lavender"
+    },
+    "INTL": {
+      "classifier_name": "International Trade",
+      "color": "LavenderBlush"
+    },
+    "PFIN": {
+      "classifier_name": "Personal Finance",
+      "color": "PaleGreen"
+    },
+    "INVEST": {
+      "classifier_name": "Investment",
+      "color": "Aquamarine"
+    },
+    "DIGITAL": {
+      "classifier_name": "Digital Economy",
+      "color": "Thistle"
+    },
+    "THINK": {
+      "classifier_name": "Critical Thinking",
+      "color": "MistyRose"
+    },
+    "CAPSTONE": {
+      "classifier_name": "Capstone Projects",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "economics-course::economics",
+      "label": "Economics",
+      "subject_id": "economics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "economics-course::scarcity",
+      "label": "Scarcity",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::opportunity-cost",
+      "label": "Opportunity Cost",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::scarcity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::trade-offs",
+      "label": "Trade-offs",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::scarcity",
+        "economics-course::opportunity-cost"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::marginal-analysis",
+      "label": "Marginal Analysis",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost",
+        "economics-course::trade-offs"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::incentives",
+      "label": "Incentives",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::opportunity-cost"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::rational-decision-making",
+      "label": "Rational Decision Making",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost",
+        "economics-course::marginal-analysis",
+        "economics-course::incentives"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::economic-models",
+      "label": "Economic Models",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::rational-decision-making"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::positive-economics",
+      "label": "Positive Economics",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::economic-models"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::normative-economics",
+      "label": "Normative Economics",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::economic-models",
+        "economics-course::positive-economics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::microeconomics",
+      "label": "Microeconomics",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::economic-models"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::macroeconomics",
+      "label": "Macroeconomics",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::economic-models"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::market-economy",
+      "label": "Market Economy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::incentives"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::command-economy",
+      "label": "Command Economy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::mixed-economy",
+      "label": "Mixed Economy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-economy",
+        "economics-course::command-economy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::factors-of-production",
+      "label": "Factors of Production",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::production-possibilities",
+      "label": "Production Possibilities",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::scarcity",
+        "economics-course::factors-of-production"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::efficiency",
+      "label": "Efficiency",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost",
+        "economics-course::production-possibilities"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::demand",
+      "label": "Demand",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::microeconomics"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::law-of-demand",
+      "label": "Law of Demand",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::demand-curve",
+      "label": "Demand Curve",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand",
+        "economics-course::law-of-demand"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::change-in-demand",
+      "label": "Change in Demand",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand",
+        "economics-course::demand-curve"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::determinants-of-demand",
+      "label": "Determinants of Demand",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand",
+        "economics-course::change-in-demand"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::normal-goods",
+      "label": "Normal Goods",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand",
+        "economics-course::determinants-of-demand"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::inferior-goods",
+      "label": "Inferior Goods",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand",
+        "economics-course::determinants-of-demand",
+        "economics-course::normal-goods"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::substitute-goods",
+      "label": "Substitute Goods",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand",
+        "economics-course::determinants-of-demand"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::complementary-goods",
+      "label": "Complementary Goods",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand",
+        "economics-course::determinants-of-demand",
+        "economics-course::substitute-goods"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::supply",
+      "label": "Supply",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::microeconomics",
+        "economics-course::factors-of-production"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::law-of-supply",
+      "label": "Law of Supply",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::supply"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::supply-curve",
+      "label": "Supply Curve",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::supply",
+        "economics-course::law-of-supply"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::change-in-supply",
+      "label": "Change in Supply",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::supply",
+        "economics-course::supply-curve"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::determinants-of-supply",
+      "label": "Determinants of Supply",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::supply",
+        "economics-course::change-in-supply"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::market-equilibrium",
+      "label": "Market Equilibrium",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand-curve",
+        "economics-course::supply-curve"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::equilibrium-price",
+      "label": "Equilibrium Price",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-equilibrium"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::surplus",
+      "label": "Surplus",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-equilibrium",
+        "economics-course::equilibrium-price"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::shortage",
+      "label": "Shortage",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-equilibrium",
+        "economics-course::equilibrium-price",
+        "economics-course::surplus"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::price-mechanism",
+      "label": "Price Mechanism",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::incentives",
+        "economics-course::market-equilibrium",
+        "economics-course::equilibrium-price"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::price-ceiling",
+      "label": "Price Ceiling",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::equilibrium-price",
+        "economics-course::shortage"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::price-floor",
+      "label": "Price Floor",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::equilibrium-price",
+        "economics-course::surplus"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::elasticity",
+      "label": "Elasticity",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::law-of-demand",
+        "economics-course::demand-curve",
+        "economics-course::law-of-supply",
+        "economics-course::supply-curve"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::price-elasticity-of-demand",
+      "label": "Price Elasticity of Demand",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::elasticity"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::elastic-demand",
+      "label": "Elastic Demand",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::price-elasticity-of-demand"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::inelastic-demand",
+      "label": "Inelastic Demand",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::price-elasticity-of-demand",
+        "economics-course::elastic-demand"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::consumer-surplus",
+      "label": "Consumer Surplus",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::demand-curve",
+        "economics-course::equilibrium-price"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::producer-surplus",
+      "label": "Producer Surplus",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::supply-curve",
+        "economics-course::equilibrium-price"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::utility",
+      "label": "Utility",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::rational-decision-making",
+        "economics-course::demand"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::marginal-utility",
+      "label": "Marginal Utility",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-analysis",
+        "economics-course::utility"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::diminishing-marginal-utility",
+      "label": "Diminishing Marginal Utility",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-utility"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::consumer-choice",
+      "label": "Consumer Choice",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::rational-decision-making",
+        "economics-course::utility",
+        "economics-course::diminishing-marginal-utility"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::budget-constraint",
+      "label": "Budget Constraint",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost",
+        "economics-course::consumer-choice"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::production-function",
+      "label": "Production Function",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::factors-of-production",
+        "economics-course::supply"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::marginal-product",
+      "label": "Marginal Product",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-analysis",
+        "economics-course::production-function"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::diminishing-returns",
+      "label": "Diminishing Returns",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-product"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::marginal-revenue",
+      "label": "Marginal Revenue",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-analysis",
+        "economics-course::supply"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::marginal-cost",
+      "label": "Marginal Cost",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-analysis",
+        "economics-course::production-function",
+        "economics-course::marginal-revenue"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::average-total-cost",
+      "label": "Average Total Cost",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-cost"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::fixed-costs",
+      "label": "Fixed Costs",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::production-function",
+        "economics-course::average-total-cost"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::variable-costs",
+      "label": "Variable Costs",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::production-function",
+        "economics-course::average-total-cost",
+        "economics-course::fixed-costs"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::economies-of-scale",
+      "label": "Economies of Scale",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::average-total-cost",
+        "economics-course::variable-costs"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::profit-maximization",
+      "label": "Profit Maximization",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-analysis",
+        "economics-course::marginal-revenue",
+        "economics-course::marginal-cost"
+      ],
+      "taxonomy_id": "MICRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::market-structure",
+      "label": "Market Structure",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::microeconomics",
+        "economics-course::market-equilibrium"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::perfect-competition",
+      "label": "Perfect Competition",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-structure"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::price-taker",
+      "label": "Price Taker",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::perfect-competition"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::monopoly",
+      "label": "Monopoly",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-structure",
+        "economics-course::perfect-competition"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::natural-monopoly",
+      "label": "Natural Monopoly",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economies-of-scale",
+        "economics-course::monopoly"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::price-maker",
+      "label": "Price Maker",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::monopoly"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::oligopoly",
+      "label": "Oligopoly",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-structure",
+        "economics-course::monopoly"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::monopolistic-competition",
+      "label": "Monopolistic Competition",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-structure",
+        "economics-course::perfect-competition",
+        "economics-course::monopoly"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::product-differentiation",
+      "label": "Product Differentiation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::monopolistic-competition"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::barriers-to-entry",
+      "label": "Barriers to Entry",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::monopoly",
+        "economics-course::oligopoly"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::market-power",
+      "label": "Market Power",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::monopoly",
+        "economics-course::price-maker",
+        "economics-course::barriers-to-entry"
+      ],
+      "taxonomy_id": "MKSTR",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::market-failure",
+      "label": "Market Failure",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::efficiency",
+        "economics-course::market-structure"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::externalities",
+      "label": "Externalities",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-failure"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::negative-externality",
+      "label": "Negative Externality",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::externalities"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::positive-externality",
+      "label": "Positive Externality",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::externalities",
+        "economics-course::negative-externality"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::public-goods",
+      "label": "Public Goods",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-failure"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::free-rider-problem",
+      "label": "Free Rider Problem",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::public-goods"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::common-resources",
+      "label": "Common Resources",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-failure",
+        "economics-course::public-goods"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::tragedy-of-the-commons",
+      "label": "Tragedy of the Commons",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::common-resources"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::deadweight-loss",
+      "label": "Deadweight Loss",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::consumer-surplus",
+        "economics-course::producer-surplus",
+        "economics-course::market-failure"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::government-intervention",
+      "label": "Government Intervention",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-failure",
+        "economics-course::deadweight-loss"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::taxes",
+      "label": "Taxes",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::government-intervention"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::subsidies",
+      "label": "Subsidies",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::government-intervention",
+        "economics-course::taxes"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::pigouvian-tax",
+      "label": "Pigouvian Tax",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::negative-externality",
+        "economics-course::taxes"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::regulation",
+      "label": "Regulation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::government-intervention"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::antitrust-policy",
+      "label": "Antitrust Policy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-power",
+        "economics-course::regulation"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::property-rights",
+      "label": "Property Rights",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::common-resources"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::market-efficiency",
+      "label": "Market Efficiency",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::efficiency",
+        "economics-course::market-equilibrium",
+        "economics-course::consumer-surplus",
+        "economics-course::producer-surplus"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::equity",
+      "label": "Equity",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::normative-economics"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::efficiency-vs-equity",
+      "label": "Efficiency vs Equity",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::market-efficiency",
+        "economics-course::equity"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::tax-incidence",
+      "label": "Tax Incidence",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::elasticity",
+        "economics-course::taxes"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::welfare-economics",
+      "label": "Welfare Economics",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::consumer-surplus",
+        "economics-course::producer-surplus",
+        "economics-course::market-efficiency",
+        "economics-course::equity"
+      ],
+      "taxonomy_id": "PUBEC",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::gross-domestic-product",
+      "label": "Gross Domestic Product",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::macroeconomics"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::gdp-calculation",
+      "label": "GDP Calculation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::gross-domestic-product"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::nominal-gdp",
+      "label": "Nominal GDP",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::gross-domestic-product",
+        "economics-course::gdp-calculation"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::real-gdp",
+      "label": "Real GDP",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::nominal-gdp"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::per-capita-gdp",
+      "label": "Per Capita GDP",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::real-gdp"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::economic-growth",
+      "label": "Economic Growth",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::real-gdp",
+        "economics-course::per-capita-gdp"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::standard-of-living",
+      "label": "Standard of Living",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::per-capita-gdp",
+        "economics-course::economic-growth"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::unemployment",
+      "label": "Unemployment",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::macroeconomics",
+        "economics-course::labor-force"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::unemployment-rate",
+      "label": "Unemployment Rate",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::unemployment"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::labor-force",
+      "label": "Labor Force",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::factors-of-production"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::frictional-unemployment",
+      "label": "Frictional Unemployment",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::unemployment"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::structural-unemployment",
+      "label": "Structural Unemployment",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::unemployment",
+        "economics-course::frictional-unemployment"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::cyclical-unemployment",
+      "label": "Cyclical Unemployment",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::unemployment",
+        "economics-course::business-cycle"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::inflation",
+      "label": "Inflation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::macroeconomics"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::consumer-price-index",
+      "label": "Consumer Price Index",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::inflation"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::inflation-rate",
+      "label": "Inflation Rate",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::inflation",
+        "economics-course::consumer-price-index"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::deflation",
+      "label": "Deflation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::inflation",
+        "economics-course::inflation-rate"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::purchasing-power",
+      "label": "Purchasing Power",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::inflation",
+        "economics-course::inflation-rate"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::business-cycle",
+      "label": "Business Cycle",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::macroeconomics",
+        "economics-course::economic-growth"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::recession",
+      "label": "Recession",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::business-cycle"
+      ],
+      "taxonomy_id": "MACRO",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::money",
+      "label": "Money",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::functions-of-money",
+      "label": "Functions of Money",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::money"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::medium-of-exchange",
+      "label": "Medium of Exchange",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::functions-of-money"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::store-of-value",
+      "label": "Store of Value",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::functions-of-money",
+        "economics-course::medium-of-exchange"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::fiat-money",
+      "label": "Fiat Money",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::money",
+        "economics-course::functions-of-money"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::money-supply",
+      "label": "Money Supply",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::money",
+        "economics-course::fiat-money"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::banks",
+      "label": "Banks",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::money",
+        "economics-course::money-supply"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::fractional-reserve-banking",
+      "label": "Fractional Reserve Banking",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::banks"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::federal-reserve",
+      "label": "Federal Reserve",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::banks",
+        "economics-course::central-bank"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::central-bank",
+      "label": "Central Bank",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::banks"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::interest-rates",
+      "label": "Interest Rates",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::money-supply",
+        "economics-course::banks"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::open-market-operations",
+      "label": "Open Market Operations",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::federal-reserve",
+        "economics-course::interest-rates"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::quantitative-easing",
+      "label": "Quantitative Easing",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::federal-reserve",
+        "economics-course::open-market-operations"
+      ],
+      "taxonomy_id": "MONEY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::fiscal-policy",
+      "label": "Fiscal Policy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::macroeconomics",
+        "economics-course::government-intervention"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::government-spending",
+      "label": "Government Spending",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::fiscal-policy"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::taxation",
+      "label": "Taxation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::taxes",
+        "economics-course::fiscal-policy"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::budget-deficit",
+      "label": "Budget Deficit",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::government-spending",
+        "economics-course::taxation"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::national-debt",
+      "label": "National Debt",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::budget-deficit"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::expansionary-fiscal-policy",
+      "label": "Expansionary Fiscal Policy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::fiscal-policy",
+        "economics-course::government-spending"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::contractionary-fiscal-policy",
+      "label": "Contractionary Fiscal Policy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::fiscal-policy",
+        "economics-course::taxation"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::monetary-policy",
+      "label": "Monetary Policy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::macroeconomics",
+        "economics-course::federal-reserve",
+        "economics-course::interest-rates"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::expansionary-monetary-policy",
+      "label": "Expansionary Monetary Policy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::monetary-policy"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::contractionary-monetary-policy",
+      "label": "Contractionary Monetary Policy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::monetary-policy",
+        "economics-course::expansionary-monetary-policy"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::aggregate-demand",
+      "label": "Aggregate Demand",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::macroeconomics",
+        "economics-course::demand",
+        "economics-course::gross-domestic-product"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::aggregate-supply",
+      "label": "Aggregate Supply",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::macroeconomics",
+        "economics-course::supply",
+        "economics-course::gross-domestic-product"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::multiplier-effect",
+      "label": "Multiplier Effect",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::government-spending",
+        "economics-course::aggregate-demand"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::crowding-out",
+      "label": "Crowding Out",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::budget-deficit",
+        "economics-course::multiplier-effect"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::stagflation",
+      "label": "Stagflation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::inflation",
+        "economics-course::recession"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::phillips-curve",
+      "label": "Phillips Curve",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::unemployment",
+        "economics-course::inflation"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::policy-trade-offs",
+      "label": "Policy Trade-offs",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::fiscal-policy",
+        "economics-course::monetary-policy",
+        "economics-course::phillips-curve"
+      ],
+      "taxonomy_id": "POLICY",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::international-trade",
+      "label": "International Trade",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::market-economy"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::exports",
+      "label": "Exports",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::international-trade"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::imports",
+      "label": "Imports",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::international-trade",
+        "economics-course::exports"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::trade-balance",
+      "label": "Trade Balance",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::exports",
+        "economics-course::imports"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::absolute-advantage",
+      "label": "Absolute Advantage",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::production-possibilities",
+        "economics-course::international-trade"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::comparative-advantage",
+      "label": "Comparative Advantage",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost",
+        "economics-course::absolute-advantage"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::specialization",
+      "label": "Specialization",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::comparative-advantage"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::tariffs",
+      "label": "Tariffs",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::government-intervention",
+        "economics-course::imports"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::free-trade",
+      "label": "Free Trade",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::international-trade",
+        "economics-course::tariffs"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::protectionism",
+      "label": "Protectionism",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::tariffs",
+        "economics-course::free-trade"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::exchange-rates",
+      "label": "Exchange Rates",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::money",
+        "economics-course::international-trade"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::currency-appreciation",
+      "label": "Currency Appreciation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::exchange-rates"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::globalization",
+      "label": "Globalization",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::international-trade",
+        "economics-course::specialization",
+        "economics-course::free-trade"
+      ],
+      "taxonomy_id": "INTL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::personal-budget",
+      "label": "Personal Budget",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost",
+        "economics-course::trade-offs"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::income",
+      "label": "Income",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::factors-of-production",
+        "economics-course::labor-force"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::saving",
+      "label": "Saving",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::personal-budget",
+        "economics-course::income"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::compound-interest",
+      "label": "Compound Interest",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::interest-rates",
+        "economics-course::saving"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::time-value-of-money",
+      "label": "Time Value of Money",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::compound-interest"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::present-value",
+      "label": "Present Value",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::time-value-of-money"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::rule-of-72",
+      "label": "Rule of 72",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::compound-interest"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::credit",
+      "label": "Credit",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::banks",
+        "economics-course::interest-rates"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::credit-score",
+      "label": "Credit Score",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::credit"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::debt",
+      "label": "Debt",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::credit"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::loans",
+      "label": "Loans",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::banks",
+        "economics-course::credit",
+        "economics-course::debt"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::mortgages",
+      "label": "Mortgages",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::loans"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::financial-literacy",
+      "label": "Financial Literacy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::personal-budget",
+        "economics-course::credit"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::emergency-fund",
+      "label": "Emergency Fund",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::saving",
+        "economics-course::financial-literacy"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::financial-goals",
+      "label": "Financial Goals",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::personal-budget",
+        "economics-course::financial-literacy"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::human-capital",
+      "label": "Human Capital",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::factors-of-production",
+        "economics-course::labor-force"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::career-economics",
+      "label": "Career Economics",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost",
+        "economics-course::income",
+        "economics-course::human-capital"
+      ],
+      "taxonomy_id": "PFIN",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::investment",
+      "label": "Investment",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::saving",
+        "economics-course::risk"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::stocks",
+      "label": "Stocks",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::investment"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::bonds",
+      "label": "Bonds",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::investment",
+        "economics-course::stocks"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::mutual-funds",
+      "label": "Mutual Funds",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::stocks",
+        "economics-course::bonds",
+        "economics-course::diversification"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::diversification",
+      "label": "Diversification",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::investment",
+        "economics-course::risk"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::risk",
+      "label": "Risk",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::return",
+      "label": "Return",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::investment",
+        "economics-course::risk"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::risk-return-trade-off",
+      "label": "Risk-Return Trade-off",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::risk",
+        "economics-course::return"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::stock-market",
+      "label": "Stock Market",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::stocks"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::retirement-savings",
+      "label": "Retirement Savings",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::compound-interest",
+        "economics-course::financial-goals",
+        "economics-course::investment"
+      ],
+      "taxonomy_id": "INVEST",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::digital-economy",
+      "label": "Digital Economy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::market-economy"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::network-effects",
+      "label": "Network Effects",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::digital-economy"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::platform-economics",
+      "label": "Platform Economics",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::digital-economy",
+        "economics-course::network-effects"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::two-sided-markets",
+      "label": "Two-Sided Markets",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::platform-economics"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::winner-take-all-markets",
+      "label": "Winner-Take-All Markets",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::network-effects",
+        "economics-course::two-sided-markets"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::information-goods",
+      "label": "Information Goods",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::digital-economy"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::marginal-cost-of-digital",
+      "label": "Marginal Cost of Digital",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::marginal-cost",
+        "economics-course::information-goods"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::attention-economy",
+      "label": "Attention Economy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::digital-economy",
+        "economics-course::information-goods"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::sharing-economy",
+      "label": "Sharing Economy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::digital-economy",
+        "economics-course::platform-economics"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::gig-economy",
+      "label": "Gig Economy",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::labor-force",
+        "economics-course::sharing-economy"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::e-commerce",
+      "label": "E-commerce",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::international-trade",
+        "economics-course::digital-economy"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::cryptocurrency",
+      "label": "Cryptocurrency",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::money",
+        "economics-course::blockchain"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::blockchain",
+      "label": "Blockchain",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::digital-economy"
+      ],
+      "taxonomy_id": "DIGITAL",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::economic-misinformation",
+      "label": "Economic Misinformation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economic-models",
+        "economics-course::data-interpretation"
+      ],
+      "taxonomy_id": "THINK",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::correlation-vs-causation",
+      "label": "Correlation vs Causation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economic-models",
+        "economics-course::data-interpretation"
+      ],
+      "taxonomy_id": "THINK",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::data-interpretation",
+      "label": "Data Interpretation",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economic-models"
+      ],
+      "taxonomy_id": "THINK",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::opportunity-cost",
+        "economics-course::marginal-analysis",
+        "economics-course::welfare-economics"
+      ],
+      "taxonomy_id": "THINK",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economic-models",
+        "economics-course::externalities"
+      ],
+      "taxonomy_id": "THINK",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::working-in-teams",
+      "label": "Working in Teams",
+      "subject_id": "economics-course",
+      "dependencies": [],
+      "taxonomy_id": "CAPSTONE",
+      "level": "foundational"
+    },
+    {
+      "id": "economics-course::selecting-a-project",
+      "label": "Selecting a Project",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economics",
+        "economics-course::working-in-teams"
+      ],
+      "taxonomy_id": "CAPSTONE",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::dividing-the-work",
+      "label": "Dividing the Work",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::working-in-teams",
+        "economics-course::selecting-a-project"
+      ],
+      "taxonomy_id": "CAPSTONE",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::integrating-the-findings",
+      "label": "Integrating the Findings",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::data-interpretation",
+        "economics-course::dividing-the-work"
+      ],
+      "taxonomy_id": "CAPSTONE",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::presenting-findings",
+      "label": "Presenting Findings",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::integrating-the-findings"
+      ],
+      "taxonomy_id": "CAPSTONE",
+      "level": "core"
+    },
+    {
+      "id": "economics-course::using-ai",
+      "label": "Using AI",
+      "subject_id": "economics-course",
+      "dependencies": [
+        "economics-course::economic-models",
+        "economics-course::data-interpretation",
+        "economics-course::presenting-findings"
+      ],
+      "taxonomy_id": "CAPSTONE",
+      "level": "core"
+    }
+  ]
+}

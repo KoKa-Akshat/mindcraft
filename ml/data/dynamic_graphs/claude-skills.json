@@ -1,0 +1,2077 @@
+{
+  "subject_id": "claude-skills",
+  "title": "Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "AIFND": {
+      "classifier_name": "AI Foundations",
+      "color": "salmon"
+    },
+    "SKILL": {
+      "classifier_name": "Claude Skills System",
+      "color": "mediumturquoise"
+    },
+    "IBOOK": {
+      "classifier_name": "Intelligent Textbooks",
+      "color": "steelblue"
+    },
+    "MKDOC": {
+      "classifier_name": "MkDocs Platform",
+      "color": "darkseagreen"
+    },
+    "GRAPH": {
+      "classifier_name": "Learning Graphs",
+      "color": "khaki"
+    },
+    "EDTHY": {
+      "classifier_name": "Educational Theory",
+      "color": "sandybrown"
+    },
+    "CONTE": {
+      "classifier_name": "Content Creation",
+      "color": "chocolate"
+    },
+    "RSRCE": {
+      "classifier_name": "Educational Resources",
+      "color": "mediumpurple"
+    },
+    "INTER": {
+      "classifier_name": "Interactive Elements",
+      "color": "coral"
+    },
+    "VERCT": {
+      "classifier_name": "Version Control",
+      "color": "cornflowerblue"
+    },
+    "TOOLS": {
+      "classifier_name": "Development Tools",
+      "color": "plum"
+    },
+    "DATAS": {
+      "classifier_name": "Data & Scripting",
+      "color": "hotpink"
+    }
+  },
+  "concepts": [
+    {
+      "id": "claude-skills::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "claude-skills",
+      "dependencies": [],
+      "taxonomy_id": "AIFND",
+      "level": "foundational"
+    },
+    {
+      "id": "claude-skills::claude-ai",
+      "label": "Claude AI",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::large-language-models-overview",
+      "label": "Large Language Models Overview",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::anthropic-claude-pro-account",
+      "label": "Anthropic Claude Pro Account",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-ai"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::claude-code-interface",
+      "label": "Claude Code Interface",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::anthropic-claude-pro-account"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::claude-skill",
+      "label": "Claude Skill",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-code-interface"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-definition-file-structure",
+      "label": "Skill Definition File Structure",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::yaml-frontmatter-in-skills",
+      "label": "YAML Frontmatter in Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::skill-definition-file-structure"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-name-and-description",
+      "label": "Skill Name and Description",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::yaml-frontmatter-in-skills"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-license-information",
+      "label": "Skill License Information",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::yaml-frontmatter-in-skills"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::allowed-tools-in-skills",
+      "label": "Allowed Tools in Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::yaml-frontmatter-in-skills"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-workflow-instructions",
+      "label": "Skill Workflow Instructions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::skill-definition-file-structure"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::installing-a-claude-skill",
+      "label": "Installing a Claude Skill",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::listing-available-skills",
+      "label": "Listing Available Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::installing-a-claude-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::invoking-skills-with-slash-commands",
+      "label": "Invoking Skills with Slash Commands",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::installing-a-claude-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-execution-context",
+      "label": "Skill Execution Context",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::invoking-skills-with-slash-commands"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::claude-command",
+      "label": "Claude Command",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::command-definition-files",
+      "label": "Command Definition Files",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-command"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::installing-claude-commands",
+      "label": "Installing Claude Commands",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-command"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::difference-between-skills-commands",
+      "label": "Difference Between Skills & Commands",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-skill",
+        "claude-skills::claude-command"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-directory-structure",
+      "label": "Skill Directory Structure",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::skill-definition-file-structure"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::supporting-assets-in-skills",
+      "label": "Supporting Assets in Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::skill-directory-structure"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::python-scripts-in-skills",
+      "label": "Python Scripts in Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::supporting-assets-in-skills"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::template-files-in-skills",
+      "label": "Template Files in Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::supporting-assets-in-skills"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::reference-documentation-in-skills",
+      "label": "Reference Documentation in Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::supporting-assets-in-skills"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "claude-skills",
+      "dependencies": [],
+      "taxonomy_id": "IBOOK",
+      "level": "foundational"
+    },
+    {
+      "id": "claude-skills::five-levels-of-textbook-intelligence",
+      "label": "Five Levels of Textbook Intelligence",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "IBOOK",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::level-1-static-content",
+      "label": "Level 1: Static Content",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::five-levels-of-textbook-intelligence"
+      ],
+      "taxonomy_id": "IBOOK",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::level-2-hyperlinked-navigation",
+      "label": "Level 2: Hyperlinked Navigation",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::level-1-static-content"
+      ],
+      "taxonomy_id": "IBOOK",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::level-3-interactive-elements",
+      "label": "Level 3: Interactive Elements",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::level-2-hyperlinked-navigation"
+      ],
+      "taxonomy_id": "IBOOK",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::level-4-adaptive-content",
+      "label": "Level 4: Adaptive Content",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::level-3-interactive-elements"
+      ],
+      "taxonomy_id": "IBOOK",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::level-5-ai-personalization",
+      "label": "Level 5: AI Personalization",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::level-4-adaptive-content"
+      ],
+      "taxonomy_id": "IBOOK",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::mkdocs",
+      "label": "MkDocs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "MKDOC",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::mkdocs-material-theme",
+      "label": "MkDocs Material Theme",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::mkdocs"
+      ],
+      "taxonomy_id": "MKDOC",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::mkdocs-configuration-file",
+      "label": "MkDocs Configuration File",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::mkdocs"
+      ],
+      "taxonomy_id": "MKDOC",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::navigation-structure-in-mkdocs",
+      "label": "Navigation Structure in MkDocs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::mkdocs-configuration-file"
+      ],
+      "taxonomy_id": "MKDOC",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::markdown-formatting-basics",
+      "label": "Markdown Formatting Basics",
+      "subject_id": "claude-skills",
+      "dependencies": [],
+      "taxonomy_id": "MKDOC",
+      "level": "foundational"
+    },
+    {
+      "id": "claude-skills::admonitions-in-mkdocs",
+      "label": "Admonitions in MkDocs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::mkdocs-material-theme",
+        "claude-skills::markdown-formatting-basics"
+      ],
+      "taxonomy_id": "MKDOC",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::learning-graph",
+      "label": "Learning Graph",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::concept-nodes-in-learning-graphs",
+      "label": "Concept Nodes in Learning Graphs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::learning-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::dependency-edges-in-learning-graphs",
+      "label": "Dependency Edges in Learning Graphs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::learning-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::directed-acyclic-graph-dag",
+      "label": "Directed Acyclic Graph (DAG)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::learning-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::prerequisite-relationships",
+      "label": "Prerequisite Relationships",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::learning-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::concept-dependencies",
+      "label": "Concept Dependencies",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::concept-nodes-in-learning-graphs",
+        "claude-skills::dependency-edges-in-learning-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::learning-pathways",
+      "label": "Learning Pathways",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::directed-acyclic-graph-dag",
+        "claude-skills::concept-dependencies"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::course-description",
+      "label": "Course Description",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::target-audience-definition",
+      "label": "Target Audience Definition",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::course-description"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::course-prerequisites",
+      "label": "Course Prerequisites",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::course-description"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::main-topics-covered",
+      "label": "Main Topics Covered",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::course-description"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::topics-excluded-from-course",
+      "label": "Topics Excluded from Course",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::course-description"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::learning-outcomes",
+      "label": "Learning Outcomes",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::course-description"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::bloom-s-taxonomy",
+      "label": "Bloom's Taxonomy",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::learning-outcomes"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::bloom-s-2001-revision",
+      "label": "Bloom's 2001 Revision",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::remember-cognitive-level-1",
+      "label": "Remember (Cognitive Level 1)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::understand-cognitive-level-2",
+      "label": "Understand (Cognitive Level 2)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::apply-cognitive-level-3",
+      "label": "Apply (Cognitive Level 3)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::analyze-cognitive-level-4",
+      "label": "Analyze (Cognitive Level 4)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::evaluate-cognitive-level-5",
+      "label": "Evaluate (Cognitive Level 5)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::create-cognitive-level-6",
+      "label": "Create (Cognitive Level 6)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::action-verbs-for-learning-outcomes",
+      "label": "Action Verbs for Learning Outcomes",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-2001-revision"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::course-description-quality-score",
+      "label": "Course Description Quality Score",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::course-description"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::assessing-course-descriptions",
+      "label": "Assessing Course Descriptions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::course-description-quality-score"
+      ],
+      "taxonomy_id": "EDTHY",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::concept-enumeration-process",
+      "label": "Concept Enumeration Process",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::learning-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::generating-200-concepts",
+      "label": "Generating 200 Concepts",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::concept-enumeration-process"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::concept-label-requirements",
+      "label": "Concept Label Requirements",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::generating-200-concepts"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::title-case-convention",
+      "label": "Title Case Convention",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::concept-label-requirements"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::maximum-character-length",
+      "label": "Maximum Character Length",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::concept-label-requirements"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::concept-granularity",
+      "label": "Concept Granularity",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::generating-200-concepts"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::atomic-concepts",
+      "label": "Atomic Concepts",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::concept-granularity"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::dependency-mapping-process",
+      "label": "Dependency Mapping Process",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::concept-dependencies"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::csv-file-format-for-graphs",
+      "label": "CSV File Format for Graphs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dependency-mapping-process"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::pipe-delimited-dependencies",
+      "label": "Pipe-Delimited Dependencies",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::csv-file-format-for-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::conceptid-field",
+      "label": "ConceptID Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::csv-file-format-for-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::conceptlabel-field",
+      "label": "ConceptLabel Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::csv-file-format-for-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::dependencies-field",
+      "label": "Dependencies Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::csv-file-format-for-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::foundational-concepts",
+      "label": "Foundational Concepts",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dependency-mapping-process"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::prerequisite-concepts",
+      "label": "Prerequisite Concepts",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::foundational-concepts"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::advanced-concepts",
+      "label": "Advanced Concepts",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::prerequisite-concepts"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::circular-dependency-detection",
+      "label": "Circular Dependency Detection",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::directed-acyclic-graph-dag"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::dag-validation",
+      "label": "DAG Validation",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::directed-acyclic-graph-dag",
+        "claude-skills::circular-dependency-detection"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::self-dependency-checking",
+      "label": "Self-Dependency Checking",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dag-validation"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::quality-metrics-for-graphs",
+      "label": "Quality Metrics for Graphs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dag-validation"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::terminal-nodes",
+      "label": "Terminal Nodes",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quality-metrics-for-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::disconnected-subgraphs",
+      "label": "Disconnected Subgraphs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quality-metrics-for-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::linear-chain-detection",
+      "label": "Linear Chain Detection",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quality-metrics-for-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::indegree-analysis",
+      "label": "Indegree Analysis",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quality-metrics-for-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::outdegree-analysis",
+      "label": "Outdegree Analysis",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quality-metrics-for-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::average-dependencies-per-concept",
+      "label": "Average Dependencies Per Concept",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quality-metrics-for-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::maximum-dependency-chain-length",
+      "label": "Maximum Dependency Chain Length",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quality-metrics-for-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::learning-graph-quality-score",
+      "label": "Learning Graph Quality Score",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quality-metrics-for-graphs"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::taxonomy",
+      "label": "Taxonomy",
+      "subject_id": "claude-skills",
+      "dependencies": [],
+      "taxonomy_id": "DATAS",
+      "level": "foundational"
+    },
+    {
+      "id": "claude-skills::concept-categorization",
+      "label": "Concept Categorization",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::taxonomy"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::taxonomy-categories",
+      "label": "Taxonomy Categories",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::concept-categorization"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::taxonomyid-abbreviations",
+      "label": "TaxonomyID Abbreviations",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::taxonomy-categories"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::category-distribution",
+      "label": "Category Distribution",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::concept-categorization"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::avoiding-over-representation",
+      "label": "Avoiding Over-Representation",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::category-distribution"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::taxonomyid-field-in-csv",
+      "label": "TaxonomyID Field in CSV",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::csv-file-format-for-graphs",
+        "claude-skills::taxonomyid-abbreviations"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::adding-taxonomy-to-graph",
+      "label": "Adding Taxonomy to Graph",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::taxonomyid-field-in-csv"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::vis-network-json-format",
+      "label": "vis-network JSON Format",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::csv-file-format-for-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::json-schema-for-learning-graphs",
+      "label": "JSON Schema for Learning Graphs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::vis-network-json-format"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::metadata-section-in-json",
+      "label": "Metadata Section in JSON",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::json-schema-for-learning-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::groups-section-in-json",
+      "label": "Groups Section in JSON",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::json-schema-for-learning-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::nodes-section-in-json",
+      "label": "Nodes Section in JSON",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::json-schema-for-learning-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::edges-section-in-json",
+      "label": "Edges Section in JSON",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::json-schema-for-learning-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::dublin-core-metadata",
+      "label": "Dublin Core Metadata",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::metadata-section-in-json"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::title-metadata-field",
+      "label": "Title Metadata Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dublin-core-metadata"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::description-metadata-field",
+      "label": "Description Metadata Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dublin-core-metadata"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::creator-metadata-field",
+      "label": "Creator Metadata Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dublin-core-metadata"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::date-metadata-field",
+      "label": "Date Metadata Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dublin-core-metadata"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::version-metadata-field",
+      "label": "Version Metadata Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dublin-core-metadata"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::format-metadata-field",
+      "label": "Format Metadata Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dublin-core-metadata"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::license-metadata-field",
+      "label": "License Metadata Field",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::dublin-core-metadata"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::color-coding-in-visualizations",
+      "label": "Color Coding in Visualizations",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::groups-section-in-json"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::font-colors-for-readability",
+      "label": "Font Colors for Readability",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::color-coding-in-visualizations"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::glossary",
+      "label": "Glossary",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::iso-11179-standards",
+      "label": "ISO 11179 Standards",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::glossary"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::precise-definitions",
+      "label": "Precise Definitions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::concise-definitions",
+      "label": "Concise Definitions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::distinct-definitions",
+      "label": "Distinct Definitions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::non-circular-definitions",
+      "label": "Non-Circular Definitions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::definitions-without-business-rules",
+      "label": "Definitions Without Business Rules",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::glossary-generation-process",
+      "label": "Glossary Generation Process",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::glossary",
+        "claude-skills::iso-11179-standards"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::faq",
+      "label": "FAQ",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::faq-generation-process",
+      "label": "FAQ Generation Process",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::faq"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::common-student-questions",
+      "label": "Common Student Questions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::faq-generation-process"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::faq-from-course-content",
+      "label": "FAQ from Course Content",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::faq-generation-process"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::microsim",
+      "label": "MicroSim",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook",
+        "claude-skills::level-3-interactive-elements"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::p5-js-javascript-library",
+      "label": "p5.js JavaScript Library",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::microsim"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::interactive-simulations",
+      "label": "Interactive Simulations",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::microsim"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::microsim-directory-structure",
+      "label": "MicroSim Directory Structure",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::p5-js-javascript-library"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::main-html-in-microsims",
+      "label": "main.html in MicroSims",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::microsim-directory-structure"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::index-md-for-microsim-docs",
+      "label": "index.md for MicroSim Docs",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::microsim-directory-structure",
+        "claude-skills::markdown-formatting-basics"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::iframe-embedding",
+      "label": "Iframe Embedding",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::main-html-in-microsims",
+        "claude-skills::index-md-for-microsim-docs"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::seeded-randomness",
+      "label": "Seeded Randomness",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::p5-js-javascript-library"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::interactive-controls-sliders",
+      "label": "Interactive Controls (Sliders)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::p5-js-javascript-library"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::interactive-controls-buttons",
+      "label": "Interactive Controls (Buttons)",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::p5-js-javascript-library"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::microsim-metadata",
+      "label": "MicroSim Metadata",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::microsim-directory-structure"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::educational-simulation-design",
+      "label": "Educational Simulation Design",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::interactive-simulations"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::quiz",
+      "label": "Quiz",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::multiple-choice-questions",
+      "label": "Multiple-Choice Questions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quiz"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::quiz-alignment-with-concepts",
+      "label": "Quiz Alignment with Concepts",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quiz",
+        "claude-skills::concept-nodes-in-learning-graphs"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::bloom-s-taxonomy-in-quizzes",
+      "label": "Bloom's Taxonomy in Quizzes",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quiz",
+        "claude-skills::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::quiz-distribution-across-levels",
+      "label": "Quiz Distribution Across Levels",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bloom-s-taxonomy-in-quizzes"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::assessing-student-understanding",
+      "label": "Assessing Student Understanding",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::quiz"
+      ],
+      "taxonomy_id": "RSRCE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::chapter-structure",
+      "label": "Chapter Structure",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "CONTE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::section-organization",
+      "label": "Section Organization",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::chapter-structure"
+      ],
+      "taxonomy_id": "CONTE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::content-generation-process",
+      "label": "Content Generation Process",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook",
+        "claude-skills::claude-skill"
+      ],
+      "taxonomy_id": "CONTE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::chapter-index-files",
+      "label": "Chapter Index Files",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::chapter-structure"
+      ],
+      "taxonomy_id": "CONTE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::chapter-concept-lists",
+      "label": "Chapter Concept Lists",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::chapter-index-files",
+        "claude-skills::concept-nodes-in-learning-graphs"
+      ],
+      "taxonomy_id": "CONTE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::reading-level-appropriateness",
+      "label": "Reading Level Appropriateness",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::content-generation-process"
+      ],
+      "taxonomy_id": "CONTE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::worked-examples-in-content",
+      "label": "Worked Examples in Content",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::content-generation-process"
+      ],
+      "taxonomy_id": "CONTE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::practice-exercises",
+      "label": "Practice Exercises",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::content-generation-process"
+      ],
+      "taxonomy_id": "CONTE",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::git",
+      "label": "Git",
+      "subject_id": "claude-skills",
+      "dependencies": [],
+      "taxonomy_id": "VERCT",
+      "level": "foundational"
+    },
+    {
+      "id": "claude-skills::version-control-basics",
+      "label": "Version Control Basics",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::git"
+      ],
+      "taxonomy_id": "VERCT",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::git-repository-structure",
+      "label": "Git Repository Structure",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::version-control-basics"
+      ],
+      "taxonomy_id": "VERCT",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::git-status-command",
+      "label": "Git Status Command",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::git-repository-structure"
+      ],
+      "taxonomy_id": "VERCT",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::git-add-command",
+      "label": "Git Add Command",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::git-repository-structure"
+      ],
+      "taxonomy_id": "VERCT",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::git-commit-command",
+      "label": "Git Commit Command",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::git-add-command"
+      ],
+      "taxonomy_id": "VERCT",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::git-push-command",
+      "label": "Git Push Command",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::git-commit-command"
+      ],
+      "taxonomy_id": "VERCT",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::github-integration",
+      "label": "GitHub Integration",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::git"
+      ],
+      "taxonomy_id": "VERCT",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::github-pages-deployment",
+      "label": "GitHub Pages Deployment",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::github-integration",
+        "claude-skills::mkdocs-material-theme"
+      ],
+      "taxonomy_id": "VERCT",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::visual-studio-code",
+      "label": "Visual Studio Code",
+      "subject_id": "claude-skills",
+      "dependencies": [],
+      "taxonomy_id": "TOOLS",
+      "level": "foundational"
+    },
+    {
+      "id": "claude-skills::vs-code-for-content-development",
+      "label": "VS Code for Content Development",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::visual-studio-code",
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::terminal-in-vs-code",
+      "label": "Terminal in VS Code",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::vs-code-for-content-development",
+        "claude-skills::command-line-interface-basics"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::bash",
+      "label": "Bash",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::command-line-interface-basics"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::shell-scripts",
+      "label": "Shell Scripts",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::bash"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::script-execution-permissions",
+      "label": "Script Execution Permissions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::shell-scripts"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::python",
+      "label": "Python",
+      "subject_id": "claude-skills",
+      "dependencies": [],
+      "taxonomy_id": "DATAS",
+      "level": "foundational"
+    },
+    {
+      "id": "claude-skills::python-scripts-for-processing",
+      "label": "Python Scripts for Processing",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::python"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::pip-package-management",
+      "label": "pip Package Management",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::python"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::installing-python-packages",
+      "label": "Installing Python Packages",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::pip-package-management"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::analyze-graph-py-script",
+      "label": "analyze-graph.py Script",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::python-scripts-for-processing",
+        "claude-skills::csv-file-format-for-graphs"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::csv-to-json-py-script",
+      "label": "csv-to-json.py Script",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::python-scripts-for-processing",
+        "claude-skills::csv-file-format-for-graphs",
+        "claude-skills::vis-network-json-format"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::add-taxonomy-py-script",
+      "label": "add-taxonomy.py Script",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::python-scripts-for-processing",
+        "claude-skills::csv-file-format-for-graphs",
+        "claude-skills::taxonomyid-field-in-csv"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::taxonomy-distribution-py-script",
+      "label": "taxonomy-distribution.py Script",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::python-scripts-for-processing",
+        "claude-skills::csv-file-format-for-graphs",
+        "claude-skills::category-distribution"
+      ],
+      "taxonomy_id": "DATAS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::prompt-design-principles",
+      "label": "Prompt Design Principles",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::prompt-engineering"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::educational-content-prompts",
+      "label": "Educational Content Prompts",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::prompt-design-principles",
+        "claude-skills::intelligent-textbook"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::iterative-prompt-refinement",
+      "label": "Iterative Prompt Refinement",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::prompt-design-principles"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::claude-token-limits",
+      "label": "Claude Token Limits",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-ai"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::token-management-strategies",
+      "label": "Token Management Strategies",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::claude-token-limits"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::4-hour-usage-windows",
+      "label": "4-Hour Usage Windows",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::anthropic-claude-pro-account"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::claude-pro-limitations",
+      "label": "Claude Pro Limitations",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::anthropic-claude-pro-account"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::optimizing-claude-usage",
+      "label": "Optimizing Claude Usage",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::token-management-strategies"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-testing-and-debugging",
+      "label": "Skill Testing and Debugging",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::installing-a-claude-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::error-analysis-in-skills",
+      "label": "Error Analysis in Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::skill-testing-and-debugging"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::improving-skill-quality",
+      "label": "Improving Skill Quality",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::skill-testing-and-debugging",
+        "claude-skills::error-analysis-in-skills"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::security-in-skill-execution",
+      "label": "Security in Skill Execution",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::allowed-tools-in-skills"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::permission-management",
+      "label": "Permission Management",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::security-in-skill-execution"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::file-access-permissions",
+      "label": "File Access Permissions",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::permission-management"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::command-line-interface-basics",
+      "label": "Command-Line Interface Basics",
+      "subject_id": "claude-skills",
+      "dependencies": [],
+      "taxonomy_id": "TOOLS",
+      "level": "foundational"
+    },
+    {
+      "id": "claude-skills::terminal-commands",
+      "label": "Terminal Commands",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::command-line-interface-basics"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::directory-navigation",
+      "label": "Directory Navigation",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::terminal-commands"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::file-creation-and-editing",
+      "label": "File Creation and Editing",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::terminal-commands"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::symlink-creation",
+      "label": "Symlink Creation",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::terminal-commands"
+      ],
+      "taxonomy_id": "TOOLS",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::installing-skills-globally",
+      "label": "Installing Skills Globally",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::installing-a-claude-skill",
+        "claude-skills::symlink-creation"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::project-specific-skills",
+      "label": "Project-Specific Skills",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::installing-a-claude-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-distribution-methods",
+      "label": "Skill Distribution Methods",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::installing-a-claude-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::skill-packaging-best-practices",
+      "label": "Skill Packaging Best Practices",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::skill-directory-structure",
+        "claude-skills::skill-distribution-methods"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "claude-skills::capstone-complete-textbook-project",
+      "label": "Capstone: Complete Textbook Project",
+      "subject_id": "claude-skills",
+      "dependencies": [
+        "claude-skills::intelligent-textbook",
+        "claude-skills::claude-skill",
+        "claude-skills::learning-graph",
+        "claude-skills::glossary",
+        "claude-skills::faq",
+        "claude-skills::microsim",
+        "claude-skills::quiz",
+        "claude-skills::chapter-structure"
+      ],
+      "taxonomy_id": "IBOOK",
+      "level": "core"
+    }
+  ]
+}

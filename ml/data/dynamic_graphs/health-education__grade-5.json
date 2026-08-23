@@ -1,0 +1,756 @@
+{
+  "subject_id": "health-education__grade-5",
+  "title": "Grade 5 Health Education Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations",
+      "color": "SteelBlue"
+    },
+    "FOOD": {
+      "classifier_name": "Food and Nutrition",
+      "color": "Gold"
+    },
+    "GROW": {
+      "classifier_name": "Human Growth and Development",
+      "color": "DarkSlateBlue"
+    },
+    "EMOT": {
+      "classifier_name": "Mental and Emotional Health",
+      "color": "MediumPurple"
+    },
+    "WELL": {
+      "classifier_name": "Personal Health and Wellness",
+      "color": "DarkGreen"
+    },
+    "SAFE": {
+      "classifier_name": "Personal Safety and Violence Prevention",
+      "color": "Crimson"
+    },
+    "SKIL": {
+      "classifier_name": "Skill Standards",
+      "color": "Teal"
+    }
+  },
+  "concepts": [
+    {
+      "id": "health-education__grade-5::health",
+      "label": "Health",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "health-education__grade-5::cultural-nutrient-approaches",
+      "label": "Cultural Nutrient Approaches",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::daily-energy-needs",
+      "label": "Daily Energy Needs",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::nutrition-label-comparison",
+      "label": "Nutrition Label Comparison",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::choosing-the-healthier-food",
+      "label": "Choosing The Healthier Food",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::nutrition-label-comparison"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::water-as-the-healthy-drink-choice",
+      "label": "Water As The Healthy Drink Choice",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::comparing-water-to-other-drinks",
+      "label": "Comparing Water To Other Drinks",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::water-as-the-healthy-drink-choice"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::nutritious-meal-planning",
+      "label": "Nutritious Meal Planning",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::choosing-the-healthier-food",
+        "health-education__grade-5::daily-energy-needs"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::nutritious-snack-choices",
+      "label": "Nutritious Snack Choices",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::nutritious-meal-planning"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::foodborne-illness",
+      "label": "Foodborne Illness",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::unsafe-food-handling-practices",
+      "label": "Unsafe Food Handling Practices",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::foodborne-illness"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::family-influence-on-decisions",
+      "label": "Family Influence On Decisions",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::peer-influence-on-decisions",
+      "label": "Peer Influence On Decisions",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::emotions-shape-behavior",
+      "label": "Emotions Shape Behavior",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::telling-a-trusted-adult",
+      "label": "Telling A Trusted Adult",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::trusted-adult"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::trusted-adult",
+      "label": "Trusted Adult",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::health-concern-reporting",
+      "label": "Health Concern Reporting",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::telling-a-trusted-adult"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::restorative-self-management-strategies",
+      "label": "Restorative Self-Management Strategies",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::emotions-shape-behavior"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::managing-personal-growth",
+      "label": "Managing Personal Growth",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::restorative-self-management-strategies"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::managing-relationships",
+      "label": "Managing Relationships",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::restorative-self-management-strategies",
+        "health-education__grade-5::family-influence-on-decisions",
+        "health-education__grade-5::peer-influence-on-decisions"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::supporting-a-peer-in-difficulty",
+      "label": "Supporting A Peer In Difficulty",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::respecting-peer-boundaries"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::respecting-peer-boundaries",
+      "label": "Respecting Peer Boundaries",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::managing-relationships"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::guiding-a-peer-to-help",
+      "label": "Guiding A Peer To Help",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::supporting-a-peer-in-difficulty",
+        "health-education__grade-5::trusted-adult"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::equity",
+      "label": "Equity",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::belonging",
+      "label": "Belonging",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::equity"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::including-and-supporting-others",
+      "label": "Including And Supporting Others",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::equity",
+        "health-education__grade-5::belonging"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::emotional-triggers",
+      "label": "Emotional Triggers",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::emotions-shape-behavior"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::situations-that-influence-emotions",
+      "label": "Situations That Influence Emotions",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::emotional-triggers"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::bystander",
+      "label": "Bystander",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::bystander-action-against-bullying",
+      "label": "Bystander Action Against Bullying",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::bystander"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::preventing-fighting-and-violence",
+      "label": "Preventing Fighting And Violence",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::bystander-action-against-bullying"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::ability-inclusive-kindness",
+      "label": "Ability-Inclusive Kindness",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::including-and-supporting-others"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::inclusive-environments",
+      "label": "Inclusive Environments",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::ability-inclusive-kindness",
+        "health-education__grade-5::belonging"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::sleep-and-rest-needs",
+      "label": "Sleep And Rest Needs",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::sleep-supports-growth-and-learning",
+      "label": "Sleep Supports Growth And Learning",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::sleep-and-rest-needs"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::fitness-component",
+      "label": "Fitness Component",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::physical-activities-by-fitness-component",
+      "label": "Physical Activities By Fitness Component",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::fitness-component"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::allergic-reaction",
+      "label": "Allergic Reaction",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::allergic-reaction-signs",
+      "label": "Allergic Reaction Signs",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::allergic-reaction"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::responding-to-allergic-reactions",
+      "label": "Responding To Allergic Reactions",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::allergic-reaction-signs"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::chronic-condition",
+      "label": "Chronic Condition",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::common-illness-symptoms",
+      "label": "Common Illness Symptoms",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::chronic-condition"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::knowing-when-to-seek-help",
+      "label": "Knowing When To Seek Help",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::common-illness-symptoms",
+        "health-education__grade-5::trusted-adult"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::personal-behaviors-and-long-term-health",
+      "label": "Personal Behaviors And Long-Term Health",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::common-illness-symptoms",
+        "health-education__grade-5::sleep-supports-growth-and-learning"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::social-media-harm",
+      "label": "Social Media Harm",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::technology-harm-prevention-strategies",
+      "label": "Technology Harm Prevention Strategies",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::social-media-harm"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::reporting-online-harm",
+      "label": "Reporting Online Harm",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::technology-harm-prevention-strategies",
+        "health-education__grade-5::trusted-adult"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::unhealthy-relationship-recognition",
+      "label": "Unhealthy Relationship Recognition",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::managing-relationships"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::boundary-setting",
+      "label": "Boundary-Setting",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::respecting-peer-boundaries",
+        "health-education__grade-5::unhealthy-relationship-recognition"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::seeking-support-for-relationships",
+      "label": "Seeking Support For Relationships",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::unhealthy-relationship-recognition",
+        "health-education__grade-5::trusted-adult"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::safely-exiting-unsafe-relationships",
+      "label": "Safely Exiting Unsafe Relationships",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::boundary-setting",
+        "health-education__grade-5::seeking-support-for-relationships"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::emergency-risk-reduction",
+      "label": "Emergency Risk Reduction",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::peer-actions-during-emergencies",
+      "label": "Peer Actions During Emergencies",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::emergency-risk-reduction"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::school-staff-actions-during-emergencies",
+      "label": "School-Staff Actions During Emergencies",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::emergency-risk-reduction"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::consent",
+      "label": "Consent",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::coercion",
+      "label": "Coercion",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::consent"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::consent-versus-coercion",
+      "label": "Consent Versus Coercion",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::consent",
+        "health-education__grade-5::coercion"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::recognizing-unsafe-situations",
+      "label": "Recognizing Unsafe Situations",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::consent-versus-coercion"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::reporting-unsafe-situations",
+      "label": "Reporting Unsafe Situations",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::recognizing-unsafe-situations",
+        "health-education__grade-5::trusted-adult"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::health-behavior-influences",
+      "label": "Health Behavior Influences",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::family-influence-on-decisions",
+        "health-education__grade-5::peer-influence-on-decisions"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::managing-health-influences",
+      "label": "Managing Health Influences",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health-behavior-influences"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::identifying-needed-trusted-resources",
+      "label": "Identifying Needed Trusted Resources",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::trusted-adult",
+        "health-education__grade-5::knowing-when-to-seek-help"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::conflict-resolution",
+      "label": "Conflict Resolution",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::managing-relationships"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::demonstrating-conflict-resolution",
+      "label": "Demonstrating Conflict Resolution",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::conflict-resolution"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::demonstrating-boundary-setting",
+      "label": "Demonstrating Boundary-Setting",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::boundary-setting"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::health-decision-options-and-consequences",
+      "label": "Health Decision Options And Consequences",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::managing-health-influences"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::decision-reflection",
+      "label": "Decision Reflection",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::health-decision-options-and-consequences"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::personal-health-goal-tracking",
+      "label": "Personal Health Goal Tracking",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::nutritious-snack-choices",
+        "health-education__grade-5::physical-activities-by-fitness-component",
+        "health-education__grade-5::personal-behaviors-and-long-term-health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::ownership-of-personal-health",
+      "label": "Ownership Of Personal Health",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::personal-health-goal-tracking",
+        "health-education__grade-5::decision-reflection"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-5::health-message-delivery",
+      "label": "Health Message Delivery",
+      "subject_id": "health-education__grade-5",
+      "dependencies": [
+        "health-education__grade-5::demonstrating-conflict-resolution",
+        "health-education__grade-5::demonstrating-boundary-setting"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    }
+  ]
+}

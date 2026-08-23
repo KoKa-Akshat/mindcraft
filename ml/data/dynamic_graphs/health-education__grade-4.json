@@ -1,0 +1,639 @@
+{
+  "subject_id": "health-education__grade-4",
+  "title": "Grade 4 Health Education Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations",
+      "color": "SteelBlue"
+    },
+    "FOOD": {
+      "classifier_name": "Food and Nutrition",
+      "color": "Gold"
+    },
+    "GROW": {
+      "classifier_name": "Human Growth and Development",
+      "color": "DarkSlateBlue"
+    },
+    "EMOT": {
+      "classifier_name": "Mental and Emotional Health",
+      "color": "MediumPurple"
+    },
+    "WELL": {
+      "classifier_name": "Personal Health and Wellness",
+      "color": "DarkGreen"
+    },
+    "SAFE": {
+      "classifier_name": "Personal Safety and Violence Prevention",
+      "color": "Crimson"
+    },
+    "SKIL": {
+      "classifier_name": "Skill Standards",
+      "color": "Teal"
+    }
+  },
+  "concepts": [
+    {
+      "id": "health-education__grade-4::health",
+      "label": "Health",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "health-education__grade-4::macronutrient",
+      "label": "Macronutrient",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::carbohydrates",
+      "label": "Carbohydrates",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::macronutrient"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::protein",
+      "label": "Protein",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::macronutrient"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::fats",
+      "label": "Fats",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::macronutrient"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::vitamins-and-minerals",
+      "label": "Vitamins And Minerals",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::water-and-hydration",
+      "label": "Water And Hydration",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::nutrition-label",
+      "label": "Nutrition Label",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::carbohydrates",
+        "health-education__grade-4::protein",
+        "health-education__grade-4::fats",
+        "health-education__grade-4::vitamins-and-minerals"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::balanced-meal-planning",
+      "label": "Balanced Meal Planning",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::nutrition-label",
+        "health-education__grade-4::water-and-hydration"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::limiting-caffeinated-drinks",
+      "label": "Limiting Caffeinated Drinks",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::water-and-hydration"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::limiting-sugary-drinks",
+      "label": "Limiting Sugary Drinks",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::water-and-hydration"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::effects-of-sugary-foods",
+      "label": "Effects Of Sugary Foods",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::limiting-sugary-drinks"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::effects-of-salty-foods",
+      "label": "Effects Of Salty Foods",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::food-temperature-safety",
+      "label": "Food Temperature Safety",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::conflict-management",
+      "label": "Conflict Management",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::respecting-cultural-differences",
+      "label": "Respecting Cultural Differences",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::conflict-management"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::puberty-as-a-life-stage",
+      "label": "Puberty As A Life Stage",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::puberty-across-cultures",
+      "label": "Puberty Across Cultures",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::puberty-as-a-life-stage",
+        "health-education__grade-4::respecting-cultural-differences"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::self-regulation",
+      "label": "Self-Regulation",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::cultural-self-regulation-practices",
+      "label": "Cultural Self-Regulation Practices",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::self-regulation",
+        "health-education__grade-4::respecting-cultural-differences"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::mental-health-benefits-of-culture",
+      "label": "Mental Health Benefits Of Culture",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::cultural-self-regulation-practices"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::emotions-influence-behavior",
+      "label": "Emotions Influence Behavior",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::self-regulation"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::managing-emotions",
+      "label": "Managing Emotions",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::emotions-influence-behavior"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::responding-to-teasing-and-exclusion",
+      "label": "Responding To Teasing And Exclusion",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::managing-emotions",
+        "health-education__grade-4::bias",
+        "health-education__grade-4::prejudice"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::responding-to-bullying",
+      "label": "Responding To Bullying",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::managing-emotions",
+        "health-education__grade-4::bias",
+        "health-education__grade-4::prejudice"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::bias",
+      "label": "Bias",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::respecting-cultural-differences"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::prejudice",
+      "label": "Prejudice",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::respecting-cultural-differences",
+        "health-education__grade-4::bias"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::mental-health-changes-over-time",
+      "label": "Mental Health Changes Over Time",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::mental-health-benefits-of-culture",
+        "health-education__grade-4::culturally-appropriate-help"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::culturally-appropriate-help",
+      "label": "Culturally Appropriate Help",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::trusted-adult",
+        "health-education__grade-4::respecting-cultural-differences"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::trusted-adult",
+      "label": "Trusted Adult",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::allergy",
+      "label": "Allergy",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::allergy-prevention-and-management",
+      "label": "Allergy Prevention And Management",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::allergy"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::cultural-physical-activity-traditions",
+      "label": "Cultural Physical Activity Traditions",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::respecting-cultural-differences"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::benefits-of-physical-activity-on-mood",
+      "label": "Benefits Of Physical Activity On Mood",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::cultural-physical-activity-traditions"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::infectious-disease",
+      "label": "Infectious Disease",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::non-infectious-disease",
+      "label": "Non-Infectious Disease",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::how-germs-spread",
+      "label": "How Germs Spread",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::infectious-disease"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::disease-prevention-strategies",
+      "label": "Disease Prevention Strategies",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::how-germs-spread",
+        "health-education__grade-4::allergy-prevention-and-management"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::cultural-wellness-perspectives",
+      "label": "Cultural Wellness Perspectives",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::respecting-cultural-differences",
+        "health-education__grade-4::disease-prevention-strategies"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::harmful-technology-behavior",
+      "label": "Harmful Technology Behavior",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::situational-awareness",
+      "label": "Situational Awareness",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::warning-sign"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::exiting-unsafe-situations",
+      "label": "Exiting Unsafe Situations",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::situational-awareness"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::personal-boundaries",
+      "label": "Personal Boundaries",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::setting-boundaries",
+      "label": "Setting Boundaries",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::personal-boundaries",
+        "health-education__grade-4::respecting-cultural-differences"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::warning-sign",
+      "label": "Warning Sign",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::peer-pressure",
+      "label": "Peer Pressure",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::influences-on-health-behavior"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::refusal-skill",
+      "label": "Refusal Skill",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::peer-pressure"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::demonstrating-refusal-skills",
+      "label": "Demonstrating Refusal Skills",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::refusal-skill",
+        "health-education__grade-4::exiting-unsafe-situations"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::influences-on-health-behavior",
+      "label": "Influences On Health Behavior",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::media-and-technology-influence",
+      "label": "Media And Technology Influence",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::influences-on-health-behavior",
+        "health-education__grade-4::harmful-technology-behavior"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::valid-health-information",
+      "label": "Valid Health Information",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::influences-on-health-behavior"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::reliable-health-information",
+      "label": "Reliable Health Information",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::influences-on-health-behavior"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::evaluating-health-products-and-services",
+      "label": "Evaluating Health Products And Services",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::valid-health-information",
+        "health-education__grade-4::reliable-health-information"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::goal-plan-development",
+      "label": "Goal Plan Development",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::balanced-meal-planning",
+        "health-education__grade-4::benefits-of-physical-activity-on-mood",
+        "health-education__grade-4::disease-prevention-strategies"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::identifying-supports-and-barriers",
+      "label": "Identifying Supports And Barriers",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::goal-plan-development",
+        "health-education__grade-4::trusted-adult"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::tracking-health-behaviors",
+      "label": "Tracking Health Behaviors",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::goal-plan-development"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::using-research-for-a-position",
+      "label": "Using Research For A Position",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::evaluating-health-products-and-services"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-4::constructing-a-health-position",
+      "label": "Constructing A Health Position",
+      "subject_id": "health-education__grade-4",
+      "dependencies": [
+        "health-education__grade-4::using-research-for-a-position",
+        "health-education__grade-4::identifying-supports-and-barriers"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    }
+  ]
+}

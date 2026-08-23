@@ -1,0 +1,2104 @@
+{
+  "subject_id": "automating-instructional-design",
+  "title": "Automating Instructional Design Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "BLOOM": {
+      "classifier_name": "Bloom's Taxonomy",
+      "color": "PeachPuff"
+    },
+    "VISUA": {
+      "classifier_name": "Visualization Types",
+      "color": "LightYellow"
+    },
+    "LIBRA": {
+      "classifier_name": "Libraries & Tools",
+      "color": "PaleTurquoise"
+    },
+    "SPECI": {
+      "classifier_name": "Specification",
+      "color": "Lavender"
+    },
+    "COGNI": {
+      "classifier_name": "Cognitive Science",
+      "color": "PaleGreen"
+    },
+    "AUDIE": {
+      "classifier_name": "Audience Adaptation",
+      "color": "LightPink"
+    },
+    "EVALU": {
+      "classifier_name": "Evaluation & Testing",
+      "color": "PowderBlue"
+    },
+    "ITERA": {
+      "classifier_name": "Iteration & Workflow",
+      "color": "Thistle"
+    },
+    "ACCES": {
+      "classifier_name": "Accessibility",
+      "color": "Honeydew"
+    },
+    "DEPLO": {
+      "classifier_name": "Deployment",
+      "color": "MistyRose"
+    },
+    "CAPST": {
+      "classifier_name": "Capstone",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "automating-instructional-design::instructional-design",
+      "label": "Instructional Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "automating-instructional-design::learning-objective",
+      "label": "Learning Objective",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::instructional-design"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::microsim",
+      "label": "MicroSim",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective",
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::interactive-simulation",
+      "label": "Interactive Simulation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::educational-technology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::educational-technology",
+      "label": "Educational Technology",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "automating-instructional-design::ai-assisted-design",
+      "label": "AI-Assisted Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::educational-technology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::bloom-s-taxonomy",
+      "label": "Bloom's Taxonomy",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::cognitive-complexity",
+      "label": "Cognitive Complexity",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::remember-level",
+      "label": "Remember Level",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::understand-level",
+      "label": "Understand Level",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::bloom-s-taxonomy",
+        "automating-instructional-design::remember-level"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::apply-level",
+      "label": "Apply Level",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::bloom-s-taxonomy",
+        "automating-instructional-design::understand-level"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::analyze-level",
+      "label": "Analyze Level",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::bloom-s-taxonomy",
+        "automating-instructional-design::apply-level"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::evaluate-level",
+      "label": "Evaluate Level",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::bloom-s-taxonomy",
+        "automating-instructional-design::analyze-level"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::create-level",
+      "label": "Create Level",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::bloom-s-taxonomy",
+        "automating-instructional-design::evaluate-level"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::action-verbs",
+      "label": "Action Verbs",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::measurable-outcomes",
+      "label": "Measurable Outcomes",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective",
+        "automating-instructional-design::action-verbs"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::learning-outcome",
+      "label": "Learning Outcome",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective",
+        "automating-instructional-design::measurable-outcomes"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::objective-decomposition",
+      "label": "Objective Decomposition",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective",
+        "automating-instructional-design::atomic-concepts"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::atomic-concepts",
+      "label": "Atomic Concepts",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::compound-objectives",
+      "label": "Compound Objectives",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective",
+        "automating-instructional-design::atomic-concepts"
+      ],
+      "taxonomy_id": "BLOOM",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::prerequisite-knowledge",
+      "label": "Prerequisite Knowledge",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective",
+        "automating-instructional-design::concept-dependencies"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::assumed-knowledge",
+      "label": "Assumed Knowledge",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::prerequisite-knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::simulation-readiness",
+      "label": "Simulation Readiness",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim",
+        "automating-instructional-design::objective-decomposition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::concept-dependencies",
+      "label": "Concept Dependencies",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::atomic-concepts"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::learning-pathway",
+      "label": "Learning Pathway",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::concept-dependencies",
+        "automating-instructional-design::prerequisite-knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::visualization-paradigm",
+      "label": "Visualization Paradigm",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::p5-js-animation",
+      "label": "p5.js Animation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm",
+        "automating-instructional-design::motion-simulation"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::network-graph",
+      "label": "Network Graph",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm",
+        "automating-instructional-design::relationship-graph"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::vis-network-library",
+      "label": "vis-network Library",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::network-graph"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::timeline-visualization",
+      "label": "Timeline Visualization",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm",
+        "automating-instructional-design::sequence-display"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::vis-timeline-library",
+      "label": "vis-timeline Library",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::timeline-visualization"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::chart-visualization",
+      "label": "Chart Visualization",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm",
+        "automating-instructional-design::trend-chart"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::chart-js-library",
+      "label": "Chart.js Library",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::chart-visualization"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::plotly-library",
+      "label": "Plotly Library",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::chart-visualization"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::map-visualization",
+      "label": "Map Visualization",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm",
+        "automating-instructional-design::spatial-visualization"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::leaflet-library",
+      "label": "Leaflet Library",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::map-visualization"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::diagram-visualization",
+      "label": "Diagram Visualization",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm",
+        "automating-instructional-design::flowchart"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::mermaid-library",
+      "label": "Mermaid Library",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::diagram-visualization"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::venn-diagram",
+      "label": "Venn Diagram",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm",
+        "automating-instructional-design::classification-display"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::set-visualization",
+      "label": "Set Visualization",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::venn-diagram"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::motion-simulation",
+      "label": "Motion Simulation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::physics-simulation",
+      "label": "Physics Simulation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::motion-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::dynamic-systems",
+      "label": "Dynamic Systems",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::physics-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::cause-effect-display",
+      "label": "Cause-Effect Display",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::motion-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::relationship-graph",
+      "label": "Relationship Graph",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::hierarchy-display",
+      "label": "Hierarchy Display",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::relationship-graph"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::dependency-mapping",
+      "label": "Dependency Mapping",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::relationship-graph",
+        "automating-instructional-design::concept-dependencies"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::influence-diagram",
+      "label": "Influence Diagram",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::relationship-graph"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::sequence-display",
+      "label": "Sequence Display",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::process-timeline",
+      "label": "Process Timeline",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::sequence-display"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::trend-chart",
+      "label": "Trend Chart",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::distribution-chart",
+      "label": "Distribution Chart",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::trend-chart"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::correlation-display",
+      "label": "Correlation Display",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::trend-chart"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::spatial-visualization",
+      "label": "Spatial Visualization",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::flowchart",
+      "label": "Flowchart",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::state-machine-diagram",
+      "label": "State Machine Diagram",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::flowchart"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::classification-display",
+      "label": "Classification Display",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::paradigm-selection",
+      "label": "Paradigm Selection",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm",
+        "automating-instructional-design::concept-characteristics"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::concept-characteristics",
+      "label": "Concept Characteristics",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::atomic-concepts"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::visual-affordances",
+      "label": "Visual Affordances",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::visualization-paradigm"
+      ],
+      "taxonomy_id": "VISUA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::specification-document",
+      "label": "Specification Document",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::visual-description",
+      "label": "Visual Description",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::specification-document"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::interaction-behavior",
+      "label": "Interaction Behavior",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::specification-document",
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::behavior-constraints",
+      "label": "Behavior Constraints",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interaction-behavior"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::success-criteria",
+      "label": "Success Criteria",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::specification-document",
+        "automating-instructional-design::measurable-outcomes"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::edge-case-definition",
+      "label": "Edge Case Definition",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::specification-document",
+        "automating-instructional-design::behavior-constraints"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::specification-ambiguity",
+      "label": "Specification Ambiguity",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::specification-document"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::intent-preservation",
+      "label": "Intent Preservation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective",
+        "automating-instructional-design::specification-ambiguity"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::ai-interpretation",
+      "label": "AI Interpretation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::ai-assisted-design",
+        "automating-instructional-design::intent-preservation"
+      ],
+      "taxonomy_id": "SPECI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::ai-assisted-design"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::refinement-prompt",
+      "label": "Refinement Prompt",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::prompt-engineering",
+        "automating-instructional-design::iterative-refinement"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::generation-workflow",
+      "label": "Generation Workflow",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::ai-assisted-design",
+        "automating-instructional-design::claude-code-skills"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::output-interpretation",
+      "label": "Output Interpretation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::generation-workflow"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::issue-identification",
+      "label": "Issue Identification",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::output-interpretation"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::regeneration-decision",
+      "label": "Regeneration Decision",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::issue-identification",
+        "automating-instructional-design::version-control"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::manual-adjustment",
+      "label": "Manual Adjustment",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::issue-identification"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::version-control",
+      "label": "Version Control",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::generation-workflow"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::iteration-management",
+      "label": "Iteration Management",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::version-control"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::cognitive-development",
+      "label": "Cognitive Development",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::piaget-stages",
+        "automating-instructional-design::vygotsky-theory"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::piaget-stages",
+      "label": "Piaget Stages",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [],
+      "taxonomy_id": "AUDIE",
+      "level": "foundational"
+    },
+    {
+      "id": "automating-instructional-design::vygotsky-theory",
+      "label": "Vygotsky Theory",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [],
+      "taxonomy_id": "AUDIE",
+      "level": "foundational"
+    },
+    {
+      "id": "automating-instructional-design::early-childhood-design",
+      "label": "Early Childhood Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-development",
+        "automating-instructional-design::touch-target-size"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::elementary-design",
+      "label": "Elementary Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-development",
+        "automating-instructional-design::guided-exploration"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::middle-school-design",
+      "label": "Middle School Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-development"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::high-school-design",
+      "label": "High School Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-development"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::undergraduate-design",
+      "label": "Undergraduate Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-development"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::graduate-design",
+      "label": "Graduate Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-development"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::corporate-training-design",
+      "label": "Corporate Training Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-development"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::touch-target-size",
+      "label": "Touch Target Size",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::simple-cause-effect",
+      "label": "Simple Cause-Effect",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cause-effect-display"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::guided-exploration",
+      "label": "Guided Exploration",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::scaffolded-complexity",
+      "label": "Scaffolded Complexity",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::guided-exploration",
+        "automating-instructional-design::progressive-disclosure"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::reading-support",
+      "label": "Reading Support",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::elementary-design"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::abstract-concepts",
+      "label": "Abstract Concepts",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::middle-school-design"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::multiple-variables",
+      "label": "Multiple Variables",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::abstract-concepts"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::hypothesis-testing",
+      "label": "Hypothesis Testing",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::multiple-variables"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::real-world-application",
+      "label": "Real-World Application",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::high-school-design"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::data-interpretation",
+      "label": "Data Interpretation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::real-world-application"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::theoretical-foundations",
+      "label": "Theoretical Foundations",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::undergraduate-design"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::mathematical-relations",
+      "label": "Mathematical Relations",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::theoretical-foundations"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::research-applications",
+      "label": "Research Applications",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::graduate-design"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::parameter-space",
+      "label": "Parameter Space",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::research-applications"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::job-relevant-scenarios",
+      "label": "Job-Relevant Scenarios",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::corporate-training-design"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::time-efficient-design",
+      "label": "Time-Efficient Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::job-relevant-scenarios"
+      ],
+      "taxonomy_id": "AUDIE",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::cognitive-load-theory",
+      "label": "Cognitive Load Theory",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::intrinsic-load",
+        "automating-instructional-design::extraneous-load",
+        "automating-instructional-design::germane-load"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::intrinsic-load",
+      "label": "Intrinsic Load",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::working-memory"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::extraneous-load",
+      "label": "Extraneous Load",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::working-memory"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::germane-load",
+      "label": "Germane Load",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::working-memory",
+        "automating-instructional-design::schema-formation"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::split-attention-effect",
+      "label": "Split Attention Effect",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-load-theory"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::progressive-disclosure",
+      "label": "Progressive Disclosure",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-load-theory",
+        "automating-instructional-design::information-density"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::color-accessibility",
+      "label": "Color Accessibility",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::contrast-design"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::contrast-design",
+      "label": "Contrast Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [],
+      "taxonomy_id": "ACCES",
+      "level": "foundational"
+    },
+    {
+      "id": "automating-instructional-design::animation-speed",
+      "label": "Animation Speed",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::motion-simulation",
+        "automating-instructional-design::learner-control"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::learner-control",
+      "label": "Learner Control",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::visual-simplicity",
+      "label": "Visual Simplicity",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::extraneous-load"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::information-density",
+      "label": "Information Density",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-load-theory"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::cognitive-load-meter",
+      "label": "Cognitive Load Meter",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-load-theory"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::design-tradeoffs",
+      "label": "Design Tradeoffs",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-load-theory",
+        "automating-instructional-design::visual-simplicity"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::mental-effort",
+      "label": "Mental Effort",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-load-theory"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::working-memory",
+      "label": "Working Memory",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [],
+      "taxonomy_id": "COGNI",
+      "level": "foundational"
+    },
+    {
+      "id": "automating-instructional-design::long-term-memory",
+      "label": "Long-Term Memory",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::working-memory"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::schema-formation",
+      "label": "Schema Formation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::long-term-memory"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::misconception",
+      "label": "Misconception",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::mental-model"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::common-misconceptions",
+      "label": "Common Misconceptions",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::misconception"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::misconception-correction",
+      "label": "Misconception Correction",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::common-misconceptions",
+        "automating-instructional-design::conceptual-change"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::misconception-reinforcement",
+      "label": "Misconception Reinforcement",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::common-misconceptions"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::productive-failure",
+      "label": "Productive Failure",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::misconception-correction"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::prediction-prompt",
+      "label": "Prediction Prompt",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::misconception",
+        "automating-instructional-design::intuition-testing"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::conceptual-boundary",
+      "label": "Conceptual Boundary",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::misconception"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::mental-model",
+      "label": "Mental Model",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::schema-formation"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::conceptual-change",
+      "label": "Conceptual Change",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::mental-model"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::intuition-testing",
+      "label": "Intuition Testing",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::mental-model"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::model-comparison",
+      "label": "Model Comparison",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::mental-model",
+        "automating-instructional-design::conceptual-change"
+      ],
+      "taxonomy_id": "COGNI",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::claude-code-skills",
+      "label": "Claude Code Skills",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::ai-assisted-design"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::microsim-generator",
+      "label": "MicroSim Generator",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::claude-code-skills",
+        "automating-instructional-design::specification-document"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::template-library",
+      "label": "Template Library",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim-generator"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::iterative-refinement",
+      "label": "Iterative Refinement",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim-generator"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::conversation-prompting",
+      "label": "Conversation Prompting",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::prompt-engineering",
+        "automating-instructional-design::iterative-refinement"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::code-generation",
+      "label": "Code Generation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::claude-code-skills"
+      ],
+      "taxonomy_id": "LIBRA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::output-validation",
+      "label": "Output Validation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::code-generation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::technical-evaluation",
+      "label": "Technical Evaluation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::output-validation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::pedagogical-evaluation",
+      "label": "Pedagogical Evaluation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::technical-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::ux-evaluation",
+      "label": "UX Evaluation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::technical-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::functionality-testing",
+      "label": "Functionality Testing",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::technical-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::responsiveness-testing",
+      "label": "Responsiveness Testing",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::technical-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::bug-identification",
+      "label": "Bug Identification",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::functionality-testing"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::objective-alignment",
+      "label": "Objective Alignment",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learning-objective",
+        "automating-instructional-design::pedagogical-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::cognitive-level-match",
+      "label": "Cognitive Level Match",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::cognitive-complexity",
+        "automating-instructional-design::pedagogical-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::effectiveness-measure",
+      "label": "Effectiveness Measure",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::pedagogical-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::intuitiveness",
+      "label": "Intuitiveness",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::interactive-simulation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::engagement-balance",
+      "label": "Engagement Balance",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::ux-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::evaluation-rubric",
+      "label": "Evaluation Rubric",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::technical-evaluation",
+        "automating-instructional-design::pedagogical-evaluation",
+        "automating-instructional-design::ux-evaluation"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::rubric-development",
+      "label": "Rubric Development",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::evaluation-rubric"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::automated-evaluation",
+      "label": "Automated Evaluation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::evaluation-rubric"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::human-evaluation",
+      "label": "Human Evaluation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::evaluation-rubric"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::documentation-standard",
+      "label": "Documentation Standard",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::evaluation-rubric"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::reusability",
+      "label": "Reusability",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::documentation-standard"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::think-aloud-protocol",
+      "label": "Think-Aloud Protocol",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learner-feedback"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::a-b-testing",
+      "label": "A/B Testing",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learner-feedback"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::learner-feedback",
+      "label": "Learner Feedback",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::age-based-feedback",
+      "label": "Age-Based Feedback",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learner-feedback",
+        "automating-instructional-design::cognitive-development"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::ability-based-feedback",
+      "label": "Ability-Based Feedback",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learner-feedback"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::observation-technique",
+      "label": "Observation Technique",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::think-aloud-protocol"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::test-interpretation",
+      "label": "Test Interpretation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::think-aloud-protocol",
+        "automating-instructional-design::a-b-testing"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::change-prioritization",
+      "label": "Change Prioritization",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::test-interpretation"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::ethical-research",
+      "label": "Ethical Research",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::think-aloud-protocol"
+      ],
+      "taxonomy_id": "EVALU",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::design-test-refine-cycle",
+      "label": "Design-Test-Refine Cycle",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learner-feedback",
+        "automating-instructional-design::technical-evaluation"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::critical-changes",
+      "label": "Critical Changes",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::change-prioritization"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::nice-to-have-changes",
+      "label": "Nice-to-Have Changes",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::change-prioritization"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::fundamental-redesign",
+      "label": "Fundamental Redesign",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::change-prioritization"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::incremental-improvement",
+      "label": "Incremental Improvement",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::change-prioritization"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::scope-creep-prevention",
+      "label": "Scope Creep Prevention",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::change-prioritization"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::completion-criteria",
+      "label": "Completion Criteria",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::design-test-refine-cycle"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::change-log",
+      "label": "Change Log",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::iteration-management"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::design-rationale",
+      "label": "Design Rationale",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::change-log"
+      ],
+      "taxonomy_id": "ITERA",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::universal-design",
+      "label": "Universal Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [],
+      "taxonomy_id": "ACCES",
+      "level": "foundational"
+    },
+    {
+      "id": "automating-instructional-design::udl-principles",
+      "label": "UDL Principles",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::screen-reader-support",
+      "label": "Screen Reader Support",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::keyboard-navigation",
+      "label": "Keyboard Navigation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::color-blindness-design",
+      "label": "Color Blindness Design",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design",
+        "automating-instructional-design::color-accessibility"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::reduced-motion",
+      "label": "Reduced Motion",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design",
+        "automating-instructional-design::animation-speed"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::multilingual-support",
+      "label": "Multilingual Support",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::vocabulary-level",
+      "label": "Vocabulary Level",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::cultural-sensitivity",
+      "label": "Cultural Sensitivity",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::prior-knowledge-support",
+      "label": "Prior Knowledge Support",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design",
+        "automating-instructional-design::assumed-knowledge"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::differentiation-strategy",
+      "label": "Differentiation Strategy",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design",
+        "automating-instructional-design::scaffolded-complexity"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::accessibility-audit",
+      "label": "Accessibility Audit",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::universal-design",
+        "automating-instructional-design::evaluation-rubric"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::constraint-simulation",
+      "label": "Constraint Simulation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::accessibility-audit"
+      ],
+      "taxonomy_id": "ACCES",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::lms-integration",
+      "label": "LMS Integration",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim"
+      ],
+      "taxonomy_id": "DEPLO",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim"
+      ],
+      "taxonomy_id": "DEPLO",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::learning-analytics",
+      "label": "Learning Analytics",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::lms-integration"
+      ],
+      "taxonomy_id": "DEPLO",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::interaction-tracking",
+      "label": "Interaction Tracking",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::microsim"
+      ],
+      "taxonomy_id": "DEPLO",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::maintenance-planning",
+      "label": "Maintenance Planning",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::lms-integration"
+      ],
+      "taxonomy_id": "DEPLO",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::library-organization",
+      "label": "Library Organization",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::template-library",
+        "automating-instructional-design::reusability"
+      ],
+      "taxonomy_id": "DEPLO",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::educator-collaboration",
+      "label": "Educator Collaboration",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::library-organization"
+      ],
+      "taxonomy_id": "DEPLO",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::content-sharing",
+      "label": "Content Sharing",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::library-organization"
+      ],
+      "taxonomy_id": "DEPLO",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::portfolio-project",
+      "label": "Portfolio Project",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::design-test-refine-cycle",
+        "automating-instructional-design::learner-feedback",
+        "automating-instructional-design::evaluation-rubric"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::reflection-journal",
+      "label": "Reflection Journal",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::design-test-refine-cycle"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::peer-feedback",
+      "label": "Peer Feedback",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::learner-feedback"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "automating-instructional-design::self-evaluation",
+      "label": "Self-Evaluation",
+      "subject_id": "automating-instructional-design",
+      "dependencies": [
+        "automating-instructional-design::evaluation-rubric"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    }
+  ]
+}

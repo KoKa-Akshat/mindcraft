@@ -1,0 +1,3381 @@
+{
+  "subject_id": "circuits",
+  "title": "Circuits 1",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "AUDIO": {
+      "classifier_name": "Audio Applications",
+      "color": "MistyRose"
+    },
+    "FILT": {
+      "classifier_name": "Filters",
+      "color": "Thistle"
+    },
+    "PASV": {
+      "classifier_name": "Passive Components",
+      "color": "LightYellow"
+    },
+    "FREQ": {
+      "classifier_name": "Frequency Response",
+      "color": "Lavender"
+    },
+    "TRANS": {
+      "classifier_name": "Transient Analysis",
+      "color": "Honeydew"
+    },
+    "OPAMP": {
+      "classifier_name": "Operational Amplifiers",
+      "color": "LightPink"
+    },
+    "SIGNAL": {
+      "classifier_name": "Signal Analysis",
+      "color": "Aquamarine"
+    },
+    "POWER": {
+      "classifier_name": "AC Power",
+      "color": "PowderBlue"
+    },
+    "LAB": {
+      "classifier_name": "Laboratory",
+      "color": "Gainsboro"
+    },
+    "ACFND": {
+      "classifier_name": "AC Fundamentals",
+      "color": "PaleTurquoise"
+    },
+    "ANLYS": {
+      "classifier_name": "Circuit Analysis",
+      "color": "PeachPuff"
+    },
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    }
+  },
+  "concepts": [
+    {
+      "id": "circuits::electric-charge",
+      "label": "Electric Charge",
+      "subject_id": "circuits",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "circuits::voltage",
+      "label": "Voltage",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::electric-charge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::current",
+      "label": "Current",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::electric-charge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::electrical-energy",
+      "label": "Electrical Energy",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::electric-charge",
+        "circuits::voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power",
+      "label": "Power",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::current",
+        "circuits::electrical-energy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::resistance",
+      "label": "Resistance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::ohm-s-law",
+      "label": "Ohm's Law",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::current",
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::conductance",
+      "label": "Conductance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::electrical-ground",
+      "label": "Electrical Ground",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::circuit-schematic-symbols",
+      "label": "Circuit Schematic Symbols",
+      "subject_id": "circuits",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "circuits::voltage-source",
+      "label": "Voltage Source",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::circuit-schematic-symbols"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::current-source",
+      "label": "Current Source",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::circuit-schematic-symbols"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::dependent-sources",
+      "label": "Dependent Sources",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage-source",
+        "circuits::current-source"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::series-circuits",
+      "label": "Series Circuits",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::resistance",
+        "circuits::ohm-s-law"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::parallel-circuits",
+      "label": "Parallel Circuits",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::resistance",
+        "circuits::ohm-s-law"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::series-parallel-circuits",
+      "label": "Series-Parallel Circuits",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::series-circuits",
+        "circuits::parallel-circuits"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::voltage-divider",
+      "label": "Voltage Divider",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ohm-s-law",
+        "circuits::series-circuits"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::current-divider",
+      "label": "Current Divider",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ohm-s-law",
+        "circuits::parallel-circuits"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::kirchhoff-s-voltage-law",
+      "label": "Kirchhoff's Voltage Law",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::series-circuits",
+        "circuits::loop"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::kirchhoff-s-current-law",
+      "label": "Kirchhoff's Current Law",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::parallel-circuits",
+        "circuits::node"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::node",
+      "label": "Node",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::branch",
+      "label": "Branch",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::loop",
+      "label": "Loop",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::branch",
+        "circuits::circuit-topology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::mesh",
+      "label": "Mesh",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::loop"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::open-circuit",
+      "label": "Open Circuit",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::short-circuit",
+      "label": "Short Circuit",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-dissipation",
+      "label": "Power Dissipation",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power",
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::energy-conservation",
+      "label": "Energy Conservation",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::electrical-energy",
+        "circuits::power"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::si-units-for-circuits",
+      "label": "SI Units for Circuits",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::current",
+        "circuits::power",
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::circuit-topology",
+      "label": "Circuit Topology",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::circuit-schematic-symbols",
+        "circuits::node",
+        "circuits::branch"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::node-voltage-method",
+      "label": "Node Voltage Method",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::kirchhoff-s-voltage-law",
+        "circuits::kirchhoff-s-current-law",
+        "circuits::node",
+        "circuits::reference-node"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::reference-node",
+      "label": "Reference Node",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::electrical-ground",
+        "circuits::node"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::supernode",
+      "label": "Supernode",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::node-voltage-method",
+        "circuits::voltage-source"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::mesh-current-method",
+      "label": "Mesh Current Method",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::kirchhoff-s-voltage-law",
+        "circuits::mesh"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::supermesh",
+      "label": "Supermesh",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::mesh-current-method",
+        "circuits::current-source"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::linearity",
+      "label": "Linearity",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ohm-s-law"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::superposition-principle",
+      "label": "Superposition Principle",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::linearity",
+        "circuits::voltage-source",
+        "circuits::current-source"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::source-transformation",
+      "label": "Source Transformation",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage-source",
+        "circuits::current-source",
+        "circuits::thevenin-s-theorem"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::thevenin-s-theorem",
+      "label": "Thevenin's Theorem",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ohm-s-law",
+        "circuits::voltage-source",
+        "circuits::kirchhoff-s-voltage-law",
+        "circuits::kirchhoff-s-current-law"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::thevenin-equivalent",
+      "label": "Thevenin Equivalent",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::thevenin-s-theorem"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::norton-s-theorem",
+      "label": "Norton's Theorem",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ohm-s-law",
+        "circuits::current-source",
+        "circuits::kirchhoff-s-voltage-law",
+        "circuits::kirchhoff-s-current-law"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::norton-equivalent",
+      "label": "Norton Equivalent",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::norton-s-theorem"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::maximum-power-transfer",
+      "label": "Maximum Power Transfer",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::thevenin-equivalent",
+        "circuits::load-resistance"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::load-resistance",
+      "label": "Load Resistance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistance",
+        "circuits::thevenin-equivalent"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::equivalent-resistance",
+      "label": "Equivalent Resistance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::series-circuits",
+        "circuits::parallel-circuits"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::delta-configuration",
+      "label": "Delta Configuration",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::parallel-circuits",
+        "circuits::circuit-topology"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::wye-configuration",
+      "label": "Wye Configuration",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::series-circuits",
+        "circuits::circuit-topology"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::delta-wye-transformation",
+      "label": "Delta-Wye Transformation",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::delta-configuration",
+        "circuits::wye-configuration"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::circuit-simplification",
+      "label": "Circuit Simplification",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::equivalent-resistance",
+        "circuits::delta-wye-transformation"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::nodal-analysis",
+      "label": "Nodal Analysis",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::node-voltage-method",
+        "circuits::supernode"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::mesh-analysis",
+      "label": "Mesh Analysis",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::mesh-current-method",
+        "circuits::supermesh"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::two-port-networks",
+      "label": "Two-Port Networks",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::input-resistance",
+        "circuits::output-resistance"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::input-resistance",
+      "label": "Input Resistance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::thevenin-equivalent",
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::output-resistance",
+      "label": "Output Resistance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::thevenin-equivalent",
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::loading-effect",
+      "label": "Loading Effect",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::input-resistance",
+        "circuits::output-resistance",
+        "circuits::load-resistance"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::resistor",
+      "label": "Resistor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistance",
+        "circuits::circuit-schematic-symbols"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::resistor-color-code",
+      "label": "Resistor Color Code",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::resistor-tolerance",
+      "label": "Resistor Tolerance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistor",
+        "circuits::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::potentiometer",
+      "label": "Potentiometer",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::capacitor",
+      "label": "Capacitor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::electric-charge",
+        "circuits::voltage",
+        "circuits::circuit-schematic-symbols"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::capacitance",
+      "label": "Capacitance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::capacitor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::parallel-plate-capacitor",
+      "label": "Parallel Plate Capacitor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::capacitance",
+        "circuits::dielectric-material"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::dielectric-material",
+      "label": "Dielectric Material",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::capacitance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::capacitor-energy-storage",
+      "label": "Capacitor Energy Storage",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::electrical-energy",
+        "circuits::capacitance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::capacitors-in-series",
+      "label": "Capacitors in Series",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::capacitance",
+        "circuits::series-circuits"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::capacitors-in-parallel",
+      "label": "Capacitors in Parallel",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::capacitance",
+        "circuits::parallel-circuits"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::inductor",
+      "label": "Inductor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::magnetic-field",
+        "circuits::circuit-schematic-symbols"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::inductance",
+      "label": "Inductance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inductor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::magnetic-field",
+      "label": "Magnetic Field",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::inductor-energy-storage",
+      "label": "Inductor Energy Storage",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::electrical-energy",
+        "circuits::inductance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::inductors-in-series",
+      "label": "Inductors in Series",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inductance",
+        "circuits::series-circuits"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::inductors-in-parallel",
+      "label": "Inductors in Parallel",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inductance",
+        "circuits::parallel-circuits"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::mutual-inductance",
+      "label": "Mutual Inductance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inductance",
+        "circuits::magnetic-field"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::coupling-coefficient",
+      "label": "Coupling Coefficient",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::mutual-inductance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::wire-resistance",
+      "label": "Wire Resistance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistance",
+        "circuits::resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::parasitic-capacitance",
+      "label": "Parasitic Capacitance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::capacitance",
+        "circuits::real-vs-ideal-components"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::parasitic-inductance",
+      "label": "Parasitic Inductance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inductance",
+        "circuits::real-vs-ideal-components"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::component-power-rating",
+      "label": "Component Power Rating",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power",
+        "circuits::power-dissipation"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::component-derating",
+      "label": "Component Derating",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::component-power-rating"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::real-vs-ideal-components",
+      "label": "Real vs Ideal Components",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistor",
+        "circuits::capacitor",
+        "circuits::inductor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "circuits::transient-response",
+      "label": "Transient Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::steady-state-response"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::steady-state-response",
+      "label": "Steady-State Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ohm-s-law",
+        "circuits::ac-circuit-analysis"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::time-constant",
+      "label": "Time Constant",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rc-circuit",
+        "circuits::rl-circuit"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rc-circuit",
+      "label": "RC Circuit",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistor",
+        "circuits::capacitor",
+        "circuits::ohm-s-law"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rc-charging",
+      "label": "RC Charging",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rc-circuit",
+        "circuits::capacitor-energy-storage",
+        "circuits::initial-conditions"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rc-discharging",
+      "label": "RC Discharging",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rc-circuit",
+        "circuits::capacitor-energy-storage",
+        "circuits::initial-conditions"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rl-circuit",
+      "label": "RL Circuit",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistor",
+        "circuits::inductor",
+        "circuits::ohm-s-law"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rl-energizing",
+      "label": "RL Energizing",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rl-circuit",
+        "circuits::inductor-energy-storage",
+        "circuits::initial-conditions"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rl-de-energizing",
+      "label": "RL De-energizing",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rl-circuit",
+        "circuits::inductor-energy-storage",
+        "circuits::initial-conditions"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::exponential-response",
+      "label": "Exponential Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::time-constant",
+        "circuits::rc-charging",
+        "circuits::rc-discharging",
+        "circuits::rl-energizing",
+        "circuits::rl-de-energizing"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::initial-conditions",
+      "label": "Initial Conditions",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rc-circuit",
+        "circuits::rl-circuit"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::final-conditions",
+      "label": "Final Conditions",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::steady-state-response",
+        "circuits::rc-circuit",
+        "circuits::rl-circuit"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::natural-response",
+      "label": "Natural Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::exponential-response",
+        "circuits::initial-conditions"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::forced-response",
+      "label": "Forced Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::steady-state-response",
+        "circuits::voltage-source"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::complete-response",
+      "label": "Complete Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::natural-response",
+        "circuits::forced-response"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::first-order-circuits",
+      "label": "First-Order Circuits",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rc-circuit",
+        "circuits::rl-circuit",
+        "circuits::time-constant"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::second-order-circuits",
+      "label": "Second-Order Circuits",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rlc-circuit",
+        "circuits::damping-ratio",
+        "circuits::natural-frequency"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rlc-circuit",
+      "label": "RLC Circuit",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rc-circuit",
+        "circuits::rl-circuit",
+        "circuits::resistor",
+        "circuits::capacitor",
+        "circuits::inductor"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::overdamped-response",
+      "label": "Overdamped Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::second-order-circuits",
+        "circuits::damping-ratio"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::underdamped-response",
+      "label": "Underdamped Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::second-order-circuits",
+        "circuits::damping-ratio"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::critically-damped-response",
+      "label": "Critically Damped Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::second-order-circuits",
+        "circuits::damping-ratio"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::damping-ratio",
+      "label": "Damping Ratio",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rlc-circuit",
+        "circuits::natural-frequency"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::natural-frequency",
+      "label": "Natural Frequency",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rlc-circuit"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::step-response",
+      "label": "Step Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::complete-response",
+        "circuits::first-order-circuits"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::pulse-response",
+      "label": "Pulse Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::step-response"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "circuits::alternating-current",
+      "label": "Alternating Current",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::sinusoidal-waveform"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::sinusoidal-waveform",
+      "label": "Sinusoidal Waveform",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::amplitude",
+        "circuits::frequency",
+        "circuits::phase-angle"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::amplitude",
+      "label": "Amplitude",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::current"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::frequency",
+      "label": "Frequency",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::period"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::period",
+      "label": "Period",
+      "subject_id": "circuits",
+      "dependencies": [],
+      "taxonomy_id": "ACFND",
+      "level": "foundational"
+    },
+    {
+      "id": "circuits::angular-frequency",
+      "label": "Angular Frequency",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::phase-angle",
+      "label": "Phase Angle",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::angular-frequency"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::phase-shift",
+      "label": "Phase Shift",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::phase-angle"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::peak-value",
+      "label": "Peak Value",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::amplitude"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::peak-to-peak-value",
+      "label": "Peak-to-Peak Value",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::peak-value"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rms-value",
+      "label": "RMS Value",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::peak-value",
+        "circuits::average-value"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::average-value",
+      "label": "Average Value",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::peak-value"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::complex-numbers",
+      "label": "Complex Numbers",
+      "subject_id": "circuits",
+      "dependencies": [],
+      "taxonomy_id": "ACFND",
+      "level": "foundational"
+    },
+    {
+      "id": "circuits::rectangular-form",
+      "label": "Rectangular Form",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::complex-numbers"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::polar-form",
+      "label": "Polar Form",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::complex-numbers"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::euler-s-formula",
+      "label": "Euler's Formula",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::complex-numbers",
+        "circuits::angular-frequency"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::phasor",
+      "label": "Phasor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::sinusoidal-waveform",
+        "circuits::polar-form",
+        "circuits::euler-s-formula"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::phasor-diagram",
+      "label": "Phasor Diagram",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::phasor"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::phasor-addition",
+      "label": "Phasor Addition",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::phasor",
+        "circuits::phasor-diagram"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::impedance",
+      "label": "Impedance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistance",
+        "circuits::reactance",
+        "circuits::complex-impedance"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::reactance",
+      "label": "Reactance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::capacitive-reactance",
+        "circuits::inductive-reactance"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::capacitive-reactance",
+      "label": "Capacitive Reactance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::capacitance",
+        "circuits::angular-frequency"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::inductive-reactance",
+      "label": "Inductive Reactance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inductance",
+        "circuits::angular-frequency"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::admittance",
+      "label": "Admittance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::conductance",
+        "circuits::impedance"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::susceptance",
+      "label": "Susceptance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::admittance"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::ac-resistance",
+      "label": "AC Resistance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistance",
+        "circuits::alternating-current"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::impedance-triangle",
+      "label": "Impedance Triangle",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::impedance",
+        "circuits::reactance",
+        "circuits::ac-resistance"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::complex-impedance",
+      "label": "Complex Impedance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::complex-numbers",
+        "circuits::reactance"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::ac-circuit-analysis",
+      "label": "AC Circuit Analysis",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::phasor",
+        "circuits::impedance",
+        "circuits::kirchhoff-s-voltage-law",
+        "circuits::kirchhoff-s-current-law"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::phasor-domain",
+      "label": "Phasor Domain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::phasor",
+        "circuits::ac-circuit-analysis"
+      ],
+      "taxonomy_id": "ACFND",
+      "level": "core"
+    },
+    {
+      "id": "circuits::instantaneous-power",
+      "label": "Instantaneous Power",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power",
+        "circuits::sinusoidal-waveform"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::average-power",
+      "label": "Average Power",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::instantaneous-power",
+        "circuits::rms-value"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::real-power",
+      "label": "Real Power",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::average-power",
+        "circuits::power-factor"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::reactive-power",
+      "label": "Reactive Power",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::reactance",
+        "circuits::average-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::apparent-power",
+      "label": "Apparent Power",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::average-power",
+        "circuits::reactive-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::complex-power",
+      "label": "Complex Power",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::real-power",
+        "circuits::reactive-power",
+        "circuits::complex-numbers"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-triangle",
+      "label": "Power Triangle",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::real-power",
+        "circuits::reactive-power",
+        "circuits::apparent-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-factor",
+      "label": "Power Factor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::average-power",
+        "circuits::apparent-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::leading-power-factor",
+      "label": "Leading Power Factor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power-factor",
+        "circuits::capacitive-reactance"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::lagging-power-factor",
+      "label": "Lagging Power Factor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power-factor",
+        "circuits::inductive-reactance"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-factor-correction",
+      "label": "Power Factor Correction",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power-factor",
+        "circuits::leading-power-factor",
+        "circuits::lagging-power-factor",
+        "circuits::capacitors-in-parallel"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::var",
+      "label": "VAR",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::reactive-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::watt",
+      "label": "Watt",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::real-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::volt-ampere",
+      "label": "Volt-Ampere",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::apparent-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::maximum-power-in-ac",
+      "label": "Maximum Power in AC",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::maximum-power-transfer",
+        "circuits::ac-circuit-analysis"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rms-power-calculation",
+      "label": "RMS Power Calculation",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rms-value",
+        "circuits::average-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-in-resistors",
+      "label": "Power in Resistors",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power",
+        "circuits::ac-resistance"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-in-capacitors",
+      "label": "Power in Capacitors",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::reactive-power",
+        "circuits::capacitive-reactance"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-in-inductors",
+      "label": "Power in Inductors",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::reactive-power",
+        "circuits::inductive-reactance"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::efficiency",
+      "label": "Efficiency",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power",
+        "circuits::real-power"
+      ],
+      "taxonomy_id": "POWER",
+      "level": "core"
+    },
+    {
+      "id": "circuits::frequency-response",
+      "label": "Frequency Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency",
+        "circuits::transfer-function"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::transfer-function",
+      "label": "Transfer Function",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::impedance",
+        "circuits::ac-circuit-analysis"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::magnitude-response",
+      "label": "Magnitude Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency-response",
+        "circuits::decibel"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::phase-response",
+      "label": "Phase Response",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency-response",
+        "circuits::phase-angle"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::bode-plot",
+      "label": "Bode Plot",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::bode-magnitude-plot",
+        "circuits::bode-phase-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::bode-magnitude-plot",
+      "label": "Bode Magnitude Plot",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::magnitude-response",
+        "circuits::decibel",
+        "circuits::decade"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::bode-phase-plot",
+      "label": "Bode Phase Plot",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::phase-response",
+        "circuits::decade"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::decibel",
+      "label": "Decibel",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::decade",
+      "label": "Decade",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::octave",
+      "label": "Octave",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::cutoff-frequency",
+      "label": "Cutoff Frequency",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency-response",
+        "circuits::half-power-point"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::corner-frequency",
+      "label": "Corner Frequency",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::cutoff-frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::half-power-point",
+      "label": "Half-Power Point",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::average-power",
+        "circuits::decibel"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::bandwidth",
+      "label": "Bandwidth",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::cutoff-frequency",
+        "circuits::passband",
+        "circuits::stopband"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::passband",
+      "label": "Passband",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::stopband",
+      "label": "Stopband",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::roll-off-rate",
+      "label": "Roll-Off Rate",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::bandwidth",
+        "circuits::filter-order"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::asymptotic-approximation",
+      "label": "Asymptotic Approximation",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::bode-plot",
+        "circuits::bode-magnitude-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::poles-and-zeros",
+      "label": "Poles and Zeros",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::transfer-function",
+        "circuits::complex-numbers"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::resonance",
+      "label": "Resonance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resonant-frequency",
+        "circuits::quality-factor"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::resonant-frequency",
+      "label": "Resonant Frequency",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::natural-frequency",
+        "circuits::capacitive-reactance",
+        "circuits::inductive-reactance"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::quality-factor",
+      "label": "Quality Factor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::bandwidth",
+        "circuits::resonant-frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::selectivity",
+      "label": "Selectivity",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::quality-factor",
+        "circuits::bandwidth"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::series-resonance",
+      "label": "Series Resonance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resonance",
+        "circuits::rlc-circuit",
+        "circuits::series-circuits"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::parallel-resonance",
+      "label": "Parallel Resonance",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resonance",
+        "circuits::rlc-circuit",
+        "circuits::parallel-circuits"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "circuits::filter",
+      "label": "Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency-response",
+        "circuits::passband",
+        "circuits::stopband"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::low-pass-filter",
+      "label": "Low-Pass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::filter",
+        "circuits::cutoff-frequency"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::high-pass-filter",
+      "label": "High-Pass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::filter",
+        "circuits::cutoff-frequency"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::band-pass-filter",
+      "label": "Band-Pass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::filter",
+        "circuits::bandwidth",
+        "circuits::resonance"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::band-reject-filter",
+      "label": "Band-Reject Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::filter",
+        "circuits::bandwidth"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::notch-filter",
+      "label": "Notch Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::band-reject-filter",
+        "circuits::resonant-frequency"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::first-order-filter",
+      "label": "First-Order Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::low-pass-filter",
+        "circuits::high-pass-filter",
+        "circuits::first-order-circuits"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::second-order-filter",
+      "label": "Second-Order Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::band-pass-filter",
+        "circuits::band-reject-filter",
+        "circuits::second-order-circuits"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::filter-order",
+      "label": "Filter Order",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::first-order-filter",
+        "circuits::second-order-filter"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rc-low-pass-filter",
+      "label": "RC Low-Pass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rc-circuit",
+        "circuits::low-pass-filter"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rc-high-pass-filter",
+      "label": "RC High-Pass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rc-circuit",
+        "circuits::high-pass-filter"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rl-low-pass-filter",
+      "label": "RL Low-Pass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rl-circuit",
+        "circuits::low-pass-filter"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rl-high-pass-filter",
+      "label": "RL High-Pass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rl-circuit",
+        "circuits::high-pass-filter"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rlc-band-pass-filter",
+      "label": "RLC Band-Pass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rlc-circuit",
+        "circuits::band-pass-filter"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::passive-filter",
+      "label": "Passive Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::filter",
+        "circuits::resistor",
+        "circuits::capacitor",
+        "circuits::inductor"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::active-filter",
+      "label": "Active Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::filter",
+        "circuits::operational-amplifier"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::filter-design",
+      "label": "Filter Design",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::filter-order",
+        "circuits::passive-filter",
+        "circuits::active-filter"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::audio-tone-control",
+      "label": "Audio Tone Control",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::bass-filter",
+        "circuits::treble-filter",
+        "circuits::filter-design"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::bass-filter",
+      "label": "Bass Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::low-pass-filter",
+        "circuits::audio-signal"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::treble-filter",
+      "label": "Treble Filter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::high-pass-filter",
+        "circuits::audio-signal"
+      ],
+      "taxonomy_id": "FILT",
+      "level": "core"
+    },
+    {
+      "id": "circuits::operational-amplifier",
+      "label": "Operational Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::current",
+        "circuits::circuit-schematic-symbols"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::ideal-op-amp",
+      "label": "Ideal Op-Amp",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::open-loop-gain"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::op-amp-symbol",
+      "label": "Op-Amp Symbol",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::circuit-schematic-symbols"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::inverting-input",
+      "label": "Inverting Input",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::op-amp-symbol"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::non-inverting-input",
+      "label": "Non-Inverting Input",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::op-amp-symbol"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::op-amp-output",
+      "label": "Op-Amp Output",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::op-amp-symbol"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::open-loop-gain",
+      "label": "Open-Loop Gain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::amplifier-gain"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::closed-loop-gain",
+      "label": "Closed-Loop Gain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::open-loop-gain",
+        "circuits::negative-feedback"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::negative-feedback",
+      "label": "Negative Feedback",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::op-amp-output"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::positive-feedback",
+      "label": "Positive Feedback",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::op-amp-output"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::virtual-short",
+      "label": "Virtual Short",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ideal-op-amp",
+        "circuits::negative-feedback"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::virtual-ground",
+      "label": "Virtual Ground",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::virtual-short",
+        "circuits::electrical-ground"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::inverting-amplifier",
+      "label": "Inverting Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ideal-op-amp",
+        "circuits::negative-feedback",
+        "circuits::virtual-ground",
+        "circuits::resistor"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::non-inverting-amplifier",
+      "label": "Non-Inverting Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::ideal-op-amp",
+        "circuits::negative-feedback",
+        "circuits::virtual-short",
+        "circuits::resistor"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::voltage-follower",
+      "label": "Voltage Follower",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::non-inverting-amplifier",
+        "circuits::closed-loop-gain"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::buffer-amplifier",
+      "label": "Buffer Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage-follower",
+        "circuits::input-resistance",
+        "circuits::output-resistance"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::summing-amplifier",
+      "label": "Summing Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inverting-amplifier",
+        "circuits::superposition-principle"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::difference-amplifier",
+      "label": "Difference Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inverting-amplifier",
+        "circuits::non-inverting-amplifier"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::instrumentation-amplifier",
+      "label": "Instrumentation Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::difference-amplifier"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::integrator-circuit",
+      "label": "Integrator Circuit",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inverting-amplifier",
+        "circuits::capacitor",
+        "circuits::rc-circuit"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::differentiator-circuit",
+      "label": "Differentiator Circuit",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::inverting-amplifier",
+        "circuits::capacitor",
+        "circuits::rc-circuit"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::op-amp-bandwidth",
+      "label": "Op-Amp Bandwidth",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::bandwidth"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::gain-bandwidth-product",
+      "label": "Gain-Bandwidth Product",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::closed-loop-gain",
+        "circuits::op-amp-bandwidth"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::slew-rate",
+      "label": "Slew Rate",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::op-amp-output"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::input-offset-voltage",
+      "label": "Input Offset Voltage",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::inverting-input",
+        "circuits::non-inverting-input"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::input-bias-current",
+      "label": "Input Bias Current",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::inverting-input",
+        "circuits::non-inverting-input"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::common-mode-rejection",
+      "label": "Common Mode Rejection",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::difference-amplifier",
+        "circuits::cmrr"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::cmrr",
+      "label": "CMRR",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::difference-amplifier",
+        "circuits::decibel"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::op-amp-saturation",
+      "label": "Op-Amp Saturation",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::op-amp-output",
+        "circuits::voltage-source"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::rail-to-rail-op-amp",
+      "label": "Rail-to-Rail Op-Amp",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::op-amp-saturation"
+      ],
+      "taxonomy_id": "OPAMP",
+      "level": "core"
+    },
+    {
+      "id": "circuits::signal",
+      "label": "Signal",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::current"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::periodic-signal",
+      "label": "Periodic Signal",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal",
+        "circuits::period"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::aperiodic-signal",
+      "label": "Aperiodic Signal",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::fourier-series",
+      "label": "Fourier Series",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::periodic-signal",
+        "circuits::fundamental-frequency",
+        "circuits::harmonics"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::fundamental-frequency",
+      "label": "Fundamental Frequency",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency",
+        "circuits::periodic-signal"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::harmonics",
+      "label": "Harmonics",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::fundamental-frequency"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::harmonic-content",
+      "label": "Harmonic Content",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::fourier-series",
+        "circuits::harmonics"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::spectrum",
+      "label": "Spectrum",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::harmonic-content",
+        "circuits::frequency-spectrum"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::frequency-spectrum",
+      "label": "Frequency Spectrum",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency",
+        "circuits::harmonic-content"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::time-domain",
+      "label": "Time Domain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal",
+        "circuits::period"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::frequency-domain",
+      "label": "Frequency Domain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal",
+        "circuits::frequency",
+        "circuits::frequency-spectrum"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::waveform-symmetry",
+      "label": "Waveform Symmetry",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::even-symmetry",
+        "circuits::odd-symmetry",
+        "circuits::half-wave-symmetry"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::even-symmetry",
+      "label": "Even Symmetry",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::sinusoidal-waveform",
+        "circuits::fourier-series"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::odd-symmetry",
+      "label": "Odd Symmetry",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::sinusoidal-waveform",
+        "circuits::fourier-series"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::half-wave-symmetry",
+      "label": "Half-Wave Symmetry",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::sinusoidal-waveform",
+        "circuits::fourier-series"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::dc-component",
+      "label": "DC Component",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal",
+        "circuits::average-value"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::ac-component",
+      "label": "AC Component",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal",
+        "circuits::alternating-current"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::signal-amplitude",
+      "label": "Signal Amplitude",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::amplitude",
+        "circuits::signal"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::crest-factor",
+      "label": "Crest Factor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::peak-value",
+        "circuits::rms-value"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::form-factor",
+      "label": "Form Factor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::rms-value",
+        "circuits::average-value"
+      ],
+      "taxonomy_id": "SIGNAL",
+      "level": "core"
+    },
+    {
+      "id": "circuits::audio-signal",
+      "label": "Audio Signal",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal",
+        "circuits::audio-frequency-range"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::audio-frequency-range",
+      "label": "Audio Frequency Range",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency",
+        "circuits::human-hearing-range"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::human-hearing-range",
+      "label": "Human Hearing Range",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::microphone",
+      "label": "Microphone",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::audio-signal",
+        "circuits::signal"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::speaker",
+      "label": "Speaker",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::audio-signal",
+        "circuits::signal",
+        "circuits::power"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::audio-amplifier",
+      "label": "Audio Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::operational-amplifier",
+        "circuits::audio-signal",
+        "circuits::amplifier-gain"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::preamplifier",
+      "label": "Preamplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::audio-amplifier",
+        "circuits::buffer-amplifier"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-amplifier",
+      "label": "Power Amplifier",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::audio-amplifier",
+        "circuits::power-gain"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::amplifier-gain",
+      "label": "Amplifier Gain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage-gain",
+        "circuits::current-gain",
+        "circuits::power-gain"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::voltage-gain",
+      "label": "Voltage Gain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::decibel"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::current-gain",
+      "label": "Current Gain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::decibel"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::power-gain",
+      "label": "Power Gain",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power",
+        "circuits::decibel"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::decibels-in-audio",
+      "label": "Decibels in Audio",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::decibel",
+        "circuits::audio-signal"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::dbv",
+      "label": "dBV",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::decibels-in-audio",
+        "circuits::voltage"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::dbu",
+      "label": "dBu",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::decibels-in-audio",
+        "circuits::voltage"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::headroom",
+      "label": "Headroom",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::op-amp-saturation",
+        "circuits::dynamic-range"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::dynamic-range",
+      "label": "Dynamic Range",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal-to-noise-ratio",
+        "circuits::noise-floor"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::signal-to-noise-ratio",
+      "label": "Signal-to-Noise Ratio",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::signal",
+        "circuits::noise-floor"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::noise-floor",
+      "label": "Noise Floor",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::thermal-noise"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::thermal-noise",
+      "label": "Thermal Noise",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistance",
+        "circuits::resistor"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::audio-distortion",
+      "label": "Audio Distortion",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::audio-signal",
+        "circuits::harmonic-distortion",
+        "circuits::intermodulation-distortion"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::harmonic-distortion",
+      "label": "Harmonic Distortion",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::harmonics"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::thd",
+      "label": "THD",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::harmonic-distortion",
+        "circuits::decibel"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::intermodulation-distortion",
+      "label": "Intermodulation Distortion",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::audio-signal",
+        "circuits::frequency"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::clipping",
+      "label": "Clipping",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::op-amp-saturation",
+        "circuits::audio-distortion"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "circuits::multimeter",
+      "label": "Multimeter",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::current",
+        "circuits::resistance"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::oscilloscope",
+      "label": "Oscilloscope",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::sinusoidal-waveform",
+        "circuits::period"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::function-generator",
+      "label": "Function Generator",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::sinusoidal-waveform",
+        "circuits::voltage-source"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::dc-power-supply",
+      "label": "DC Power Supply",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage-source",
+        "circuits::voltage"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::spectrum-analyzer",
+      "label": "Spectrum Analyzer",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency-spectrum",
+        "circuits::oscilloscope"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::voltage-measurement",
+      "label": "Voltage Measurement",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::voltage",
+        "circuits::multimeter"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::current-measurement",
+      "label": "Current Measurement",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::current",
+        "circuits::multimeter"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::resistance-measurement",
+      "label": "Resistance Measurement",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::resistance",
+        "circuits::multimeter"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::frequency-measurement",
+      "label": "Frequency Measurement",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::frequency",
+        "circuits::oscilloscope"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::phase-measurement",
+      "label": "Phase Measurement",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::phase-angle",
+        "circuits::oscilloscope"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::oscilloscope-probe",
+      "label": "Oscilloscope Probe",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::oscilloscope"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::probe-compensation",
+      "label": "Probe Compensation",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::oscilloscope-probe",
+        "circuits::capacitor"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::triggering",
+      "label": "Triggering",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::oscilloscope",
+        "circuits::sinusoidal-waveform"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::time-base",
+      "label": "Time Base",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::oscilloscope",
+        "circuits::period"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::vertical-sensitivity",
+      "label": "Vertical Sensitivity",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::oscilloscope",
+        "circuits::amplitude"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::ac-coupling",
+      "label": "AC Coupling",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::oscilloscope",
+        "circuits::capacitor",
+        "circuits::ac-component"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::dc-coupling",
+      "label": "DC Coupling",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::oscilloscope",
+        "circuits::dc-component"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::breadboard",
+      "label": "Breadboard",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::prototyping"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::prototyping",
+      "label": "Prototyping",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::circuit-schematic-symbols",
+        "circuits::resistor",
+        "circuits::capacitor",
+        "circuits::inductor"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::soldering",
+      "label": "Soldering",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::prototyping"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::circuit-debugging",
+      "label": "Circuit Debugging",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::multimeter",
+        "circuits::oscilloscope",
+        "circuits::measurement-error"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::measurement-error",
+      "label": "Measurement Error",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::loading-error",
+        "circuits::calibration"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::loading-error",
+      "label": "Loading Error",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::loading-effect",
+        "circuits::multimeter",
+        "circuits::oscilloscope"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::calibration",
+      "label": "Calibration",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::multimeter",
+        "circuits::oscilloscope"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    },
+    {
+      "id": "circuits::safety-practices",
+      "label": "Safety Practices",
+      "subject_id": "circuits",
+      "dependencies": [
+        "circuits::power",
+        "circuits::power-dissipation",
+        "circuits::dc-power-supply"
+      ],
+      "taxonomy_id": "LAB",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,5438 @@
+{
+  "subject_id": "chemistry",
+  "title": "AP Chemistry Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "RXNS": {
+      "classifier_name": "Chemical Reactions",
+      "color": "MistyRose"
+    },
+    "STOI": {
+      "classifier_name": "Stoichiometry and Titration",
+      "color": "PeachPuff"
+    },
+    "EQBM": {
+      "classifier_name": "Equilibrium",
+      "color": "LightYellow"
+    },
+    "GAS": {
+      "classifier_name": "Gas Laws and Behavior",
+      "color": "Honeydew"
+    },
+    "ECHEM": {
+      "classifier_name": "Electrochemistry",
+      "color": "PaleTurquoise"
+    },
+    "BOND": {
+      "classifier_name": "Bonding and Structure",
+      "color": "SteelBlue"
+    },
+    "IMF": {
+      "classifier_name": "Intermolecular Forces",
+      "color": "Lavender"
+    },
+    "ATOM": {
+      "classifier_name": "Atomic Structure",
+      "color": "LavenderBlush"
+    },
+    "KIN": {
+      "classifier_name": "Kinetics",
+      "color": "Thistle"
+    },
+    "MOLE": {
+      "classifier_name": "Moles and Quantitative Analysis",
+      "color": "MintCream"
+    },
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "ACID": {
+      "classifier_name": "Acids and Bases",
+      "color": "Plum"
+    },
+    "PTAB": {
+      "classifier_name": "Periodic Table and Trends",
+      "color": "Gainsboro"
+    },
+    "THRM": {
+      "classifier_name": "Thermodynamics",
+      "color": "PowderBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "chemistry::matter",
+      "label": "Matter",
+      "subject_id": "chemistry",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "chemistry::energy",
+      "label": "Energy",
+      "subject_id": "chemistry",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "chemistry::atoms",
+      "label": "Atoms",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::matter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::elements",
+      "label": "Elements",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::atoms"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::compounds",
+      "label": "Compounds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::elements"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mixtures",
+      "label": "Mixtures",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::matter",
+        "chemistry::compounds"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::physical-properties",
+      "label": "Physical Properties",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::matter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::chemical-properties",
+      "label": "Chemical Properties",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::matter",
+        "chemistry::compounds"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::physical-changes",
+      "label": "Physical Changes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::physical-properties"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::chemical-changes",
+      "label": "Chemical Changes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-properties"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::scientific-method",
+      "label": "Scientific Method",
+      "subject_id": "chemistry",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "chemistry::measurement",
+      "label": "Measurement",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::si-units",
+      "label": "SI Units",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::significant-figures",
+      "label": "Significant Figures",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::dimensional-analysis",
+      "label": "Dimensional Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::si-units",
+        "chemistry::significant-figures"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::density",
+      "label": "Density",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::matter",
+        "chemistry::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::temperature-scales",
+      "label": "Temperature Scales",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::scientific-notation",
+      "label": "Scientific Notation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::accuracy-and-precision",
+      "label": "Accuracy and Precision",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::percent-error",
+      "label": "Percent Error",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::accuracy-and-precision"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::laboratory-safety",
+      "label": "Laboratory Safety",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::data-collection",
+      "label": "Data Collection",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::scientific-method",
+        "chemistry::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::graphing-data",
+      "label": "Graphing Data",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::data-collection"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::conservation-laws",
+      "label": "Conservation Laws",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::atomic-theory-history",
+      "label": "Atomic Theory History",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::atoms"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::subatomic-particles",
+      "label": "Subatomic Particles",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::atoms",
+        "chemistry::atomic-theory-history"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::protons",
+      "label": "Protons",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::subatomic-particles"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::neutrons",
+      "label": "Neutrons",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::subatomic-particles"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electrons",
+      "label": "Electrons",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::subatomic-particles"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::atomic-number",
+      "label": "Atomic Number",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::protons"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mass-number",
+      "label": "Mass Number",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::protons",
+        "chemistry::neutrons"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::isotopes",
+      "label": "Isotopes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::atomic-number",
+        "chemistry::mass-number"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::atomic-mass",
+      "label": "Atomic Mass",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::mass-number"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::average-atomic-mass",
+      "label": "Average Atomic Mass",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::isotopes",
+        "chemistry::atomic-mass"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mass-spectrometry",
+      "label": "Mass Spectrometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::average-atomic-mass"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mass-spectrum-analysis",
+      "label": "Mass Spectrum Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::mass-spectrometry",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::relative-abundance",
+      "label": "Relative Abundance",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::isotopes",
+        "chemistry::mass-spectrometry"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mole-concept",
+      "label": "Mole Concept",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::average-atomic-mass"
+      ],
+      "taxonomy_id": "MOLE",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::avogadro-s-number",
+      "label": "Avogadro's Number",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::mole-concept"
+      ],
+      "taxonomy_id": "MOLE",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molar-mass",
+      "label": "Molar Mass",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::mole-concept",
+        "chemistry::average-atomic-mass"
+      ],
+      "taxonomy_id": "MOLE",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mole-calculations",
+      "label": "Mole Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::mole-concept",
+        "chemistry::avogadro-s-number",
+        "chemistry::molar-mass"
+      ],
+      "taxonomy_id": "MOLE",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::percent-composition",
+      "label": "Percent Composition",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molar-mass",
+        "chemistry::mole-calculations"
+      ],
+      "taxonomy_id": "MOLE",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::empirical-formula",
+      "label": "Empirical Formula",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::percent-composition"
+      ],
+      "taxonomy_id": "MOLE",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molecular-formula",
+      "label": "Molecular Formula",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::empirical-formula",
+        "chemistry::molar-mass"
+      ],
+      "taxonomy_id": "MOLE",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::combustion-analysis",
+      "label": "Combustion Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-formula",
+        "chemistry::chemical-changes"
+      ],
+      "taxonomy_id": "MOLE",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bohr-model",
+      "label": "Bohr Model",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electrons",
+        "chemistry::atomic-theory-history"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::quantum-mechanical-model",
+      "label": "Quantum Mechanical Model",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bohr-model"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::energy-levels",
+      "label": "Energy Levels",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::quantum-mechanical-model"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::principal-quantum-number",
+      "label": "Principal Quantum Number",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::energy-levels"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::subshells",
+      "label": "Subshells",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::principal-quantum-number"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::orbitals",
+      "label": "Orbitals",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::subshells"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::orbital-shapes",
+      "label": "Orbital Shapes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::orbitals"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electron-configuration",
+      "label": "Electron Configuration",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::subshells",
+        "chemistry::orbitals"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::aufbau-principle",
+      "label": "Aufbau Principle",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-configuration"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::pauli-exclusion-principle",
+      "label": "Pauli Exclusion Principle",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-configuration"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::hund-s-rule",
+      "label": "Hund's Rule",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-configuration",
+        "chemistry::orbitals"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::valence-electrons",
+      "label": "Valence Electrons",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-configuration",
+        "chemistry::elements"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::core-electrons",
+      "label": "Core Electrons",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-configuration",
+        "chemistry::valence-electrons"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::noble-gas-notation",
+      "label": "Noble Gas Notation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-configuration",
+        "chemistry::valence-electrons"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electron-config-of-ions",
+      "label": "Electron Config of Ions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-configuration",
+        "chemistry::valence-electrons"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electromagnetic-spectrum",
+      "label": "Electromagnetic Spectrum",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::wavelength",
+      "label": "Wavelength",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electromagnetic-spectrum"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::frequency",
+      "label": "Frequency",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electromagnetic-spectrum",
+        "chemistry::wavelength"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::photon-energy",
+      "label": "Photon Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::frequency",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::planck-s-equation",
+      "label": "Planck's Equation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::photon-energy"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::photoelectric-effect",
+      "label": "Photoelectric Effect",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::photon-energy",
+        "chemistry::planck-s-equation"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::emission-spectra",
+      "label": "Emission Spectra",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bohr-model",
+        "chemistry::photon-energy"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::absorption-spectra",
+      "label": "Absorption Spectra",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::emission-spectra"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::photoelectron-spectroscopy",
+      "label": "Photoelectron Spectroscopy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-configuration",
+        "chemistry::photon-energy"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::pes-data-interpretation",
+      "label": "PES Data Interpretation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::photoelectron-spectroscopy",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "ATOM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::periodic-table-organization",
+      "label": "Periodic Table Organization",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::elements",
+        "chemistry::atomic-number"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::periods-and-groups",
+      "label": "Periods and Groups",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::periodic-table-organization"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::periodic-trends",
+      "label": "Periodic Trends",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::periods-and-groups",
+        "chemistry::electron-configuration"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::atomic-radius",
+      "label": "Atomic Radius",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::periodic-trends"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ionic-radius",
+      "label": "Ionic Radius",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::periodic-trends",
+        "chemistry::atomic-radius"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ionization-energy",
+      "label": "Ionization Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::periodic-trends",
+        "chemistry::valence-electrons"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::successive-ionization-energy",
+      "label": "Successive Ionization Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ionization-energy"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electron-affinity",
+      "label": "Electron Affinity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::periodic-trends",
+        "chemistry::valence-electrons"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electronegativity",
+      "label": "Electronegativity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::periodic-trends",
+        "chemistry::ionization-energy",
+        "chemistry::electron-affinity"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::effective-nuclear-charge",
+      "label": "Effective Nuclear Charge",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::protons",
+        "chemistry::electrons",
+        "chemistry::periodic-trends"
+      ],
+      "taxonomy_id": "PTAB",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::chemical-bonds",
+      "label": "Chemical Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::valence-electrons",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ionic-bonds",
+      "label": "Ionic Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-bonds",
+        "chemistry::electronegativity"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::covalent-bonds",
+      "label": "Covalent Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-bonds",
+        "chemistry::valence-electrons"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::metallic-bonds",
+      "label": "Metallic Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bond-formation-energy",
+      "label": "Bond Formation Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-bonds",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ionic-compounds",
+      "label": "Ionic Compounds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ionic-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::crystal-lattice",
+      "label": "Crystal Lattice",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ionic-compounds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::lattice-energy",
+      "label": "Lattice Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::crystal-lattice",
+        "chemistry::bond-formation-energy"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::cation-formation",
+      "label": "Cation Formation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ionization-energy",
+        "chemistry::ionic-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::anion-formation",
+      "label": "Anion Formation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-affinity",
+        "chemistry::ionic-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::polyatomic-ions",
+      "label": "Polyatomic Ions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ionic-compounds",
+        "chemistry::covalent-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::naming-ionic-compounds",
+      "label": "Naming Ionic Compounds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ionic-compounds",
+        "chemistry::polyatomic-ions"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::writing-ionic-formulas",
+      "label": "Writing Ionic Formulas",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ionic-compounds",
+        "chemistry::polyatomic-ions"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::transition-metal-ions",
+      "label": "Transition Metal Ions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::cation-formation",
+        "chemistry::periods-and-groups"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::lewis-dot-symbols",
+      "label": "Lewis Dot Symbols",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::valence-electrons"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::lewis-structures",
+      "label": "Lewis Structures",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-dot-symbols",
+        "chemistry::covalent-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::octet-rule",
+      "label": "Octet Rule",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures",
+        "chemistry::valence-electrons"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::single-bonds",
+      "label": "Single Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::double-bonds",
+      "label": "Double Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures",
+        "chemistry::single-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::triple-bonds",
+      "label": "Triple Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures",
+        "chemistry::double-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::lone-pairs",
+      "label": "Lone Pairs",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bonding-pairs",
+      "label": "Bonding Pairs",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::resonance-structures",
+      "label": "Resonance Structures",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures",
+        "chemistry::double-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::resonance-hybrid",
+      "label": "Resonance Hybrid",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::resonance-structures"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::formal-charge",
+      "label": "Formal Charge",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures",
+        "chemistry::lone-pairs"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::formal-charge-calculation",
+      "label": "Formal Charge Calculation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::formal-charge"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::expanded-octets",
+      "label": "Expanded Octets",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::octet-rule",
+        "chemistry::subshells"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::incomplete-octets",
+      "label": "Incomplete Octets",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::octet-rule"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::exceptions-to-octet-rule",
+      "label": "Exceptions to Octet Rule",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::expanded-octets",
+        "chemistry::incomplete-octets"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bond-order",
+      "label": "Bond Order",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::single-bonds",
+        "chemistry::double-bonds",
+        "chemistry::triple-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bond-length",
+      "label": "Bond Length",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bond-order"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bond-energy",
+      "label": "Bond Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bond-order",
+        "chemistry::bond-formation-energy"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::vsepr-theory",
+      "label": "VSEPR Theory",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lewis-structures",
+        "chemistry::lone-pairs",
+        "chemistry::bonding-pairs"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electron-geometry",
+      "label": "Electron Geometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::vsepr-theory"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molecular-geometry",
+      "label": "Molecular Geometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::vsepr-theory",
+        "chemistry::electron-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::linear-geometry",
+      "label": "Linear Geometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::trigonal-planar-geometry",
+      "label": "Trigonal Planar Geometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::tetrahedral-geometry",
+      "label": "Tetrahedral Geometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::trigonal-bipyramidal",
+      "label": "Trigonal Bipyramidal",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-geometry",
+        "chemistry::expanded-octets"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::octahedral-geometry",
+      "label": "Octahedral Geometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-geometry",
+        "chemistry::expanded-octets"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bent-geometry",
+      "label": "Bent Geometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-geometry",
+        "chemistry::lone-pairs"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::trigonal-pyramidal",
+      "label": "Trigonal Pyramidal",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-geometry",
+        "chemistry::lone-pairs"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bond-angles",
+      "label": "Bond Angles",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::lone-pair-repulsion",
+      "label": "Lone Pair Repulsion",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::lone-pairs",
+        "chemistry::vsepr-theory"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::orbital-hybridization",
+      "label": "Orbital Hybridization",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::orbitals",
+        "chemistry::covalent-bonds",
+        "chemistry::molecular-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::sp-hybridization",
+      "label": "sp Hybridization",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::orbital-hybridization",
+        "chemistry::linear-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::sp2-hybridization",
+      "label": "sp2 Hybridization",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::orbital-hybridization",
+        "chemistry::trigonal-planar-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::sp3-hybridization",
+      "label": "sp3 Hybridization",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::orbital-hybridization",
+        "chemistry::tetrahedral-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::sigma-bonds",
+      "label": "Sigma Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::orbital-hybridization",
+        "chemistry::single-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::pi-bonds",
+      "label": "Pi Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::orbital-hybridization",
+        "chemistry::double-bonds",
+        "chemistry::sigma-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bond-polarity",
+      "label": "Bond Polarity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electronegativity",
+        "chemistry::covalent-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electronegativity-difference",
+      "label": "Electronegativity Difference",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electronegativity",
+        "chemistry::bond-polarity"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::polar-covalent-bonds",
+      "label": "Polar Covalent Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bond-polarity",
+        "chemistry::electronegativity-difference"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::nonpolar-covalent-bonds",
+      "label": "Nonpolar Covalent Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bond-polarity",
+        "chemistry::electronegativity-difference"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::dipole-moment",
+      "label": "Dipole Moment",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bond-polarity",
+        "chemistry::molecular-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molecular-polarity",
+      "label": "Molecular Polarity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::dipole-moment",
+        "chemistry::molecular-geometry"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::polar-molecules",
+      "label": "Polar Molecules",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-polarity"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::nonpolar-molecules",
+      "label": "Nonpolar Molecules",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-polarity"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::naming-covalent-compounds",
+      "label": "Naming Covalent Compounds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::compounds",
+        "chemistry::covalent-bonds"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::network-covalent-solids",
+      "label": "Network Covalent Solids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::covalent-bonds",
+        "chemistry::crystal-lattice"
+      ],
+      "taxonomy_id": "BOND",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::intermolecular-forces",
+      "label": "Intermolecular Forces",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecular-polarity",
+        "chemistry::polar-molecules",
+        "chemistry::nonpolar-molecules"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::intramolecular-forces",
+      "label": "Intramolecular Forces",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-bonds",
+        "chemistry::bond-energy"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::imf-vs-chemical-bonds",
+      "label": "IMF vs Chemical Bonds",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::intermolecular-forces",
+        "chemistry::intramolecular-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::london-dispersion-forces",
+      "label": "London Dispersion Forces",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::intermolecular-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::polarizability",
+      "label": "Polarizability",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::london-dispersion-forces",
+        "chemistry::electrons"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::dipole-dipole-forces",
+      "label": "Dipole-Dipole Forces",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::intermolecular-forces",
+        "chemistry::dipole-moment"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::hydrogen-bonding",
+      "label": "Hydrogen Bonding",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::dipole-dipole-forces",
+        "chemistry::electronegativity"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::hydrogen-bond-requirements",
+      "label": "Hydrogen Bond Requirements",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::hydrogen-bonding"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ion-dipole-forces",
+      "label": "Ion-Dipole Forces",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::intermolecular-forces",
+        "chemistry::ionic-compounds"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::imf-strength-comparison",
+      "label": "IMF Strength Comparison",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::london-dispersion-forces",
+        "chemistry::dipole-dipole-forces",
+        "chemistry::hydrogen-bonding",
+        "chemistry::ion-dipole-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::states-of-matter",
+      "label": "States of Matter",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::matter",
+        "chemistry::energy",
+        "chemistry::intermolecular-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::kinetic-molecular-theory",
+      "label": "Kinetic Molecular Theory",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::states-of-matter",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::solids",
+      "label": "Solids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::states-of-matter",
+        "chemistry::intermolecular-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::crystalline-solids",
+      "label": "Crystalline Solids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solids",
+        "chemistry::crystal-lattice"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::amorphous-solids",
+      "label": "Amorphous Solids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solids"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::liquids",
+      "label": "Liquids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::states-of-matter",
+        "chemistry::intermolecular-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::surface-tension",
+      "label": "Surface Tension",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::liquids",
+        "chemistry::intermolecular-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::viscosity",
+      "label": "Viscosity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::liquids",
+        "chemistry::intermolecular-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::capillary-action",
+      "label": "Capillary Action",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::surface-tension",
+        "chemistry::hydrogen-bonding"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::gases",
+      "label": "Gases",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::states-of-matter",
+        "chemistry::kinetic-molecular-theory"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::gas-pressure",
+      "label": "Gas Pressure",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gases"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::atmospheric-pressure",
+      "label": "Atmospheric Pressure",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gas-pressure"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ideal-gas-law",
+      "label": "Ideal Gas Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gases",
+        "chemistry::mole-concept",
+        "chemistry::temperature-scales"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ideal-gas-constant",
+      "label": "Ideal Gas Constant",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ideal-gas-law"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::boyle-s-law",
+      "label": "Boyle's Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ideal-gas-law",
+        "chemistry::gas-pressure"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::charles-s-law",
+      "label": "Charles's Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ideal-gas-law",
+        "chemistry::temperature-scales"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::avogadro-s-law",
+      "label": "Avogadro's Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ideal-gas-law",
+        "chemistry::mole-concept"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::dalton-s-law",
+      "label": "Dalton's Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ideal-gas-law",
+        "chemistry::gas-pressure"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::partial-pressures",
+      "label": "Partial Pressures",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::dalton-s-law"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mole-fraction",
+      "label": "Mole Fraction",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::partial-pressures",
+        "chemistry::mole-concept"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::gas-stoichiometry",
+      "label": "Gas Stoichiometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ideal-gas-law",
+        "chemistry::mole-calculations"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molar-volume",
+      "label": "Molar Volume",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ideal-gas-law",
+        "chemistry::mole-concept"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::real-gases",
+      "label": "Real Gases",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ideal-gas-law",
+        "chemistry::intermolecular-forces"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::van-der-waals-equation",
+      "label": "Van der Waals Equation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::real-gases"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::deviations-from-ideality",
+      "label": "Deviations from Ideality",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::real-gases",
+        "chemistry::van-der-waals-equation"
+      ],
+      "taxonomy_id": "GAS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::phase-changes",
+      "label": "Phase Changes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::states-of-matter",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::melting-and-freezing",
+      "label": "Melting and Freezing",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::phase-changes",
+        "chemistry::solids",
+        "chemistry::liquids"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::boiling-and-condensation",
+      "label": "Boiling and Condensation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::phase-changes",
+        "chemistry::liquids",
+        "chemistry::gases"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::sublimation-and-deposition",
+      "label": "Sublimation and Deposition",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::phase-changes",
+        "chemistry::solids",
+        "chemistry::gases"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::heating-curves",
+      "label": "Heating Curves",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::phase-changes",
+        "chemistry::temperature-scales",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::cooling-curves",
+      "label": "Cooling Curves",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::heating-curves"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::heat-of-fusion",
+      "label": "Heat of Fusion",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::melting-and-freezing",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::heat-of-vaporization",
+      "label": "Heat of Vaporization",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::boiling-and-condensation",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::phase-diagrams",
+      "label": "Phase Diagrams",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::phase-changes",
+        "chemistry::gas-pressure",
+        "chemistry::temperature-scales"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::triple-point",
+      "label": "Triple Point",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::phase-diagrams"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::critical-point",
+      "label": "Critical Point",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::phase-diagrams"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::vapor-pressure",
+      "label": "Vapor Pressure",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::boiling-and-condensation",
+        "chemistry::kinetic-molecular-theory"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::solutions",
+      "label": "Solutions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::mixtures",
+        "chemistry::solvent-and-solute"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::solvent-and-solute",
+      "label": "Solvent and Solute",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::mixtures"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::solubility",
+      "label": "Solubility",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solutions",
+        "chemistry::intermolecular-forces"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::like-dissolves-like",
+      "label": "Like Dissolves Like",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility",
+        "chemistry::molecular-polarity"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::saturated-solutions",
+      "label": "Saturated Solutions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::concentration-units",
+      "label": "Concentration Units",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solutions"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molarity",
+      "label": "Molarity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::concentration-units",
+        "chemistry::mole-concept",
+        "chemistry::mole-calculations"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::dilution-calculations",
+      "label": "Dilution Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molarity"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::beer-lambert-law",
+      "label": "Beer-Lambert Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molarity",
+        "chemistry::absorption-spectra"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::spectrophotometry",
+      "label": "Spectrophotometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::beer-lambert-law",
+        "chemistry::data-collection"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::colligative-properties",
+      "label": "Colligative Properties",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solutions",
+        "chemistry::mole-fraction"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::boiling-point-elevation",
+      "label": "Boiling Point Elevation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::colligative-properties",
+        "chemistry::boiling-and-condensation"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::freezing-point-depression",
+      "label": "Freezing Point Depression",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::colligative-properties",
+        "chemistry::melting-and-freezing"
+      ],
+      "taxonomy_id": "IMF",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::chemical-equations",
+      "label": "Chemical Equations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-changes",
+        "chemistry::compounds"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::balancing-equations",
+      "label": "Balancing Equations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equations",
+        "chemistry::conservation-laws"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::coefficients",
+      "label": "Coefficients",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::balancing-equations"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::state-symbols",
+      "label": "State Symbols",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equations",
+        "chemistry::states-of-matter"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reaction-types-overview",
+      "label": "Reaction Types Overview",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equations"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::synthesis-reactions",
+      "label": "Synthesis Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-types-overview"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::decomposition-reactions",
+      "label": "Decomposition Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-types-overview"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::single-replacement",
+      "label": "Single Replacement",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-types-overview"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::double-replacement",
+      "label": "Double Replacement",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-types-overview"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::combustion-reactions",
+      "label": "Combustion Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-types-overview",
+        "chemistry::chemical-changes"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::activity-series",
+      "label": "Activity Series",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::single-replacement",
+        "chemistry::ionization-energy"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::solubility-rules",
+      "label": "Solubility Rules",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility",
+        "chemistry::ionic-compounds"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::precipitation-reactions",
+      "label": "Precipitation Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::double-replacement",
+        "chemistry::solubility-rules"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::complete-ionic-equations",
+      "label": "Complete Ionic Equations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::precipitation-reactions",
+        "chemistry::ionic-compounds"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::net-ionic-equations",
+      "label": "Net Ionic Equations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::complete-ionic-equations"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::spectator-ions",
+      "label": "Spectator Ions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::net-ionic-equations"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::stoichiometry",
+      "label": "Stoichiometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::balancing-equations",
+        "chemistry::mole-calculations"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mole-to-mole-ratios",
+      "label": "Mole-to-Mole Ratios",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::stoichiometry",
+        "chemistry::coefficients"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mass-to-mass-calculations",
+      "label": "Mass-to-Mass Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::stoichiometry",
+        "chemistry::molar-mass"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::limiting-reagent",
+      "label": "Limiting Reagent",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::stoichiometry"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::excess-reagent",
+      "label": "Excess Reagent",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::limiting-reagent"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::theoretical-yield",
+      "label": "Theoretical Yield",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::limiting-reagent"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::actual-yield",
+      "label": "Actual Yield",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::theoretical-yield"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::percent-yield",
+      "label": "Percent Yield",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::theoretical-yield",
+        "chemistry::actual-yield"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::solution-stoichiometry",
+      "label": "Solution Stoichiometry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::stoichiometry",
+        "chemistry::molarity"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::titration",
+      "label": "Titration",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solution-stoichiometry"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::titration-curves",
+      "label": "Titration Curves",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::equivalence-point",
+      "label": "Equivalence Point",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration",
+        "chemistry::titration-curves"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::indicator-selection",
+      "label": "Indicator Selection",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::equivalence-point"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::gravimetric-analysis",
+      "label": "Gravimetric Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::precipitation-reactions",
+        "chemistry::stoichiometry"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::oxidation-states",
+      "label": "Oxidation States",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::elements",
+        "chemistry::chemical-bonds"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::assigning-oxidation-numbers",
+      "label": "Assigning Oxidation Numbers",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::oxidation-states"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::oxidation",
+      "label": "Oxidation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::oxidation-states",
+        "chemistry::assigning-oxidation-numbers"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reduction",
+      "label": "Reduction",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::oxidation-states",
+        "chemistry::assigning-oxidation-numbers"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::redox-reactions",
+      "label": "Redox Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::oxidation",
+        "chemistry::reduction"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::half-reactions",
+      "label": "Half Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::redox-reactions"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::balancing-redox-equations",
+      "label": "Balancing Redox Equations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::half-reactions",
+        "chemistry::balancing-equations"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::oxidizing-agents",
+      "label": "Oxidizing Agents",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::redox-reactions"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reducing-agents",
+      "label": "Reducing Agents",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::redox-reactions"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electron-transfer",
+      "label": "Electron Transfer",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::redox-reactions",
+        "chemistry::electrons"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::conservation-of-mass",
+      "label": "Conservation of Mass",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::conservation-laws",
+        "chemistry::stoichiometry"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::conservation-of-charge",
+      "label": "Conservation of Charge",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::conservation-laws",
+        "chemistry::electron-transfer"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::gas-evolution-reactions",
+      "label": "Gas Evolution Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::double-replacement",
+        "chemistry::gases"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::acid-carbonate-reactions",
+      "label": "Acid-Carbonate Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gas-evolution-reactions"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molecular-equations",
+      "label": "Molecular Equations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equations",
+        "chemistry::ionic-compounds"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reaction-prediction",
+      "label": "Reaction Prediction",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-types-overview",
+        "chemistry::activity-series",
+        "chemistry::solubility-rules"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::qualitative-analysis",
+      "label": "Qualitative Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-prediction"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::flame-tests",
+      "label": "Flame Tests",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::qualitative-analysis",
+        "chemistry::emission-spectra"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::precipitate-identification",
+      "label": "Precipitate Identification",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::qualitative-analysis",
+        "chemistry::precipitation-reactions"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::volumetric-analysis",
+      "label": "Volumetric Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::standard-solutions",
+      "label": "Standard Solutions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molarity",
+        "chemistry::volumetric-analysis"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::primary-standards",
+      "label": "Primary Standards",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::standard-solutions"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::endpoint-vs-equivalence",
+      "label": "Endpoint vs Equivalence",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::equivalence-point",
+        "chemistry::indicator-selection"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::titration-calculations",
+      "label": "Titration Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration",
+        "chemistry::solution-stoichiometry"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::percent-purity",
+      "label": "Percent Purity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration-calculations",
+        "chemistry::percent-yield"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::empirical-formula-from-data",
+      "label": "Empirical Formula from Data",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::empirical-formula",
+        "chemistry::percent-composition",
+        "chemistry::data-collection"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molar-ratios-in-solutions",
+      "label": "Molar Ratios in Solutions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molarity",
+        "chemistry::mole-to-mole-ratios"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::serial-dilutions",
+      "label": "Serial Dilutions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::dilution-calculations"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::driving-force-of-reactions",
+      "label": "Driving Force of Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-types-overview",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::metathesis-reactions",
+      "label": "Metathesis Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::double-replacement"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::acid-metal-reactions",
+      "label": "Acid-Metal Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::redox-reactions",
+        "chemistry::single-replacement"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::disproportionation",
+      "label": "Disproportionation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::redox-reactions",
+        "chemistry::assigning-oxidation-numbers"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::color-of-solutions",
+      "label": "Color of Solutions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solutions",
+        "chemistry::electromagnetic-spectrum"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::chemical-analysis",
+      "label": "Chemical Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::qualitative-analysis",
+        "chemistry::volumetric-analysis"
+      ],
+      "taxonomy_id": "RXNS",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::back-titration",
+      "label": "Back Titration",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration",
+        "chemistry::titration-calculations"
+      ],
+      "taxonomy_id": "STOI",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reaction-rate",
+      "label": "Reaction Rate",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-changes",
+        "chemistry::measurement"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::rate-of-disappearance",
+      "label": "Rate of Disappearance",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-rate"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::rate-of-appearance",
+      "label": "Rate of Appearance",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-rate"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::average-rate",
+      "label": "Average Rate",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-rate",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::instantaneous-rate",
+      "label": "Instantaneous Rate",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::average-rate",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::initial-rate",
+      "label": "Initial Rate",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::instantaneous-rate"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::rate-law",
+      "label": "Rate Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::initial-rate",
+        "chemistry::reaction-rate"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::rate-constant",
+      "label": "Rate Constant",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::rate-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reaction-order",
+      "label": "Reaction Order",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::rate-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::zero-order-reactions",
+      "label": "Zero Order Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-order"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::first-order-reactions",
+      "label": "First Order Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-order"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::second-order-reactions",
+      "label": "Second Order Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-order"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::determining-reaction-order",
+      "label": "Determining Reaction Order",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::method-of-initial-rates",
+        "chemistry::molecularity"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::method-of-initial-rates",
+      "label": "Method of Initial Rates",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::initial-rate",
+        "chemistry::rate-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::integrated-rate-laws",
+      "label": "Integrated Rate Laws",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::rate-law",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::zero-order-integrated-law",
+      "label": "Zero Order Integrated Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::integrated-rate-laws",
+        "chemistry::zero-order-reactions"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::first-order-integrated-law",
+      "label": "First Order Integrated Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::integrated-rate-laws",
+        "chemistry::first-order-reactions"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::second-order-integrated-law",
+      "label": "Second Order Integrated Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::integrated-rate-laws",
+        "chemistry::second-order-reactions"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::half-life",
+      "label": "Half-Life",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::first-order-integrated-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::first-order-half-life",
+      "label": "First Order Half-Life",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::half-life",
+        "chemistry::first-order-integrated-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::graphical-rate-analysis",
+      "label": "Graphical Rate Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::integrated-rate-laws",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::concentration-vs-time",
+      "label": "Concentration vs Time",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::graphical-rate-analysis"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::linearization-rate-data",
+      "label": "Linearization Rate Data",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::graphical-rate-analysis",
+        "chemistry::concentration-vs-time"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::collision-theory",
+      "label": "Collision Theory",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-rate",
+        "chemistry::kinetic-molecular-theory"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::activation-energy",
+      "label": "Activation Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::collision-theory",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::activated-complex",
+      "label": "Activated Complex",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::activation-energy"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::transition-state",
+      "label": "Transition State",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::activated-complex"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::effective-collisions",
+      "label": "Effective Collisions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::collision-theory",
+        "chemistry::activation-energy"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::orientation-factor",
+      "label": "Orientation Factor",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::effective-collisions"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::arrhenius-equation",
+      "label": "Arrhenius Equation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::activation-energy",
+        "chemistry::rate-constant",
+        "chemistry::temperature-scales"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::arrhenius-plot",
+      "label": "Arrhenius Plot",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::arrhenius-equation",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::frequency-factor",
+      "label": "Frequency Factor",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::arrhenius-equation"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::temperature-and-rate",
+      "label": "Temperature and Rate",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::collision-theory",
+        "chemistry::arrhenius-equation"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::energy-diagrams",
+      "label": "Energy Diagrams",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::activation-energy",
+        "chemistry::energy",
+        "chemistry::graphing-data"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::exothermic-diagrams",
+      "label": "Exothermic Diagrams",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::energy-diagrams",
+        "chemistry::exothermic-reactions"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::endothermic-diagrams",
+      "label": "Endothermic Diagrams",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::energy-diagrams",
+        "chemistry::endothermic-reactions"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reaction-mechanisms",
+      "label": "Reaction Mechanisms",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::elementary-steps"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::elementary-steps",
+      "label": "Elementary Steps",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-rate",
+        "chemistry::rate-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molecularity",
+      "label": "Molecularity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::elementary-steps"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::unimolecular-reactions",
+      "label": "Unimolecular Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecularity"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bimolecular-reactions",
+      "label": "Bimolecular Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::molecularity"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::rate-determining-step",
+      "label": "Rate-Determining Step",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-mechanisms",
+        "chemistry::elementary-steps",
+        "chemistry::rate-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reaction-intermediates",
+      "label": "Reaction Intermediates",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-mechanisms",
+        "chemistry::elementary-steps"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::mechanism-validation",
+      "label": "Mechanism Validation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::rate-determining-step",
+        "chemistry::reaction-intermediates",
+        "chemistry::rate-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::catalysis",
+      "label": "Catalysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::activation-energy",
+        "chemistry::reaction-rate"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::homogeneous-catalysis",
+      "label": "Homogeneous Catalysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::catalysis",
+        "chemistry::solutions"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::heterogeneous-catalysis",
+      "label": "Heterogeneous Catalysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::catalysis",
+        "chemistry::solids"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::enzyme-catalysis",
+      "label": "Enzyme Catalysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::catalysis"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::catalyst-effect-on-ea",
+      "label": "Catalyst Effect on Ea",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::catalysis",
+        "chemistry::activation-energy",
+        "chemistry::energy-diagrams"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::catalyst-and-equilibrium",
+      "label": "Catalyst and Equilibrium",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::catalysis",
+        "chemistry::chemical-equilibrium"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::catalyzed-vs-uncatalyzed",
+      "label": "Catalyzed vs Uncatalyzed",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::catalyst-effect-on-ea",
+        "chemistry::energy-diagrams"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::surface-area-and-rate",
+      "label": "Surface Area and Rate",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::heterogeneous-catalysis",
+        "chemistry::reaction-rate"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::concentration-and-rate",
+      "label": "Concentration and Rate",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-rate",
+        "chemistry::rate-law"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::factors-affecting-rate",
+      "label": "Factors Affecting Rate",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::temperature-and-rate",
+        "chemistry::surface-area-and-rate",
+        "chemistry::concentration-and-rate",
+        "chemistry::orientation-factor"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::kinetics-experiments",
+      "label": "Kinetics Experiments",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::data-collection",
+        "chemistry::reaction-rate",
+        "chemistry::method-of-initial-rates"
+      ],
+      "taxonomy_id": "KIN",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::thermodynamics",
+      "label": "Thermodynamics",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::energy",
+        "chemistry::conservation-laws"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::system-and-surroundings",
+      "label": "System and Surroundings",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::thermodynamics"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::open-systems",
+      "label": "Open Systems",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::system-and-surroundings"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::closed-systems",
+      "label": "Closed Systems",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::system-and-surroundings"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::isolated-systems",
+      "label": "Isolated Systems",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::system-and-surroundings"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::exothermic-reactions",
+      "label": "Exothermic Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::thermodynamics",
+        "chemistry::chemical-changes"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::endothermic-reactions",
+      "label": "Endothermic Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::thermodynamics",
+        "chemistry::chemical-changes"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::heat-and-temperature",
+      "label": "Heat and Temperature",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::energy",
+        "chemistry::temperature-scales"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::heat-transfer",
+      "label": "Heat Transfer",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::heat-and-temperature"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::specific-heat-capacity",
+      "label": "Specific Heat Capacity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::heat-and-temperature",
+        "chemistry::matter"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::heat-capacity",
+      "label": "Heat Capacity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::specific-heat-capacity"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::calorimetry",
+      "label": "Calorimetry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::heat-transfer",
+        "chemistry::specific-heat-capacity"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::coffee-cup-calorimeter",
+      "label": "Coffee Cup Calorimeter",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::calorimetry",
+        "chemistry::closed-systems"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bomb-calorimeter",
+      "label": "Bomb Calorimeter",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::calorimetry",
+        "chemistry::isolated-systems"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::enthalpy",
+      "label": "Enthalpy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::thermodynamics",
+        "chemistry::heat-transfer"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::enthalpy-change",
+      "label": "Enthalpy Change",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::enthalpy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::standard-enthalpy",
+      "label": "Standard Enthalpy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::enthalpy-change"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::enthalpy-of-formation",
+      "label": "Enthalpy of Formation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::standard-enthalpy",
+        "chemistry::compounds"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::standard-formation-values",
+      "label": "Standard Formation Values",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::enthalpy-of-formation"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::enthalpy-of-combustion",
+      "label": "Enthalpy of Combustion",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::standard-enthalpy",
+        "chemistry::combustion-reactions"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::enthalpy-of-reaction",
+      "label": "Enthalpy of Reaction",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::enthalpy-change",
+        "chemistry::stoichiometry"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::hess-s-law",
+      "label": "Hess's Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::enthalpy-of-reaction",
+        "chemistry::conservation-laws"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::hess-s-law-calculations",
+      "label": "Hess's Law Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::hess-s-law",
+        "chemistry::enthalpy-of-reaction"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::born-haber-cycle",
+      "label": "Born-Haber Cycle",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::hess-s-law",
+        "chemistry::lattice-energy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bond-enthalpy",
+      "label": "Bond Enthalpy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bond-energy",
+        "chemistry::enthalpy-change"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bond-enthalpy-calculations",
+      "label": "Bond Enthalpy Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bond-enthalpy",
+        "chemistry::enthalpy-of-reaction"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::entropy",
+      "label": "Entropy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::thermodynamics"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::entropy-change",
+      "label": "Entropy Change",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::entropy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::standard-entropy",
+      "label": "Standard Entropy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::entropy-change"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::entropy-and-disorder",
+      "label": "Entropy and Disorder",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::entropy",
+        "chemistry::kinetic-molecular-theory"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::microstates",
+      "label": "Microstates",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::entropy-and-disorder"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::boltzmann-equation",
+      "label": "Boltzmann Equation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::microstates"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::second-law-thermodynamics",
+      "label": "Second Law Thermodynamics",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::entropy",
+        "chemistry::thermodynamics"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::third-law-thermodynamics",
+      "label": "Third Law Thermodynamics",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::standard-entropy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::entropy-of-phase-changes",
+      "label": "Entropy of Phase Changes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::entropy-change",
+        "chemistry::phase-changes"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::entropy-predictions",
+      "label": "Entropy Predictions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::entropy-change",
+        "chemistry::entropy-and-disorder"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::gibbs-free-energy",
+      "label": "Gibbs Free Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::enthalpy",
+        "chemistry::entropy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::gibbs-free-energy-equation",
+      "label": "Gibbs Free Energy Equation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gibbs-free-energy",
+        "chemistry::enthalpy-change",
+        "chemistry::entropy-change"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::standard-free-energy",
+      "label": "Standard Free Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gibbs-free-energy-equation",
+        "chemistry::standard-enthalpy",
+        "chemistry::standard-entropy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::free-energy-of-formation",
+      "label": "Free Energy of Formation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::standard-free-energy",
+        "chemistry::enthalpy-of-formation"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::spontaneity",
+      "label": "Spontaneity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gibbs-free-energy-equation"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::nonspontaneous-processes",
+      "label": "Nonspontaneous Processes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::spontaneity"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::temperature-dependence",
+      "label": "Temperature Dependence",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gibbs-free-energy-equation",
+        "chemistry::temperature-scales"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::gibbs-and-equilibrium",
+      "label": "Gibbs and Equilibrium",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gibbs-free-energy",
+        "chemistry::chemical-equilibrium"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::free-energy-and-work",
+      "label": "Free Energy and Work",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::gibbs-free-energy",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::coupled-reactions",
+      "label": "Coupled Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::nonspontaneous-processes",
+        "chemistry::free-energy-and-work"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::thermodynamic-stability",
+      "label": "Thermodynamic Stability",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::spontaneity",
+        "chemistry::gibbs-free-energy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::kinetic-stability",
+      "label": "Kinetic Stability",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::activation-energy",
+        "chemistry::thermodynamic-stability"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::state-functions",
+      "label": "State Functions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::enthalpy",
+        "chemistry::entropy",
+        "chemistry::thermodynamics"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::path-functions",
+      "label": "Path Functions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::state-functions",
+        "chemistry::heat-transfer"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::internal-energy",
+      "label": "Internal Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::thermodynamics",
+        "chemistry::energy"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::first-law-thermodynamics",
+      "label": "First Law Thermodynamics",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::internal-energy",
+        "chemistry::conservation-laws"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::pv-work",
+      "label": "PV Work",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::first-law-thermodynamics",
+        "chemistry::ideal-gas-law"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::enthalpy-vs-internal-energy",
+      "label": "Enthalpy vs Internal Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::enthalpy",
+        "chemistry::internal-energy",
+        "chemistry::pv-work"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::calorimetry-calculations",
+      "label": "Calorimetry Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::calorimetry",
+        "chemistry::specific-heat-capacity",
+        "chemistry::dimensional-analysis"
+      ],
+      "taxonomy_id": "THRM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::chemical-equilibrium",
+      "label": "Chemical Equilibrium",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-rate",
+        "chemistry::thermodynamics"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::dynamic-equilibrium",
+      "label": "Dynamic Equilibrium",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equilibrium"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::equilibrium-state",
+      "label": "Equilibrium State",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::dynamic-equilibrium"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::forward-reaction",
+      "label": "Forward Reaction",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equilibrium"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reverse-reaction",
+      "label": "Reverse Reaction",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equilibrium",
+        "chemistry::forward-reaction"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::equilibrium-constant-kc",
+      "label": "Equilibrium Constant Kc",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equilibrium",
+        "chemistry::molarity"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::equilibrium-constant-kp",
+      "label": "Equilibrium Constant Kp",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::equilibrium-constant-kc",
+        "chemistry::partial-pressures"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::kc-and-kp-relationship",
+      "label": "Kc and Kp Relationship",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::equilibrium-constant-kc",
+        "chemistry::equilibrium-constant-kp",
+        "chemistry::ideal-gas-law"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::writing-k-expressions",
+      "label": "Writing K Expressions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::equilibrium-constant-kc"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::homogeneous-equilibrium",
+      "label": "Homogeneous Equilibrium",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::writing-k-expressions",
+        "chemistry::solutions"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::heterogeneous-equilibrium",
+      "label": "Heterogeneous Equilibrium",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::writing-k-expressions",
+        "chemistry::solids"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::equilibrium-position",
+      "label": "Equilibrium Position",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::equilibrium-constant-kc"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reaction-quotient-q",
+      "label": "Reaction Quotient Q",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::equilibrium-constant-kc"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::q-vs-k-comparison",
+      "label": "Q vs K Comparison",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::reaction-quotient-q",
+        "chemistry::equilibrium-constant-kc"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::predicting-direction",
+      "label": "Predicting Direction",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::q-vs-k-comparison"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ice-tables",
+      "label": "ICE Tables",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::writing-k-expressions",
+        "chemistry::molarity"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ice-table-calculations",
+      "label": "ICE Table Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ice-tables"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::small-k-approximation",
+      "label": "Small K Approximation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ice-table-calculations"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::quadratic-in-equilibrium",
+      "label": "Quadratic in Equilibrium",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ice-table-calculations"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::le-chatelier-s-principle",
+      "label": "Le Chatelier's Principle",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::dynamic-equilibrium",
+        "chemistry::equilibrium-position"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::concentration-changes",
+      "label": "Concentration Changes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::le-chatelier-s-principle",
+        "chemistry::equilibrium-constant-kc"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::pressure-changes",
+      "label": "Pressure Changes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::le-chatelier-s-principle",
+        "chemistry::equilibrium-constant-kp"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::volume-changes",
+      "label": "Volume Changes",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::le-chatelier-s-principle",
+        "chemistry::ideal-gas-law"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::temperature-changes-on-k",
+      "label": "Temperature Changes on K",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::le-chatelier-s-principle",
+        "chemistry::exothermic-reactions",
+        "chemistry::endothermic-reactions"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::effect-of-catalyst-on-eq",
+      "label": "Effect of Catalyst on Eq",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::le-chatelier-s-principle",
+        "chemistry::catalysis"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::adding-inert-gas",
+      "label": "Adding Inert Gas",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::le-chatelier-s-principle",
+        "chemistry::dalton-s-law"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::equilibrium-shifts",
+      "label": "Equilibrium Shifts",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::le-chatelier-s-principle"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::solubility-equilibria",
+      "label": "Solubility Equilibria",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility",
+        "chemistry::chemical-equilibrium"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::solubility-product-ksp",
+      "label": "Solubility Product Ksp",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility-equilibria",
+        "chemistry::writing-k-expressions"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::molar-solubility",
+      "label": "Molar Solubility",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility-product-ksp"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::common-ion-effect",
+      "label": "Common Ion Effect",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility-product-ksp",
+        "chemistry::le-chatelier-s-principle"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::predicting-precipitation",
+      "label": "Predicting Precipitation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility-product-ksp",
+        "chemistry::reaction-quotient-q"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::selective-precipitation",
+      "label": "Selective Precipitation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::predicting-precipitation"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::complex-ion-formation",
+      "label": "Complex Ion Formation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility-equilibria",
+        "chemistry::polyatomic-ions"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::formation-constants",
+      "label": "Formation Constants",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::complex-ion-formation",
+        "chemistry::writing-k-expressions"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ksp-calculations",
+      "label": "Ksp Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility-product-ksp",
+        "chemistry::ice-tables"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ion-product",
+      "label": "Ion Product",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility-product-ksp",
+        "chemistry::reaction-quotient-q"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::temperature-and-solubility",
+      "label": "Temperature and Solubility",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility-equilibria",
+        "chemistry::temperature-changes-on-k"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::henry-s-law",
+      "label": "Henry's Law",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::solubility",
+        "chemistry::gas-pressure"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::equilibrium-and-free-energy",
+      "label": "Equilibrium and Free Energy",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-equilibrium",
+        "chemistry::gibbs-free-energy"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::relationship-k-and-delta-g",
+      "label": "Relationship K and Delta G",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::equilibrium-and-free-energy",
+        "chemistry::gibbs-free-energy-equation"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::manipulating-k-expressions",
+      "label": "Manipulating K Expressions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::writing-k-expressions"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::reversing-reactions-k",
+      "label": "Reversing Reactions K",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::manipulating-k-expressions"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::adding-reactions-k",
+      "label": "Adding Reactions K",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::manipulating-k-expressions"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::industrial-equilibrium",
+      "label": "Industrial Equilibrium",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::le-chatelier-s-principle",
+        "chemistry::chemical-equilibrium"
+      ],
+      "taxonomy_id": "EQBM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::acids",
+      "label": "Acids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-properties"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bases",
+      "label": "Bases",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::chemical-properties"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::arrhenius-theory",
+      "label": "Arrhenius Theory",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acids",
+        "chemistry::bases"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::bronsted-lowry-theory",
+      "label": "Bronsted-Lowry Theory",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::arrhenius-theory",
+        "chemistry::electron-transfer"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::lewis-acid-base-theory",
+      "label": "Lewis Acid-Base Theory",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bronsted-lowry-theory",
+        "chemistry::lone-pairs"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::conjugate-acid-base-pairs",
+      "label": "Conjugate Acid-Base Pairs",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bronsted-lowry-theory"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::conjugate-acid",
+      "label": "Conjugate Acid",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::conjugate-acid-base-pairs"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::conjugate-base",
+      "label": "Conjugate Base",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::conjugate-acid-base-pairs"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::amphiprotic-substances",
+      "label": "Amphiprotic Substances",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bronsted-lowry-theory",
+        "chemistry::conjugate-acid-base-pairs"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::autoionization-of-water",
+      "label": "Autoionization of Water",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bronsted-lowry-theory"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ion-product-of-water-kw",
+      "label": "Ion Product of Water Kw",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::autoionization-of-water",
+        "chemistry::equilibrium-constant-kc"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ph-scale",
+      "label": "pH Scale",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ion-product-of-water-kw"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ph-calculation",
+      "label": "pH Calculation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ph-scale",
+        "chemistry::scientific-notation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::poh",
+      "label": "pOH",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ph-scale"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ph-and-poh-relationship",
+      "label": "pH and pOH Relationship",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ph-calculation",
+        "chemistry::poh",
+        "chemistry::ion-product-of-water-kw"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::strong-acids",
+      "label": "Strong Acids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acids",
+        "chemistry::arrhenius-theory"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::strong-bases",
+      "label": "Strong Bases",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bases",
+        "chemistry::arrhenius-theory"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::strong-acid-ph",
+      "label": "Strong Acid pH",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::strong-acids",
+        "chemistry::ph-calculation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::strong-base-ph",
+      "label": "Strong Base pH",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::strong-bases",
+        "chemistry::poh"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::weak-acids",
+      "label": "Weak Acids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acids",
+        "chemistry::chemical-equilibrium"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::weak-bases",
+      "label": "Weak Bases",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bases",
+        "chemistry::chemical-equilibrium"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::acid-dissociation-ka",
+      "label": "Acid Dissociation Ka",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::weak-acids",
+        "chemistry::writing-k-expressions"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::base-dissociation-kb",
+      "label": "Base Dissociation Kb",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::weak-bases",
+        "chemistry::writing-k-expressions"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ka-and-kb-relationship",
+      "label": "Ka and Kb Relationship",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-dissociation-ka",
+        "chemistry::base-dissociation-kb",
+        "chemistry::ion-product-of-water-kw"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::percent-ionization",
+      "label": "Percent Ionization",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-dissociation-ka",
+        "chemistry::weak-acids"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::weak-acid-ph-calculation",
+      "label": "Weak Acid pH Calculation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-dissociation-ka",
+        "chemistry::ice-tables",
+        "chemistry::ph-calculation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::weak-base-ph-calculation",
+      "label": "Weak Base pH Calculation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::base-dissociation-kb",
+        "chemistry::ice-tables",
+        "chemistry::poh"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::polyprotic-acids",
+      "label": "Polyprotic Acids",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::weak-acids",
+        "chemistry::acid-dissociation-ka"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::diprotic-acid-equilibria",
+      "label": "Diprotic Acid Equilibria",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::polyprotic-acids",
+        "chemistry::ice-tables"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::acid-strength-factors",
+      "label": "Acid Strength Factors",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-dissociation-ka",
+        "chemistry::electronegativity",
+        "chemistry::bond-length"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::binary-acid-trends",
+      "label": "Binary Acid Trends",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-strength-factors",
+        "chemistry::periodic-trends"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::oxyacid-strength",
+      "label": "Oxyacid Strength",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-strength-factors",
+        "chemistry::assigning-oxidation-numbers"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::salt-hydrolysis",
+      "label": "Salt Hydrolysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bronsted-lowry-theory",
+        "chemistry::solubility"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::acidic-salts",
+      "label": "Acidic Salts",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::salt-hydrolysis",
+        "chemistry::acid-dissociation-ka"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::basic-salts",
+      "label": "Basic Salts",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::salt-hydrolysis",
+        "chemistry::base-dissociation-kb"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::neutral-salts",
+      "label": "Neutral Salts",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::salt-hydrolysis"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::buffer-solutions",
+      "label": "Buffer Solutions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::weak-acids",
+        "chemistry::weak-bases",
+        "chemistry::conjugate-acid-base-pairs"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::buffer-composition",
+      "label": "Buffer Composition",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::buffer-solutions"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::henderson-hasselbalch",
+      "label": "Henderson-Hasselbalch",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::buffer-solutions",
+        "chemistry::acid-dissociation-ka",
+        "chemistry::ph-calculation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::buffer-capacity",
+      "label": "Buffer Capacity",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::buffer-solutions",
+        "chemistry::buffer-composition"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::buffer-ph-calculations",
+      "label": "Buffer pH Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::henderson-hasselbalch",
+        "chemistry::ice-tables"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::buffer-preparation",
+      "label": "Buffer Preparation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::buffer-capacity",
+        "chemistry::buffer-ph-calculations"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::acid-base-titration",
+      "label": "Acid-Base Titration",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration",
+        "chemistry::bronsted-lowry-theory"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::strong-acid-strong-base",
+      "label": "Strong Acid-Strong Base",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-base-titration",
+        "chemistry::strong-acid-ph",
+        "chemistry::strong-base-ph"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::weak-acid-strong-base",
+      "label": "Weak Acid-Strong Base",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-base-titration",
+        "chemistry::weak-acid-ph-calculation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::strong-acid-weak-base",
+      "label": "Strong Acid-Weak Base",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-base-titration",
+        "chemistry::weak-base-ph-calculation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::titration-curve-analysis",
+      "label": "Titration Curve Analysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::acid-base-titration",
+        "chemistry::titration-curves",
+        "chemistry::ph-scale"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::half-equivalence-point",
+      "label": "Half-Equivalence Point",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration-curve-analysis",
+        "chemistry::acid-dissociation-ka"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::buffer-region",
+      "label": "Buffer Region",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::titration-curve-analysis",
+        "chemistry::buffer-solutions"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::indicators-and-ph-range",
+      "label": "Indicators and pH Range",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::indicator-selection",
+        "chemistry::ph-scale"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::selecting-indicators",
+      "label": "Selecting Indicators",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::indicators-and-ph-range",
+        "chemistry::titration-curve-analysis"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::neutralization-reactions",
+      "label": "Neutralization Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::bronsted-lowry-theory",
+        "chemistry::net-ionic-equations"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::net-ionic-acid-base",
+      "label": "Net Ionic Acid-Base",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::neutralization-reactions",
+        "chemistry::net-ionic-equations"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::dilute-acid-calculations",
+      "label": "Dilute Acid Calculations",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::strong-acid-ph",
+        "chemistry::dilution-calculations"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::ph-of-mixed-solutions",
+      "label": "pH of Mixed Solutions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::ph-calculation",
+        "chemistry::buffer-solutions"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electrochemistry",
+      "label": "Electrochemistry",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::redox-reactions",
+        "chemistry::thermodynamics"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::galvanic-cells",
+      "label": "Galvanic Cells",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electrochemistry",
+        "chemistry::spontaneity"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::voltaic-cell-components",
+      "label": "Voltaic Cell Components",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::galvanic-cells"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::anode-and-cathode",
+      "label": "Anode and Cathode",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::voltaic-cell-components",
+        "chemistry::oxidation",
+        "chemistry::reduction"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::salt-bridge",
+      "label": "Salt Bridge",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::voltaic-cell-components",
+        "chemistry::ion-dipole-forces"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electron-flow-direction",
+      "label": "Electron Flow Direction",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::anode-and-cathode",
+        "chemistry::electron-transfer"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::cell-notation",
+      "label": "Cell Notation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::anode-and-cathode",
+        "chemistry::voltaic-cell-components"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::standard-reduction-potential",
+      "label": "Standard Reduction Potential",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::anode-and-cathode",
+        "chemistry::reduction"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::standard-hydrogen-electrode",
+      "label": "Standard Hydrogen Electrode",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::standard-reduction-potential"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::cell-potential-calculation",
+      "label": "Cell Potential Calculation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::standard-reduction-potential",
+        "chemistry::standard-hydrogen-electrode"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::spontaneous-cell-reactions",
+      "label": "Spontaneous Cell Reactions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::cell-potential-calculation",
+        "chemistry::spontaneity"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::nernst-equation",
+      "label": "Nernst Equation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::cell-potential-calculation",
+        "chemistry::equilibrium-constant-kc",
+        "chemistry::ph-calculation"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::nonstandard-conditions",
+      "label": "Nonstandard Conditions",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::nernst-equation"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::concentration-cells",
+      "label": "Concentration Cells",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::nernst-equation",
+        "chemistry::nonstandard-conditions"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::free-energy-and-cell-emf",
+      "label": "Free Energy and Cell EMF",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::cell-potential-calculation",
+        "chemistry::gibbs-free-energy"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::delta-g-and-e-relation",
+      "label": "Delta G and E Relation",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::free-energy-and-cell-emf",
+        "chemistry::gibbs-free-energy-equation"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::faraday-s-constant",
+      "label": "Faraday's Constant",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electron-transfer",
+        "chemistry::mole-concept"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electrolytic-cells",
+      "label": "Electrolytic Cells",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electrochemistry",
+        "chemistry::nonspontaneous-processes"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electrolysis",
+      "label": "Electrolysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electrolytic-cells"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electrolysis-of-water",
+      "label": "Electrolysis of Water",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electrolysis",
+        "chemistry::decomposition-reactions"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::electroplating",
+      "label": "Electroplating",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electrolysis"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::faraday-s-laws",
+      "label": "Faraday's Laws",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::faraday-s-constant",
+        "chemistry::electrolysis"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::stoichiometry-electrolysis",
+      "label": "Stoichiometry Electrolysis",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::faraday-s-laws",
+        "chemistry::stoichiometry"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::batteries-and-fuel-cells",
+      "label": "Batteries and Fuel Cells",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::galvanic-cells",
+        "chemistry::electrolytic-cells"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    },
+    {
+      "id": "chemistry::corrosion",
+      "label": "Corrosion",
+      "subject_id": "chemistry",
+      "dependencies": [
+        "chemistry::electrochemistry",
+        "chemistry::redox-reactions"
+      ],
+      "taxonomy_id": "ECHEM",
+      "level": "core"
+    }
+  ]
+}

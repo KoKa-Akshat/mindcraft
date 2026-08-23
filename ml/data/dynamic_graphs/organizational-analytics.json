@@ -1,0 +1,2203 @@
+{
+  "subject_id": "organizational-analytics",
+  "title": "Organizational Analytics with AI",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "GMOD": {
+      "classifier_name": "Graph Modeling",
+      "color": "PeachPuff"
+    },
+    "GPERF": {
+      "classifier_name": "Graph Performance",
+      "color": "LightYellow"
+    },
+    "EVENT": {
+      "classifier_name": "Event Streams",
+      "color": "PaleGreen"
+    },
+    "DPIPE": {
+      "classifier_name": "Data Pipelines",
+      "color": "PaleTurquoise"
+    },
+    "OMOD": {
+      "classifier_name": "Organizational Modeling",
+      "color": "PowderBlue"
+    },
+    "ETHIC": {
+      "classifier_name": "Ethics and Privacy",
+      "color": "Plum"
+    },
+    "SECUR": {
+      "classifier_name": "Security",
+      "color": "LightPink"
+    },
+    "GALG": {
+      "classifier_name": "Graph Algorithms",
+      "color": "LightSteelBlue"
+    },
+    "NLPML": {
+      "classifier_name": "NLP and Machine Learning",
+      "color": "Thistle"
+    },
+    "INSGT": {
+      "classifier_name": "Organizational Insights",
+      "color": "Honeydew"
+    },
+    "APPHR": {
+      "classifier_name": "Applied HR Analytics",
+      "color": "Aquamarine"
+    },
+    "RPTDASH": {
+      "classifier_name": "Reporting and Dashboards",
+      "color": "Lavender"
+    },
+    "CAPST": {
+      "classifier_name": "Capstone and Integration",
+      "color": "MistyRose"
+    }
+  },
+  "concepts": [
+    {
+      "id": "organizational-analytics::organizational-analytics",
+      "label": "Organizational Analytics",
+      "subject_id": "organizational-analytics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "organizational-analytics::human-resources-data",
+      "label": "Human Resources Data",
+      "subject_id": "organizational-analytics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "organizational-analytics::hris",
+      "label": "HRIS",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::human-resources-data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::relational-databases",
+      "label": "Relational Databases",
+      "subject_id": "organizational-analytics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "organizational-analytics::relational-database-limits",
+      "label": "Relational Database Limits",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::relational-databases"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-databases",
+      "label": "Graph Databases",
+      "subject_id": "organizational-analytics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "organizational-analytics::graph-vs-relational",
+      "label": "Graph vs Relational",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::relational-databases",
+        "organizational-analytics::graph-databases"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-data-model",
+      "label": "Graph Data Model",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-databases"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::nodes",
+      "label": "Nodes",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-data-model"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::edges",
+      "label": "Edges",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-data-model",
+        "organizational-analytics::nodes"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::node-properties",
+      "label": "Node Properties",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::nodes"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::edge-properties",
+      "label": "Edge Properties",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::edges"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::directed-graphs",
+      "label": "Directed Graphs",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::nodes",
+        "organizational-analytics::edges"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::undirected-graphs",
+      "label": "Undirected Graphs",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::nodes",
+        "organizational-analytics::edges"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::directed-acyclic-graphs",
+      "label": "Directed Acyclic Graphs",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::directed-graphs"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::weighted-edges",
+      "label": "Weighted Edges",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::edge-properties"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-schema-design",
+      "label": "Graph Schema Design",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-data-model",
+        "organizational-analytics::node-properties",
+        "organizational-analytics::edge-properties"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::property-graph-model",
+      "label": "Property Graph Model",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-data-model",
+        "organizational-analytics::node-properties",
+        "organizational-analytics::edge-properties"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-query-language",
+      "label": "Graph Query Language",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-databases",
+        "organizational-analytics::graph-data-model"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::cypher-query-language",
+      "label": "Cypher Query Language",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-query-language"
+      ],
+      "taxonomy_id": "GMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-traversals",
+      "label": "Graph Traversals",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::directed-graphs",
+        "organizational-analytics::graph-query-language"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-database-performance",
+      "label": "Graph Database Performance",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-databases",
+        "organizational-analytics::graph-query-language"
+      ],
+      "taxonomy_id": "GPERF",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::indexing-in-graphs",
+      "label": "Indexing in Graphs",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-database-performance"
+      ],
+      "taxonomy_id": "GPERF",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-scalability",
+      "label": "Graph Scalability",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-database-performance",
+        "organizational-analytics::indexing-in-graphs"
+      ],
+      "taxonomy_id": "GPERF",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::employee-event-streams",
+      "label": "Employee Event Streams",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::organizational-analytics",
+        "organizational-analytics::human-resources-data"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::event-logs",
+      "label": "Event Logs",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-event-streams"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::universal-timestamps",
+      "label": "Universal Timestamps",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::event-logs"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::event-normalization",
+      "label": "Event Normalization",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::event-logs",
+        "organizational-analytics::universal-timestamps"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::event-enrichment",
+      "label": "Event Enrichment",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::event-normalization"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::email-event-streams",
+      "label": "Email Event Streams",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-event-streams",
+        "organizational-analytics::event-logs"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::chat-event-streams",
+      "label": "Chat Event Streams",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-event-streams",
+        "organizational-analytics::event-logs"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::device-activity-logs",
+      "label": "Device Activity Logs",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-event-streams",
+        "organizational-analytics::event-logs"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::desktop-activity",
+      "label": "Desktop Activity",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::device-activity-logs"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::mobile-device-events",
+      "label": "Mobile Device Events",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::device-activity-logs"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::software-application-logs",
+      "label": "Software Application Logs",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::device-activity-logs"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::calendar-events",
+      "label": "Calendar Events",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-event-streams",
+        "organizational-analytics::universal-timestamps"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::meeting-patterns",
+      "label": "Meeting Patterns",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::calendar-events"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::login-and-logout-events",
+      "label": "Login and Logout Events",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::device-activity-logs",
+        "organizational-analytics::universal-timestamps"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::business-process-mining",
+      "label": "Business Process Mining",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-event-streams",
+        "organizational-analytics::event-logs"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::process-discovery",
+      "label": "Process Discovery",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::business-process-mining"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::process-conformance",
+      "label": "Process Conformance",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::business-process-mining",
+        "organizational-analytics::process-discovery"
+      ],
+      "taxonomy_id": "EVENT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::staging-areas",
+      "label": "Staging Areas",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::event-logs",
+        "organizational-analytics::universal-timestamps"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::etl-for-graph-data",
+      "label": "ETL for Graph Data",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::staging-areas",
+        "organizational-analytics::graph-data-model"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::data-ingestion-pipelines",
+      "label": "Data Ingestion Pipelines",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::etl-for-graph-data"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::batch-loading",
+      "label": "Batch Loading",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::data-ingestion-pipelines"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::stream-processing",
+      "label": "Stream Processing",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::data-ingestion-pipelines"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::real-time-data-ingestion",
+      "label": "Real-time Data Ingestion",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::stream-processing"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::latency-management",
+      "label": "Latency Management",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::real-time-data-ingestion"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::data-quality-checks",
+      "label": "Data Quality Checks",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::data-ingestion-pipelines"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::deduplication",
+      "label": "Deduplication",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::data-quality-checks"
+      ],
+      "taxonomy_id": "DPIPE",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::modeling-employees",
+      "label": "Modeling Employees",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::human-resources-data",
+        "organizational-analytics::graph-data-model",
+        "organizational-analytics::node-properties"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::employee-attributes",
+      "label": "Employee Attributes",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-employees"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::employee-identifier",
+      "label": "Employee Identifier",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-employees",
+        "organizational-analytics::employee-attributes"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::modeling-organizations",
+      "label": "Modeling Organizations",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::organizational-analytics",
+        "organizational-analytics::graph-data-model"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::organization-attributes",
+      "label": "Organization Attributes",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-organizations"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::organizational-hierarchy",
+      "label": "Organizational Hierarchy",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-organizations",
+        "organizational-analytics::directed-graphs"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::department-structure",
+      "label": "Department Structure",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::organizational-hierarchy"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::reporting-lines",
+      "label": "Reporting Lines",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::organizational-hierarchy",
+        "organizational-analytics::directed-graphs"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::modeling-communication",
+      "label": "Modeling Communication",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::edges",
+        "organizational-analytics::email-event-streams",
+        "organizational-analytics::chat-event-streams"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::communication-channels",
+      "label": "Communication Channels",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-communication"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::communication-frequency",
+      "label": "Communication Frequency",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-communication",
+        "organizational-analytics::weighted-edges"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::communication-volume",
+      "label": "Communication Volume",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-communication",
+        "organizational-analytics::communication-frequency"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::modeling-positions",
+      "label": "Modeling Positions",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-employees",
+        "organizational-analytics::modeling-organizations"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::roles-and-titles",
+      "label": "Roles and Titles",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-positions"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::modeling-projects",
+      "label": "Modeling Projects",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-organizations",
+        "organizational-analytics::edges"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::task-assignments",
+      "label": "Task Assignments",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-projects",
+        "organizational-analytics::modeling-employees"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::onboarding-data-model",
+      "label": "Onboarding Data Model",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-employees",
+        "organizational-analytics::universal-timestamps"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::license-tracking",
+      "label": "License Tracking",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::software-application-logs",
+        "organizational-analytics::modeling-employees"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::activity-types",
+      "label": "Activity Types",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-event-streams",
+        "organizational-analytics::event-logs"
+      ],
+      "taxonomy_id": "OMOD",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::ethics-of-privacy",
+      "label": "Ethics of Privacy",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::organizational-analytics",
+        "organizational-analytics::human-resources-data"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::data-consent",
+      "label": "Data Consent",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethics-of-privacy"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::employee-data-rights",
+      "label": "Employee Data Rights",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethics-of-privacy",
+        "organizational-analytics::data-consent"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::anonymization",
+      "label": "Anonymization",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethics-of-privacy"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::pseudonymization",
+      "label": "Pseudonymization",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::anonymization"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::privacy-by-design",
+      "label": "Privacy by Design",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethics-of-privacy",
+        "organizational-analytics::anonymization"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::ethical-frameworks",
+      "label": "Ethical Frameworks",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethics-of-privacy"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::bias-in-analytics",
+      "label": "Bias in Analytics",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethical-frameworks",
+        "organizational-analytics::machine-learning"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::transparency-in-analytics",
+      "label": "Transparency in Analytics",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethical-frameworks"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::security",
+      "label": "Security",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethics-of-privacy"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::role-based-access-control",
+      "label": "Role-based Access Control",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::security"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::data-encryption",
+      "label": "Data Encryption",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::security"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::audit-trails",
+      "label": "Audit Trails",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::security",
+        "organizational-analytics::role-based-access-control"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::record-retention",
+      "label": "Record Retention",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::security",
+        "organizational-analytics::ethics-of-privacy"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::data-minimization",
+      "label": "Data Minimization",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ethics-of-privacy",
+        "organizational-analytics::record-retention"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-algorithms",
+      "label": "Graph Algorithms",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-databases",
+        "organizational-analytics::graph-traversals"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::degree-centrality",
+      "label": "Degree Centrality",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::nodes",
+        "organizational-analytics::edges"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::indegree",
+      "label": "Indegree",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::degree-centrality",
+        "organizational-analytics::directed-graphs"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::outdegree",
+      "label": "Outdegree",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::degree-centrality",
+        "organizational-analytics::directed-graphs"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::betweenness-centrality",
+      "label": "Betweenness Centrality",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::shortest-path"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::closeness-centrality",
+      "label": "Closeness Centrality",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::shortest-path"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::eigenvector-centrality",
+      "label": "Eigenvector Centrality",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::degree-centrality"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::pagerank",
+      "label": "PageRank",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::eigenvector-centrality"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::pathfinding-algorithms",
+      "label": "Pathfinding Algorithms",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::graph-traversals"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::shortest-path",
+      "label": "Shortest Path",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::pathfinding-algorithms"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::dijkstra-algorithm",
+      "label": "Dijkstra Algorithm",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::shortest-path",
+        "organizational-analytics::weighted-edges"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::breadth-first-search",
+      "label": "Breadth-first Search",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-traversals",
+        "organizational-analytics::pathfinding-algorithms"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::depth-first-search",
+      "label": "Depth-first Search",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-traversals",
+        "organizational-analytics::pathfinding-algorithms"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::clustering-coefficient",
+      "label": "Clustering Coefficient",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::nodes",
+        "organizational-analytics::edges"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::community-detection",
+      "label": "Community Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::clustering-coefficient"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::louvain-algorithm",
+      "label": "Louvain Algorithm",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::community-detection"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::label-propagation",
+      "label": "Label Propagation",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::community-detection"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::modularity",
+      "label": "Modularity",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::community-detection"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::labeling-communities",
+      "label": "Labeling Communities",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::community-detection",
+        "organizational-analytics::louvain-algorithm"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::similarity-algorithms",
+      "label": "Similarity Algorithms",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::jaccard-similarity",
+      "label": "Jaccard Similarity",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::similarity-algorithms"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::cosine-similarity",
+      "label": "Cosine Similarity",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::similarity-algorithms"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::node-similarity",
+      "label": "Node Similarity",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::similarity-algorithms",
+        "organizational-analytics::nodes"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::similar-people",
+      "label": "Similar People",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::node-similarity",
+        "organizational-analytics::modeling-employees"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::similar-roles",
+      "label": "Similar Roles",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::node-similarity",
+        "organizational-analytics::roles-and-titles"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::similar-events",
+      "label": "Similar Events",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::node-similarity",
+        "organizational-analytics::employee-event-streams"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-metrics",
+      "label": "Graph Metrics",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::degree-centrality"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::network-density",
+      "label": "Network Density",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-metrics",
+        "organizational-analytics::nodes",
+        "organizational-analytics::edges"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::average-path-length",
+      "label": "Average Path Length",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-metrics",
+        "organizational-analytics::shortest-path"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::connected-components",
+      "label": "Connected Components",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-metrics",
+        "organizational-analytics::breadth-first-search"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::subgraph-analysis",
+      "label": "Subgraph Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-metrics",
+        "organizational-analytics::connected-components"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::motif-detection",
+      "label": "Motif Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::subgraph-analysis"
+      ],
+      "taxonomy_id": "GALG",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::natural-language-processing",
+      "label": "Natural Language Processing",
+      "subject_id": "organizational-analytics",
+      "dependencies": [],
+      "taxonomy_id": "NLPML",
+      "level": "foundational"
+    },
+    {
+      "id": "organizational-analytics::tokenization",
+      "label": "Tokenization",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::natural-language-processing"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::named-entity-recognition",
+      "label": "Named Entity Recognition",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::natural-language-processing",
+        "organizational-analytics::tokenization"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::text-classification",
+      "label": "Text Classification",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::natural-language-processing",
+        "organizational-analytics::tokenization"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::sentiment-analysis",
+      "label": "Sentiment Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::natural-language-processing",
+        "organizational-analytics::text-classification"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::sentiment-scoring",
+      "label": "Sentiment Scoring",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::sentiment-analysis"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::emotion-detection",
+      "label": "Emotion Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::sentiment-analysis"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::topic-modeling",
+      "label": "Topic Modeling",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::natural-language-processing",
+        "organizational-analytics::tokenization"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::word-embeddings",
+      "label": "Word Embeddings",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::natural-language-processing"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::large-language-models",
+      "label": "Large Language Models",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::natural-language-processing",
+        "organizational-analytics::word-embeddings"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::summarization",
+      "label": "Summarization",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::large-language-models"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::summarizing-events",
+      "label": "Summarizing Events",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::summarization",
+        "organizational-analytics::employee-event-streams"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::communication-tone-analysis",
+      "label": "Communication Tone Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::sentiment-analysis",
+        "organizational-analytics::modeling-communication"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "organizational-analytics",
+      "dependencies": [],
+      "taxonomy_id": "NLPML",
+      "level": "foundational"
+    },
+    {
+      "id": "organizational-analytics::supervised-learning",
+      "label": "Supervised Learning",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::machine-learning"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::unsupervised-learning",
+      "label": "Unsupervised Learning",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::machine-learning"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::feature-engineering",
+      "label": "Feature Engineering",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::machine-learning"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::training-and-evaluation",
+      "label": "Training and Evaluation",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::machine-learning",
+        "organizational-analytics::supervised-learning"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-machine-learning",
+      "label": "Graph Machine Learning",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::machine-learning",
+        "organizational-analytics::graph-algorithms"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-neural-networks",
+      "label": "Graph Neural Networks",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-machine-learning"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::node-embeddings",
+      "label": "Node Embeddings",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-machine-learning",
+        "organizational-analytics::nodes"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::link-prediction",
+      "label": "Link Prediction",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-machine-learning",
+        "organizational-analytics::edges"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-classification",
+      "label": "Graph Classification",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-machine-learning",
+        "organizational-analytics::community-detection"
+      ],
+      "taxonomy_id": "NLPML",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::influence-detection",
+      "label": "Influence Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::degree-centrality",
+        "organizational-analytics::betweenness-centrality",
+        "organizational-analytics::modeling-communication"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::informal-leaders",
+      "label": "Informal Leaders",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::influence-detection"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::decision-shapers",
+      "label": "Decision Shapers",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::influence-detection",
+        "organizational-analytics::informal-leaders"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::bridge-builders",
+      "label": "Bridge Builders",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::influence-detection",
+        "organizational-analytics::betweenness-centrality"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::boundary-spanners",
+      "label": "Boundary Spanners",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::bridge-builders",
+        "organizational-analytics::community-detection"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::information-flow-analysis",
+      "label": "Information Flow Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::pathfinding-algorithms",
+        "organizational-analytics::modeling-communication",
+        "organizational-analytics::communication-frequency"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::communication-bottlenecks",
+      "label": "Communication Bottlenecks",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::information-flow-analysis",
+        "organizational-analytics::betweenness-centrality"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::efficiency-metrics",
+      "label": "Efficiency Metrics",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::information-flow-analysis",
+        "organizational-analytics::graph-metrics"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::silo-detection",
+      "label": "Silo Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::community-detection",
+        "organizational-analytics::modeling-communication"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::cross-team-interaction",
+      "label": "Cross-team Interaction",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::silo-detection",
+        "organizational-analytics::modeling-communication"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::fragmentation-analysis",
+      "label": "Fragmentation Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::silo-detection",
+        "organizational-analytics::connected-components"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::vulnerability-analysis",
+      "label": "Vulnerability Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::degree-centrality",
+        "organizational-analytics::betweenness-centrality",
+        "organizational-analytics::connected-components"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::single-points-of-failure",
+      "label": "Single Points of Failure",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::vulnerability-analysis"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::knowledge-concentration",
+      "label": "Knowledge Concentration",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::vulnerability-analysis",
+        "organizational-analytics::influence-detection"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::succession-planning",
+      "label": "Succession Planning",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::vulnerability-analysis",
+        "organizational-analytics::single-points-of-failure",
+        "organizational-analytics::knowledge-concentration"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::flight-risk-detection",
+      "label": "Flight Risk Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::communication-frequency",
+        "organizational-analytics::sentiment-analysis",
+        "organizational-analytics::supervised-learning"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::disengagement-signals",
+      "label": "Disengagement Signals",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::flight-risk-detection",
+        "organizational-analytics::communication-frequency"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::turnover-contagion",
+      "label": "Turnover Contagion",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::flight-risk-detection",
+        "organizational-analytics::influence-detection"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::retention-analytics",
+      "label": "Retention Analytics",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::flight-risk-detection",
+        "organizational-analytics::disengagement-signals",
+        "organizational-analytics::turnover-contagion"
+      ],
+      "taxonomy_id": "INSGT",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::recognition-events",
+      "label": "Recognition Events",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-event-streams",
+        "organizational-analytics::summarizing-events"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::hidden-achievements",
+      "label": "Hidden Achievements",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::recognition-events",
+        "organizational-analytics::influence-detection"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::alignment-analysis",
+      "label": "Alignment Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::task-assignments",
+        "organizational-analytics::strategy-alignment"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::strategy-alignment",
+      "label": "Strategy Alignment",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::modeling-organizations",
+        "organizational-analytics::modeling-projects"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::ideation-tracking",
+      "label": "Ideation Tracking",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::topic-modeling",
+        "organizational-analytics::modeling-communication"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::idea-flow-networks",
+      "label": "Idea Flow Networks",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::ideation-tracking",
+        "organizational-analytics::information-flow-analysis"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::innovation-metrics",
+      "label": "Innovation Metrics",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::idea-flow-networks",
+        "organizational-analytics::efficiency-metrics"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::mentoring-matching",
+      "label": "Mentoring Matching",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::similar-people",
+        "organizational-analytics::skill-gap-analysis"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::mentor-mentee-pairing",
+      "label": "Mentor-mentee Pairing",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::mentoring-matching"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::skill-gap-analysis",
+      "label": "Skill Gap Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::employee-attributes",
+        "organizational-analytics::roles-and-titles",
+        "organizational-analytics::similar-roles"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::training-gap-detection",
+      "label": "Training Gap Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::skill-gap-analysis",
+        "organizational-analytics::training-and-evaluation"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::placement-optimization",
+      "label": "Placement Optimization",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::similar-people",
+        "organizational-analytics::skill-gap-analysis"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::optimal-task-assignment",
+      "label": "Optimal Task Assignment",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::placement-optimization",
+        "organizational-analytics::task-assignments"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::backlog-task-assignment",
+      "label": "Backlog Task Assignment",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::optimal-task-assignment"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::career-path-analysis",
+      "label": "Career Path Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::roles-and-titles",
+        "organizational-analytics::pathfinding-algorithms",
+        "organizational-analytics::employee-attributes"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::career-guidance",
+      "label": "Career Guidance",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::career-path-analysis"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::onboarding-effectiveness",
+      "label": "Onboarding Effectiveness",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::onboarding-data-model",
+        "organizational-analytics::communication-frequency",
+        "organizational-analytics::universal-timestamps"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::integration-monitoring",
+      "label": "Integration Monitoring",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::onboarding-effectiveness",
+        "organizational-analytics::cross-team-interaction"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::merger-integration",
+      "label": "Merger Integration",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::integration-monitoring",
+        "organizational-analytics::fragmentation-analysis"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::reorganization-impact",
+      "label": "Reorganization Impact",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::organizational-hierarchy",
+        "organizational-analytics::information-flow-analysis",
+        "organizational-analytics::fragmentation-analysis"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::inclusion-analytics",
+      "label": "Inclusion Analytics",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::degree-centrality",
+        "organizational-analytics::modeling-communication",
+        "organizational-analytics::network-centrality-equity"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::network-centrality-equity",
+      "label": "Network Centrality Equity",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::degree-centrality",
+        "organizational-analytics::modeling-employees"
+      ],
+      "taxonomy_id": "APPHR",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::reporting",
+      "label": "Reporting",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-metrics",
+        "organizational-analytics::graph-algorithms"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::operational-reports",
+      "label": "Operational Reports",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::reporting"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::executive-dashboards",
+      "label": "Executive Dashboards",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::reporting",
+        "organizational-analytics::dashboard-design"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::dashboard-design",
+      "label": "Dashboard Design",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::reporting"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::dashboard-design"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::real-time-discovery",
+      "label": "Real-time Discovery",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::real-time-data-ingestion",
+        "organizational-analytics::reporting"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::pattern-detection",
+      "label": "Pattern Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::real-time-discovery",
+        "organizational-analytics::motif-detection"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::anomaly-detection",
+      "label": "Anomaly Detection",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::pattern-detection",
+        "organizational-analytics::unsupervised-learning"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::trend-analysis",
+      "label": "Trend Analysis",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::pattern-detection",
+        "organizational-analytics::reporting"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::alerting-systems",
+      "label": "Alerting Systems",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::real-time-discovery",
+        "organizational-analytics::anomaly-detection"
+      ],
+      "taxonomy_id": "RPTDASH",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::graph-library-design",
+      "label": "Graph Library Design",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::graph-query-language"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::reusable-graph-queries",
+      "label": "Reusable Graph Queries",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-library-design",
+        "organizational-analytics::cypher-query-language"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::api-integration",
+      "label": "API Integration",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-library-design",
+        "organizational-analytics::data-ingestion-pipelines"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::detecting-ai-events",
+      "label": "Detecting AI Events",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::large-language-models",
+        "organizational-analytics::employee-event-streams"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::ai-generated-content",
+      "label": "AI-generated Content",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::detecting-ai-events",
+        "organizational-analytics::large-language-models"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::building-a-graph-library",
+      "label": "Building a Graph Library",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-library-design",
+        "organizational-analytics::reusable-graph-queries"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::end-to-end-pipeline",
+      "label": "End-to-end Pipeline",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::data-ingestion-pipelines",
+        "organizational-analytics::graph-algorithms",
+        "organizational-analytics::reporting"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::organizational-health-score",
+      "label": "Organizational Health Score",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::graph-metrics",
+        "organizational-analytics::sentiment-analysis",
+        "organizational-analytics::efficiency-metrics"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::benchmarking",
+      "label": "Benchmarking",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::organizational-health-score"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    },
+    {
+      "id": "organizational-analytics::continuous-improvement",
+      "label": "Continuous Improvement",
+      "subject_id": "organizational-analytics",
+      "dependencies": [
+        "organizational-analytics::benchmarking",
+        "organizational-analytics::end-to-end-pipeline"
+      ],
+      "taxonomy_id": "CAPST",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,6138 @@
+{
+  "subject_id": "learning-record-store",
+  "title": "Learning Record Store: IEEE Standards, Architecture, and Practice",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "STD": {
+      "classifier_name": "Standards & Governance",
+      "color": "SteelBlue"
+    },
+    "GRAPH": {
+      "classifier_name": "Graph Data Model",
+      "color": "DarkSlateBlue"
+    },
+    "INGST": {
+      "classifier_name": "Ingestion & Compression Pipeline",
+      "color": "DarkGreen"
+    },
+    "TECH": {
+      "classifier_name": "Technology Stack",
+      "color": "LimeGreen"
+    },
+    "ARCH": {
+      "classifier_name": "Architecture & Capacity Model",
+      "color": "Gold"
+    },
+    "STORE": {
+      "classifier_name": "Storage Engineering",
+      "color": "DarkGoldenrod"
+    },
+    "DASH": {
+      "classifier_name": "Privacy & Dashboard Mechanics",
+      "color": "Teal"
+    },
+    "DEPL": {
+      "classifier_name": "Deployment & DevOps",
+      "color": "DodgerBlue"
+    },
+    "OPS": {
+      "classifier_name": "Operations, Testing & Roadmap",
+      "color": "Crimson"
+    },
+    "INFRA": {
+      "classifier_name": "Infrastructure & Cost",
+      "color": "DarkRed"
+    },
+    "ROLE": {
+      "classifier_name": "Personas & Roles",
+      "color": "MediumPurple"
+    },
+    "ADMIN": {
+      "classifier_name": "Admin UIs & Compliance",
+      "color": "Indigo"
+    },
+    "RPT": {
+      "classifier_name": "Reports & Analytics Catalog",
+      "color": "DarkOrchid"
+    },
+    "EXP": {
+      "classifier_name": "Experimentation Subsystem",
+      "color": "Orange"
+    },
+    "PROD": {
+      "classifier_name": "Producer Contract & Cross-Persona",
+      "color": "SaddleBrown"
+    }
+  },
+  "concepts": [
+    {
+      "id": "learning-record-store::learning-management-system",
+      "label": "Learning Management System",
+      "subject_id": "learning-record-store",
+      "dependencies": [],
+      "taxonomy_id": "STD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-record-store::scorm",
+      "label": "SCORM",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-management-system"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::aicc",
+      "label": "AICC",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-management-system"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::content-packaging",
+      "label": "Content Packaging",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::scorm"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::sharable-content-object",
+      "label": "Sharable Content Object",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::scorm",
+        "learning-record-store::content-packaging"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experience-api",
+      "label": "Experience API",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-management-system",
+        "learning-record-store::scorm"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-record-store",
+      "label": "Learning Record Store",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experience-api"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-record-provider",
+      "label": "Learning Record Provider",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experience-api",
+        "learning-record-store::learning-record-store"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::actor",
+      "label": "Actor",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experience-api"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::verb",
+      "label": "Verb",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experience-api"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::object-activity",
+      "label": "Object Activity",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experience-api"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::activity-type",
+      "label": "Activity Type",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::object-activity"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::result",
+      "label": "Result",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experience-api"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::context",
+      "label": "Context",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experience-api"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement",
+      "label": "Statement",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::actor",
+        "learning-record-store::verb",
+        "learning-record-store::object-activity"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::sub-statement",
+      "label": "Sub-Statement",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::attachment",
+      "label": "Attachment",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::extensions",
+      "label": "Extensions",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::result",
+        "learning-record-store::context"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-immutability",
+      "label": "Statement Immutability",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::voided-statement",
+      "label": "Voided Statement",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement-immutability"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::registration",
+      "label": "Registration",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::context",
+        "learning-record-store::statement"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::actor-account",
+      "label": "Actor Account",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::actor"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::inverse-functional-identifier",
+      "label": "Inverse Functional Identifier",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::actor-account"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-id",
+      "label": "Statement ID",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::restful-api",
+      "label": "RESTful API",
+      "subject_id": "learning-record-store",
+      "dependencies": [],
+      "taxonomy_id": "STD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-record-store::http-verb",
+      "label": "HTTP Verb",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::restful-api"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::xapi-endpoint",
+      "label": "xAPI Endpoint",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::restful-api",
+        "learning-record-store::learning-record-store"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-query-parameter",
+      "label": "Statement Query Parameter",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-endpoint"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::oauth-authentication",
+      "label": "OAuth Authentication",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-endpoint"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::basic-authentication",
+      "label": "Basic Authentication",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-endpoint"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ieee-ltsc",
+      "label": "IEEE LTSC",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-record-store"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ieee-9274-1-1-2023",
+      "label": "IEEE 9274.1.1-2023",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement",
+        "learning-record-store::learning-record-store",
+        "learning-record-store::ieee-ltsc"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ieee-9274-2-1",
+      "label": "IEEE 9274.2.1",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ieee-9274-1-1-2023"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::xapi-profile-standard",
+      "label": "xAPI Profile Standard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ieee-9274-2-1"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::json-ld",
+      "label": "JSON-LD",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-profile-standard"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::application-profile",
+      "label": "Application Profile",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-profile-standard",
+        "learning-record-store::json-ld"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::determining-property",
+      "label": "Determining Property",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::application-profile"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cmi5",
+      "label": "cmi5",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::application-profile"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cmi5-assignable-unit",
+      "label": "cmi5 Assignable Unit",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::cmi5"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cmi5-launch-method",
+      "label": "cmi5 Launch Method",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::cmi5"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::total-learning-architecture",
+      "label": "Total Learning Architecture",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-record-store",
+        "learning-record-store::ieee-ltsc"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adl-initiative",
+      "label": "ADL Initiative",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experience-api"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::i2idl",
+      "label": "I2IDL",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ieee-ltsc",
+        "learning-record-store::adl-initiative"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::xapi-conformance-suite",
+      "label": "xAPI Conformance Suite",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::i2idl",
+        "learning-record-store::ieee-9274-1-1-2023"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::xapi-profile-server",
+      "label": "xAPI Profile Server",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::i2idl",
+        "learning-record-store::application-profile"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::tla-reference-implementation",
+      "label": "TLA Reference Implementation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::i2idl",
+        "learning-record-store::total-learning-architecture"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::standards-governance",
+      "label": "Standards Governance",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ieee-ltsc",
+        "learning-record-store::adl-initiative",
+        "learning-record-store::i2idl"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::stewardship-transition",
+      "label": "Stewardship Transition",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::adl-initiative",
+        "learning-record-store::ieee-ltsc"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::open-source-infrastructure",
+      "label": "Open Source Infrastructure",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::i2idl"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::1edtech-consortium",
+      "label": "1EdTech Consortium",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ieee-ltsc"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::caliper-analytics",
+      "label": "Caliper Analytics",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::1edtech-consortium"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-object-metadata",
+      "label": "Learning Object Metadata",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::1edtech-consortium"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::competency-framework",
+      "label": "Competency Framework",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::total-learning-architecture"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-ecosystem",
+      "label": "Learning Ecosystem",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::total-learning-architecture",
+        "learning-record-store::competency-framework"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::data-verifiability",
+      "label": "Data Verifiability",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement-immutability",
+        "learning-record-store::ieee-9274-1-1-2023"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::data-transparency",
+      "label": "Data Transparency",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::data-verifiability"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learner-data-portability",
+      "label": "Learner Data Portability",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ieee-9274-1-1-2023",
+        "learning-record-store::learning-record-store"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::vendor-interoperability",
+      "label": "Vendor Interoperability",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ieee-9274-1-1-2023",
+        "learning-record-store::xapi-conformance-suite"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-timestamp",
+      "label": "Statement Timestamp",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::activity-definition",
+      "label": "Activity Definition",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::object-activity",
+        "learning-record-store::activity-type"
+      ],
+      "taxonomy_id": "STD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::system-context-diagram",
+      "label": "System Context Diagram",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-record-store"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ingestion-plane",
+      "label": "Ingestion Plane",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::processing-plane",
+      "label": "Processing Plane",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::storage-plane",
+      "label": "Storage Plane",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::analytics-plane",
+      "label": "Analytics Plane",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::presentation-plane",
+      "label": "Presentation Plane",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ingestion-gateway",
+      "label": "Ingestion Gateway",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::durable-event-queue",
+      "label": "Durable Event Queue",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-plane",
+        "learning-record-store::ingestion-gateway"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::event-store",
+      "label": "Event Store",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::storage-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::stream-processor",
+      "label": "Stream Processor",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::processing-plane",
+        "learning-record-store::durable-event-queue"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::analytics-api",
+      "label": "Analytics API",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::admin-api",
+      "label": "Admin API",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-api",
+      "label": "Experiment API",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::roster-api",
+      "label": "Roster API",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram",
+        "learning-record-store::analytics-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::export-api",
+      "label": "Export API",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::storage-plane",
+        "learning-record-store::analytics-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::tenant",
+      "label": "Tenant",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::district",
+      "label": "District",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::tenant"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::school",
+      "label": "School",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::course",
+      "label": "Course",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::school"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::section",
+      "label": "Section",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::course"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::enrollment",
+      "label": "Enrollment",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::section"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::tenancy-hierarchy",
+      "label": "Tenancy Hierarchy",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district",
+        "learning-record-store::school",
+        "learning-record-store::course",
+        "learning-record-store::section"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::hard-isolation",
+      "label": "Hard Isolation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district",
+        "learning-record-store::tenancy-hierarchy"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::soft-isolation",
+      "label": "Soft Isolation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::school",
+        "learning-record-store::tenancy-hierarchy"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::oneroster",
+      "label": "OneRoster",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::roster-api",
+        "learning-record-store::enrollment"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::student-information-system",
+      "label": "Student Information System",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::oneroster"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::student",
+      "label": "Student",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::section"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::pseudonymous-account",
+      "label": "Pseudonymous Account",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student",
+        "learning-record-store::actor-account"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::student-key",
+      "label": "Student Key",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::pseudonymous-account"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::pii-vault",
+      "label": "PII Vault",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-key"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::labeled-property-graph",
+      "label": "Labeled Property Graph",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::storage-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::node-label",
+      "label": "Node Label",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::relationship-type",
+      "label": "Relationship Type",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::textbook",
+      "label": "Textbook",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::node-label"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::textbook-version",
+      "label": "Textbook Version",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::chapter",
+      "label": "Chapter",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook",
+        "learning-record-store::node-label"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::page",
+      "label": "Page",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::chapter"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::microsim",
+      "label": "MicroSim",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::chapter"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::microsim-version",
+      "label": "MicroSim Version",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::microsim"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::quiz",
+      "label": "Quiz",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::page"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::question",
+      "label": "Question",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::quiz"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept",
+      "label": "Concept",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::node-label"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-graph-dag",
+      "label": "Learning Graph DAG",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::concept",
+        "learning-record-store::relationship-type"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::depends-on-relationship",
+      "label": "Depends On Relationship",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-graph-dag",
+        "learning-record-store::relationship-type"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::covers-relationship",
+      "label": "Covers Relationship",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::relationship-type",
+        "learning-record-store::page",
+        "learning-record-store::microsim",
+        "learning-record-store::question",
+        "learning-record-store::concept"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::has-mastery-relationship",
+      "label": "Has Mastery Relationship",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::relationship-type",
+        "learning-record-store::student"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::of-concept-relationship",
+      "label": "Of Concept Relationship",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::relationship-type",
+        "learning-record-store::concept"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::touched-relationship",
+      "label": "Touched Relationship",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::relationship-type",
+        "learning-record-store::page",
+        "learning-record-store::microsim",
+        "learning-record-store::question"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::verb-controlled-vocabulary",
+      "label": "Verb Controlled Vocabulary",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::relationship-type",
+        "learning-record-store::verb"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-node",
+      "label": "Experiment Node",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::relationship-type"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::variant-node",
+      "label": "Variant Node",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-node",
+        "learning-record-store::relationship-type"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::summary-vertex",
+      "label": "Summary Vertex",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::analytical-grain",
+      "label": "Analytical Grain",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::summary-vertex"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept-mastery-vertex",
+      "label": "Concept Mastery Vertex",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytical-grain",
+        "learning-record-store::has-mastery-relationship",
+        "learning-record-store::concept"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::page-engagement-vertex",
+      "label": "Page Engagement Vertex",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytical-grain",
+        "learning-record-store::page"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::microsim-engagement-vertex",
+      "label": "MicroSim Engagement Vertex",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytical-grain",
+        "learning-record-store::microsim"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::question-response-vertex",
+      "label": "Question Response Vertex",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytical-grain",
+        "learning-record-store::question"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-session-vertex",
+      "label": "Learning Session Vertex",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytical-grain",
+        "learning-record-store::touched-relationship"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::section-rollup-vertex",
+      "label": "Section Rollup Vertex",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytical-grain",
+        "learning-record-store::section",
+        "learning-record-store::concept-mastery-vertex"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statements-compressed",
+      "label": "Statements Compressed",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::summary-vertex"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::xapi-statement-resource",
+      "label": "xAPI Statement Resource",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-endpoint",
+        "learning-record-store::statement"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::structural-validation",
+      "label": "Structural Validation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-statement-resource"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::semantic-validation",
+      "label": "Semantic Validation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-statement-resource",
+        "learning-record-store::activity-definition"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::schema-on-read",
+      "label": "Schema On Read",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::semantic-validation"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::non-blocking-ingestion",
+      "label": "Non-Blocking Ingestion",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::schema-on-read"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::accept-first-ingestion",
+      "label": "Accept-First Ingestion",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::non-blocking-ingestion"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::provisional-node",
+      "label": "Provisional Node",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::accept-first-ingestion",
+        "learning-record-store::node-label"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::reconciliation-worker",
+      "label": "Reconciliation Worker",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::provisional-node"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::idempotent-delivery",
+      "label": "Idempotent Delivery",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::statement-id"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::at-least-once-delivery",
+      "label": "At-Least-Once Delivery",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::durable-event-queue",
+        "learning-record-store::idempotent-delivery"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::backpressure",
+      "label": "Backpressure",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::durable-event-queue",
+        "learning-record-store::non-blocking-ingestion"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-compression-ratio",
+      "label": "Statement Compression Ratio",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::summary-vertex",
+        "learning-record-store::statements-compressed"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::change-driven-materialization",
+      "label": "Change-Driven Materialization",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::summary-vertex",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::absolute-value-write",
+      "label": "Absolute Value Write",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::change-driven-materialization"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-storage-function",
+      "label": "Statement Storage Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::event-store",
+        "learning-record-store::xapi-statement-resource"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-retrieval-function",
+      "label": "Statement Retrieval Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-statement-resource",
+        "learning-record-store::statement-query-parameter"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::voiding-function",
+      "label": "Voiding Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::voided-statement",
+        "learning-record-store::statement-storage-function"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::actor-pseudonymization-function",
+      "label": "Actor Pseudonymization Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::pseudonymous-account"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::activity-resolution-function",
+      "label": "Activity Resolution Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::provisional-node"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept-mapping-function",
+      "label": "Concept Mapping Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::covers-relationship",
+        "learning-record-store::concept"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mastery-computation-function",
+      "label": "Mastery Computation Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::concept-mastery-vertex"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::progress-projection-function",
+      "label": "Progress Projection Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::concept-mastery-vertex",
+        "learning-record-store::section-rollup-vertex"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-assignment-function",
+      "label": "Experiment Assignment Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-node",
+        "learning-record-store::variant-node"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::reconciliation-function",
+      "label": "Reconciliation Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::reconciliation-worker"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::export-function",
+      "label": "Export Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::export-api",
+        "learning-record-store::event-store"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::retention-purge-function",
+      "label": "Retention Purge Function",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::pii-vault",
+        "learning-record-store::event-store"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::fastapi",
+      "label": "FastAPI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::uvicorn",
+      "label": "Uvicorn",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::fastapi"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::redpanda",
+      "label": "Redpanda",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::durable-event-queue"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::apache-kafka",
+      "label": "Apache Kafka",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::redpanda"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::confluent-kafka-library",
+      "label": "Confluent-Kafka Library",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::clickhouse",
+      "label": "ClickHouse",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::event-store"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::neo4j-5-community",
+      "label": "Neo4j 5 Community",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::labeled-property-graph"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::postgresql-16",
+      "label": "PostgreSQL 16",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::pii-vault"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::redis-7",
+      "label": "Redis 7",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::storage-plane"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::minio",
+      "label": "MinIO",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::export-api"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::amazon-s3",
+      "label": "Amazon S3",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::minio"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::graphql",
+      "label": "GraphQL",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-api"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::keycloak",
+      "label": "Keycloak",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::admin-api"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::opentelemetry",
+      "label": "OpenTelemetry",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::jaeger",
+      "label": "Jaeger",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::opentelemetry"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::prometheus",
+      "label": "Prometheus",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::opentelemetry"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::grafana",
+      "label": "Grafana",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::prometheus"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adr-event-store-decision",
+      "label": "ADR Event Store Decision",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::event-store",
+        "learning-record-store::labeled-property-graph"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adr-compression-sync-decision",
+      "label": "ADR Compression Sync Decision",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::change-driven-materialization",
+        "learning-record-store::absolute-value-write"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adr-graph-not-hot-path",
+      "label": "ADR Graph Not Hot Path",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::concept-mastery-vertex",
+        "learning-record-store::redis-7"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adr-partition-key-decision",
+      "label": "ADR Partition Key Decision",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::durable-event-queue",
+        "learning-record-store::student"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adr-one-image-many-roles",
+      "label": "ADR One Image Many Roles",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adr-bkt-mastery-decision",
+      "label": "ADR BKT Mastery Decision",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mastery-computation-function"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adr-python-gateway-decision",
+      "label": "ADR Python Gateway Decision",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::fastapi",
+        "learning-record-store::ingestion-gateway"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::memgraph-alternative",
+      "label": "Memgraph Alternative",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-5-community"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::peak-sustained-ingest",
+      "label": "Peak Sustained Ingest",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::burst-ingest-rate",
+      "label": "Burst Ingest Rate",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::peak-sustained-ingest"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mean-statement-size",
+      "label": "Mean Statement Size",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-statement-resource"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::active-ingestion-window",
+      "label": "Active Ingestion Window",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::peak-sustained-ingest"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::duty-cycle",
+      "label": "Duty Cycle",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::active-ingestion-window"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statements-per-day",
+      "label": "Statements Per Day",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::burst-ingest-rate",
+        "learning-record-store::duty-cycle"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::kafka-disk-sizing",
+      "label": "Kafka Disk Sizing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::statements-per-day"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::clickhouse-disk-sizing",
+      "label": "ClickHouse Disk Sizing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse",
+        "learning-record-store::statements-per-day"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::http-request-rate",
+      "label": "HTTP Request Rate",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mean-statement-size",
+        "learning-record-store::peak-sustained-ingest"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::graph-write-rate-naive",
+      "label": "Graph Write Rate Naive",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::summary-vertex",
+        "learning-record-store::burst-ingest-rate"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::neo4j-structural-node-count",
+      "label": "Neo4j Structural Node Count",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-5-community",
+        "learning-record-store::tenancy-hierarchy"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::storage-compression-ratio",
+      "label": "Storage Compression Ratio",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement-compression-ratio",
+        "learning-record-store::statements-per-day"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::write-rate-compression",
+      "label": "Write-Rate Compression",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::change-driven-materialization",
+        "learning-record-store::graph-write-rate-naive"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::sync-cadence-tradeoff",
+      "label": "Sync Cadence Tradeoff",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::write-rate-compression"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::distinct-active-grains",
+      "label": "Distinct Active Grains",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytical-grain",
+        "learning-record-store::sync-cadence-tradeoff"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::bayesian-knowledge-tracing",
+      "label": "Bayesian Knowledge Tracing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mastery-computation-function"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::prior-mastery-probability",
+      "label": "Prior Mastery Probability",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bayesian-knowledge-tracing"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::slip-parameter",
+      "label": "Slip Parameter",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bayesian-knowledge-tracing"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::guess-parameter",
+      "label": "Guess Parameter",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bayesian-knowledge-tracing"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::transit-parameter",
+      "label": "Transit Parameter",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bayesian-knowledge-tracing"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::evidence-conditioning-step",
+      "label": "Evidence Conditioning Step",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::prior-mastery-probability",
+        "learning-record-store::slip-parameter",
+        "learning-record-store::guess-parameter"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-transition-step",
+      "label": "Learning Transition Step",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::evidence-conditioning-step",
+        "learning-record-store::transit-parameter"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::soft-correctness-mapping",
+      "label": "Soft Correctness Mapping",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bayesian-knowledge-tracing",
+        "learning-record-store::microsim-engagement-vertex"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::authn-token-cache",
+      "label": "AuthN Token Cache",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::redis-7"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::uuidv7-statement-id",
+      "label": "UUIDv7 Statement ID",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-statement-resource"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::kafka-producer-acks-all",
+      "label": "Kafka Producer Acks All",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::ingestion-gateway"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::gateway-backpressure-queue",
+      "label": "Gateway Backpressure Queue",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::backpressure",
+        "learning-record-store::ingestion-gateway"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::hmac-sha256-pseudonymization",
+      "label": "HMAC-SHA256 Pseudonymization",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::actor-pseudonymization-function"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::per-district-salt",
+      "label": "Per-District Salt",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::hmac-sha256-pseudonymization",
+        "learning-record-store::district"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mutual-tls-salt-fetch",
+      "label": "Mutual TLS Salt Fetch",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::per-district-salt",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::kafka-consumer-batch-window",
+      "label": "Kafka Consumer Batch Window",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::replacingmergetree-dedup",
+      "label": "ReplacingMergeTree Dedup",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse",
+        "learning-record-store::idempotent-delivery"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::bkt-streaming-update",
+      "label": "BKT Streaming Update",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-transition-step",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::compacted-state-checkpoint",
+      "label": "Compacted State Checkpoint",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bkt-streaming-update"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::late-arrival-detector",
+      "label": "Late Arrival Detector",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::at-least-once-delivery",
+        "learning-record-store::bkt-streaming-update"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::targeted-replay-command",
+      "label": "Targeted Replay Command",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::late-arrival-detector"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::xxhash64-bucketing",
+      "label": "xxhash64 Bucketing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-assignment-function"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::bucket-to-variant-map",
+      "label": "Bucket To Variant Map",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xxhash64-bucketing",
+        "learning-record-store::variant-node"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ramping-allocation-rule",
+      "label": "Ramping Allocation Rule",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bucket-to-variant-map"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::report-id-endpoint-pattern",
+      "label": "Report ID Endpoint Pattern",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-api"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::analytics-cache-key",
+      "label": "Analytics Cache Key",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::redis-7",
+        "learning-record-store::report-id-endpoint-pattern"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::data-version-invalidation",
+      "label": "Data Version Invalidation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-cache-key",
+        "learning-record-store::change-driven-materialization"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::privacy-filter-choke-point",
+      "label": "Privacy Filter Choke Point",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-api",
+        "learning-record-store::pii-vault"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::p95-latency-budget",
+      "label": "P95 Latency Budget",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-api"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::dash-background-callback",
+      "label": "Dash Background Callback",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::redis-7"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::redis-celery-queue",
+      "label": "Redis Celery Queue",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::redis-7",
+        "learning-record-store::dash-background-callback"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::multi-page-dash-app",
+      "label": "Multi-Page Dash App",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::dash-background-callback"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::filter-state-store",
+      "label": "Filter State Store",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::multi-page-dash-app"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::raw-statements-topic",
+      "label": "Raw Statements Topic",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::section"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::bulk-statements-topic",
+      "label": "Bulk Statements Topic",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::raw-statements-topic"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::dead-letter-topic",
+      "label": "Dead Letter Topic",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::structural-validation"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::reconcile-task-topic",
+      "label": "Reconcile Task Topic",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::reconciliation-worker"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mastery-state-topic",
+      "label": "Mastery State Topic",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::bkt-streaming-update"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::audit-feed-topic",
+      "label": "Audit Feed Topic",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::district"
+      ],
+      "taxonomy_id": "INGST",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::lrs-statements-table",
+      "label": "Lrs Statements Table",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse",
+        "learning-record-store::xapi-statement-resource"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::lrs-concept-mastery-table",
+      "label": "Lrs Concept Mastery Table",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse",
+        "learning-record-store::concept-mastery-vertex"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::section-concept-daily-mv",
+      "label": "Section Concept Daily MV",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lrs-statements-table",
+        "learning-record-store::section"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::student-concept-rollup-mv",
+      "label": "Student Concept Rollup MV",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lrs-statements-table",
+        "learning-record-store::concept"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::student-page-rollup-mv",
+      "label": "Student Page Rollup MV",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lrs-statements-table",
+        "learning-record-store::page"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::replacingmergetree-engine",
+      "label": "ReplacingMergeTree Engine",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::aggregatingmergetree-engine",
+      "label": "AggregatingMergeTree Engine",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::lowcardinality-type",
+      "label": "LowCardinality Type",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::zstd-compression-codec",
+      "label": "ZSTD Compression Codec",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::partition-by-month",
+      "label": "Partition By Month",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lrs-statements-table"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::grain-uniqueness-constraint",
+      "label": "Grain Uniqueness Constraint",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-5-community",
+        "learning-record-store::analytical-grain"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-label-prohibition",
+      "label": "Statement Label Prohibition",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-5-community",
+        "learning-record-store::statement-compression-ratio"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept-dag-acyclicity-check",
+      "label": "Concept DAG Acyclicity Check",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::learning-graph-dag"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::vault-db-instance",
+      "label": "Vault-Db Instance",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::postgresql-16",
+        "learning-record-store::pii-vault"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::meta-db-instance",
+      "label": "Meta-Db Instance",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::postgresql-16",
+        "learning-record-store::admin-api"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::network-credential-boundary",
+      "label": "Network Credential Boundary",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::vault-db-instance",
+        "learning-record-store::meta-db-instance"
+      ],
+      "taxonomy_id": "STORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::tenant-context-injection",
+      "label": "Tenant Context Injection",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::tenant"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::threshold-suppression",
+      "label": "Threshold Suppression",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-filter-choke-point"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::complementary-suppression",
+      "label": "Complementary Suppression",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::threshold-suppression"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::privacy-audit-write",
+      "label": "Privacy Audit Write",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-filter-choke-point",
+        "learning-record-store::pii-vault"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::trace-id-propagation",
+      "label": "Trace ID Propagation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::opentelemetry"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::paged-metric-threshold",
+      "label": "Paged Metric Threshold",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::trace-id-propagation"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::idempotency-by-statement-id",
+      "label": "Idempotency By Statement ID",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::idempotent-delivery",
+        "learning-record-store::statement-id"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::replay-command",
+      "label": "Replay Command",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::event-store",
+        "learning-record-store::change-driven-materialization"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::rebuild-graph-command",
+      "label": "Rebuild Graph Command",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::replay-command"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::shadow-table-swap",
+      "label": "Shadow Table Swap",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::replay-command"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::common-dashboard-anatomy",
+      "label": "Common Dashboard Anatomy",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-plane"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::kpi-tile-component",
+      "label": "KPI Tile Component",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::heatmap-component",
+      "label": "Heatmap Component",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::funnel-chart-component",
+      "label": "Funnel Chart Component",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::radar-chart-component",
+      "label": "Radar Chart Component",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::sankey-chart-component",
+      "label": "Sankey Chart Component",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::time-series-component",
+      "label": "Time Series Component",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::data-table-component",
+      "label": "Data Table Component",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::graph-explorer-component",
+      "label": "Graph Explorer Component",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy",
+        "learning-record-store::learning-graph-dag"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::server-side-aggregation",
+      "label": "Server-Side Aggregation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::analytics-plane",
+        "learning-record-store::analytics-api"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cross-filtering-interaction",
+      "label": "Cross-Filtering Interaction",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::drill-down-interaction",
+      "label": "Drill-Down Interaction",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::dashboard-export",
+      "label": "Dashboard Export",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "DASH",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::one-image-many-roles-philosophy",
+      "label": "One Image Many Roles Philosophy",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::dockerfile-multi-stage-build",
+      "label": "Dockerfile Multi-Stage Build",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::one-image-many-roles-philosophy"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::base-build-stage",
+      "label": "Base Build Stage",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::dockerfile-multi-stage-build"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::builder-build-stage",
+      "label": "Builder Build Stage",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::base-build-stage"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::runtime-build-stage",
+      "label": "Runtime Build Stage",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::builder-build-stage"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::non-root-container-user",
+      "label": "Non-Root Container User",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::runtime-build-stage"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::uv-sync-command",
+      "label": "uv Sync Command",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::builder-build-stage"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::docker-build-cache-mount",
+      "label": "Docker Build Cache Mount",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::uv-sync-command"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::frozen-lockfile",
+      "label": "Frozen Lockfile",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::uv-sync-command"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::healthcheck-directive",
+      "label": "Healthcheck Directive",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::runtime-build-stage"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::pid-1-signal-handling",
+      "label": "PID 1 Signal Handling",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::non-root-container-user"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::role-dispatcher-cli",
+      "label": "Role Dispatcher CLI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::one-image-many-roles-philosophy"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::bootstrap-cli-role",
+      "label": "Bootstrap CLI Role",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::role-dispatcher-cli"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::seed-demo-command",
+      "label": "Seed Demo Command",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bootstrap-cli-role"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::loadgen-command",
+      "label": "Loadgen Command",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bootstrap-cli-role",
+        "learning-record-store::peak-sustained-ingest"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::replay-cli-command",
+      "label": "Replay CLI Command",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bootstrap-cli-role",
+        "learning-record-store::replay-command"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::healthcheck-cli-command",
+      "label": "Healthcheck CLI Command",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bootstrap-cli-role",
+        "learning-record-store::healthcheck-directive"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::identity-cli-role",
+      "label": "Identity CLI Role",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::role-dispatcher-cli",
+        "learning-record-store::actor-pseudonymization-function"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::analytics-api-cli-role",
+      "label": "Analytics API CLI Role",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::role-dispatcher-cli",
+        "learning-record-store::analytics-api"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::admin-api-cli-role",
+      "label": "Admin API CLI Role",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::role-dispatcher-cli",
+        "learning-record-store::admin-api"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::dashboards-cli-role",
+      "label": "Dashboards CLI Role",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::role-dispatcher-cli",
+        "learning-record-store::multi-page-dash-app"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::docker-compose-stack",
+      "label": "Docker Compose Stack",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::one-image-many-roles-philosophy"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::yaml-anchor-reuse",
+      "label": "YAML Anchor Reuse",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-compose-stack"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::compose-healthcheck-gate",
+      "label": "Compose Healthcheck Gate",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-compose-stack",
+        "learning-record-store::healthcheck-directive"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::compose-profile",
+      "label": "Compose Profile",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-compose-stack"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::redpanda-console",
+      "label": "Redpanda Console",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::compose-profile",
+        "learning-record-store::redpanda"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::otel-collector-service",
+      "label": "OTel Collector Service",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::compose-profile",
+        "learning-record-store::opentelemetry"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::loadgen-profile-service",
+      "label": "Loadgen Profile Service",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::compose-profile",
+        "learning-record-store::loadgen-command"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::full-profile-keycloak",
+      "label": "Full Profile Keycloak",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::compose-profile",
+        "learning-record-store::keycloak"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-up-target",
+      "label": "Make Up Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-compose-stack"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-down-target",
+      "label": "Make Down Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::make-up-target"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-clean-target",
+      "label": "Make Clean Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::make-up-target"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-logs-target",
+      "label": "Make Logs Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::make-up-target"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-seed-target",
+      "label": "Make Seed Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::make-up-target",
+        "learning-record-store::seed-demo-command"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-smoke-target",
+      "label": "Make Smoke Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::make-up-target"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-perf-target",
+      "label": "Make Perf Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::loadgen-profile-service"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-obs-target",
+      "label": "Make Obs Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::otel-collector-service"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-rebuild-target",
+      "label": "Make Rebuild Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::replay-cli-command"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::make-test-target",
+      "label": "Make Test Target",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::make-up-target"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::github-actions-release-workflow",
+      "label": "GitHub Actions Release Workflow",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::dockerfile-multi-stage-build"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::docker-buildx",
+      "label": "Docker Buildx",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::github-actions-release-workflow"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::multi-arch-image-build",
+      "label": "Multi-Arch Image Build",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-buildx"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::gha-layer-cache",
+      "label": "GHA Layer Cache",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::github-actions-release-workflow"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::provenance-attestation",
+      "label": "Provenance Attestation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::github-actions-release-workflow"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::sbom-generation",
+      "label": "SBOM Generation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::github-actions-release-workflow"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::trivy-vulnerability-scan",
+      "label": "Trivy Vulnerability Scan",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::github-actions-release-workflow"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cosign-image-signing",
+      "label": "Cosign Image Signing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::github-actions-release-workflow"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::immutable-digest-reference",
+      "label": "Immutable Digest Reference",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::github-actions-release-workflow",
+        "learning-record-store::cosign-image-signing"
+      ],
+      "taxonomy_id": "DEPL",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::pydantic-settings-validation",
+      "label": "Pydantic Settings Validation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::fastapi"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::environment-variable-config",
+      "label": "Environment Variable Config",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::pydantic-settings-validation"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::aws-secrets-manager",
+      "label": "AWS Secrets Manager",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::environment-variable-config"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::external-secrets-operator",
+      "label": "External Secrets Operator",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::aws-secrets-manager"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::kubernetes-secret",
+      "label": "Kubernetes Secret",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::external-secrets-operator"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ingest-key-rotation",
+      "label": "Ingest Key Rotation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::environment-variable-config"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ingest-key-hashing",
+      "label": "Ingest Key Hashing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingest-key-rotation"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::additive-column-migration",
+      "label": "Additive Column Migration",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lrs-statements-table"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::rebuild-and-swap-migration",
+      "label": "Rebuild And Swap Migration",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::replay-command"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::expand-contract-migration",
+      "label": "Expand Contract Migration",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::postgresql-16"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::kafka-partition-increase-caveat",
+      "label": "Kafka Partition Increase Caveat",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::kafka-disk-sizing"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::recovery-point-objective",
+      "label": "Recovery Point Objective",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::event-store"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::recovery-time-objective",
+      "label": "Recovery Time Objective",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::event-store"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::write-ahead-log-archiving",
+      "label": "Write-Ahead Log Archiving",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::vault-db-instance"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::point-in-time-recovery",
+      "label": "Point-In-Time Recovery",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::write-ahead-log-archiving"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::nightly-backup-snapshot",
+      "label": "Nightly Backup Snapshot",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::recovery-point-objective"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::quarterly-restore-drill",
+      "label": "Quarterly Restore Drill",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::nightly-backup-snapshot"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::rolling-update-strategy",
+      "label": "Rolling Update Strategy",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::runtime-build-stage"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::termination-grace-period",
+      "label": "Termination Grace Period",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::stream-processor",
+        "learning-record-store::rolling-update-strategy"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::gateway-first-deploy-order",
+      "label": "Gateway-First Deploy Order",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::rolling-update-strategy"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::expand-contract-rollback",
+      "label": "Expand-Contract Rollback",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::expand-contract-migration"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::kafka-unavailable-failure",
+      "label": "Kafka Unavailable Failure",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::redpanda"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::clickhouse-unavailable-failure",
+      "label": "ClickHouse Unavailable Failure",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::neo4j-unavailable-failure",
+      "label": "Neo4j Unavailable Failure",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-5-community"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::summarizer-stopped-failure",
+      "label": "Summarizer Stopped Failure",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::change-driven-materialization"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::summarizer-split-brain",
+      "label": "Summarizer Split Brain",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::absolute-value-write"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::identity-service-unavailable",
+      "label": "Identity Service Unavailable",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::identity-cli-role"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::redis-unavailable-failure",
+      "label": "Redis Unavailable Failure",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::redis-7"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-service-error",
+      "label": "Experiment Service Error",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-assignment-function"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::reconciliation-backlog-growth",
+      "label": "Reconciliation Backlog Growth",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::reconciliation-worker"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::poison-message-handling",
+      "label": "Poison Message Handling",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::dead-letter-topic"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::district-queue-flood",
+      "label": "District Queue Flood",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district",
+        "learning-record-store::backpressure"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::clock-skew-handling",
+      "label": "Clock Skew Handling",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::semantic-validation"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::unit-test-layer",
+      "label": "Unit Test Layer",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bayesian-knowledge-tracing",
+        "learning-record-store::threshold-suppression"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::compression-test-suite",
+      "label": "Compression Test Suite",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement-compression-ratio",
+        "learning-record-store::absolute-value-write"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::adl-conformance-test-suite",
+      "label": "ADL Conformance Test Suite",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-statement-resource"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::testcontainers-integration-test",
+      "label": "Testcontainers Integration Test",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-compose-stack"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::privacy-adversarial-suite",
+      "label": "Privacy Adversarial Suite",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::threshold-suppression"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::load-test-loadgen",
+      "label": "Load Test Loadgen",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::loadgen-command"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::replay-nightly-test",
+      "label": "Replay Nightly Test",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::replay-command"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::chaos-kill-test",
+      "label": "Chaos Kill Test",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::kafka-unavailable-failure",
+        "learning-record-store::clickhouse-unavailable-failure",
+        "learning-record-store::neo4j-unavailable-failure"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::d-3-partition-key-deviation",
+      "label": "D-3 Partition Key Deviation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::adr-partition-key-decision"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::d-4-privacy-threshold-deviation",
+      "label": "D-4 Privacy Threshold Deviation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::threshold-suppression"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::d-5-complementary-suppression",
+      "label": "D-5 Complementary Suppression",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::complementary-suppression"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::m0-walking-skeleton",
+      "label": "M0 Walking Skeleton",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-compose-stack"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::m1-ingestion-complete",
+      "label": "M1 Ingestion Complete",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::m0-walking-skeleton",
+        "learning-record-store::accept-first-ingestion"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::m2-compression-graph-mastery",
+      "label": "M2 Compression Graph Mastery",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::m1-ingestion-complete",
+        "learning-record-store::bayesian-knowledge-tracing"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::m3-analytics-dashboards",
+      "label": "M3 Analytics Dashboards",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::m2-compression-graph-mastery",
+        "learning-record-store::common-dashboard-anatomy"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::m4-admin-experiments",
+      "label": "M4 Admin Experiments",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::m3-analytics-dashboards",
+        "learning-record-store::experiment-assignment-function"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::m5-scale-production",
+      "label": "M5 Scale Production",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::m4-admin-experiments"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::neo4j-licensing-question",
+      "label": "Neo4j Licensing Question",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-5-community"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::clickhouse-cloud-vs-self-hosted",
+      "label": "ClickHouse Cloud Vs Self-Hosted",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::gateway-language-trigger",
+      "label": "Gateway Language Trigger",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::adr-python-gateway-decision"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::bkt-parameter-fitting",
+      "label": "BKT Parameter Fitting",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bayesian-knowledge-tracing"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::retention-vs-research-value",
+      "label": "Retention Vs Research Value",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::retention-purge-function"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::multi-region-question",
+      "label": "Multi-Region Question",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::microsim-bkt-mapping-gap",
+      "label": "MicroSim BKT Mapping Gap",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::soft-correctness-mapping"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::compute-plane-sizing",
+      "label": "Compute Plane Sizing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::monthly-cost-estimate",
+      "label": "Monthly Cost Estimate",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::compute-plane-sizing"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::reserved-instance-pricing",
+      "label": "Reserved Instance Pricing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::monthly-cost-estimate"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::neo4j-licensing-cost",
+      "label": "Neo4j Licensing Cost",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-licensing-question",
+        "learning-record-store::monthly-cost-estimate"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cost-sensitivity-driver",
+      "label": "Cost Sensitivity Driver",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::monthly-cost-estimate"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::single-server-pilot-tier",
+      "label": "Single-Server Pilot Tier",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::compute-plane-sizing"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::vm-hypervisor-isolation",
+      "label": "VM Hypervisor Isolation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::single-server-pilot-tier"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::bare-metal-hosting",
+      "label": "Bare-Metal Hosting",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::single-server-pilot-tier"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::nvme-local-storage",
+      "label": "NVMe Local Storage",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse",
+        "learning-record-store::redpanda"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::network-ingress-sizing",
+      "label": "Network Ingress Sizing",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::peak-sustained-ingest"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::docker-desktop",
+      "label": "Docker Desktop",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-compose-stack"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::docker-engine",
+      "label": "Docker Engine",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-compose-stack"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::remote-ssh-development",
+      "label": "Remote SSH Development",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-engine"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::docker-context-over-ssh",
+      "label": "Docker Context Over SSH",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-engine"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ssh-tunnel-port-forward",
+      "label": "SSH Tunnel Port Forward",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::docker-context-over-ssh"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::hetzner-cloud-host",
+      "label": "Hetzner Cloud Host",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::nvme-local-storage"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::digitalocean-droplet",
+      "label": "DigitalOcean Droplet",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::nvme-local-storage"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::aws-ec2-instance",
+      "label": "AWS EC2 Instance",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::amazon-s3"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ufw-firewall-rule",
+      "label": "UFW Firewall Rule",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::hetzner-cloud-host"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mvp-architecture-proof",
+      "label": "MVP Architecture Proof",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::write-rate-compression"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::burst-insensitivity-claim",
+      "label": "Burst Insensitivity Claim",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mvp-architecture-proof",
+        "learning-record-store::write-rate-compression"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::smoke-harness-decorative-check",
+      "label": "Smoke Harness Decorative Check",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mvp-architecture-proof"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mastery-path-disconnection",
+      "label": "Mastery Path Disconnection",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mastery-computation-function",
+        "learning-record-store::bayesian-knowledge-tracing"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::lift-vs-rewrite-decision",
+      "label": "Lift Vs Rewrite Decision",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mvp-architecture-proof"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::raw-column-pii-hole",
+      "label": "Raw Column PII Hole",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lrs-statements-table",
+        "learning-record-store::pii-vault"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::last-seen-type-fix",
+      "label": "Last Seen Type Fix",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bkt-streaming-update"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mastery-join-fix",
+      "label": "Mastery Join Fix",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lrs-concept-mastery-table",
+        "learning-record-store::mastery-computation-function"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mvp-step-1-foundation",
+      "label": "MVP Step 1 Foundation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lift-vs-rewrite-decision"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mvp-step-2-ingest-path",
+      "label": "MVP Step 2 Ingest Path",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mvp-step-1-foundation",
+        "learning-record-store::structural-validation"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mvp-step-3-loadgen-contract",
+      "label": "MVP Step 3 Loadgen Contract",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mvp-step-2-ingest-path",
+        "learning-record-store::loadgen-command"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mvp-step-4-compression-graph",
+      "label": "MVP Step 4 Compression Graph",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mvp-step-3-loadgen-contract",
+        "learning-record-store::change-driven-materialization"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mvp-step-5-burst-proof",
+      "label": "MVP Step 5 Burst Proof",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mvp-step-4-compression-graph",
+        "learning-record-store::burst-insensitivity-claim"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::vault-net-isolation",
+      "label": "Vault Net Isolation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::vault-db-instance"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::mvp-deferred-scope",
+      "label": "MVP Deferred Scope",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::mvp-step-5-burst-proof"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::kubernetes",
+      "label": "Kubernetes",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::one-image-many-roles-philosophy"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::helm-chart",
+      "label": "Helm Chart",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::kubernetes"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::keda-autoscaler",
+      "label": "KEDA Autoscaler",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::kubernetes",
+        "learning-record-store::stream-processor"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::horizontal-pod-autoscaler",
+      "label": "Horizontal Pod Autoscaler",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::kubernetes",
+        "learning-record-store::ingestion-gateway"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::availability-zone",
+      "label": "Availability Zone",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::kubernetes"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::managed-streaming-kafka",
+      "label": "Managed Streaming Kafka",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::apache-kafka",
+        "learning-record-store::availability-zone"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::continuous-integration-pipeline",
+      "label": "Continuous Integration Pipeline",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::github-actions-release-workflow"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::total-cost-of-ownership",
+      "label": "Total Cost Of Ownership",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::monthly-cost-estimate"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::em-parameter-fitting",
+      "label": "EM Parameter Fitting",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::bayesian-knowledge-tracing",
+        "learning-record-store::bkt-parameter-fitting"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::application-load-balancer",
+      "label": "Application Load Balancer",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-gateway",
+        "learning-record-store::availability-zone"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::clickhouse-cloud",
+      "label": "ClickHouse Cloud",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::clickhouse",
+        "learning-record-store::clickhouse-cloud-vs-self-hosted"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::neo4j-auradb",
+      "label": "Neo4j AuraDB",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-5-community",
+        "learning-record-store::neo4j-licensing-question"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::neo4j-enterprise-edition",
+      "label": "Neo4j Enterprise Edition",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-5-community",
+        "learning-record-store::neo4j-licensing-question"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::causal-cluster-topology",
+      "label": "Causal Cluster Topology",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::neo4j-auradb",
+        "learning-record-store::neo4j-enterprise-edition"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::rds-multi-az-postgres",
+      "label": "RDS Multi-AZ Postgres",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::postgresql-16",
+        "learning-record-store::availability-zone"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::elasticache-redis",
+      "label": "ElastiCache Redis",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::redis-7",
+        "learning-record-store::availability-zone"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::dead-letter-queue-concept",
+      "label": "Dead Letter Queue Concept",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::dead-letter-topic"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ingress-controller",
+      "label": "Ingress Controller",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::application-load-balancer"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::high-availability-requirement",
+      "label": "High Availability Requirement",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::causal-cluster-topology",
+        "learning-record-store::neo4j-licensing-question"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::lru-fallback-cache",
+      "label": "LRU Fallback Cache",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::authn-token-cache"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cache-ttl-expiry",
+      "label": "Cache TTL Expiry",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::authn-token-cache"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::managed-identity-provider",
+      "label": "Managed Identity Provider",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::keycloak"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::step-up-authentication",
+      "label": "Step-Up Authentication",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::admin-api",
+        "learning-record-store::keycloak"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::client-credentials-grant",
+      "label": "Client Credentials Grant",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::oauth-authentication"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::district-administrator",
+      "label": "District Administrator",
+      "subject_id": "learning-record-store",
+      "dependencies": [],
+      "taxonomy_id": "ROLE",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-record-store::teacher",
+      "label": "Teacher",
+      "subject_id": "learning-record-store",
+      "dependencies": [],
+      "taxonomy_id": "ROLE",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-record-store::textbook-author",
+      "label": "Textbook Author",
+      "subject_id": "learning-record-store",
+      "dependencies": [],
+      "taxonomy_id": "ROLE",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-record-store::system-administrator",
+      "label": "System Administrator",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-context-diagram"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::school-administrator",
+      "label": "School Administrator",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::school"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::auditor-role",
+      "label": "Auditor Role",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-audit-write"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::district-management-ui",
+      "label": "District Management UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::admin-api"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::school-course-section-ui",
+      "label": "School Course Section UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::school",
+        "learning-record-store::course",
+        "learning-record-store::section"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::textbook-deployment-ui",
+      "label": "Textbook Deployment UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::textbook-version"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::xapi-credentials-ui",
+      "label": "xAPI Credentials UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::xapi-statement-resource"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-administration-ui",
+      "label": "Experiment Administration UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::experiment-node"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::user-access-management-ui",
+      "label": "User Access Management UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::privacy-compliance-ui",
+      "label": "Privacy Compliance UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::pii-vault"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::audit-monitoring-ui",
+      "label": "Audit Monitoring UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::privacy-audit-write"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::system-configuration-ui",
+      "label": "System Configuration UI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::roster-source-configuration",
+      "label": "Roster Source Configuration",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::oneroster"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::data-residency-policy",
+      "label": "Data Residency Policy",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::district"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::retention-policy",
+      "label": "Retention Policy",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-management-ui",
+        "learning-record-store::retention-purge-function"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::legal-hold-toggle",
+      "label": "Legal Hold Toggle",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::retention-policy"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::enrollment-editor",
+      "label": "Enrollment Editor",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::school-course-section-ui",
+        "learning-record-store::enrollment"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::instructor-assignment-tool",
+      "label": "Instructor Assignment Tool",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::school-course-section-ui",
+        "learning-record-store::teacher"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::term-academic-year-rollover",
+      "label": "Term Academic Year Rollover",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::school-course-section-ui"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::deployment-editor",
+      "label": "Deployment Editor",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook-deployment-ui",
+        "learning-record-store::textbook-version"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::provisional-reconcile-queue",
+      "label": "Provisional Reconcile Queue",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook-deployment-ui",
+        "learning-record-store::provisional-node"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::microsim-registry-view",
+      "label": "MicroSim Registry View",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook-deployment-ui",
+        "learning-record-store::microsim"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::endpoint-key-rotation",
+      "label": "Endpoint Key Rotation",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-credentials-ui",
+        "learning-record-store::ingest-key-rotation"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::verb-vocabulary-browser",
+      "label": "Verb Vocabulary Browser",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-credentials-ui",
+        "learning-record-store::verb-controlled-vocabulary"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::dead-letter-inspector",
+      "label": "Dead-Letter Inspector",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-credentials-ui",
+        "learning-record-store::dead-letter-topic"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-list-view",
+      "label": "Experiment List View",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-administration-ui",
+        "learning-record-store::experiment-node"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-lifecycle-controls",
+      "label": "Experiment Lifecycle Controls",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-administration-ui",
+        "learning-record-store::experiment-list-view"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::user-crud-management",
+      "label": "User CRUD Management",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::user-access-management-ui"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::role-assignment-scope",
+      "label": "Role Assignment Scope",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::user-access-management-ui",
+        "learning-record-store::user-crud-management"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::access-review-workflow",
+      "label": "Access Review Workflow",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::role-assignment-scope"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::impersonation-audit",
+      "label": "Impersonation Audit",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::user-access-management-ui",
+        "learning-record-store::privacy-audit-write"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::policy-profile-preset",
+      "label": "Policy Profile Preset",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-compliance-ui"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::data-subject-request",
+      "label": "Data Subject Request",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-compliance-ui",
+        "learning-record-store::pii-vault"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::consent-status",
+      "label": "Consent Status",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-compliance-ui",
+        "learning-record-store::data-subject-request"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::aggregation-threshold",
+      "label": "Aggregation Threshold",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-compliance-ui",
+        "learning-record-store::threshold-suppression"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::audit-log-browser",
+      "label": "Audit Log Browser",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::audit-monitoring-ui",
+        "learning-record-store::privacy-audit-write"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::alerting-configuration",
+      "label": "Alerting Configuration",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-configuration-ui",
+        "learning-record-store::paged-metric-threshold"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::retention-defaults-config",
+      "label": "Retention Defaults Config",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-configuration-ui",
+        "learning-record-store::retention-policy"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::feature-flag-config",
+      "label": "Feature Flag Config",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-configuration-ui"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::rate-limit-config",
+      "label": "Rate Limit Config",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::system-configuration-ui"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ferpa-compliance",
+      "label": "FERPA Compliance",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-compliance-ui",
+        "learning-record-store::retention-policy"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::coppa-compliance",
+      "label": "COPPA Compliance",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-compliance-ui",
+        "learning-record-store::consent-status"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::gdpr-compliance",
+      "label": "GDPR Compliance",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::privacy-compliance-ui",
+        "learning-record-store::data-subject-request"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::right-to-erasure",
+      "label": "Right To Erasure",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::gdpr-compliance",
+        "learning-record-store::data-subject-request"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::role-based-access-control",
+      "label": "Role-Based Access Control",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::user-access-management-ui"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::single-sign-on",
+      "label": "Single Sign-On",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::keycloak",
+        "learning-record-store::role-based-access-control"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::saml-protocol",
+      "label": "SAML Protocol",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::single-sign-on"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::oidc-protocol",
+      "label": "OIDC Protocol",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::single-sign-on"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::district-adoption-dashboard",
+      "label": "District Adoption Dashboard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::statements-per-day"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::school-comparison-report",
+      "label": "School Comparison Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::school"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::course-rollup-report",
+      "label": "Course Rollup Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::course"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::deployment-inventory-report",
+      "label": "Deployment Inventory Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::deployment-editor"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::data-quality-monitor",
+      "label": "Data Quality Monitor",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::reconciliation-backlog-growth"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ingestion-health-report",
+      "label": "Ingestion Health Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::http-request-rate"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::license-seat-utilization",
+      "label": "License Seat Utilization",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::enrollment"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::privacy-access-audit",
+      "label": "Privacy Access Audit",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::privacy-audit-write"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::district-overview-dashboard",
+      "label": "District Overview Dashboard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-adoption-dashboard",
+        "learning-record-store::school-comparison-report",
+        "learning-record-store::course-rollup-report"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::system-health-dashboard",
+      "label": "System Health Dashboard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::ingestion-health-report",
+        "learning-record-store::data-quality-monitor"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::district-rollout-plan",
+      "label": "District Rollout Plan",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-adoption-dashboard",
+        "learning-record-store::deployment-inventory-report",
+        "learning-record-store::roster-source-configuration"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::my-classes-dashboard",
+      "label": "My Classes Dashboard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::teacher",
+        "learning-record-store::analytics-api"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::student-detail-dashboard",
+      "label": "Student Detail Dashboard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::teacher",
+        "learning-record-store::concept-mastery-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::student-progress-overview",
+      "label": "Student Progress Overview",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-detail-dashboard",
+        "learning-record-store::concept-mastery-vertex",
+        "learning-record-store::concept"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept-mastery-radar",
+      "label": "Concept Mastery Radar",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-detail-dashboard",
+        "learning-record-store::concept-mastery-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::time-on-task-timeline",
+      "label": "Time-On-Task Timeline",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-detail-dashboard",
+        "learning-record-store::learning-session-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::struggle-detector",
+      "label": "Struggle Detector",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-detail-dashboard",
+        "learning-record-store::question-response-vertex",
+        "learning-record-store::depends-on-relationship"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::prerequisite-gap-analysis",
+      "label": "Prerequisite Gap Analysis",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::struggle-detector",
+        "learning-record-store::depends-on-relationship"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::quiz-item-analysis",
+      "label": "Quiz Item Analysis",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-detail-dashboard",
+        "learning-record-store::question-response-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::idle-disengagement-alert",
+      "label": "Idle Disengagement Alert",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-detail-dashboard",
+        "learning-record-store::backpressure"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-velocity-report",
+      "label": "Learning Velocity Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-detail-dashboard",
+        "learning-record-store::concept-mastery-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::reading-vs-doing-balance",
+      "label": "Reading Vs Doing Balance",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-detail-dashboard",
+        "learning-record-store::verb"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::class-mastery-heatmap",
+      "label": "Class Mastery Heatmap",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::section-rollup-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept-difficulty-ranking",
+      "label": "Concept Difficulty Ranking",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::section-rollup-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::completion-funnel",
+      "label": "Completion Funnel",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::funnel-chart-component"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::pace-distribution",
+      "label": "Pace Distribution",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::chapter"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::class-engagement-calendar",
+      "label": "Class Engagement Calendar",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::backpressure"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::question-discrimination",
+      "label": "Question Discrimination",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::question-response-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::microsim-utilization-report",
+      "label": "MicroSim Utilization Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::microsim-engagement-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cohort-comparison-report",
+      "label": "Cohort Comparison Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::section"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::at-risk-roster",
+      "label": "At-Risk Roster",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::struggle-detector",
+        "learning-record-store::idle-disengagement-alert",
+        "learning-record-store::prerequisite-gap-analysis"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::standards-coverage-report",
+      "label": "Standards Coverage Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::covers-relationship"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ad-hoc-cohort-builder",
+      "label": "Ad-Hoc Cohort Builder",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::learning-graph-explorer",
+      "label": "Learning Graph Explorer",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::learning-graph-dag"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::statement-query-console",
+      "label": "Statement Query Console",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard",
+        "learning-record-store::event-store"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::funnel-builder",
+      "label": "Funnel Builder",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::completion-funnel"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::alert-rule-builder",
+      "label": "Alert Rule Builder",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::idle-disengagement-alert"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::report-scheduler",
+      "label": "Report Scheduler",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::my-classes-dashboard"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::section-enrollment",
+      "label": "Section Enrollment",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::teacher",
+        "learning-record-store::enrollment"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::co-teacher-assignment",
+      "label": "Co-Teacher Assignment",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::teacher"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::content-insights-dashboard",
+      "label": "Content Insights Dashboard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook-author",
+        "learning-record-store::analytics-api"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiments-dashboard",
+      "label": "Experiments Dashboard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook-author",
+        "learning-record-store::experiment-node"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::page-effectiveness-report",
+      "label": "Page Effectiveness Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::page-engagement-vertex",
+        "learning-record-store::concept-mastery-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::microsim-impact-report",
+      "label": "MicroSim Impact Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::microsim-engagement-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::confusing-content-finder",
+      "label": "Confusing-Content Finder",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::page-engagement-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::drop-off-map",
+      "label": "Drop-Off Map",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::page"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept-coverage-gaps",
+      "label": "Concept-Coverage Gaps",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::covers-relationship",
+        "learning-record-store::learning-graph-dag"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::question-health-report",
+      "label": "Question Health Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::question-response-vertex"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::version-comparison-report",
+      "label": "Version Comparison Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::textbook-version"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cross-district-benchmark",
+      "label": "Cross-District Benchmark",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::district"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::correlation-explorer",
+      "label": "Correlation Explorer",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-designer",
+      "label": "Experiment Designer",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiments-dashboard",
+        "learning-record-store::experiment-node"
+      ],
+      "taxonomy_id": "RPT",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-definition",
+      "label": "Experiment Definition",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiments-dashboard",
+        "learning-record-store::experiment-node"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-hypothesis",
+      "label": "Experiment Hypothesis",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-definition"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::primary-outcome-metric",
+      "label": "Primary Outcome Metric",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-definition"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::unit-of-randomization",
+      "label": "Unit Of Randomization",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-definition"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-variant",
+      "label": "Experiment Variant",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-definition",
+        "learning-record-store::variant-node"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::allocation-weight",
+      "label": "Allocation Weight",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-variant"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::guardrail-metric",
+      "label": "Guardrail Metric",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-definition"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::eligibility-predicate",
+      "label": "Eligibility Predicate",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-definition"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::deterministic-sticky-assignment",
+      "label": "Deterministic Sticky Assignment",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-variant",
+        "learning-record-store::experiment-assignment-function"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::sample-ratio-mismatch",
+      "label": "Sample-Ratio Mismatch",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::deterministic-sticky-assignment"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::effect-size",
+      "label": "Effect Size",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::primary-outcome-metric"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cohens-d",
+      "label": "Cohens D",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::effect-size"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::confidence-interval",
+      "label": "Confidence Interval",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::effect-size"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::two-sided-significance-test",
+      "label": "Two-Sided Significance Test",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::confidence-interval"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::sequential-testing-correction",
+      "label": "Sequential Testing Correction",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::two-sided-significance-test"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::segmentation-analysis",
+      "label": "Segmentation Analysis",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::primary-outcome-metric"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::guardrail-regression-flag",
+      "label": "Guardrail Regression Flag",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::guardrail-metric"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experiment-readout-dashboard",
+      "label": "Experiment Readout Dashboard",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiments-dashboard",
+        "learning-record-store::effect-size",
+        "learning-record-store::confidence-interval"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::textbook-registry",
+      "label": "Textbook Registry",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook-author",
+        "learning-record-store::textbook"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::microsim-registry",
+      "label": "MicroSim Registry",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook-author",
+        "learning-record-store::microsim"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::content-effectiveness-loop",
+      "label": "Content Effectiveness Loop",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::content-insights-dashboard",
+        "learning-record-store::experiment-designer"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::ab-test-lifecycle",
+      "label": "AB Test Lifecycle",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experiment-definition",
+        "learning-record-store::deterministic-sticky-assignment"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::cross-persona-workflow",
+      "label": "Cross-Persona Workflow",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district-administrator",
+        "learning-record-store::teacher",
+        "learning-record-store::textbook-author"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::shared-statement-log",
+      "label": "Shared Statement Log",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::event-store",
+        "learning-record-store::cross-persona-workflow"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::persona-facing-report",
+      "label": "Persona-Facing Report",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::cross-persona-workflow"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::canonical-activity-iri",
+      "label": "Canonical Activity IRI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::page",
+        "learning-record-store::object-activity"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::trailing-slash-rule",
+      "label": "Trailing Slash Rule",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::canonical-activity-iri"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::question-iri-fragment",
+      "label": "Question IRI Fragment",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::canonical-activity-iri",
+        "learning-record-store::question"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::named-sub-activity-fragment",
+      "label": "Named Sub-Activity Fragment",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::canonical-activity-iri"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::randomized-order-naming-rule",
+      "label": "Randomized Order Naming Rule",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::question-iri-fragment",
+        "learning-record-store::named-sub-activity-fragment"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::answered-verb",
+      "label": "Answered Verb",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::verb-controlled-vocabulary",
+        "learning-record-store::question"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::experienced-verb",
+      "label": "Experienced Verb",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::verb-controlled-vocabulary",
+        "learning-record-store::page"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::interacted-verb",
+      "label": "Interacted Verb",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::verb-controlled-vocabulary",
+        "learning-record-store::microsim"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::textbook-version-grouping-iri",
+      "label": "Textbook Version Grouping IRI",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::textbook-version",
+        "learning-record-store::canonical-activity-iri"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::object-definition-type-map",
+      "label": "Object Definition Type Map",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::canonical-activity-iri",
+        "learning-record-store::microsim"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::control-object-type",
+      "label": "Control Object Type",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::object-definition-type-map",
+        "learning-record-store::named-sub-activity-fragment"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept-extension-field",
+      "label": "Concept Extension Field",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::concept",
+        "learning-record-store::canonical-activity-iri"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::concept-enrichment-path",
+      "label": "Concept Enrichment Path",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::concept-mapping-function",
+        "learning-record-store::concept-extension-field"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::start-pause-dwell-pattern",
+      "label": "Start Pause Dwell Pattern",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::experienced-verb",
+        "learning-record-store::page-engagement-vertex"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::visibility-change-flush",
+      "label": "Visibility Change Flush",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::start-pause-dwell-pattern"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::producer-excluded-field",
+      "label": "Producer Excluded Field",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district",
+        "learning-record-store::student-key"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::xapi-transport-header",
+      "label": "xAPI Transport Header",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-statement-resource"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::district-id-server-assigned",
+      "label": "District ID Server-Assigned",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::district",
+        "learning-record-store::producer-excluded-field"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::student-key-server-derived",
+      "label": "Student Key Server-Derived",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::student-key",
+        "learning-record-store::producer-excluded-field"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::stored-at-gateway-timestamp",
+      "label": "Stored At Gateway Timestamp",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::statement-timestamp",
+        "learning-record-store::ingestion-gateway"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::api-version-header",
+      "label": "API Version Header",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::xapi-transport-header"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::reference-statement-example",
+      "label": "Reference Statement Example",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::canonical-activity-iri",
+        "learning-record-store::answered-verb"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    },
+    {
+      "id": "learning-record-store::field-to-column-map",
+      "label": "Field To Column Map",
+      "subject_id": "learning-record-store",
+      "dependencies": [
+        "learning-record-store::lrs-statements-table",
+        "learning-record-store::canonical-activity-iri"
+      ],
+      "taxonomy_id": "PROD",
+      "level": "core"
+    }
+  ]
+}

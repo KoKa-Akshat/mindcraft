@@ -1,0 +1,5410 @@
+{
+  "subject_id": "hydroponics",
+  "title": "Hydroponics: From Mason Jar to Vertical Farm",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "PHYS": {
+      "classifier_name": "Plant Physiology",
+      "color": "DarkGreen"
+    },
+    "NUTR": {
+      "classifier_name": "Nutrients and Chemistry",
+      "color": "Teal"
+    },
+    "SYST": {
+      "classifier_name": "Hydroponic System Types",
+      "color": "DodgerBlue"
+    },
+    "DIY": {
+      "classifier_name": "DIY and School Systems",
+      "color": "LimeGreen"
+    },
+    "GROW": {
+      "classifier_name": "Growing Media and Crops",
+      "color": "OliveDrab"
+    },
+    "LITE": {
+      "classifier_name": "Lighting Science",
+      "color": "Gold"
+    },
+    "ENVC": {
+      "classifier_name": "Environmental Control",
+      "color": "DarkGoldenrod"
+    },
+    "UPYTH": {
+      "classifier_name": "MicroPython Programming",
+      "color": "MediumPurple"
+    },
+    "SENS": {
+      "classifier_name": "Sensors and Electronics",
+      "color": "DarkSlateBlue"
+    },
+    "DATA": {
+      "classifier_name": "Data Analysis",
+      "color": "Indigo"
+    },
+    "SAFE": {
+      "classifier_name": "Food Safety and Sanitation",
+      "color": "Crimson"
+    },
+    "SOLAR": {
+      "classifier_name": "Solar Energy and Power",
+      "color": "Orange"
+    },
+    "VERT": {
+      "classifier_name": "Vertical Farming",
+      "color": "DarkOrchid"
+    },
+    "FIN": {
+      "classifier_name": "Financial Modeling",
+      "color": "SaddleBrown"
+    }
+  },
+  "concepts": [
+    {
+      "id": "hydroponics::hydroponics-definition",
+      "label": "Hydroponics Definition",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::history-of-hydroponics",
+      "label": "History of Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hydroponics-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::william-frederick-gericke",
+      "label": "William Frederick Gericke",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::history-of-hydroponics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::soilless-growing-systems",
+      "label": "Soilless Growing Systems",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hydroponics-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::soil-vs-soilless-comparison",
+      "label": "Soil vs Soilless Comparison",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::water-as-growth-medium",
+      "label": "Water as Growth Medium",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::controlled-environment-ag",
+      "label": "Controlled Environment Ag",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hydroponics-definition",
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::indoor-growing-basics",
+      "label": "Indoor Growing Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::controlled-environment-ag"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::plant-growth-fundamentals",
+      "label": "Plant Growth Fundamentals",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::cell-biology-basics",
+      "label": "Cell Biology Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::photosynthesis-overview",
+      "label": "Photosynthesis Overview",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::cell-biology-basics",
+        "hydroponics::plant-growth-fundamentals"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::cellular-respiration-overview",
+      "label": "Cellular Respiration Overview",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::cell-biology-basics",
+        "hydroponics::plant-growth-fundamentals"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::plant-life-cycle",
+      "label": "Plant Life Cycle",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-growth-fundamentals"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::seed-germination",
+      "label": "Seed Germination",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-life-cycle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::seedling-development",
+      "label": "Seedling Development",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::seed-germination"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::vegetative-growth-stage",
+      "label": "Vegetative Growth Stage",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::seedling-development"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::flowering-and-fruiting-stage",
+      "label": "Flowering and Fruiting Stage",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vegetative-growth-stage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::harvest-and-post-harvest",
+      "label": "Harvest and Post-Harvest",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::flowering-and-fruiting-stage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::crop-rotation-planning",
+      "label": "Crop Rotation Planning",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-life-cycle",
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::grow-room-layout",
+      "label": "Grow Room Layout",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::indoor-growing-basics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::space-utilization",
+      "label": "Space Utilization",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::grow-room-layout"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::year-round-production",
+      "label": "Year-Round Production",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::controlled-environment-ag",
+        "hydroponics::crop-rotation-planning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::food-security-context",
+      "label": "Food Security Context",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hydroponics-definition",
+        "hydroponics::year-round-production"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::urban-agriculture-definition",
+      "label": "Urban Agriculture Definition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::controlled-environment-ag",
+        "hydroponics::food-security-context"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hydroponics-vs-aquaponics",
+      "label": "Hydroponics vs Aquaponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hydroponics-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-anatomy",
+      "label": "Root Anatomy",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::cell-biology-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-hair-cells",
+      "label": "Root Hair Cells",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-zone-oxygen-requirement",
+      "label": "Root Zone Oxygen Requirement",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nutrient-uptake-mechanisms",
+      "label": "Nutrient Uptake Mechanisms",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy",
+        "hydroponics::root-hair-cells"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::passive-diffusion",
+      "label": "Passive Diffusion",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-uptake-mechanisms"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::active-transport",
+      "label": "Active Transport",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-uptake-mechanisms",
+        "hydroponics::cell-biology-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::osmosis-and-water-potential",
+      "label": "Osmosis and Water Potential",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::cell-biology-basics",
+        "hydroponics::water-as-growth-medium"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::transpiration",
+      "label": "Transpiration",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::osmosis-and-water-potential",
+        "hydroponics::root-anatomy"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::xylem-transport",
+      "label": "Xylem Transport",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy",
+        "hydroponics::transpiration"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::phloem-transport",
+      "label": "Phloem Transport",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy",
+        "hydroponics::photosynthesis-overview"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::stomata-function",
+      "label": "Stomata Function",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::transpiration",
+        "hydroponics::photosynthesis-overview"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::leaf-structure",
+      "label": "Leaf Structure",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::cell-biology-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::chloroplast-function",
+      "label": "Chloroplast Function",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::cell-biology-basics",
+        "hydroponics::photosynthesis-overview"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::photosynthesis-light-reactions",
+      "label": "Photosynthesis Light Reactions",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::chloroplast-function",
+        "hydroponics::photosynthesis-overview"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::calvin-cycle",
+      "label": "Calvin Cycle",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photosynthesis-light-reactions"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::chlorophyll-and-pigments",
+      "label": "Chlorophyll and Pigments",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::chloroplast-function"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-exudates",
+      "label": "Root Exudates",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy",
+        "hydroponics::nutrient-uptake-mechanisms"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::rhizosphere-chemistry",
+      "label": "Rhizosphere Chemistry",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-exudates"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::cation-exchange-at-root-surface",
+      "label": "Cation Exchange at Root Surface",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-uptake-mechanisms",
+        "hydroponics::passive-diffusion",
+        "hydroponics::active-transport"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ion-concentration-gradients",
+      "label": "Ion Concentration Gradients",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-diffusion",
+        "hydroponics::active-transport"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-adaptation-to-hydroponics",
+      "label": "Root Adaptation to Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy",
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dissolved-oxygen-in-root-zone",
+      "label": "Dissolved Oxygen in Root Zone",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-zone-oxygen-requirement",
+        "hydroponics::water-as-growth-medium"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-rot-physiology",
+      "label": "Root Rot Physiology",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy",
+        "hydroponics::root-zone-oxygen-requirement"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::plant-stress-responses",
+      "label": "Plant Stress Responses",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-growth-fundamentals",
+        "hydroponics::cell-biology-basics"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ethylene-as-stress-hormone",
+      "label": "Ethylene as Stress Hormone",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-stress-responses"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nutrient-deficiency-physiology",
+      "label": "Nutrient Deficiency Physiology",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-uptake-mechanisms",
+        "hydroponics::ion-concentration-gradients"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nutrient-toxicity-effects",
+      "label": "Nutrient Toxicity Effects",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-uptake-mechanisms",
+        "hydroponics::ion-concentration-gradients"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::tip-burn-in-lettuce",
+      "label": "Tip Burn in Lettuce",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-deficiency-physiology"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::blossom-end-rot",
+      "label": "Blossom End Rot",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-deficiency-physiology"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::interveinal-chlorosis",
+      "label": "Interveinal Chlorosis",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-deficiency-physiology"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::purple-stem-syndrome",
+      "label": "Purple Stem Syndrome",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-deficiency-physiology"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::necrosis-patterns",
+      "label": "Necrosis Patterns",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-deficiency-physiology",
+        "hydroponics::nutrient-toxicity-effects"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::growth-rate-measurement",
+      "label": "Growth Rate Measurement",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vegetative-growth-stage",
+        "hydroponics::plant-growth-fundamentals"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::biomass-accumulation",
+      "label": "Biomass Accumulation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::growth-rate-measurement"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::fresh-weight-vs-dry-weight",
+      "label": "Fresh Weight vs Dry Weight",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::biomass-accumulation"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::essential-plant-nutrients",
+      "label": "Essential Plant Nutrients",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-uptake-mechanisms"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::macronutrient-definition",
+      "label": "Macronutrient Definition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::essential-plant-nutrients"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nitrogen-functions-in-plants",
+      "label": "Nitrogen Functions in Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::macronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::phosphorus-functions-in-plants",
+      "label": "Phosphorus Functions in Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::macronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::potassium-functions-in-plants",
+      "label": "Potassium Functions in Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::macronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::calcium-functions-in-plants",
+      "label": "Calcium Functions in Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::macronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::magnesium-functions-in-plants",
+      "label": "Magnesium Functions in Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::macronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::sulfur-functions-in-plants",
+      "label": "Sulfur Functions in Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::macronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::micronutrient-definition",
+      "label": "Micronutrient Definition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::essential-plant-nutrients"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::iron-in-plant-nutrition",
+      "label": "Iron in Plant Nutrition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::manganese-in-plant-nutrition",
+      "label": "Manganese in Plant Nutrition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::zinc-in-plant-nutrition",
+      "label": "Zinc in Plant Nutrition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::copper-in-plant-nutrition",
+      "label": "Copper in Plant Nutrition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::boron-in-plant-nutrition",
+      "label": "Boron in Plant Nutrition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::molybdenum-in-plant-nutrition",
+      "label": "Molybdenum in Plant Nutrition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::chlorine-in-plant-nutrition",
+      "label": "Chlorine in Plant Nutrition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nickel-in-plant-nutrition",
+      "label": "Nickel in Plant Nutrition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ph-scale-definition",
+      "label": "pH Scale Definition",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "NUTR",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::ph-and-nutrient-availability",
+      "label": "pH and Nutrient Availability",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-scale-definition",
+        "hydroponics::essential-plant-nutrients"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::mulder-s-chart",
+      "label": "Mulder's Chart",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-and-nutrient-availability"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::electrical-conductivity-ec",
+      "label": "Electrical Conductivity (EC)",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "NUTR",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::ec-as-tds-proxy",
+      "label": "EC as TDS Proxy",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::electrical-conductivity-ec"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::parts-per-million-ppm",
+      "label": "Parts Per Million (ppm)",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "NUTR",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::nutrient-solution-concentration",
+      "label": "Nutrient Solution Concentration",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::parts-per-million-ppm",
+        "hydroponics::electrical-conductivity-ec",
+        "hydroponics::macronutrient-definition"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::two-part-nutrient-systems",
+      "label": "Two-Part Nutrient Systems",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::three-part-nutrient-systems",
+      "label": "Three-Part Nutrient Systems",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-solution-concentration",
+        "hydroponics::two-part-nutrient-systems"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::calcium-nitrate",
+      "label": "Calcium Nitrate",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nitrogen-functions-in-plants",
+        "hydroponics::calcium-functions-in-plants",
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::magnesium-sulfate-epsom-salt",
+      "label": "Magnesium Sulfate (Epsom Salt)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::magnesium-functions-in-plants",
+        "hydroponics::sulfur-functions-in-plants",
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::potassium-nitrate",
+      "label": "Potassium Nitrate",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nitrogen-functions-in-plants",
+        "hydroponics::potassium-functions-in-plants",
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::potassium-phosphate",
+      "label": "Potassium Phosphate",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::phosphorus-functions-in-plants",
+        "hydroponics::potassium-functions-in-plants",
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::chelated-iron-edta-dtpa",
+      "label": "Chelated Iron (EDTA/DTPA)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::iron-in-plant-nutrition",
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ph-up-and-ph-down",
+      "label": "pH-Up and pH-Down",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-scale-definition",
+        "hydroponics::ph-and-nutrient-availability"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ph-buffer-solutions",
+      "label": "pH Buffer Solutions",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-scale-definition",
+        "hydroponics::ph-up-and-ph-down"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::water-hardness",
+      "label": "Water Hardness",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-as-growth-medium",
+        "hydroponics::electrical-conductivity-ec"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::bicarbonate-buffering",
+      "label": "Bicarbonate Buffering",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-buffer-solutions",
+        "hydroponics::water-hardness"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::cation-anion-balance",
+      "label": "Cation-Anion Balance",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::macronutrient-definition",
+        "hydroponics::micronutrient-definition",
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nutrient-solution-mixing-order",
+      "label": "Nutrient Solution Mixing Order",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-solution-concentration",
+        "hydroponics::two-part-nutrient-systems",
+        "hydroponics::three-part-nutrient-systems"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::stock-solution-concentrates",
+      "label": "Stock Solution Concentrates",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-solution-concentration",
+        "hydroponics::nutrient-solution-mixing-order"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nutrient-solution-temperature",
+      "label": "Nutrient Solution Temperature",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nutrient-solution-oxygen",
+      "label": "Nutrient Solution Oxygen",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-solution-concentration",
+        "hydroponics::dissolved-oxygen-in-root-zone"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::passive-vs-active-systems",
+      "label": "Passive vs Active Systems",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems",
+        "hydroponics::water-as-growth-medium"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::kratky-method",
+      "label": "Kratky Method",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::kratky-air-gap-principle",
+      "label": "Kratky Air Gap Principle",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::kratky-method",
+        "hydroponics::dissolved-oxygen-in-root-zone"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::deep-water-culture-dwc",
+      "label": "Deep Water Culture (DWC)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dwc-air-pump-and-air-stone",
+      "label": "DWC Air Pump and Air Stone",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::deep-water-culture-dwc",
+        "hydroponics::dissolved-oxygen-in-root-zone"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::single-bucket-dwc",
+      "label": "Single-Bucket DWC",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::deep-water-culture-dwc",
+        "hydroponics::dwc-air-pump-and-air-stone"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::multi-bucket-dwc",
+      "label": "Multi-Bucket DWC",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::single-bucket-dwc"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::recirculating-dwc-rdwc",
+      "label": "Recirculating DWC (RDWC)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::multi-bucket-dwc"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nutrient-film-technique-nft",
+      "label": "Nutrient Film Technique (NFT)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nft-channel-design",
+      "label": "NFT Channel Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-film-technique-nft"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nft-flow-rate",
+      "label": "NFT Flow Rate",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-film-technique-nft",
+        "hydroponics::nft-channel-design"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nft-pump-failure-risk",
+      "label": "NFT Pump Failure Risk",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-film-technique-nft",
+        "hydroponics::nft-flow-rate"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ebb-and-flow-system",
+      "label": "Ebb-and-Flow System",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ebb-and-flow-timer-programming",
+      "label": "Ebb-and-Flow Timer Programming",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ebb-and-flow-system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::flood-table-design",
+      "label": "Flood Table Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ebb-and-flow-system",
+        "hydroponics::ebb-and-flow-timer-programming"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::aeroponics-definition",
+      "label": "Aeroponics Definition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems",
+        "hydroponics::dissolved-oxygen-in-root-zone"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::high-pressure-aeroponics",
+      "label": "High-Pressure Aeroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::aeroponics-definition"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::low-pressure-aeroponics",
+      "label": "Low-Pressure Aeroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::aeroponics-definition"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::fogponics-ultrasonic",
+      "label": "Fogponics (Ultrasonic)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::aeroponics-definition"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::drip-irrigation-hydroponics",
+      "label": "Drip Irrigation Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::wick-system",
+      "label": "Wick System",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::system-selection-criteria",
+      "label": "System Selection Criteria",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems",
+        "hydroponics::kratky-method",
+        "hydroponics::deep-water-culture-dwc",
+        "hydroponics::nutrient-film-technique-nft",
+        "hydroponics::ebb-and-flow-system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::pump-selection-and-sizing",
+      "label": "Pump Selection and Sizing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::deep-water-culture-dwc",
+        "hydroponics::nutrient-film-technique-nft",
+        "hydroponics::ebb-and-flow-system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::reservoir-design",
+      "label": "Reservoir Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-as-growth-medium",
+        "hydroponics::nutrient-solution-concentration"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::net-pots-and-baskets",
+      "label": "Net Pots and Baskets",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::tubing-and-fittings",
+      "label": "Tubing and Fittings",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::system-failure-modes",
+      "label": "System Failure Modes",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems",
+        "hydroponics::nft-pump-failure-risk"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::redundancy-in-system-design",
+      "label": "Redundancy in System Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::system-failure-modes"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-zone-volume",
+      "label": "Root Zone Volume",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::root-anatomy",
+        "hydroponics::reservoir-design"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::plant-spacing",
+      "label": "Plant Spacing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::space-utilization",
+        "hydroponics::plant-life-cycle"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::system-scalability",
+      "label": "System Scalability",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems",
+        "hydroponics::system-selection-criteria"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::water-recirculation",
+      "label": "Water Recirculation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems",
+        "hydroponics::water-as-growth-medium"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::run-to-waste-systems",
+      "label": "Run-to-Waste Systems",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hybrid-system-designs",
+      "label": "Hybrid System Designs",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::deep-water-culture-dwc",
+        "hydroponics::nutrient-film-technique-nft",
+        "hydroponics::aeroponics-definition"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::system-cleaning-between-cycles",
+      "label": "System Cleaning Between Cycles",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::mason-jar-kratky-setup",
+      "label": "Mason Jar Kratky Setup",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::kratky-method",
+        "hydroponics::kratky-air-gap-principle"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::5-gallon-bucket-dwc-build",
+      "label": "5-Gallon Bucket DWC Build",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::deep-water-culture-dwc",
+        "hydroponics::dwc-air-pump-and-air-stone",
+        "hydroponics::single-bucket-dwc"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::storage-tote-dwc-build",
+      "label": "Storage Tote DWC Build",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::deep-water-culture-dwc",
+        "hydroponics::dwc-air-pump-and-air-stone"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::pvc-pipe-nft-build",
+      "label": "PVC Pipe NFT Build",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-film-technique-nft",
+        "hydroponics::nft-channel-design"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::recycled-container-builds",
+      "label": "Recycled Container Builds",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems",
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hardware-store-materials-list",
+      "label": "Hardware Store Materials List",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::net-pot-sizing-guide",
+      "label": "Net Pot Sizing Guide",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::net-pots-and-baskets"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::airline-tubing-and-air-stones",
+      "label": "Airline Tubing and Air Stones",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::dwc-air-pump-and-air-stone"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::aquarium-air-pump-selection",
+      "label": "Aquarium Air Pump Selection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::dwc-air-pump-and-air-stone",
+        "hydroponics::pump-selection-and-sizing"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::float-valve-for-auto-refill",
+      "label": "Float Valve for Auto-Refill",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::reservoir-design"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-proofing-reservoir",
+      "label": "Light-Proofing Reservoir",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::reservoir-design"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::diy-ph-calibration",
+      "label": "DIY pH Calibration",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-scale-definition",
+        "hydroponics::ph-up-and-ph-down",
+        "hydroponics::ph-buffer-solutions"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::diy-ec-calibration",
+      "label": "DIY EC Calibration",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::electrical-conductivity-ec",
+        "hydroponics::ec-as-tds-proxy"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::beginner-crop-selection",
+      "label": "Beginner Crop Selection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-life-cycle",
+        "hydroponics::system-selection-criteria"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::lettuce-varieties",
+      "label": "Lettuce Varieties",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::beginner-crop-selection"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::herb-selection-for-beginners",
+      "label": "Herb Selection for Beginners",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::beginner-crop-selection"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::microgreens-production",
+      "label": "Microgreens Production",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::seed-germination",
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::seeding-and-germination-trays",
+      "label": "Seeding and Germination Trays",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::seed-germination",
+        "hydroponics::seedling-development"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::seedling-transfer-timing",
+      "label": "Seedling Transfer Timing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::seedling-development",
+        "hydroponics::seeding-and-germination-trays"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::school-garden-safety-rules",
+      "label": "School Garden Safety Rules",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::student-data-protocols",
+      "label": "Student Data Protocols",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::science-fair-project-design",
+      "label": "Science Fair Project Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems",
+        "hydroponics::student-data-protocols"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::classroom-grow-system-layout",
+      "label": "Classroom Grow System Layout",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::grow-room-layout",
+        "hydroponics::mason-jar-kratky-setup",
+        "hydroponics::5-gallon-bucket-dwc-build"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::system-cost-tiers",
+      "label": "System Cost Tiers",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::passive-vs-active-systems",
+        "hydroponics::system-selection-criteria"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::upgrade-pathways-for-beginners",
+      "label": "Upgrade Pathways for Beginners",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::system-cost-tiers",
+        "hydroponics::system-scalability"
+      ],
+      "taxonomy_id": "DIY",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::rockwool-properties",
+      "label": "Rockwool Properties",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::rockwool-ph-preparation",
+      "label": "Rockwool pH Preparation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::rockwool-properties",
+        "hydroponics::ph-scale-definition",
+        "hydroponics::ph-up-and-ph-down"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::expanded-clay-hydroton",
+      "label": "Expanded Clay (Hydroton)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::coconut-coir-properties",
+      "label": "Coconut Coir Properties",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::perlite-in-hydroponics",
+      "label": "Perlite in Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::vermiculite-properties",
+      "label": "Vermiculite Properties",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::pumice-as-growing-media",
+      "label": "Pumice as Growing Media",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::gravel-and-sand-media",
+      "label": "Gravel and Sand Media",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::reusable-vs-single-use-media",
+      "label": "Reusable vs Single-Use Media",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::rockwool-properties",
+        "hydroponics::expanded-clay-hydroton",
+        "hydroponics::coconut-coir-properties",
+        "hydroponics::perlite-in-hydroponics"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::media-sterilization-methods",
+      "label": "Media Sterilization Methods",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::reusable-vs-single-use-media"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::media-air-porosity",
+      "label": "Media Air Porosity",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::rockwool-properties",
+        "hydroponics::expanded-clay-hydroton",
+        "hydroponics::coconut-coir-properties"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::media-water-retention",
+      "label": "Media Water Retention",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::rockwool-properties",
+        "hydroponics::coconut-coir-properties",
+        "hydroponics::vermiculite-properties"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::crop-selection-by-system-type",
+      "label": "Crop Selection by System Type",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::system-selection-criteria",
+        "hydroponics::beginner-crop-selection"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::lettuce-and-leafy-greens",
+      "label": "Lettuce and Leafy Greens",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::lettuce-varieties",
+        "hydroponics::crop-selection-by-system-type"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::basil-and-culinary-herbs",
+      "label": "Basil and Culinary Herbs",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::herb-selection-for-beginners",
+        "hydroponics::crop-selection-by-system-type"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::tomatoes-in-hydroponics",
+      "label": "Tomatoes in Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::crop-selection-by-system-type",
+        "hydroponics::vegetative-growth-stage",
+        "hydroponics::flowering-and-fruiting-stage"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::cucumbers-in-hydroponics",
+      "label": "Cucumbers in Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::crop-selection-by-system-type",
+        "hydroponics::vegetative-growth-stage",
+        "hydroponics::flowering-and-fruiting-stage"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::strawberries-in-hydroponics",
+      "label": "Strawberries in Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::crop-selection-by-system-type",
+        "hydroponics::vegetative-growth-stage"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::microgreens-and-sprouts",
+      "label": "Microgreens and Sprouts",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::microgreens-production",
+        "hydroponics::crop-selection-by-system-type"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::flowering-plants-peppers",
+      "label": "Flowering Plants (Peppers)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::crop-selection-by-system-type",
+        "hydroponics::flowering-and-fruiting-stage"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::plant-density-and-spacing",
+      "label": "Plant Density and Spacing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-spacing",
+        "hydroponics::crop-selection-by-system-type"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::succession-planting",
+      "label": "Succession Planting",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::crop-rotation-planning",
+        "hydroponics::crop-selection-by-system-type"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::transplanting-techniques",
+      "label": "Transplanting Techniques",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::seedling-transfer-timing",
+        "hydroponics::rockwool-properties",
+        "hydroponics::expanded-clay-hydroton"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::harvest-timing-indicators",
+      "label": "Harvest Timing Indicators",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::growth-rate-measurement",
+        "hydroponics::crop-selection-by-system-type"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::post-harvest-handling",
+      "label": "Post-Harvest Handling",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::harvest-timing-indicators"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-and-plant-growth",
+      "label": "Light and Plant Growth",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photosynthesis-overview",
+        "hydroponics::photosynthesis-light-reactions"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::photosynthetic-active-radiation",
+      "label": "Photosynthetic Active Radiation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-and-plant-growth"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::par-wavelength-range",
+      "label": "PAR Wavelength Range",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photosynthetic-active-radiation"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::red-light-effects-on-plants",
+      "label": "Red Light Effects on Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::par-wavelength-range"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::blue-light-effects-on-plants",
+      "label": "Blue Light Effects on Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::par-wavelength-range"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::far-red-light-effects",
+      "label": "Far-Red Light Effects",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::par-wavelength-range"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ppfd-photon-flux-density",
+      "label": "PPFD: Photon Flux Density",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photosynthetic-active-radiation"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::daily-light-integral-dli",
+      "label": "Daily Light Integral (DLI)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ppfd-photon-flux-density"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dli-calculation",
+      "label": "DLI Calculation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::daily-light-integral-dli"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::photoperiod-requirements",
+      "label": "Photoperiod Requirements",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-life-cycle",
+        "hydroponics::light-and-plant-growth"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::long-day-vs-short-day-plants",
+      "label": "Long-Day vs Short-Day Plants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photoperiod-requirements"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::led-grow-light-technology",
+      "label": "LED Grow Light Technology",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-and-plant-growth"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::led-spectrum-and-efficiency",
+      "label": "LED Spectrum and Efficiency",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::led-grow-light-technology",
+        "hydroponics::par-wavelength-range",
+        "hydroponics::red-light-effects-on-plants",
+        "hydroponics::blue-light-effects-on-plants"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hid-lighting-hps-and-mh",
+      "label": "HID Lighting (HPS and MH)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-and-plant-growth"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::fluorescent-lighting-t5-t8",
+      "label": "Fluorescent Lighting (T5/T8)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-and-plant-growth"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::led-vs-hid-comparison",
+      "label": "LED vs HID Comparison",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::led-grow-light-technology",
+        "hydroponics::hid-lighting-hps-and-mh",
+        "hydroponics::fluorescent-lighting-t5-t8"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-intensity-and-canopy",
+      "label": "Light Intensity and Canopy",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ppfd-photon-flux-density"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::inverse-square-law-for-light",
+      "label": "Inverse Square Law for Light",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-intensity-and-canopy"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::grow-light-mounting-height",
+      "label": "Grow Light Mounting Height",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::inverse-square-law-for-light"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-uniformity-and-ppfd-map",
+      "label": "Light Uniformity and PPFD Map",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ppfd-photon-flux-density",
+        "hydroponics::grow-light-mounting-height"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::heat-output-from-lighting",
+      "label": "Heat Output From Lighting",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hid-lighting-hps-and-mh",
+        "hydroponics::led-grow-light-technology"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-schedules-and-photoperiod",
+      "label": "Light Schedules and Photoperiod",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photoperiod-requirements",
+        "hydroponics::long-day-vs-short-day-plants"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-recipes-for-crop-stages",
+      "label": "Light Recipes for Crop Stages",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-schedules-and-photoperiod",
+        "hydroponics::red-light-effects-on-plants",
+        "hydroponics::blue-light-effects-on-plants",
+        "hydroponics::far-red-light-effects"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::lumens-vs-ppfd-distinction",
+      "label": "Lumens vs PPFD Distinction",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photosynthetic-active-radiation",
+        "hydroponics::ppfd-photon-flux-density"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-efficacy-mol-j",
+      "label": "Light Efficacy µmol/J",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ppfd-photon-flux-density",
+        "hydroponics::led-grow-light-technology"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-meter-and-quantum-sensor",
+      "label": "Light Meter and Quantum Sensor",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ppfd-photon-flux-density"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::photoperiod-control-relay",
+      "label": "Photoperiod Control Relay",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-schedules-and-photoperiod"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-cost-per-kwh",
+      "label": "Light Cost Per kWh",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::daily-light-integral-dli",
+        "hydroponics::led-vs-hid-comparison"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-energy-to-biomass",
+      "label": "Light Energy to Biomass",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-and-plant-growth",
+        "hydroponics::biomass-accumulation"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::co2-benefit-under-high-light",
+      "label": "CO2 Benefit Under High Light",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-and-plant-growth",
+        "hydroponics::co2-concentration-effects"
+      ],
+      "taxonomy_id": "LITE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::temperature-and-plant-growth",
+      "label": "Temperature and Plant Growth",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plant-growth-fundamentals",
+        "hydroponics::photosynthesis-overview"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::air-temperature-management",
+      "label": "Air Temperature Management",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::temperature-and-plant-growth"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solution-temperature-control",
+      "label": "Solution Temperature Control",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-solution-temperature",
+        "hydroponics::temperature-and-plant-growth"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-zone-temperature-optimum",
+      "label": "Root Zone Temperature Optimum",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solution-temperature-control",
+        "hydroponics::root-anatomy"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::relative-humidity-definition",
+      "label": "Relative Humidity Definition",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "ENVC",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::humidity-and-transpiration",
+      "label": "Humidity and Transpiration",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::relative-humidity-definition",
+        "hydroponics::transpiration"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::high-humidity-and-disease-risk",
+      "label": "High Humidity and Disease Risk",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::humidity-and-transpiration"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::low-humidity-and-tip-burn",
+      "label": "Low Humidity and Tip Burn",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::humidity-and-transpiration",
+        "hydroponics::tip-burn-in-lettuce"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::co2-concentration-effects",
+      "label": "CO2 Concentration Effects",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photosynthesis-overview",
+        "hydroponics::photosynthesis-light-reactions"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::co2-enrichment-methods",
+      "label": "CO2 Enrichment Methods",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::co2-concentration-effects"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::vapor-pressure-deficit-vpd",
+      "label": "Vapor Pressure Deficit (VPD)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::relative-humidity-definition",
+        "hydroponics::temperature-and-plant-growth"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::vpd-calculation",
+      "label": "VPD Calculation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vapor-pressure-deficit-vpd"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::vpd-optimal-ranges-by-stage",
+      "label": "VPD Optimal Ranges by Stage",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vpd-calculation",
+        "hydroponics::vegetative-growth-stage",
+        "hydroponics::flowering-and-fruiting-stage"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hvac-basics-for-grow-rooms",
+      "label": "HVAC Basics for Grow Rooms",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::indoor-growing-basics",
+        "hydroponics::air-temperature-management",
+        "hydroponics::humidity-and-transpiration"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::exhaust-and-intake-fan-sizing",
+      "label": "Exhaust and Intake Fan Sizing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hvac-basics-for-grow-rooms"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::air-circulation-and-fans",
+      "label": "Air Circulation and Fans",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::indoor-growing-basics",
+        "hydroponics::air-temperature-management"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::grow-tent-setup",
+      "label": "Grow Tent Setup",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::indoor-growing-basics",
+        "hydroponics::grow-room-layout"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::grow-room-insulation",
+      "label": "Grow Room Insulation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::indoor-growing-basics",
+        "hydroponics::hvac-basics-for-grow-rooms"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::data-logger-basics",
+      "label": "Data Logger Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "ENVC",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::environmental-alarm-setpoints",
+      "label": "Environmental Alarm Setpoints",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::data-logger-basics",
+        "hydroponics::vapor-pressure-deficit-vpd",
+        "hydroponics::temperature-and-plant-growth",
+        "hydroponics::relative-humidity-definition"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::thermostat-and-humidity-ctrl",
+      "label": "Thermostat and Humidity Ctrl",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::environmental-alarm-setpoints",
+        "hydroponics::air-temperature-management",
+        "hydroponics::humidity-and-transpiration"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::co2-controller-and-regulator",
+      "label": "CO2 Controller and Regulator",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::co2-enrichment-methods",
+        "hydroponics::environmental-alarm-setpoints"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ballast-and-lighting-controller",
+      "label": "Ballast and Lighting Controller",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photoperiod-control-relay",
+        "hydroponics::environmental-alarm-setpoints"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::grow-room-automation-overview",
+      "label": "Grow Room Automation Overview",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::thermostat-and-humidity-ctrl",
+        "hydroponics::co2-controller-and-regulator",
+        "hydroponics::ballast-and-lighting-controller"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::heating-and-cooling-trade-offs",
+      "label": "Heating and Cooling Trade-offs",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hvac-basics-for-grow-rooms",
+        "hydroponics::air-temperature-management"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dehumidifier-selection",
+      "label": "Dehumidifier Selection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::humidity-and-transpiration",
+        "hydroponics::hvac-basics-for-grow-rooms"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::humidifier-selection",
+      "label": "Humidifier Selection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::humidity-and-transpiration",
+        "hydroponics::hvac-basics-for-grow-rooms"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::air-filtration-carbon-filter",
+      "label": "Air Filtration Carbon Filter",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hvac-basics-for-grow-rooms"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::positive-vs-negative-pressure",
+      "label": "Positive vs Negative Pressure",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hvac-basics-for-grow-rooms",
+        "hydroponics::exhaust-and-intake-fan-sizing"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::fire-safety-in-indoor-grows",
+      "label": "Fire Safety in Indoor Grows",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::indoor-growing-basics"
+      ],
+      "taxonomy_id": "ENVC",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::micropython-vs-cpython",
+      "label": "MicroPython vs CPython",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "UPYTH",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::raspberry-pi-pico-overview",
+      "label": "Raspberry Pi Pico Overview",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "UPYTH",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::raspberry-pi-pico-w-wi-fi",
+      "label": "Raspberry Pi Pico W (Wi-Fi)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::raspberry-pi-pico-overview"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::esp32-microcontroller-overview",
+      "label": "ESP32 Microcontroller Overview",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "UPYTH",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::micropython-installation",
+      "label": "MicroPython Installation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-vs-cpython",
+        "hydroponics::raspberry-pi-pico-overview"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::thonny-ide-setup",
+      "label": "Thonny IDE Setup",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-installation"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::repl-read-eval-print-loop",
+      "label": "REPL (Read-Eval-Print Loop)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::thonny-ide-setup"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::variables-and-data-types",
+      "label": "Variables and Data Types",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::repl-read-eval-print-loop"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::integer-and-float-types",
+      "label": "Integer and Float Types",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::variables-and-data-types"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::string-operations",
+      "label": "String Operations",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::variables-and-data-types"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::boolean-logic",
+      "label": "Boolean Logic",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::variables-and-data-types"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::none-type-and-null-checks",
+      "label": "None Type and Null Checks",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::variables-and-data-types",
+        "hydroponics::boolean-logic"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::lists-in-micropython",
+      "label": "Lists in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::variables-and-data-types"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::tuples-in-micropython",
+      "label": "Tuples in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::variables-and-data-types"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dictionaries-in-micropython",
+      "label": "Dictionaries in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::variables-and-data-types"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::if-else-statements",
+      "label": "If-Else Statements",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::boolean-logic"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::for-loops",
+      "label": "For Loops",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::lists-in-micropython",
+        "hydroponics::if-else-statements"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::while-loops",
+      "label": "While Loops",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::if-else-statements"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::loop-control-break-continue",
+      "label": "Loop Control (Break/Continue)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::for-loops",
+        "hydroponics::while-loops"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::functions-and-def-keyword",
+      "label": "Functions and def Keyword",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::variables-and-data-types",
+        "hydroponics::for-loops"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::function-parameters-and-returns",
+      "label": "Function Parameters and Returns",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::default-parameters",
+      "label": "Default Parameters",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::function-parameters-and-returns"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::lambda-functions",
+      "label": "Lambda Functions",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::classes-and-objects-oop",
+      "label": "Classes and Objects (OOP)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::functions-and-def-keyword",
+        "hydroponics::function-parameters-and-returns"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::inheritance-in-micropython",
+      "label": "Inheritance in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::classes-and-objects-oop"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::exception-handling-try-except",
+      "label": "Exception Handling Try/Except",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::if-else-statements",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::file-i-o-in-micropython",
+      "label": "File I/O in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::functions-and-def-keyword",
+        "hydroponics::exception-handling-try-except"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::reading-files",
+      "label": "Reading Files",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::file-i-o-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::writing-and-appending-files",
+      "label": "Writing and Appending Files",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::file-i-o-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::csv-file-writing-in-micropython",
+      "label": "CSV File Writing in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::writing-and-appending-files",
+        "hydroponics::lists-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::json-in-micropython",
+      "label": "JSON in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::dictionaries-in-micropython",
+        "hydroponics::writing-and-appending-files"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::i2c-protocol-basics",
+      "label": "I2C Protocol Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "UPYTH",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::i2c-in-micropython",
+      "label": "I2C in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::i2c-protocol-basics",
+        "hydroponics::micropython-installation",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::spi-protocol-basics",
+      "label": "SPI Protocol Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "UPYTH",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::spi-in-micropython",
+      "label": "SPI in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::spi-protocol-basics",
+        "hydroponics::micropython-installation",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::uart-serial-communication",
+      "label": "UART Serial Communication",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::raspberry-pi-pico-overview"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::analog-to-digital-converter",
+      "label": "Analog-to-Digital Converter",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "UPYTH",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::adc-in-micropython",
+      "label": "ADC in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::analog-to-digital-converter",
+        "hydroponics::micropython-installation",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::digital-to-analog-converter",
+      "label": "Digital-to-Analog Converter",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::analog-to-digital-converter"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::pwm-pulse-width-modulation",
+      "label": "PWM: Pulse Width Modulation",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "UPYTH",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::pwm-in-micropython",
+      "label": "PWM in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pwm-pulse-width-modulation",
+        "hydroponics::micropython-installation",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::gpio-pin-modes",
+      "label": "GPIO Pin Modes",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::raspberry-pi-pico-overview",
+        "hydroponics::esp32-microcontroller-overview",
+        "hydroponics::micropython-installation"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::digital-read-and-write",
+      "label": "Digital Read and Write",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::gpio-pin-modes",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::pull-up-and-pull-down-resistors",
+      "label": "Pull-Up and Pull-Down Resistors",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::gpio-pin-modes"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::interrupts-and-irq",
+      "label": "Interrupts and IRQ",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::gpio-pin-modes",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::timer-and-machine-timer",
+      "label": "Timer and machine.Timer",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-installation",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::utime-module",
+      "label": "utime Module",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-installation"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::async-await-in-micropython",
+      "label": "Async/Await in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::functions-and-def-keyword",
+        "hydroponics::while-loops"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::asyncio-in-micropython",
+      "label": "asyncio in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::async-await-in-micropython",
+        "hydroponics::micropython-installation"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::wi-fi-connection-on-esp32",
+      "label": "Wi-Fi Connection on ESP32",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::raspberry-pi-pico-w-wi-fi",
+        "hydroponics::esp32-microcontroller-overview",
+        "hydroponics::micropython-installation"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::socket-programming",
+      "label": "Socket Programming",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::wi-fi-connection-on-esp32",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::mqtt-protocol-basics",
+      "label": "MQTT Protocol Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "UPYTH",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::micropython-mqtt-client",
+      "label": "MicroPython MQTT Client",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::mqtt-protocol-basics",
+        "hydroponics::wi-fi-connection-on-esp32",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::http-requests-from-micropython",
+      "label": "HTTP Requests From MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::wi-fi-connection-on-esp32",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::memory-management-in-micropython",
+      "label": "Memory Management in MicroPython",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-vs-cpython",
+        "hydroponics::variables-and-data-types"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::garbage-collection",
+      "label": "Garbage Collection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::memory-management-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::watchdog-timer",
+      "label": "Watchdog Timer",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::timer-and-machine-timer",
+        "hydroponics::micropython-installation"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::boot-py-and-main-py-execution",
+      "label": "Boot.py and Main.py Execution",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-installation",
+        "hydroponics::file-i-o-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ota-over-the-air-updates",
+      "label": "OTA Over-the-Air Updates",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::wi-fi-connection-on-esp32",
+        "hydroponics::boot-py-and-main-py-execution"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::micropython-libraries",
+      "label": "MicroPython Libraries",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-installation"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ds18b20-temperature-library",
+      "label": "DS18B20 Temperature Library",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-libraries",
+        "hydroponics::i2c-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dht11-dht22-library",
+      "label": "DHT11/DHT22 Library",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-libraries",
+        "hydroponics::gpio-pin-modes"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ssd1306-oled-display-library",
+      "label": "SSD1306 OLED Display Library",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-libraries",
+        "hydroponics::i2c-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::atlas-scientific-ph-library",
+      "label": "Atlas Scientific pH Library",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-libraries",
+        "hydroponics::i2c-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::atlas-scientific-ec-library",
+      "label": "Atlas Scientific EC Library",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-libraries",
+        "hydroponics::i2c-in-micropython"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::mcp3208-adc-spi-library",
+      "label": "MCP3208 ADC SPI Library",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-libraries",
+        "hydroponics::spi-in-micropython",
+        "hydroponics::analog-to-digital-converter"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::relay-module-control-code",
+      "label": "Relay Module Control Code",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::digital-read-and-write",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::peristaltic-pump-relay-logic",
+      "label": "Peristaltic Pump Relay Logic",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::relay-module-control-code",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::neopixel-ws2812-control",
+      "label": "NeoPixel WS2812 Control",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pwm-in-micropython",
+        "hydroponics::micropython-libraries"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::lcd-16x2-i2c-library",
+      "label": "LCD 16x2 I2C Library",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::i2c-in-micropython",
+        "hydroponics::micropython-libraries"
+      ],
+      "taxonomy_id": "UPYTH",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ph-electrode-glass-electrode",
+      "label": "pH Electrode (Glass Electrode)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-scale-definition",
+        "hydroponics::ph-and-nutrient-availability"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ph-probe-calibration",
+      "label": "pH Probe Calibration",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-electrode-glass-electrode",
+        "hydroponics::ph-buffer-solutions",
+        "hydroponics::diy-ph-calibration"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ph-calibration-buffers",
+      "label": "pH Calibration Buffers",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-buffer-solutions",
+        "hydroponics::ph-electrode-glass-electrode"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ec-probe-design",
+      "label": "EC Probe Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::electrical-conductivity-ec"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ec-probe-calibration",
+      "label": "EC Probe Calibration",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ec-probe-design",
+        "hydroponics::diy-ec-calibration"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ds18b20-temperature-probe",
+      "label": "DS18B20 Temperature Probe",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::data-logger-basics"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dht11-vs-dht22-comparison",
+      "label": "DHT11 vs DHT22 Comparison",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::relative-humidity-definition",
+        "hydroponics::data-logger-basics"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::co2-ndir-sensor-technology",
+      "label": "CO2 NDIR Sensor Technology",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::co2-concentration-effects",
+        "hydroponics::data-logger-basics"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::water-level-sensor",
+      "label": "Water Level Sensor",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::reservoir-design",
+        "hydroponics::data-logger-basics"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ultrasonic-distance-sensor",
+      "label": "Ultrasonic Distance Sensor",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::data-logger-basics",
+        "hydroponics::analog-to-digital-converter"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::float-switch",
+      "label": "Float Switch",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-level-sensor"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::relay-module",
+      "label": "Relay Module",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::gpio-pin-modes",
+        "hydroponics::digital-read-and-write"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dosing-pump-peristaltic",
+      "label": "Dosing Pump (Peristaltic)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pump-selection-and-sizing",
+        "hydroponics::relay-module"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solenoid-valve",
+      "label": "Solenoid Valve",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::relay-module"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::flow-sensor",
+      "label": "Flow Sensor",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pump-selection-and-sizing",
+        "hydroponics::data-logger-basics"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::power-supply-selection",
+      "label": "Power Supply Selection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::raspberry-pi-pico-overview",
+        "hydroponics::esp32-microcontroller-overview"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::breadboard-prototyping",
+      "label": "Breadboard Prototyping",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::raspberry-pi-pico-overview"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::pcb-design-basics",
+      "label": "PCB Design Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::breadboard-prototyping"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::voltage-divider-circuit",
+      "label": "Voltage Divider Circuit",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::analog-to-digital-converter",
+        "hydroponics::pull-up-and-pull-down-resistors"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::op-amp-circuits",
+      "label": "Op-Amp Circuits",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::analog-to-digital-converter",
+        "hydroponics::voltage-divider-circuit"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::sensor-noise-and-filtering",
+      "label": "Sensor Noise and Filtering",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::analog-to-digital-converter",
+        "hydroponics::data-logger-basics"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::moving-average-filter",
+      "label": "Moving Average Filter",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::sensor-noise-and-filtering",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::analog-signal-conditioning",
+      "label": "Analog Signal Conditioning",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::op-amp-circuits",
+        "hydroponics::sensor-noise-and-filtering"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::sensor-drift-and-recalibration",
+      "label": "Sensor Drift and Recalibration",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::ph-electrode-glass-electrode",
+        "hydroponics::ec-probe-design",
+        "hydroponics::sensor-noise-and-filtering"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::wireless-sensor-node-design",
+      "label": "Wireless Sensor Node Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::wi-fi-connection-on-esp32",
+        "hydroponics::micropython-mqtt-client",
+        "hydroponics::ds18b20-temperature-probe",
+        "hydroponics::ph-electrode-glass-electrode",
+        "hydroponics::uart-serial-communication"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::battery-powered-sensor-nodes",
+      "label": "Battery-Powered Sensor Nodes",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::power-supply-selection",
+        "hydroponics::wireless-sensor-node-design"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::sensor-data-timestamping",
+      "label": "Sensor Data Timestamping",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::utime-module",
+        "hydroponics::data-logger-basics",
+        "hydroponics::csv-file-writing-in-micropython"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::multiplexed-sensor-reading",
+      "label": "Multiplexed Sensor Reading",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::i2c-in-micropython",
+        "hydroponics::spi-in-micropython",
+        "hydroponics::analog-to-digital-converter",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::atlas-scientific-ezo-circuits",
+      "label": "Atlas Scientific EZO Circuits",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::atlas-scientific-ph-library",
+        "hydroponics::atlas-scientific-ec-library",
+        "hydroponics::ph-electrode-glass-electrode",
+        "hydroponics::ec-probe-design"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::sensor-enclosure-waterproofing",
+      "label": "Sensor Enclosure Waterproofing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pcb-design-basics",
+        "hydroponics::wireless-sensor-node-design"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::data-collection-strategy",
+      "label": "Data Collection Strategy",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::data-logger-basics",
+        "hydroponics::sensor-data-timestamping"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::sensor-reading-frequency",
+      "label": "Sensor Reading Frequency",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::timer-and-machine-timer",
+        "hydroponics::data-collection-strategy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::csv-file-format-and-structure",
+      "label": "CSV File Format and Structure",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::csv-file-writing-in-micropython"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::data-logging-to-sd-card",
+      "label": "Data Logging to SD Card",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::file-i-o-in-micropython",
+        "hydroponics::csv-file-writing-in-micropython",
+        "hydroponics::sensor-data-timestamping"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::cloud-data-storage-options",
+      "label": "Cloud Data Storage Options",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::micropython-mqtt-client",
+        "hydroponics::http-requests-from-micropython"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::google-sheets-as-data-logger",
+      "label": "Google Sheets as Data Logger",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::http-requests-from-micropython",
+        "hydroponics::csv-file-format-and-structure"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::python-environment-setup",
+      "label": "Python Environment Setup",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::jupyter-notebook-basics",
+      "label": "Jupyter Notebook Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::python-environment-setup"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::pandas-library-introduction",
+      "label": "pandas Library Introduction",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::python-environment-setup",
+        "hydroponics::lists-in-micropython",
+        "hydroponics::dictionaries-in-micropython"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dataframe-creation-and-structure",
+      "label": "DataFrame Creation and Structure",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pandas-library-introduction"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::reading-csv-with-pandas",
+      "label": "Reading CSV With pandas",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pandas-library-introduction",
+        "hydroponics::csv-file-format-and-structure"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dataframe-indexing-and-slicing",
+      "label": "DataFrame Indexing and Slicing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::dataframe-creation-and-structure"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::date-time-parsing-with-pandas",
+      "label": "Date-Time Parsing With pandas",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::dataframe-creation-and-structure",
+        "hydroponics::sensor-data-timestamping"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::resampling-time-series-data",
+      "label": "Resampling Time-Series Data",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::date-time-parsing-with-pandas",
+        "hydroponics::sensor-reading-frequency"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::rolling-window-statistics",
+      "label": "Rolling Window Statistics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::resampling-time-series-data",
+        "hydroponics::function-parameters-and-returns"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::missing-data-handling",
+      "label": "Missing Data Handling",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::dataframe-creation-and-structure",
+        "hydroponics::exception-handling-try-except"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::data-cleaning-and-validation",
+      "label": "Data Cleaning and Validation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::missing-data-handling",
+        "hydroponics::dataframe-creation-and-structure"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::numpy-library-introduction",
+      "label": "NumPy Library Introduction",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::python-environment-setup"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::numpy-arrays",
+      "label": "NumPy Arrays",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::numpy-library-introduction"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::array-operations-broadcasting",
+      "label": "Array Operations Broadcasting",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::numpy-arrays"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::statistical-functions-in-numpy",
+      "label": "Statistical Functions in NumPy",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::numpy-arrays",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::mean-median-standard-deviation",
+      "label": "Mean Median Standard Deviation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::statistical-functions-in-numpy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::correlation-analysis",
+      "label": "Correlation Analysis",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::mean-median-standard-deviation",
+        "hydroponics::dataframe-creation-and-structure"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::linear-regression",
+      "label": "Linear Regression",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::regression-in-numpy-polyfit",
+      "label": "Regression in NumPy (polyfit)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::numpy-library-introduction",
+        "hydroponics::linear-regression",
+        "hydroponics::statistical-functions-in-numpy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::scikit-learn-linear-regression",
+      "label": "scikit-learn Linear Regression",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::linear-regression",
+        "hydroponics::pandas-library-introduction"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::matplotlib-basics",
+      "label": "Matplotlib Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::python-environment-setup"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::line-charts-for-sensor-data",
+      "label": "Line Charts for Sensor Data",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::matplotlib-basics",
+        "hydroponics::reading-csv-with-pandas"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::scatter-plots",
+      "label": "Scatter Plots",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::matplotlib-basics"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::histogram-and-distribution",
+      "label": "Histogram and Distribution",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::matplotlib-basics",
+        "hydroponics::mean-median-standard-deviation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::subplots-and-figure-layout",
+      "label": "Subplots and Figure Layout",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::matplotlib-basics",
+        "hydroponics::line-charts-for-sensor-data",
+        "hydroponics::scatter-plots"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::plotly-introduction",
+      "label": "Plotly Introduction",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::python-environment-setup"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::plotly-express-line-chart",
+      "label": "Plotly Express Line Chart",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plotly-introduction",
+        "hydroponics::reading-csv-with-pandas"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::plotly-interactive-dashboard",
+      "label": "Plotly Interactive Dashboard",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plotly-introduction",
+        "hydroponics::plotly-express-line-chart"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::dash-framework-plotly-dash",
+      "label": "Dash Framework (Plotly Dash)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plotly-introduction",
+        "hydroponics::plotly-interactive-dashboard"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::real-time-dashboard-updates",
+      "label": "Real-Time Dashboard Updates",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::dash-framework-plotly-dash",
+        "hydroponics::micropython-mqtt-client"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::time-series-visualization",
+      "label": "Time-Series Visualization",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::date-time-parsing-with-pandas",
+        "hydroponics::line-charts-for-sensor-data",
+        "hydroponics::plotly-express-line-chart"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::statistical-process-control",
+      "label": "Statistical Process Control",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::mean-median-standard-deviation",
+        "hydroponics::data-collection-strategy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::control-charts-x-bar-r-chart",
+      "label": "Control Charts (X-bar R-chart)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::statistical-process-control",
+        "hydroponics::mean-median-standard-deviation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::control-limits-calculation",
+      "label": "Control Limits Calculation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::control-charts-x-bar-r-chart",
+        "hydroponics::mean-median-standard-deviation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::anomaly-detection-methods",
+      "label": "Anomaly Detection Methods",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::mean-median-standard-deviation",
+        "hydroponics::data-collection-strategy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::z-score-anomaly-detection",
+      "label": "Z-Score Anomaly Detection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::anomaly-detection-methods",
+        "hydroponics::mean-median-standard-deviation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::iqr-outlier-detection",
+      "label": "IQR Outlier Detection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::anomaly-detection-methods",
+        "hydroponics::mean-median-standard-deviation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::moving-average-anomaly-detection",
+      "label": "Moving Average Anomaly Detection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::anomaly-detection-methods",
+        "hydroponics::rolling-window-statistics"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::trend-detection-in-sensor-data",
+      "label": "Trend Detection in Sensor Data",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::regression-in-numpy-polyfit",
+        "hydroponics::resampling-time-series-data",
+        "hydroponics::anomaly-detection-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::food-safety-in-controlled-envs",
+      "label": "Food Safety in Controlled Envs",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hydroponics-definition",
+        "hydroponics::controlled-environment-ag"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::biofilm-definition-and-formation",
+      "label": "Biofilm Definition and Formation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::biofilm-in-recirculating-systems",
+      "label": "Biofilm in Recirculating Systems",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::biofilm-definition-and-formation",
+        "hydroponics::water-recirculation"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::human-pathogens-in-hydroponics",
+      "label": "Human Pathogens in Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::food-safety-in-controlled-envs",
+        "hydroponics::biofilm-in-recirculating-systems"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::listeria-monocytogenes-risk",
+      "label": "Listeria Monocytogenes Risk",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::human-pathogens-in-hydroponics"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::salmonella-in-hydroponic-lettuce",
+      "label": "Salmonella in Hydroponic Lettuce",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::human-pathogens-in-hydroponics"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::shiga-toxin-e-coli-stec-risk",
+      "label": "Shiga Toxin E Coli (STEC) Risk",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::human-pathogens-in-hydroponics"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::haccp-principles",
+      "label": "HACCP Principles",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hazard-analysis-in-hydroponics",
+      "label": "Hazard Analysis in Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::haccp-principles",
+        "hydroponics::human-pathogens-in-hydroponics"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::critical-control-points",
+      "label": "Critical Control Points",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::haccp-principles",
+        "hydroponics::hazard-analysis-in-hydroponics"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::corrective-actions-haccp",
+      "label": "Corrective Actions (HACCP)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::critical-control-points"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::water-source-selection",
+      "label": "Water Source Selection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-as-growth-medium",
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::municipal-water-safety",
+      "label": "Municipal Water Safety",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-source-selection"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::well-water-testing",
+      "label": "Well Water Testing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-source-selection"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::rainwater-risks-for-leafy-greens",
+      "label": "Rainwater Risks for Leafy Greens",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-source-selection",
+        "hydroponics::salmonella-in-hydroponic-lettuce"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::bleach-sanitization-protocol",
+      "label": "Bleach Sanitization Protocol",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::system-cleaning-between-cycles",
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hydrogen-peroxide-sanitization",
+      "label": "Hydrogen Peroxide Sanitization",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::system-cleaning-between-cycles",
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::uv-sterilization-for-water",
+      "label": "UV Sterilization for Water",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-source-selection",
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ozone-treatment",
+      "label": "Ozone Treatment",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-source-selection",
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::sanitization-schedule",
+      "label": "Sanitization Schedule",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::bleach-sanitization-protocol",
+        "hydroponics::hydrogen-peroxide-sanitization",
+        "hydroponics::system-cleaning-between-cycles"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::food-grade-materials",
+      "label": "Food-Grade Materials",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems",
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::worker-hygiene-protocols",
+      "label": "Worker Hygiene Protocols",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::food-safety-in-controlled-envs"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::pest-and-disease-management",
+      "label": "Pest and Disease Management",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hydroponics-definition",
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::root-rot-pythium-management",
+      "label": "Root Rot (Pythium) Management",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pest-and-disease-management",
+        "hydroponics::root-rot-physiology",
+        "hydroponics::dissolved-oxygen-in-root-zone"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::algae-bloom-prevention",
+      "label": "Algae Bloom Prevention",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::pest-and-disease-management",
+        "hydroponics::light-proofing-reservoir"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-energy-basics",
+      "label": "Solar Energy Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "SOLAR",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::photovoltaic-pv-effect",
+      "label": "Photovoltaic (PV) Effect",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-energy-basics"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-cell-types",
+      "label": "Solar Cell Types",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photovoltaic-pv-effect"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-panel-efficiency",
+      "label": "Solar Panel Efficiency",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-cell-types",
+        "hydroponics::photovoltaic-pv-effect"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-panel-watt-peak-wp",
+      "label": "Solar Panel Watt-Peak (Wp)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-panel-efficiency"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-irradiance-w-m2",
+      "label": "Solar Irradiance W/m2",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-energy-basics"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::peak-sun-hours",
+      "label": "Peak Sun Hours",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-irradiance-w-m2"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-panel-output-calculation",
+      "label": "Solar Panel Output Calculation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-panel-watt-peak-wp",
+        "hydroponics::solar-irradiance-w-m2",
+        "hydroponics::peak-sun-hours"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-panel-cost-trends",
+      "label": "Solar Panel Cost Trends",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-energy-basics",
+        "hydroponics::solar-panel-efficiency"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::levelized-cost-of-energy-lcoe",
+      "label": "Levelized Cost of Energy (LCOE)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-panel-output-calculation",
+        "hydroponics::solar-panel-cost-trends"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::mppt-max-power-point-tracking",
+      "label": "MPPT Max Power Point Tracking",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::photovoltaic-pv-effect",
+        "hydroponics::solar-panel-efficiency"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::charge-controller-pwm-vs-mppt",
+      "label": "Charge Controller PWM vs MPPT",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::mppt-max-power-point-tracking"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::battery-storage-basics",
+      "label": "Battery Storage Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "SOLAR",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::lead-acid-battery",
+      "label": "Lead-Acid Battery",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::battery-storage-basics"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::lithium-iron-phosphate-lifepo4",
+      "label": "Lithium Iron Phosphate LiFePO4",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::battery-storage-basics"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::battery-state-of-charge",
+      "label": "Battery State of Charge",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::battery-storage-basics"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::battery-sizing-for-grow-room",
+      "label": "Battery Sizing for Grow Room",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::battery-storage-basics",
+        "hydroponics::solar-panel-output-calculation",
+        "hydroponics::daily-light-integral-dli"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::inverter-selection-off-grid",
+      "label": "Inverter Selection Off-Grid",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::battery-storage-basics",
+        "hydroponics::charge-controller-pwm-vs-mppt"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::grid-tie-solar-system",
+      "label": "Grid-Tie Solar System",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-energy-basics",
+        "hydroponics::solar-panel-output-calculation"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::net-metering",
+      "label": "Net Metering",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::grid-tie-solar-system"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::off-grid-solar-system-design",
+      "label": "Off-Grid Solar System Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::charge-controller-pwm-vs-mppt",
+        "hydroponics::inverter-selection-off-grid",
+        "hydroponics::battery-sizing-for-grow-room"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hybrid-grid-and-battery-system",
+      "label": "Hybrid Grid and Battery System",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::grid-tie-solar-system",
+        "hydroponics::off-grid-solar-system-design"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-for-grow-lights",
+      "label": "Solar for Grow Lights",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-energy-basics",
+        "hydroponics::led-grow-light-technology",
+        "hydroponics::light-cost-per-kwh"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-for-pumps-and-sensors",
+      "label": "Solar for Pumps and Sensors",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-energy-basics",
+        "hydroponics::pump-selection-and-sizing",
+        "hydroponics::battery-powered-sensor-nodes"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::power-monitoring-with-ina219",
+      "label": "Power Monitoring With INA219",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::i2c-in-micropython",
+        "hydroponics::adc-in-micropython",
+        "hydroponics::functions-and-def-keyword"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::energy-audit-for-grow-room",
+      "label": "Energy Audit for Grow Room",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::daily-light-integral-dli",
+        "hydroponics::light-cost-per-kwh",
+        "hydroponics::hvac-basics-for-grow-rooms"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::energy-dashboard-with-plotly",
+      "label": "Energy Dashboard With Plotly",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plotly-interactive-dashboard",
+        "hydroponics::energy-audit-for-grow-room"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-roi-calculation",
+      "label": "Solar ROI Calculation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::levelized-cost-of-energy-lcoe",
+        "hydroponics::capital-budgeting-basics",
+        "hydroponics::return-on-investment-roi"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::carbon-footprint-indoor-growing",
+      "label": "Carbon Footprint Indoor Growing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-energy-basics",
+        "hydroponics::energy-audit-for-grow-room",
+        "hydroponics::controlled-environment-ag"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::microinverter-technology",
+      "label": "Microinverter Technology",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::inverter-selection-off-grid",
+        "hydroponics::grid-tie-solar-system"
+      ],
+      "taxonomy_id": "SOLAR",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::vertical-farming-definition",
+      "label": "Vertical Farming Definition",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hydroponics-definition",
+        "hydroponics::controlled-environment-ag",
+        "hydroponics::space-utilization"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::multi-tier-growing-racks",
+      "label": "Multi-Tier Growing Racks",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::grow-room-layout"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::tower-garden-systems",
+      "label": "Tower Garden Systems",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::aeroponics-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::commercial-nft-at-scale",
+      "label": "Commercial NFT at Scale",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-film-technique-nft",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::commercial-dwc-raft-culture",
+      "label": "Commercial DWC (Raft Culture)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::deep-water-culture-dwc",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::aerofarms-technology",
+      "label": "AeroFarms Technology",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::high-pressure-aeroponics",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::bowery-farming-overview",
+      "label": "Bowery Farming Overview",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::gotham-greens-model",
+      "label": "Gotham Greens Model",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::grid-tie-solar-system"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::container-farm-design",
+      "label": "Container Farm Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::indoor-growing-basics"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::rooftop-farm-design",
+      "label": "Rooftop Farm Design",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::container-farm-design"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::building-integrated-agriculture",
+      "label": "Building-Integrated Agriculture",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::rooftop-farm-design"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::commercial-crop-selection",
+      "label": "Commercial Crop Selection",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::crop-selection-by-system-type",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::yield-per-square-meter",
+      "label": "Yield Per Square Meter",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::biomass-accumulation",
+        "hydroponics::multi-tier-growing-racks",
+        "hydroponics::plant-density-and-spacing"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::light-uniformity-multi-tier",
+      "label": "Light Uniformity Multi-Tier",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-uniformity-and-ppfd-map",
+        "hydroponics::multi-tier-growing-racks"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::hvac-for-large-facilities",
+      "label": "HVAC for Large Facilities",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::hvac-basics-for-grow-rooms",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::commercial-water-treatment",
+      "label": "Commercial Water Treatment",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::uv-sterilization-for-water",
+        "hydroponics::ozone-treatment",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::automation-in-commercial-farms",
+      "label": "Automation in Commercial Farms",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::grow-room-automation-overview",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::robotic-harvesting-systems",
+      "label": "Robotic Harvesting Systems",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::automation-in-commercial-farms",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::ai-crop-management",
+      "label": "AI Crop Management",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::automation-in-commercial-farms",
+        "hydroponics::anomaly-detection-methods",
+        "hydroponics::plotly-interactive-dashboard"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::food-miles-and-distribution",
+      "label": "Food Miles and Distribution",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::proximity-to-consumers",
+      "label": "Proximity to Consumers",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::food-miles-and-distribution",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::cold-chain-logistics",
+      "label": "Cold Chain Logistics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::post-harvest-handling",
+        "hydroponics::food-miles-and-distribution"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::organic-certification",
+      "label": "Organic Certification",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::haccp-principles"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::good-agricultural-practices",
+      "label": "Good Agricultural Practices",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::haccp-principles",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::commercial-scale-challenges",
+      "label": "Commercial Scale Challenges",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::hvac-for-large-facilities",
+        "hydroponics::automation-in-commercial-farms",
+        "hydroponics::energy-audit-for-grow-room"
+      ],
+      "taxonomy_id": "VERT",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::capital-budgeting-basics",
+      "label": "Capital Budgeting Basics",
+      "subject_id": "hydroponics",
+      "dependencies": [],
+      "taxonomy_id": "FIN",
+      "level": "foundational"
+    },
+    {
+      "id": "hydroponics::net-present-value-npv",
+      "label": "Net Present Value (NPV)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::capital-budgeting-basics"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::internal-rate-of-return-irr",
+      "label": "Internal Rate of Return (IRR)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::capital-budgeting-basics",
+        "hydroponics::net-present-value-npv"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::break-even-analysis",
+      "label": "Break-Even Analysis",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::capital-budgeting-basics"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::return-on-investment-roi",
+      "label": "Return on Investment (ROI)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::capital-budgeting-basics"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::payback-period-calculation",
+      "label": "Payback Period Calculation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::return-on-investment-roi",
+        "hydroponics::net-present-value-npv"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::fixed-vs-variable-costs",
+      "label": "Fixed vs Variable Costs",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::capital-budgeting-basics"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::operating-expense-opex",
+      "label": "Operating Expense (OpEx)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::fixed-vs-variable-costs",
+        "hydroponics::vertical-farming-definition",
+        "hydroponics::soilless-growing-systems"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::capital-expense-capex",
+      "label": "Capital Expense (CapEx)",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::fixed-vs-variable-costs",
+        "hydroponics::vertical-farming-definition"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::energy-cost-modeling",
+      "label": "Energy Cost Modeling",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::light-cost-per-kwh",
+        "hydroponics::energy-audit-for-grow-room",
+        "hydroponics::fixed-vs-variable-costs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::water-cost-modeling",
+      "label": "Water Cost Modeling",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::water-as-growth-medium",
+        "hydroponics::fixed-vs-variable-costs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::labor-cost-estimation",
+      "label": "Labor Cost Estimation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::fixed-vs-variable-costs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::nutrient-cost-per-cycle",
+      "label": "Nutrient Cost Per Cycle",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::nutrient-solution-concentration",
+        "hydroponics::fixed-vs-variable-costs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::revenue-modeling",
+      "label": "Revenue Modeling",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::yield-per-square-meter",
+        "hydroponics::fixed-vs-variable-costs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::wholesale-vs-retail-pricing",
+      "label": "Wholesale vs Retail Pricing",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::revenue-modeling"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::farmers-market-revenue",
+      "label": "Farmers Market Revenue",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::wholesale-vs-retail-pricing"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::restaurant-direct-sales",
+      "label": "Restaurant Direct Sales",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::wholesale-vs-retail-pricing"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::csa-community-supported-ag",
+      "label": "CSA Community Supported Ag",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::wholesale-vs-retail-pricing",
+        "hydroponics::year-round-production"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::grant-writing-school-gardens",
+      "label": "Grant Writing School Gardens",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::soilless-growing-systems",
+        "hydroponics::capital-budgeting-basics"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::usda-urban-agriculture-grants",
+      "label": "USDA Urban Agriculture Grants",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::grant-writing-school-gardens",
+        "hydroponics::urban-agriculture-definition"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::crowdfunding-for-farm-startups",
+      "label": "Crowdfunding for Farm Startups",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::capital-budgeting-basics"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::business-plan-structure",
+      "label": "Business Plan Structure",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::capital-budgeting-basics",
+        "hydroponics::revenue-modeling"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::market-research-local-produce",
+      "label": "Market Research Local Produce",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::revenue-modeling",
+        "hydroponics::wholesale-vs-retail-pricing"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::sensitivity-analysis",
+      "label": "Sensitivity Analysis",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::net-present-value-npv",
+        "hydroponics::return-on-investment-roi",
+        "hydroponics::fixed-vs-variable-costs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::monte-carlo-farm-risk-simulation",
+      "label": "Monte Carlo Farm Risk Simulation",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::sensitivity-analysis",
+        "hydroponics::statistical-functions-in-numpy",
+        "hydroponics::fixed-vs-variable-costs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::solar-energy-roi-in-hydroponics",
+      "label": "Solar Energy ROI in Hydroponics",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-roi-calculation",
+        "hydroponics::energy-cost-modeling"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::energy-projections-with-solar",
+      "label": "Energy Projections With Solar",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::solar-panel-cost-trends",
+        "hydroponics::energy-cost-modeling",
+        "hydroponics::solar-energy-roi-in-hydroponics"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::financial-dashboard-in-plotly",
+      "label": "Financial Dashboard in Plotly",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::plotly-interactive-dashboard",
+        "hydroponics::revenue-modeling",
+        "hydroponics::energy-cost-modeling"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::cash-flow-forecasting",
+      "label": "Cash Flow Forecasting",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::fixed-vs-variable-costs",
+        "hydroponics::revenue-modeling",
+        "hydroponics::net-present-value-npv"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "hydroponics::scale-up-financial-modeling",
+      "label": "Scale-Up Financial Modeling",
+      "subject_id": "hydroponics",
+      "dependencies": [
+        "hydroponics::cash-flow-forecasting",
+        "hydroponics::sensitivity-analysis",
+        "hydroponics::yield-per-square-meter",
+        "hydroponics::multi-tier-growing-racks"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    }
+  ]
+}

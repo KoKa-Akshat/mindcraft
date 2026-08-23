@@ -1,0 +1,3246 @@
+{
+  "subject_id": "control-systems",
+  "title": "Control Systems Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "PROP": {
+      "classifier_name": "System Properties",
+      "color": "PeachPuff"
+    },
+    "TIME": {
+      "classifier_name": "Time Response",
+      "color": "LightYellow"
+    },
+    "LAPL": {
+      "classifier_name": "Laplace Methods",
+      "color": "Honeydew"
+    },
+    "MODEL": {
+      "classifier_name": "Physical Modeling",
+      "color": "PaleTurquoise"
+    },
+    "LINEAR": {
+      "classifier_name": "Linearization",
+      "color": "Thistle"
+    },
+    "BLOCK": {
+      "classifier_name": "Block Diagrams",
+      "color": "LavenderBlush"
+    },
+    "STAB": {
+      "classifier_name": "Stability Analysis",
+      "color": "MistyRose"
+    },
+    "RLOC": {
+      "classifier_name": "Root Locus",
+      "color": "PaleGreen"
+    },
+    "FREQ": {
+      "classifier_name": "Frequency Response",
+      "color": "PowderBlue"
+    },
+    "ERROR": {
+      "classifier_name": "Steady-State Error",
+      "color": "Plum"
+    },
+    "CTRL": {
+      "classifier_name": "Controller Design",
+      "color": "Aquamarine"
+    },
+    "PERF": {
+      "classifier_name": "Performance",
+      "color": "LightPink"
+    }
+  },
+  "concepts": [
+    {
+      "id": "control-systems::control-system",
+      "label": "Control System",
+      "subject_id": "control-systems",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "control-systems::feedback",
+      "label": "Feedback",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::open-loop-control",
+      "label": "Open-Loop Control",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::closed-loop-control",
+      "label": "Closed-Loop Control",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system",
+        "control-systems::feedback"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::plant",
+      "label": "Plant",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::controller",
+      "label": "Controller",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system",
+        "control-systems::closed-loop-control"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::actuator",
+      "label": "Actuator",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system",
+        "control-systems::plant"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::sensor",
+      "label": "Sensor",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system",
+        "control-systems::feedback"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::reference-input",
+      "label": "Reference Input",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::closed-loop-control",
+        "control-systems::controller"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::error-signal",
+      "label": "Error Signal",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::closed-loop-control",
+        "control-systems::reference-input"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::disturbance",
+      "label": "Disturbance",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system",
+        "control-systems::plant"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::system-response",
+      "label": "System Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system",
+        "control-systems::plant"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::dynamic-system",
+      "label": "Dynamic System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::control-system"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::linear-system",
+      "label": "Linear System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dynamic-system"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::time-invariant-system",
+      "label": "Time-Invariant System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dynamic-system"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::lti-system",
+      "label": "LTI System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::linear-system",
+        "control-systems::time-invariant-system"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::superposition-principle",
+      "label": "Superposition Principle",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::linear-system"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::homogeneity",
+      "label": "Homogeneity",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::linear-system"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::causality",
+      "label": "Causality",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dynamic-system"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::differential-equation",
+      "label": "Differential Equation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dynamic-system"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::first-order-system",
+      "label": "First-Order System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lti-system",
+        "control-systems::differential-equation"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::second-order-system",
+      "label": "Second-Order System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lti-system",
+        "control-systems::differential-equation"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::higher-order-system",
+      "label": "Higher-Order System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::second-order-system"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::order-of-a-system",
+      "label": "Order of a System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::differential-equation"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::initial-conditions",
+      "label": "Initial Conditions",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::differential-equation"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::natural-response",
+      "label": "Natural Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::differential-equation",
+        "control-systems::initial-conditions"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::forced-response",
+      "label": "Forced Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::differential-equation"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::total-response",
+      "label": "Total Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::natural-response",
+        "control-systems::forced-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::zero-input-response",
+      "label": "Zero-Input Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::natural-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::zero-state-response",
+      "label": "Zero-State Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::forced-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::transient-response",
+      "label": "Transient Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::total-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::steady-state-response",
+      "label": "Steady-State Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::total-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::time-constant",
+      "label": "Time Constant",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::first-order-system",
+        "control-systems::transient-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::damping-ratio",
+      "label": "Damping Ratio",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::second-order-system"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::natural-frequency",
+      "label": "Natural Frequency",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::second-order-system"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::damped-frequency",
+      "label": "Damped Frequency",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::damping-ratio",
+        "control-systems::natural-frequency"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::undamped-system",
+      "label": "Undamped System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::damping-ratio"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::underdamped-system",
+      "label": "Underdamped System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::damping-ratio",
+        "control-systems::damped-frequency"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::critically-damped-system",
+      "label": "Critically Damped System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::damping-ratio"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::overdamped-system",
+      "label": "Overdamped System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::damping-ratio"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::overshoot",
+      "label": "Overshoot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::underdamped-system",
+        "control-systems::transient-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::percent-overshoot",
+      "label": "Percent Overshoot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::overshoot",
+        "control-systems::damping-ratio"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::settling-time",
+      "label": "Settling Time",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::transient-response",
+        "control-systems::time-constant"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::rise-time",
+      "label": "Rise Time",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::transient-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::peak-time",
+      "label": "Peak Time",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::underdamped-system",
+        "control-systems::overshoot"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::delay-time",
+      "label": "Delay Time",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::transient-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::step-input",
+      "label": "Step Input",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::impulse-input",
+      "label": "Impulse Input",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::ramp-input",
+      "label": "Ramp Input",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::parabolic-input",
+      "label": "Parabolic Input",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::ramp-input"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::sinusoidal-input",
+      "label": "Sinusoidal Input",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::unit-step-response",
+      "label": "Unit Step Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::step-input",
+        "control-systems::total-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::impulse-response",
+      "label": "Impulse Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::impulse-input",
+        "control-systems::total-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::ramp-response",
+      "label": "Ramp Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::ramp-input",
+        "control-systems::total-response"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::standard-test-inputs",
+      "label": "Standard Test Inputs",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::step-input",
+        "control-systems::impulse-input",
+        "control-systems::ramp-input"
+      ],
+      "taxonomy_id": "TIME",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::transfer-function",
+      "label": "Transfer Function",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lti-system",
+        "control-systems::differential-equation"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::laplace-transform",
+      "label": "Laplace Transform",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::differential-equation"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::inverse-laplace-transform",
+      "label": "Inverse Laplace Transform",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::laplace-transform"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::s-domain",
+      "label": "S-Domain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::laplace-transform"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::time-domain",
+      "label": "Time Domain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-response"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::frequency-domain",
+      "label": "Frequency Domain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::sinusoidal-input",
+        "control-systems::s-domain"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::poles",
+      "label": "Poles",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::transfer-function",
+        "control-systems::s-domain"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::zeros",
+      "label": "Zeros",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::transfer-function",
+        "control-systems::s-domain"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pole-zero-plot",
+      "label": "Pole-Zero Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::poles",
+        "control-systems::zeros"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pole-zero-cancellation",
+      "label": "Pole-Zero Cancellation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-zero-plot"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::dominant-poles",
+      "label": "Dominant Poles",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::poles",
+        "control-systems::transient-response"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pole-locations",
+      "label": "Pole Locations",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::poles"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::complex-conjugate-poles",
+      "label": "Complex Conjugate Poles",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-locations",
+        "control-systems::underdamped-system"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::real-poles",
+      "label": "Real Poles",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-locations"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::repeated-poles",
+      "label": "Repeated Poles",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-locations"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::simple-poles",
+      "label": "Simple Poles",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-locations"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pole-at-origin",
+      "label": "Pole at Origin",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-locations"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::poles-in-left-half-plane",
+      "label": "Poles in Left Half Plane",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-locations",
+        "control-systems::stability"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::poles-in-right-half-plane",
+      "label": "Poles in Right Half Plane",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-locations",
+        "control-systems::unstable-system"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::poles-on-imaginary-axis",
+      "label": "Poles on Imaginary Axis",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-locations",
+        "control-systems::marginal-stability"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::initial-value-theorem",
+      "label": "Initial Value Theorem",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::laplace-transform",
+        "control-systems::s-domain"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::final-value-theorem",
+      "label": "Final Value Theorem",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::laplace-transform",
+        "control-systems::s-domain",
+        "control-systems::steady-state-response"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::partial-fraction-expansion",
+      "label": "Partial Fraction Expansion",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::inverse-laplace-transform",
+        "control-systems::poles"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::residue-calculation",
+      "label": "Residue Calculation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::partial-fraction-expansion"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::cover-up-method",
+      "label": "Cover-Up Method",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::residue-calculation"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::convolution-integral",
+      "label": "Convolution Integral",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::impulse-response"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::convolution-in-s-domain",
+      "label": "Convolution in S-Domain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::convolution-integral",
+        "control-systems::s-domain"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::system-order",
+      "label": "System Order",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::order-of-a-system",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::proper-transfer-function",
+      "label": "Proper Transfer Function",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::transfer-function",
+        "control-systems::system-order"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::strictly-proper-function",
+      "label": "Strictly Proper Function",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::proper-transfer-function"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::dc-gain",
+      "label": "DC Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::transfer-function",
+        "control-systems::steady-state-response"
+      ],
+      "taxonomy_id": "LAPL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::electrical-systems",
+      "label": "Electrical Systems",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lti-system"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::mechanical-systems",
+      "label": "Mechanical Systems",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lti-system"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::translational-systems",
+      "label": "Translational Systems",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::mechanical-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::rotational-systems",
+      "label": "Rotational Systems",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::mechanical-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::electromechanical-systems",
+      "label": "Electromechanical Systems",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::electrical-systems",
+        "control-systems::mechanical-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::motor-model",
+      "label": "Motor Model",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::electromechanical-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::dc-motor",
+      "label": "DC Motor",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::motor-model"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::armature-controlled-motor",
+      "label": "Armature-Controlled Motor",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dc-motor"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::field-controlled-motor",
+      "label": "Field-Controlled Motor",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dc-motor"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::motor-transfer-function",
+      "label": "Motor Transfer Function",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dc-motor",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::rlc-circuit",
+      "label": "RLC Circuit",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::electrical-systems",
+        "control-systems::second-order-system"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::rc-circuit",
+      "label": "RC Circuit",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::electrical-systems",
+        "control-systems::first-order-system"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::rl-circuit",
+      "label": "RL Circuit",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::electrical-systems",
+        "control-systems::first-order-system"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::op-amp-circuits",
+      "label": "Op-Amp Circuits",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::electrical-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::mass-spring-damper",
+      "label": "Mass-Spring-Damper",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::translational-systems",
+        "control-systems::second-order-system"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pendulum-system",
+      "label": "Pendulum System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::rotational-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::gear-train",
+      "label": "Gear Train",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::rotational-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::lever-system",
+      "label": "Lever System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::translational-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::fluid-systems",
+      "label": "Fluid Systems",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lti-system"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::thermal-systems",
+      "label": "Thermal Systems",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lti-system",
+        "control-systems::first-order-system"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::analogous-systems",
+      "label": "Analogous Systems",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::electrical-systems",
+        "control-systems::mechanical-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::impedance-analogy",
+      "label": "Impedance Analogy",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::analogous-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::mobility-analogy",
+      "label": "Mobility Analogy",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::analogous-systems"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::force-voltage-analogy",
+      "label": "Force-Voltage Analogy",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::impedance-analogy"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::force-current-analogy",
+      "label": "Force-Current Analogy",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::mobility-analogy"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::linearization",
+      "label": "Linearization",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nonlinear-system"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::operating-point",
+      "label": "Operating Point",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::linearization"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::equilibrium-point",
+      "label": "Equilibrium Point",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::operating-point"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::small-signal-analysis",
+      "label": "Small Signal Analysis",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::linearization",
+        "control-systems::equilibrium-point"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::taylor-series-expansion",
+      "label": "Taylor Series Expansion",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::linearization"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::nonlinear-system",
+      "label": "Nonlinear System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dynamic-system"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::saturation",
+      "label": "Saturation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nonlinear-system"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::dead-zone",
+      "label": "Dead Zone",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nonlinear-system"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::backlash",
+      "label": "Backlash",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nonlinear-system"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::hysteresis",
+      "label": "Hysteresis",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nonlinear-system"
+      ],
+      "taxonomy_id": "LINEAR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::block-diagram",
+      "label": "Block Diagram",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::closed-loop-control",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::summing-junction",
+      "label": "Summing Junction",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram",
+        "control-systems::error-signal"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pickoff-point",
+      "label": "Pickoff Point",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::cascade-connection",
+      "label": "Cascade Connection",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::parallel-connection",
+      "label": "Parallel Connection",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::feedback-connection",
+      "label": "Feedback Connection",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram",
+        "control-systems::feedback"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::block-diagram-reduction",
+      "label": "Block Diagram Reduction",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram",
+        "control-systems::cascade-connection",
+        "control-systems::parallel-connection",
+        "control-systems::feedback-connection"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::block-diagram-algebra",
+      "label": "Block Diagram Algebra",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram-reduction"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::forward-path",
+      "label": "Forward Path",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram",
+        "control-systems::closed-loop-transfer"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::feedback-path",
+      "label": "Feedback Path",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram",
+        "control-systems::open-loop-transfer"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::loop",
+      "label": "Loop",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::forward-path",
+        "control-systems::feedback-path"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::inner-loop",
+      "label": "Inner Loop",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::loop"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::outer-loop",
+      "label": "Outer Loop",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::loop",
+        "control-systems::inner-loop"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::loop-gain",
+      "label": "Loop Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::loop",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::closed-loop-transfer",
+      "label": "Closed-Loop Transfer",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::closed-loop-control",
+        "control-systems::transfer-function",
+        "control-systems::block-diagram-reduction"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::open-loop-transfer",
+      "label": "Open-Loop Transfer",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::open-loop-control",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::unity-feedback",
+      "label": "Unity Feedback",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::feedback-connection",
+        "control-systems::closed-loop-transfer"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::non-unity-feedback",
+      "label": "Non-Unity Feedback",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::feedback-connection",
+        "control-systems::closed-loop-transfer"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::signal-flow-graph",
+      "label": "Signal Flow Graph",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::block-diagram"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::node",
+      "label": "Node",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::signal-flow-graph"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::branch",
+      "label": "Branch",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::signal-flow-graph"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::branch-gain",
+      "label": "Branch Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::branch",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::mason-s-gain-formula",
+      "label": "Mason's Gain Formula",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::signal-flow-graph",
+        "control-systems::forward-path-gain",
+        "control-systems::loop-gain-calculation"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::forward-path-gain",
+      "label": "Forward Path Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::signal-flow-graph",
+        "control-systems::forward-path"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::loop-gain-calculation",
+      "label": "Loop Gain Calculation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::signal-flow-graph",
+        "control-systems::loop-gain"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::non-touching-loops",
+      "label": "Non-Touching Loops",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::loop-gain-calculation"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::graph-determinant",
+      "label": "Graph Determinant",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::mason-s-gain-formula",
+        "control-systems::non-touching-loops"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::cofactor",
+      "label": "Cofactor",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::graph-determinant"
+      ],
+      "taxonomy_id": "BLOCK",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::stability",
+      "label": "Stability",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::closed-loop-control",
+        "control-systems::system-response"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bibo-stability",
+      "label": "BIBO Stability",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability",
+        "control-systems::bounded-input",
+        "control-systems::bounded-output"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::internal-stability",
+      "label": "Internal Stability",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::asymptotic-stability",
+      "label": "Asymptotic Stability",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability",
+        "control-systems::steady-state-response"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::marginal-stability",
+      "label": "Marginal Stability",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::unstable-system",
+      "label": "Unstable System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bounded-input",
+      "label": "Bounded Input",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::step-input",
+        "control-systems::impulse-input",
+        "control-systems::ramp-input"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bounded-output",
+      "label": "Bounded Output",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-response"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::characteristic-equation",
+      "label": "Characteristic Equation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::transfer-function",
+        "control-systems::poles"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::characteristic-polynomial",
+      "label": "Characteristic Polynomial",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::characteristic-equation"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::characteristic-roots",
+      "label": "Characteristic Roots",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::characteristic-polynomial",
+        "control-systems::poles"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::routh-hurwitz-criterion",
+      "label": "Routh-Hurwitz Criterion",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::characteristic-polynomial",
+        "control-systems::stability"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::routh-array",
+      "label": "Routh Array",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::routh-hurwitz-criterion"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::routh-array-construction",
+      "label": "Routh Array Construction",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::routh-array"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::special-cases-routh",
+      "label": "Special Cases Routh",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::routh-array-construction"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::zero-in-first-column",
+      "label": "Zero in First Column",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::special-cases-routh"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::row-of-zeros",
+      "label": "Row of Zeros",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::special-cases-routh"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::auxiliary-polynomial",
+      "label": "Auxiliary Polynomial",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::row-of-zeros"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::stability-boundary",
+      "label": "Stability Boundary",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::routh-hurwitz-criterion",
+        "control-systems::relative-stability"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::relative-stability",
+      "label": "Relative Stability",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability",
+        "control-systems::dominant-poles"
+      ],
+      "taxonomy_id": "STAB",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::root-locus",
+      "label": "Root Locus",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::poles",
+        "control-systems::stability",
+        "control-systems::loop-gain"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::root-locus-rules",
+      "label": "Root Locus Rules",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::starting-points",
+      "label": "Starting Points",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules",
+        "control-systems::poles"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::ending-points",
+      "label": "Ending Points",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules",
+        "control-systems::zeros"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::number-of-branches",
+      "label": "Number of Branches",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::symmetry-property",
+      "label": "Symmetry Property",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::real-axis-segments",
+      "label": "Real Axis Segments",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::angle-condition",
+      "label": "Angle Condition",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::magnitude-condition",
+      "label": "Magnitude Condition",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::breakaway-point",
+      "label": "Breakaway Point",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules",
+        "control-systems::real-axis-segments"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::break-in-point",
+      "label": "Break-In Point",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules",
+        "control-systems::real-axis-segments"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::asymptotes",
+      "label": "Asymptotes",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules",
+        "control-systems::ending-points"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::centroid",
+      "label": "Centroid",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::asymptotes"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::asymptote-angles",
+      "label": "Asymptote Angles",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::asymptotes"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::departure-angle",
+      "label": "Departure Angle",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules",
+        "control-systems::complex-conjugate-poles"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::arrival-angle",
+      "label": "Arrival Angle",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules",
+        "control-systems::zeros"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::imaginary-axis-crossing",
+      "label": "Imaginary Axis Crossing",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-rules",
+        "control-systems::poles-on-imaginary-axis"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::root-locus-gain",
+      "label": "Root Locus Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus",
+        "control-systems::magnitude-condition"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::gain-adjustment",
+      "label": "Gain Adjustment",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus-gain"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::dominant-pole-design",
+      "label": "Dominant Pole Design",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dominant-poles",
+        "control-systems::root-locus"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pole-placement",
+      "label": "Pole Placement",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dominant-pole-design"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::root-locus-compensation",
+      "label": "Root Locus Compensation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::root-locus",
+        "control-systems::compensator-design"
+      ],
+      "taxonomy_id": "RLOC",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::frequency-response",
+      "label": "Frequency Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::frequency-domain",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::sinusoidal-steady-state",
+      "label": "Sinusoidal Steady State",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::sinusoidal-input",
+        "control-systems::steady-state-response",
+        "control-systems::frequency-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::magnitude-response",
+      "label": "Magnitude Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::frequency-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::phase-response",
+      "label": "Phase Response",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::frequency-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::frequency-transfer-func",
+      "label": "Frequency Transfer Func",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::frequency-response",
+        "control-systems::transfer-function"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::substitution-s-jw",
+      "label": "Substitution s=jw",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::frequency-transfer-func",
+        "control-systems::s-domain"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bode-plot",
+      "label": "Bode Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::frequency-response",
+        "control-systems::decibel",
+        "control-systems::logarithmic-scale"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bode-magnitude-plot",
+      "label": "Bode Magnitude Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot",
+        "control-systems::magnitude-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bode-phase-plot",
+      "label": "Bode Phase Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot",
+        "control-systems::phase-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::decibel",
+      "label": "Decibel",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::magnitude-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::logarithmic-scale",
+      "label": "Logarithmic Scale",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::decibel"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::decade",
+      "label": "Decade",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::logarithmic-scale"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::octave",
+      "label": "Octave",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::logarithmic-scale"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::corner-frequency",
+      "label": "Corner Frequency",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot",
+        "control-systems::poles"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::break-frequency",
+      "label": "Break Frequency",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::corner-frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::asymptotic-approximation",
+      "label": "Asymptotic Approximation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot",
+        "control-systems::bode-plot-construction"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bode-plot-construction",
+      "label": "Bode Plot Construction",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot",
+        "control-systems::first-order-factor",
+        "control-systems::second-order-factor"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::first-order-factor",
+      "label": "First-Order Factor",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::first-order-system",
+        "control-systems::bode-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::second-order-factor",
+      "label": "Second-Order Factor",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::second-order-system",
+        "control-systems::bode-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::first-order-bode-plot",
+      "label": "First-Order Bode Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::first-order-factor",
+        "control-systems::bode-plot-construction"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::second-order-bode-plot",
+      "label": "Second-Order Bode Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::second-order-factor",
+        "control-systems::bode-plot-construction"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::integrator-bode-plot",
+      "label": "Integrator Bode Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-at-origin",
+        "control-systems::bode-plot-construction"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::differentiator-bode-plot",
+      "label": "Differentiator Bode Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::zeros",
+        "control-systems::bode-plot-construction"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::constant-gain-term",
+      "label": "Constant Gain Term",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::dc-gain",
+        "control-systems::bode-plot-construction"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::time-delay-in-bode",
+      "label": "Time Delay in Bode",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::resonant-peak",
+      "label": "Resonant Peak",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::second-order-bode-plot",
+        "control-systems::underdamped-system"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::resonant-frequency",
+      "label": "Resonant Frequency",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::resonant-peak",
+        "control-systems::natural-frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::quality-factor",
+      "label": "Quality Factor",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::resonant-peak",
+        "control-systems::damping-ratio"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bandwidth",
+      "label": "Bandwidth",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot",
+        "control-systems::cutoff-frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::cutoff-frequency",
+      "label": "Cutoff Frequency",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::corner-frequency",
+        "control-systems::decibel"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::half-power-point",
+      "label": "Half-Power Point",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::cutoff-frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::low-pass-system",
+      "label": "Low-Pass System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot",
+        "control-systems::cutoff-frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::high-pass-system",
+      "label": "High-Pass System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-plot",
+        "control-systems::cutoff-frequency"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bandpass-system",
+      "label": "Bandpass System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::low-pass-system",
+        "control-systems::high-pass-system"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::notch-filter",
+      "label": "Notch Filter",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bandpass-system"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::gain-margin",
+      "label": "Gain Margin",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability-margins",
+        "control-systems::gain-crossover"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::phase-margin",
+      "label": "Phase Margin",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability-margins",
+        "control-systems::phase-crossover"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::stability-margins",
+      "label": "Stability Margins",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability",
+        "control-systems::bode-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::crossover-frequency",
+      "label": "Crossover Frequency",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::gain-crossover",
+        "control-systems::phase-crossover"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::gain-crossover",
+      "label": "Gain Crossover",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-magnitude-plot",
+        "control-systems::decibel"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::phase-crossover",
+      "label": "Phase Crossover",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::bode-phase-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::minimum-phase-system",
+      "label": "Minimum Phase System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::zeros",
+        "control-systems::poles-in-left-half-plane"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::non-minimum-phase",
+      "label": "Non-Minimum Phase",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::zeros",
+        "control-systems::poles-in-right-half-plane"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::all-pass-system",
+      "label": "All-Pass System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::magnitude-response",
+        "control-systems::phase-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::nyquist-plot",
+      "label": "Nyquist Plot",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::frequency-response",
+        "control-systems::nyquist-contour"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::nyquist-diagram",
+      "label": "Nyquist Diagram",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nyquist-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::nyquist-criterion",
+      "label": "Nyquist Criterion",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nyquist-plot",
+        "control-systems::encirclement",
+        "control-systems::stability"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::nyquist-contour",
+      "label": "Nyquist Contour",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::s-domain",
+        "control-systems::frequency-response"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::encirclement",
+      "label": "Encirclement",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nyquist-plot"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::clockwise-encirclement",
+      "label": "Clockwise Encirclement",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::encirclement"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::right-half-plane-poles",
+      "label": "Right-Half Plane Poles",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::poles-in-right-half-plane",
+        "control-systems::nyquist-criterion"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::right-half-plane-zeros",
+      "label": "Right-Half Plane Zeros",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::non-minimum-phase"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::conditionally-stable",
+      "label": "Conditionally Stable",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::nyquist-criterion",
+        "control-systems::gain-adjustment"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::gain-margin-from-nyquist",
+      "label": "Gain Margin from Nyquist",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::gain-margin",
+        "control-systems::nyquist-diagram"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::phase-margin-from-nyquist",
+      "label": "Phase Margin from Nyquist",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::phase-margin",
+        "control-systems::nyquist-diagram"
+      ],
+      "taxonomy_id": "FREQ",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::steady-state-error",
+      "label": "Steady-State Error",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::steady-state-response",
+        "control-systems::error-signal"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::steady-state-accuracy",
+      "label": "Steady-State Accuracy",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::steady-state-error"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::error-constants",
+      "label": "Error Constants",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::steady-state-error",
+        "control-systems::system-type"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::position-error-constant",
+      "label": "Position Error Constant",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::error-constants",
+        "control-systems::type-0-system"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::velocity-error-constant",
+      "label": "Velocity Error Constant",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::error-constants",
+        "control-systems::type-1-system"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::acceleration-error-const",
+      "label": "Acceleration Error Const",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::error-constants",
+        "control-systems::type-2-system"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::system-type",
+      "label": "System Type",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pole-at-origin",
+        "control-systems::closed-loop-transfer"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::type-0-system",
+      "label": "Type 0 System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-type"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::type-1-system",
+      "label": "Type 1 System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-type"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::type-2-system",
+      "label": "Type 2 System",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-type"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::type-number",
+      "label": "Type Number",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::system-type"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::error-coefficients",
+      "label": "Error Coefficients",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::error-constants"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::disturbance-error",
+      "label": "Disturbance Error",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::steady-state-error",
+        "control-systems::disturbance"
+      ],
+      "taxonomy_id": "ERROR",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::proportional-control",
+      "label": "Proportional Control",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller",
+        "control-systems::proportional-gain"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::integral-control",
+      "label": "Integral Control",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller",
+        "control-systems::integral-gain"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::derivative-control",
+      "label": "Derivative Control",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller",
+        "control-systems::derivative-gain"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::p-controller",
+      "label": "P Controller",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::proportional-control"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pi-controller",
+      "label": "PI Controller",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::proportional-control",
+        "control-systems::integral-control"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pd-controller",
+      "label": "PD Controller",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::proportional-control",
+        "control-systems::derivative-control"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::pid-controller",
+      "label": "PID Controller",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pi-controller",
+        "control-systems::pd-controller"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::proportional-gain",
+      "label": "Proportional Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::integral-gain",
+      "label": "Integral Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::derivative-gain",
+      "label": "Derivative Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::integral-time",
+      "label": "Integral Time",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::integral-gain"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::derivative-time",
+      "label": "Derivative Time",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::derivative-gain"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::controller-tuning",
+      "label": "Controller Tuning",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::pid-controller"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::ziegler-nichols-method",
+      "label": "Ziegler-Nichols Method",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller-tuning",
+        "control-systems::ultimate-gain",
+        "control-systems::ultimate-period"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::reaction-curve-method",
+      "label": "Reaction Curve Method",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller-tuning",
+        "control-systems::time-constant"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::ultimate-gain-method",
+      "label": "Ultimate Gain Method",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::ziegler-nichols-method"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::ultimate-gain",
+      "label": "Ultimate Gain",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller-tuning",
+        "control-systems::marginal-stability"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::ultimate-period",
+      "label": "Ultimate Period",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::ultimate-gain"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::trial-and-error-tuning",
+      "label": "Trial and Error Tuning",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller-tuning"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::anti-windup",
+      "label": "Anti-Windup",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::integral-control",
+        "control-systems::saturation"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::derivative-kick",
+      "label": "Derivative Kick",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::derivative-control"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::lead-compensator",
+      "label": "Lead Compensator",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::compensator-design",
+        "control-systems::phase-lead"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::lag-compensator",
+      "label": "Lag Compensator",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::compensator-design",
+        "control-systems::phase-lag"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::lead-lag-compensator",
+      "label": "Lead-Lag Compensator",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lead-compensator",
+        "control-systems::lag-compensator"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::phase-lead",
+      "label": "Phase Lead",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::phase-response",
+        "control-systems::phase-margin"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::phase-lag",
+      "label": "Phase Lag",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::phase-response",
+        "control-systems::steady-state-error"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::compensator-design",
+      "label": "Compensator Design",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::controller",
+        "control-systems::performance-specs"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::maximum-phase-lead",
+      "label": "Maximum Phase Lead",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lead-compensator",
+        "control-systems::phase-lead"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::compensation-zero",
+      "label": "Compensation Zero",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lead-compensator",
+        "control-systems::zeros"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::compensation-pole",
+      "label": "Compensation Pole",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::lead-compensator",
+        "control-systems::poles"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::bode-design-method",
+      "label": "Bode Design Method",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::compensator-design",
+        "control-systems::bode-plot",
+        "control-systems::gain-margin",
+        "control-systems::phase-margin"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::root-locus-design",
+      "label": "Root Locus Design",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::compensator-design",
+        "control-systems::root-locus"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::performance-specs",
+      "label": "Performance Specs",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::overshoot",
+        "control-systems::settling-time",
+        "control-systems::rise-time",
+        "control-systems::steady-state-error"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::design-tradeoffs",
+      "label": "Design Tradeoffs",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::performance-specs",
+        "control-systems::robustness"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::speed-vs-stability",
+      "label": "Speed vs Stability",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::design-tradeoffs",
+        "control-systems::rise-time",
+        "control-systems::stability"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::robustness",
+      "label": "Robustness",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::stability",
+        "control-systems::sensitivity"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::sensitivity",
+      "label": "Sensitivity",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::closed-loop-transfer",
+        "control-systems::stability"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::sensitivity-function",
+      "label": "Sensitivity Function",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::sensitivity"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::complementary-sensitivity",
+      "label": "Complementary Sensitivity",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::sensitivity-function"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::disturbance-rejection",
+      "label": "Disturbance Rejection",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::disturbance",
+        "control-systems::closed-loop-transfer",
+        "control-systems::robustness"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "control-systems::noise-attenuation",
+      "label": "Noise Attenuation",
+      "subject_id": "control-systems",
+      "dependencies": [
+        "control-systems::sensor",
+        "control-systems::robustness",
+        "control-systems::bandwidth"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    }
+  ]
+}

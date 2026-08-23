@@ -1,0 +1,4722 @@
+{
+  "subject_id": "genetics",
+  "title": "Genetics: Analysis, Genomics, and Modern Inference",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "PROB": {
+      "classifier_name": "Probabilistic Reasoning",
+      "color": "PeachPuff"
+    },
+    "PED": {
+      "classifier_name": "Pedigree and Inheritance",
+      "color": "LightPink"
+    },
+    "GSTR": {
+      "classifier_name": "Genome Structure",
+      "color": "Thistle"
+    },
+    "GVAR": {
+      "classifier_name": "Genetic Variation",
+      "color": "Plum"
+    },
+    "MAP": {
+      "classifier_name": "Mapping and Linkage",
+      "color": "PowderBlue"
+    },
+    "QUANT": {
+      "classifier_name": "Quantitative Genetics",
+      "color": "LightYellow"
+    },
+    "POP": {
+      "classifier_name": "Population Genetics",
+      "color": "PaleGreen"
+    },
+    "REG": {
+      "classifier_name": "Gene Regulation",
+      "color": "Aquamarine"
+    },
+    "EXP": {
+      "classifier_name": "Experimental Methods",
+      "color": "LightSteelBlue"
+    },
+    "BIOINFO": {
+      "classifier_name": "Genomics and Bioinformatics",
+      "color": "Honeydew"
+    },
+    "CLIN": {
+      "classifier_name": "Human and Clinical Genetics",
+      "color": "MistyRose"
+    },
+    "ETHICS": {
+      "classifier_name": "Ethics and Society",
+      "color": "Lavender"
+    },
+    "FRONT": {
+      "classifier_name": "Frontier Topics",
+      "color": "PaleTurquoise"
+    }
+  },
+  "concepts": [
+    {
+      "id": "genetics::genetic-inference",
+      "label": "Genetic Inference",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::probability-in-genetics",
+      "label": "Probability in Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::conditional-probability",
+      "label": "Conditional Probability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::probability-in-genetics"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::bayesian-reasoning",
+      "label": "Bayesian Reasoning",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::conditional-probability"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::prior-probability",
+      "label": "Prior Probability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::bayesian-reasoning"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::posterior-probability",
+      "label": "Posterior Probability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::bayesian-reasoning",
+        "genetics::prior-probability"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::likelihood-ratio",
+      "label": "Likelihood Ratio",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::bayesian-reasoning",
+        "genetics::posterior-probability"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pedigree-analysis",
+      "label": "Pedigree Analysis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference",
+        "genetics::probability-in-genetics"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::autosomal-dominant-pedigree",
+      "label": "Autosomal Dominant Pedigree",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pedigree-analysis"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::autosomal-recessive-pedigree",
+      "label": "Autosomal Recessive Pedigree",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pedigree-analysis"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::x-linked-inheritance",
+      "label": "X-Linked Inheritance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pedigree-analysis"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::x-linked-recessive-pedigree",
+      "label": "X-Linked Recessive Pedigree",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::x-linked-inheritance"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::x-linked-dominant-pedigree",
+      "label": "X-Linked Dominant Pedigree",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::x-linked-inheritance"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::carrier-probability",
+      "label": "Carrier Probability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::bayesian-reasoning",
+        "genetics::autosomal-recessive-pedigree"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::penetrance",
+      "label": "Penetrance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pedigree-analysis",
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::incomplete-penetrance",
+      "label": "Incomplete Penetrance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::penetrance"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::expressivity",
+      "label": "Expressivity",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::penetrance"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::variable-expressivity",
+      "label": "Variable Expressivity",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::expressivity"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::phenocopy",
+      "label": "Phenocopy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::penetrance",
+        "genetics::expressivity"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-heterogeneity",
+      "label": "Genetic Heterogeneity",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::locus-heterogeneity",
+      "label": "Locus Heterogeneity",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-heterogeneity"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::allelic-heterogeneity",
+      "label": "Allelic Heterogeneity",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-heterogeneity"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::epistasis",
+      "label": "Epistasis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::duplicate-epistasis",
+      "label": "Duplicate Epistasis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epistasis"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::complementary-epistasis",
+      "label": "Complementary Epistasis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epistasis"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::suppressor-epistasis",
+      "label": "Suppressor Epistasis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epistasis"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::epistatic-pathway-analysis",
+      "label": "Epistatic Pathway Analysis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epistasis",
+        "genetics::suppressor-epistasis"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::complementation-test",
+      "label": "Complementation Test",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference",
+        "genetics::epistasis"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::complementation-group",
+      "label": "Complementation Group",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::complementation-test"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cis-trans-test",
+      "label": "Cis-Trans Test",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::complementation-test"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::allelism",
+      "label": "Allelism",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::complementation-test",
+        "genetics::complementation-group"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::functional-allelism",
+      "label": "Functional Allelism",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::allelism"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chi-square-test",
+      "label": "Chi-Square Test",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::probability-in-genetics"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::goodness-of-fit-test",
+      "label": "Goodness of Fit Test",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chi-square-test"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::test-cross",
+      "label": "Test Cross",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::reciprocal-cross",
+      "label": "Reciprocal Cross",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::test-cross"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::null-hypothesis-in-genetics",
+      "label": "Null Hypothesis in Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chi-square-test"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::p-value-interpretation",
+      "label": "P-Value Interpretation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::null-hypothesis-in-genetics"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "genetics::modified-mendelian-ratios",
+      "label": "Modified Mendelian Ratios",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epistasis",
+        "genetics::chi-square-test"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::lethal-alleles",
+      "label": "Lethal Alleles",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pleiotropy",
+      "label": "Pleiotropy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-background-effects",
+      "label": "Genetic Background Effects",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epistasis",
+        "genetics::pleiotropy"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::age-of-onset",
+      "label": "Age of Onset",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::penetrance",
+        "genetics::incomplete-penetrance"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::anticipation",
+      "label": "Anticipation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::age-of-onset"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genomic-imprinting",
+      "label": "Genomic Imprinting",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epigenetics"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::parent-of-origin-effects",
+      "label": "Parent of Origin Effects",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomic-imprinting"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::uniparental-disomy",
+      "label": "Uniparental Disomy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomic-imprinting",
+        "genetics::aneuploidy"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::mosaicism",
+      "label": "Mosaicism",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::somatic-mosaicism",
+      "label": "Somatic Mosaicism",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mosaicism"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::germline-mosaicism",
+      "label": "Germline Mosaicism",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mosaicism"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genome-organization",
+      "label": "Genome Organization",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::chromosome-structure",
+      "label": "Chromosome Structure",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-organization"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::euchromatin",
+      "label": "Euchromatin",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromosome-structure",
+        "genetics::chromatin"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::heterochromatin",
+      "label": "Heterochromatin",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromosome-structure",
+        "genetics::chromatin"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::constitutive-heterochromatin",
+      "label": "Constitutive Heterochromatin",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::heterochromatin"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::facultative-heterochromatin",
+      "label": "Facultative Heterochromatin",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::heterochromatin"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::centromere-structure",
+      "label": "Centromere Structure",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::telomere-structure",
+      "label": "Telomere Structure",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromatin",
+      "label": "Chromatin",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::nucleosome",
+      "label": "Nucleosome",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromatin"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::histone-proteins",
+      "label": "Histone Proteins",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::nucleosome"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::histone-modifications",
+      "label": "Histone Modifications",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::histone-proteins"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::histone-acetylation",
+      "label": "Histone Acetylation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::histone-modifications"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::histone-methylation",
+      "label": "Histone Methylation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::histone-modifications"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromatin-remodeling",
+      "label": "Chromatin Remodeling",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::histone-modifications",
+        "genetics::chromatin"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::epigenetics",
+      "label": "Epigenetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::histone-modifications",
+        "genetics::cpg-islands"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dna-methylation",
+      "label": "DNA Methylation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epigenetics"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cpg-islands",
+      "label": "CpG Islands",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-organization"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::epigenetic-inheritance",
+      "label": "Epigenetic Inheritance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epigenetics",
+        "genetics::dna-methylation"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::x-inactivation",
+      "label": "X-Inactivation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::facultative-heterochromatin",
+        "genetics::epigenetics"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dosage-compensation",
+      "label": "Dosage Compensation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::x-inactivation"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::barr-body",
+      "label": "Barr Body",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::x-inactivation"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-variation",
+      "label": "Genetic Variation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-organization"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::single-nucleotide-polymorphism",
+      "label": "Single Nucleotide Polymorphism",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-variation"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::insertion-deletion-variant",
+      "label": "Insertion Deletion Variant",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-variation"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::copy-number-variation",
+      "label": "Copy Number Variation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-variation",
+        "genetics::structural-variation"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::structural-variation",
+      "label": "Structural Variation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-variation"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromosomal-inversion",
+      "label": "Chromosomal Inversion",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::structural-variation",
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromosomal-translocation",
+      "label": "Chromosomal Translocation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::structural-variation",
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromosomal-deletion",
+      "label": "Chromosomal Deletion",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::structural-variation",
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromosomal-duplication",
+      "label": "Chromosomal Duplication",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::structural-variation",
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::tandem-repeat",
+      "label": "Tandem Repeat",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-variation"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::short-tandem-repeat",
+      "label": "Short Tandem Repeat",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::tandem-repeat"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::microsatellite",
+      "label": "Microsatellite",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::short-tandem-repeat"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::minisatellite",
+      "label": "Minisatellite",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::tandem-repeat"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::variable-number-tandem-repeat",
+      "label": "Variable Number Tandem Repeat",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::minisatellite"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::haplotype",
+      "label": "Haplotype",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::single-nucleotide-polymorphism"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::haplotype-block",
+      "label": "Haplotype Block",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::haplotype",
+        "genetics::linkage-disequilibrium"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::linkage-disequilibrium",
+      "label": "Linkage Disequilibrium",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::haplotype",
+        "genetics::linkage"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::tag-snp",
+      "label": "Tag SNP",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::haplotype-block",
+        "genetics::linkage-disequilibrium"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::hapmap-project",
+      "label": "HapMap Project",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::haplotype",
+        "genetics::tag-snp"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::transposable-elements",
+      "label": "Transposable Elements",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-organization",
+        "genetics::genetic-variation"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dna-transposon",
+      "label": "DNA Transposon",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transposable-elements"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::retrotransposon",
+      "label": "Retrotransposon",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transposable-elements"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::line-element",
+      "label": "LINE Element",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::retrotransposon"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::sine-element",
+      "label": "SINE Element",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::retrotransposon"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::alu-element",
+      "label": "Alu Element",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::sine-element"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::transposon-mutagenesis",
+      "label": "Transposon Mutagenesis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transposable-elements",
+        "genetics::mutagenesis-screen"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-duplication",
+      "label": "Gene Duplication",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::structural-variation",
+        "genetics::genome-organization"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::paralog",
+      "label": "Paralog",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-duplication"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ortholog",
+      "label": "Ortholog",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-duplication",
+        "genetics::comparative-genomics"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-family",
+      "label": "Gene Family",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-duplication",
+        "genetics::paralog"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pseudogene",
+      "label": "Pseudogene",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-duplication"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::segmental-duplication",
+      "label": "Segmental Duplication",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-duplication",
+        "genetics::structural-variation"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::polyploidy",
+      "label": "Polyploidy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-organization",
+        "genetics::aneuploidy"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::aneuploidy",
+      "label": "Aneuploidy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::trisomy",
+      "label": "Trisomy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::aneuploidy"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::monosomy",
+      "label": "Monosomy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::aneuploidy"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::nondisjunction",
+      "label": "Nondisjunction",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::aneuploidy"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromosomal-rearrangement",
+      "label": "Chromosomal Rearrangement",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::structural-variation",
+        "genetics::chromosomal-inversion",
+        "genetics::chromosomal-translocation"
+      ],
+      "taxonomy_id": "GVAR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::linkage",
+      "label": "Linkage",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::genetic-linkage",
+      "label": "Genetic Linkage",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::linkage",
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::recombination",
+      "label": "Recombination",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::linkage"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::crossing-over",
+      "label": "Crossing Over",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination",
+        "genetics::chromosome-structure"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::recombination-frequency",
+      "label": "Recombination Frequency",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination",
+        "genetics::crossing-over"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-map",
+      "label": "Genetic Map",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination-frequency"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::map-distance",
+      "label": "Map Distance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-map"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::centimorgan",
+      "label": "Centimorgan",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::map-distance"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::two-point-cross",
+      "label": "Two-Point Cross",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination-frequency",
+        "genetics::test-cross"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::three-point-cross",
+      "label": "Three-Point Cross",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::two-point-cross"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::interference",
+      "label": "Interference",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::three-point-cross"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::coefficient-of-coincidence",
+      "label": "Coefficient of Coincidence",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::interference"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-order-determination",
+      "label": "Gene Order Determination",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::three-point-cross"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-markers",
+      "label": "Genetic Markers",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-variation",
+        "genetics::linkage"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::molecular-markers",
+      "label": "Molecular Markers",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-markers"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::restriction-fragment-length",
+      "label": "Restriction Fragment Length",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::molecular-markers"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::microsatellite-markers",
+      "label": "Microsatellite Markers",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::microsatellite",
+        "genetics::molecular-markers"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::snp-markers",
+      "label": "SNP Markers",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::single-nucleotide-polymorphism",
+        "genetics::molecular-markers"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::physical-map",
+      "label": "Physical Map",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-map",
+        "genetics::molecular-markers"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cytogenetic-map",
+      "label": "Cytogenetic Map",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromosome-structure",
+        "genetics::physical-map"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::radiation-hybrid-mapping",
+      "label": "Radiation Hybrid Mapping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::physical-map"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::somatic-cell-hybridization",
+      "label": "Somatic Cell Hybridization",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::radiation-hybrid-mapping"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::synteny",
+      "label": "Synteny",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::physical-map",
+        "genetics::comparative-genomics"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::comparative-genomics",
+      "label": "Comparative Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics",
+        "genetics::physical-map"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-discovery-strategies",
+      "label": "Gene Discovery Strategies",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-markers",
+        "genetics::genetic-map"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::positional-cloning",
+      "label": "Positional Cloning",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-discovery-strategies",
+        "genetics::physical-map"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::candidate-gene-approach",
+      "label": "Candidate Gene Approach",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-discovery-strategies"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::linkage-analysis",
+      "label": "Linkage Analysis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-linkage",
+        "genetics::genetic-markers"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::lod-score",
+      "label": "LOD Score",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::linkage-analysis"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::lod-score-threshold",
+      "label": "LOD Score Threshold",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::lod-score"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::parametric-linkage",
+      "label": "Parametric Linkage",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::linkage-analysis"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::nonparametric-linkage",
+      "label": "Nonparametric Linkage",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::linkage-analysis"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::recombination-hotspots",
+      "label": "Recombination Hotspots",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination",
+        "genetics::crossing-over"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::sex-differences-in-mapping",
+      "label": "Sex Differences in Mapping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-map",
+        "genetics::recombination-hotspots"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::mitotic-recombination",
+      "label": "Mitotic Recombination",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-conversion",
+      "label": "Gene Conversion",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination",
+        "genetics::mitotic-recombination"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::tetrad-analysis",
+      "label": "Tetrad Analysis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ordered-tetrad",
+      "label": "Ordered Tetrad",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::tetrad-analysis"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::unordered-tetrad",
+      "label": "Unordered Tetrad",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::tetrad-analysis"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::centromere-mapping",
+      "label": "Centromere Mapping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::ordered-tetrad",
+        "genetics::centromere-structure"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::half-tetrad-analysis",
+      "label": "Half-Tetrad Analysis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::tetrad-analysis"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::deletion-mapping",
+      "label": "Deletion Mapping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromosomal-deletion",
+        "genetics::genetic-map"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::complementation-mapping",
+      "label": "Complementation Mapping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::complementation-test",
+        "genetics::genetic-map"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::fine-structure-mapping",
+      "label": "Fine Structure Mapping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-map",
+        "genetics::intragenic-recombination"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::intragenic-recombination",
+      "label": "Intragenic Recombination",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::recombination"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::quantitative-genetics",
+      "label": "Quantitative Genetics",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::quantitative-trait",
+      "label": "Quantitative Trait",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::quantitative-genetics"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::continuous-variation",
+      "label": "Continuous Variation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::quantitative-trait"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::polygenic-inheritance",
+      "label": "Polygenic Inheritance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::quantitative-trait",
+        "genetics::continuous-variation"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::multifactorial-trait",
+      "label": "Multifactorial Trait",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::polygenic-inheritance"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::threshold-trait",
+      "label": "Threshold Trait",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::multifactorial-trait"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::heritability",
+      "label": "Heritability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::quantitative-genetics",
+        "genetics::phenotypic-variance"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::broad-sense-heritability",
+      "label": "Broad Sense Heritability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::heritability"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::narrow-sense-heritability",
+      "label": "Narrow Sense Heritability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::heritability",
+        "genetics::additive-genetic-variance"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::additive-genetic-variance",
+      "label": "Additive Genetic Variance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::phenotypic-variance"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dominance-variance",
+      "label": "Dominance Variance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::phenotypic-variance"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::epistatic-variance",
+      "label": "Epistatic Variance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::phenotypic-variance",
+        "genetics::epistasis"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::environmental-variance",
+      "label": "Environmental Variance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::phenotypic-variance"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::phenotypic-variance",
+      "label": "Phenotypic Variance",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::quantitative-genetics",
+        "genetics::quantitative-trait"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::twin-studies",
+      "label": "Twin Studies",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::heritability"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::monozygotic-twins",
+      "label": "Monozygotic Twins",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::twin-studies"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dizygotic-twins",
+      "label": "Dizygotic Twins",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::twin-studies"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::concordance-rate",
+      "label": "Concordance Rate",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::twin-studies",
+        "genetics::monozygotic-twins",
+        "genetics::dizygotic-twins"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::heritability-estimation",
+      "label": "Heritability Estimation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::heritability",
+        "genetics::twin-studies"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::quantitative-trait-locus",
+      "label": "Quantitative Trait Locus",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::quantitative-genetics",
+        "genetics::genetic-markers"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::qtl-mapping",
+      "label": "QTL Mapping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::quantitative-trait-locus",
+        "genetics::genetic-map"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::interval-mapping",
+      "label": "Interval Mapping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::qtl-mapping"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::marker-assisted-selection",
+      "label": "Marker Assisted Selection",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::qtl-mapping",
+        "genetics::quantitative-trait-locus"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gwas",
+      "label": "GWAS",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::single-nucleotide-polymorphism",
+        "genetics::quantitative-trait-locus",
+        "genetics::population-genetics"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::manhattan-plot",
+      "label": "Manhattan Plot",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gwas"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::significance-threshold",
+      "label": "Significance Threshold",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gwas",
+        "genetics::multiple-testing-correction"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::multiple-testing-correction",
+      "label": "Multiple Testing Correction",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gwas"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::bonferroni-correction",
+      "label": "Bonferroni Correction",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::multiple-testing-correction"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::false-discovery-rate",
+      "label": "False Discovery Rate",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::multiple-testing-correction"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::effect-size",
+      "label": "Effect Size",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gwas"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::odds-ratio",
+      "label": "Odds Ratio",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::effect-size"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::polygenic-risk-score",
+      "label": "Polygenic Risk Score",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gwas",
+        "genetics::effect-size"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::missing-heritability",
+      "label": "Missing Heritability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::heritability",
+        "genetics::gwas"
+      ],
+      "taxonomy_id": "QUANT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::population-genetics",
+      "label": "Population Genetics",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::allele-frequency",
+      "label": "Allele Frequency",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::population-genetics"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genotype-frequency",
+      "label": "Genotype Frequency",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::allele-frequency"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::hardy-weinberg-equilibrium",
+      "label": "Hardy-Weinberg Equilibrium",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::allele-frequency",
+        "genetics::genotype-frequency"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::hardy-weinberg-assumptions",
+      "label": "Hardy-Weinberg Assumptions",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::hardy-weinberg-equilibrium"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chi-square-hwe-test",
+      "label": "Chi-Square HWE Test",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::hardy-weinberg-equilibrium",
+        "genetics::chi-square-test"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::natural-selection",
+      "label": "Natural Selection",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::population-genetics"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::fitness",
+      "label": "Fitness",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::natural-selection"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::selection-coefficient",
+      "label": "Selection Coefficient",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::fitness"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::directional-selection",
+      "label": "Directional Selection",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::natural-selection"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::stabilizing-selection",
+      "label": "Stabilizing Selection",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::natural-selection"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::disruptive-selection",
+      "label": "Disruptive Selection",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::natural-selection"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::balancing-selection",
+      "label": "Balancing Selection",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::natural-selection"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::heterozygote-advantage",
+      "label": "Heterozygote Advantage",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::balancing-selection"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-drift",
+      "label": "Genetic Drift",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::population-genetics"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::bottleneck-effect",
+      "label": "Bottleneck Effect",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-drift"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::founder-effect",
+      "label": "Founder Effect",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-drift"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-flow",
+      "label": "Gene Flow",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::population-genetics"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::migration",
+      "label": "Migration",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-flow"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::mutation-rate",
+      "label": "Mutation Rate",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::population-genetics",
+        "genetics::genetic-variation"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::population-structure",
+      "label": "Population Structure",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::population-genetics",
+        "genetics::fixation-index"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::fixation-index",
+      "label": "Fixation Index",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::population-genetics",
+        "genetics::allele-frequency"
+      ],
+      "taxonomy_id": "POP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-expression",
+      "label": "Gene Expression",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::transcription-regulation",
+      "label": "Transcription Regulation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-expression"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::promoter",
+      "label": "Promoter",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-regulation"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::tata-box",
+      "label": "TATA Box",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::promoter"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::transcription-factor",
+      "label": "Transcription Factor",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-regulation"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::general-transcription-factor",
+      "label": "General Transcription Factor",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-factor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::specific-transcription-factor",
+      "label": "Specific Transcription Factor",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-factor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::activator",
+      "label": "Activator",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::specific-transcription-factor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::repressor",
+      "label": "Repressor",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::specific-transcription-factor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::enhancer",
+      "label": "Enhancer",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-regulation",
+        "genetics::specific-transcription-factor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::silencer",
+      "label": "Silencer",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-regulation",
+        "genetics::repressor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::insulator",
+      "label": "Insulator",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::enhancer",
+        "genetics::silencer"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cis-regulatory-element",
+      "label": "Cis-Regulatory Element",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::enhancer",
+        "genetics::promoter"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::trans-acting-factor",
+      "label": "Trans-Acting Factor",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-factor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::transcriptional-logic",
+      "label": "Transcriptional Logic",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::enhancer",
+        "genetics::combinatorial-control"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::combinatorial-control",
+      "label": "Combinatorial Control",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-factor",
+        "genetics::enhancer"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-regulatory-network",
+      "label": "Gene Regulatory Network",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-expression",
+        "genetics::transcription-factor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::network-motif",
+      "label": "Network Motif",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-regulatory-network"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::network-motif"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::feed-forward-loop",
+      "label": "Feed-Forward Loop",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::network-motif"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::operon-model",
+      "label": "Operon Model",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transcription-regulation"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::lac-operon",
+      "label": "Lac Operon",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::operon-model"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::trp-operon",
+      "label": "Trp Operon",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::operon-model"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::positive-regulation",
+      "label": "Positive Regulation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::activator",
+        "genetics::operon-model"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::negative-regulation",
+      "label": "Negative Regulation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::repressor",
+        "genetics::operon-model"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::post-transcriptional-reg",
+      "label": "Post-Transcriptional Reg",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-expression"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::rna-splicing",
+      "label": "RNA Splicing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::post-transcriptional-reg"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::alternative-splicing",
+      "label": "Alternative Splicing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::rna-splicing"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::exon-skipping",
+      "label": "Exon Skipping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::alternative-splicing"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::rna-editing",
+      "label": "RNA Editing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::post-transcriptional-reg"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::mrna-stability",
+      "label": "mRNA Stability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::post-transcriptional-reg"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::rna-interference",
+      "label": "RNA Interference",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::post-transcriptional-reg",
+        "genetics::microrna"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::microrna",
+      "label": "MicroRNA",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::noncoding-rna"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::small-interfering-rna",
+      "label": "Small Interfering RNA",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::rna-interference"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::long-noncoding-rna",
+      "label": "Long Noncoding RNA",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::noncoding-rna"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::noncoding-rna",
+      "label": "Noncoding RNA",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-expression"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::riboswitch",
+      "label": "Riboswitch",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::noncoding-rna"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::translational-regulation",
+      "label": "Translational Regulation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-expression"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::protein-degradation",
+      "label": "Protein Degradation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-expression"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ubiquitin-pathway",
+      "label": "Ubiquitin Pathway",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::protein-degradation"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromatin-state",
+      "label": "Chromatin State",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromatin",
+        "genetics::histone-modifications"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::open-chromatin",
+      "label": "Open Chromatin",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromatin-state",
+        "genetics::histone-acetylation"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::closed-chromatin",
+      "label": "Closed Chromatin",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromatin-state",
+        "genetics::histone-methylation"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::bivalent-chromatin",
+      "label": "Bivalent Chromatin",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromatin-state"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::poised-enhancer",
+      "label": "Poised Enhancer",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::enhancer",
+        "genetics::bivalent-chromatin"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::super-enhancer",
+      "label": "Super Enhancer",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::enhancer"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::topologically-assoc-domain",
+      "label": "Topologically Assoc Domain",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromatin-state",
+        "genetics::chromatin-looping"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromatin-looping",
+      "label": "Chromatin Looping",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chromatin-state"
+      ],
+      "taxonomy_id": "GSTR",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cell-identity",
+      "label": "Cell Identity",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cell-fate-determination",
+        "genetics::gene-regulatory-network"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cell-fate-determination",
+      "label": "Cell Fate Determination",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-expression",
+        "genetics::gene-regulatory-network"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::master-regulator-gene",
+      "label": "Master Regulator Gene",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cell-fate-determination",
+        "genetics::transcription-factor"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pioneer-factor",
+      "label": "Pioneer Factor",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::master-regulator-gene",
+        "genetics::chromatin-state"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::stem-cell-gene-expression",
+      "label": "Stem Cell Gene Expression",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cell-identity",
+        "genetics::gene-expression"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::differentiation",
+      "label": "Differentiation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cell-fate-determination"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cellular-reprogramming",
+      "label": "Cellular Reprogramming",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::differentiation",
+        "genetics::epigenetics"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "genetics::forward-genetics",
+      "label": "Forward Genetics",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::reverse-genetics",
+      "label": "Reverse Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::forward-genetics"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::mutagenesis-screen",
+      "label": "Mutagenesis Screen",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::forward-genetics"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chemical-mutagenesis",
+      "label": "Chemical Mutagenesis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mutagenesis-screen"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ems-mutagenesis",
+      "label": "EMS Mutagenesis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::chemical-mutagenesis"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::insertional-mutagenesis",
+      "label": "Insertional Mutagenesis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mutagenesis-screen",
+        "genetics::transposable-elements"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::saturation-mutagenesis",
+      "label": "Saturation Mutagenesis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mutagenesis-screen"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::enhancer-trap",
+      "label": "Enhancer Trap",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::insertional-mutagenesis",
+        "genetics::enhancer"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::suppressor-screen",
+      "label": "Suppressor Screen",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mutagenesis-screen"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::modifier-screen",
+      "label": "Modifier Screen",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mutagenesis-screen",
+        "genetics::epistasis"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-mosaic-analysis",
+      "label": "Genetic Mosaic Analysis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mutagenesis-screen",
+        "genetics::mosaicism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::clonal-analysis",
+      "label": "Clonal Analysis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-mosaic-analysis"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::model-organism",
+      "label": "Model Organism",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::drosophila-genetics",
+      "label": "Drosophila Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::model-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::yeast-genetics",
+      "label": "Yeast Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::model-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::mouse-genetics",
+      "label": "Mouse Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::model-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::c-elegans-genetics",
+      "label": "C. Elegans Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::model-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::zebrafish-genetics",
+      "label": "Zebrafish Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::model-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::arabidopsis-genetics",
+      "label": "Arabidopsis Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::model-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-knockout",
+      "label": "Gene Knockout",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::reverse-genetics"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::conditional-knockout",
+      "label": "Conditional Knockout",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-knockout"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::knockdown",
+      "label": "Knockdown",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::reverse-genetics"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::rna-interference-screen",
+      "label": "RNA Interference Screen",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::rna-interference",
+        "genetics::knockdown"
+      ],
+      "taxonomy_id": "MAP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::crispr-cas9",
+      "label": "CRISPR-Cas9",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::reverse-genetics"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::guide-rna-design",
+      "label": "Guide RNA Design",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-cas9"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-editing",
+      "label": "Gene Editing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-cas9"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::homology-directed-repair",
+      "label": "Homology Directed Repair",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::nhej-repair",
+      "label": "NHEJ Repair",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::base-editing",
+      "label": "Base Editing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-cas9"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::prime-editing",
+      "label": "Prime Editing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-cas9"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-drive",
+      "label": "Gene Drive",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-cas9",
+        "genetics::natural-selection"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::transgenic-organism",
+      "label": "Transgenic Organism",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::reporter-gene",
+      "label": "Reporter Gene",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::transgenic-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gfp-reporter",
+      "label": "GFP Reporter",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::reporter-gene"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cre-lox-system",
+      "label": "Cre-Lox System",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::conditional-knockout",
+        "genetics::transgenic-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gal4-uas-system",
+      "label": "GAL4-UAS System",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::drosophila-genetics",
+        "genetics::transgenic-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::functional-genomics",
+      "label": "Functional Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics",
+        "genetics::reverse-genetics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::phenotype-scoring",
+      "label": "Phenotype Scoring",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::mutagenesis-screen",
+        "genetics::model-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-interaction",
+      "label": "Genetic Interaction",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::epistasis",
+        "genetics::model-organism"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::synthetic-lethality",
+      "label": "Synthetic Lethality",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-interaction"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genomics",
+      "label": "Genomics",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::genome-sequencing",
+      "label": "Genome Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::sanger-sequencing",
+      "label": "Sanger Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-sequencing"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::next-gen-sequencing",
+      "label": "Next-Gen Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-sequencing"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::illumina-sequencing",
+      "label": "Illumina Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::long-read-sequencing",
+      "label": "Long-Read Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::whole-genome-sequencing",
+      "label": "Whole Genome Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::whole-exome-sequencing",
+      "label": "Whole Exome Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::targeted-sequencing",
+      "label": "Targeted Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::sequence-alignment",
+      "label": "Sequence Alignment",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::blast-algorithm",
+      "label": "BLAST Algorithm",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::sequence-alignment"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pairwise-alignment",
+      "label": "Pairwise Alignment",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::sequence-alignment"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::multiple-sequence-alignment",
+      "label": "Multiple Sequence Alignment",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pairwise-alignment"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genome-annotation",
+      "label": "Genome Annotation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics",
+        "genetics::sequence-alignment"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-prediction",
+      "label": "Gene Prediction",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-annotation"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::variant-calling",
+      "label": "Variant Calling",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing",
+        "genetics::sequence-alignment"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::vcf-file-format",
+      "label": "VCF File Format",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::variant-calling"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::fasta-file-format",
+      "label": "FASTA File Format",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::fastq-file-format",
+      "label": "FASTQ File Format",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::bam-file-format",
+      "label": "BAM File Format",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing",
+        "genetics::sequence-alignment"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::bed-file-format",
+      "label": "BED File Format",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-annotation"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::variant-annotation",
+      "label": "Variant Annotation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::variant-calling",
+        "genetics::genome-annotation"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::variant-classification",
+      "label": "Variant Classification",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::variant-annotation"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::benign-variant",
+      "label": "Benign Variant",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::variant-classification"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pathogenic-variant",
+      "label": "Pathogenic Variant",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::variant-classification"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::variant-of-uncertain-sig",
+      "label": "Variant of Uncertain Sig",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::variant-classification"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genomic-databases",
+      "label": "Genomic Databases",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ncbi-database",
+      "label": "NCBI Database",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomic-databases"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ensembl-database",
+      "label": "Ensembl Database",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomic-databases"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ucsc-genome-browser",
+      "label": "UCSC Genome Browser",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomic-databases"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::clinvar-database",
+      "label": "ClinVar Database",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomic-databases",
+        "genetics::variant-classification"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dbsnp-database",
+      "label": "dbSNP Database",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomic-databases",
+        "genetics::single-nucleotide-polymorphism"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::reproducible-workflows",
+      "label": "Reproducible Workflows",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pipeline-automation",
+      "label": "Pipeline Automation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::reproducible-workflows"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::version-control-in-genomics",
+      "label": "Version Control in Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::reproducible-workflows"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::rna-seq-analysis",
+      "label": "RNA-Seq Analysis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::next-gen-sequencing",
+        "genetics::gene-expression"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::differential-expression",
+      "label": "Differential Expression",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::rna-seq-analysis"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-ontology",
+      "label": "Gene Ontology",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-annotation",
+        "genetics::functional-annotation"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pathway-enrichment",
+      "label": "Pathway Enrichment",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::differential-expression",
+        "genetics::gene-ontology"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::functional-annotation",
+      "label": "Functional Annotation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genome-annotation"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::human-genetics",
+      "label": "Human Genetics",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::mendelian-disease",
+      "label": "Mendelian Disease",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::human-genetics",
+        "genetics::pedigree-analysis"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::complex-disease",
+      "label": "Complex Disease",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::human-genetics",
+        "genetics::polygenic-inheritance",
+        "genetics::gwas"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-counseling",
+      "label": "Genetic Counseling",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::human-genetics",
+        "genetics::risk-assessment"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::risk-assessment",
+      "label": "Risk Assessment",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::bayesian-reasoning",
+        "genetics::human-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::carrier-screening",
+      "label": "Carrier Screening",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-counseling",
+        "genetics::carrier-probability"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::newborn-screening",
+      "label": "Newborn Screening",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-counseling"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::prenatal-genetic-testing",
+      "label": "Prenatal Genetic Testing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-counseling"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::preimplantation-diagnosis",
+      "label": "Preimplantation Diagnosis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::prenatal-genetic-testing"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::family-history-assessment",
+      "label": "Family History Assessment",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pedigree-analysis",
+        "genetics::genetic-counseling"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pedigree-construction",
+      "label": "Pedigree Construction",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pedigree-analysis",
+        "genetics::family-history-assessment"
+      ],
+      "taxonomy_id": "PED",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-testing-types",
+      "label": "Genetic Testing Types",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::human-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::diagnostic-testing",
+      "label": "Diagnostic Testing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-testing-types"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::predictive-testing",
+      "label": "Predictive Testing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-testing-types"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::presymptomatic-testing",
+      "label": "Presymptomatic Testing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::predictive-testing"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pharmacogenomics",
+      "label": "Pharmacogenomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::human-genetics",
+        "genetics::gene-expression"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::drug-metabolism-variation",
+      "label": "Drug Metabolism Variation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pharmacogenomics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cyp450-polymorphisms",
+      "label": "CYP450 Polymorphisms",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::drug-metabolism-variation",
+        "genetics::single-nucleotide-polymorphism"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dosage-optimization",
+      "label": "Dosage Optimization",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pharmacogenomics",
+        "genetics::drug-metabolism-variation"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::adverse-drug-reaction",
+      "label": "Adverse Drug Reaction",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::drug-metabolism-variation"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::companion-diagnostics",
+      "label": "Companion Diagnostics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pharmacogenomics",
+        "genetics::targeted-therapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::precision-medicine",
+      "label": "Precision Medicine",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::human-genetics",
+        "genetics::pharmacogenomics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::targeted-therapy",
+      "label": "Targeted Therapy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::precision-medicine"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::biomarker-discovery",
+      "label": "Biomarker Discovery",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::precision-medicine",
+        "genetics::gwas"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cancer-genetics",
+      "label": "Cancer Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::human-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::oncogene",
+      "label": "Oncogene",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cancer-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::tumor-suppressor-gene",
+      "label": "Tumor Suppressor Gene",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cancer-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::two-hit-hypothesis",
+      "label": "Two-Hit Hypothesis",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::tumor-suppressor-gene"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::somatic-mutation-in-cancer",
+      "label": "Somatic Mutation in Cancer",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cancer-genetics",
+        "genetics::somatic-mosaicism"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::driver-mutation",
+      "label": "Driver Mutation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::somatic-mutation-in-cancer"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::passenger-mutation",
+      "label": "Passenger Mutation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::somatic-mutation-in-cancer"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::tumor-mutational-burden",
+      "label": "Tumor Mutational Burden",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::somatic-mutation-in-cancer",
+        "genetics::driver-mutation"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::microsatellite-instability",
+      "label": "Microsatellite Instability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::microsatellite",
+        "genetics::somatic-mutation-in-cancer"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::lynch-syndrome",
+      "label": "Lynch Syndrome",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::microsatellite-instability",
+        "genetics::hereditary-cancer-syndrome"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::brca-genes",
+      "label": "BRCA Genes",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::tumor-suppressor-gene",
+        "genetics::hereditary-cancer-syndrome"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::liquid-biopsy",
+      "label": "Liquid Biopsy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cancer-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::circulating-tumor-dna",
+      "label": "Circulating Tumor DNA",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::liquid-biopsy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::hereditary-cancer-syndrome",
+      "label": "Hereditary Cancer Syndrome",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cancer-genetics",
+        "genetics::tumor-suppressor-gene"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::chromosomal-instability",
+      "label": "Chromosomal Instability",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::cancer-genetics",
+        "genetics::chromosomal-rearrangement"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cancer-predisposition",
+      "label": "Cancer Predisposition",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::hereditary-cancer-syndrome",
+        "genetics::cancer-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-risk-factor",
+      "label": "Genetic Risk Factor",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gwas",
+        "genetics::human-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::polygenic-disease-risk",
+      "label": "Polygenic Disease Risk",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::polygenic-risk-score",
+        "genetics::complex-disease"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-therapy",
+      "label": "Gene Therapy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing",
+        "genetics::human-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::antisense-therapy",
+      "label": "Antisense Therapy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-therapy",
+        "genetics::noncoding-rna"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-replacement-therapy",
+      "label": "Gene Replacement Therapy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-therapy"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-ethics",
+      "label": "Genetic Ethics",
+      "subject_id": "genetics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "genetics::informed-consent",
+      "label": "Informed Consent",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-privacy",
+      "label": "Genetic Privacy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-discrimination",
+      "label": "Genetic Discrimination",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-privacy"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gina-legislation",
+      "label": "GINA Legislation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-discrimination"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::data-ownership",
+      "label": "Data Ownership",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-privacy"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::biobank-ethics",
+      "label": "Biobank Ethics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-ethics",
+        "genetics::data-ownership"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::return-of-results",
+      "label": "Return of Results",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::informed-consent",
+        "genetics::genetic-counseling"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::incidental-findings",
+      "label": "Incidental Findings",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::return-of-results"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::duty-to-warn",
+      "label": "Duty to Warn",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::return-of-results",
+        "genetics::genetic-discrimination"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::equity-in-genomic-medicine",
+      "label": "Equity in Genomic Medicine",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::health-disparities",
+      "label": "Health Disparities",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::equity-in-genomic-medicine"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::diversity-in-genomics",
+      "label": "Diversity in Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::equity-in-genomic-medicine"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::reference-genome-bias",
+      "label": "Reference Genome Bias",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::diversity-in-genomics",
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ancestry-and-identity",
+      "label": "Ancestry and Identity",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::population-genetics",
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-editing-ethics",
+      "label": "Gene Editing Ethics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing",
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::germline-editing-debate",
+      "label": "Germline Editing Debate",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::somatic-gene-editing",
+      "label": "Somatic Gene Editing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing-ethics"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::enhancement-vs-therapy",
+      "label": "Enhancement vs Therapy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::eugenics-history",
+      "label": "Eugenics History",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dtc-genetic-testing",
+      "label": "DTC Genetic Testing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::human-genetics",
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::dtc-testing-regulation",
+      "label": "DTC Testing Regulation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::dtc-genetic-testing"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genetic-literacy",
+      "label": "Genetic Literacy",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::public-engagement",
+      "label": "Public Engagement",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-literacy"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::science-communication",
+      "label": "Science Communication",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-literacy"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::crispr-advancements",
+      "label": "CRISPR Advancements",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-cas9"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::crispr-therapeutics",
+      "label": "CRISPR Therapeutics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-advancements",
+        "genetics::gene-therapy"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::in-vivo-gene-editing",
+      "label": "In Vivo Gene Editing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-advancements"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::epigenome-editing",
+      "label": "Epigenome Editing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::crispr-advancements",
+        "genetics::epigenetics"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::single-cell-genomics",
+      "label": "Single-Cell Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::single-cell-rna-sequencing",
+      "label": "Single-Cell RNA Sequencing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::single-cell-genomics",
+        "genetics::rna-seq-analysis"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::spatial-transcriptomics",
+      "label": "Spatial Transcriptomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::single-cell-rna-sequencing"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::cell-atlas-projects",
+      "label": "Cell Atlas Projects",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::single-cell-genomics",
+        "genetics::single-cell-rna-sequencing"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::ai-in-genomics",
+      "label": "AI in Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::machine-learning-variants",
+      "label": "Machine Learning Variants",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::ai-in-genomics",
+        "genetics::variant-calling"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::deep-learning-in-genomics",
+      "label": "Deep Learning in Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::ai-in-genomics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::large-language-models-bio",
+      "label": "Large Language Models Bio",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::deep-learning-in-genomics"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::protein-structure-ai",
+      "label": "Protein Structure AI",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::deep-learning-in-genomics"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::long-read-genomics",
+      "label": "Long-Read Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::long-read-sequencing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pangenome",
+      "label": "Pangenome",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics",
+        "genetics::genetic-variation"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::pangenome-reference",
+      "label": "Pangenome Reference",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::pangenome"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::structural-variant-calling",
+      "label": "Structural Variant Calling",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::variant-calling",
+        "genetics::structural-variation"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::telomere-to-telomere",
+      "label": "Telomere-to-Telomere",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::telomere-structure",
+        "genetics::long-read-sequencing"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::metagenomics",
+      "label": "Metagenomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::microbiome-genetics",
+      "label": "Microbiome Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::metagenomics"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::gene-regulation-atlas",
+      "label": "Gene Regulation Atlas",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-regulatory-network",
+        "genetics::single-cell-genomics"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::4d-nucleome",
+      "label": "4D Nucleome",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::topologically-assoc-domain",
+        "genetics::single-cell-genomics"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::synthetic-genomics",
+      "label": "Synthetic Genomics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics",
+        "genetics::gene-editing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "genetics::xenotransplantation",
+      "label": "Xenotransplantation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-editing",
+        "genetics::genetic-ethics"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::emerging-research-methods",
+      "label": "Emerging Research Methods",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genomics"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    },
+    {
+      "id": "genetics::experimental-design",
+      "label": "Experimental Design",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::forward-genetics",
+        "genetics::genetic-inference"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::hypothesis-testing",
+      "label": "Hypothesis Testing",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::experimental-design",
+        "genetics::null-hypothesis-in-genetics"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "genetics::data-interpretation",
+      "label": "Data Interpretation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::hypothesis-testing",
+        "genetics::chi-square-test"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::research-ethics",
+      "label": "Research Ethics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-ethics",
+        "genetics::experimental-design"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::scientific-communication",
+      "label": "Scientific Communication",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::data-interpretation",
+        "genetics::science-communication"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "genetics::computational-workflow",
+      "label": "Computational Workflow",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::reproducible-workflows",
+        "genetics::pipeline-automation"
+      ],
+      "taxonomy_id": "BIOINFO",
+      "level": "core"
+    },
+    {
+      "id": "genetics::variant-interpretation",
+      "label": "Variant Interpretation",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::variant-classification",
+        "genetics::risk-assessment"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::genotype-phenotype-models",
+      "label": "Genotype-Phenotype Models",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::genetic-inference",
+        "genetics::gene-expression",
+        "genetics::quantitative-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::systems-genetics",
+      "label": "Systems Genetics",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::gene-regulatory-network",
+        "genetics::quantitative-trait-locus",
+        "genetics::population-genetics"
+      ],
+      "taxonomy_id": "CLIN",
+      "level": "core"
+    },
+    {
+      "id": "genetics::capstone-genomic-project",
+      "label": "Capstone Genomic Project",
+      "subject_id": "genetics",
+      "dependencies": [
+        "genetics::computational-workflow",
+        "genetics::variant-interpretation",
+        "genetics::genotype-phenotype-models"
+      ],
+      "taxonomy_id": "FRONT",
+      "level": "core"
+    }
+  ]
+}

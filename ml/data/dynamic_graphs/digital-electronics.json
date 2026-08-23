@@ -1,0 +1,3274 @@
+{
+  "subject_id": "digital-electronics",
+  "title": "Digital Electronics",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "NUMSYS": {
+      "classifier_name": "Number Systems",
+      "color": "MistyRose"
+    },
+    "BOOL": {
+      "classifier_name": "Boolean Algebra",
+      "color": "PeachPuff"
+    },
+    "GATES": {
+      "classifier_name": "Logic Gates",
+      "color": "LightYellow"
+    },
+    "COMB": {
+      "classifier_name": "Combinational Logic",
+      "color": "Honeydew"
+    },
+    "BLOCKS": {
+      "classifier_name": "Building Blocks",
+      "color": "PaleTurquoise"
+    },
+    "SEQ": {
+      "classifier_name": "Sequential Basics",
+      "color": "LightSteelBlue"
+    },
+    "FLIPFLOP": {
+      "classifier_name": "Flip-Flops",
+      "color": "Lavender"
+    },
+    "FSM": {
+      "classifier_name": "Finite State Machines",
+      "color": "LavenderBlush"
+    },
+    "REG": {
+      "classifier_name": "Registers & Counters",
+      "color": "Thistle"
+    },
+    "HDL": {
+      "classifier_name": "Verilog HDL",
+      "color": "PaleGreen"
+    },
+    "VERIFY": {
+      "classifier_name": "Verification & Lab",
+      "color": "Aquamarine"
+    }
+  },
+  "concepts": [
+    {
+      "id": "digital-electronics::binary-number-system",
+      "label": "Binary Number System",
+      "subject_id": "digital-electronics",
+      "dependencies": [],
+      "taxonomy_id": "NUMSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-electronics::decimal-to-binary-conversion",
+      "label": "Decimal to Binary Conversion",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::binary-to-decimal-conversion",
+      "label": "Binary to Decimal Conversion",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::hexadecimal-numbers",
+      "label": "Hexadecimal Numbers",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::hex-to-binary-conversion",
+      "label": "Hex to Binary Conversion",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system",
+        "digital-electronics::hexadecimal-numbers"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::octal-numbers",
+      "label": "Octal Numbers",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::binary-addition",
+      "label": "Binary Addition",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::binary-subtraction",
+      "label": "Binary Subtraction",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system",
+        "digital-electronics::binary-addition"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::two-s-complement",
+      "label": "Two's Complement",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system",
+        "digital-electronics::binary-subtraction"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::signed-binary-numbers",
+      "label": "Signed Binary Numbers",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system",
+        "digital-electronics::two-s-complement"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::overflow-detection",
+      "label": "Overflow Detection",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-addition",
+        "digital-electronics::signed-binary-numbers"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::bcd-encoding",
+      "label": "BCD Encoding",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system",
+        "digital-electronics::binary-to-decimal-conversion"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::gray-code",
+      "label": "Gray Code",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::weighted-codes",
+      "label": "Weighted Codes",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-number-system",
+        "digital-electronics::bcd-encoding"
+      ],
+      "taxonomy_id": "NUMSYS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::boolean-variable",
+      "label": "Boolean Variable",
+      "subject_id": "digital-electronics",
+      "dependencies": [],
+      "taxonomy_id": "BOOL",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-electronics::boolean-constant",
+      "label": "Boolean Constant",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-variable"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::boolean-expression",
+      "label": "Boolean Expression",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-variable",
+        "digital-electronics::boolean-constant"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::boolean-function",
+      "label": "Boolean Function",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-expression"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::truth-table",
+      "label": "Truth Table",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-expression",
+        "digital-electronics::boolean-function"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::and-operation",
+      "label": "AND Operation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-variable",
+        "digital-electronics::boolean-constant"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::or-operation",
+      "label": "OR Operation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-variable",
+        "digital-electronics::boolean-constant"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::not-operation",
+      "label": "NOT Operation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-variable",
+        "digital-electronics::boolean-constant"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::boolean-algebra",
+      "label": "Boolean Algebra",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-variable",
+        "digital-electronics::and-operation",
+        "digital-electronics::or-operation",
+        "digital-electronics::not-operation"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::identity-law",
+      "label": "Identity Law",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::null-law",
+      "label": "Null Law",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::idempotent-law",
+      "label": "Idempotent Law",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::complement-law",
+      "label": "Complement Law",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra",
+        "digital-electronics::not-operation"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::commutative-law",
+      "label": "Commutative Law",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::associative-law",
+      "label": "Associative Law",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::distributive-law",
+      "label": "Distributive Law",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::absorption-law",
+      "label": "Absorption Law",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra",
+        "digital-electronics::distributive-law"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::de-morgan-s-theorem",
+      "label": "De Morgan's Theorem",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra",
+        "digital-electronics::not-operation",
+        "digital-electronics::and-operation",
+        "digital-electronics::or-operation"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::dual-expression",
+      "label": "Dual Expression",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra",
+        "digital-electronics::de-morgan-s-theorem"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::consensus-theorem",
+      "label": "Consensus Theorem",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra",
+        "digital-electronics::absorption-law"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::boolean-proof-technique",
+      "label": "Boolean Proof Technique",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-algebra",
+        "digital-electronics::identity-law",
+        "digital-electronics::null-law",
+        "digital-electronics::idempotent-law",
+        "digital-electronics::complement-law",
+        "digital-electronics::commutative-law",
+        "digital-electronics::associative-law",
+        "digital-electronics::distributive-law",
+        "digital-electronics::absorption-law",
+        "digital-electronics::de-morgan-s-theorem"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::logic-gate",
+      "label": "Logic Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-function",
+        "digital-electronics::truth-table"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::and-gate",
+      "label": "AND Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::and-operation"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::or-gate",
+      "label": "OR Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::or-operation"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::not-gate",
+      "label": "NOT Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::not-operation"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::buffer-gate",
+      "label": "Buffer Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::nand-gate",
+      "label": "NAND Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::and-gate",
+        "digital-electronics::not-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::nor-gate",
+      "label": "NOR Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::or-gate",
+        "digital-electronics::not-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::xor-gate",
+      "label": "XOR Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::and-operation",
+        "digital-electronics::or-operation",
+        "digital-electronics::not-operation"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::xnor-gate",
+      "label": "XNOR Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::xor-gate",
+        "digital-electronics::not-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::gate-symbol",
+      "label": "Gate Symbol",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::ieee-gate-symbols",
+      "label": "IEEE Gate Symbols",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::gate-symbol"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::functional-completeness",
+      "label": "Functional Completeness",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::nand-gate",
+        "digital-electronics::nor-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::universal-gate",
+      "label": "Universal Gate",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::functional-completeness"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::nand-only-design",
+      "label": "NAND-Only Design",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::nand-gate",
+        "digital-electronics::functional-completeness",
+        "digital-electronics::universal-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::nor-only-design",
+      "label": "NOR-Only Design",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::nor-gate",
+        "digital-electronics::functional-completeness",
+        "digital-electronics::universal-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::gate-delay",
+      "label": "Gate Delay",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::propagation-delay",
+      "label": "Propagation Delay",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::gate-delay"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::rise-time",
+      "label": "Rise Time",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::propagation-delay"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fall-time",
+      "label": "Fall Time",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::propagation-delay"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fan-in",
+      "label": "Fan-In",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fan-out",
+      "label": "Fan-Out",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::logic-levels",
+      "label": "Logic Levels",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::noise-margin",
+      "label": "Noise Margin",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-levels"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::voltage-threshold",
+      "label": "Voltage Threshold",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-levels"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::logic-family",
+      "label": "Logic Family",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-levels"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::ttl-logic",
+      "label": "TTL Logic",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-family"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::cmos-logic",
+      "label": "CMOS Logic",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-family"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::digital-signal",
+      "label": "Digital Signal",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-levels"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::analog-vs-digital",
+      "label": "Analog vs Digital",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::digital-signal"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::signal-integrity",
+      "label": "Signal Integrity",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::noise-margin",
+        "digital-electronics::digital-signal"
+      ],
+      "taxonomy_id": "GATES",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::combinational-logic",
+      "label": "Combinational Logic",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::boolean-function"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::sequential-logic",
+      "label": "Sequential Logic",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic",
+        "digital-electronics::memory-element"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::gate-level-design",
+      "label": "Gate-Level Design",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::boolean-to-gates-mapping",
+      "label": "Boolean to Gates Mapping",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-expression",
+        "digital-electronics::logic-gate",
+        "digital-electronics::gate-level-design"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::multi-level-logic",
+      "label": "Multi-Level Logic",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::gate-level-design",
+        "digital-electronics::boolean-to-gates-mapping"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::two-level-logic",
+      "label": "Two-Level Logic",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::gate-level-design",
+        "digital-electronics::boolean-to-gates-mapping"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::sum-of-products",
+      "label": "Sum of Products",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-expression",
+        "digital-electronics::two-level-logic",
+        "digital-electronics::minterm"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::product-of-sums",
+      "label": "Product of Sums",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-expression",
+        "digital-electronics::two-level-logic",
+        "digital-electronics::maxterm"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::minterm",
+      "label": "Minterm",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-expression",
+        "digital-electronics::truth-table"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::maxterm",
+      "label": "Maxterm",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-expression",
+        "digital-electronics::truth-table"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::canonical-form",
+      "label": "Canonical Form",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sum-of-products",
+        "digital-electronics::product-of-sums",
+        "digital-electronics::minterm",
+        "digital-electronics::maxterm"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::standard-form",
+      "label": "Standard Form",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::canonical-form"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::minimal-form",
+      "label": "Minimal Form",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::standard-form",
+        "digital-electronics::logic-minimization"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::logic-minimization",
+      "label": "Logic Minimization",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::boolean-expression",
+        "digital-electronics::boolean-algebra"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::algebraic-simplification",
+      "label": "Algebraic Simplification",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-minimization",
+        "digital-electronics::boolean-proof-technique"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::factoring",
+      "label": "Factoring",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::algebraic-simplification"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::common-term-extraction",
+      "label": "Common Term Extraction",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::algebraic-simplification",
+        "digital-electronics::factoring"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::karnaugh-map",
+      "label": "Karnaugh Map",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::truth-table",
+        "digital-electronics::logic-minimization"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::k-map-2-variable",
+      "label": "K-Map 2 Variable",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::karnaugh-map"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::k-map-3-variable",
+      "label": "K-Map 3 Variable",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::karnaugh-map",
+        "digital-electronics::k-map-2-variable"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::k-map-4-variable",
+      "label": "K-Map 4 Variable",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::karnaugh-map",
+        "digital-electronics::k-map-3-variable"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::k-map-grouping-rules",
+      "label": "K-Map Grouping Rules",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::karnaugh-map",
+        "digital-electronics::k-map-2-variable"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::adjacent-cells",
+      "label": "Adjacent Cells",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::k-map-grouping-rules"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::don-t-care-condition",
+      "label": "Don't Care Condition",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::karnaugh-map",
+        "digital-electronics::truth-table"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::prime-implicant",
+      "label": "Prime Implicant",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::karnaugh-map",
+        "digital-electronics::k-map-grouping-rules",
+        "digital-electronics::adjacent-cells"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::essential-prime-implicant",
+      "label": "Essential Prime Implicant",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::prime-implicant"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::implicant-cover",
+      "label": "Implicant Cover",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::prime-implicant",
+        "digital-electronics::essential-prime-implicant"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::minimal-sop",
+      "label": "Minimal SOP",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sum-of-products",
+        "digital-electronics::essential-prime-implicant",
+        "digital-electronics::implicant-cover"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::minimal-pos",
+      "label": "Minimal POS",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::product-of-sums",
+        "digital-electronics::essential-prime-implicant",
+        "digital-electronics::implicant-cover"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::quine-mccluskey-method",
+      "label": "Quine-McCluskey Method",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::prime-implicant",
+        "digital-electronics::essential-prime-implicant",
+        "digital-electronics::implicant-cover"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::hazard",
+      "label": "Hazard",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic",
+        "digital-electronics::propagation-delay"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::static-hazard",
+      "label": "Static Hazard",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::hazard"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::dynamic-hazard",
+      "label": "Dynamic Hazard",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::hazard",
+        "digital-electronics::static-hazard"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::hazard-free-design",
+      "label": "Hazard-Free Design",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::static-hazard",
+        "digital-electronics::dynamic-hazard",
+        "digital-electronics::karnaugh-map"
+      ],
+      "taxonomy_id": "COMB",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::multiplexer",
+      "label": "Multiplexer",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic",
+        "digital-electronics::and-gate",
+        "digital-electronics::or-gate"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mux-2-to-1",
+      "label": "MUX 2-to-1",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::multiplexer"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mux-4-to-1",
+      "label": "MUX 4-to-1",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::multiplexer",
+        "digital-electronics::mux-2-to-1"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mux-8-to-1",
+      "label": "MUX 8-to-1",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::multiplexer",
+        "digital-electronics::mux-4-to-1"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mux-tree",
+      "label": "MUX Tree",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::mux-4-to-1",
+        "digital-electronics::mux-8-to-1"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mux-as-logic-function",
+      "label": "MUX as Logic Function",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::multiplexer",
+        "digital-electronics::boolean-function"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::demultiplexer",
+      "label": "Demultiplexer",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic",
+        "digital-electronics::multiplexer"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::demux-1-to-4",
+      "label": "DEMUX 1-to-4",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::demultiplexer"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::encoder",
+      "label": "Encoder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic",
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::decoder",
+      "label": "Decoder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic",
+        "digital-electronics::binary-number-system",
+        "digital-electronics::encoder"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::2-to-4-decoder",
+      "label": "2-to-4 Decoder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::decoder"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::3-to-8-decoder",
+      "label": "3-to-8 Decoder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::decoder",
+        "digital-electronics::2-to-4-decoder"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::decoder-enable",
+      "label": "Decoder Enable",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::decoder"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::priority-encoder",
+      "label": "Priority Encoder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::encoder"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::7-segment-display",
+      "label": "7-Segment Display",
+      "subject_id": "digital-electronics",
+      "dependencies": [],
+      "taxonomy_id": "BLOCKS",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-electronics::7-segment-decoder",
+      "label": "7-Segment Decoder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::decoder",
+        "digital-electronics::7-segment-display"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::binary-comparator",
+      "label": "Binary Comparator",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic",
+        "digital-electronics::xor-gate"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::magnitude-comparator",
+      "label": "Magnitude Comparator",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-comparator"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::equality-comparator",
+      "label": "Equality Comparator",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-comparator",
+        "digital-electronics::xnor-gate"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::half-adder",
+      "label": "Half Adder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic",
+        "digital-electronics::binary-addition",
+        "digital-electronics::xor-gate"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::full-adder",
+      "label": "Full Adder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::half-adder",
+        "digital-electronics::carry-bit"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::carry-bit",
+      "label": "Carry Bit",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::half-adder"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::sum-bit",
+      "label": "Sum Bit",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::half-adder"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::ripple-carry-adder",
+      "label": "Ripple Carry Adder",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::full-adder",
+        "digital-electronics::carry-bit"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::carry-propagation-delay",
+      "label": "Carry Propagation Delay",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::ripple-carry-adder",
+        "digital-electronics::propagation-delay"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::carry-lookahead-concept",
+      "label": "Carry Lookahead Concept",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::ripple-carry-adder",
+        "digital-electronics::carry-propagation-delay"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::adder-subtractor",
+      "label": "Adder Subtractor",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::ripple-carry-adder",
+        "digital-electronics::two-s-complement"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::overflow-in-addition",
+      "label": "Overflow in Addition",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::adder-subtractor",
+        "digital-electronics::overflow-detection"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::alu-concept",
+      "label": "ALU Concept",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::adder-subtractor",
+        "digital-electronics::magnitude-comparator",
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::parity-bit",
+      "label": "Parity Bit",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::xor-gate"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::parity-generator",
+      "label": "Parity Generator",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::parity-bit",
+        "digital-electronics::xor-gate"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::parity-checker",
+      "label": "Parity Checker",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::parity-generator"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::error-detection",
+      "label": "Error Detection",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::parity-bit",
+        "digital-electronics::parity-checker"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::tri-state-buffer",
+      "label": "Tri-State Buffer",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::buffer-gate",
+        "digital-electronics::logic-levels"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::bus-architecture",
+      "label": "Bus Architecture",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::tri-state-buffer"
+      ],
+      "taxonomy_id": "BLOCKS",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::memory-element",
+      "label": "Memory Element",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::state-concept",
+      "label": "State Concept",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::memory-element"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate",
+        "digital-electronics::memory-element"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::bistable-element",
+      "label": "Bistable Element",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::feedback-loop"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::sr-latch",
+      "label": "SR Latch",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::bistable-element",
+        "digital-electronics::nand-gate",
+        "digital-electronics::nor-gate"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::sr-latch-truth-table",
+      "label": "SR Latch Truth Table",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sr-latch",
+        "digital-electronics::truth-table"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::invalid-state-problem",
+      "label": "Invalid State Problem",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sr-latch",
+        "digital-electronics::sr-latch-truth-table"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::gated-sr-latch",
+      "label": "Gated SR Latch",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sr-latch",
+        "digital-electronics::clock-signal"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::d-latch",
+      "label": "D Latch",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::gated-sr-latch"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::level-sensitive",
+      "label": "Level Sensitive",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-latch",
+        "digital-electronics::clock-signal"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::transparent-latch",
+      "label": "Transparent Latch",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-latch",
+        "digital-electronics::level-sensitive"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::latch-timing-problem",
+      "label": "Latch Timing Problem",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::transparent-latch"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::race-condition",
+      "label": "Race Condition",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::latch-timing-problem",
+        "digital-electronics::feedback-loop"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::clock-signal",
+      "label": "Clock Signal",
+      "subject_id": "digital-electronics",
+      "dependencies": [],
+      "taxonomy_id": "SEQ",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-electronics::clock-edge",
+      "label": "Clock Edge",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clock-signal"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::rising-edge",
+      "label": "Rising Edge",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clock-edge"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::falling-edge",
+      "label": "Falling Edge",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clock-edge"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::clock-period",
+      "label": "Clock Period",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clock-signal"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::clock-frequency",
+      "label": "Clock Frequency",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clock-period"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::duty-cycle",
+      "label": "Duty Cycle",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clock-period"
+      ],
+      "taxonomy_id": "SEQ",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::d-flip-flop",
+      "label": "D Flip-Flop",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-latch",
+        "digital-electronics::clock-edge",
+        "digital-electronics::edge-triggered"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::edge-triggered",
+      "label": "Edge Triggered",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clock-edge"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::positive-edge-triggered",
+      "label": "Positive Edge Triggered",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::edge-triggered",
+        "digital-electronics::rising-edge"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::negative-edge-triggered",
+      "label": "Negative Edge Triggered",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::edge-triggered",
+        "digital-electronics::falling-edge"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::master-slave-flip-flop",
+      "label": "Master-Slave Flip-Flop",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::d-latch"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::jk-flip-flop",
+      "label": "JK Flip-Flop",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::sr-latch"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::jk-toggle-mode",
+      "label": "JK Toggle Mode",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::jk-flip-flop"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::t-flip-flop",
+      "label": "T Flip-Flop",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::jk-flip-flop",
+        "digital-electronics::jk-toggle-mode"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::flip-flop-symbol",
+      "label": "Flip-Flop Symbol",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::jk-flip-flop",
+        "digital-electronics::t-flip-flop"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::preset-input",
+      "label": "Preset Input",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::clear-input",
+      "label": "Clear Input",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::asynchronous-reset",
+      "label": "Asynchronous Reset",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clear-input"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::synchronous-reset",
+      "label": "Synchronous Reset",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clear-input",
+        "digital-electronics::clock-edge"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::setup-time",
+      "label": "Setup Time",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::edge-triggered"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::hold-time",
+      "label": "Hold Time",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::edge-triggered"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::clock-to-q-delay",
+      "label": "Clock-to-Q Delay",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::propagation-delay"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::timing-diagram",
+      "label": "Timing Diagram",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::clock-signal",
+        "digital-electronics::d-flip-flop"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::timing-constraint",
+      "label": "Timing Constraint",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::setup-time",
+        "digital-electronics::hold-time"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::timing-violation",
+      "label": "Timing Violation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::timing-constraint"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::metastability",
+      "label": "Metastability",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::timing-violation"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mtbf-concept",
+      "label": "MTBF Concept",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::metastability"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::synchronous-system",
+      "label": "Synchronous System",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::clock-signal"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::asynchronous-input",
+      "label": "Asynchronous Input",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::synchronous-system"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::synchronizer-circuit",
+      "label": "Synchronizer Circuit",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::asynchronous-input",
+        "digital-electronics::metastability"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::double-flop-synchronizer",
+      "label": "Double Flop Synchronizer",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::synchronizer-circuit",
+        "digital-electronics::d-flip-flop"
+      ],
+      "taxonomy_id": "FLIPFLOP",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::finite-state-machine",
+      "label": "Finite State Machine",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sequential-logic",
+        "digital-electronics::state-concept",
+        "digital-electronics::d-flip-flop"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fsm-state",
+      "label": "FSM State",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::state-transition",
+      "label": "State Transition",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::fsm-state"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::current-state",
+      "label": "Current State",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fsm-state"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::next-state",
+      "label": "Next State",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-transition",
+        "digital-electronics::current-state"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::next-state-logic",
+      "label": "Next State Logic",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::next-state",
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::output-logic",
+      "label": "Output Logic",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::moore-machine",
+      "label": "Moore Machine",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::output-logic"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::moore-output",
+      "label": "Moore Output",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::moore-machine"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mealy-machine",
+      "label": "Mealy Machine",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::output-logic"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mealy-output",
+      "label": "Mealy Output",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::mealy-machine"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::state-diagram",
+      "label": "State Diagram",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::state-transition"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::state-diagram-notation",
+      "label": "State Diagram Notation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-diagram"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::state-table",
+      "label": "State Table",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-diagram",
+        "digital-electronics::truth-table"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::state-encoding",
+      "label": "State Encoding",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::binary-encoding",
+      "label": "Binary Encoding",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-encoding"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::one-hot-encoding",
+      "label": "One-Hot Encoding",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-encoding"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::gray-code-encoding",
+      "label": "Gray Code Encoding",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-encoding",
+        "digital-electronics::gray-code"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::state-assignment",
+      "label": "State Assignment",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-encoding",
+        "digital-electronics::binary-encoding",
+        "digital-electronics::one-hot-encoding"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::state-minimization",
+      "label": "State Minimization",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-table",
+        "digital-electronics::state-assignment"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::next-state-equation",
+      "label": "Next State Equation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::next-state-logic",
+        "digital-electronics::state-table"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::output-equation",
+      "label": "Output Equation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::output-logic",
+        "digital-electronics::state-table"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fsm-design-process",
+      "label": "FSM Design Process",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::state-diagram",
+        "digital-electronics::state-table",
+        "digital-electronics::next-state-equation",
+        "digital-electronics::output-equation"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fsm-verification",
+      "label": "FSM Verification",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fsm-design-process",
+        "digital-electronics::timing-diagram"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::sequence-detector",
+      "label": "Sequence Detector",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::fsm-design-process"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::pattern-recognition-fsm",
+      "label": "Pattern Recognition FSM",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sequence-detector"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::overlapping-detection",
+      "label": "Overlapping Detection",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sequence-detector"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::non-overlapping-detection",
+      "label": "Non-Overlapping Detection",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sequence-detector",
+        "digital-electronics::overlapping-detection"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::traffic-light-controller",
+      "label": "Traffic Light Controller",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fsm-design-process"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::vending-machine-fsm",
+      "label": "Vending Machine FSM",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fsm-design-process",
+        "digital-electronics::traffic-light-controller"
+      ],
+      "taxonomy_id": "FSM",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::counter",
+      "label": "Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::d-flip-flop"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::up-counter",
+      "label": "Up Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::counter"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::down-counter",
+      "label": "Down Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::counter",
+        "digital-electronics::up-counter"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::up-down-counter",
+      "label": "Up-Down Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::up-counter",
+        "digital-electronics::down-counter"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::mod-n-counter",
+      "label": "Mod-N Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::counter"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::binary-counter",
+      "label": "Binary Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::counter",
+        "digital-electronics::binary-number-system"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::bcd-counter",
+      "label": "BCD Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::binary-counter",
+        "digital-electronics::bcd-encoding"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::decade-counter",
+      "label": "Decade Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::bcd-counter"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::ring-counter",
+      "label": "Ring Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::counter",
+        "digital-electronics::shift-register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::johnson-counter",
+      "label": "Johnson Counter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::ring-counter"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::counter-state-diagram",
+      "label": "Counter State Diagram",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::counter",
+        "digital-electronics::state-diagram"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::counter-overflow",
+      "label": "Counter Overflow",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::counter",
+        "digital-electronics::overflow-detection"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::register",
+      "label": "Register",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::d-flip-flop",
+        "digital-electronics::synchronous-system"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::parallel-load-register",
+      "label": "Parallel Load Register",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::register",
+        "digital-electronics::enable-signal"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::shift-register",
+      "label": "Shift Register",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::serial-in-serial-out",
+      "label": "Serial In Serial Out",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::shift-register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::serial-in-parallel-out",
+      "label": "Serial In Parallel Out",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::shift-register",
+        "digital-electronics::serial-in-serial-out"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::parallel-in-serial-out",
+      "label": "Parallel In Serial Out",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::shift-register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::parallel-in-parallel-out",
+      "label": "Parallel In Parallel Out",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::shift-register",
+        "digital-electronics::parallel-load-register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::bidirectional-shift",
+      "label": "Bidirectional Shift",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::shift-register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::universal-shift-register",
+      "label": "Universal Shift Register",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::serial-in-serial-out",
+        "digital-electronics::serial-in-parallel-out",
+        "digital-electronics::parallel-in-serial-out",
+        "digital-electronics::parallel-in-parallel-out",
+        "digital-electronics::bidirectional-shift"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::enable-signal",
+      "label": "Enable Signal",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::load-signal",
+      "label": "Load Signal",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::register",
+        "digital-electronics::parallel-load-register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::clear-signal",
+      "label": "Clear Signal",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::register",
+        "digital-electronics::clear-input"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::register-file",
+      "label": "Register File",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::register"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::datapath-concept",
+      "label": "Datapath Concept",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::register",
+        "digital-electronics::alu-concept",
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::control-unit",
+      "label": "Control Unit",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::finite-state-machine",
+        "digital-electronics::datapath-concept"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::register-transfer-level",
+      "label": "Register Transfer Level",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::datapath-concept",
+        "digital-electronics::control-unit"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::rtl-notation",
+      "label": "RTL Notation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::register-transfer-level"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::verilog-hdl",
+      "label": "Verilog HDL",
+      "subject_id": "digital-electronics",
+      "dependencies": [],
+      "taxonomy_id": "HDL",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-electronics::hdl-vs-programming",
+      "label": "HDL vs Programming",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::module-definition",
+      "label": "Module Definition",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::port-declaration",
+      "label": "Port Declaration",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::module-definition"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::input-port",
+      "label": "Input Port",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::port-declaration"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::output-port",
+      "label": "Output Port",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::port-declaration"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::inout-port",
+      "label": "Inout Port",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::port-declaration",
+        "digital-electronics::tri-state-buffer"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::wire-data-type",
+      "label": "Wire Data Type",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::reg-data-type",
+      "label": "Reg Data Type",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::sequential-logic"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::parameter",
+      "label": "Parameter",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::module-definition"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::assign-statement",
+      "label": "Assign Statement",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::wire-data-type"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::continuous-assignment",
+      "label": "Continuous Assignment",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::assign-statement"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::always-block",
+      "label": "Always Block",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::reg-data-type"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::sensitivity-list",
+      "label": "Sensitivity List",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::always-block"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::blocking-assignment",
+      "label": "Blocking Assignment",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::always-block"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::non-blocking-assignment",
+      "label": "Non-Blocking Assignment",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::always-block",
+        "digital-electronics::blocking-assignment"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::if-else-in-verilog",
+      "label": "If-Else in Verilog",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::always-block"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::case-statement",
+      "label": "Case Statement",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::always-block",
+        "digital-electronics::if-else-in-verilog"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::combinational-always",
+      "label": "Combinational Always",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::always-block",
+        "digital-electronics::sensitivity-list",
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::sequential-always",
+      "label": "Sequential Always",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::always-block",
+        "digital-electronics::sensitivity-list",
+        "digital-electronics::sequential-logic"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::posedge-keyword",
+      "label": "Posedge Keyword",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sequential-always",
+        "digital-electronics::rising-edge"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::negedge-keyword",
+      "label": "Negedge Keyword",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::sequential-always",
+        "digital-electronics::falling-edge"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::initial-block",
+      "label": "Initial Block",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::structural-modeling",
+      "label": "Structural Modeling",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::module-definition",
+        "digital-electronics::module-instantiation"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::behavioral-modeling",
+      "label": "Behavioral Modeling",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::always-block"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::gate-level-verilog",
+      "label": "Gate-Level Verilog",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::structural-modeling",
+        "digital-electronics::logic-gate"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::rtl-verilog",
+      "label": "RTL Verilog",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::behavioral-modeling",
+        "digital-electronics::register-transfer-level"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::module-instantiation",
+      "label": "Module Instantiation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::module-definition"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::hierarchical-design",
+      "label": "Hierarchical Design",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::module-instantiation",
+        "digital-electronics::structural-modeling"
+      ],
+      "taxonomy_id": "HDL",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::testbench",
+      "label": "Testbench",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::initial-block"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::stimulus-generation",
+      "label": "Stimulus Generation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::testbench"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::clock-generation",
+      "label": "Clock Generation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::testbench",
+        "digital-electronics::clock-signal"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::test-vector",
+      "label": "Test Vector",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::testbench",
+        "digital-electronics::stimulus-generation"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::self-checking-testbench",
+      "label": "Self-Checking Testbench",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::testbench",
+        "digital-electronics::test-vector"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::simulation",
+      "label": "Simulation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::testbench",
+        "digital-electronics::verilog-hdl"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::simulation-time",
+      "label": "Simulation Time",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::simulation"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::waveform-viewer",
+      "label": "Waveform Viewer",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::simulation",
+        "digital-electronics::timing-diagram"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::debugging-waveforms",
+      "label": "Debugging Waveforms",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::waveform-viewer"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::synthesis",
+      "label": "Synthesis",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::rtl-verilog"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::synthesizable-code",
+      "label": "Synthesizable Code",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::synthesis"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::non-synthesizable-code",
+      "label": "Non-Synthesizable Code",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::synthesis",
+        "digital-electronics::synthesizable-code"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fpga-architecture",
+      "label": "FPGA Architecture",
+      "subject_id": "digital-electronics",
+      "dependencies": [],
+      "taxonomy_id": "VERIFY",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-electronics::fpga-lut",
+      "label": "FPGA LUT",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fpga-architecture",
+        "digital-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fpga-flip-flop",
+      "label": "FPGA Flip-Flop",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fpga-architecture",
+        "digital-electronics::d-flip-flop"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fpga-routing",
+      "label": "FPGA Routing",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fpga-architecture"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::fpga-implementation",
+      "label": "FPGA Implementation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fpga-architecture",
+        "digital-electronics::synthesis"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::pin-assignment",
+      "label": "Pin Assignment",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::fpga-implementation"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::breadboard-prototyping",
+      "label": "Breadboard Prototyping",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-gate"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::logic-probe",
+      "label": "Logic Probe",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::breadboard-prototyping",
+        "digital-electronics::logic-levels"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::logic-analyzer",
+      "label": "Logic Analyzer",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::logic-probe",
+        "digital-electronics::timing-diagram"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::led-indicator",
+      "label": "LED Indicator",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::breadboard-prototyping"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::switch-input",
+      "label": "Switch Input",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::breadboard-prototyping"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::debouncing",
+      "label": "Debouncing",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::switch-input",
+        "digital-electronics::d-flip-flop"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::design-verification",
+      "label": "Design Verification",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::simulation",
+        "digital-electronics::fsm-verification"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::functional-verification",
+      "label": "Functional Verification",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::design-verification"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::timing-verification",
+      "label": "Timing Verification",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::design-verification",
+        "digital-electronics::timing-constraint"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::hardware-software-boundary",
+      "label": "Hardware-Software Boundary",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::verilog-hdl",
+        "digital-electronics::hdl-vs-programming"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::abstraction-levels",
+      "label": "Abstraction Levels",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::gate-level-design",
+        "digital-electronics::register-transfer-level",
+        "digital-electronics::rtl-verilog"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::design-hierarchy",
+      "label": "Design Hierarchy",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::hierarchical-design",
+        "digital-electronics::abstraction-levels"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::design-reuse",
+      "label": "Design Reuse",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::module-definition",
+        "digital-electronics::design-hierarchy"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::design-documentation",
+      "label": "Design Documentation",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::design-reuse"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    },
+    {
+      "id": "digital-electronics::digital-system-design",
+      "label": "Digital System Design",
+      "subject_id": "digital-electronics",
+      "dependencies": [
+        "digital-electronics::datapath-concept",
+        "digital-electronics::control-unit",
+        "digital-electronics::design-verification",
+        "digital-electronics::design-hierarchy"
+      ],
+      "taxonomy_id": "VERIFY",
+      "level": "core"
+    }
+  ]
+}

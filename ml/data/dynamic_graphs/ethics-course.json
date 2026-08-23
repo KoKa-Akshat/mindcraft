@@ -1,0 +1,2622 @@
+{
+  "subject_id": "ethics-course",
+  "title": "Data-Driven Ethics and Systems Change",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "HARM": {
+      "classifier_name": "Harm Measurement",
+      "color": "PeachPuff"
+    },
+    "DATA": {
+      "classifier_name": "Data Gathering",
+      "color": "LightYellow"
+    },
+    "MRKT": {
+      "classifier_name": "Market and Power",
+      "color": "PowderBlue"
+    },
+    "CASE": {
+      "classifier_name": "Industry Cases",
+      "color": "Thistle"
+    },
+    "SYSF": {
+      "classifier_name": "Systems Foundations",
+      "color": "PaleGreen"
+    },
+    "ARCH": {
+      "classifier_name": "System Archetypes",
+      "color": "Aquamarine"
+    },
+    "LEVR": {
+      "classifier_name": "Leverage Points",
+      "color": "LightSteelBlue"
+    },
+    "BEHAV": {
+      "classifier_name": "Behavioral Economics",
+      "color": "MistyRose"
+    },
+    "ADVOC": {
+      "classifier_name": "Advocacy Strategies",
+      "color": "Lavender"
+    },
+    "COMM": {
+      "classifier_name": "Communication",
+      "color": "Honeydew"
+    },
+    "CORP": {
+      "classifier_name": "Corporate Responsibility",
+      "color": "Gainsboro"
+    },
+    "CAP": {
+      "classifier_name": "Capstone and Reform",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "ethics-course::ethics",
+      "label": "Ethics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-driven-ethics",
+        "ethics-course::traditional-moral-philosophy",
+        "ethics-course::ethical-reasoning",
+        "ethics-course::harm-definition",
+        "ethics-course::informed-consent",
+        "ethics-course::corporate-responsibility"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::data-driven-ethics",
+      "label": "Data-Driven Ethics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::evidence-based-ethics",
+        "ethics-course::harm-definition",
+        "ethics-course::future-of-ethics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::traditional-moral-philosophy",
+      "label": "Traditional Moral Philosophy",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::ethical-reasoning",
+      "label": "Ethical Reasoning",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::evidence-based-ethics",
+      "label": "Evidence-Based Ethics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::advocacy-strategies"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::scientific-method",
+      "label": "Scientific Method",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-driven-ethics",
+        "ethics-course::evidence-based-ethics",
+        "ethics-course::research-methods",
+        "ethics-course::reproducibility"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::ethical-reasoning",
+        "ethics-course::analytical-writing",
+        "ethics-course::qualitative-analysis",
+        "ethics-course::objectivity",
+        "ethics-course::subjectivity",
+        "ethics-course::systems-thinking",
+        "ethics-course::five-whys-technique",
+        "ethics-course::audience-analysis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::analytical-writing",
+      "label": "Analytical Writing",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::data-literacy",
+      "label": "Data Literacy",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-driven-ethics",
+        "ethics-course::statistical-thinking",
+        "ethics-course::qualitative-analysis",
+        "ethics-course::data-visualization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::statistical-thinking",
+      "label": "Statistical Thinking",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::quantitative-analysis",
+        "ethics-course::mortality-rate",
+        "ethics-course::morbidity-rate",
+        "ethics-course::risk-assessment",
+        "ethics-course::sampling-methods",
+        "ethics-course::outlier-detection"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::quantitative-analysis",
+      "label": "Quantitative Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::research-methods",
+        "ethics-course::harm-quantification",
+        "ethics-course::cost-benefit-analysis",
+        "ethics-course::normalized-metrics",
+        "ethics-course::data-aggregation",
+        "ethics-course::meta-analysis",
+        "ethics-course::missing-data",
+        "ethics-course::data-cleaning",
+        "ethics-course::outlier-detection",
+        "ethics-course::data-visualization",
+        "ethics-course::success-metrics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::qualitative-analysis",
+      "label": "Qualitative Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::research-methods"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::research-methods",
+      "label": "Research Methods",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::primary-sources",
+        "ethics-course::secondary-sources",
+        "ethics-course::ethical-data-collection",
+        "ethics-course::sampling-methods",
+        "ethics-course::systematic-review",
+        "ethics-course::cross-validation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::primary-sources",
+      "label": "Primary Sources",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::academic-sources",
+        "ethics-course::government-data-sources",
+        "ethics-course::ngo-data-sources"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::secondary-sources",
+      "label": "Secondary Sources",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::academic-sources",
+        "ethics-course::government-data-sources",
+        "ethics-course::ngo-data-sources"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::academic-sources",
+      "label": "Academic Sources",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-credibility",
+        "ethics-course::peer-review",
+        "ethics-course::systematic-review"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::government-data-sources",
+      "label": "Government Data Sources",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-credibility",
+        "ethics-course::industry-self-reporting",
+        "ethics-course::open-data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::ngo-data-sources",
+      "label": "NGO Data Sources",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-credibility"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::data-credibility",
+      "label": "Data Credibility",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::source-triangulation",
+        "ethics-course::data-quality-assessment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::source-triangulation",
+      "label": "Source Triangulation",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::independent-verification"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::objectivity",
+      "label": "Objectivity",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::subjectivity",
+        "ethics-course::bias-recognition",
+        "ethics-course::informed-consent",
+        "ethics-course::transparency"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::subjectivity",
+      "label": "Subjectivity",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::bias-recognition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::bias-recognition",
+      "label": "Bias Recognition",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::cognitive-biases",
+        "ethics-course::selection-bias",
+        "ethics-course::reporting-bias",
+        "ethics-course::publication-bias",
+        "ethics-course::industry-self-reporting",
+        "ethics-course::greenwashing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::cognitive-biases",
+      "label": "Cognitive Biases",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::confirmation-bias",
+        "ethics-course::mental-models",
+        "ethics-course::addiction-mechanisms",
+        "ethics-course::attention-economy",
+        "ethics-course::behavioral-economics",
+        "ethics-course::cognitive-load"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::harm-definition",
+      "label": "Harm Definition",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::harm-quantification"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::harm-quantification",
+      "label": "Harm Quantification",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::mortality-rate",
+        "ethics-course::morbidity-rate",
+        "ethics-course::social-cost-accounting",
+        "ethics-course::economic-externalities",
+        "ethics-course::life-cycle-analysis",
+        "ethics-course::cradle-to-grave-analysis",
+        "ethics-course::environmental-impact",
+        "ethics-course::health-impact-assessment",
+        "ethics-course::social-impact-assessment",
+        "ethics-course::cost-benefit-analysis",
+        "ethics-course::risk-assessment",
+        "ethics-course::harm-per-revenue",
+        "ethics-course::per-capita-impact",
+        "ethics-course::normalized-metrics",
+        "ethics-course::harm-scorecards",
+        "ethics-course::multi-dimensional-harm"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::mortality-rate",
+      "label": "Mortality Rate",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::dalys",
+        "ethics-course::years-of-life-lost"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::morbidity-rate",
+      "label": "Morbidity Rate",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::dalys",
+        "ethics-course::years-lived-with-disability",
+        "ethics-course::disability-weights"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::dalys",
+      "label": "DALYs",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::qalys",
+        "ethics-course::health-impact-assessment",
+        "ethics-course::tobacco-mortality",
+        "ethics-course::air-pollution-deaths",
+        "ethics-course::diet-related-deaths"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::qalys",
+      "label": "QALYs",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "HARM",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::years-of-life-lost",
+      "label": "Years of Life Lost",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::dalys"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::years-lived-with-disability",
+      "label": "Years Lived with Disability",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::dalys"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::disability-weights",
+      "label": "Disability Weights",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::years-lived-with-disability"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::social-cost-accounting",
+      "label": "Social Cost Accounting",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::social-impact-assessment"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::economic-externalities",
+      "label": "Economic Externalities",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::social-cost-accounting",
+        "ethics-course::negative-externalities",
+        "ethics-course::positive-externalities",
+        "ethics-course::market-failures",
+        "ethics-course::public-goods"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::negative-externalities",
+      "label": "Negative Externalities",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::pigouvian-taxes"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::positive-externalities",
+      "label": "Positive Externalities",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::subsidies"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::life-cycle-analysis",
+      "label": "Life-Cycle Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::environmental-impact",
+        "ethics-course::supply-chain-ethics"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::cradle-to-grave-analysis",
+      "label": "Cradle-to-Grave Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::life-cycle-analysis"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::environmental-impact",
+      "label": "Environmental Impact",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::carbon-footprint",
+        "ethics-course::water-footprint",
+        "ethics-course::multi-dimensional-harm",
+        "ethics-course::climate-change-impact",
+        "ethics-course::textile-waste",
+        "ethics-course::soil-degradation"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::carbon-footprint",
+      "label": "Carbon Footprint",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::carbon-pricing"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::water-footprint",
+      "label": "Water Footprint",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "HARM",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::health-impact-assessment",
+      "label": "Health Impact Assessment",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::multi-dimensional-harm",
+        "ethics-course::pesticide-exposure"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::social-impact-assessment",
+      "label": "Social Impact Assessment",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::multi-dimensional-harm",
+        "ethics-course::labor-exploitation",
+        "ethics-course::corporate-responsibility"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::pareto-efficiency"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::risk-assessment",
+      "label": "Risk Assessment",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "HARM",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::harm-per-revenue",
+      "label": "Harm Per Revenue",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::industry-comparisons"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::per-capita-impact",
+      "label": "Per Capita Impact",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::industry-comparisons"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::normalized-metrics",
+      "label": "Normalized Metrics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::harm-per-revenue",
+        "ethics-course::per-capita-impact",
+        "ethics-course::harm-scorecards",
+        "ethics-course::esg-metrics"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::industry-comparisons",
+      "label": "Industry Comparisons",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::tobacco-industry",
+        "ethics-course::fossil-fuel-industry",
+        "ethics-course::ultra-processed-foods",
+        "ethics-course::fast-fashion-industry",
+        "ethics-course::cybercrime-industry",
+        "ethics-course::industrial-agriculture",
+        "ethics-course::pharmaceutical-industry",
+        "ethics-course::gambling-industry",
+        "ethics-course::social-media-harms"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::harm-scorecards",
+      "label": "Harm Scorecards",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::tobacco-industry",
+        "ethics-course::fossil-fuel-industry",
+        "ethics-course::ultra-processed-foods",
+        "ethics-course::fast-fashion-industry",
+        "ethics-course::cybercrime-industry",
+        "ethics-course::industrial-agriculture",
+        "ethics-course::pharmaceutical-industry",
+        "ethics-course::gambling-industry"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::multi-dimensional-harm",
+      "label": "Multi-Dimensional Harm",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::harm-scorecards",
+        "ethics-course::cumulative-impact",
+        "ethics-course::impact-mapping",
+        "ethics-course::triple-bottom-line"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::cumulative-impact",
+      "label": "Cumulative Impact",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::intergenerational-harm"
+      ],
+      "taxonomy_id": "HARM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::intergenerational-harm",
+      "label": "Intergenerational Harm",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "HARM",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::ethical-data-collection",
+      "label": "Ethical Data Collection",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::informed-consent",
+      "label": "Informed Consent",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::ethical-data-collection",
+        "ethics-course::data-privacy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::data-privacy",
+      "label": "Data Privacy",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::anonymization"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::anonymization",
+      "label": "Anonymization",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-aggregation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::data-aggregation",
+      "label": "Data Aggregation",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::sampling-methods",
+      "label": "Sampling Methods",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::random-sampling",
+        "ethics-course::stratified-sampling",
+        "ethics-course::selection-bias"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::random-sampling",
+      "label": "Random Sampling",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::stratified-sampling",
+      "label": "Stratified Sampling",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::selection-bias",
+      "label": "Selection Bias",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::reporting-bias",
+      "label": "Reporting Bias",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::publication-bias",
+      "label": "Publication Bias",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::industry-self-reporting",
+      "label": "Industry Self-Reporting",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::reporting-bias"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::independent-verification",
+      "label": "Independent Verification",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::peer-review",
+      "label": "Peer Review",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::publication-bias",
+        "ethics-course::independent-verification"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::meta-analysis",
+      "label": "Meta-Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::systematic-review",
+      "label": "Systematic Review",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::meta-analysis"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::data-quality-assessment",
+      "label": "Data Quality Assessment",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::missing-data",
+      "label": "Missing Data",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-cleaning"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::data-cleaning",
+      "label": "Data Cleaning",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::data-quality-assessment",
+        "ethics-course::cross-validation",
+        "ethics-course::data-documentation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::outlier-detection",
+      "label": "Outlier Detection",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::cross-validation",
+      "label": "Cross-Validation",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::reproducibility"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::reproducibility",
+      "label": "Reproducibility",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::transparency"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::transparency",
+      "label": "Transparency",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::open-data",
+        "ethics-course::data-documentation",
+        "ethics-course::sustainability-reporting",
+        "ethics-course::whistleblowing"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::open-data",
+      "label": "Open Data",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::data-documentation",
+      "label": "Data Documentation",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::system-boundaries",
+        "ethics-course::system-components",
+        "ethics-course::stocks-and-flows",
+        "ethics-course::mental-models",
+        "ethics-course::root-cause-analysis",
+        "ethics-course::five-whys-technique",
+        "ethics-course::iceberg-model",
+        "ethics-course::events-level",
+        "ethics-course::unintended-consequences",
+        "ethics-course::side-effects",
+        "ethics-course::stakeholder-analysis",
+        "ethics-course::power-dynamics",
+        "ethics-course::collective-action",
+        "ethics-course::attention-economy",
+        "ethics-course::leverage-points",
+        "ethics-course::donella-meadows"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::complex-systems",
+      "label": "Complex Systems",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::systems-thinking",
+        "ethics-course::emergence",
+        "ethics-course::nonlinear-dynamics"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::system-boundaries",
+      "label": "System Boundaries",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "SYSF",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::system-components",
+      "label": "System Components",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::system-boundaries",
+        "ethics-course::interconnections"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::interconnections",
+      "label": "Interconnections",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::emergence",
+        "ethics-course::feedback-loops"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::emergence",
+      "label": "Emergence",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::self-organization"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::nonlinear-dynamics",
+      "label": "Nonlinear Dynamics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::tipping-points"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::feedback-loops",
+      "label": "Feedback Loops",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::nonlinear-dynamics",
+        "ethics-course::positive-feedback",
+        "ethics-course::negative-feedback",
+        "ethics-course::delays-in-systems",
+        "ethics-course::causal-loop-diagrams",
+        "ethics-course::information-flows"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::positive-feedback",
+      "label": "Positive Feedback",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::reinforcing-loops",
+        "ethics-course::positive-feedback-gains"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::negative-feedback",
+      "label": "Negative Feedback",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::balancing-loops",
+        "ethics-course::negative-feedback-strength"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::reinforcing-loops",
+      "label": "Reinforcing Loops",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::causal-loop-diagrams",
+        "ethics-course::success-to-the-successful",
+        "ethics-course::escalation"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::balancing-loops",
+      "label": "Balancing Loops",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::dynamic-equilibrium",
+        "ethics-course::causal-loop-diagrams",
+        "ethics-course::eroding-goals"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::delays-in-systems",
+      "label": "Delays in Systems",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::growth-and-underinvest",
+        "ethics-course::delay-lengths",
+        "ethics-course::intervention-timing"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::stocks-and-flows",
+      "label": "Stocks and Flows",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::delays-in-systems",
+        "ethics-course::stock-variables",
+        "ethics-course::flow-variables",
+        "ethics-course::system-dynamics-models",
+        "ethics-course::constants-and-parameters",
+        "ethics-course::stock-flow-structures"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::stock-variables",
+      "label": "Stock Variables",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::accumulation",
+        "ethics-course::depletion",
+        "ethics-course::buffer-sizes"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::flow-variables",
+      "label": "Flow Variables",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::accumulation",
+        "ethics-course::depletion"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::accumulation",
+      "label": "Accumulation",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::dynamic-equilibrium"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::depletion",
+      "label": "Depletion",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::dynamic-equilibrium",
+        "ethics-course::limits-to-growth"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::dynamic-equilibrium",
+      "label": "Dynamic Equilibrium",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::tipping-points",
+        "ethics-course::resilience"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::tipping-points",
+      "label": "Tipping Points",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::thresholds",
+        "ethics-course::system-collapse"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::thresholds",
+      "label": "Thresholds",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::resilience"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::resilience",
+      "label": "Resilience",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::system-collapse"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::system-collapse",
+      "label": "System Collapse",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "SYSF",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::causal-loop-diagrams",
+      "label": "Causal Loop Diagrams",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::system-dynamics-models",
+        "ethics-course::system-archetypes",
+        "ethics-course::network-visualizations"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::system-dynamics-models",
+      "label": "System Dynamics Models",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::system-archetypes",
+        "ethics-course::system-intervention"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::mental-models",
+      "label": "Mental Models",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::mental-models-level",
+        "ethics-course::system-goals",
+        "ethics-course::paradigm-shifts"
+      ],
+      "taxonomy_id": "SYSF",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::system-archetypes",
+      "label": "System Archetypes",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::tragedy-of-the-commons",
+        "ethics-course::shifting-the-burden",
+        "ethics-course::success-to-the-successful",
+        "ethics-course::fixes-that-fail",
+        "ethics-course::limits-to-growth",
+        "ethics-course::escalation",
+        "ethics-course::eroding-goals",
+        "ethics-course::growth-and-underinvest"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::tragedy-of-the-commons",
+      "label": "Tragedy of the Commons",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::shifting-the-burden",
+      "label": "Shifting the Burden",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::success-to-the-successful",
+      "label": "Success to the Successful",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::fixes-that-fail",
+      "label": "Fixes That Fail",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::limits-to-growth",
+      "label": "Limits to Growth",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::escalation",
+      "label": "Escalation",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::eroding-goals",
+      "label": "Eroding Goals",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::growth-and-underinvest",
+      "label": "Growth and Underinvest",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::root-cause-analysis",
+      "label": "Root Cause Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::five-whys-technique",
+      "label": "Five Whys Technique",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::root-cause-analysis"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::iceberg-model",
+      "label": "Iceberg Model",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::events-level",
+      "label": "Events Level",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::iceberg-model",
+        "ethics-course::patterns-level"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::patterns-level",
+      "label": "Patterns Level",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::structures-level"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::structures-level",
+      "label": "Structures Level",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::mental-models-level"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::mental-models-level",
+      "label": "Mental Models Level",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::unintended-consequences",
+      "label": "Unintended Consequences",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::problem-shifting"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::side-effects",
+      "label": "Side Effects",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::fixes-that-fail",
+        "ethics-course::unintended-consequences",
+        "ethics-course::rebound-effects"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::rebound-effects",
+      "label": "Rebound Effects",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::problem-shifting",
+      "label": "Problem Shifting",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::time-shifting",
+        "ethics-course::geographic-shifting"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::time-shifting",
+      "label": "Time Shifting",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::geographic-shifting",
+      "label": "Geographic Shifting",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::stakeholder-analysis",
+      "label": "Stakeholder Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::stakeholder-engagement"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::power-dynamics",
+      "label": "Power Dynamics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::stakeholder-analysis",
+        "ethics-course::vested-interests",
+        "ethics-course::information-asymmetry"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::vested-interests",
+      "label": "Vested Interests",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::regulatory-capture"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::regulatory-capture",
+      "label": "Regulatory Capture",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "MRKT",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::information-asymmetry",
+      "label": "Information Asymmetry",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::regulatory-capture",
+        "ethics-course::principal-agent-problem",
+        "ethics-course::adverse-selection",
+        "ethics-course::drug-pricing"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::principal-agent-problem",
+      "label": "Principal-Agent Problem",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::moral-hazard"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::moral-hazard",
+      "label": "Moral Hazard",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "MRKT",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::adverse-selection",
+      "label": "Adverse Selection",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "MRKT",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::market-failures",
+      "label": "Market Failures",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::market-based-solutions"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::public-goods",
+      "label": "Public Goods",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::market-failures",
+        "ethics-course::common-pool-resources",
+        "ethics-course::free-rider-problem"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::common-pool-resources",
+      "label": "Common Pool Resources",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::tragedy-of-the-commons"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::free-rider-problem",
+      "label": "Free Rider Problem",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "MRKT",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::collective-action",
+      "label": "Collective Action",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::free-rider-problem",
+        "ethics-course::social-dilemmas",
+        "ethics-course::prisoner-s-dilemma"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::social-dilemmas",
+      "label": "Social Dilemmas",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "MRKT",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::prisoner-s-dilemma",
+      "label": "Prisoner's Dilemma",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::social-dilemmas",
+        "ethics-course::nash-equilibrium"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::nash-equilibrium",
+      "label": "Nash Equilibrium",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::pareto-efficiency"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::pareto-efficiency",
+      "label": "Pareto Efficiency",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "MRKT",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::tobacco-industry",
+      "label": "Tobacco Industry",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::tobacco-mortality"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::tobacco-mortality",
+      "label": "Tobacco Mortality",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::secondhand-smoke"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::secondhand-smoke",
+      "label": "Secondhand Smoke",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::fossil-fuel-industry",
+      "label": "Fossil Fuel Industry",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::air-pollution-deaths",
+        "ethics-course::climate-change-impact"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::air-pollution-deaths",
+      "label": "Air Pollution Deaths",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::climate-change-impact",
+      "label": "Climate Change Impact",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::ultra-processed-foods",
+      "label": "Ultra-Processed Foods",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::diet-related-deaths",
+        "ethics-course::food-addiction"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::diet-related-deaths",
+      "label": "Diet-Related Deaths",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::food-addiction",
+      "label": "Food Addiction",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::fast-fashion-industry",
+      "label": "Fast Fashion Industry",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::textile-waste",
+        "ethics-course::labor-exploitation"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::textile-waste",
+      "label": "Textile Waste",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::labor-exploitation",
+      "label": "Labor Exploitation",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::cybercrime-industry",
+      "label": "Cybercrime Industry",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::identity-theft",
+        "ethics-course::financial-fraud"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::identity-theft",
+      "label": "Identity Theft",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::financial-fraud",
+      "label": "Financial Fraud",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::industrial-agriculture",
+      "label": "Industrial Agriculture",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::pesticide-exposure",
+        "ethics-course::soil-degradation"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::pesticide-exposure",
+      "label": "Pesticide Exposure",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::soil-degradation",
+      "label": "Soil Degradation",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::pharmaceutical-industry",
+      "label": "Pharmaceutical Industry",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::opioid-crisis",
+        "ethics-course::drug-pricing"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::opioid-crisis",
+      "label": "Opioid Crisis",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::drug-pricing",
+      "label": "Drug Pricing",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::gambling-industry",
+      "label": "Gambling Industry",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::addiction-mechanisms",
+      "label": "Addiction Mechanisms",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::food-addiction",
+        "ethics-course::opioid-crisis",
+        "ethics-course::social-media-harms"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::social-media-harms",
+      "label": "Social Media Harms",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::attention-economy",
+      "label": "Attention Economy",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CASE",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::leverage-points",
+      "label": "Leverage Points",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::system-intervention",
+        "ethics-course::low-leverage-points",
+        "ethics-course::high-leverage-points",
+        "ethics-course::intervention-hierarchy"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::donella-meadows",
+      "label": "Donella Meadows",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::leverage-points"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::system-intervention",
+      "label": "System Intervention",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::stock-flow-structures",
+        "ethics-course::delay-lengths",
+        "ethics-course::negative-feedback-strength",
+        "ethics-course::positive-feedback-gains"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::low-leverage-points",
+      "label": "Low Leverage Points",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::constants-and-parameters",
+        "ethics-course::buffer-sizes",
+        "ethics-course::intervention-hierarchy"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::high-leverage-points",
+      "label": "High Leverage Points",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::information-flows",
+        "ethics-course::system-rules",
+        "ethics-course::self-organization",
+        "ethics-course::system-goals",
+        "ethics-course::paradigm-shifts",
+        "ethics-course::intervention-hierarchy"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::constants-and-parameters",
+      "label": "Constants and Parameters",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::buffer-sizes",
+      "label": "Buffer Sizes",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::stock-flow-structures",
+      "label": "Stock-Flow Structures",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::delay-lengths",
+      "label": "Delay Lengths",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::negative-feedback-strength",
+      "label": "Negative Feedback Strength",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::positive-feedback-gains",
+      "label": "Positive Feedback Gains",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::information-flows",
+      "label": "Information Flows",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::system-rules",
+      "label": "System Rules",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::self-organization",
+      "label": "Self-Organization",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::system-goals",
+      "label": "System Goals",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::paradigm-shifts",
+      "label": "Paradigm Shifts",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::transcending-paradigms"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::transcending-paradigms",
+      "label": "Transcending Paradigms",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::future-of-ethics"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::intervention-hierarchy",
+      "label": "Intervention Hierarchy",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::intervention-timing",
+        "ethics-course::intervention-sequencing",
+        "ethics-course::advocacy-strategies",
+        "ethics-course::reform-proposals"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::intervention-timing",
+      "label": "Intervention Timing",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::intervention-sequencing"
+      ],
+      "taxonomy_id": "LEVR",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::intervention-sequencing",
+      "label": "Intervention Sequencing",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "LEVR",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::advocacy-strategies",
+      "label": "Advocacy Strategies",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::policy-design",
+        "ethics-course::movement-building",
+        "ethics-course::coalition-formation",
+        "ethics-course::media-strategy",
+        "ethics-course::reform-proposals"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::policy-design",
+      "label": "Policy Design",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::regulatory-approaches",
+        "ethics-course::market-based-solutions"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::regulatory-approaches",
+      "label": "Regulatory Approaches",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::corporate-accountability",
+        "ethics-course::regulatory-enforcement"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::market-based-solutions",
+      "label": "Market-Based Solutions",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::pigouvian-taxes",
+        "ethics-course::subsidies",
+        "ethics-course::incentive-design"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::carbon-pricing",
+      "label": "Carbon Pricing",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ADVOC",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::pigouvian-taxes",
+      "label": "Pigouvian Taxes",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::carbon-pricing"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::subsidies",
+      "label": "Subsidies",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ADVOC",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::incentive-design",
+      "label": "Incentive Design",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ADVOC",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::behavioral-economics",
+      "label": "Behavioral Economics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::incentive-design",
+        "ethics-course::nudge-theory",
+        "ethics-course::choice-architecture",
+        "ethics-course::social-norms",
+        "ethics-course::framing-effects",
+        "ethics-course::loss-aversion",
+        "ethics-course::present-bias",
+        "ethics-course::cognitive-load"
+      ],
+      "taxonomy_id": "BEHAV",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::nudge-theory",
+      "label": "Nudge Theory",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "BEHAV",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::choice-architecture",
+      "label": "Choice Architecture",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::nudge-theory",
+        "ethics-course::default-options"
+      ],
+      "taxonomy_id": "BEHAV",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::default-options",
+      "label": "Default Options",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "BEHAV",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::social-norms",
+      "label": "Social Norms",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "BEHAV",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::framing-effects",
+      "label": "Framing Effects",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::message-framing"
+      ],
+      "taxonomy_id": "BEHAV",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::loss-aversion",
+      "label": "Loss Aversion",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "BEHAV",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::present-bias",
+      "label": "Present Bias",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "BEHAV",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::cognitive-load",
+      "label": "Cognitive Load",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::decision-fatigue"
+      ],
+      "taxonomy_id": "BEHAV",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::decision-fatigue",
+      "label": "Decision Fatigue",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "BEHAV",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::movement-building",
+      "label": "Movement Building",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::public-awareness-campaigns",
+        "ethics-course::grassroots-organizing"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::coalition-formation",
+      "label": "Coalition Formation",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::movement-building",
+        "ethics-course::stakeholder-engagement"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::stakeholder-engagement",
+      "label": "Stakeholder Engagement",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::corporate-engagement"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::public-awareness-campaigns",
+      "label": "Public Awareness Campaigns",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ADVOC",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::media-strategy",
+      "label": "Media Strategy",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::public-awareness-campaigns"
+      ],
+      "taxonomy_id": "ADVOC",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::grassroots-organizing",
+      "label": "Grassroots Organizing",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ADVOC",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::corporate-engagement",
+      "label": "Corporate Engagement",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "ADVOC",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::graphical-storytelling",
+        "ethics-course::network-visualizations",
+        "ethics-course::evidence-presentation"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::graphical-storytelling",
+      "label": "Graphical Storytelling",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::infographics"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::infographics",
+      "label": "Infographics",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "COMM",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::network-visualizations",
+      "label": "Network Visualizations",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::impact-mapping"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::impact-mapping",
+      "label": "Impact Mapping",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "COMM",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::audience-analysis",
+      "label": "Audience Analysis",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::message-framing"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::message-framing",
+      "label": "Message Framing",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::persuasive-communication"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::persuasive-communication",
+      "label": "Persuasive Communication",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::evidence-presentation"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::evidence-presentation",
+      "label": "Evidence Presentation",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "COMM",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::reform-proposals",
+      "label": "Reform Proposals",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::implementation-strategy",
+        "ethics-course::capstone-project"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::implementation-strategy",
+      "label": "Implementation Strategy",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::success-metrics",
+        "ethics-course::capstone-project"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::success-metrics",
+      "label": "Success Metrics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::monitoring-and-evaluation"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::monitoring-and-evaluation",
+      "label": "Monitoring and Evaluation",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::adaptive-management",
+        "ethics-course::capstone-project"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::adaptive-management",
+      "label": "Adaptive Management",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::corporate-responsibility",
+      "label": "Corporate Responsibility",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::corporate-engagement",
+        "ethics-course::esg-metrics",
+        "ethics-course::stakeholder-capitalism",
+        "ethics-course::shareholder-primacy",
+        "ethics-course::triple-bottom-line",
+        "ethics-course::supply-chain-ethics",
+        "ethics-course::whistleblowing",
+        "ethics-course::corporate-accountability"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::esg-metrics",
+      "label": "ESG Metrics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::sustainability-reporting"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::sustainability-reporting",
+      "label": "Sustainability Reporting",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::greenwashing"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::greenwashing",
+      "label": "Greenwashing",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::ethics-washing"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::ethics-washing",
+      "label": "Ethics Washing",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CORP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::stakeholder-capitalism",
+      "label": "Stakeholder Capitalism",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CORP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::shareholder-primacy",
+      "label": "Shareholder Primacy",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CORP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::triple-bottom-line",
+      "label": "Triple Bottom Line",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::b-corp-certification"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::b-corp-certification",
+      "label": "B Corp Certification",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::social-enterprise"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::social-enterprise",
+      "label": "Social Enterprise",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::impact-investing"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::impact-investing",
+      "label": "Impact Investing",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::divestment-strategies"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::divestment-strategies",
+      "label": "Divestment Strategies",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CORP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::supply-chain-ethics",
+      "label": "Supply Chain Ethics",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::due-diligence"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::due-diligence",
+      "label": "Due Diligence",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CORP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::whistleblowing",
+      "label": "Whistleblowing",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CORP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::corporate-accountability",
+      "label": "Corporate Accountability",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::legal-liability"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::legal-liability",
+      "label": "Legal Liability",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::regulatory-enforcement"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::regulatory-enforcement",
+      "label": "Regulatory Enforcement",
+      "subject_id": "ethics-course",
+      "dependencies": [
+        "ethics-course::international-standards"
+      ],
+      "taxonomy_id": "CORP",
+      "level": "core"
+    },
+    {
+      "id": "ethics-course::international-standards",
+      "label": "International Standards",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CORP",
+      "level": "foundational"
+    },
+    {
+      "id": "ethics-course::future-of-ethics",
+      "label": "Future of Ethics",
+      "subject_id": "ethics-course",
+      "dependencies": [],
+      "taxonomy_id": "CORP",
+      "level": "foundational"
+    }
+  ]
+}

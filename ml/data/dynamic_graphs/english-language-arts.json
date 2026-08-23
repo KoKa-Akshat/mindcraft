@@ -1,0 +1,3168 @@
+{
+  "subject_id": "english-language-arts",
+  "title": "US High School English Language Arts",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "RLIT": {
+      "classifier_name": "Reading Literature",
+      "color": "DarkGreen"
+    },
+    "RINF": {
+      "classifier_name": "Reading Informational Text",
+      "color": "Teal"
+    },
+    "WRITE": {
+      "classifier_name": "Writing",
+      "color": "Gold"
+    },
+    "SPEAK": {
+      "classifier_name": "Speaking and Listening",
+      "color": "DodgerBlue"
+    },
+    "LANG": {
+      "classifier_name": "Language",
+      "color": "LightSkyBlue"
+    },
+    "CRIT": {
+      "classifier_name": "Critical Thinking and Logic",
+      "color": "Crimson"
+    },
+    "MLIT": {
+      "classifier_name": "Media and Digital Literacy",
+      "color": "OliveDrab"
+    },
+    "BIAS": {
+      "classifier_name": "Cognitive Bias",
+      "color": "DarkOrchid"
+    },
+    "SYS": {
+      "classifier_name": "Systems Thinking",
+      "color": "Orange"
+    },
+    "RES": {
+      "classifier_name": "Research and Citation",
+      "color": "MediumPurple"
+    },
+    "CAP": {
+      "classifier_name": "Capstone and Assessment",
+      "color": "DimGray"
+    },
+    "AIWR": {
+      "classifier_name": "AI and Writing",
+      "color": "Coral"
+    }
+  },
+  "concepts": [
+    {
+      "id": "english-language-arts::english-language-arts-overview",
+      "label": "English Language Arts Overview",
+      "subject_id": "english-language-arts",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "english-language-arts::common-core-ela-standards",
+      "label": "Common Core ELA Standards",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::college-and-career-readiness",
+      "label": "College and Career Readiness",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::common-core-ela-standards"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::grades-9-10-standards-band",
+      "label": "Grades 9-10 Standards Band",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::common-core-ela-standards"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::grades-11-12-standards-band",
+      "label": "Grades 11-12 Standards Band",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::grades-9-10-standards-band"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::five-ela-strands",
+      "label": "Five ELA Strands",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::common-core-ela-standards"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ccr-anchor-standards",
+      "label": "CCR Anchor Standards",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::college-and-career-readiness",
+        "english-language-arts::five-ela-strands"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::close-reading",
+      "label": "Close Reading",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::textual-evidence",
+      "label": "Textual Evidence",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::text-complexity",
+      "label": "Text Complexity",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::lexile-level",
+      "label": "Lexile Level",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::text-complexity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::independent-reading",
+      "label": "Independent Reading",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::text-complexity",
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::academic-vocabulary",
+      "label": "Academic Vocabulary",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::domain-specific-vocabulary",
+      "label": "Domain-Specific Vocabulary",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::academic-vocabulary"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::literary-genres",
+      "label": "Literary Genres",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::fiction",
+      "label": "Fiction",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::nonfiction",
+      "label": "Nonfiction",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::drama",
+      "label": "Drama",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::poetry",
+      "label": "Poetry",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::short-story",
+      "label": "Short Story",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::fiction"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::novel",
+      "label": "Novel",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::fiction"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::novella",
+      "label": "Novella",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::fiction"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::memoir",
+      "label": "Memoir",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::nonfiction"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::essay",
+      "label": "Essay",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::nonfiction"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::epic-poetry",
+      "label": "Epic Poetry",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::poetry"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::tragedy",
+      "label": "Tragedy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::drama"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::comedy",
+      "label": "Comedy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::drama"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::sonnet",
+      "label": "Sonnet",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::poetry"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::lyric-poetry",
+      "label": "Lyric Poetry",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::poetry"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::free-verse",
+      "label": "Free Verse",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::poetry"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::theme",
+      "label": "Theme",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading",
+        "english-language-arts::textual-evidence"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::central-idea",
+      "label": "Central Idea",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading",
+        "english-language-arts::textual-evidence"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::character-development",
+      "label": "Character Development",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::fiction",
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::protagonist-and-antagonist",
+      "label": "Protagonist and Antagonist",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::character-development"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::plot-structure",
+      "label": "Plot Structure",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::fiction"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::exposition",
+      "label": "Exposition",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::plot-structure"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::rising-action",
+      "label": "Rising Action",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::plot-structure",
+        "english-language-arts::exposition"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::climax",
+      "label": "Climax",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rising-action"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::falling-action",
+      "label": "Falling Action",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::climax"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::resolution",
+      "label": "Resolution",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::falling-action"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::conflict-types",
+      "label": "Conflict Types",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::character-development",
+        "english-language-arts::plot-structure"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::point-of-view",
+      "label": "Point of View",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::first-person-narrator",
+      "label": "First-Person Narrator",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::point-of-view"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::third-person-narrator",
+      "label": "Third-Person Narrator",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::point-of-view"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::unreliable-narrator",
+      "label": "Unreliable Narrator",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::first-person-narrator",
+        "english-language-arts::third-person-narrator"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::cultural-perspective",
+      "label": "Cultural Perspective",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::point-of-view",
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::author-s-choices",
+      "label": "Author's Choices",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::text-structure",
+      "label": "Text Structure",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::figurative-language",
+      "label": "Figurative Language",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading",
+        "english-language-arts::academic-vocabulary"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::metaphor",
+      "label": "Metaphor",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::simile",
+      "label": "Simile",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::personification",
+      "label": "Personification",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::hyperbole",
+      "label": "Hyperbole",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::irony",
+      "label": "Irony",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::symbolism",
+      "label": "Symbolism",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::allusion",
+      "label": "Allusion",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language",
+        "english-language-arts::academic-vocabulary"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::motif",
+      "label": "Motif",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::theme",
+        "english-language-arts::symbolism"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::imagery",
+      "label": "Imagery",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::connotation-and-denotation",
+      "label": "Connotation and Denotation",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::academic-vocabulary"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::diction-word-choice",
+      "label": "Diction (Word Choice)",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::connotation-and-denotation"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::tone",
+      "label": "Tone",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::diction-word-choice",
+        "english-language-arts::author-s-choices"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::mood",
+      "label": "Mood",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::tone"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::author-s-style",
+      "label": "Author's Style",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::diction-word-choice",
+        "english-language-arts::tone",
+        "english-language-arts::syntax-and-sentence-structure"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::syntax-and-sentence-structure",
+      "label": "Syntax and Sentence Structure",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::academic-vocabulary"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::narrative-techniques",
+      "label": "Narrative Techniques",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::plot-structure",
+        "english-language-arts::point-of-view"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::foreshadowing",
+      "label": "Foreshadowing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::narrative-techniques"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::flashback",
+      "label": "Flashback",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::narrative-techniques"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::pacing",
+      "label": "Pacing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::narrative-techniques"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::multiple-interpretations",
+      "label": "Multiple Interpretations",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading",
+        "english-language-arts::textual-evidence"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::source-material-and-adaptations",
+      "label": "Source Material and Adaptations",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres",
+        "english-language-arts::multiple-interpretations"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::comparing-artistic-mediums",
+      "label": "Comparing Artistic Mediums",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::source-material-and-adaptations"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::shakespeare",
+      "label": "Shakespeare",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::drama",
+        "english-language-arts::tragedy"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::elizabethan-drama",
+      "label": "Elizabethan Drama",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::shakespeare"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::american-literary-periods",
+      "label": "American Literary Periods",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres",
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::british-literary-periods",
+      "label": "British Literary Periods",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres",
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::romantic-period",
+      "label": "Romantic Period",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::american-literary-periods"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::realism-and-naturalism",
+      "label": "Realism and Naturalism",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::american-literary-periods"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::modernist-literature",
+      "label": "Modernist Literature",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::american-literary-periods"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::contemporary-literature",
+      "label": "Contemporary Literature",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::american-literary-periods"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::mythology",
+      "label": "Mythology",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::classical-literature",
+      "label": "Classical Literature",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::mythology"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::world-literature-in-translation",
+      "label": "World Literature in Translation",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::literary-genres",
+        "english-language-arts::classical-literature"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::american-literature",
+      "label": "American Literature",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::american-literary-periods",
+        "english-language-arts::fiction",
+        "english-language-arts::poetry"
+      ],
+      "taxonomy_id": "RLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::informational-text",
+      "label": "Informational Text",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::nonfiction"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::central-idea-informational",
+      "label": "Central Idea (Informational)",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::central-idea"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::supporting-details",
+      "label": "Supporting Details",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::central-idea-informational"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::summarizing",
+      "label": "Summarizing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::central-idea-informational",
+        "english-language-arts::supporting-details"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::paraphrasing",
+      "label": "Paraphrasing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::summarizing"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::rhetoric",
+      "label": "Rhetoric",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::argument",
+      "label": "Argument",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetoric"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::claims",
+      "label": "Claims",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::argument"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::counterclaims",
+      "label": "Counterclaims",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::claims"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::evidence-types",
+      "label": "Evidence Types",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::argument",
+        "english-language-arts::textual-evidence"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::reasoning",
+      "label": "Reasoning",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::argument",
+        "english-language-arts::claims"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::warrant",
+      "label": "Warrant",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::claims",
+        "english-language-arts::evidence-types"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::rhetorical-appeals",
+      "label": "Rhetorical Appeals",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetoric"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ethos",
+      "label": "Ethos",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetorical-appeals"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::pathos",
+      "label": "Pathos",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetorical-appeals"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::logos",
+      "label": "Logos",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetorical-appeals"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::kairos",
+      "label": "Kairos",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetorical-appeals"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::author-s-purpose",
+      "label": "Author's Purpose",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::author-s-choices"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::rhetorical-strategies",
+      "label": "Rhetorical Strategies",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetoric",
+        "english-language-arts::rhetorical-appeals"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::point-of-view-informational",
+      "label": "Point of View (Informational)",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::point-of-view"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::us-foundational-documents",
+      "label": "US Foundational Documents",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::declaration-of-independence",
+      "label": "Declaration of Independence",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-foundational-documents"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::us-constitution",
+      "label": "US Constitution",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-foundational-documents",
+        "english-language-arts::declaration-of-independence"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::bill-of-rights",
+      "label": "Bill of Rights",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-constitution"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::federalist-papers",
+      "label": "Federalist Papers",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-foundational-documents"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::gettysburg-address",
+      "label": "Gettysburg Address",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-foundational-documents",
+        "english-language-arts::abraham-lincoln"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::letter-from-birmingham-jail",
+      "label": "Letter from Birmingham Jail",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-foundational-documents",
+        "english-language-arts::martin-luther-king-jr"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::presidential-addresses",
+      "label": "Presidential Addresses",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-foundational-documents"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ralph-waldo-emerson",
+      "label": "Ralph Waldo Emerson",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::romantic-period"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::henry-david-thoreau",
+      "label": "Henry David Thoreau",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::romantic-period"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::abraham-lincoln",
+      "label": "Abraham Lincoln",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-foundational-documents"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::martin-luther-king-jr",
+      "label": "Martin Luther King Jr.",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::us-foundational-documents"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::scientific-texts",
+      "label": "Scientific Texts",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::technical-texts",
+      "label": "Technical Texts",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::historical-informational-texts",
+      "label": "Historical Informational Texts",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::us-foundational-documents"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::multiple-source-comparison",
+      "label": "Multiple Source Comparison",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::textual-evidence"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::differing-viewpoints",
+      "label": "Differing Viewpoints",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::multiple-source-comparison",
+        "english-language-arts::point-of-view-informational"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::author-credibility",
+      "label": "Author Credibility",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ethos",
+        "english-language-arts::informational-text"
+      ],
+      "taxonomy_id": "RINF",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::argument-writing",
+      "label": "Argument Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::argument",
+        "english-language-arts::claims",
+        "english-language-arts::counterclaims"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::informative-writing",
+      "label": "Informative Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informational-text",
+        "english-language-arts::central-idea-informational"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::explanatory-writing",
+      "label": "Explanatory Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informative-writing"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::narrative-writing",
+      "label": "Narrative Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::narrative-techniques",
+        "english-language-arts::plot-structure"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::writing-modes-comparison",
+      "label": "Writing Modes Comparison",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::argument-writing",
+        "english-language-arts::informative-writing",
+        "english-language-arts::narrative-writing"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::writing-process",
+      "label": "Writing Process",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::prewriting-and-planning",
+      "label": "Prewriting and Planning",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::writing-process"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::drafting",
+      "label": "Drafting",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::prewriting-and-planning"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::revising",
+      "label": "Revising",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::drafting"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::editing",
+      "label": "Editing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::revising"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::publishing",
+      "label": "Publishing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::editing"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::task-purpose-and-audience",
+      "label": "Task Purpose and Audience",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::writing-process"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::tone-and-register",
+      "label": "Tone and Register",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::task-purpose-and-audience",
+        "english-language-arts::tone"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::essay-structure",
+      "label": "Essay Structure",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::writing-process"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::thesis-statement",
+      "label": "Thesis Statement",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::essay-structure",
+        "english-language-arts::argument-writing"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::introduction-paragraph",
+      "label": "Introduction Paragraph",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::essay-structure",
+        "english-language-arts::thesis-statement"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::body-paragraph",
+      "label": "Body Paragraph",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::essay-structure",
+        "english-language-arts::thesis-statement"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::conclusion-paragraph",
+      "label": "Conclusion Paragraph",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::essay-structure",
+        "english-language-arts::thesis-statement"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::topic-sentence",
+      "label": "Topic Sentence",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::body-paragraph"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::transitions",
+      "label": "Transitions",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::body-paragraph",
+        "english-language-arts::topic-sentence"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::claim-development",
+      "label": "Claim Development",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::argument-writing",
+        "english-language-arts::thesis-statement"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::counterclaim-development",
+      "label": "Counterclaim Development",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::claim-development",
+        "english-language-arts::counterclaims"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::evidence-integration",
+      "label": "Evidence Integration",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::evidence-types",
+        "english-language-arts::textual-evidence"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::quotation-integration",
+      "label": "Quotation Integration",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::evidence-integration",
+        "english-language-arts::textual-evidence"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::research-writing",
+      "label": "Research Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::writing-process",
+        "english-language-arts::research-methodology"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::short-research-projects",
+      "label": "Short Research Projects",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::research-writing"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::sustained-research-paper",
+      "label": "Sustained Research Paper",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::short-research-projects",
+        "english-language-arts::research-question"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::research-question",
+      "label": "Research Question",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::research-methodology"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::source-credibility",
+      "label": "Source Credibility",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::author-credibility",
+        "english-language-arts::research-methodology"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::primary-sources",
+      "label": "Primary Sources",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::source-credibility"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::secondary-sources",
+      "label": "Secondary Sources",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::source-credibility"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::plagiarism",
+      "label": "Plagiarism",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::evidence-integration",
+        "english-language-arts::paraphrasing"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::mla-citation-format",
+      "label": "MLA Citation Format",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::plagiarism",
+        "english-language-arts::evidence-integration"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::apa-citation-format",
+      "label": "APA Citation Format",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::plagiarism",
+        "english-language-arts::evidence-integration"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::annotated-bibliography",
+      "label": "Annotated Bibliography",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::mla-citation-format",
+        "english-language-arts::apa-citation-format",
+        "english-language-arts::source-credibility"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::definition-and-classification",
+      "label": "Definition and Classification",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informative-writing",
+        "english-language-arts::essay-structure"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::comparison-and-contrast",
+      "label": "Comparison and Contrast",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informative-writing",
+        "english-language-arts::essay-structure",
+        "english-language-arts::multiple-source-comparison"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::cause-and-effect-writing",
+      "label": "Cause and Effect Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informative-writing",
+        "english-language-arts::essay-structure"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::problem-and-solution-writing",
+      "label": "Problem and Solution Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::informative-writing",
+        "english-language-arts::essay-structure"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::sensory-detail",
+      "label": "Sensory Detail",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::narrative-writing",
+        "english-language-arts::imagery"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::descriptive-language",
+      "label": "Descriptive Language",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::sensory-detail",
+        "english-language-arts::diction-word-choice"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::sequence-of-events",
+      "label": "Sequence of Events",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::narrative-writing",
+        "english-language-arts::plot-structure"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::digital-writing-tools",
+      "label": "Digital Writing Tools",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::writing-process"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::collaborative-writing",
+      "label": "Collaborative Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::writing-process",
+        "english-language-arts::digital-writing-tools"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::peer-writing-workshop",
+      "label": "Peer Writing Workshop",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::revising",
+        "english-language-arts::collaborative-writing"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::writing-rubrics",
+      "label": "Writing Rubrics",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::writing-process"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::self-assessment-of-writing",
+      "label": "Self-Assessment of Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::writing-rubrics",
+        "english-language-arts::revising"
+      ],
+      "taxonomy_id": "WRITE",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::academic-discussion",
+      "label": "Academic Discussion",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::structured-discussion",
+      "label": "Structured Discussion",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::academic-discussion"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::collaborative-conversation",
+      "label": "Collaborative Conversation",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::structured-discussion"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::active-listening",
+      "label": "Active Listening",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::academic-discussion"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::speaking-skills",
+      "label": "Speaking Skills",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::academic-discussion"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::presentation-skills",
+      "label": "Presentation Skills",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::speaking-skills"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::oral-presentation",
+      "label": "Oral Presentation",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::presentation-skills"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::multimedia-presentation",
+      "label": "Multimedia Presentation",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::oral-presentation",
+        "english-language-arts::digital-media-integration"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::digital-media-integration",
+      "label": "Digital Media Integration",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::digital-writing-tools"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::visual-displays",
+      "label": "Visual Displays",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::digital-media-integration"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::formal-english",
+      "label": "Formal English",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::standard-english-grammar"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::code-switching",
+      "label": "Code-Switching",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::formal-english"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::civil-disagreement",
+      "label": "Civil Disagreement",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::collaborative-conversation",
+        "english-language-arts::active-listening"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::evidence-based-discussion",
+      "label": "Evidence-Based Discussion",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::structured-discussion",
+        "english-language-arts::textual-evidence"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::evaluating-a-speaker",
+      "label": "Evaluating a Speaker",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::active-listening",
+        "english-language-arts::speaker-s-reasoning"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::speaker-s-reasoning",
+      "label": "Speaker's Reasoning",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::reasoning",
+        "english-language-arts::speaking-skills"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::media-evaluation",
+      "label": "Media Evaluation",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::active-listening",
+        "english-language-arts::academic-discussion"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::diverse-media-formats",
+      "label": "Diverse Media Formats",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::digital-media-integration",
+        "english-language-arts::media-evaluation"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::adapting-speech-to-context",
+      "label": "Adapting Speech to Context",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::speaking-skills",
+        "english-language-arts::code-switching"
+      ],
+      "taxonomy_id": "SPEAK",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::standard-english-grammar",
+      "label": "Standard English Grammar",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::parts-of-speech",
+      "label": "Parts of Speech",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::standard-english-grammar"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::nouns-and-pronouns",
+      "label": "Nouns and Pronouns",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::parts-of-speech"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::verbs-and-verb-tenses",
+      "label": "Verbs and Verb Tenses",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::parts-of-speech"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::adjectives-and-adverbs",
+      "label": "Adjectives and Adverbs",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::parts-of-speech"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::prepositions",
+      "label": "Prepositions",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::parts-of-speech"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::conjunctions",
+      "label": "Conjunctions",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::parts-of-speech"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::sentence-types",
+      "label": "Sentence Types",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::standard-english-grammar",
+        "english-language-arts::parts-of-speech"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::simple-sentence",
+      "label": "Simple Sentence",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::sentence-types"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::compound-sentence",
+      "label": "Compound Sentence",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::sentence-types",
+        "english-language-arts::conjunctions"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::complex-sentence",
+      "label": "Complex Sentence",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::sentence-types",
+        "english-language-arts::dependent-clause"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::compound-complex-sentence",
+      "label": "Compound-Complex Sentence",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::compound-sentence",
+        "english-language-arts::complex-sentence"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::phrases-and-clauses",
+      "label": "Phrases and Clauses",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::parts-of-speech",
+        "english-language-arts::sentence-types"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::independent-clause",
+      "label": "Independent Clause",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::phrases-and-clauses"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::dependent-clause",
+      "label": "Dependent Clause",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::phrases-and-clauses",
+        "english-language-arts::independent-clause"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::participial-phrase",
+      "label": "Participial Phrase",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::phrases-and-clauses",
+        "english-language-arts::nouns-and-pronouns"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::infinitive-phrase",
+      "label": "Infinitive Phrase",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::phrases-and-clauses",
+        "english-language-arts::verbs-and-verb-tenses"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::capitalization-rules",
+      "label": "Capitalization Rules",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::standard-english-grammar"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::punctuation-conventions",
+      "label": "Punctuation Conventions",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::standard-english-grammar"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::comma-usage",
+      "label": "Comma Usage",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::punctuation-conventions",
+        "english-language-arts::sentence-types"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::semicolon-and-colon-use",
+      "label": "Semicolon and Colon Use",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::punctuation-conventions",
+        "english-language-arts::compound-sentence"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::apostrophe-and-possessives",
+      "label": "Apostrophe and Possessives",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::punctuation-conventions",
+        "english-language-arts::nouns-and-pronouns"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::quotation-marks-usage",
+      "label": "Quotation Marks Usage",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::punctuation-conventions"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::spelling-conventions",
+      "label": "Spelling Conventions",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::standard-english-grammar"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::vocabulary-acquisition",
+      "label": "Vocabulary Acquisition",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::academic-vocabulary",
+        "english-language-arts::standard-english-grammar"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::context-clues",
+      "label": "Context Clues",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::vocabulary-acquisition",
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::morphology",
+      "label": "Morphology",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::vocabulary-acquisition"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::word-roots",
+      "label": "Word Roots",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::morphology"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::prefixes-and-suffixes",
+      "label": "Prefixes and Suffixes",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::morphology",
+        "english-language-arts::word-roots"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::reference-materials",
+      "label": "Reference Materials",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::vocabulary-acquisition"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::word-relationships",
+      "label": "Word Relationships",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::vocabulary-acquisition",
+        "english-language-arts::connotation-and-denotation"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::word-nuances",
+      "label": "Word Nuances",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::word-relationships",
+        "english-language-arts::connotation-and-denotation"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::figurative-vs-literal-language",
+      "label": "Figurative vs. Literal Language",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::figurative-language",
+        "english-language-arts::connotation-and-denotation"
+      ],
+      "taxonomy_id": "LANG",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::logical-reasoning",
+      "label": "Logical Reasoning",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::critical-thinking"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::questioning-assumptions",
+      "label": "Questioning Assumptions",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::critical-thinking"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::annotation-and-marking",
+      "label": "Annotation and Marking",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::argumentation-skills",
+      "label": "Argumentation Skills",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::argument",
+        "english-language-arts::logical-reasoning"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::rhetorical-analysis",
+      "label": "Rhetorical Analysis",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetoric",
+        "english-language-arts::rhetorical-strategies",
+        "english-language-arts::critical-thinking"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::logical-fallacies",
+      "label": "Logical Fallacies",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::logical-reasoning",
+        "english-language-arts::argumentation-skills"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ad-hominem-fallacy",
+      "label": "Ad Hominem Fallacy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::straw-man-fallacy",
+      "label": "Straw Man Fallacy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::false-dichotomy",
+      "label": "False Dichotomy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::slippery-slope-fallacy",
+      "label": "Slippery Slope Fallacy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::appeal-to-authority",
+      "label": "Appeal to Authority",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::circular-reasoning",
+      "label": "Circular Reasoning",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::hasty-generalization",
+      "label": "Hasty Generalization",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::media-literacy",
+      "label": "Media Literacy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::critical-thinking",
+        "english-language-arts::english-language-arts-overview"
+      ],
+      "taxonomy_id": "MLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::digital-literacy",
+      "label": "Digital Literacy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::media-literacy",
+        "english-language-arts::digital-media-integration"
+      ],
+      "taxonomy_id": "MLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::source-evaluation",
+      "label": "Source Evaluation",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::source-credibility",
+        "english-language-arts::media-literacy"
+      ],
+      "taxonomy_id": "MLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::fact-checking-skills",
+      "label": "Fact-Checking Skills",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::source-evaluation",
+        "english-language-arts::logical-reasoning"
+      ],
+      "taxonomy_id": "MLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::misinformation-detection",
+      "label": "Misinformation Detection",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::fact-checking-skills",
+        "english-language-arts::media-literacy"
+      ],
+      "taxonomy_id": "MLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::social-media-literacy",
+      "label": "Social Media Literacy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::misinformation-detection",
+        "english-language-arts::digital-literacy"
+      ],
+      "taxonomy_id": "MLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::propaganda-techniques",
+      "label": "Propaganda Techniques",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::rhetoric",
+        "english-language-arts::media-literacy"
+      ],
+      "taxonomy_id": "MLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::emotional-manipulation-in-media",
+      "label": "Emotional Manipulation in Media",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::propaganda-techniques",
+        "english-language-arts::pathos"
+      ],
+      "taxonomy_id": "MLIT",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::cognitive-bias",
+      "label": "Cognitive Bias",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::critical-thinking",
+        "english-language-arts::logical-reasoning"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::availability-heuristic",
+      "label": "Availability Heuristic",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::anchoring-bias",
+      "label": "Anchoring Bias",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::in-group-favoritism",
+      "label": "In-Group Favoritism",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::framing-effect",
+      "label": "Framing Effect",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias",
+        "english-language-arts::propaganda-techniques"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::dunning-kruger-effect",
+      "label": "Dunning-Kruger Effect",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::bandwagon-effect",
+      "label": "Bandwagon Effect",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::sunk-cost-fallacy",
+      "label": "Sunk Cost Fallacy",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::hindsight-bias",
+      "label": "Hindsight Bias",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::attribution-bias",
+      "label": "Attribution Bias",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::survivorship-bias",
+      "label": "Survivorship Bias",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::recency-bias",
+      "label": "Recency Bias",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias",
+        "english-language-arts::availability-heuristic"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::halo-effect",
+      "label": "Halo Effect",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::false-consensus-effect",
+      "label": "False Consensus Effect",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias",
+        "english-language-arts::in-group-favoritism"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::negativity-bias",
+      "label": "Negativity Bias",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::motivated-reasoning",
+      "label": "Motivated Reasoning",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::confirmation-bias",
+        "english-language-arts::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::stereotyping",
+      "label": "Stereotyping",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cognitive-bias",
+        "english-language-arts::in-group-favoritism"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::critical-thinking",
+        "english-language-arts::logical-reasoning"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::feedback-loops",
+      "label": "Feedback Loops",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::systems-thinking"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::balancing-feedback-loops",
+      "label": "Balancing Feedback Loops",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::reinforcing-feedback-loops",
+      "label": "Reinforcing Feedback Loops",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::causal-loop-diagrams",
+      "label": "Causal Loop Diagrams",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::feedback-loops",
+        "english-language-arts::balancing-feedback-loops",
+        "english-language-arts::reinforcing-feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::unintended-consequences",
+      "label": "Unintended Consequences",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::systems-thinking",
+        "english-language-arts::causal-loop-diagrams"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::holistic-problem-analysis",
+      "label": "Holistic Problem Analysis",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::systems-thinking",
+        "english-language-arts::critical-thinking"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::second-order-effects",
+      "label": "Second-Order Effects",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::unintended-consequences",
+        "english-language-arts::causal-loop-diagrams"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ai-impact-on-writing",
+      "label": "AI Impact on Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::english-language-arts-overview",
+        "english-language-arts::writing-process"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ai-writing-tools-overview",
+      "label": "AI Writing Tools Overview",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ai-impact-on-writing"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::cowriting-with-ai",
+      "label": "Cowriting with AI",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ai-writing-tools-overview",
+        "english-language-arts::writing-process"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ai-for-brainstorming",
+      "label": "AI for Brainstorming",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cowriting-with-ai",
+        "english-language-arts::prewriting-and-planning"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ai-feedback-on-writing",
+      "label": "AI Feedback on Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cowriting-with-ai",
+        "english-language-arts::revising"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ai-for-outlining-and-org",
+      "label": "AI for Outlining and Org",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ai-for-brainstorming",
+        "english-language-arts::essay-structure"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::prompt-engineering-for-writing",
+      "label": "Prompt Engineering for Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ai-writing-tools-overview",
+        "english-language-arts::prewriting-and-planning"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ethical-ai-use-in-academics",
+      "label": "Ethical AI Use in Academics",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ai-impact-on-writing",
+        "english-language-arts::critical-thinking"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::academic-dishonesty-with-ai",
+      "label": "Academic Dishonesty with AI",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ethical-ai-use-in-academics",
+        "english-language-arts::plagiarism"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ai-generated-text-detection",
+      "label": "AI-Generated Text Detection",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::academic-dishonesty-with-ai",
+        "english-language-arts::fact-checking-skills"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ai-disclosure-and-citation",
+      "label": "AI Disclosure and Citation",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ethical-ai-use-in-academics",
+        "english-language-arts::mla-citation-format"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::ai-limitations-in-writing",
+      "label": "AI Limitations in Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ai-writing-tools-overview",
+        "english-language-arts::critical-thinking"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::preserving-voice-with-ai",
+      "label": "Preserving Voice with AI",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::cowriting-with-ai",
+        "english-language-arts::author-s-style"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::critical-eval-of-ai-output",
+      "label": "Critical Eval of AI Output",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::ai-writing-tools-overview",
+        "english-language-arts::critical-thinking",
+        "english-language-arts::fact-checking-skills"
+      ],
+      "taxonomy_id": "AIWR",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::research-methodology",
+      "label": "Research Methodology",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::close-reading",
+        "english-language-arts::critical-thinking"
+      ],
+      "taxonomy_id": "RES",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::library-and-database-research",
+      "label": "Library and Database Research",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::research-methodology"
+      ],
+      "taxonomy_id": "RES",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::evaluating-research-sources",
+      "label": "Evaluating Research Sources",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::source-credibility",
+        "english-language-arts::research-methodology"
+      ],
+      "taxonomy_id": "RES",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::synthesizing-multiple-sources",
+      "label": "Synthesizing Multiple Sources",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::multiple-source-comparison",
+        "english-language-arts::evidence-integration",
+        "english-language-arts::research-methodology"
+      ],
+      "taxonomy_id": "RES",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::college-and-career-readiness",
+        "english-language-arts::ccr-anchor-standards"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::senior-research-thesis",
+      "label": "Senior Research Thesis",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::capstone-project",
+        "english-language-arts::sustained-research-paper",
+        "english-language-arts::synthesizing-multiple-sources"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::oral-defense",
+      "label": "Oral Defense",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::senior-research-thesis",
+        "english-language-arts::oral-presentation"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::literary-portfolio",
+      "label": "Literary Portfolio",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::capstone-project",
+        "english-language-arts::american-literature",
+        "english-language-arts::narrative-writing"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::rhetorical-analysis-project",
+      "label": "Rhetorical Analysis Project",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::capstone-project",
+        "english-language-arts::rhetorical-analysis",
+        "english-language-arts::synthesizing-multiple-sources"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::literary-criticism-portfolio",
+      "label": "Literary Criticism Portfolio",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::capstone-project",
+        "english-language-arts::american-literature",
+        "english-language-arts::rhetorical-analysis"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::civic-engagement-portfolio",
+      "label": "Civic Engagement Portfolio",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::capstone-project",
+        "english-language-arts::us-foundational-documents",
+        "english-language-arts::argument-writing"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::public-letter-writing",
+      "label": "Public Letter Writing",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::argument-writing",
+        "english-language-arts::task-purpose-and-audience"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "english-language-arts::audience-awareness",
+      "label": "Audience Awareness",
+      "subject_id": "english-language-arts",
+      "dependencies": [
+        "english-language-arts::task-purpose-and-audience",
+        "english-language-arts::presentation-skills"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    }
+  ]
+}

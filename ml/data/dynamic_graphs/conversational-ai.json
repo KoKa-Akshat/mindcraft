@@ -1,0 +1,2094 @@
+{
+  "subject_id": "conversational-ai",
+  "title": "Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "red"
+    },
+    "SEARCH": {
+      "classifier_name": "Search Technologies",
+      "color": "slateblue"
+    },
+    "METRIC": {
+      "classifier_name": "Search Quality Metrics",
+      "color": "chocolate"
+    },
+    "LLM": {
+      "classifier_name": "Language Models",
+      "color": "peru"
+    },
+    "EMBED": {
+      "classifier_name": "Embeddings and Vectors",
+      "color": "turquoise"
+    },
+    "CHAT": {
+      "classifier_name": "Chatbot Systems",
+      "color": "coral"
+    },
+    "RAG": {
+      "classifier_name": "RAG Patterns",
+      "color": "cornflowerblue"
+    },
+    "GRAPH": {
+      "classifier_name": "Knowledge Graphs",
+      "color": "khaki"
+    },
+    "NLP": {
+      "classifier_name": "NLP Processing",
+      "color": "mediumpurple"
+    },
+    "QUERY": {
+      "classifier_name": "Query Systems",
+      "color": "tomato"
+    },
+    "SEC": {
+      "classifier_name": "Security and Privacy",
+      "color": "hotpink"
+    },
+    "EVAL": {
+      "classifier_name": "Evaluation and Optimization",
+      "color": "skyblue"
+    },
+    "TOOL": {
+      "classifier_name": "Tools and Projects",
+      "color": "mediumaquamarine"
+    }
+  },
+  "concepts": [
+    {
+      "id": "conversational-ai::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "conversational-ai",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "conversational-ai::ai-timeline",
+      "label": "AI Timeline",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::artificial-intelligence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::ai-doubling-rate",
+      "label": "AI Doubling Rate",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::artificial-intelligence",
+        "conversational-ai::ai-timeline"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::moore-s-law",
+      "label": "Moore's Law",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::artificial-intelligence",
+        "conversational-ai::ai-doubling-rate"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::natural-language-processing",
+      "label": "Natural Language Processing",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::artificial-intelligence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::text-processing",
+      "label": "Text Processing",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::natural-language-processing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::string-matching",
+      "label": "String Matching",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::text-processing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::regular-expressions",
+      "label": "Regular Expressions",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::string-matching"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::grep-command",
+      "label": "Grep Command",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::string-matching",
+        "conversational-ai::regular-expressions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::keyword-search",
+      "label": "Keyword Search",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::text-processing",
+        "conversational-ai::search-index"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::search-index",
+      "label": "Search Index",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::text-processing"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::inverted-index",
+      "label": "Inverted Index",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::search-index"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::reverse-index",
+      "label": "Reverse Index",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::inverted-index"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::full-text-search",
+      "label": "Full-Text Search",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search",
+        "conversational-ai::inverted-index"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::boolean-search",
+      "label": "Boolean Search",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::search-query",
+      "label": "Search Query",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::query-parser",
+      "label": "Query Parser",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::search-query"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::synonym-expansion",
+      "label": "Synonym Expansion",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::thesaurus",
+      "label": "Thesaurus",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::synonym-expansion"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::ontology",
+      "label": "Ontology",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::natural-language-processing",
+        "conversational-ai::knowledge-graph"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::taxonomy",
+      "label": "Taxonomy",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::ontology"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::controlled-vocabulary",
+      "label": "Controlled Vocabulary",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::taxonomy"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::metadata",
+      "label": "Metadata",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::text-processing"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::metadata-tagging",
+      "label": "Metadata Tagging",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::metadata"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::dublin-core",
+      "label": "Dublin Core",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::metadata",
+        "conversational-ai::metadata-tagging"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::semantic-search",
+      "label": "Semantic Search",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search",
+        "conversational-ai::word-embedding"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::vector-similarity",
+      "label": "Vector Similarity",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::embedding-vector"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::cosine-similarity",
+      "label": "Cosine Similarity",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::vector-similarity"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::euclidean-distance",
+      "label": "Euclidean Distance",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::vector-similarity"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::search-ranking",
+      "label": "Search Ranking",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::page-rank-algorithm",
+      "label": "Page Rank Algorithm",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::search-ranking"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::tf-idf",
+      "label": "TF-IDF",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::term-frequency",
+        "conversational-ai::document-frequency"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::term-frequency",
+      "label": "Term Frequency",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::document-frequency",
+      "label": "Document Frequency",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::search-precision",
+      "label": "Search Precision",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "METRIC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::search-recall",
+      "label": "Search Recall",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "METRIC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::f-measure",
+      "label": "F-Measure",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::search-precision",
+        "conversational-ai::search-recall"
+      ],
+      "taxonomy_id": "METRIC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::f1-score",
+      "label": "F1 Score",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::f-measure"
+      ],
+      "taxonomy_id": "METRIC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::confusion-matrix",
+      "label": "Confusion Matrix",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::search-precision",
+        "conversational-ai::search-recall"
+      ],
+      "taxonomy_id": "METRIC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::true-positive",
+      "label": "True Positive",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::confusion-matrix"
+      ],
+      "taxonomy_id": "METRIC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::false-positive",
+      "label": "False Positive",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::confusion-matrix"
+      ],
+      "taxonomy_id": "METRIC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::search-performance",
+      "label": "Search Performance",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::keyword-search"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::query-optimization",
+      "label": "Query Optimization",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::search-query",
+        "conversational-ai::search-performance"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::index-performance",
+      "label": "Index Performance",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::search-index",
+        "conversational-ai::search-performance"
+      ],
+      "taxonomy_id": "SEARCH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::artificial-intelligence",
+        "conversational-ai::natural-language-processing"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::transformer-architecture",
+      "label": "Transformer Architecture",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::large-language-model"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::attention-mechanism",
+      "label": "Attention Mechanism",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::transformer-architecture"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::token",
+      "label": "Token",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::natural-language-processing"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::tokenization",
+      "label": "Tokenization",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::token"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::subword-tokenization",
+      "label": "Subword Tokenization",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::tokenization"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::byte-pair-encoding",
+      "label": "Byte Pair Encoding",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::subword-tokenization"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::word-embedding",
+      "label": "Word Embedding",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::token",
+        "conversational-ai::vector-space-model"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::embedding-vector",
+      "label": "Embedding Vector",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::word-embedding"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::vector-space-model",
+      "label": "Vector Space Model",
+      "subject_id": "conversational-ai",
+      "dependencies": [],
+      "taxonomy_id": "EMBED",
+      "level": "foundational"
+    },
+    {
+      "id": "conversational-ai::vector-dimension",
+      "label": "Vector Dimension",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::embedding-vector",
+        "conversational-ai::vector-space-model"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::embedding-model",
+      "label": "Embedding Model",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::word-embedding"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::word2vec",
+      "label": "Word2Vec",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::embedding-model"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::glove",
+      "label": "GloVe",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::embedding-model"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::fasttext",
+      "label": "FastText",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::embedding-model"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::sentence-embedding",
+      "label": "Sentence Embedding",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::word-embedding"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::contextual-embedding",
+      "label": "Contextual Embedding",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::sentence-embedding"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::vector-database",
+      "label": "Vector Database",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::embedding-vector"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::vector-store",
+      "label": "Vector Store",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::vector-database"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::vector-index",
+      "label": "Vector Index",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::vector-store"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::approximate-nearest-neighbor",
+      "label": "Approximate Nearest Neighbor",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::vector-index"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::faiss",
+      "label": "FAISS",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::vector-store",
+        "conversational-ai::approximate-nearest-neighbor"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::pinecone",
+      "label": "Pinecone",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::vector-store"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::weaviate",
+      "label": "Weaviate",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::vector-store"
+      ],
+      "taxonomy_id": "EMBED",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chatbot",
+      "label": "Chatbot",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::artificial-intelligence",
+        "conversational-ai::natural-language-processing"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::conversational-agent",
+      "label": "Conversational Agent",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::dialog-system",
+      "label": "Dialog System",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::conversational-agent"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::intent-recognition",
+      "label": "Intent Recognition",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::natural-language-processing",
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::intent-modeling",
+      "label": "Intent Modeling",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::intent-recognition"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::intent-classification",
+      "label": "Intent Classification",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::intent-modeling"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::entity-extraction",
+      "label": "Entity Extraction",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::natural-language-processing",
+        "conversational-ai::text-processing"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::named-entity-recognition",
+      "label": "Named Entity Recognition",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::entity-extraction"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::entity-type",
+      "label": "Entity Type",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::named-entity-recognition"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::entity-linking",
+      "label": "Entity Linking",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::named-entity-recognition"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::faq",
+      "label": "FAQ",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::faq-analysis",
+      "label": "FAQ Analysis",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::faq"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::question-answer-pair",
+      "label": "Question-Answer Pair",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::faq"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-query",
+      "label": "User Query",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-intent",
+      "label": "User Intent",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::intent-recognition",
+        "conversational-ai::user-query"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chatbot-response",
+      "label": "Chatbot Response",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::response-generation",
+      "label": "Response Generation",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-response"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::response-quality",
+      "label": "Response Quality",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-response"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::response-latency",
+      "label": "Response Latency",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-response",
+        "conversational-ai::search-performance"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-feedback",
+      "label": "User Feedback",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-response"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::feedback-button",
+      "label": "Feedback Button",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-feedback"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::thumbs-up-down",
+      "label": "Thumbs Up/Down",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::feedback-button"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-feedback"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::ai-flywheel",
+      "label": "AI Flywheel",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::feedback-loop",
+        "conversational-ai::continuous-improvement"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::continuous-improvement",
+      "label": "Continuous Improvement",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::feedback-loop"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-interface",
+      "label": "User Interface",
+      "subject_id": "conversational-ai",
+      "dependencies": [],
+      "taxonomy_id": "CHAT",
+      "level": "foundational"
+    },
+    {
+      "id": "conversational-ai::chat-interface",
+      "label": "Chat Interface",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-interface"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::message-bubble",
+      "label": "Message Bubble",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chat-interface"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chat-history",
+      "label": "Chat History",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chat-interface"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::conversation-context",
+      "label": "Conversation Context",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chat-history"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::session-management",
+      "label": "Session Management",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::conversation-context"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chatbot-framework",
+      "label": "Chatbot Framework",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::rasa",
+      "label": "Rasa",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-framework"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::dialogflow",
+      "label": "Dialogflow",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-framework"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::botpress",
+      "label": "Botpress",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-framework"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::langchain",
+      "label": "LangChain",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-framework",
+        "conversational-ai::large-language-model"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::llamaindex",
+      "label": "LlamaIndex",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-framework",
+        "conversational-ai::large-language-model"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::javascript-library",
+      "label": "JavaScript Library",
+      "subject_id": "conversational-ai",
+      "dependencies": [],
+      "taxonomy_id": "CHAT",
+      "level": "foundational"
+    },
+    {
+      "id": "conversational-ai::node-js",
+      "label": "Node.js",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::javascript-library"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::react-chatbot",
+      "label": "React Chatbot",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::javascript-library",
+        "conversational-ai::node-js"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chat-widget",
+      "label": "Chat Widget",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chat-interface",
+        "conversational-ai::javascript-library"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::external-knowledge",
+      "label": "External Knowledge",
+      "subject_id": "conversational-ai",
+      "dependencies": [],
+      "taxonomy_id": "RAG",
+      "level": "foundational"
+    },
+    {
+      "id": "conversational-ai::public-knowledge-base",
+      "label": "Public Knowledge Base",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::external-knowledge"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::internal-knowledge",
+      "label": "Internal Knowledge",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::external-knowledge"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::private-documents",
+      "label": "Private Documents",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::internal-knowledge"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::document-corpus",
+      "label": "Document Corpus",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::external-knowledge"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::rag-pattern",
+      "label": "RAG Pattern",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::large-language-model",
+        "conversational-ai::vector-store",
+        "conversational-ai::document-corpus"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::retrieval-augmented-generation",
+      "label": "Retrieval Augmented Generation",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::rag-pattern"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::retrieval-step",
+      "label": "Retrieval Step",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::rag-pattern"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::augmentation-step",
+      "label": "Augmentation Step",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::retrieval-step"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::generation-step",
+      "label": "Generation Step",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::augmentation-step"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::context-window",
+      "label": "Context Window",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::large-language-model"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::large-language-model"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::system-prompt",
+      "label": "System Prompt",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::prompt-engineering"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-prompt",
+      "label": "User Prompt",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::prompt-engineering"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::rag-limitations",
+      "label": "RAG Limitations",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::rag-pattern"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::context-length-limit",
+      "label": "Context Length Limit",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::context-window"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::hallucination",
+      "label": "Hallucination",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::large-language-model"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::factual-accuracy",
+      "label": "Factual Accuracy",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::response-quality",
+        "conversational-ai::hallucination"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::graphrag-pattern",
+      "label": "GraphRAG Pattern",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::rag-pattern",
+        "conversational-ai::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "conversational-ai",
+      "dependencies": [],
+      "taxonomy_id": "GRAPH",
+      "level": "foundational"
+    },
+    {
+      "id": "conversational-ai::graph-database",
+      "label": "Graph Database",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::node",
+      "label": "Node",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::edge",
+      "label": "Edge",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::triple",
+      "label": "Triple",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::node",
+        "conversational-ai::edge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::subject-predicate-object",
+      "label": "Subject-Predicate-Object",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::triple"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::rdf",
+      "label": "RDF",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::triple"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::graph-query",
+      "label": "Graph Query",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::opencypher",
+      "label": "OpenCypher",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::graph-query"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::cypher-query-language",
+      "label": "Cypher Query Language",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::graph-query"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::neo4j",
+      "label": "Neo4j",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::graph-database"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::corporate-nervous-system",
+      "label": "Corporate Nervous System",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::knowledge-graph",
+        "conversational-ai::knowledge-management"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::organizational-knowledge",
+      "label": "Organizational Knowledge",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::corporate-nervous-system"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::knowledge-management",
+      "label": "Knowledge Management",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::external-knowledge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::nlp-pipeline",
+      "label": "NLP Pipeline",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::natural-language-processing"
+      ],
+      "taxonomy_id": "NLP",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::text-preprocessing",
+      "label": "Text Preprocessing",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::text-processing",
+        "conversational-ai::nlp-pipeline"
+      ],
+      "taxonomy_id": "NLP",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::text-normalization",
+      "label": "Text Normalization",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::text-preprocessing"
+      ],
+      "taxonomy_id": "NLP",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::stemming",
+      "label": "Stemming",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::text-preprocessing"
+      ],
+      "taxonomy_id": "NLP",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::lemmatization",
+      "label": "Lemmatization",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::text-preprocessing"
+      ],
+      "taxonomy_id": "NLP",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::part-of-speech-tagging",
+      "label": "Part-of-Speech Tagging",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::nlp-pipeline"
+      ],
+      "taxonomy_id": "NLP",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::dependency-parsing",
+      "label": "Dependency Parsing",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::nlp-pipeline"
+      ],
+      "taxonomy_id": "NLP",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::coreference-resolution",
+      "label": "Coreference Resolution",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::nlp-pipeline"
+      ],
+      "taxonomy_id": "NLP",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::database-query",
+      "label": "Database Query",
+      "subject_id": "conversational-ai",
+      "dependencies": [],
+      "taxonomy_id": "QUERY",
+      "level": "foundational"
+    },
+    {
+      "id": "conversational-ai::sql-query",
+      "label": "SQL Query",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::database-query"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::query-parameter",
+      "label": "Query Parameter",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::database-query"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::parameter-extraction",
+      "label": "Parameter Extraction",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::query-parameter"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::query-template",
+      "label": "Query Template",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::sql-query",
+        "conversational-ai::query-parameter"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::parameterized-query",
+      "label": "Parameterized Query",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::query-template"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::query-execution",
+      "label": "Query Execution",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::database-query"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::query-description",
+      "label": "Query Description",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::database-query"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::natural-language-to-sql",
+      "label": "Natural Language to SQL",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::natural-language-processing",
+        "conversational-ai::sql-query"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::question-to-query-mapping",
+      "label": "Question to Query Mapping",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::natural-language-to-sql",
+        "conversational-ai::user-query"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::slot-filling",
+      "label": "Slot Filling",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::parameter-extraction"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-context",
+      "label": "User Context",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-query"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-profile",
+      "label": "User Profile",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-context"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-preferences",
+      "label": "User Preferences",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-profile"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-history",
+      "label": "User History",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-profile"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::personalization",
+      "label": "Personalization",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-profile",
+        "conversational-ai::user-preferences"
+      ],
+      "taxonomy_id": "CHAT",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::security",
+      "label": "Security",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::authentication",
+      "label": "Authentication",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::security"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::authorization",
+      "label": "Authorization",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::security"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-permission",
+      "label": "User Permission",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::authorization"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::role-based-access-control",
+      "label": "Role-Based Access Control",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-permission"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::rbac",
+      "label": "RBAC",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::role-based-access-control"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::access-policy",
+      "label": "Access Policy",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-permission"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::data-privacy",
+      "label": "Data Privacy",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::security"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::pii",
+      "label": "PII",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::data-privacy"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::personally-identifiable-info",
+      "label": "Personally Identifiable Info",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::pii"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::gdpr",
+      "label": "GDPR",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::data-privacy"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::data-retention",
+      "label": "Data Retention",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::data-privacy"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::log-storage",
+      "label": "Log Storage",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::data-retention"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chat-log",
+      "label": "Chat Log",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chat-history",
+        "conversational-ai::log-storage"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::logging-system",
+      "label": "Logging System",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::log-storage"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::log-analysis",
+      "label": "Log Analysis",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chat-log",
+        "conversational-ai::logging-system"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::query-frequency",
+      "label": "Query Frequency",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::log-analysis"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::frequency-analysis",
+      "label": "Frequency Analysis",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::query-frequency"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::pareto-analysis",
+      "label": "Pareto Analysis",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::frequency-analysis"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::80-20-rule",
+      "label": "80/20 Rule",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::pareto-analysis"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chatbot-metrics",
+      "label": "Chatbot Metrics",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::kpi",
+      "label": "KPI",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::key-performance-indicator",
+      "label": "Key Performance Indicator",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::kpi"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chatbot-dashboard",
+      "label": "Chatbot Dashboard",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::acceptance-rate",
+      "label": "Acceptance Rate",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-feedback",
+        "conversational-ai::chatbot-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::user-satisfaction",
+      "label": "User Satisfaction",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::user-feedback",
+        "conversational-ai::chatbot-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::response-accuracy",
+      "label": "Response Accuracy",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::response-quality",
+        "conversational-ai::chatbot-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chatbot-evaluation",
+      "label": "Chatbot Evaluation",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::a-b-testing",
+      "label": "A/B Testing",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot-evaluation"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::performance-tuning",
+      "label": "Performance Tuning",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::search-performance",
+        "conversational-ai::chatbot-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::optimization",
+      "label": "Optimization",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::performance-tuning"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::team-project",
+      "label": "Team Project",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot",
+        "conversational-ai::rag-pattern",
+        "conversational-ai::graphrag-pattern"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "conversational-ai::chatbot-career",
+      "label": "Chatbot Career",
+      "subject_id": "conversational-ai",
+      "dependencies": [
+        "conversational-ai::chatbot"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    }
+  ]
+}

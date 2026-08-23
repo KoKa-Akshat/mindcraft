@@ -1,0 +1,2173 @@
+{
+  "subject_id": "intro-to-graph",
+  "title": "Introduction to Graph Databases",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "red"
+    },
+    "GRAPH": {
+      "classifier_name": "Graph Data Model",
+      "color": "orange"
+    },
+    "QUERY": {
+      "classifier_name": "Query Languages",
+      "color": "yellow"
+    },
+    "PERF": {
+      "classifier_name": "Performance & Optimization",
+      "color": "lightgreen"
+    },
+    "ALGO": {
+      "classifier_name": "Graph Algorithms",
+      "color": "blue"
+    },
+    "SOCIAL": {
+      "classifier_name": "Social Networks",
+      "color": "purple"
+    },
+    "KNOW": {
+      "classifier_name": "Knowledge Management",
+      "color": "pink"
+    },
+    "PATTERN": {
+      "classifier_name": "Modeling Patterns",
+      "color": "brown"
+    },
+    "FIN": {
+      "classifier_name": "Financial Applications",
+      "color": "green"
+    },
+    "HEALTH": {
+      "classifier_name": "Healthcare Applications",
+      "color": "gray"
+    },
+    "SUPPLY": {
+      "classifier_name": "Supply Chain & IT",
+      "color": "navy"
+    },
+    "ADV": {
+      "classifier_name": "Advanced Topics",
+      "color": "gold"
+    }
+  },
+  "concepts": [
+    {
+      "id": "intro-to-graph::data-modeling",
+      "label": "Data Modeling",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::world-models"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::world-models",
+      "label": "World Models",
+      "subject_id": "intro-to-graph",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-graph::knowledge-representation",
+      "label": "Knowledge Representation",
+      "subject_id": "intro-to-graph",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-graph::rdbms",
+      "label": "RDBMS",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::data-modeling",
+        "intro-to-graph::schema-design"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::olap",
+      "label": "OLAP",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::rdbms"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::oltp",
+      "label": "OLTP",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::rdbms"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::nosql-databases",
+      "label": "NoSQL Databases",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::rdbms",
+        "intro-to-graph::data-modeling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::key-value-stores",
+      "label": "Key-Value Stores",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nosql-databases"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::document-databases",
+      "label": "Document Databases",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nosql-databases"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::wide-column-stores",
+      "label": "Wide-Column Stores",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nosql-databases"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-databases",
+      "label": "Graph Databases",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nosql-databases",
+        "intro-to-graph::data-structures"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::cap-theorem",
+      "label": "CAP Theorem",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nosql-databases"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::tradeoff-analysis",
+      "label": "Tradeoff Analysis",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::cap-theorem"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::schema-design",
+      "label": "Schema Design",
+      "subject_id": "intro-to-graph",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-graph::hash-maps",
+      "label": "Hash Maps",
+      "subject_id": "intro-to-graph",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-graph::trees",
+      "label": "Trees",
+      "subject_id": "intro-to-graph",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-graph::arrays",
+      "label": "Arrays",
+      "subject_id": "intro-to-graph",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-graph::data-structures",
+      "label": "Data Structures",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::hash-maps",
+        "intro-to-graph::trees",
+        "intro-to-graph::arrays"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::relational-model",
+      "label": "Relational Model",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::rdbms"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::normalization",
+      "label": "Normalization",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::relational-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::labeled-property-graph",
+      "label": "Labeled Property Graph",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-databases",
+        "intro-to-graph::nodes",
+        "intro-to-graph::edges",
+        "intro-to-graph::properties",
+        "intro-to-graph::labels"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::nodes",
+      "label": "Nodes",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-databases"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::edges",
+      "label": "Edges",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-databases",
+        "intro-to-graph::nodes"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::properties",
+      "label": "Properties",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nodes",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::labels",
+      "label": "Labels",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nodes"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::schema-optional-modeling",
+      "label": "Schema-Optional Modeling",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::schema-design",
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::schema-enforced-modeling",
+      "label": "Schema-Enforced Modeling",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::schema-design",
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::index-free-adjacency",
+      "label": "Index-Free Adjacency",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::edges",
+        "intro-to-graph::traversal"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::traversal",
+      "label": "Traversal",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::edges",
+        "intro-to-graph::nodes"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-query",
+      "label": "Graph Query",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::traversal"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::pattern-matching",
+      "label": "Pattern Matching",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-query"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::multi-hop-queries",
+      "label": "Multi-Hop Queries",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::traversal",
+        "intro-to-graph::graph-query"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::aggregation",
+      "label": "Aggregation",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-query"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::path-patterns",
+      "label": "Path Patterns",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::traversal",
+        "intro-to-graph::pattern-matching"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::constant-time-neighbor-access",
+      "label": "Constant-Time Neighbor Access",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::index-free-adjacency"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::first-class-relationships",
+      "label": "First-Class Relationships",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::edges",
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::edge-direction",
+      "label": "Edge Direction",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-data-model",
+      "label": "Graph Data Model",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-schema",
+      "label": "Graph Schema",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-data-model",
+        "intro-to-graph::schema-design"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::metadata-representation",
+      "label": "Metadata Representation",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::properties"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::open-world-model",
+      "label": "Open World Model",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::schema-optional-modeling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::closed-world-model",
+      "label": "Closed World Model",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::schema-enforced-modeling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-validation",
+      "label": "Graph Validation",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-schema"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::document-validation",
+      "label": "Document Validation",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::document-databases"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::rule-systems",
+      "label": "Rule Systems",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-validation"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::opencypher",
+      "label": "OpenCypher",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-query",
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::gsql",
+      "label": "GSQL",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-query",
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::statistical-query-tuning",
+      "label": "Statistical Query Tuning",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::query-optimization",
+        "intro-to-graph::query-performance"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::gql",
+      "label": "GQL",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-query",
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::cypher-syntax",
+      "label": "Cypher Syntax",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::opencypher"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::match-clause",
+      "label": "Match Clause",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::cypher-syntax"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::where-clause",
+      "label": "Where Clause",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::cypher-syntax"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::return-clause",
+      "label": "Return Clause",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::cypher-syntax"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::create-statement",
+      "label": "Create Statement",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::cypher-syntax"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::merge-statement",
+      "label": "Merge Statement",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::cypher-syntax",
+        "intro-to-graph::create-statement"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::delete-statement",
+      "label": "Delete Statement",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::cypher-syntax"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::set-clause",
+      "label": "Set Clause",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::cypher-syntax"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-patterns",
+      "label": "Graph Patterns",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::pattern-matching",
+        "intro-to-graph::cypher-syntax"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::variable-length-paths",
+      "label": "Variable Length Paths",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::path-patterns",
+        "intro-to-graph::match-clause"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::shortest-path",
+      "label": "Shortest Path",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::variable-length-paths"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::all-paths",
+      "label": "All Paths",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::path-patterns",
+        "intro-to-graph::match-clause"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::map-reduce-pattern",
+      "label": "Map-Reduce Pattern",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::gsql"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::accumulators",
+      "label": "Accumulators",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::gsql",
+        "intro-to-graph::map-reduce-pattern"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::query-optimization",
+      "label": "Query Optimization",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-query"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::query-performance",
+      "label": "Query Performance",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::query-optimization"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::query-latency",
+      "label": "Query Latency",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::query-performance"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::query-throughput",
+      "label": "Query Throughput",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::query-performance"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::declarative-queries",
+      "label": "Declarative Queries",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::opencypher",
+        "intro-to-graph::gql"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::imperative-queries",
+      "label": "Imperative Queries",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::gsql"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::query-plans",
+      "label": "Query Plans",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::query-optimization"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::hop-count",
+      "label": "Hop Count",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::multi-hop-queries",
+        "intro-to-graph::traversal"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::degree-of-node",
+      "label": "Degree of Node",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nodes",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::indegree",
+      "label": "Indegree",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::degree-of-node",
+        "intro-to-graph::edge-direction"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::outdegree",
+      "label": "Outdegree",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::degree-of-node",
+        "intro-to-graph::edge-direction"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::edge-to-node-ratio",
+      "label": "Edge-to-Node Ratio",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nodes",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-indexes",
+      "label": "Graph Indexes",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-schema"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::vector-indexes",
+      "label": "Vector Indexes",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-indexes"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::full-text-search",
+      "label": "Full-Text Search",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-indexes"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::composite-indexes",
+      "label": "Composite Indexes",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-indexes"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-metrics",
+      "label": "Graph Metrics",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::degree-of-node",
+        "intro-to-graph::hop-count"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::performance-benchmarking",
+      "label": "Performance Benchmarking",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::query-performance"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::synthetic-benchmarks",
+      "label": "Synthetic Benchmarks",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::performance-benchmarking"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::single-node-benchmarks",
+      "label": "Single-Node Benchmarks",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::performance-benchmarking"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::multi-node-benchmarks",
+      "label": "Multi-Node Benchmarks",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::performance-benchmarking",
+        "intro-to-graph::distributed-graph-databases"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::ldbc-snb-benchmark",
+      "label": "LDBC SNB Benchmark",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::synthetic-benchmarks"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-500",
+      "label": "Graph 500",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::synthetic-benchmarks"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::query-cost-analysis",
+      "label": "Query Cost Analysis",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::query-performance",
+        "intro-to-graph::query-plans"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::join-operations",
+      "label": "Join Operations",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::rdbms",
+        "intro-to-graph::relational-model"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::traversal-cost",
+      "label": "Traversal Cost",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::traversal",
+        "intro-to-graph::query-cost-analysis"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::scalability",
+      "label": "Scalability",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::performance-benchmarking",
+        "intro-to-graph::distributed-graph-databases"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::breadth-first-search",
+      "label": "Breadth-First Search",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::traversal"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::depth-first-search",
+      "label": "Depth-First Search",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::traversal"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::a-star-algorithm",
+      "label": "A-Star Algorithm",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::pathfinding"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::pathfinding",
+      "label": "Pathfinding",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::shortest-path",
+        "intro-to-graph::breadth-first-search"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::traveling-salesman-problem",
+      "label": "Traveling Salesman Problem",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::pathfinding"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::pagerank",
+      "label": "PageRank",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::centrality-measures"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::community-detection",
+      "label": "Community Detection",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::connected-components"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::centrality-measures",
+      "label": "Centrality Measures",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::degree-of-node"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::betweenness-centrality",
+      "label": "Betweenness Centrality",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::centrality-measures"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::closeness-centrality",
+      "label": "Closeness Centrality",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::centrality-measures"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-embeddings",
+      "label": "Graph Embeddings",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-neural-networks"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-neural-networks",
+      "label": "Graph Neural Networks",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::weakly-connected-components"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::link-prediction",
+      "label": "Link Prediction",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-neural-networks"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::node-classification",
+      "label": "Node Classification",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-neural-networks"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-clustering",
+      "label": "Graph Clustering",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::community-detection",
+        "intro-to-graph::graph-neural-networks"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::shortest-path-algorithms",
+      "label": "Shortest Path Algorithms",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::shortest-path",
+        "intro-to-graph::pathfinding"
+      ],
+      "taxonomy_id": "QUERY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::minimum-spanning-tree",
+      "label": "Minimum Spanning Tree",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::trees",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::connected-components",
+      "label": "Connected Components",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::traversal",
+        "intro-to-graph::breadth-first-search"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::strongly-connected-components",
+      "label": "Strongly Connected Components",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::connected-components",
+        "intro-to-graph::edge-direction"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::weakly-connected-components",
+      "label": "Weakly Connected Components",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::connected-components",
+        "intro-to-graph::edge-direction"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::social-networks",
+      "label": "Social Networks",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::friend-graphs",
+      "label": "Friend Graphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::social-networks",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::influence-graphs",
+      "label": "Influence Graphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::social-networks",
+        "intro-to-graph::edge-direction"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::follower-networks",
+      "label": "Follower Networks",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::social-networks",
+        "intro-to-graph::edge-direction"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::activity-streams",
+      "label": "Activity Streams",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::social-networks",
+        "intro-to-graph::properties"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::user-profiles",
+      "label": "User Profiles",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::social-networks",
+        "intro-to-graph::nodes",
+        "intro-to-graph::properties"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::relationship-types",
+      "label": "Relationship Types",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::edges",
+        "intro-to-graph::labels"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::sentiment-analysis",
+      "label": "Sentiment Analysis",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::natural-language-processing"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::natural-language-processing",
+      "label": "Natural Language Processing",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::knowledge-representation"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::fake-account-detection",
+      "label": "Fake Account Detection",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::social-networks",
+        "intro-to-graph::community-detection"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::human-resources-modeling",
+      "label": "Human Resources Modeling",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::social-networks",
+        "intro-to-graph::graph-data-model"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::org-chart-models",
+      "label": "Org Chart Models",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::human-resources-modeling",
+        "intro-to-graph::trees"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::skill-management",
+      "label": "Skill Management",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::human-resources-modeling",
+        "intro-to-graph::nodes",
+        "intro-to-graph::properties"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::task-assignment",
+      "label": "Task Assignment",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::org-chart-models",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::backlog-management",
+      "label": "Backlog Management",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::task-assignment"
+      ],
+      "taxonomy_id": "SOCIAL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::concept-dependency-graphs",
+      "label": "Concept Dependency Graphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::edge-direction",
+        "intro-to-graph::knowledge-representation"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::curriculum-graphs",
+      "label": "Curriculum Graphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::concept-dependency-graphs"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::ontologies",
+      "label": "Ontologies",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::knowledge-representation"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::skos",
+      "label": "SKOS",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::ontologies"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::preferred-labels",
+      "label": "Preferred Labels",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::skos",
+        "intro-to-graph::labels"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::alternate-labels",
+      "label": "Alternate Labels",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::skos",
+        "intro-to-graph::labels"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::acronym-lists",
+      "label": "Acronym Lists",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::preferred-labels",
+        "intro-to-graph::alternate-labels"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::glossaries",
+      "label": "Glossaries",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::preferred-labels",
+        "intro-to-graph::alternate-labels"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::controlled-vocabularies",
+      "label": "Controlled Vocabularies",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::skos"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::taxonomies",
+      "label": "Taxonomies",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::controlled-vocabularies",
+        "intro-to-graph::trees"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::enterprise-knowledge",
+      "label": "Enterprise Knowledge",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::ontologies",
+        "intro-to-graph::knowledge-representation"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::department-knowledge",
+      "label": "Department Knowledge",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::enterprise-knowledge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::project-knowledge",
+      "label": "Project Knowledge",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::enterprise-knowledge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::personal-knowledge-graphs",
+      "label": "Personal Knowledge Graphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::knowledge-representation"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::note-taking-systems",
+      "label": "Note-Taking Systems",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::personal-knowledge-graphs"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::knowledge-capture",
+      "label": "Knowledge Capture",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::knowledge-representation",
+        "intro-to-graph::enterprise-knowledge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::tacit-knowledge",
+      "label": "Tacit Knowledge",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::knowledge-capture"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::codifiable-knowledge",
+      "label": "Codifiable Knowledge",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::knowledge-capture"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::knowledge-management",
+      "label": "Knowledge Management",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::enterprise-knowledge",
+        "intro-to-graph::knowledge-capture"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::action-item-extraction",
+      "label": "Action Item Extraction",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::natural-language-processing",
+        "intro-to-graph::project-knowledge"
+      ],
+      "taxonomy_id": "KNOW",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::subgraphs",
+      "label": "Subgraphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::nodes",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::supernodes",
+      "label": "Supernodes",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::nodes",
+        "intro-to-graph::degree-of-node"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::anti-patterns",
+      "label": "Anti-Patterns",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-data-model",
+        "intro-to-graph::graph-schema"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::hyperedges",
+      "label": "Hyperedges",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::edges",
+        "intro-to-graph::aggregation"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::multi-edges",
+      "label": "Multi-Edges",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::edges",
+        "intro-to-graph::relationship-types"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::time-based-modeling",
+      "label": "Time-Based Modeling",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::properties",
+        "intro-to-graph::graph-data-model"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::time-trees",
+      "label": "Time Trees",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::time-based-modeling",
+        "intro-to-graph::trees"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::iot-event-modeling",
+      "label": "IoT Event Modeling",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::time-based-modeling",
+        "intro-to-graph::properties"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::decision-trees",
+      "label": "Decision Trees",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::trees",
+        "intro-to-graph::rule-systems"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::bitemporal-models",
+      "label": "Bitemporal Models",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::time-based-modeling"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-quality-metrics",
+      "label": "Graph Quality Metrics",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-metrics",
+        "intro-to-graph::graph-validation"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::model-validation",
+      "label": "Model Validation",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-validation",
+        "intro-to-graph::graph-schema"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::schema-evolution",
+      "label": "Schema Evolution",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-schema"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::data-migration",
+      "label": "Data Migration",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::schema-evolution",
+        "intro-to-graph::data-loading"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::etl-pipelines",
+      "label": "ETL Pipelines",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::data-loading"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::csv-import",
+      "label": "CSV Import",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::etl-pipelines"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::json-import",
+      "label": "JSON Import",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::etl-pipelines"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::data-loading",
+      "label": "Data Loading",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::bulk-loading",
+      "label": "Bulk Loading",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::data-loading"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::incremental-loading",
+      "label": "Incremental Loading",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::data-loading",
+        "intro-to-graph::bulk-loading"
+      ],
+      "taxonomy_id": "PATTERN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::web-storefront-models",
+      "label": "Web Storefront Models",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-data-model",
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::product-catalogs",
+      "label": "Product Catalogs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::web-storefront-models",
+        "intro-to-graph::nodes",
+        "intro-to-graph::properties"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::recommendation-engines",
+      "label": "Recommendation Engines",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::pagerank",
+        "intro-to-graph::link-prediction",
+        "intro-to-graph::product-catalogs"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::bill-of-materials",
+      "label": "Bill of Materials",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::trees",
+        "intro-to-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::complex-parts",
+      "label": "Complex Parts",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::bill-of-materials"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::supply-chain-modeling",
+      "label": "Supply Chain Modeling",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::graph-data-model",
+        "intro-to-graph::bill-of-materials"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::financial-transactions",
+      "label": "Financial Transactions",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::edges",
+        "intro-to-graph::properties"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::fraud-detection",
+      "label": "Fraud Detection",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::financial-transactions",
+        "intro-to-graph::community-detection",
+        "intro-to-graph::influence-graphs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::anti-money-laundering",
+      "label": "Anti-Money Laundering",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::fraud-detection"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::know-your-customer",
+      "label": "Know Your Customer",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::financial-transactions",
+        "intro-to-graph::anti-money-laundering"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::account-networks",
+      "label": "Account Networks",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::financial-transactions",
+        "intro-to-graph::social-networks"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::healthcare-graphs",
+      "label": "Healthcare Graphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::graph-data-model"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::provider-patient-graphs",
+      "label": "Provider-Patient Graphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::healthcare-graphs",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::electronic-health-records",
+      "label": "Electronic Health Records",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::healthcare-graphs",
+        "intro-to-graph::document-databases"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::clinical-pathways",
+      "label": "Clinical Pathways",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::provider-patient-graphs",
+        "intro-to-graph::path-patterns"
+      ],
+      "taxonomy_id": "HEALTH",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::it-asset-management",
+      "label": "IT Asset Management",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::graph-data-model"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::dependency-graphs",
+      "label": "Dependency Graphs",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::edge-direction",
+        "intro-to-graph::concept-dependency-graphs"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::network-topology",
+      "label": "Network Topology",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::it-asset-management",
+        "intro-to-graph::edges"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::configuration-management",
+      "label": "Configuration Management",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::it-asset-management",
+        "intro-to-graph::properties"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::impact-analysis",
+      "label": "Impact Analysis",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::dependency-graphs",
+        "intro-to-graph::pathfinding"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::root-cause-analysis",
+      "label": "Root Cause Analysis",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::breadth-first-search",
+        "intro-to-graph::impact-analysis"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::regulatory-compliance",
+      "label": "Regulatory Compliance",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::rule-systems",
+        "intro-to-graph::model-validation"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::data-lineage",
+      "label": "Data Lineage",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::dependency-graphs",
+        "intro-to-graph::edge-direction"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::master-data-management",
+      "label": "Master Data Management",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::rdbms",
+        "intro-to-graph::graph-data-model"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::reference-data-models",
+      "label": "Reference Data Models",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-data-model",
+        "intro-to-graph::graph-schema"
+      ],
+      "taxonomy_id": "SUPPLY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::distributed-graph-databases",
+      "label": "Distributed Graph Databases",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-databases"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-partitioning",
+      "label": "Graph Partitioning",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::distributed-graph-databases"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::sharding-strategies",
+      "label": "Sharding Strategies",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-partitioning"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::replication",
+      "label": "Replication",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::distributed-graph-databases"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::consistency-models",
+      "label": "Consistency Models",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::distributed-graph-databases",
+        "intro-to-graph::cap-theorem"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::graph-visualization",
+      "label": "Graph Visualization",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::graph-query"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::interactive-queries",
+      "label": "Interactive Queries",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::graph-query",
+        "intro-to-graph::graph-visualization"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::real-time-analytics",
+      "label": "Real-Time Analytics",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::query-performance",
+        "intro-to-graph::distributed-graph-databases"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::batch-processing",
+      "label": "Batch Processing",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::etl-pipelines",
+        "intro-to-graph::real-time-analytics"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-graph::capstone-project-design",
+      "label": "Capstone Project Design",
+      "subject_id": "intro-to-graph",
+      "dependencies": [
+        "intro-to-graph::labeled-property-graph",
+        "intro-to-graph::graph-data-model",
+        "intro-to-graph::opencypher",
+        "intro-to-graph::gsql",
+        "intro-to-graph::data-loading",
+        "intro-to-graph::recommendation-engines"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,2173 @@
+{
+  "subject_id": "signal-processing__data",
+  "title": "signal-processing__data",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {},
+  "concepts": [
+    {
+      "id": "signal-processing__data::real-numbers",
+      "label": "Real Numbers",
+      "subject_id": "signal-processing__data",
+      "dependencies": [],
+      "taxonomy_id": "math",
+      "level": "foundational"
+    },
+    {
+      "id": "signal-processing__data::complex-numbers",
+      "label": "Complex Numbers",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::real-numbers"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::imaginary-unit",
+      "label": "Imaginary Unit",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::real-numbers",
+        "signal-processing__data::complex-numbers"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::euler-s-formula",
+      "label": "Euler's Formula",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::complex-numbers",
+        "signal-processing__data::trigonometry",
+        "signal-processing__data::exponential-functions"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::phasors",
+      "label": "Phasors",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::complex-numbers",
+        "signal-processing__data::euler-s-formula"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::vectors",
+      "label": "Vectors",
+      "subject_id": "signal-processing__data",
+      "dependencies": [],
+      "taxonomy_id": "math",
+      "level": "foundational"
+    },
+    {
+      "id": "signal-processing__data::matrices",
+      "label": "Matrices",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::vectors"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::linear-algebra",
+      "label": "Linear Algebra",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::vectors",
+        "signal-processing__data::matrices"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::differential-calculus",
+      "label": "Differential Calculus",
+      "subject_id": "signal-processing__data",
+      "dependencies": [],
+      "taxonomy_id": "math",
+      "level": "foundational"
+    },
+    {
+      "id": "signal-processing__data::integral-calculus",
+      "label": "Integral Calculus",
+      "subject_id": "signal-processing__data",
+      "dependencies": [],
+      "taxonomy_id": "math",
+      "level": "foundational"
+    },
+    {
+      "id": "signal-processing__data::differential-equations",
+      "label": "Differential Equations",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::differential-calculus"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::partial-derivatives",
+      "label": "Partial Derivatives",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::differential-calculus"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::probability-theory",
+      "label": "Probability Theory",
+      "subject_id": "signal-processing__data",
+      "dependencies": [],
+      "taxonomy_id": "math",
+      "level": "foundational"
+    },
+    {
+      "id": "signal-processing__data::random-variables",
+      "label": "Random Variables",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::probability-theory"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::statistical-distributions",
+      "label": "Statistical Distributions",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::probability-theory",
+        "signal-processing__data::random-variables"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::mean-and-expected-value",
+      "label": "Mean and Expected Value",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::probability-theory",
+        "signal-processing__data::random-variables"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::variance",
+      "label": "Variance",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::probability-theory",
+        "signal-processing__data::random-variables",
+        "signal-processing__data::mean-and-expected-value"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::standard-deviation",
+      "label": "Standard Deviation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::probability-theory",
+        "signal-processing__data::random-variables",
+        "signal-processing__data::variance"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::trigonometry",
+      "label": "Trigonometry",
+      "subject_id": "signal-processing__data",
+      "dependencies": [],
+      "taxonomy_id": "math",
+      "level": "foundational"
+    },
+    {
+      "id": "signal-processing__data::exponential-functions",
+      "label": "Exponential Functions",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::real-numbers"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::signals",
+      "label": "Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::real-numbers"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::systems",
+      "label": "Systems",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::continuous-time-signals",
+      "label": "Continuous-Time Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::discrete-time-signals",
+      "label": "Discrete-Time Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::analog-signals",
+      "label": "Analog Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::continuous-time-signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::digital-signals",
+      "label": "Digital Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::discrete-time-signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::periodic-signals",
+      "label": "Periodic Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::aperiodic-signals",
+      "label": "Aperiodic Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::even-signals",
+      "label": "Even Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::odd-signals",
+      "label": "Odd Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::energy-signals",
+      "label": "Energy Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::integral-calculus"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::power-signals",
+      "label": "Power Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::integral-calculus"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::unit-step-function",
+      "label": "Unit Step Function",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::unit-impulse-function",
+      "label": "Unit Impulse Function",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::sinusoidal-signals",
+      "label": "Sinusoidal Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::trigonometry"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::exponential-signals",
+      "label": "Exponential Signals",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::exponential-functions"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::signal-operations",
+      "label": "Signal Operations",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::time-shifting",
+      "label": "Time Shifting",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::signal-operations"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::time-scaling",
+      "label": "Time Scaling",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::signal-operations"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::signal-amplitude",
+      "label": "Signal Amplitude",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::signal-phase",
+      "label": "Signal Phase",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::trigonometry"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::signal-frequency",
+      "label": "Signal Frequency",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::periodic-signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::time-domain",
+      "label": "Time Domain",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::frequency-domain",
+      "label": "Frequency Domain",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::signal-frequency"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::signal-representation",
+      "label": "Signal Representation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::time-domain",
+        "signal-processing__data::frequency-domain"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::linear-systems",
+      "label": "Linear Systems",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::time-invariant-systems",
+      "label": "Time-Invariant Systems",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::lti-systems",
+      "label": "LTI Systems",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::linear-systems",
+        "signal-processing__data::time-invariant-systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::causality",
+      "label": "Causality",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::stability",
+      "label": "Stability",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::bibo-stability",
+      "label": "BIBO Stability",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::stability"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::impulse-response",
+      "label": "Impulse Response",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::unit-impulse-function",
+        "signal-processing__data::lti-systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::step-response",
+      "label": "Step Response",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::unit-step-function",
+        "signal-processing__data::lti-systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::frequency-response",
+      "label": "Frequency Response",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::frequency-domain",
+        "signal-processing__data::lti-systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::system-characterization",
+      "label": "System Characterization",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::lti-systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::convolution",
+      "label": "Convolution",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::lti-systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::convolution-sum",
+      "label": "Convolution Sum",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::discrete-time-signals",
+        "signal-processing__data::convolution"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::convolution-integral",
+      "label": "Convolution Integral",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::continuous-time-signals",
+        "signal-processing__data::convolution",
+        "signal-processing__data::integral-calculus"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::superposition-principle",
+      "label": "Superposition Principle",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::linear-systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::system-transfer-function",
+      "label": "System Transfer Function",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::lti-systems",
+        "signal-processing__data::frequency-response"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::poles-and-zeros",
+      "label": "Poles and Zeros",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::complex-numbers",
+        "signal-processing__data::system-transfer-function"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::system-memory",
+      "label": "System Memory",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::invertibility",
+      "label": "Invertibility",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::feedback-systems",
+      "label": "Feedback Systems",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::feedforward-systems",
+      "label": "Feedforward Systems",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::sampling",
+      "label": "Sampling",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::continuous-time-signals",
+        "signal-processing__data::discrete-time-signals"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::sampling-rate",
+      "label": "Sampling Rate",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::sampling-frequency",
+      "label": "Sampling Frequency",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling",
+        "signal-processing__data::signal-frequency"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::sampling-theorem",
+      "label": "Sampling Theorem",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling",
+        "signal-processing__data::frequency-domain"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::nyquist-rate",
+      "label": "Nyquist Rate",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling-theorem"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::nyquist-frequency",
+      "label": "Nyquist Frequency",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling-theorem",
+        "signal-processing__data::nyquist-rate"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::aliasing",
+      "label": "Aliasing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling",
+        "signal-processing__data::frequency-domain",
+        "signal-processing__data::nyquist-frequency"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::anti-aliasing-filters",
+      "label": "Anti-Aliasing Filters",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::aliasing",
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::oversampling",
+      "label": "Oversampling",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling",
+        "signal-processing__data::sampling-rate"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::undersampling",
+      "label": "Undersampling",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling",
+        "signal-processing__data::sampling-rate"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::quantization",
+      "label": "Quantization",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::digital-signals",
+        "signal-processing__data::sampling"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::quantization-error",
+      "label": "Quantization Error",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::quantization"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::quantization-noise",
+      "label": "Quantization Noise",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::quantization",
+        "signal-processing__data::quantization-error"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::sample-and-hold",
+      "label": "Sample-and-Hold",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::analog-to-digital-conversion",
+      "label": "Analog-to-Digital Conversion",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::analog-signals",
+        "signal-processing__data::digital-signals",
+        "signal-processing__data::sampling",
+        "signal-processing__data::quantization"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fourier-series",
+      "label": "Fourier Series",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::periodic-signals",
+        "signal-processing__data::trigonometry",
+        "signal-processing__data::integral-calculus"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fourier-coefficients",
+      "label": "Fourier Coefficients",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-series"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fundamental-frequency",
+      "label": "Fundamental Frequency",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::periodic-signals",
+        "signal-processing__data::signal-frequency"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::harmonics",
+      "label": "Harmonics",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::periodic-signals",
+        "signal-processing__data::fundamental-frequency"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fourier-transform",
+      "label": "Fourier Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-series",
+        "signal-processing__data::integral-calculus",
+        "signal-processing__data::continuous-time-signals"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::inverse-fourier-transform",
+      "label": "Inverse Fourier Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fourier-transform-properties",
+      "label": "Fourier Transform Properties",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::linearity-property",
+      "label": "Linearity Property",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::fourier-transform-properties"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::time-shifting-property",
+      "label": "Time Shifting Property",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::fourier-transform-properties",
+        "signal-processing__data::time-shifting"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::frequency-shifting-property",
+      "label": "Frequency Shifting Property",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::fourier-transform-properties",
+        "signal-processing__data::frequency-domain"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::convolution-property",
+      "label": "Convolution Property",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::fourier-transform-properties",
+        "signal-processing__data::convolution"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::duality-property",
+      "label": "Duality Property",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::fourier-transform-properties"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::parseval-s-theorem",
+      "label": "Parseval's Theorem",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::energy-signals",
+        "signal-processing__data::power-signals"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::discrete-fourier-transform",
+      "label": "Discrete Fourier Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::discrete-time-signals"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::dft-properties",
+      "label": "DFT Properties",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::discrete-fourier-transform"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fast-fourier-transform",
+      "label": "Fast Fourier Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::discrete-fourier-transform"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fft-algorithm",
+      "label": "FFT Algorithm",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fast-fourier-transform"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fft-complexity",
+      "label": "FFT Complexity",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fast-fourier-transform",
+        "signal-processing__data::fft-algorithm"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::inverse-fft",
+      "label": "Inverse FFT",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fast-fourier-transform"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::window-functions",
+      "label": "Window Functions",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::discrete-fourier-transform"
+      ],
+      "taxonomy_id": "math",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::rectangular-window",
+      "label": "Rectangular Window",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::window-functions"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::hamming-window",
+      "label": "Hamming Window",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::window-functions"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::hanning-window",
+      "label": "Hanning Window",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::window-functions"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::spectral-leakage",
+      "label": "Spectral Leakage",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::discrete-fourier-transform",
+        "signal-processing__data::window-functions"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::zero-padding",
+      "label": "Zero Padding",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::discrete-fourier-transform"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::laplace-transform",
+      "label": "Laplace Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::complex-numbers",
+        "signal-processing__data::integral-calculus"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::region-of-convergence",
+      "label": "Region of Convergence",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::laplace-transform"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::laplace-transform-properties",
+      "label": "Laplace Transform Properties",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::laplace-transform"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::inverse-laplace-transform",
+      "label": "Inverse Laplace Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::laplace-transform"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::z-transform",
+      "label": "Z-Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::discrete-fourier-transform",
+        "signal-processing__data::laplace-transform"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::z-transform-properties",
+      "label": "Z-Transform Properties",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::z-transform"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::inverse-z-transform",
+      "label": "Inverse Z-Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::z-transform"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::z-plane",
+      "label": "Z-Plane",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::z-transform",
+        "signal-processing__data::complex-numbers"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::unit-circle",
+      "label": "Unit Circle",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::z-plane"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::bilinear-transform",
+      "label": "Bilinear Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::laplace-transform",
+        "signal-processing__data::z-transform"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::short-time-fourier-transform",
+      "label": "Short-Time Fourier Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::window-functions"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::stft-limitations",
+      "label": "STFT Limitations",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::short-time-fourier-transform"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::wavelet-transform",
+      "label": "Wavelet Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::continuous-wavelet-transform",
+      "label": "Continuous Wavelet Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::wavelet-transform",
+        "signal-processing__data::continuous-time-signals"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::discrete-wavelet-transform",
+      "label": "Discrete Wavelet Transform",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::wavelet-transform",
+        "signal-processing__data::discrete-time-signals"
+      ],
+      "taxonomy_id": "trans",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filtering",
+      "label": "Filtering",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::systems",
+        "signal-processing__data::frequency-response"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-types",
+      "label": "Filter Types",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::low-pass-filter",
+      "label": "Low-Pass Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-types",
+        "signal-processing__data::frequency-domain"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::high-pass-filter",
+      "label": "High-Pass Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-types",
+        "signal-processing__data::frequency-domain"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::band-pass-filter",
+      "label": "Band-Pass Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-types",
+        "signal-processing__data::frequency-domain"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::band-stop-filter",
+      "label": "Band-Stop Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-types",
+        "signal-processing__data::frequency-domain"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::all-pass-filter",
+      "label": "All-Pass Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-types"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::ideal-filters",
+      "label": "Ideal Filters",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-types"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::practical-filters",
+      "label": "Practical Filters",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::ideal-filters"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-order",
+      "label": "Filter Order",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-cutoff-frequency",
+      "label": "Filter Cutoff Frequency",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::signal-frequency"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-bandwidth",
+      "label": "Filter Bandwidth",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-cutoff-frequency"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-rolloff",
+      "label": "Filter Rolloff",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-order"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::passband",
+      "label": "Passband",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::stopband",
+      "label": "Stopband",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::transition-band",
+      "label": "Transition Band",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::passband",
+        "signal-processing__data::stopband"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::passband-ripple",
+      "label": "Passband Ripple",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::passband"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::stopband-attenuation",
+      "label": "Stopband Attenuation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::stopband"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::fir-filters",
+      "label": "FIR Filters",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::impulse-response",
+        "signal-processing__data::discrete-time-signals"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::iir-filters",
+      "label": "IIR Filters",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::impulse-response",
+        "signal-processing__data::discrete-time-signals"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-impulse-response",
+      "label": "Filter Impulse Response",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::impulse-response"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-stability",
+      "label": "Filter Stability",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::stability",
+        "signal-processing__data::iir-filters"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::linear-phase-response",
+      "label": "Linear Phase Response",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::frequency-response",
+        "signal-processing__data::fir-filters"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::phase-distortion",
+      "label": "Phase Distortion",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::frequency-response",
+        "signal-processing__data::signal-phase"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::group-delay",
+      "label": "Group Delay",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::frequency-response",
+        "signal-processing__data::linear-phase-response"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-design-methods",
+      "label": "Filter Design Methods",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-specifications",
+      "label": "Filter Specifications",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-order",
+        "signal-processing__data::filter-cutoff-frequency",
+        "signal-processing__data::filter-bandwidth"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::butterworth-filter",
+      "label": "Butterworth Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::practical-filters",
+        "signal-processing__data::iir-filters",
+        "signal-processing__data::filter-specifications"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::chebyshev-type-i-filter",
+      "label": "Chebyshev Type I Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::practical-filters",
+        "signal-processing__data::iir-filters",
+        "signal-processing__data::filter-specifications"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::chebyshev-type-ii-filter",
+      "label": "Chebyshev Type II Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::practical-filters",
+        "signal-processing__data::iir-filters",
+        "signal-processing__data::filter-specifications"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::elliptic-filter",
+      "label": "Elliptic Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::practical-filters",
+        "signal-processing__data::iir-filters",
+        "signal-processing__data::filter-specifications"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::bessel-filter",
+      "label": "Bessel Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::practical-filters",
+        "signal-processing__data::iir-filters",
+        "signal-processing__data::filter-specifications"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::window-method-design",
+      "label": "Window Method Design",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fir-filters",
+        "signal-processing__data::window-functions",
+        "signal-processing__data::filter-design-methods"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::frequency-sampling-method",
+      "label": "Frequency Sampling Method",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fir-filters",
+        "signal-processing__data::discrete-fourier-transform",
+        "signal-processing__data::filter-design-methods"
+      ],
+      "taxonomy_id": "samp",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::parks-mcclellan-algorithm",
+      "label": "Parks-McClellan Algorithm",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fir-filters",
+        "signal-processing__data::filter-design-methods",
+        "signal-processing__data::optimal-filter-design"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::optimal-filter-design",
+      "label": "Optimal Filter Design",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filter-design-methods",
+        "signal-processing__data::filter-specifications"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::pole-zero-placement",
+      "label": "Pole-Zero Placement",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::poles-and-zeros",
+        "signal-processing__data::filter-design-methods"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::digital-filter-design",
+      "label": "Digital Filter Design",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-design-methods",
+        "signal-processing__data::digital-signals"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::analog-filter-design",
+      "label": "Analog Filter Design",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-design-methods",
+        "signal-processing__data::analog-signals"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::filter-implementation",
+      "label": "Filter Implementation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::filter-design-methods"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::direct-form-implementation",
+      "label": "Direct Form Implementation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filter-implementation",
+        "signal-processing__data::iir-filters"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::cascade-form-implementation",
+      "label": "Cascade Form Implementation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filter-implementation",
+        "signal-processing__data::poles-and-zeros"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::parallel-form-implementation",
+      "label": "Parallel Form Implementation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filter-implementation",
+        "signal-processing__data::poles-and-zeros"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::lattice-structure",
+      "label": "Lattice Structure",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filter-implementation",
+        "signal-processing__data::fir-filters"
+      ],
+      "taxonomy_id": "fdes",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::polyphase-filters",
+      "label": "Polyphase Filters",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filter-implementation",
+        "signal-processing__data::multirate-signal-processing"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::adaptive-filtering",
+      "label": "Adaptive Filtering",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::wiener-filter"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::lms-algorithm",
+      "label": "LMS Algorithm",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::adaptive-filtering",
+        "signal-processing__data::linear-algebra"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::rls-algorithm",
+      "label": "RLS Algorithm",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::adaptive-filtering",
+        "signal-processing__data::linear-algebra"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::wiener-filter",
+      "label": "Wiener Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::filtering",
+        "signal-processing__data::correlation",
+        "signal-processing__data::probability-theory"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::kalman-filter",
+      "label": "Kalman Filter",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::wiener-filter",
+        "signal-processing__data::differential-equations",
+        "signal-processing__data::random-variables"
+      ],
+      "taxonomy_id": "filt",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::correlation",
+      "label": "Correlation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::integral-calculus"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::autocorrelation",
+      "label": "Autocorrelation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::correlation"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::cross-correlation",
+      "label": "Cross-Correlation",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::correlation"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::power-spectral-density",
+      "label": "Power Spectral Density",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::power-signals",
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::correlation"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::energy-spectral-density",
+      "label": "Energy Spectral Density",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::energy-signals",
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::correlation"
+      ],
+      "taxonomy_id": "four",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::spectrogram",
+      "label": "Spectrogram",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::short-time-fourier-transform",
+        "signal-processing__data::power-spectral-density"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::signal-compression",
+      "label": "Signal Compression",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::lossless-compression",
+      "label": "Lossless Compression",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signal-compression"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::lossy-compression",
+      "label": "Lossy Compression",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signal-compression"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::multirate-signal-processing",
+      "label": "Multirate Signal Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::sampling",
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::audio-signal-processing",
+      "label": "Audio Signal Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::speech-processing",
+      "label": "Speech Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::audio-signal-processing",
+        "signal-processing__data::short-time-fourier-transform"
+      ],
+      "taxonomy_id": "app",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::music-signal-processing",
+      "label": "Music Signal Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::audio-signal-processing",
+        "signal-processing__data::harmonics"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::image-processing",
+      "label": "Image Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "app",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::video-processing",
+      "label": "Video Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::image-processing"
+      ],
+      "taxonomy_id": "app",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::communication-systems",
+      "label": "Communication Systems",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::modulation-techniques"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::modulation-techniques",
+      "label": "Modulation Techniques",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::phasors",
+        "signal-processing__data::fourier-transform"
+      ],
+      "taxonomy_id": "misc",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::biomedical-signal-processing",
+      "label": "Biomedical Signal Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::signals",
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::radar-signal-processing",
+      "label": "Radar Signal Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::cross-correlation",
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::sonar-signal-processing",
+      "label": "Sonar Signal Processing",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::cross-correlation",
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::filtering"
+      ],
+      "taxonomy_id": "sig",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::machine-learning-basics",
+      "label": "Machine Learning Basics",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::linear-algebra",
+        "signal-processing__data::probability-theory"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::neural-networks",
+      "label": "Neural Networks",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::machine-learning-basics",
+        "signal-processing__data::matrices",
+        "signal-processing__data::linear-algebra"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::deep-learning",
+      "label": "Deep Learning",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::neural-networks"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::convolutional-neural-networks",
+      "label": "Convolutional Neural Networks",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::deep-learning",
+        "signal-processing__data::convolution"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::feature-extraction",
+      "label": "Feature Extraction",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::fourier-transform",
+        "signal-processing__data::discrete-fourier-transform",
+        "signal-processing__data::correlation"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::machine-learning-basics",
+        "signal-processing__data::feature-extraction"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::deep-learning"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::ai-powered-simulations",
+      "label": "AI-Powered Simulations",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::machine-learning-basics",
+        "signal-processing__data::signals"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::interactive-learning-systems",
+      "label": "Interactive Learning Systems",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::machine-learning-basics"
+      ],
+      "taxonomy_id": "sys",
+      "level": "core"
+    },
+    {
+      "id": "signal-processing__data::adaptive-educational-content",
+      "label": "Adaptive Educational Content",
+      "subject_id": "signal-processing__data",
+      "dependencies": [
+        "signal-processing__data::machine-learning-basics",
+        "signal-processing__data::interactive-learning-systems"
+      ],
+      "taxonomy_id": "adv",
+      "level": "core"
+    }
+  ]
+}

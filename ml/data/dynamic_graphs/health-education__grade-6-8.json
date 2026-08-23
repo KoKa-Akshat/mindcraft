@@ -1,0 +1,1414 @@
+{
+  "subject_id": "health-education__grade-6-8",
+  "title": "Health Education — Grade 6-8 Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations",
+      "color": "SteelBlue"
+    },
+    "FOOD": {
+      "classifier_name": "Food and Nutrition",
+      "color": "LimeGreen"
+    },
+    "GROW": {
+      "classifier_name": "Human Growth, Development, and Sexual Health",
+      "color": "MediumPurple"
+    },
+    "EMOT": {
+      "classifier_name": "Mental and Emotional Health",
+      "color": "HotPink"
+    },
+    "WELL": {
+      "classifier_name": "Personal Health and Wellness",
+      "color": "DarkGoldenrod"
+    },
+    "SAFE": {
+      "classifier_name": "Personal Safety and Violence Prevention",
+      "color": "Crimson"
+    },
+    "SUB": {
+      "classifier_name": "Substance Use Awareness and Prevention",
+      "color": "SaddleBrown"
+    },
+    "SKIL": {
+      "classifier_name": "Skill Standards",
+      "color": "Teal"
+    }
+  },
+  "concepts": [
+    {
+      "id": "health-education__grade-6-8::health",
+      "label": "Health",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "health-education__grade-6-8::dietary-guidelines-across-cultures",
+      "label": "Dietary Guidelines Across Cultures",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::food-label-analysis",
+      "label": "Food Label Analysis",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::marketing-claims-analysis",
+      "label": "Marketing Claims Analysis",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::food-label-analysis"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::water-versus-sugary-drinks",
+      "label": "Water Versus Sugary Drinks",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::caffeinated-and-energy-drink-effects",
+      "label": "Caffeinated And Energy Drink Effects",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::water-versus-sugary-drinks"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::effects-of-sugary-and-salty-foods",
+      "label": "Effects Of Sugary And Salty Foods",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::food-label-analysis"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::meal-and-snack-planning",
+      "label": "Meal And Snack Planning",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::food-label-analysis",
+        "health-education__grade-6-8::marketing-claims-analysis",
+        "health-education__grade-6-8::effects-of-sugary-and-salty-foods"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::food-sovereignty",
+      "label": "Food Sovereignty",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::dietary-guidelines-across-cultures"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::community-food-access-initiatives",
+      "label": "Community Food Access Initiatives",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::food-sovereignty"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::relationship-structures",
+      "label": "Relationship Structures",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::healthy-relationship-characteristics",
+      "label": "Healthy Relationship Characteristics",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::relationship-structures"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::unhealthy-relationship-characteristics",
+      "label": "Unhealthy Relationship Characteristics",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::relationship-structures"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::romantic-relationships",
+      "label": "Romantic Relationships",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::healthy-relationship-characteristics",
+        "health-education__grade-6-8::unhealthy-relationship-characteristics"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::seeking-help-about-relationships-or-development",
+      "label": "Seeking Help About Relationships Or Development",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::comprehensive-health-care",
+      "label": "Comprehensive Health Care",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::adolescent-access-to-health-care",
+      "label": "Adolescent Access To Health Care",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::comprehensive-health-care"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::sti-transmission",
+      "label": "STI Transmission",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::hiv",
+      "label": "HIV",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::sti-transmission"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::sti-signs-and-symptoms",
+      "label": "STI Signs And Symptoms",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::sti-transmission",
+        "health-education__grade-6-8::hiv"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::sti-treatment-and-cure",
+      "label": "STI Treatment And Cure",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::sti-signs-and-symptoms"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::protecting-against-stis",
+      "label": "Protecting Against STIs",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::sti-signs-and-symptoms",
+        "health-education__grade-6-8::sti-treatment-and-cure"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::preventing-unintended-pregnancy",
+      "label": "Preventing Unintended Pregnancy",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::protecting-against-stis"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::healthcare-access-barriers",
+      "label": "Healthcare Access Barriers",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::comprehensive-health-care",
+        "health-education__grade-6-8::adolescent-access-to-health-care"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::reducing-healthcare-barriers",
+      "label": "Reducing Healthcare Barriers",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::healthcare-access-barriers"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::personal-boundary-setting",
+      "label": "Personal Boundary-Setting",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::cultural-values-of-respect-and-balance",
+      "label": "Cultural Values Of Respect And Balance",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::personal-boundary-setting"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::consent",
+      "label": "Consent",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::coercion",
+      "label": "Coercion",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::consent"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::consent-versus-coercion",
+      "label": "Consent Versus Coercion",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::consent",
+        "health-education__grade-6-8::coercion"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::suicide-and-self-harm-warning-signs",
+      "label": "Suicide And Self-Harm Warning Signs",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::seeking-help-for-suicide-risk",
+      "label": "Seeking Help For Suicide Risk",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::suicide-and-self-harm-warning-signs"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::personal-stressors",
+      "label": "Personal Stressors",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::restorative-stress-management-practices",
+      "label": "Restorative Stress-Management Practices",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::personal-stressors"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::warning-signs-of-emotional-distress",
+      "label": "Warning Signs Of Emotional Distress",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::supports-for-emotional-distress",
+      "label": "Supports For Emotional Distress",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::warning-signs-of-emotional-distress"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::trusted-adult",
+      "label": "Trusted Adult",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::empathy-in-relationships",
+      "label": "Empathy In Relationships",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::healthy-relationship-characteristics"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::communication-for-conflict-resolution",
+      "label": "Communication For Conflict Resolution",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::empathy-in-relationships"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::nonviolent-conflict-resolution",
+      "label": "Nonviolent Conflict Resolution",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::communication-for-conflict-resolution"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::emotion-management-strategies",
+      "label": "Emotion Management Strategies",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::restorative-stress-management-practices",
+        "health-education__grade-6-8::communication-for-conflict-resolution"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::indigenous-and-traditional-healing-approaches",
+      "label": "Indigenous And Traditional Healing Approaches",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::restorative-stress-management-practices"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::unfair-treatment",
+      "label": "Unfair Treatment",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::exclusion-and-bias-effects-on-mental-health",
+      "label": "Exclusion And Bias Effects On Mental Health",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::unfair-treatment"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::bullying-effects-on-mental-health",
+      "label": "Bullying Effects On Mental Health",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::unfair-treatment",
+        "health-education__grade-6-8::exclusion-and-bias-effects-on-mental-health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::media-representation-of-mental-health",
+      "label": "Media Representation Of Mental Health",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::bullying-effects-on-mental-health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::stigma-reduction",
+      "label": "Stigma Reduction",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::media-representation-of-mental-health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::brain-healthy-habits",
+      "label": "Brain-Healthy Habits",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::alzheimer-s-disease",
+      "label": "Alzheimer's Disease",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::brain-healthy-habits"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::dementia",
+      "label": "Dementia",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::alzheimer-s-disease"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::sleep-pattern-influences",
+      "label": "Sleep Pattern Influences",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::cultural-sleep-practices",
+      "label": "Cultural Sleep Practices",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::sleep-pattern-influences"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::workout-plan-design",
+      "label": "Workout Plan Design",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::moderate-and-vigorous-activity",
+      "label": "Moderate And Vigorous Activity",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::workout-plan-design"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::muscle-strengthening-activity",
+      "label": "Muscle-Strengthening Activity",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::workout-plan-design"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::bone-strengthening-activity",
+      "label": "Bone-Strengthening Activity",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::workout-plan-design"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::emergency-medication-use",
+      "label": "Emergency Medication Use",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::heimlich-maneuver",
+      "label": "Heimlich Maneuver",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::emergency-medication-use"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::recognizing-emergencies",
+      "label": "Recognizing Emergencies",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::scene-safety-assessment",
+      "label": "Scene Safety Assessment",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::recognizing-emergencies"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::priority-response-needs",
+      "label": "Priority Response Needs",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::scene-safety-assessment"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::infectious-disease-transmission",
+      "label": "Infectious Disease Transmission",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::hygiene-as-disease-prevention",
+      "label": "Hygiene As Disease Prevention",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::infectious-disease-transmission"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::food-and-water-safety-practices",
+      "label": "Food And Water Safety Practices",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::infectious-disease-transmission"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::personal-protective-equipment",
+      "label": "Personal Protective Equipment",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::infectious-disease-transmission"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::harmful-or-explicit-content-sharing",
+      "label": "Harmful Or Explicit Content Sharing",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::consequences-of-sharing-explicit-content",
+      "label": "Consequences Of Sharing Explicit Content",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::harmful-or-explicit-content-sharing"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::power-dynamics-in-relationships",
+      "label": "Power Dynamics In Relationships",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::unhealthy-relationship-characteristics"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::peer-pressure",
+      "label": "Peer Pressure",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::unhealthy-relationship-characteristics"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::digital-communication-effects-on-relationships",
+      "label": "Digital Communication Effects On Relationships",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::harmful-or-explicit-content-sharing",
+        "health-education__grade-6-8::peer-pressure"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::boundary-setting-strategies",
+      "label": "Boundary-Setting Strategies",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::personal-boundary-setting",
+        "health-education__grade-6-8::unhealthy-relationship-characteristics"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::seeking-support-for-relationship-safety",
+      "label": "Seeking Support For Relationship Safety",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::boundary-setting-strategies",
+        "health-education__grade-6-8::trusted-adult"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::school-safety-actions",
+      "label": "School Safety Actions",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::recognizing-threats",
+      "label": "Recognizing Threats",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::school-safety-actions"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::reporting-safety-concerns",
+      "label": "Reporting Safety Concerns",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::recognizing-threats"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::practicing-emergency-responses",
+      "label": "Practicing Emergency Responses",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::school-safety-actions"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::consent-in-healthy-relationships",
+      "label": "Consent In Healthy Relationships",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::consent"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::responding-to-coercion",
+      "label": "Responding To Coercion",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::coercion",
+        "health-education__grade-6-8::consent-in-healthy-relationships"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::substance-use-disorder",
+      "label": "Substance Use Disorder",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::relapse",
+      "label": "Relapse",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::substance-use-disorder"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::misusing-over-the-counter-medications",
+      "label": "Misusing Over-The-Counter Medications",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::misusing-prescription-medications",
+      "label": "Misusing Prescription Medications",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::misusing-over-the-counter-medications"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::alcohol-misuse-consequences",
+      "label": "Alcohol Misuse Consequences",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::illegal-substance-consequences",
+      "label": "Illegal Substance Consequences",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::alcohol-misuse-consequences"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::alcohol-effects-on-developing-body-and-brain",
+      "label": "Alcohol Effects On Developing Body And Brain",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::commercial-tobacco-effects-on-developing-body-and-brain",
+      "label": "Commercial Tobacco Effects On Developing Body And Brain",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::nicotine-effects-on-developing-body-and-brain",
+      "label": "Nicotine Effects On Developing Body And Brain",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::commercial-tobacco-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::cannabis-effects-on-developing-body-and-brain",
+      "label": "Cannabis Effects On Developing Body And Brain",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::illegal-drug-effects-on-developing-body-and-brain",
+      "label": "Illegal Drug Effects On Developing Body And Brain",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::cultural-teachings-that-protect-youth",
+      "label": "Cultural Teachings That Protect Youth",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::alcohol-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::commercial-tobacco-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::nicotine-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::cannabis-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::illegal-drug-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::commercial-tobacco-addiction",
+      "label": "Commercial Tobacco Addiction",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::commercial-tobacco-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::traditional-tobacco-and-plant-medicine-use",
+      "label": "Traditional Tobacco And Plant Medicine Use",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::commercial-tobacco-addiction"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::medication-storage-and-disposal-safety",
+      "label": "Medication Storage And Disposal Safety",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::misusing-over-the-counter-medications",
+        "health-education__grade-6-8::misusing-prescription-medications"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::reading-medication-labels",
+      "label": "Reading Medication Labels",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::medication-storage-and-disposal-safety"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::traditional-plant-medicine-practices",
+      "label": "Traditional Plant Medicine Practices",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::traditional-tobacco-and-plant-medicine-use"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::benefits-of-being-substance-free",
+      "label": "Benefits Of Being Substance-Free",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::alcohol-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::commercial-tobacco-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::nicotine-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::cannabis-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::illegal-drug-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::healthy-stress-management-without-substances",
+      "label": "Healthy Stress Management Without Substances",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::restorative-stress-management-practices",
+        "health-education__grade-6-8::benefits-of-being-substance-free"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::substance-use-and-injury-risk",
+      "label": "Substance Use And Injury Risk",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::alcohol-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::cannabis-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::illegal-drug-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::substance-use-and-violence-risk",
+      "label": "Substance Use And Violence Risk",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::alcohol-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::cannabis-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::illegal-drug-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::substance-use-and-self-harm-risk",
+      "label": "Substance Use And Self-Harm Risk",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::suicide-and-self-harm-warning-signs",
+        "health-education__grade-6-8::alcohol-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::cannabis-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::illegal-drug-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::substance-use-and-sexual-health-risk",
+      "label": "Substance Use And Sexual Health Risk",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::protecting-against-stis",
+        "health-education__grade-6-8::alcohol-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::cannabis-effects-on-developing-body-and-brain",
+        "health-education__grade-6-8::illegal-drug-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::signs-of-substance-use-disorder",
+      "label": "Signs Of Substance Use Disorder",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::substance-use-disorder"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::substance-use-treatment-options",
+      "label": "Substance Use Treatment Options",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::signs-of-substance-use-disorder"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::community-and-cultural-recovery-supports",
+      "label": "Community And Cultural Recovery Supports",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::substance-use-treatment-options",
+        "health-education__grade-6-8::trusted-adult"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::impaired-driving-risk",
+      "label": "Impaired Driving Risk",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::alcohol-effects-on-developing-body-and-brain"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::laws-on-impaired-driving",
+      "label": "Laws On Impaired Driving",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::impaired-driving-risk"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::substance-industry-advertising-influence",
+      "label": "Substance Industry Advertising Influence",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::substance-related-health-disparities",
+      "label": "Substance-Related Health Disparities",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::substance-industry-advertising-influence"
+      ],
+      "taxonomy_id": "SUB",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::social-norms-and-health-practices",
+      "label": "Social Norms And Health Practices",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::public-health-policy-influence",
+      "label": "Public Health Policy Influence",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::social-norms-and-health-practices"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::family-and-cultural-influence-on-health-behavior",
+      "label": "Family And Cultural Influence On Health Behavior",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::peer-and-media-influence-on-health-behavior",
+      "label": "Peer And Media Influence On Health Behavior",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::strategies-to-identify-health-influences",
+      "label": "Strategies To Identify Health Influences",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::family-and-cultural-influence-on-health-behavior",
+        "health-education__grade-6-8::peer-and-media-influence-on-health-behavior"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::valid-health-information-sources",
+      "label": "Valid Health Information Sources",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::comprehensive-health-care"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::situations-needing-professional-support",
+      "label": "Situations Needing Professional Support",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::trusted-adult",
+        "health-education__grade-6-8::seeking-help-for-suicide-risk",
+        "health-education__grade-6-8::supports-for-emotional-distress"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::evaluating-validity-of-health-information",
+      "label": "Evaluating Validity Of Health Information",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::valid-health-information-sources"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::verbal-and-nonverbal-communication",
+      "label": "Verbal And Nonverbal Communication",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::communication-for-conflict-resolution"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::conflict-resolution-skills",
+      "label": "Conflict-Resolution Skills",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::communication-for-conflict-resolution",
+        "health-education__grade-6-8::nonviolent-conflict-resolution"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::self-advocacy-skills",
+      "label": "Self-Advocacy Skills",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::personal-boundary-setting"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::refusal-skills",
+      "label": "Refusal Skills",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::personal-boundary-setting",
+        "health-education__grade-6-8::boundary-setting-strategies"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::communicating-boundaries-and-consent",
+      "label": "Communicating Boundaries And Consent",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::consent",
+        "health-education__grade-6-8::refusal-skills"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::decision-making-process",
+      "label": "Decision-Making Process",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::evaluating-decision-consequences",
+      "label": "Evaluating Decision Consequences",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::decision-making-process"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::supports-and-barriers-to-health-decisions",
+      "label": "Supports And Barriers To Health Decisions",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::strategies-to-identify-health-influences",
+        "health-education__grade-6-8::decision-making-process"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::health-behavior-self-assessment",
+      "label": "Health Behavior Self-Assessment",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::individual-versus-collaborative-goal-setting",
+      "label": "Individual Versus Collaborative Goal Setting",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health-behavior-self-assessment"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::goal-plan-construction",
+      "label": "Goal Plan Construction",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::supports-and-barriers-to-health-decisions",
+        "health-education__grade-6-8::individual-versus-collaborative-goal-setting"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::evaluating-goal-plan-outcomes",
+      "label": "Evaluating Goal Plan Outcomes",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::goal-plan-construction"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::ownership-of-health-behaviors",
+      "label": "Ownership Of Health Behaviors",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health-behavior-self-assessment"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::researching-health-topics",
+      "label": "Researching Health Topics",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::health-message-design",
+      "label": "Health Message Design",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::researching-health-topics",
+        "health-education__grade-6-8::evaluating-validity-of-health-information"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::delivering-health-messages-to-audiences",
+      "label": "Delivering Health Messages To Audiences",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::health-message-design",
+        "health-education__grade-6-8::verbal-and-nonverbal-communication"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-6-8::reflecting-on-health-message-effectiveness",
+      "label": "Reflecting On Health Message Effectiveness",
+      "subject_id": "health-education__grade-6-8",
+      "dependencies": [
+        "health-education__grade-6-8::delivering-health-messages-to-audiences"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    }
+  ]
+}

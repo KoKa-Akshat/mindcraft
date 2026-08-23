@@ -1,0 +1,604 @@
+{
+  "subject_id": "health-education__grade-1",
+  "title": "Grade 1 Health Education Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations",
+      "color": "SteelBlue"
+    },
+    "FOOD": {
+      "classifier_name": "Food and Nutrition",
+      "color": "Gold"
+    },
+    "GROW": {
+      "classifier_name": "Human Growth and Development",
+      "color": "DarkSlateBlue"
+    },
+    "EMOT": {
+      "classifier_name": "Mental and Emotional Health",
+      "color": "MediumPurple"
+    },
+    "WELL": {
+      "classifier_name": "Personal Health and Wellness",
+      "color": "DarkGreen"
+    },
+    "SAFE": {
+      "classifier_name": "Personal Safety and Violence Prevention",
+      "color": "Crimson"
+    },
+    "SKIL": {
+      "classifier_name": "Skill Standards",
+      "color": "Teal"
+    }
+  },
+  "concepts": [
+    {
+      "id": "health-education__grade-1::health",
+      "label": "Health",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "health-education__grade-1::food-group",
+      "label": "Food Group",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::variety-of-foods",
+      "label": "Variety Of Foods",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::food-group"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::drink-types",
+      "label": "Drink Types",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::water-as-a-drink",
+      "label": "Water As A Drink",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::drink-types"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::breakfast",
+      "label": "Breakfast",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::variety-of-foods"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::food-safety",
+      "label": "Food Safety",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::food-storage",
+      "label": "Food Storage",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::food-safety"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::food-preparation-safety",
+      "label": "Food Preparation Safety",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::food-safety",
+        "health-education__grade-1::food-storage"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::peer-relationship",
+      "label": "Peer Relationship",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::healthy-peer-traits",
+      "label": "Healthy Peer Traits",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::peer-relationship",
+        "health-education__grade-1::kindness"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::feelings",
+      "label": "Feelings",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::talking-about-feelings",
+      "label": "Talking About Feelings",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::cultural-support-practices",
+      "label": "Cultural Support Practices",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::talking-about-feelings",
+        "health-education__grade-1::trusted-adult"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::signs-of-emotional-struggle",
+      "label": "Signs Of Emotional Struggle",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::feelings",
+        "health-education__grade-1::situational-feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::uniqueness",
+      "label": "Uniqueness",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::valuing-uniqueness",
+      "label": "Valuing Uniqueness",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::uniqueness"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::belonging",
+      "label": "Belonging",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::valuing-uniqueness"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::caring-relationships",
+      "label": "Caring Relationships",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::valuing-uniqueness",
+        "health-education__grade-1::peer-relationship"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::situational-feelings",
+      "label": "Situational Feelings",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::kindness",
+      "label": "Kindness",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::unkindness",
+      "label": "Unkindness",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::kindness-and-belonging",
+      "label": "Kindness And Belonging",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::kindness",
+        "health-education__grade-1::unkindness",
+        "health-education__grade-1::belonging"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::hygiene",
+      "label": "Hygiene",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::personal-care-practice",
+      "label": "Personal Care Practice",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::hygiene"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::community-health-practice",
+      "label": "Community Health Practice",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::personal-care-practice",
+        "health-education__grade-1::hygiene"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::physical-activity",
+      "label": "Physical Activity",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::benefits-of-physical-activity",
+      "label": "Benefits Of Physical Activity",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::physical-activity"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::daily-active-play",
+      "label": "Daily Active Play",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::physical-activity",
+        "health-education__grade-1::benefits-of-physical-activity"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::germs",
+      "label": "Germs",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::how-germs-spread",
+      "label": "How Germs Spread",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::germs"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::illness-prevention-action",
+      "label": "Illness Prevention Action",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::how-germs-spread",
+        "health-education__grade-1::hygiene"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::permission",
+      "label": "Permission",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::healthy-technology-use",
+      "label": "Healthy Technology Use",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::permission"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::sharing-information-safely",
+      "label": "Sharing Information Safely",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::permission",
+        "health-education__grade-1::healthy-technology-use"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::safe-behavior",
+      "label": "Safe Behavior",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::unsafe-behavior",
+      "label": "Unsafe Behavior",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::safe-behavior"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::asking-a-trusted-adult",
+      "label": "Asking A Trusted Adult",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::trusted-adult",
+        "health-education__grade-1::safe-behavior"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::trusted-adult",
+      "label": "Trusted Adult",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::school-emergency",
+      "label": "School Emergency",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::safety-drill",
+      "label": "Safety Drill",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::school-emergency"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::body-safety",
+      "label": "Body Safety",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::unsafe-touch",
+      "label": "Unsafe Touch",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::body-safety"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::saying-no",
+      "label": "Saying No",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::unsafe-touch",
+        "health-education__grade-1::asking-a-trusted-adult"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::influence",
+      "label": "Influence",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::positive-influence",
+      "label": "Positive Influence",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::influence"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::negative-influence",
+      "label": "Negative Influence",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::influence"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::seeking-help",
+      "label": "Seeking Help",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::trusted-adult",
+        "health-education__grade-1::asking-a-trusted-adult"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::communication",
+      "label": "Communication",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::communicating-feelings",
+      "label": "Communicating Feelings",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::communication",
+        "health-education__grade-1::feelings"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::communicating-needs",
+      "label": "Communicating Needs",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::communication"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::recognizing-need-for-help",
+      "label": "Recognizing Need For Help",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::seeking-help"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::health-decision",
+      "label": "Health Decision",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::positive-influence",
+        "health-education__grade-1::negative-influence"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::tracking-health-behaviors",
+      "label": "Tracking Health Behaviors",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::personal-care-practice",
+        "health-education__grade-1::physical-activity"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-1::asking-for-help-with-choices",
+      "label": "Asking For Help With Choices",
+      "subject_id": "health-education__grade-1",
+      "dependencies": [
+        "health-education__grade-1::recognizing-need-for-help",
+        "health-education__grade-1::health-decision"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    }
+  ]
+}

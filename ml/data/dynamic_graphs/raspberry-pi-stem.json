@@ -1,0 +1,5554 @@
+{
+  "subject_id": "raspberry-pi-stem",
+  "title": "Learning STEM with Raspberry Pi Hardware: An Encyclopedia of Hands-On Projects Across the Raspberry Pi Foundation Hardware Family",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations and Product Selection",
+      "color": "SteelBlue"
+    },
+    "CIRC": {
+      "classifier_name": "Circuits and GPIO",
+      "color": "DarkSlateBlue"
+    },
+    "LEDSN": {
+      "classifier_name": "LED Art and Analog Sensors",
+      "color": "DarkGreen"
+    },
+    "ROBOT": {
+      "classifier_name": "STEM Robot Kits",
+      "color": "LimeGreen"
+    },
+    "CLOCK": {
+      "classifier_name": "Clocks, Watches, and Wearables",
+      "color": "Gold"
+    },
+    "WIFI": {
+      "classifier_name": "Wireless Communication",
+      "color": "DarkGoldenrod"
+    },
+    "LINUX": {
+      "classifier_name": "Linux and the Pi 500+ Desktop",
+      "color": "Khaki"
+    },
+    "RGBKB": {
+      "classifier_name": "RGB Keyboard Lighting",
+      "color": "Teal"
+    },
+    "PIHW": {
+      "classifier_name": "Raspberry Pi 5 Hardware",
+      "color": "DodgerBlue"
+    },
+    "VISN": {
+      "classifier_name": "Real-Time Image Recognition",
+      "color": "LightSkyBlue"
+    },
+    "AUDIO": {
+      "classifier_name": "Real-Time Sound Recognition",
+      "color": "Crimson"
+    },
+    "LOGIS": {
+      "classifier_name": "Budgeting, Logistics, and Capstone",
+      "color": "DarkRed"
+    }
+  },
+  "concepts": [
+    {
+      "id": "raspberry-pi-stem::computational-thinking",
+      "label": "Computational Thinking",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "raspberry-pi-stem::decomposition",
+      "label": "Decomposition",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::abstraction",
+      "label": "Abstraction",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::algorithm-design",
+      "label": "Algorithm Design",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::computational-thinking",
+        "raspberry-pi-stem::decomposition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::algorithm",
+      "label": "Algorithm",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::algorithm-design"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::physical-computing",
+      "label": "Physical Computing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "raspberry-pi-stem::input-device",
+      "label": "Input Device",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::physical-computing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::output-device",
+      "label": "Output Device",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::physical-computing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sensor",
+      "label": "Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::input-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::actuator",
+      "label": "Actuator",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::output-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sensor",
+        "raspberry-pi-stem::actuator"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sense-think-act-cycle",
+      "label": "Sense Think Act Cycle",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sensor",
+        "raspberry-pi-stem::actuator",
+        "raspberry-pi-stem::algorithm"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::debugging",
+      "label": "Debugging",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::algorithm"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rubber-duck-debugging",
+      "label": "Rubber Duck Debugging",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::debugging"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::iterative-design",
+      "label": "Iterative Design",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::debugging"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::prototype",
+      "label": "Prototype",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::iterative-design"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::edge-case",
+      "label": "Edge Case",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::debugging"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::root-cause-analysis",
+      "label": "Root Cause Analysis",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::debugging",
+        "raspberry-pi-stem::edge-case"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::flowchart",
+      "label": "Flowchart",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::algorithm"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pseudocode",
+      "label": "Pseudocode",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::algorithm"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::state-machine",
+      "label": "State Machine",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::algorithm",
+        "raspberry-pi-stem::sense-think-act-cycle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::event-driven-programming",
+      "label": "Event Driven Programming",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::state-machine"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::polling",
+      "label": "Polling",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::state-machine"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::interrupt",
+      "label": "Interrupt",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::polling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::trial-and-error-testing",
+      "label": "Trial And Error Testing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::iterative-design",
+        "raspberry-pi-stem::edge-case"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::raspberry-pi-foundation",
+      "label": "Raspberry Pi Foundation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "raspberry-pi-stem::raspberry-pi-pico",
+      "label": "Raspberry Pi Pico",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-foundation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::raspberry-pi-pico-w",
+      "label": "Raspberry Pi Pico W",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::raspberry-pi-pico-2",
+      "label": "Raspberry Pi Pico 2",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::raspberry-pi-500",
+      "label": "Raspberry Pi 500+",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-foundation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::raspberry-pi-5",
+      "label": "Raspberry Pi 5",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-foundation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::microcontroller",
+      "label": "Microcontroller",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::single-board-computer",
+      "label": "Single Board Computer",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-500",
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::system-on-chip",
+      "label": "System On Chip",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::microcontroller",
+        "raspberry-pi-stem::single-board-computer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rp2040-chip",
+      "label": "RP2040 Chip",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-pico",
+        "raspberry-pi-stem::microcontroller"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rp2350-chip",
+      "label": "RP2350 Chip",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-pico-2",
+        "raspberry-pi-stem::rp2040-chip"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::broadcom-bcm2712",
+      "label": "Broadcom BCM2712",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5",
+        "raspberry-pi-stem::system-on-chip"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::clock-speed",
+      "label": "Clock Speed",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::system-on-chip"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ram-shortage",
+      "label": "RAM Shortage",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::single-board-computer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::price-tier",
+      "label": "Price Tier",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-foundation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::total-cost-of-ownership",
+      "label": "Total Cost Of Ownership",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::price-tier"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::product-decision-framework",
+      "label": "Product Decision Framework",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::microcontroller",
+        "raspberry-pi-stem::single-board-computer",
+        "raspberry-pi-stem::price-tier"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::classroom-budget",
+      "label": "Classroom Budget",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::price-tier"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::bulk-purchasing",
+      "label": "Bulk Purchasing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::classroom-budget"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::device-lifespan",
+      "label": "Device Lifespan",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::single-board-computer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::hardware-compatibility",
+      "label": "Hardware Compatibility",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::system-on-chip"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::vendor-documentation",
+      "label": "Vendor Documentation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-foundation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::breadboard",
+      "label": "Breadboard",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [],
+      "taxonomy_id": "CIRC",
+      "level": "foundational"
+    },
+    {
+      "id": "raspberry-pi-stem::breadboard-rail",
+      "label": "Breadboard Rail",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::breadboard"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::breadboard-row",
+      "label": "Breadboard Row",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::breadboard"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::jumper-wire",
+      "label": "Jumper Wire",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::breadboard"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::gpio-pin",
+      "label": "GPIO Pin",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-pico",
+        "raspberry-pi-stem::breadboard"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pin-numbering",
+      "label": "Pin Numbering",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::digital-pin",
+      "label": "Digital Pin",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::analog-pin",
+      "label": "Analog Pin",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::voltage",
+      "label": "Voltage",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [],
+      "taxonomy_id": "CIRC",
+      "level": "foundational"
+    },
+    {
+      "id": "raspberry-pi-stem::current",
+      "label": "Current",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::resistance",
+      "label": "Resistance",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage",
+        "raspberry-pi-stem::current"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ohms-law",
+      "label": "Ohms Law",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage",
+        "raspberry-pi-stem::current",
+        "raspberry-pi-stem::resistance"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::resistor",
+      "label": "Resistor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::resistance"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pull-up-resistor",
+      "label": "Pull Up Resistor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::resistor",
+        "raspberry-pi-stem::digital-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pull-down-resistor",
+      "label": "Pull Down Resistor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::resistor",
+        "raspberry-pi-stem::digital-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::capacitor",
+      "label": "Capacitor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::current"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::led",
+      "label": "LED",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::resistor"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::led-polarity",
+      "label": "LED Polarity",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::forward-voltage",
+      "label": "Forward Voltage",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led",
+        "raspberry-pi-stem::voltage"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::current-limiting-resistor",
+      "label": "Current Limiting Resistor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led",
+        "raspberry-pi-stem::resistor"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ground",
+      "label": "Ground",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::vcc",
+      "label": "VCC",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::3-3-volt-logic",
+      "label": "3.3 Volt Logic",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage",
+        "raspberry-pi-stem::vcc"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::short-circuit",
+      "label": "Short Circuit",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::current",
+        "raspberry-pi-stem::ground"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::open-circuit",
+      "label": "Open Circuit",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::current"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::series-circuit",
+      "label": "Series Circuit",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::resistance"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::parallel-circuit",
+      "label": "Parallel Circuit",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::resistance"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::multimeter",
+      "label": "Multimeter",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage",
+        "raspberry-pi-stem::current"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::continuity-test",
+      "label": "Continuity Test",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::multimeter",
+        "raspberry-pi-stem::open-circuit"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::digital-output",
+      "label": "Digital Output",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::digital-input",
+      "label": "Digital Input",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::analog-to-digital-converter",
+      "label": "Analog To Digital Converter",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pwm",
+      "label": "PWM",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-output"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::duty-cycle",
+      "label": "Duty Cycle",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pwm"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::debounce",
+      "label": "Debounce",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-input"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::schematic-diagram",
+      "label": "Schematic Diagram",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::breadboard",
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::circuit-diagram",
+      "label": "Circuit Diagram",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::schematic-diagram"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wire-color-convention",
+      "label": "Wire Color Convention",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::jumper-wire",
+        "raspberry-pi-stem::ground",
+        "raspberry-pi-stem::vcc"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::power-rail",
+      "label": "Power Rail",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::breadboard-rail",
+        "raspberry-pi-stem::vcc"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::component-datasheet",
+      "label": "Component Datasheet",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::resistor",
+        "raspberry-pi-stem::led"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::static-discharge",
+      "label": "Static Discharge",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::micropython",
+      "label": "MicroPython",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::thonny-ide",
+      "label": "Thonny IDE",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::micropython"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::blink-an-led",
+      "label": "Blink An LED",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led",
+        "raspberry-pi-stem::digital-output",
+        "raspberry-pi-stem::micropython",
+        "raspberry-pi-stem::thonny-ide"
+      ],
+      "taxonomy_id": "CIRC",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::neopixel",
+      "label": "NeoPixel",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led",
+        "raspberry-pi-stem::blink-an-led"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ws2812b-led",
+      "label": "WS2812B LED",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neopixel"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::addressable-led",
+      "label": "Addressable LED",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ws2812b-led"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rgb-color-model",
+      "label": "RGB Color Model",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ws2812b-led"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rgb-value",
+      "label": "RGB Value",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-color-model"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::color-mixing",
+      "label": "Color Mixing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-color-model"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::hue",
+      "label": "Hue",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-color-model"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::saturation",
+      "label": "Saturation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::hue"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::brightness",
+      "label": "Brightness",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-color-model"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pixel-index",
+      "label": "Pixel Index",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::addressable-led"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::led-strip",
+      "label": "LED Strip",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::addressable-led"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::data-line",
+      "label": "Data Line",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ws2812b-led",
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::chained-led-protocol",
+      "label": "Chained LED Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::data-line",
+        "raspberry-pi-stem::addressable-led"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::color-wheel",
+      "label": "Color Wheel",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::color-mixing",
+        "raspberry-pi-stem::hue"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rainbow-cycle",
+      "label": "Rainbow Cycle",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::color-wheel"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::animation-frame",
+      "label": "Animation Frame",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::addressable-led"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::frame-rate",
+      "label": "Frame Rate",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::animation-frame"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::color-fade",
+      "label": "Color Fade",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-value",
+        "raspberry-pi-stem::frame-rate"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::chase-animation",
+      "label": "Chase Animation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pixel-index",
+        "raspberry-pi-stem::frame-rate"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sparkle-animation",
+      "label": "Sparkle Animation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::frame-rate",
+        "raspberry-pi-stem::rgb-value"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::color-palette",
+      "label": "Color Palette",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-value",
+        "raspberry-pi-stem::color-mixing"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::neopixel-library",
+      "label": "Neopixel Library",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neopixel",
+        "raspberry-pi-stem::micropython"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::show-method",
+      "label": "Show Method",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neopixel-library"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::fill-method",
+      "label": "Fill Method",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neopixel-library"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::set-pixel-color",
+      "label": "Set Pixel Color",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neopixel-library",
+        "raspberry-pi-stem::pixel-index"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::brightness-scaling",
+      "label": "Brightness Scaling",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::brightness",
+        "raspberry-pi-stem::set-pixel-color"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::power-budget-for-leds",
+      "label": "Power Budget For LEDs",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led-strip",
+        "raspberry-pi-stem::current"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::current-draw-per-led",
+      "label": "Current Draw Per LED",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::power-budget-for-leds",
+        "raspberry-pi-stem::current"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wearable-electronics",
+      "label": "Wearable Electronics",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led-strip"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::led-diffuser",
+      "label": "LED Diffuser",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led-strip"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::light-painting",
+      "label": "Light Painting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rainbow-cycle",
+        "raspberry-pi-stem::chase-animation"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::color-theory",
+      "label": "Color Theory",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::color-mixing",
+        "raspberry-pi-stem::hue",
+        "raspberry-pi-stem::saturation"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::push-button",
+      "label": "Push Button",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::breadboard",
+        "raspberry-pi-stem::digital-input",
+        "raspberry-pi-stem::pull-down-resistor"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::momentary-switch",
+      "label": "Momentary Switch",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::push-button"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::photoresistor",
+      "label": "Photoresistor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-pin"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::light-dependent-resistor",
+      "label": "Light Dependent Resistor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::photoresistor"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::voltage-divider",
+      "label": "Voltage Divider",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::resistor",
+        "raspberry-pi-stem::voltage",
+        "raspberry-pi-stem::ohms-law"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::analog-read",
+      "label": "Analog Read",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-pin",
+        "raspberry-pi-stem::analog-to-digital-converter"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::digital-read",
+      "label": "Digital Read",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-input"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::threshold-value",
+      "label": "Threshold Value",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-read"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::calibration",
+      "label": "Calibration",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::threshold-value"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::potentiometer",
+      "label": "Potentiometer",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::voltage-divider",
+        "raspberry-pi-stem::analog-pin"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::tilt-switch",
+      "label": "Tilt Switch",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::push-button"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::reed-switch",
+      "label": "Reed Switch",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::push-button"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::magnetic-sensor",
+      "label": "Magnetic Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::reed-switch"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::temperature-sensor",
+      "label": "Temperature Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-read"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::dht11-sensor",
+      "label": "DHT11 Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::temperature-sensor"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::humidity-sensor",
+      "label": "Humidity Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::dht11-sensor"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sound-sensor",
+      "label": "Sound Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-read"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::microphone-module",
+      "label": "Microphone Module",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sound-sensor"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::piezo-buzzer",
+      "label": "Piezo Buzzer",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-output"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::passive-buzzer",
+      "label": "Passive Buzzer",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::piezo-buzzer"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::active-buzzer",
+      "label": "Active Buzzer",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::piezo-buzzer"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::tone-generation",
+      "label": "Tone Generation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::piezo-buzzer",
+        "raspberry-pi-stem::pwm"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::interrupt-handler",
+      "label": "Interrupt Handler",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::interrupt",
+        "raspberry-pi-stem::digital-read",
+        "raspberry-pi-stem::pull-up-resistor"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::button-debounce-code",
+      "label": "Button Debounce Code",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::debounce",
+        "raspberry-pi-stem::digital-read",
+        "raspberry-pi-stem::push-button"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sensor-reading-loop",
+      "label": "Sensor Reading Loop",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-read",
+        "raspberry-pi-stem::digital-read"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sampling-rate",
+      "label": "Sampling Rate",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sensor-reading-loop"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::noise-filtering",
+      "label": "Noise Filtering",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sampling-rate"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::moving-average-filter",
+      "label": "Moving Average Filter",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::noise-filtering"
+      ],
+      "taxonomy_id": "LEDSN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::robot-chassis",
+      "label": "Robot Chassis",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::physical-computing"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::dc-motor",
+      "label": "DC Motor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::actuator"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::motor-driver",
+      "label": "Motor Driver",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::dc-motor",
+        "raspberry-pi-stem::digital-output"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::h-bridge",
+      "label": "H Bridge",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::motor-driver"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::motor-polarity",
+      "label": "Motor Polarity",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::dc-motor"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wheel-encoder",
+      "label": "Wheel Encoder",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::dc-motor",
+        "raspberry-pi-stem::analog-read"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::differential-drive",
+      "label": "Differential Drive",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::dc-motor",
+        "raspberry-pi-stem::robot-chassis"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::left-motor",
+      "label": "Left Motor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::differential-drive"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::right-motor",
+      "label": "Right Motor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::differential-drive"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::forward-motion",
+      "label": "Forward Motion",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::left-motor",
+        "raspberry-pi-stem::right-motor"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::turning-radius",
+      "label": "Turning Radius",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::forward-motion"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::motor-speed-control",
+      "label": "Motor Speed Control",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pwm",
+        "raspberry-pi-stem::motor-driver"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::battery-pack",
+      "label": "Battery Pack",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::current"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rechargeable-battery",
+      "label": "Rechargeable Battery",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::battery-pack"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::power-switch",
+      "label": "Power Switch",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::battery-pack"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::voltage-regulator",
+      "label": "Voltage Regulator",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::battery-pack",
+        "raspberry-pi-stem::voltage"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ultrasonic-sensor",
+      "label": "Ultrasonic Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-read"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::time-of-flight-sensor",
+      "label": "Time Of Flight Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ultrasonic-sensor"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::distance-measurement",
+      "label": "Distance Measurement",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ultrasonic-sensor",
+        "raspberry-pi-stem::time-of-flight-sensor"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::obstacle-detection",
+      "label": "Obstacle Detection",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::distance-measurement"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::collision-avoidance",
+      "label": "Collision Avoidance",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::obstacle-detection",
+        "raspberry-pi-stem::forward-motion",
+        "raspberry-pi-stem::feedback-loop"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::line-following",
+      "label": "Line Following",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::forward-motion",
+        "raspberry-pi-stem::analog-read"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::infrared-sensor",
+      "label": "Infrared Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-read"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::reflectance-sensor",
+      "label": "Reflectance Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::infrared-sensor"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::robot-behavior-loop",
+      "label": "Robot Behavior Loop",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::collision-avoidance",
+        "raspberry-pi-stem::line-following",
+        "raspberry-pi-stem::state-machine"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::state-based-behavior",
+      "label": "State Based Behavior",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::robot-behavior-loop",
+        "raspberry-pi-stem::state-machine"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::autonomous-navigation",
+      "label": "Autonomous Navigation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::collision-avoidance",
+        "raspberry-pi-stem::line-following",
+        "raspberry-pi-stem::state-based-behavior"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::robot-calibration",
+      "label": "Robot Calibration",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::calibration",
+        "raspberry-pi-stem::wheel-encoder",
+        "raspberry-pi-stem::root-cause-analysis"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::chassis-assembly",
+      "label": "Chassis Assembly",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::robot-chassis"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wheel-alignment",
+      "label": "Wheel Alignment",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::chassis-assembly",
+        "raspberry-pi-stem::motor-polarity"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::robot-testing-arena",
+      "label": "Robot Testing Arena",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::autonomous-navigation"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::robot-safety-stop",
+      "label": "Robot Safety Stop",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::obstacle-detection",
+        "raspberry-pi-stem::power-switch"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::emergency-stop-button",
+      "label": "Emergency Stop Button",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::robot-safety-stop",
+        "raspberry-pi-stem::push-button"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::motor-stall",
+      "label": "Motor Stall",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::motor-driver",
+        "raspberry-pi-stem::motor-speed-control"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::oled-display",
+      "label": "OLED Display",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led",
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ssd1306-driver",
+      "label": "SSD1306 Driver",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::oled-display"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::i2c-protocol",
+      "label": "I2C Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::i2c-address",
+      "label": "I2C Address",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::i2c-protocol"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::spi-protocol",
+      "label": "SPI Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::display-resolution",
+      "label": "Display Resolution",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::oled-display"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pixel-buffer",
+      "label": "Pixel Buffer",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::display-resolution"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::frame-buffer",
+      "label": "Frame Buffer",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pixel-buffer"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::draw-pixel",
+      "label": "Draw Pixel",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::frame-buffer"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::draw-line",
+      "label": "Draw Line",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::draw-pixel"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::draw-circle",
+      "label": "Draw Circle",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::draw-pixel"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::draw-text",
+      "label": "Draw Text",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::draw-pixel"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::font-rendering",
+      "label": "Font Rendering",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::draw-text"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::display-refresh",
+      "label": "Display Refresh",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::frame-buffer"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::facial-expression-design",
+      "label": "Facial Expression Design",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::draw-line",
+        "raspberry-pi-stem::draw-circle"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::eye-shape",
+      "label": "Eye Shape",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::facial-expression-design",
+        "raspberry-pi-stem::draw-circle"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::emotion-state",
+      "label": "Emotion State",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::facial-expression-design",
+        "raspberry-pi-stem::state-machine"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::idle-animation",
+      "label": "Idle Animation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::emotion-state",
+        "raspberry-pi-stem::frame-rate"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::blink-animation",
+      "label": "Blink Animation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::eye-shape",
+        "raspberry-pi-stem::frame-rate"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::expression-transition",
+      "label": "Expression Transition",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::emotion-state",
+        "raspberry-pi-stem::idle-animation"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sensor-driven-expression",
+      "label": "Sensor Driven Expression",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::emotion-state",
+        "raspberry-pi-stem::analog-read"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::robot-personality",
+      "label": "Robot Personality",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::expression-transition",
+        "raspberry-pi-stem::sensor-driven-expression"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::behavior-tree",
+      "label": "Behavior Tree",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::state-based-behavior",
+        "raspberry-pi-stem::robot-personality"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::priority-based-behavior",
+      "label": "Priority Based Behavior",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::behavior-tree"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sound-feedback",
+      "label": "Sound Feedback",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::piezo-buzzer",
+        "raspberry-pi-stem::emotion-state"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::buzzer-melody",
+      "label": "Buzzer Melody",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::tone-generation",
+        "raspberry-pi-stem::sound-feedback"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::multi-sensor-fusion",
+      "label": "Multi Sensor Fusion",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ultrasonic-sensor",
+        "raspberry-pi-stem::photoresistor",
+        "raspberry-pi-stem::sensor-driven-expression"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::display-wiring",
+      "label": "Display Wiring",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ssd1306-driver",
+        "raspberry-pi-stem::i2c-protocol"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::contrast-setting",
+      "label": "Contrast Setting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ssd1306-driver"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::screen-saver-mode",
+      "label": "Screen Saver Mode",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::display-refresh",
+        "raspberry-pi-stem::idle-animation"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::custom-bitmap-icon",
+      "label": "Custom Bitmap Icon",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::draw-pixel",
+        "raspberry-pi-stem::draw-text"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::animation-timing",
+      "label": "Animation Timing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::frame-rate",
+        "raspberry-pi-stem::idle-animation"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::non-blocking-code",
+      "label": "Non Blocking Code",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::event-driven-programming",
+        "raspberry-pi-stem::animation-timing"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::cooperative-multitasking",
+      "label": "Cooperative Multitasking",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::non-blocking-code",
+        "raspberry-pi-stem::robot-behavior-loop"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::real-time-clock",
+      "label": "Real Time Clock",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::i2c-protocol"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ds3231-module",
+      "label": "DS3231 Module",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::real-time-clock"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::coin-cell-battery",
+      "label": "Coin Cell Battery",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ds3231-module"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::timekeeping-accuracy",
+      "label": "Timekeeping Accuracy",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ds3231-module"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ntp-time-sync",
+      "label": "NTP Time Sync",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::real-time-clock"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::network-time-protocol",
+      "label": "Network Time Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ntp-time-sync"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::epoch-time",
+      "label": "Epoch Time",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ntp-time-sync"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::time-zone-offset",
+      "label": "Time Zone Offset",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ntp-time-sync"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::seven-segment-display",
+      "label": "Seven Segment Display",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::led"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::tm1637-driver",
+      "label": "TM1637 Driver",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::seven-segment-display",
+        "raspberry-pi-stem::gpio-pin"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::shift-register",
+      "label": "Shift Register",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-output"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::74hc595-chip",
+      "label": "74HC595 Chip",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::shift-register"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::lcd-character-display",
+      "label": "LCD Character Display",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::i2c-protocol"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::lcd1602-module",
+      "label": "LCD1602 Module",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::lcd-character-display"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::tft-display",
+      "label": "TFT Display",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::spi-protocol"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ili9341-driver",
+      "label": "ILI9341 Driver",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::tft-display"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::round-display",
+      "label": "Round Display",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::tft-display"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::gc9a01-driver",
+      "label": "GC9A01 Driver",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::round-display"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::watch-face-design",
+      "label": "Watch Face Design",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::tft-display",
+        "raspberry-pi-stem::ds3231-module"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::analog-clock-hands",
+      "label": "Analog Clock Hands",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::watch-face-design"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::digital-clock-format",
+      "label": "Digital Clock Format",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::seven-segment-display",
+        "raspberry-pi-stem::ds3231-module"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::alarm-feature",
+      "label": "Alarm Feature",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ds3231-module",
+        "raspberry-pi-stem::piezo-buzzer"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::stopwatch-feature",
+      "label": "Stopwatch Feature",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ds3231-module"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::timer-feature",
+      "label": "Timer Feature",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ds3231-module"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wearable-enclosure",
+      "label": "Wearable Enclosure",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wearable-electronics",
+        "raspberry-pi-stem::watch-face-design"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wristband-mounting",
+      "label": "Wristband Mounting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wearable-enclosure"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::battery-life-optimization",
+      "label": "Battery Life Optimization",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::coin-cell-battery",
+        "raspberry-pi-stem::battery-pack"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sleep-mode",
+      "label": "Sleep Mode",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::battery-life-optimization"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::deep-sleep",
+      "label": "Deep Sleep",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sleep-mode"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::low-power-design",
+      "label": "Low Power Design",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::deep-sleep"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::clock-update-interval",
+      "label": "Clock Update Interval",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ntp-time-sync",
+        "raspberry-pi-stem::frame-rate"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::time-formatting-code",
+      "label": "Time Formatting Code",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::epoch-time",
+        "raspberry-pi-stem::time-zone-offset"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::daylight-saving-time",
+      "label": "Daylight Saving Time",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::time-zone-offset"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::custom-watch-strap",
+      "label": "Custom Watch Strap",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wristband-mounting"
+      ],
+      "taxonomy_id": "CLOCK",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wi-fi",
+      "label": "Wi-Fi",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-pico-w"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wi-fi-credentials",
+      "label": "Wi-Fi Credentials",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wi-fi"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::network-ssid",
+      "label": "Network SSID",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wi-fi-credentials"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ip-address",
+      "label": "IP Address",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wi-fi"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::dhcp",
+      "label": "DHCP",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ip-address"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wireless-module",
+      "label": "Wireless Module",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wi-fi"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::cyw43-chip",
+      "label": "CYW43 Chip",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wireless-module"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::socket-programming",
+      "label": "Socket Programming",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ip-address",
+        "raspberry-pi-stem::micropython"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::http-protocol",
+      "label": "HTTP Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::socket-programming"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::http-request",
+      "label": "HTTP Request",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::http-protocol"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::http-response",
+      "label": "HTTP Response",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::http-protocol"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::web-server",
+      "label": "Web Server",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::http-protocol",
+        "raspberry-pi-stem::http-request"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rest-endpoint",
+      "label": "REST Endpoint",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::web-server"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::json-data-format",
+      "label": "JSON Data Format",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rest-endpoint"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::mqtt-protocol",
+      "label": "MQTT Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::socket-programming"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::mqtt-broker",
+      "label": "MQTT Broker",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::mqtt-protocol"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::mqtt-topic",
+      "label": "MQTT Topic",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::mqtt-broker"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::publish-subscribe-model",
+      "label": "Publish Subscribe Model",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::mqtt-topic"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::bluetooth-low-energy",
+      "label": "Bluetooth Low Energy",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::cyw43-chip"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ble-advertising",
+      "label": "BLE Advertising",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bluetooth-low-energy"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ble-peripheral",
+      "label": "BLE Peripheral",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ble-advertising"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ble-central",
+      "label": "BLE Central",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ble-advertising"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ble-service",
+      "label": "BLE Service",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ble-peripheral"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ble-characteristic",
+      "label": "BLE Characteristic",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ble-service"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pairing-process",
+      "label": "Pairing Process",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ble-peripheral",
+        "raspberry-pi-stem::ble-central"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::swarm-robotics",
+      "label": "Swarm Robotics",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pairing-process",
+        "raspberry-pi-stem::robot-behavior-loop"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::peer-to-peer-communication",
+      "label": "Peer To Peer Communication",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pairing-process",
+        "raspberry-pi-stem::publish-subscribe-model"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::network-latency",
+      "label": "Network Latency",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ip-address"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::packet-loss",
+      "label": "Packet Loss",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::network-latency"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wireless-range",
+      "label": "Wireless Range",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::cyw43-chip"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::firewall-basics",
+      "label": "Firewall Basics",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ip-address"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::network-security",
+      "label": "Network Security",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wi-fi-credentials",
+        "raspberry-pi-stem::firewall-basics"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::captive-portal",
+      "label": "Captive Portal",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::web-server",
+        "raspberry-pi-stem::wi-fi-credentials"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::access-point-mode",
+      "label": "Access Point Mode",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::cyw43-chip"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::station-mode",
+      "label": "Station Mode",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::cyw43-chip"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::remote-control-interface",
+      "label": "Remote Control Interface",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::web-server",
+        "raspberry-pi-stem::motor-speed-control"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::raspberry-pi-os",
+      "label": "Raspberry Pi OS",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-500"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::linux-kernel",
+      "label": "Linux Kernel",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-os"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::boot-process",
+      "label": "Boot Process",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::linux-kernel"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sd-card-imaging",
+      "label": "SD Card Imaging",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-os"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::raspberry-pi-imager",
+      "label": "Raspberry Pi Imager",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sd-card-imaging"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::desktop-environment",
+      "label": "Desktop Environment",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-os"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::window-manager",
+      "label": "Window Manager",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::desktop-environment"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::file-manager",
+      "label": "File Manager",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::desktop-environment"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::terminal-emulator",
+      "label": "Terminal Emulator",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::desktop-environment"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::command-line-interface",
+      "label": "Command Line Interface",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::terminal-emulator"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::shell",
+      "label": "Shell",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::command-line-interface"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::bash-shell",
+      "label": "Bash Shell",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::shell"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::shell-prompt",
+      "label": "Shell Prompt",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::working-directory",
+      "label": "Working Directory",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::file-system-hierarchy",
+      "label": "File System Hierarchy",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::working-directory"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::home-directory",
+      "label": "Home Directory",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::file-system-hierarchy"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::root-user",
+      "label": "Root User",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::file-system-hierarchy"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sudo-command",
+      "label": "Sudo Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::root-user"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::file-permissions",
+      "label": "File Permissions",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::root-user"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::chmod-command",
+      "label": "Chmod Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::file-permissions"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::chown-command",
+      "label": "Chown Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::file-permissions"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::list-files-command",
+      "label": "List Files Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::working-directory"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::change-directory-command",
+      "label": "Change Directory Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::working-directory"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::make-directory-command",
+      "label": "Make Directory Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::working-directory"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::copy-file-command",
+      "label": "Copy File Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::working-directory"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::move-file-command",
+      "label": "Move File Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::working-directory"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::remove-file-command",
+      "label": "Remove File Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::working-directory"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::nano-text-editor",
+      "label": "Nano Text Editor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::package-manager",
+      "label": "Package Manager",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::apt-package-manager",
+      "label": "APT Package Manager",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::package-manager"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::install-package-command",
+      "label": "Install Package Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::apt-package-manager"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::update-system-command",
+      "label": "Update System Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::apt-package-manager"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::process-management",
+      "label": "Process Management",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::task-manager",
+      "label": "Task Manager",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::process-management"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::environment-variable",
+      "label": "Environment Variable",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::shell-script",
+      "label": "Shell Script",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell",
+        "raspberry-pi-stem::environment-variable",
+        "raspberry-pi-stem::pseudocode"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::cron-job",
+      "label": "Cron Job",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::shell-script"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ssh-protocol",
+      "label": "SSH Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::shell",
+        "raspberry-pi-stem::ip-address"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::remote-login",
+      "label": "Remote Login",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ssh-protocol"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::vnc-remote-desktop",
+      "label": "VNC Remote Desktop",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::remote-login",
+        "raspberry-pi-stem::desktop-environment"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::local-network-discovery",
+      "label": "Local Network Discovery",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ip-address"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::hostname",
+      "label": "Hostname",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-os"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::system-configuration-tool",
+      "label": "System Configuration Tool",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::desktop-environment"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::software-update",
+      "label": "Software Update",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::apt-package-manager"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::multi-application-multitasking",
+      "label": "Multi Application Multitasking",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::window-manager"
+      ],
+      "taxonomy_id": "LINUX",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::per-key-rgb-lighting",
+      "label": "Per Key RGB Lighting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-500",
+        "raspberry-pi-stem::rgb-color-model"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::keyboard-matrix",
+      "label": "Keyboard Matrix",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::per-key-rgb-lighting"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::key-scan-code",
+      "label": "Key Scan Code",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::keyboard-matrix"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::keyboard-firmware",
+      "label": "Keyboard Firmware",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::key-scan-code"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rgb-led-zone",
+      "label": "RGB LED Zone",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::per-key-rgb-lighting"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::lighting-effect-script",
+      "label": "Lighting Effect Script",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-led-zone"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::key-press-event",
+      "label": "Key Press Event",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::key-scan-code"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::key-release-event",
+      "label": "Key Release Event",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::key-scan-code"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::color-gradient-effect",
+      "label": "Color Gradient Effect",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-led-zone",
+        "raspberry-pi-stem::color-mixing"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::typing-speed-indicator",
+      "label": "Typing Speed Indicator",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::key-press-event",
+        "raspberry-pi-stem::key-release-event"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::notification-lighting-pattern",
+      "label": "Notification Lighting Pattern",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-led-zone",
+        "raspberry-pi-stem::lighting-effect-script"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::keyboard-api",
+      "label": "Keyboard API",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::keyboard-firmware",
+        "raspberry-pi-stem::lighting-effect-script"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::python-keyboard-library",
+      "label": "Python Keyboard Library",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::keyboard-api"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::custom-key-mapping",
+      "label": "Custom Key Mapping",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::key-scan-code",
+        "raspberry-pi-stem::python-keyboard-library"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::macro-key",
+      "label": "Macro Key",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::custom-key-mapping"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::lighting-animation-loop",
+      "label": "Lighting Animation Loop",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::lighting-effect-script",
+        "raspberry-pi-stem::frame-rate"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::reactive-lighting",
+      "label": "Reactive Lighting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::key-press-event",
+        "raspberry-pi-stem::lighting-animation-loop"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ambient-lighting-mode",
+      "label": "Ambient Lighting Mode",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::lighting-animation-loop"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::keyboard-shortcut",
+      "label": "Keyboard Shortcut",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::key-scan-code"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::usb-hid-protocol",
+      "label": "USB HID Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::keyboard-firmware"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::human-interface-device",
+      "label": "Human Interface Device",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::usb-hid-protocol"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::keyboard-backlight-brightness",
+      "label": "Keyboard Backlight Brightness",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::rgb-led-zone",
+        "raspberry-pi-stem::brightness"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::lighting-preset",
+      "label": "Lighting Preset",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::lighting-animation-loop"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::event-driven-lighting",
+      "label": "Event Driven Lighting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::key-press-event",
+        "raspberry-pi-stem::event-driven-programming"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::visual-feedback-design",
+      "label": "Visual Feedback Design",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::reactive-lighting",
+        "raspberry-pi-stem::emotion-state"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::accessibility-lighting-cue",
+      "label": "Accessibility Lighting Cue",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::visual-feedback-design"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::game-status-indicator",
+      "label": "Game Status Indicator",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::reactive-lighting"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pomodoro-timer-lighting",
+      "label": "Pomodoro Timer Lighting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::lighting-animation-loop",
+        "raspberry-pi-stem::timer-feature"
+      ],
+      "taxonomy_id": "RGBKB",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pcie-interface",
+      "label": "PCIe Interface",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::nvme-storage",
+      "label": "NVMe Storage",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pcie-interface"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::microsd-storage",
+      "label": "MicroSD Storage",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::usb-3-0-port",
+      "label": "USB 3.0 Port",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::dual-4k-display-output",
+      "label": "Dual 4K Display Output",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::gigabit-ethernet",
+      "label": "Gigabit Ethernet",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::camera-serial-interface",
+      "label": "Camera Serial Interface",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::camera-module",
+      "label": "Camera Module",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::camera-serial-interface"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::camera-resolution",
+      "label": "Camera Resolution",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::camera-module"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::frame-capture",
+      "label": "Frame Capture",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::camera-module"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::video-stream",
+      "label": "Video Stream",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::frame-capture"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::image-sensor",
+      "label": "Image Sensor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::camera-module"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::autofocus-camera",
+      "label": "Autofocus Camera",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::image-sensor"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::global-shutter-camera",
+      "label": "Global Shutter Camera",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::image-sensor"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::rolling-shutter-camera",
+      "label": "Rolling Shutter Camera",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::image-sensor"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::active-cooling",
+      "label": "Active Cooling",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::heat-sink",
+      "label": "Heat Sink",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::active-cooling"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::thermal-throttling",
+      "label": "Thermal Throttling",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::heat-sink"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::power-supply-rating",
+      "label": "Power Supply Rating",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::raspberry-pi-5"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::usb-c-power-delivery",
+      "label": "USB C Power Delivery",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::power-supply-rating"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::gpio-header",
+      "label": "GPIO Header",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::gpio-pin",
+        "raspberry-pi-stem::raspberry-pi-5",
+        "raspberry-pi-stem::pin-numbering"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::40-pin-header",
+      "label": "40 Pin Header",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::gpio-header"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::real-time-i-o",
+      "label": "Real Time I O",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::40-pin-header"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::kernel-driver",
+      "label": "Kernel Driver",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::linux-kernel"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::device-tree-overlay",
+      "label": "Device Tree Overlay",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::kernel-driver"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::operating-system-image",
+      "label": "Operating System Image",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sd-card-imaging"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::cross-compilation",
+      "label": "Cross Compilation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::linux-kernel"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::python-virtual-environment",
+      "label": "Python Virtual Environment",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::package-dependency",
+      "label": "Package Dependency",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::python-virtual-environment"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::library-installation",
+      "label": "Library Installation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::package-dependency",
+        "raspberry-pi-stem::apt-package-manager"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::version-control",
+      "label": "Version Control",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bash-shell"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::git-basics",
+      "label": "Git Basics",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::version-control"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::github-repository",
+      "label": "GitHub Repository",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::git-basics"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::code-editor",
+      "label": "Code Editor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::thonny-ide"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::vs-code-on-pi",
+      "label": "VS Code On Pi",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::code-editor",
+        "raspberry-pi-stem::apt-package-manager"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::file-transfer-protocol",
+      "label": "File Transfer Protocol",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ip-address"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::headless-setup",
+      "label": "Headless Setup",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ssh-protocol",
+        "raspberry-pi-stem::sd-card-imaging"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::case-and-ventilation",
+      "label": "Case And Ventilation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::active-cooling"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::storage-benchmark",
+      "label": "Storage Benchmark",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::nvme-storage",
+        "raspberry-pi-stem::microsd-storage"
+      ],
+      "taxonomy_id": "PIHW",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::ai-hat-plus",
+      "label": "AI HAT Plus",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pcie-interface"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::neural-processing-unit",
+      "label": "Neural Processing Unit",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ai-hat-plus"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::tops-performance-metric",
+      "label": "TOPS Performance Metric",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neural-processing-unit"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::machine-learning-model",
+      "label": "Machine Learning Model",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neural-processing-unit",
+        "raspberry-pi-stem::abstraction"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pretrained-model",
+      "label": "Pretrained Model",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::machine-learning-model"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::model-inference",
+      "label": "Model Inference",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::machine-learning-model",
+        "raspberry-pi-stem::neural-processing-unit"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::model-training",
+      "label": "Model Training",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::machine-learning-model"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::training-versus-inference",
+      "label": "Training Versus Inference",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::model-inference",
+        "raspberry-pi-stem::model-training"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::neural-network",
+      "label": "Neural Network",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::machine-learning-model"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::convolutional-neural-network",
+      "label": "Convolutional Neural Network",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neural-network"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::image-classification",
+      "label": "Image Classification",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::convolutional-neural-network",
+        "raspberry-pi-stem::camera-module",
+        "raspberry-pi-stem::pattern-recognition"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::object-detection",
+      "label": "Object Detection",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::image-classification"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::bounding-box",
+      "label": "Bounding Box",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::object-detection"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::confidence-score",
+      "label": "Confidence Score",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::object-detection"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::class-label",
+      "label": "Class Label",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::image-classification"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::labeled-dataset",
+      "label": "Labeled Dataset",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::class-label"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::training-dataset",
+      "label": "Training Dataset",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::labeled-dataset",
+        "raspberry-pi-stem::model-training"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::validation-dataset",
+      "label": "Validation Dataset",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::training-dataset"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::model-accuracy",
+      "label": "Model Accuracy",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::validation-dataset"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::false-positive",
+      "label": "False Positive",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::confidence-score",
+        "raspberry-pi-stem::model-accuracy"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::false-negative",
+      "label": "False Negative",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::confidence-score",
+        "raspberry-pi-stem::model-accuracy"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::overfitting",
+      "label": "Overfitting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::validation-dataset",
+        "raspberry-pi-stem::model-accuracy"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::model-quantization",
+      "label": "Model Quantization",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::model-inference",
+        "raspberry-pi-stem::tops-performance-metric"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::model-compression",
+      "label": "Model Compression",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::model-quantization"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::tflite-model-format",
+      "label": "TFLite Model Format",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::model-compression"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::onnx-model-format",
+      "label": "ONNX Model Format",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::model-compression"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::edge-ai",
+      "label": "Edge AI",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::model-inference",
+        "raspberry-pi-stem::neural-processing-unit"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::inference-latency",
+      "label": "Inference Latency",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::model-inference",
+        "raspberry-pi-stem::clock-speed"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::frames-per-second",
+      "label": "Frames Per Second",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::inference-latency",
+        "raspberry-pi-stem::video-stream"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::hardware-accelerator",
+      "label": "Hardware Accelerator",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::neural-processing-unit"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::hailo-accelerator",
+      "label": "Hailo Accelerator",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::hardware-accelerator",
+        "raspberry-pi-stem::ai-hat-plus"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::model-zoo",
+      "label": "Model Zoo",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pretrained-model"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::transfer-learning",
+      "label": "Transfer Learning",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pretrained-model",
+        "raspberry-pi-stem::model-training"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::custom-object-class",
+      "label": "Custom Object Class",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::object-detection",
+        "raspberry-pi-stem::class-label"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::region-of-interest",
+      "label": "Region Of Interest",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bounding-box"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::non-maximum-suppression",
+      "label": "Non Maximum Suppression",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bounding-box",
+        "raspberry-pi-stem::confidence-score"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::image-preprocessing",
+      "label": "Image Preprocessing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::camera-resolution",
+        "raspberry-pi-stem::image-classification"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::real-time-video-pipeline",
+      "label": "Real Time Video Pipeline",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::video-stream",
+        "raspberry-pi-stem::model-inference"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::camera-to-model-pipeline",
+      "label": "Camera To Model Pipeline",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::real-time-video-pipeline",
+        "raspberry-pi-stem::image-classification"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::detection-threshold",
+      "label": "Detection Threshold",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::confidence-score",
+        "raspberry-pi-stem::false-positive"
+      ],
+      "taxonomy_id": "VISN",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::microphone-array",
+      "label": "Microphone Array",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sound-sensor"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::usb-microphone",
+      "label": "USB Microphone",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::microphone-array"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::audio-sampling-rate",
+      "label": "Audio Sampling Rate",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::usb-microphone"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::analog-audio-signal",
+      "label": "Analog Audio Signal",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::audio-sampling-rate"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::digital-audio-signal",
+      "label": "Digital Audio Signal",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-audio-signal",
+        "raspberry-pi-stem::analog-to-digital-converter"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::audio-buffer",
+      "label": "Audio Buffer",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-audio-signal"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::fast-fourier-transform",
+      "label": "Fast Fourier Transform",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::digital-audio-signal"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::frequency-spectrum",
+      "label": "Frequency Spectrum",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::fast-fourier-transform"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::spectrogram",
+      "label": "Spectrogram",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::frequency-spectrum"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sound-classification",
+      "label": "Sound Classification",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::spectrogram",
+        "raspberry-pi-stem::machine-learning-model"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::keyword-spotting",
+      "label": "Keyword Spotting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sound-classification"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::wake-word-detection",
+      "label": "Wake Word Detection",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::keyword-spotting"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::voice-command",
+      "label": "Voice Command",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::wake-word-detection"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::audio-feature-extraction",
+      "label": "Audio Feature Extraction",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::frequency-spectrum"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::mel-frequency-cepstrum",
+      "label": "Mel Frequency Cepstrum",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::audio-feature-extraction"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::noise-floor",
+      "label": "Noise Floor",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::analog-audio-signal"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::signal-to-noise-ratio",
+      "label": "Signal To Noise Ratio",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::noise-floor"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::audio-preprocessing-pipeline",
+      "label": "Audio Preprocessing Pipeline",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::audio-feature-extraction",
+        "raspberry-pi-stem::audio-buffer"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::text-to-speech",
+      "label": "Text To Speech",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::machine-learning-model"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::speech-to-text",
+      "label": "Speech To Text",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::keyword-spotting",
+        "raspberry-pi-stem::machine-learning-model"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::audio-model-inference",
+      "label": "Audio Model Inference",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sound-classification",
+        "raspberry-pi-stem::model-inference"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sound-event-detection",
+      "label": "Sound Event Detection",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sound-classification",
+        "raspberry-pi-stem::audio-model-inference"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::environmental-sound-class",
+      "label": "Environmental Sound Class",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::sound-event-detection"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::alert-sound-trigger",
+      "label": "Alert Sound Trigger",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::environmental-sound-class"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::audio-latency",
+      "label": "Audio Latency",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::audio-model-inference",
+        "raspberry-pi-stem::inference-latency"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::i2s-audio-interface",
+      "label": "I2S Audio Interface",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::spi-protocol"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::pcm5102-dac",
+      "label": "PCM5102 DAC",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::i2s-audio-interface"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::speaker-output",
+      "label": "Speaker Output",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::pcm5102-dac"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::amplifier-module",
+      "label": "Amplifier Module",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::speaker-output"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::audio-confidence-score",
+      "label": "Audio Confidence Score",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::audio-model-inference",
+        "raspberry-pi-stem::confidence-score"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::multi-modal-recognition",
+      "label": "Multi Modal Recognition",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::audio-model-inference",
+        "raspberry-pi-stem::image-classification"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::audio-privacy-considerations",
+      "label": "Audio Privacy Considerations",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::microphone-array"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::on-device-processing",
+      "label": "On Device Processing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::edge-ai",
+        "raspberry-pi-stem::audio-model-inference"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::cloud-versus-edge-processing",
+      "label": "Cloud Versus Edge Processing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::on-device-processing"
+      ],
+      "taxonomy_id": "AUDIO",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::project-budgeting",
+      "label": "Project Budgeting",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::price-tier",
+        "raspberry-pi-stem::total-cost-of-ownership"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::bill-of-materials",
+      "label": "Bill Of Materials",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-budgeting"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::component-sourcing",
+      "label": "Component Sourcing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-budgeting"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::vendor-comparison",
+      "label": "Vendor Comparison",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::component-sourcing",
+        "raspberry-pi-stem::vendor-documentation",
+        "raspberry-pi-stem::hardware-compatibility"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::bulk-discount",
+      "label": "Bulk Discount",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bulk-purchasing"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::component-substitution",
+      "label": "Component Substitution",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::component-sourcing",
+        "raspberry-pi-stem::ram-shortage"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::supply-chain-shortage",
+      "label": "Supply Chain Shortage",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::ram-shortage"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::lead-time",
+      "label": "Lead Time",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::supply-chain-shortage"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::classroom-kit-organization",
+      "label": "Classroom Kit Organization",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bill-of-materials"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::storage-and-inventory",
+      "label": "Storage And Inventory",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::classroom-kit-organization"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::shared-component-bin",
+      "label": "Shared Component Bin",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::storage-and-inventory"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::loaner-equipment-policy",
+      "label": "Loaner Equipment Policy",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::storage-and-inventory"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::grant-funding",
+      "label": "Grant Funding",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-budgeting"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::donor-sourced-hardware",
+      "label": "Donor Sourced Hardware",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::grant-funding"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::cost-per-student",
+      "label": "Cost Per Student",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-budgeting",
+        "raspberry-pi-stem::classroom-budget"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::reusable-versus-consumable",
+      "label": "Reusable Versus Consumable",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bill-of-materials",
+        "raspberry-pi-stem::device-lifespan"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::kit-checklist",
+      "label": "Kit Checklist",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::bill-of-materials",
+        "raspberry-pi-stem::storage-and-inventory"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::damage-and-repair-plan",
+      "label": "Damage And Repair Plan",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::storage-and-inventory"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::safety-guidelines",
+      "label": "Safety Guidelines",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::physical-computing"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::electrical-safety",
+      "label": "Electrical Safety",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::safety-guidelines",
+        "raspberry-pi-stem::voltage"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::battery-safety",
+      "label": "Battery Safety",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::safety-guidelines",
+        "raspberry-pi-stem::battery-pack"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::classroom-time-management",
+      "label": "Classroom Time Management",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::classroom-budget"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::lab-station-setup",
+      "label": "Lab Station Setup",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::classroom-kit-organization"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::group-size-planning",
+      "label": "Group Size Planning",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::classroom-time-management"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::differentiated-instruction",
+      "label": "Differentiated Instruction",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::classroom-time-management"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::assessment-rubric",
+      "label": "Assessment Rubric",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::differentiated-instruction"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::student-portfolio",
+      "label": "Student Portfolio",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::assessment-rubric"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::iterative-design"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::design-brief",
+      "label": "Design Brief",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::capstone-project"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::cross-tier-integration",
+      "label": "Cross Tier Integration",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::capstone-project",
+        "raspberry-pi-stem::product-decision-framework"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::sensor-to-cloud-pipeline",
+      "label": "Sensor To Cloud Pipeline",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::cross-tier-integration",
+        "raspberry-pi-stem::web-server"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::multi-board-communication",
+      "label": "Multi Board Communication",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::cross-tier-integration",
+        "raspberry-pi-stem::peer-to-peer-communication"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::project-planning-document",
+      "label": "Project Planning Document",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::design-brief"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::engineering-design-process",
+      "label": "Engineering Design Process",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::prototype",
+        "raspberry-pi-stem::capstone-project",
+        "raspberry-pi-stem::flowchart"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::requirements-gathering",
+      "label": "Requirements Gathering",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::design-brief",
+        "raspberry-pi-stem::engineering-design-process"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::prototype-iteration",
+      "label": "Prototype Iteration",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::prototype",
+        "raspberry-pi-stem::engineering-design-process",
+        "raspberry-pi-stem::trial-and-error-testing"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::user-testing",
+      "label": "User Testing",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::prototype-iteration"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::peer-code-review",
+      "label": "Peer Code Review",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::prototype-iteration"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::project-demo-day",
+      "label": "Project Demo Day",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::user-testing"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::presentation-skills",
+      "label": "Presentation Skills",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-demo-day"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::technical-documentation",
+      "label": "Technical Documentation",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-planning-document"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::readme-file",
+      "label": "README File",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::technical-documentation",
+        "raspberry-pi-stem::git-basics"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::project-reflection",
+      "label": "Project Reflection",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-demo-day"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::science-fair-format",
+      "label": "Science Fair Format",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-demo-day",
+        "raspberry-pi-stem::presentation-skills"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::robot-day-showcase-format",
+      "label": "Robot Day Showcase Format",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-demo-day"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::portfolio-artifact",
+      "label": "Portfolio Artifact",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::student-portfolio",
+        "raspberry-pi-stem::project-reflection"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::open-ended-problem",
+      "label": "Open Ended Problem",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::capstone-project"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::constraint-based-design",
+      "label": "Constraint Based Design",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::open-ended-problem",
+        "raspberry-pi-stem::classroom-budget"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::original-invention",
+      "label": "Original Invention",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::open-ended-problem",
+        "raspberry-pi-stem::cross-tier-integration"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::remix-and-extend",
+      "label": "Remix And Extend",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::original-invention"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::companion-book-cross-reference",
+      "label": "Companion Book Cross Reference",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::original-invention"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::next-steps-learning-path",
+      "label": "Next Steps Learning Path",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::companion-book-cross-reference"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::independent-study-extension",
+      "label": "Independent Study Extension",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::next-steps-learning-path"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::community-showcase-event",
+      "label": "Community Showcase Event",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::robot-day-showcase-format",
+        "raspberry-pi-stem::presentation-skills"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    },
+    {
+      "id": "raspberry-pi-stem::course-wrap-up-reflection",
+      "label": "Course Wrap Up Reflection",
+      "subject_id": "raspberry-pi-stem",
+      "dependencies": [
+        "raspberry-pi-stem::project-reflection",
+        "raspberry-pi-stem::next-steps-learning-path"
+      ],
+      "taxonomy_id": "LOGIS",
+      "level": "core"
+    }
+  ]
+}

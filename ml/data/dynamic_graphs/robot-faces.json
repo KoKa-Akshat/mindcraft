@@ -1,0 +1,3194 @@
+{
+  "subject_id": "robot-faces",
+  "title": "Robot Faces: Drawing Expressive Displays for STEM Robots",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "HWFND": {
+      "classifier_name": "Hardware & Electronics Foundations",
+      "color": "SteelBlue"
+    },
+    "HIST": {
+      "classifier_name": "History Of Screen-Based Robot Faces",
+      "color": "DarkSlateBlue"
+    },
+    "MPYFN": {
+      "classifier_name": "MicroPython Programming Fundamentals",
+      "color": "DarkGreen"
+    },
+    "DISPC": {
+      "classifier_name": "Display & Coordinate Systems",
+      "color": "Teal"
+    },
+    "PRIM": {
+      "classifier_name": "Basic Drawing Primitives",
+      "color": "LimeGreen"
+    },
+    "SHAPE": {
+      "classifier_name": "Ellipse & Polygon Drawing",
+      "color": "OliveDrab"
+    },
+    "FBVER": {
+      "classifier_name": "MicroPython FrameBuf Version History",
+      "color": "DimGray"
+    },
+    "ANAT": {
+      "classifier_name": "Facial Anatomy & Layout",
+      "color": "MediumPurple"
+    },
+    "EMOT": {
+      "classifier_name": "Emotion Psychology & Expression Design",
+      "color": "HotPink"
+    },
+    "ANIM": {
+      "classifier_name": "Animation & Timing",
+      "color": "Orange"
+    },
+    "INTER": {
+      "classifier_name": "Interactive Controls & State Machines",
+      "color": "DodgerBlue"
+    },
+    "COLOR": {
+      "classifier_name": "Color Display & RGB565 Porting",
+      "color": "Gold"
+    },
+    "CTCAP": {
+      "classifier_name": "Computational Thinking & Capstone Design",
+      "color": "Indigo"
+    }
+  },
+  "concepts": [
+    {
+      "id": "robot-faces::raspberry-pi-pico",
+      "label": "Raspberry Pi Pico",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rp2040-microcontroller"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::rp2040-microcontroller",
+      "label": "RP2040 Microcontroller",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::microcontroller"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::microcontroller",
+      "label": "Microcontroller",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HWFND",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::cytron-maker-pi-rp2040",
+      "label": "Cytron Maker Pi RP2040",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::solderless-breadboard",
+      "label": "Solderless Breadboard",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HWFND",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::jumper-wires",
+      "label": "Jumper Wires",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HWFND",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::momentary-push-button",
+      "label": "Momentary Push Button",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HWFND",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::potentiometer",
+      "label": "Potentiometer",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HWFND",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::rotary-encoder",
+      "label": "Rotary Encoder",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HWFND",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::spi-interface",
+      "label": "SPI Interface",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HWFND",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::i2c-interface",
+      "label": "I2C Interface",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HWFND",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::spi-clock-line",
+      "label": "SPI Clock Line",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::spi-interface"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::spi-data-line",
+      "label": "SPI Data Line",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::spi-interface"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::chip-select-pin",
+      "label": "Chip Select Pin",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::spi-interface"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::data-command-pin",
+      "label": "Data Command Pin",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::spi-interface"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::display-reset-pin",
+      "label": "Display Reset Pin",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::spi-interface"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::128x64-monochrome-oled",
+      "label": "128x64 Monochrome OLED",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::spi-interface"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::ssd1306-display-driver",
+      "label": "SSD1306 Display Driver",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::128x64-monochrome-oled",
+        "robot-faces::spi-clock-line",
+        "robot-faces::spi-data-line",
+        "robot-faces::chip-select-pin",
+        "robot-faces::i2c-interface"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::240x240-color-round-display",
+      "label": "240x240 Color Round Display",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::spi-interface"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::gc9a01-display-driver",
+      "label": "GC9A01 Display Driver",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::240x240-color-round-display",
+        "robot-faces::spi-clock-line",
+        "robot-faces::spi-data-line",
+        "robot-faces::chip-select-pin",
+        "robot-faces::display-reset-pin"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::pull-up-resistor",
+      "label": "Pull-Up Resistor",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::momentary-push-button"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::low-cost-robotics-kit",
+      "label": "Low-Cost Robotics Kit",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::raspberry-pi-pico",
+        "robot-faces::128x64-monochrome-oled",
+        "robot-faces::240x240-color-round-display"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::breadboard-wiring-diagram",
+      "label": "Breadboard Wiring Diagram",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::solderless-breadboard",
+        "robot-faces::jumper-wires",
+        "robot-faces::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::display-power-requirements",
+      "label": "Display Power Requirements",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::128x64-monochrome-oled",
+        "robot-faces::240x240-color-round-display"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::display-mounting-considerations",
+      "label": "Display Mounting Considerations",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::128x64-monochrome-oled",
+        "robot-faces::240x240-color-round-display"
+      ],
+      "taxonomy_id": "HWFND",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::screen-based-robot-face",
+      "label": "Screen-Based Robot Face",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "HIST",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::social-robot",
+      "label": "Social Robot",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-based-robot-face"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::anki-cozmo",
+      "label": "Anki Cozmo",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-based-robot-face",
+        "robot-faces::social-robot"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::anki-vector",
+      "label": "Anki Vector",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-cozmo"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::emotix-miko",
+      "label": "Emotix Miko",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-based-robot-face",
+        "robot-faces::social-robot"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::blue-frog-robotics-buddy",
+      "label": "Blue Frog Robotics Buddy",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-based-robot-face",
+        "robot-faces::social-robot"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::cozmo-emotion-engine",
+      "label": "Cozmo Emotion Engine",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-cozmo"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::vector-companion-app",
+      "label": "Vector Companion App",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-vector"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::miko-educational-robot-design",
+      "label": "Miko Educational Robot Design",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::emotix-miko"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::buddy-mobile-robot-base",
+      "label": "Buddy Mobile Robot Base",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::blue-frog-robotics-buddy"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::robot-startup-funding",
+      "label": "Robot Startup Funding",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-cozmo"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::robot-product-discontinuation",
+      "label": "Robot Product Discontinuation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-vector",
+        "robot-faces::robot-startup-funding"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::crowdfunding-campaign",
+      "label": "Crowdfunding Campaign",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::blue-frog-robotics-buddy"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::robot-commercial-outcome",
+      "label": "Robot Commercial Outcome",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-cozmo",
+        "robot-faces::anki-vector",
+        "robot-faces::emotix-miko",
+        "robot-faces::blue-frog-robotics-buddy"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::robot-face-design-scoping",
+      "label": "Robot Face Design Scoping",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::buddy-mobile-robot-base",
+        "robot-faces::robot-commercial-outcome"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::companion-robot-category",
+      "label": "Companion Robot Category",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::emotix-miko",
+        "robot-faces::blue-frog-robotics-buddy"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::mass-market-robot-toy",
+      "label": "Mass-Market Robot Toy",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-cozmo"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::robot-voice-interaction",
+      "label": "Robot Voice Interaction",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-vector"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::robot-business-case-study",
+      "label": "Robot Business Case Study",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::robot-startup-funding",
+        "robot-faces::robot-product-discontinuation",
+        "robot-faces::crowdfunding-campaign",
+        "robot-faces::robot-commercial-outcome"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::hardware-cost-trade-off",
+      "label": "Hardware Cost Trade-Off",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::low-cost-robotics-kit",
+        "robot-faces::robot-commercial-outcome"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::anki-company-history",
+      "label": "Anki Company History",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anki-cozmo",
+        "robot-faces::anki-vector",
+        "robot-faces::robot-product-discontinuation"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::consumer-robotics-market",
+      "label": "Consumer Robotics Market",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::mass-market-robot-toy",
+        "robot-faces::companion-robot-category"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::robot-personality-branding",
+      "label": "Robot Personality Branding",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::cozmo-emotion-engine",
+        "robot-faces::vector-companion-app"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::screen-as-face-metaphor",
+      "label": "Screen As Face Metaphor",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-based-robot-face",
+        "robot-faces::cozmo-emotion-engine"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::educational-robotics-market",
+      "label": "Educational Robotics Market",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::miko-educational-robot-design",
+        "robot-faces::consumer-robotics-market"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::micropython",
+      "label": "MicroPython",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::thonny-ide",
+      "label": "Thonny IDE",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::micropython"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::micropython-repl",
+      "label": "MicroPython REPL",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::micropython",
+        "robot-faces::thonny-ide"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::variable",
+      "label": "Variable",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::micropython"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::constant",
+      "label": "Constant",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::variable"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::data-type",
+      "label": "Data Type",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::variable"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::integer-data-type",
+      "label": "Integer Data Type",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::data-type"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::boolean-data-type",
+      "label": "Boolean Data Type",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::data-type"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::function-definition",
+      "label": "Function Definition",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::variable",
+        "robot-faces::conditional-statement"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::function-parameter",
+      "label": "Function Parameter",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::function-definition"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::function-return-value",
+      "label": "Function Return Value",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::function-definition"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::for-loop",
+      "label": "For Loop",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::variable"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::while-loop",
+      "label": "While Loop",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::variable"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::conditional-statement",
+      "label": "Conditional Statement",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::boolean-data-type",
+        "robot-faces::indentation-rules"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::import-statement",
+      "label": "Import Statement",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::module"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::module",
+      "label": "Module",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::micropython"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::list-data-structure",
+      "label": "List Data Structure",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::data-type",
+        "robot-faces::variable"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::tuple-data-structure",
+      "label": "Tuple Data Structure",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::list-data-structure"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::dictionary-data-structure",
+      "label": "Dictionary Data Structure",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::list-data-structure"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::comment-syntax",
+      "label": "Comment Syntax",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "MPYFN",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::indentation-rules",
+      "label": "Indentation Rules",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "MPYFN",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::bitwise-operator",
+      "label": "Bitwise Operator",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::integer-data-type"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::bit-shifting",
+      "label": "Bit Shifting",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::bitwise-operator"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::framebuf-module",
+      "label": "FrameBuf Module",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::import-statement",
+        "robot-faces::module"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::string-formatting",
+      "label": "String Formatting",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::data-type"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::default-parameter-value",
+      "label": "Default Parameter Value",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::function-parameter"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::multiple-return-values",
+      "label": "Multiple Return Values",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::function-return-value",
+        "robot-faces::tuple-data-structure"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::global-versus-local-scope",
+      "label": "Global Versus Local Scope",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::function-definition",
+        "robot-faces::variable"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::docstring-convention",
+      "label": "Docstring Convention",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::function-definition",
+        "robot-faces::comment-syntax"
+      ],
+      "taxonomy_id": "MPYFN",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::screen-coordinate-system",
+      "label": "Screen Coordinate System",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::pixel"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::origin-at-upper-left",
+      "label": "Origin At Upper-Left",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-coordinate-system"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::x-axis-direction",
+      "label": "X Axis Direction",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-coordinate-system"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::y-axis-direction",
+      "label": "Y Axis Direction",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-coordinate-system"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::pixel",
+      "label": "Pixel",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "DISPC",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::frame-buffer",
+      "label": "Frame Buffer",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::pixel",
+        "robot-faces::framebuf-module"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::display-resolution",
+      "label": "Display Resolution",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::pixel",
+        "robot-faces::128x64-monochrome-oled",
+        "robot-faces::240x240-color-round-display"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::monochrome-color-model",
+      "label": "Monochrome Color Model",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::pixel",
+        "robot-faces::128x64-monochrome-oled"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::display-buffer-memory",
+      "label": "Display Buffer Memory",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::screen-refresh-cycle",
+      "label": "Screen Refresh Cycle",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::aspect-ratio",
+      "label": "Aspect Ratio",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::display-resolution"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::circular-display-geometry",
+      "label": "Circular Display Geometry",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::240x240-color-round-display",
+        "robot-faces::screen-coordinate-system"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::coordinate-plane-quadrant",
+      "label": "Coordinate Plane Quadrant",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-coordinate-system",
+        "robot-faces::origin-at-upper-left",
+        "robot-faces::x-axis-direction",
+        "robot-faces::y-axis-direction"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::bounding-box",
+      "label": "Bounding Box",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-coordinate-system",
+        "robot-faces::display-resolution"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::display-initialization",
+      "label": "Display Initialization",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ssd1306-display-driver",
+        "robot-faces::gc9a01-display-driver",
+        "robot-faces::micropython-repl"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::show-method",
+      "label": "Show Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::display-initialization"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::frame-buffer-size-calculation",
+      "label": "Frame Buffer Size Calculation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::display-resolution",
+        "robot-faces::bit-depth"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::bit-depth",
+      "label": "Bit Depth",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::monochrome-color-model"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::byte-alignment-in-buffer",
+      "label": "Byte Alignment In Buffer",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::bit-depth"
+      ],
+      "taxonomy_id": "DISPC",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::fill-method",
+      "label": "Fill Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::drawing-color-value"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::horizontal-line-method",
+      "label": "Horizontal Line Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::drawing-color-value"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::vertical-line-method",
+      "label": "Vertical Line Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::drawing-color-value"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::line-method",
+      "label": "Line Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::horizontal-line-method",
+        "robot-faces::vertical-line-method"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::rectangle-method",
+      "label": "Rectangle Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::horizontal-line-method",
+        "robot-faces::vertical-line-method"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::filled-rectangle-method",
+      "label": "Filled Rectangle Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rectangle-method",
+        "robot-faces::fill-method"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::scroll-method",
+      "label": "Scroll Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::blit-method",
+      "label": "Blit Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::bitmap"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::transparent-color-key",
+      "label": "Transparent Color Key",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::blit-method"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::blit-palette-mapping",
+      "label": "Blit Palette Mapping",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::blit-method",
+        "robot-faces::monochrome-color-model"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::pixel-method",
+      "label": "Pixel Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::pixel"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::drawing-color-value",
+      "label": "Drawing Color Value",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::monochrome-color-model"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::drawing-constants",
+      "label": "Drawing Constants",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::drawing-color-value",
+        "robot-faces::constant"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::sprite",
+      "label": "Sprite",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::bitmap"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::bitmap",
+      "label": "Bitmap",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::pixel",
+        "robot-faces::unsigned-byte-array"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::unsigned-byte-array",
+      "label": "Unsigned Byte Array",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::list-data-structure"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::text-method",
+      "label": "Text Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer",
+        "robot-faces::drawing-color-value"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::draw-order-layering",
+      "label": "Draw Order Layering",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::fill-method",
+        "robot-faces::rectangle-method"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::overdraw",
+      "label": "Overdraw",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::draw-order-layering"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::clipping-at-screen-edge",
+      "label": "Clipping At Screen Edge",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::display-resolution",
+        "robot-faces::pixel-method"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::draw-call-order-optimization",
+      "label": "Draw Call Order Optimization",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::draw-order-layering"
+      ],
+      "taxonomy_id": "PRIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::ellipse-method",
+      "label": "Ellipse Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::fill-method",
+        "robot-faces::rectangle-method",
+        "robot-faces::drawing-color-value"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::quadrant-fill-code",
+      "label": "Quadrant Fill Code",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-method"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::ellipse-radius-parameter",
+      "label": "Ellipse Radius Parameter",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-method"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::filled-versus-outlined-shape",
+      "label": "Filled Versus Outlined Shape",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-method",
+        "robot-faces::filled-rectangle-method"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::poly-method",
+      "label": "Poly Method",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::line-method",
+        "robot-faces::drawing-color-value"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::point-array",
+      "label": "Point Array",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::unsigned-byte-array",
+        "robot-faces::poly-method"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::polygon-vertex",
+      "label": "Polygon Vertex",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::point-array"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::closed-polygon-path",
+      "label": "Closed Polygon Path",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::polygon-vertex"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::convex-polygon",
+      "label": "Convex Polygon",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::closed-polygon-path"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::concave-polygon",
+      "label": "Concave Polygon",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::closed-polygon-path"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::approximating-curves-with-lines",
+      "label": "Approximating Curves With Lines",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::line-method",
+        "robot-faces::ellipse-method"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::circle-as-special-ellipse",
+      "label": "Circle As Special Ellipse",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-method",
+        "robot-faces::ellipse-radius-parameter"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::triangle-eyebrow-shape",
+      "label": "Triangle Eyebrow Shape",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::poly-method",
+        "robot-faces::polygon-vertex"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::rounded-rectangle-approximation",
+      "label": "Rounded Rectangle Approximation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rectangle-method",
+        "robot-faces::ellipse-method"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::anti-aliasing-limitation",
+      "label": "Anti-Aliasing Limitation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::monochrome-color-model",
+        "robot-faces::ellipse-method"
+      ],
+      "taxonomy_id": "SHAPE",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::framebuf-version-timeline",
+      "label": "FrameBuf Version Timeline",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::framebuf-module"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::blit-cross-format-support-v1-17",
+      "label": "Blit Cross-Format Support V1.17",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::blit-method",
+        "robot-faces::blit-palette-mapping",
+        "robot-faces::framebuf-version-timeline"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::framebuf-method-set-before-v1-20",
+      "label": "Framebuf Method Set Before V1.20",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::framebuf-version-timeline",
+        "robot-faces::fill-method",
+        "robot-faces::rectangle-method",
+        "robot-faces::scroll-method",
+        "robot-faces::blit-method"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::ellipse-poly-dev-branch-merge",
+      "label": "Ellipse Poly Dev Branch Merge",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-method",
+        "robot-faces::poly-method",
+        "robot-faces::framebuf-method-set-before-v1-20"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::nightly-build-firmware",
+      "label": "Nightly Build Firmware",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-poly-dev-branch-merge"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::micropython-v1-20-0-release",
+      "label": "MicroPython V1.20.0 Release",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-poly-dev-branch-merge",
+        "robot-faces::nightly-build-firmware"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::ellipse-bug-fix-v1-24-1",
+      "label": "Ellipse Bug Fix V1.24.1",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::micropython-v1-20-0-release",
+        "robot-faces::ellipse-radius-parameter"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::pre-2023-curve-workaround",
+      "label": "Pre-2023 Curve Workaround",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::approximating-curves-with-lines",
+        "robot-faces::framebuf-method-set-before-v1-20"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::micropython-release-versioning",
+      "label": "MicroPython Release Versioning",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::framebuf-version-timeline"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::micropython-firmware-update",
+      "label": "MicroPython Firmware Update",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::micropython-release-versioning",
+        "robot-faces::micropython-v1-20-0-release"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::open-source-contribution-model",
+      "label": "Open Source Contribution Model",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-poly-dev-branch-merge",
+        "robot-faces::micropython-github-repository"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::micropython-github-repository",
+      "label": "MicroPython GitHub Repository",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::framebuf-version-timeline"
+      ],
+      "taxonomy_id": "FBVER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::face-outline",
+      "label": "Face Outline",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ellipse-method",
+        "robot-faces::poly-method",
+        "robot-faces::screen-coordinate-system"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eye-placement",
+      "label": "Eye Placement",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::face-outline",
+        "robot-faces::coordinate-plane-quadrant"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eye-size-parameter",
+      "label": "Eye Size Parameter",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::eye-placement",
+        "robot-faces::ellipse-radius-parameter"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eye-spacing",
+      "label": "Eye Spacing",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::eye-placement"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::pupil",
+      "label": "Pupil",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::eye-size-parameter",
+        "robot-faces::ellipse-method"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::pupil-size-parameter",
+      "label": "Pupil Size Parameter",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::pupil",
+        "robot-faces::ellipse-radius-parameter"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eyebrow-shape",
+      "label": "Eyebrow Shape",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::face-outline",
+        "robot-faces::triangle-eyebrow-shape"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eyebrow-angle-parameter",
+      "label": "Eyebrow Angle Parameter",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::eyebrow-shape"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::mouth-shape",
+      "label": "Mouth Shape",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::face-outline",
+        "robot-faces::ellipse-method",
+        "robot-faces::poly-method"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::mouth-curvature-parameter",
+      "label": "Mouth Curvature Parameter",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::mouth-shape",
+        "robot-faces::quadrant-fill-code"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::bottom-half-mouth-curve",
+      "label": "Bottom-Half Mouth Curve",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::mouth-curvature-parameter",
+        "robot-faces::quadrant-fill-code"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::nose-representation",
+      "label": "Nose Representation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::face-outline",
+        "robot-faces::poly-method"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::facial-symmetry",
+      "label": "Facial Symmetry",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::eye-placement",
+        "robot-faces::eyebrow-shape",
+        "robot-faces::mouth-shape"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::facial-proportion",
+      "label": "Facial Proportion",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::face-outline",
+        "robot-faces::aspect-ratio"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::draw-face-function",
+      "label": "Draw Face Function",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::face-outline",
+        "robot-faces::eye-placement",
+        "robot-faces::pupil",
+        "robot-faces::eyebrow-shape",
+        "robot-faces::mouth-shape",
+        "robot-faces::function-definition"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::parameterized-face-design",
+      "label": "Parameterized Face Design",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::draw-face-function",
+        "robot-faces::function-parameter"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::face-layout-grid",
+      "label": "Face Layout Grid",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::face-outline",
+        "robot-faces::coordinate-plane-quadrant"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::feature-independence",
+      "label": "Feature Independence",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::parameterized-face-design",
+        "robot-faces::face-outline"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eyelid-representation",
+      "label": "Eyelid Representation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::quadrant-fill-code",
+        "robot-faces::eye-placement"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::cheek-representation",
+      "label": "Cheek Representation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::face-outline",
+        "robot-faces::ellipse-method"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::face-state-data-structure",
+      "label": "Face State Data Structure",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::parameterized-face-design",
+        "robot-faces::dictionary-data-structure"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::default-face-parameters",
+      "label": "Default Face Parameters",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::parameterized-face-design",
+        "robot-faces::default-parameter-value"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::feature-scaling-for-screen-size",
+      "label": "Feature Scaling For Screen Size",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::parameterized-face-design",
+        "robot-faces::display-resolution"
+      ],
+      "taxonomy_id": "ANAT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::ekman-universal-emotions",
+      "label": "Ekman Universal Emotions",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::basic-emotion-theory",
+      "label": "Basic Emotion Theory",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ekman-universal-emotions"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::facial-action-coding",
+      "label": "Facial Action Coding",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ekman-universal-emotions"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::minimal-feature-robot-research",
+      "label": "Minimal Feature Robot Research",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::facial-action-coding",
+        "robot-faces::screen-based-robot-face"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::emotion-recognition-accuracy",
+      "label": "Emotion Recognition Accuracy",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::minimal-feature-robot-research"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::neutral-expression",
+      "label": "Neutral Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::draw-face-function",
+        "robot-faces::ekman-universal-emotions"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::happy-expression",
+      "label": "Happy Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::eyebrow-shape",
+        "robot-faces::mouth-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::sad-expression",
+      "label": "Sad Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::eyebrow-shape",
+        "robot-faces::mouth-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::angry-expression",
+      "label": "Angry Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::eyebrow-shape",
+        "robot-faces::mouth-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::afraid-expression",
+      "label": "Afraid Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::eye-placement",
+        "robot-faces::mouth-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::surprised-expression",
+      "label": "Surprised Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::eye-placement",
+        "robot-faces::eyebrow-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::disgusted-expression",
+      "label": "Disgusted Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::mouth-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::contempt-expression",
+      "label": "Contempt Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::mouth-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::tired-expression",
+      "label": "Tired Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::eyelid-representation"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::stern-expression",
+      "label": "Stern Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::eyebrow-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::sleepy-expression",
+      "label": "Sleepy Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::tired-expression",
+        "robot-faces::eyelid-representation"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::confused-expression",
+      "label": "Confused Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::eyebrow-shape"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::excited-expression",
+      "label": "Excited Expression",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::surprised-expression"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::expression-intensity",
+      "label": "Expression Intensity",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::happy-expression",
+        "robot-faces::angry-expression"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::expression-ambiguity",
+      "label": "Expression Ambiguity",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::confused-expression",
+        "robot-faces::expression-intensity"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eyebrow-emotion-signaling",
+      "label": "Eyebrow Emotion Signaling",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::happy-expression",
+        "robot-faces::sad-expression",
+        "robot-faces::angry-expression",
+        "robot-faces::surprised-expression"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::mouth-emotion-signaling",
+      "label": "Mouth Emotion Signaling",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::happy-expression",
+        "robot-faces::sad-expression",
+        "robot-faces::disgusted-expression"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eye-emotion-signaling",
+      "label": "Eye Emotion Signaling",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::afraid-expression",
+        "robot-faces::pupil"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::cross-cultural-recognition",
+      "label": "Cross-Cultural Recognition",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::basic-emotion-theory",
+        "robot-faces::emotion-recognition-accuracy"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::human-robot-interaction",
+      "label": "Human-Robot Interaction",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::social-robot",
+        "robot-faces::minimal-feature-robot-research"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::emotional-design-rubric",
+      "label": "Emotional Design Rubric",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::expression-intensity",
+        "robot-faces::expression-ambiguity"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::viewing-distance-readability",
+      "label": "Viewing Distance Readability",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::display-resolution",
+        "robot-faces::expression-intensity"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::classroom-lighting-consideration",
+      "label": "Classroom Lighting Consideration",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::monochrome-color-model",
+        "robot-faces::viewing-distance-readability"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::valence-arousal-model",
+      "label": "Valence Arousal Model",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::basic-emotion-theory"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::uncanny-valley-effect",
+      "label": "Uncanny Valley Effect",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::anthropomorphism",
+        "robot-faces::social-robot"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::anthropomorphism",
+      "label": "Anthropomorphism",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::social-robot",
+        "robot-faces::emotion-recognition-accuracy"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::affective-computing",
+      "label": "Affective Computing",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::emotion-recognition-accuracy",
+        "robot-faces::human-robot-interaction"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::multimodal-emotion-cues",
+      "label": "Multimodal Emotion Cues",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::eyebrow-emotion-signaling",
+        "robot-faces::mouth-emotion-signaling",
+        "robot-faces::eye-emotion-signaling"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::animation-loop",
+      "label": "Animation Loop",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::draw-face-function",
+        "robot-faces::while-loop"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::frame-rate",
+      "label": "Frame Rate",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::screen-refresh-cycle",
+        "robot-faces::animation-loop"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::blinking-animation",
+      "label": "Blinking Animation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::animation-loop",
+        "robot-faces::eyelid-representation"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::eye-scanner-animation",
+      "label": "Eye Scanner Animation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::animation-loop",
+        "robot-faces::pupil"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::pupil-movement-gaze",
+      "label": "Pupil Movement Gaze",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::animation-loop",
+        "robot-faces::pupil"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::timing-loop",
+      "label": "Timing Loop",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::animation-loop"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::sleep-function-timing",
+      "label": "Sleep Function Timing",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::timing-loop"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::expression-interpolation",
+      "label": "Expression Interpolation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::animation-loop",
+        "robot-faces::expression-intensity"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::easing-function",
+      "label": "Easing Function",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::expression-interpolation"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::idle-animation",
+      "label": "Idle Animation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::blinking-animation",
+        "robot-faces::pupil-movement-gaze"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::animation-state-timer",
+      "label": "Animation State Timer",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::timing-loop",
+        "robot-faces::sleep-function-timing"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::ticks-function-timing",
+      "label": "Ticks Function Timing",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::sleep-function-timing"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::ticks-diff-calculation",
+      "label": "Ticks Diff Calculation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ticks-function-timing"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::draw-time-benchmarking",
+      "label": "Draw Time Benchmarking",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ticks-diff-calculation",
+        "robot-faces::blit-method"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::frame-buffer-redraw-rate",
+      "label": "Frame Buffer Redraw Rate",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-rate",
+        "robot-faces::draw-time-benchmarking"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::flicker-reduction",
+      "label": "Flicker Reduction",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::frame-buffer-redraw-rate"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::double-buffering",
+      "label": "Double Buffering",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::flicker-reduction",
+        "robot-faces::frame-buffer"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::animation-keyframe",
+      "label": "Animation Keyframe",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::expression-interpolation",
+        "robot-faces::animation-state-timer"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::randomized-blink-timing",
+      "label": "Randomized Blink Timing",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::blinking-animation",
+        "robot-faces::sleep-function-timing"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::smooth-transition-design",
+      "label": "Smooth Transition Design",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::expression-interpolation",
+        "robot-faces::easing-function"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::state-based-animation-trigger",
+      "label": "State-Based Animation Trigger",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::idle-animation",
+        "robot-faces::mode-state-machine"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::non-blocking-delay-pattern",
+      "label": "Non-Blocking Delay Pattern",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::sleep-function-timing",
+        "robot-faces::animation-state-timer"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::cooperative-multitasking",
+      "label": "Cooperative Multitasking",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::non-blocking-delay-pattern",
+        "robot-faces::dual-core-processing"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::digital-input-reading",
+      "label": "Digital Input Reading",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::momentary-push-button"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::analog-input-reading",
+      "label": "Analog Input Reading",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::potentiometer"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::analog-to-digital-conversion",
+      "label": "Analog-To-Digital Conversion",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::analog-input-reading"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::button-debounce",
+      "label": "Button Debounce",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::digital-input-reading",
+        "robot-faces::debounce-time-constant"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::button-interrupt-handler",
+      "label": "Button Interrupt Handler",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::digital-input-reading",
+        "robot-faces::event-driven-programming"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::potentiometer-value-mapping",
+      "label": "Potentiometer Value Mapping",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::analog-to-digital-conversion",
+        "robot-faces::function-parameter"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::rotary-encoder-position-tracking",
+      "label": "Rotary Encoder Position Tracking",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rotary-encoder",
+        "robot-faces::encoder-quadrature-signal"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::encoder-direction-detection",
+      "label": "Encoder Direction Detection",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rotary-encoder-position-tracking"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::mode-state-machine",
+      "label": "Mode State Machine",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::global-state-variable",
+        "robot-faces::state-transition-diagram"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::multi-mode-menu",
+      "label": "Multi-Mode Menu",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::mode-state-machine",
+        "robot-faces::expression-selection-menu"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::expression-selection-menu",
+      "label": "Expression Selection Menu",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::neutral-expression",
+        "robot-faces::mode-state-machine"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::live-parameter-tuning",
+      "label": "Live Parameter Tuning",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::potentiometer-value-mapping",
+        "robot-faces::parameterized-face-design",
+        "robot-faces::encoder-direction-detection"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::event-driven-programming",
+      "label": "Event-Driven Programming",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::conditional-statement"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::polling-input-loop",
+      "label": "Polling Input Loop",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::digital-input-reading",
+        "robot-faces::timing-loop"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::dual-core-processing",
+      "label": "Dual-Core Processing",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::microcontroller"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::core-task-assignment",
+      "label": "Core Task Assignment",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::dual-core-processing"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::global-state-variable",
+      "label": "Global State Variable",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::global-versus-local-scope"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::input-debouncing-delay",
+      "label": "Input Debouncing Delay",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::button-debounce",
+        "robot-faces::timing-loop"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::user-interface-feedback",
+      "label": "User Interface Feedback",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::expression-selection-menu",
+        "robot-faces::blinking-animation"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::control-mapping-design",
+      "label": "Control Mapping Design",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::potentiometer-value-mapping",
+        "robot-faces::live-parameter-tuning"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::state-transition-diagram",
+      "label": "State Transition Diagram",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::conditional-statement"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::default-idle-state",
+      "label": "Default Idle State",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::mode-state-machine",
+        "robot-faces::idle-animation"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::debounce-time-constant",
+      "label": "Debounce Time Constant",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::digital-input-reading"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::encoder-quadrature-signal",
+      "label": "Encoder Quadrature Signal",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rotary-encoder"
+      ],
+      "taxonomy_id": "INTER",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::rgb565-color-model",
+      "label": "RGB565 Color Model",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::monochrome-color-model",
+        "robot-faces::bit-depth"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color565-function",
+      "label": "Color565 Function",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rgb565-color-model",
+        "robot-faces::function-parameter"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::red-green-blue-channels",
+      "label": "Red Green Blue Channels",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rgb565-color-model"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-bit-depth",
+      "label": "Color Bit Depth",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rgb565-color-model",
+        "robot-faces::bit-depth"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-palette",
+      "label": "Color Palette",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rgb565-color-model",
+        "robot-faces::blit-palette-mapping"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::named-color-constants",
+      "label": "Named Color Constants",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::color565-function",
+        "robot-faces::constant"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-wheel-function",
+      "label": "Color Wheel Function",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::color565-function",
+        "robot-faces::color-theory-basics"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-cycling-animation",
+      "label": "Color Cycling Animation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::color-wheel-function",
+        "robot-faces::animation-loop"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::round-display-layout",
+      "label": "Round Display Layout",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::circular-display-geometry",
+        "robot-faces::gc9a01-display-driver"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-versus-mono-trade-off",
+      "label": "Color Versus Mono Trade-Off",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rgb565-color-model",
+        "robot-faces::monochrome-color-model"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::display-driver-porting",
+      "label": "Display Driver Porting",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::ssd1306-display-driver",
+        "robot-faces::gc9a01-display-driver",
+        "robot-faces::display-initialization"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::cross-display-code-compatibility",
+      "label": "Cross-Display Code Compatibility",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::display-driver-porting",
+        "robot-faces::parameterized-face-design"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-contrast-design",
+      "label": "Color Contrast Design",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rgb565-color-model",
+        "robot-faces::viewing-distance-readability"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-emotion-association",
+      "label": "Color Emotion Association",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::rgb565-color-model",
+        "robot-faces::emotional-design-rubric"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::display-performance-comparison",
+      "label": "Display Performance Comparison",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::draw-time-benchmarking",
+        "robot-faces::gc9a01-display-driver"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::memory-use-comparison",
+      "label": "Memory Use Comparison",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::display-buffer-memory",
+        "robot-faces::rgb565-color-model"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::spi-bus-speed",
+      "label": "SPI Bus Speed",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::spi-interface",
+        "robot-faces::display-performance-comparison"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-display-init-sequence",
+      "label": "Color Display Init Sequence",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::gc9a01-display-driver",
+        "robot-faces::display-initialization"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::color-theory-basics",
+      "label": "Color Theory Basics",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::red-green-blue-channels"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::warm-versus-cool-color",
+      "label": "Warm Versus Cool Color",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::color-theory-basics"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::hue-saturation-brightness",
+      "label": "Hue Saturation Brightness",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::color-theory-basics"
+      ],
+      "taxonomy_id": "COLOR",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::computational-thinking",
+      "label": "Computational Thinking",
+      "subject_id": "robot-faces",
+      "dependencies": [],
+      "taxonomy_id": "CTCAP",
+      "level": "foundational"
+    },
+    {
+      "id": "robot-faces::abstraction",
+      "label": "Abstraction",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::computational-thinking",
+        "robot-faces::parameterized-face-design"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::decomposition",
+      "label": "Decomposition",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::computational-thinking",
+        "robot-faces::face-outline"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::modularity",
+      "label": "Modularity",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::computational-thinking",
+        "robot-faces::draw-face-function"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::computational-thinking",
+        "robot-faces::expression-intensity"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::algorithm-design",
+      "label": "Algorithm Design",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::computational-thinking",
+        "robot-faces::animation-loop"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::code-reuse",
+      "label": "Code Reuse",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::computational-thinking",
+        "robot-faces::blit-method"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::design-critique",
+      "label": "Design Critique",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::emotional-design-rubric"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::design-trade-off-analysis",
+      "label": "Design Trade-Off Analysis",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::color-versus-mono-trade-off",
+        "robot-faces::hardware-cost-trade-off"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::expressiveness-versus-complexity",
+      "label": "Expressiveness Versus Complexity",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::design-trade-off-analysis",
+        "robot-faces::draw-time-benchmarking"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::software-display-emulator",
+      "label": "Software Display Emulator",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::display-initialization",
+        "robot-faces::micropython-repl"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::turtle-graphics-prototype",
+      "label": "Turtle Graphics Prototype",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::software-display-emulator",
+        "robot-faces::poly-method"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::iterative-design-process",
+      "label": "Iterative Design Process",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::design-critique",
+        "robot-faces::abstraction"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::peer-design-review",
+      "label": "Peer Design Review",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::design-critique"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::rubric-based-assessment",
+      "label": "Rubric-Based Assessment",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::emotional-design-rubric",
+        "robot-faces::peer-design-review"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::constraint-driven-design",
+      "label": "Constraint-Driven Design",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::hardware-cost-trade-off",
+        "robot-faces::expressiveness-versus-complexity"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::minimum-viable-feature-set",
+      "label": "Minimum Viable Feature Set",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::decomposition",
+        "robot-faces::constraint-driven-design"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::draw-face-function",
+        "robot-faces::animation-loop",
+        "robot-faces::mode-state-machine",
+        "robot-faces::color565-function",
+        "robot-faces::design-critique",
+        "robot-faces::minimum-viable-feature-set"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::capstone-demonstration",
+      "label": "Capstone Demonstration",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::capstone-project"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::original-robot-personality",
+      "label": "Original Robot Personality",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::capstone-project",
+        "robot-faces::emotional-design-rubric"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::project-documentation",
+      "label": "Project Documentation",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::capstone-project",
+        "robot-faces::docstring-convention"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::design-justification",
+      "label": "Design Justification",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::capstone-project",
+        "robot-faces::design-critique"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    },
+    {
+      "id": "robot-faces::expression-set-planning",
+      "label": "Expression Set Planning",
+      "subject_id": "robot-faces",
+      "dependencies": [
+        "robot-faces::capstone-project",
+        "robot-faces::multimodal-emotion-cues"
+      ],
+      "taxonomy_id": "CTCAP",
+      "level": "core"
+    }
+  ]
+}

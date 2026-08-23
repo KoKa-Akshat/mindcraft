@@ -1,0 +1,4952 @@
+{
+  "subject_id": "learning-python",
+  "title": "Beginning Python — From Blocks to Code with Monty",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "ENV": {
+      "classifier_name": "Environment & Tools",
+      "color": "SteelBlue"
+    },
+    "SYN": {
+      "classifier_name": "Core Syntax & Output",
+      "color": "DarkSlateBlue"
+    },
+    "DAT": {
+      "classifier_name": "Variables & Data Types",
+      "color": "DarkGreen"
+    },
+    "CTL": {
+      "classifier_name": "Input & Control Flow",
+      "color": "LimeGreen"
+    },
+    "FUN": {
+      "classifier_name": "Functions & Scope",
+      "color": "Gold"
+    },
+    "COL": {
+      "classifier_name": "Collections",
+      "color": "DarkGoldenrod"
+    },
+    "MOD": {
+      "classifier_name": "Modules & Standard Library",
+      "color": "Teal"
+    },
+    "TXT": {
+      "classifier_name": "Text Processing & Regex",
+      "color": "DodgerBlue"
+    },
+    "FIO": {
+      "classifier_name": "File I/O & Data",
+      "color": "LightSkyBlue"
+    },
+    "ERR": {
+      "classifier_name": "Error Handling & Debugging",
+      "color": "Crimson"
+    },
+    "OOP": {
+      "classifier_name": "Object-Oriented Programming",
+      "color": "MediumPurple"
+    },
+    "VIZ": {
+      "classifier_name": "Turtle Graphics & Visualization",
+      "color": "DarkOrchid"
+    },
+    "ALG": {
+      "classifier_name": "Algorithms & Data Structures",
+      "color": "OliveDrab"
+    },
+    "ADV": {
+      "classifier_name": "Advanced & Applied Python",
+      "color": "Orange"
+    }
+  },
+  "concepts": [
+    {
+      "id": "learning-python::python-interpreter-overview",
+      "label": "Python Interpreter Overview",
+      "subject_id": "learning-python",
+      "dependencies": [],
+      "taxonomy_id": "ENV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-python::python-2-vs-python-3",
+      "label": "Python 2 vs Python 3",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::browser-based-python-environments",
+      "label": "Browser-Based Python Environments",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::repl-it-online-ide",
+      "label": "Repl.it Online IDE",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::thonny-beginner-ide",
+      "label": "Thonny Beginner IDE",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::spyder-scientific-ide",
+      "label": "Spyder Scientific IDE",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::vs-code-editor",
+      "label": "VS Code Editor",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::jupyter-notebooks",
+      "label": "Jupyter Notebooks",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::jupyterlab-environment",
+      "label": "JupyterLab Environment",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::jupyter-notebooks"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::conda-package-manager",
+      "label": "Conda Package Manager",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pip-package-installer",
+      "label": "pip Package Installer",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview",
+        "learning-python::conda-package-manager"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::virtual-environments",
+      "label": "Virtual Environments",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::pip-package-installer"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::installing-python-locally",
+      "label": "Installing Python Locally",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview",
+        "learning-python::pip-package-installer"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::running-scripts-from-terminal",
+      "label": "Running Scripts from Terminal",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::installing-python-locally",
+        "learning-python::command-line-basics"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::python-repl-shell",
+      "label": "Python REPL Shell",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::raspberry-pi-python-platform",
+      "label": "Raspberry Pi Python Platform",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview",
+        "learning-python::installing-python-locally"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::skulpt-browser-python",
+      "label": "Skulpt Browser Python",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview",
+        "learning-python::browser-based-python-environments"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::google-colab-environment",
+      "label": "Google Colab Environment",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview",
+        "learning-python::jupyter-notebooks"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::command-line-basics",
+      "label": "Command Line Basics",
+      "subject_id": "learning-python",
+      "dependencies": [],
+      "taxonomy_id": "ENV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-python::file-system-navigation",
+      "label": "File System Navigation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::command-line-basics"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::print-function",
+      "label": "print() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::single-line-comments",
+      "label": "Single-Line Comments",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::multi-line-strings",
+      "label": "Multi-Line Strings",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::indentation-as-syntax",
+      "label": "Indentation as Syntax",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::case-sensitivity",
+      "label": "Case Sensitivity",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::python-keywords",
+      "label": "Python Keywords",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::blank-lines-and-readability",
+      "label": "Blank Lines and Readability",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function",
+        "learning-python::single-line-comments"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::code-block-structure",
+      "label": "Code Block Structure",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::indentation-as-syntax"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::statement-vs-expression",
+      "label": "Statement vs Expression",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::whitespace-rules",
+      "label": "Whitespace Rules",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::indentation-as-syntax"
+      ],
+      "taxonomy_id": "SYN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::variable-definition-and-assignment",
+      "label": "Variable Definition and Assignment",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function",
+        "learning-python::statement-vs-expression"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::variable-naming-rules",
+      "label": "Variable Naming Rules",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::snake-case-convention",
+      "label": "Snake_case Convention",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-naming-rules"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::meaningful-variable-names",
+      "label": "Meaningful Variable Names",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-naming-rules",
+        "learning-python::snake-case-convention"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::multiple-assignment",
+      "label": "Multiple Assignment",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::augmented-assignment-operators",
+      "label": "Augmented Assignment Operators",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment",
+        "learning-python::arithmetic-operators"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::constants-by-convention",
+      "label": "Constants by Convention",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment",
+        "learning-python::snake-case-convention"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::variable-reassignment",
+      "label": "Variable Reassignment",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::swap-two-variables",
+      "label": "Swap Two Variables",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::multiple-assignment",
+        "learning-python::variable-reassignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::naming-conflicts-to-avoid",
+      "label": "Naming Conflicts to Avoid",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-naming-rules",
+        "learning-python::python-keywords"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::integer-type",
+      "label": "Integer Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::float-type",
+      "label": "Float Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::division-returns-float",
+      "label": "Division Returns Float",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::integer-division-operator",
+      "label": "Integer Division Operator",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::integer-type",
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::modulo-operator",
+      "label": "Modulo Operator",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::exponentiation-operator",
+      "label": "Exponentiation Operator",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::arithmetic-operators",
+      "label": "Arithmetic Operators",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::integer-type",
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::order-of-operations",
+      "label": "Order of Operations",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::arithmetic-operators"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::negative-numbers",
+      "label": "Negative Numbers",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::scientific-notation-floats",
+      "label": "Scientific Notation Floats",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::boolean-type",
+      "label": "Boolean Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::comparison-operators",
+      "label": "Comparison Operators",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::integer-type",
+        "learning-python::boolean-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::logical-operators",
+      "label": "Logical Operators",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::boolean-type",
+        "learning-python::comparison-operators"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::truthiness-and-falsiness",
+      "label": "Truthiness and Falsiness",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::boolean-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::short-circuit-evaluation",
+      "label": "Short-Circuit Evaluation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::logical-operators"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::boolean-in-conditions",
+      "label": "Boolean in Conditions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::boolean-type",
+        "learning-python::if-statement"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::chained-comparisons",
+      "label": "Chained Comparisons",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::comparison-operators",
+        "learning-python::logical-operators"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-type",
+      "label": "String Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::single-vs-double-quotes",
+      "label": "Single vs Double Quotes",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-concatenation",
+      "label": "String Concatenation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-repetition",
+      "label": "String Repetition",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-indexing",
+      "label": "String Indexing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-slicing",
+      "label": "String Slicing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-indexing"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::escape-characters",
+      "label": "Escape Characters",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-length-with-len",
+      "label": "String Length with len()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-lower-upper-strip",
+      "label": "String lower() upper() strip()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-split-join-replace",
+      "label": "String split() join() replace()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-startswith-endswith-find",
+      "label": "String startswith() endswith() find()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-isdigit-isalpha-isalnum",
+      "label": "String isdigit() isalpha() isalnum()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-format-method",
+      "label": "String format() Method",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type",
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::f-strings",
+      "label": "f-Strings",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type",
+        "learning-python::variable-definition-and-assignment",
+        "learning-python::string-format-method"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-immutability",
+      "label": "String Immutability",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::raw-strings",
+      "label": "Raw Strings",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type",
+        "learning-python::escape-characters"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-comparison",
+      "label": "String Comparison",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type",
+        "learning-python::comparison-operators"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::multiline-string-formatting",
+      "label": "Multiline String Formatting",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::multi-line-strings",
+        "learning-python::f-strings"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::none-value-and-nonetype",
+      "label": "None Value and NoneType",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::functions-returning-none",
+      "label": "Functions Returning None",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::functions-returning-none-121",
+        "learning-python::none-value-and-nonetype"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::checking-for-none-with-is",
+      "label": "Checking for None with is",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::none-value-and-nonetype",
+        "learning-python::comparison-operators"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::int-conversion",
+      "label": "int() Conversion",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::integer-type",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::float-conversion",
+      "label": "float() Conversion",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::float-type",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::str-conversion",
+      "label": "str() Conversion",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::bool-conversion",
+      "label": "bool() Conversion",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::boolean-type",
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::type-function",
+      "label": "type() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::isinstance-function",
+      "label": "isinstance() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::type-function",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::implicit-vs-explicit-conversion",
+      "label": "Implicit vs Explicit Conversion",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::int-conversion",
+        "learning-python::float-conversion",
+        "learning-python::str-conversion"
+      ],
+      "taxonomy_id": "DAT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::input-function",
+      "label": "input() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::prompting-the-user",
+      "label": "Prompting the User",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::input-function",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::converting-input-to-numbers",
+      "label": "Converting Input to Numbers",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::input-function",
+        "learning-python::int-conversion",
+        "learning-python::float-conversion"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::input-validation-basics",
+      "label": "Input Validation Basics",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::input-function",
+        "learning-python::if-statement"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::reading-multiple-inputs",
+      "label": "Reading Multiple Inputs",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::input-function",
+        "learning-python::multiple-assignment"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::strip-whitespace-from-input",
+      "label": "Strip Whitespace from Input",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::input-function",
+        "learning-python::string-lower-upper-strip"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::if-statement",
+      "label": "if Statement",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::boolean-type",
+        "learning-python::indentation-as-syntax",
+        "learning-python::code-block-structure"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::if-else-block",
+      "label": "if...else Block",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::if-statement"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::elif-chains",
+      "label": "elif Chains",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::if-else-block"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::nested-if-statements",
+      "label": "Nested if Statements",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::if-else-block"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::conditional-ternary-expression",
+      "label": "Conditional Ternary Expression",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::if-statement",
+        "learning-python::boolean-type"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::match-case-statement",
+      "label": "match/case Statement",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::if-statement",
+        "learning-python::elif-chains"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::truthiness-in-conditions",
+      "label": "Truthiness in Conditions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::truthiness-and-falsiness",
+        "learning-python::if-statement"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::compound-conditions",
+      "label": "Compound Conditions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::logical-operators",
+        "learning-python::if-statement"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::for-loop-over-sequence",
+      "label": "for Loop over Sequence",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::indentation-as-syntax",
+        "learning-python::code-block-structure"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::for-loop-with-range",
+      "label": "for Loop with range()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::range-with-start-stop-step",
+      "label": "Range with Start Stop Step",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-with-range",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::while-loop",
+      "label": "while Loop",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::indentation-as-syntax",
+        "learning-python::code-block-structure",
+        "learning-python::boolean-type"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::break-statement",
+      "label": "break Statement",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::while-loop"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::continue-statement",
+      "label": "continue Statement",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::while-loop"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::else-clause-on-loops",
+      "label": "else Clause on Loops",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::while-loop"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::nested-loops",
+      "label": "Nested Loops",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::loop-counter-variable"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::loop-counter-variable",
+      "label": "Loop Counter Variable",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::infinite-loops-to-avoid",
+      "label": "Infinite Loops to Avoid",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::while-loop",
+        "learning-python::break-statement"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::enumerate-function",
+      "label": "enumerate() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::zip-function",
+      "label": "zip() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::loop-accumulator-pattern",
+      "label": "Loop Accumulator Pattern",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::loop-with-list-building",
+      "label": "Loop with List Building",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::creating-a-list"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::countdown-loop",
+      "label": "Countdown Loop",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-with-range",
+        "learning-python::range-with-start-stop-step"
+      ],
+      "taxonomy_id": "CTL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::defining-a-function-with-def",
+      "label": "Defining a Function with def",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::indentation-as-syntax",
+        "learning-python::code-block-structure",
+        "learning-python::print-function"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::calling-a-function",
+      "label": "Calling a Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::positional-parameters",
+      "label": "Positional Parameters",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::default-parameter-values",
+      "label": "Default Parameter Values",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::positional-parameters"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::keyword-arguments",
+      "label": "Keyword Arguments",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::positional-parameters"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::return-statement",
+      "label": "return Statement",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::functions-returning-none-121",
+      "label": "Functions Returning None",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::none-value-and-nonetype"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::local-scope",
+      "label": "Local Scope",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::global-scope",
+      "label": "Global Scope",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment",
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::global-keyword",
+      "label": "global Keyword",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::global-scope",
+        "learning-python::local-scope"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::nonlocal-keyword",
+      "label": "nonlocal Keyword",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::local-scope",
+        "learning-python::nested-functions"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::docstrings",
+      "label": "Docstrings",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::multi-line-strings"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pure-functions-vs-side-effects",
+      "label": "Pure Functions vs Side Effects",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::return-statement"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::recursion-concept",
+      "label": "Recursion Concept",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::calling-a-function"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::recursion-base-case",
+      "label": "Recursion Base Case",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::recursion-concept"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::recursion-depth-and-stack",
+      "label": "Recursion Depth and Stack",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::recursion-concept",
+        "learning-python::recursion-base-case"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::lambda-functions",
+      "label": "Lambda Functions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::calling-a-function"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::variable-number-of-arguments-args",
+      "label": "Variable Number of Arguments *args",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::keyword-variable-arguments-kwargs",
+      "label": "Keyword Variable Arguments **kwargs",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::dictionary-type"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::function-as-argument",
+      "label": "Function as Argument",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::lambda-functions",
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::nested-functions",
+      "label": "Nested Functions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::local-scope"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::returning-multiple-values",
+      "label": "Returning Multiple Values",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::return-statement",
+        "learning-python::tuple-type"
+      ],
+      "taxonomy_id": "FUN",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-type",
+      "label": "List Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::creating-a-list",
+      "label": "Creating a List",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-indexing",
+      "label": "List Indexing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::negative-indexing",
+      "label": "Negative Indexing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-indexing"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-slicing",
+      "label": "List Slicing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-indexing",
+        "learning-python::string-slicing"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::len-for-lists",
+      "label": "len() for Lists",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-append-insert-extend",
+      "label": "List append() insert() extend()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-remove-pop-clear",
+      "label": "List remove() pop() clear()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-sort-reverse-copy",
+      "label": "List sort() reverse() copy()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::comparison-operators"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-index-count",
+      "label": "List index() count()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::membership-with-in-operator",
+      "label": "Membership with in Operator",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-concatenation-and-repetition",
+      "label": "List Concatenation and Repetition",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::string-concatenation",
+        "learning-python::string-repetition"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::iterating-over-a-list",
+      "label": "Iterating over a List",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::nested-lists",
+      "label": "Nested Lists",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::list-indexing"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-comprehensions",
+      "label": "List Comprehensions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::list-type",
+        "learning-python::iterating-over-a-list"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::mutable-vs-immutable-types",
+      "label": "Mutable vs Immutable Types",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-as-stack",
+      "label": "List as Stack",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::list-append-insert-extend",
+        "learning-python::list-remove-pop-clear"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-as-queue",
+      "label": "List as Queue",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::list-append-insert-extend",
+        "learning-python::list-remove-pop-clear"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::tuple-type",
+      "label": "Tuple Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::creating-a-tuple",
+      "label": "Creating a Tuple",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::tuple-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::tuple-indexing-and-slicing",
+      "label": "Tuple Indexing and Slicing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-tuple",
+        "learning-python::list-indexing",
+        "learning-python::list-slicing"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::tuple-unpacking",
+      "label": "Tuple Unpacking",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-tuple",
+        "learning-python::multiple-assignment"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::tuples-vs-lists",
+      "label": "Tuples vs Lists",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::tuple-type",
+        "learning-python::list-type",
+        "learning-python::mutable-vs-immutable-types"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::single-element-tuple-syntax",
+      "label": "Single-Element Tuple Syntax",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-tuple"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::named-tuple-concept",
+      "label": "Named Tuple Concept",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::tuple-type",
+        "learning-python::dictionary-type",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::tuple-as-return-value",
+      "label": "Tuple as Return Value",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-tuple",
+        "learning-python::return-statement"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dictionary-type",
+      "label": "Dictionary Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::creating-a-dictionary",
+      "label": "Creating a Dictionary",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dictionary-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::accessing-values-by-key",
+      "label": "Accessing Values by Key",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dictionary-type",
+        "learning-python::creating-a-dictionary"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dict-get-method",
+      "label": "dict get() Method",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::accessing-values-by-key",
+        "learning-python::dictionary-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::adding-and-updating-key-value-pairs",
+      "label": "Adding and Updating Key-Value Pairs",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-dictionary",
+        "learning-python::accessing-values-by-key"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::removing-entries-pop-del",
+      "label": "Removing Entries pop() del",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-dictionary",
+        "learning-python::list-remove-pop-clear"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dictionary-keys-values-items",
+      "label": "Dictionary keys() values() items()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-dictionary"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::iterating-over-a-dictionary",
+      "label": "Iterating over a Dictionary",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::creating-a-dictionary",
+        "learning-python::dictionary-keys-values-items"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::key-membership-with-in",
+      "label": "Key Membership with in",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::membership-with-in-operator",
+        "learning-python::dictionary-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::nested-dictionaries",
+      "label": "Nested Dictionaries",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dictionary-type",
+        "learning-python::nested-lists"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dictionary-comprehensions",
+      "label": "Dictionary Comprehensions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-comprehensions",
+        "learning-python::dictionary-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::default-dictionary-pattern",
+      "label": "Default Dictionary Pattern",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dictionary-type",
+        "learning-python::default-parameter-values"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dictionary-from-two-lists-with-zip",
+      "label": "Dictionary from Two Lists with zip()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::zip-function",
+        "learning-python::dictionary-type",
+        "learning-python::creating-a-list"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::set-type",
+      "label": "Set Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::creating-a-set",
+      "label": "Creating a Set",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::set-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::set-union-intersection-difference",
+      "label": "Set Union Intersection Difference",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::set-type",
+        "learning-python::creating-a-set"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::set-add-remove-discard",
+      "label": "Set add() remove() discard()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-set"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::set-membership-with-in",
+      "label": "Set Membership with in",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-set",
+        "learning-python::membership-with-in-operator"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::frozensets",
+      "label": "Frozensets",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::set-type",
+        "learning-python::string-immutability"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::print-output-function",
+      "label": "print() Output Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::input-read-input",
+      "label": "input() Read Input",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::input-function"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::len-sequence-length",
+      "label": "len() Sequence Length",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-length-with-len",
+        "learning-python::len-for-lists"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::range-number-sequence",
+      "label": "range() Number Sequence",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::range-with-start-stop-step"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::type-get-object-type",
+      "label": "type() Get Object Type",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::type-function"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::int-float-str-bool-conversions",
+      "label": "int() float() str() bool() Conversions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::int-conversion",
+        "learning-python::float-conversion",
+        "learning-python::str-conversion",
+        "learning-python::bool-conversion"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-tuple-set-dict-constructors",
+      "label": "list() tuple() set() dict() Constructors",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-list",
+        "learning-python::creating-a-tuple",
+        "learning-python::creating-a-set",
+        "learning-python::creating-a-dictionary"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::max-min-functions",
+      "label": "max() min() Functions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::sum-function",
+      "label": "sum() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::abs-absolute-value",
+      "label": "abs() Absolute Value",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::round-function",
+      "label": "round() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::float-type",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::sorted-function",
+      "label": "sorted() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::list-sort-reverse-copy",
+        "learning-python::comparison-operators"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::reversed-function",
+      "label": "reversed() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::enumerate-with-index",
+      "label": "enumerate() with Index",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-over-sequence",
+        "learning-python::enumerate-function"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::zip-combine-iterables",
+      "label": "zip() Combine Iterables",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::zip-function"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::map-apply-function",
+      "label": "map() Apply Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::list-type",
+        "learning-python::function-as-argument"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::filter-filter-items",
+      "label": "filter() Filter Items",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::list-type",
+        "learning-python::function-as-argument"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dir-list-attributes",
+      "label": "dir() List Attributes",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::help-documentation",
+      "label": "help() Documentation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dir-list-attributes"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::id-object-identity",
+      "label": "id() Object Identity",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::hash-function",
+      "label": "hash() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dictionary-type",
+        "learning-python::set-type",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::any-and-all-functions",
+      "label": "any() and all() Functions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::boolean-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::chr-and-ord-functions",
+      "label": "chr() and ord() Functions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-type",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::import-statement",
+      "label": "import Statement",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::from-import-specific-names",
+      "label": "from...import Specific Names",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::import-as-alias",
+      "label": "import...as Alias",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::from-import-star",
+      "label": "from...import Star",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::from-import-specific-names"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::creating-custom-modules",
+      "label": "Creating Custom Modules",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::import-statement"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::name-main-guard",
+      "label": "__name__ == \"__main__\" Guard",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-custom-modules",
+        "learning-python::import-statement"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::standard-library-overview",
+      "label": "Standard Library Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::module-search-path",
+      "label": "Module Search Path",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::file-system-navigation"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::reloading-a-module",
+      "label": "Reloading a Module",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::random-module-overview",
+      "label": "random Module Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::random-randint",
+      "label": "random.randint()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::random-module-overview",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::random-choice",
+      "label": "random.choice()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::random-module-overview",
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::random-shuffle",
+      "label": "random.shuffle()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::random-module-overview",
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::random-seed",
+      "label": "random.seed()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::random-module-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::random-random-float",
+      "label": "random.random() Float",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::random-module-overview",
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::random-sample",
+      "label": "random.sample()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::random-module-overview",
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::math-module-overview",
+      "label": "math Module Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::math-sqrt-floor-ceil",
+      "label": "math.sqrt() floor() ceil()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::math-module-overview",
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::math-sin-cos-pi",
+      "label": "math.sin() cos() pi",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::math-module-overview",
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::math-radians-degrees",
+      "label": "math.radians() degrees()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::math-module-overview",
+        "learning-python::math-sin-cos-pi"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::math-log-exp",
+      "label": "math.log() exp()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::math-module-overview",
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::math-factorial",
+      "label": "math.factorial()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::math-module-overview",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-module-constants",
+      "label": "string Module Constants",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::time-module-overview",
+      "label": "time Module Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::time-sleep",
+      "label": "time.sleep()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::time-module-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::sys-module",
+      "label": "sys Module",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::sys-path-search-path",
+      "label": "sys.path Search Path",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sys-module",
+        "learning-python::module-search-path"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::os-module",
+      "label": "os Module",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::os-path-operations",
+      "label": "os.path Operations",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::os-module",
+        "learning-python::file-system-navigation"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::json-module-overview",
+      "label": "json Module Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::json-loads-json-dumps",
+      "label": "json.loads() json.dumps()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::json-module-overview",
+        "learning-python::dictionary-type",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::json-load-json-dump",
+      "label": "json.load() json.dump()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::json-module-overview",
+        "learning-python::open-function",
+        "learning-python::with-statement-context-manager"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::csv-module-basics",
+      "label": "csv Module Basics",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview",
+        "learning-python::csv-file-reading"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::datetime-module-basics",
+      "label": "datetime Module Basics",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::collections-module",
+      "label": "collections Module",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview",
+        "learning-python::dictionary-type"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::itertools-module-overview",
+      "label": "itertools Module Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview",
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "MOD",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::re-module-import",
+      "label": "re Module Import",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::re-search-first-match",
+      "label": "re.search() First Match",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::re-module-import",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::re-findall-all-matches",
+      "label": "re.findall() All Matches",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::re-search-first-match"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::re-split-split-by-pattern",
+      "label": "re.split() Split by Pattern",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::re-module-import",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::re-sub-substitute-matches",
+      "label": "re.sub() Substitute Matches",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::re-module-import",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::digit-word-whitespace-patterns",
+      "label": "Digit Word Whitespace Patterns",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::re-module-import"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::anchors-start-and-end",
+      "label": "Anchors Start and End",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::re-module-import",
+        "learning-python::digit-word-whitespace-patterns"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::character-classes",
+      "label": "Character Classes",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::digit-word-whitespace-patterns"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::quantifiers-plus-star-question",
+      "label": "Quantifiers Plus Star Question",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::digit-word-whitespace-patterns"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::alternation-with-pipe",
+      "label": "Alternation with Pipe",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::digit-word-whitespace-patterns"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::escaping-special-characters",
+      "label": "Escaping Special Characters",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::escape-characters",
+        "learning-python::digit-word-whitespace-patterns"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::raw-strings-for-regex",
+      "label": "Raw Strings for Regex",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::raw-strings",
+        "learning-python::digit-word-whitespace-patterns"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::regex-groups-with-parentheses",
+      "label": "Regex Groups with Parentheses",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::digit-word-whitespace-patterns",
+        "learning-python::creating-a-tuple"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::compiled-regex-patterns",
+      "label": "Compiled Regex Patterns",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::re-module-import"
+      ],
+      "taxonomy_id": "TXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::open-function",
+      "label": "open() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::file-system-navigation"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::file-modes-r-w-a-b",
+      "label": "File Modes r w a b",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::file-read",
+      "label": "file.read()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function",
+        "learning-python::file-modes-r-w-a-b"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::file-readlines",
+      "label": "file.readlines()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function",
+        "learning-python::file-modes-r-w-a-b"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::file-readline",
+      "label": "file.readline()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function",
+        "learning-python::file-modes-r-w-a-b"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::file-write",
+      "label": "file.write()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function",
+        "learning-python::file-modes-r-w-a-b"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::file-close",
+      "label": "file.close()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::with-statement-context-manager",
+      "label": "with Statement Context Manager",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function",
+        "learning-python::file-close"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::iterating-over-file-lines",
+      "label": "Iterating over File Lines",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::with-statement-context-manager",
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::text-processing-strip-lower",
+      "label": "Text Processing strip() lower()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::string-lower-upper-strip",
+        "learning-python::iterating-over-file-lines"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::csv-file-reading",
+      "label": "CSV File Reading",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function",
+        "learning-python::with-statement-context-manager",
+        "learning-python::string-split-join-replace"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::csv-file-writing",
+      "label": "CSV File Writing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::open-function",
+        "learning-python::with-statement-context-manager",
+        "learning-python::file-write"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::reading-json-from-file",
+      "label": "Reading JSON from File",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::json-module-overview",
+        "learning-python::with-statement-context-manager",
+        "learning-python::json-loads-json-dumps"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::writing-json-to-file",
+      "label": "Writing JSON to File",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::json-module-overview",
+        "learning-python::with-statement-context-manager",
+        "learning-python::file-write"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::file-path-handling",
+      "label": "File Path Handling",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::os-module",
+        "learning-python::os-path-operations",
+        "learning-python::file-system-navigation"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::checking-if-file-exists",
+      "label": "Checking if File Exists",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::os-module",
+        "learning-python::os-path-operations"
+      ],
+      "taxonomy_id": "FIO",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::syntax-vs-runtime-vs-logic-errors",
+      "label": "Syntax vs Runtime vs Logic Errors",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function",
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::common-exception-types",
+      "label": "Common Exception Types",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::syntax-vs-runtime-vs-logic-errors"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::reading-a-traceback",
+      "label": "Reading a Traceback",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::common-exception-types"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::try-except-block",
+      "label": "try...except Block",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::common-exception-types"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::catching-specific-exceptions",
+      "label": "Catching Specific Exceptions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::try-except-block",
+        "learning-python::common-exception-types"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::else-clause-in-try-except",
+      "label": "else Clause in try/except",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::try-except-block",
+        "learning-python::if-else-block"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::finally-clause",
+      "label": "finally Clause",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::try-except-block"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::raise-statement",
+      "label": "raise Statement",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::try-except-block",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::assert-statement",
+      "label": "assert Statement",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::boolean-type",
+        "learning-python::comparison-operators"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::debugging-with-print",
+      "label": "Debugging with print()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::print-function",
+        "learning-python::syntax-vs-runtime-vs-logic-errors"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::using-search-engines-to-debug",
+      "label": "Using Search Engines to Debug",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::syntax-vs-runtime-vs-logic-errors"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::exception-hierarchy",
+      "label": "Exception Hierarchy",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::common-exception-types",
+        "learning-python::objects-and-classes-overview",
+        "learning-python::inheritance-basics"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::custom-exception-classes",
+      "label": "Custom Exception Classes",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::objects-and-classes-overview",
+        "learning-python::raise-statement",
+        "learning-python::exception-hierarchy"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::exception-chaining",
+      "label": "Exception Chaining",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::raise-statement",
+        "learning-python::custom-exception-classes"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::objects-and-classes-overview",
+      "label": "Objects and Classes Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-definition-and-assignment",
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::attributes-of-an-object",
+      "label": "Attributes of an Object",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::methods-of-an-object",
+      "label": "Methods of an Object",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::objects-and-classes-overview",
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::class-keyword",
+      "label": "class Keyword",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::init-constructor",
+      "label": "__init__() Constructor",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::class-keyword",
+        "learning-python::positional-parameters"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::self-parameter",
+      "label": "self Parameter",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::init-constructor"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::creating-class-instances",
+      "label": "Creating Class Instances",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::class-keyword",
+        "learning-python::init-constructor",
+        "learning-python::calling-a-function"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::accessing-attributes-and-methods",
+      "label": "Accessing Attributes and Methods",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-class-instances",
+        "learning-python::attributes-of-an-object",
+        "learning-python::methods-of-an-object"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::string-methods-as-oop-examples",
+      "label": "String Methods as OOP Examples",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::methods-of-an-object",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::list-methods-as-oop-examples",
+      "label": "List Methods as OOP Examples",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::methods-of-an-object",
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::inheritance-basics",
+      "label": "Inheritance Basics",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::class-keyword",
+        "learning-python::creating-class-instances"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::str-string-representation",
+      "label": "__str__() String Representation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::methods-of-an-object",
+        "learning-python::class-keyword",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::repr-developer-representation",
+      "label": "__repr__() Developer Representation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::str-string-representation",
+        "learning-python::class-keyword"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::subclasses-and-method-overriding",
+      "label": "Subclasses and Method Overriding",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::inheritance-basics",
+        "learning-python::methods-of-an-object"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::super-function",
+      "label": "super() Function",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::subclasses-and-method-overriding",
+        "learning-python::inheritance-basics"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::class-variables-vs-instance-variables",
+      "label": "Class Variables vs Instance Variables",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::class-keyword",
+        "learning-python::attributes-of-an-object",
+        "learning-python::variable-definition-and-assignment"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::static-methods",
+      "label": "Static Methods",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::methods-of-an-object",
+        "learning-python::class-keyword"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::properties-with-property",
+      "label": "Properties with @property",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::methods-of-an-object",
+        "learning-python::class-keyword"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dunder-methods-overview",
+      "label": "Dunder Methods Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::methods-of-an-object",
+        "learning-python::class-keyword",
+        "learning-python::str-string-representation",
+        "learning-python::repr-developer-representation"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::object-composition",
+      "label": "Object Composition",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::objects-and-classes-overview",
+        "learning-python::creating-class-instances",
+        "learning-python::inheritance-basics"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::import-turtle",
+      "label": "import turtle",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::turtle-turtle-object",
+      "label": "turtle.Turtle() Object",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-turtle",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::turtle-screen-object",
+      "label": "turtle.Screen() Object",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-turtle",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::screen-setup-and-bgcolor",
+      "label": "Screen Setup and bgcolor()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-screen-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::movement-forward-backward",
+      "label": "Movement forward() backward()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::turning-left-right",
+      "label": "Turning left() right()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::absolute-positioning-goto",
+      "label": "Absolute Positioning goto()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object",
+        "learning-python::movement-forward-backward"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pen-control-penup-pendown",
+      "label": "Pen Control penup() pendown()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pen-size-and-color",
+      "label": "Pen Size and Color",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object",
+        "learning-python::named-colors"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::fill-begin-fill-end-fill",
+      "label": "Fill begin_fill() end_fill()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object",
+        "learning-python::pen-size-and-color"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::drawing-circle-and-polygons",
+      "label": "Drawing circle() and Polygons",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object",
+        "learning-python::movement-forward-backward",
+        "learning-python::for-loop-with-range"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::turtle-appearance-shape",
+      "label": "Turtle Appearance shape()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::hiding-and-showing-turtle",
+      "label": "Hiding and Showing Turtle",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::writing-text-with-turtle-write",
+      "label": "Writing Text with turtle.write()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::clearing-and-resetting",
+      "label": "Clearing and Resetting",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object",
+        "learning-python::turtle-screen-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::position-query-xcor-ycor",
+      "label": "Position Query xcor() ycor()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::speed-control-speed",
+      "label": "Speed Control speed()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::setheading-direction",
+      "label": "setheading() Direction",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object",
+        "learning-python::turning-left-right"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::onscreenclick-event-handler",
+      "label": "onscreenclick() Event Handler",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-screen-object",
+        "learning-python::mouse-click-event-handlers"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::animation-with-turtle-loops",
+      "label": "Animation with Turtle Loops",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::movement-forward-backward",
+        "learning-python::for-loop-with-range",
+        "learning-python::time-sleep"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::color-picker-with-turtle",
+      "label": "Color Picker with Turtle",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::pen-size-and-color",
+        "learning-python::onscreenclick-event-handler",
+        "learning-python::dictionary-type"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::fractals-with-recursion-and-turtle",
+      "label": "Fractals with Recursion and Turtle",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::recursion-concept",
+        "learning-python::recursion-base-case",
+        "learning-python::movement-forward-backward"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::sine-wave-with-turtle-and-math",
+      "label": "Sine Wave with Turtle and Math",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::movement-forward-backward",
+        "learning-python::math-sin-cos-pi",
+        "learning-python::math-radians-degrees",
+        "learning-python::for-loop-with-range"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::drawing-star-patterns",
+      "label": "Drawing Star Patterns",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::movement-forward-backward",
+        "learning-python::turning-left-right",
+        "learning-python::for-loop-with-range"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::turtle-race-simulation",
+      "label": "Turtle Race Simulation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::turtle-turtle-object",
+        "learning-python::random-randint",
+        "learning-python::for-loop-with-range"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::maze-visualization-with-turtle",
+      "label": "Maze Visualization with Turtle",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::bfs-for-path-finding",
+        "learning-python::movement-forward-backward"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::matplotlib-library-overview",
+      "label": "matplotlib Library Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::import-matplotlib-pyplot-as-plt",
+      "label": "import matplotlib.pyplot as plt",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::matplotlib-library-overview"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plt-plot-line-plot",
+      "label": "plt.plot() Line Plot",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt",
+        "learning-python::creating-a-list"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plt-show-display",
+      "label": "plt.show() Display",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plot-title-and-axis-labels",
+      "label": "Plot Title and Axis Labels",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plt-grid-grid-lines",
+      "label": "plt.grid() Grid Lines",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plotting-a-sine-wave",
+      "label": "Plotting a Sine Wave",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::plt-plot-line-plot",
+        "learning-python::math-sin-cos-pi",
+        "learning-python::import-numpy-as-np"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::lists-as-xy-plot-data",
+      "label": "Lists as XY Plot Data",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::creating-a-list",
+        "learning-python::plt-plot-line-plot"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plt-scatter-scatter-plot",
+      "label": "plt.scatter() Scatter Plot",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt",
+        "learning-python::creating-a-list"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plt-bar-bar-chart",
+      "label": "plt.bar() Bar Chart",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt",
+        "learning-python::creating-a-list"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plt-hist-histogram",
+      "label": "plt.hist() Histogram",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt",
+        "learning-python::creating-a-list"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plt-legend-legend",
+      "label": "plt.legend() Legend",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt",
+        "learning-python::string-type"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::plt-savefig-save-plot",
+      "label": "plt.savefig() Save Plot",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt",
+        "learning-python::file-system-navigation"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::multiple-lines-on-one-plot",
+      "label": "Multiple Lines on One Plot",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::plt-plot-line-plot",
+        "learning-python::list-concatenation-and-repetition"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::subplots-with-plt-subplot",
+      "label": "Subplots with plt.subplot()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-matplotlib-pyplot-as-plt",
+        "learning-python::nested-loops"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::numpy-library-overview",
+      "label": "numpy Library Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::import-numpy-as-np",
+      "label": "import numpy as np",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::numpy-library-overview"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::np-array-creating-arrays",
+      "label": "np.array() Creating Arrays",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-numpy-as-np",
+        "learning-python::creating-a-list"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::np-argmax-index-of-max",
+      "label": "np.argmax() Index of Max",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::np-array-creating-arrays"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::array-operations-and-broadcasting",
+      "label": "Array Operations and Broadcasting",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::np-array-creating-arrays",
+        "learning-python::arithmetic-operators"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::reshaping-arrays",
+      "label": "Reshaping Arrays",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::np-array-creating-arrays"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::np-zeros-np-ones",
+      "label": "np.zeros() np.ones()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-numpy-as-np",
+        "learning-python::np-array-creating-arrays"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::np-linspace-evenly-spaced-values",
+      "label": "np.linspace() Evenly Spaced Values",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-numpy-as-np",
+        "learning-python::range-with-start-stop-step"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::array-slicing-and-indexing",
+      "label": "Array Slicing and Indexing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::np-array-creating-arrays",
+        "learning-python::list-slicing"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::element-wise-math-operations",
+      "label": "Element-wise Math Operations",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::array-operations-and-broadcasting",
+        "learning-python::arithmetic-operators"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::np-mean-np-std",
+      "label": "np.mean() np.std()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::np-array-creating-arrays",
+        "learning-python::sum-function"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pil-pillow-library-overview",
+      "label": "PIL Pillow Library Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::image-open-open-image",
+      "label": "Image.open() Open Image",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::pil-pillow-library-overview",
+        "learning-python::open-function"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::image-show-display-image",
+      "label": "image.show() Display Image",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::image-open-open-image"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pixel-data-and-image-arrays",
+      "label": "Pixel Data and Image Arrays",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::image-open-open-image",
+        "learning-python::np-array-creating-arrays"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::image-resize-and-crop",
+      "label": "Image Resize and Crop",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::image-open-open-image"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::image-color-conversion",
+      "label": "Image Color Conversion",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::image-open-open-image",
+        "learning-python::color-in-turtle-graphics"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::saving-images",
+      "label": "Saving Images",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::image-open-open-image",
+        "learning-python::file-system-navigation"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::abstract-data-types-overview",
+      "label": "Abstract Data Types Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::objects-and-classes-overview",
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::stack-lifo-structure",
+      "label": "Stack LIFO Structure",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::list-as-stack"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::queue-fifo-structure",
+      "label": "Queue FIFO Structure",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::list-as-queue"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::queue-enqueue-dequeue",
+      "label": "Queue enqueue() dequeue()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::queue-fifo-structure",
+        "learning-python::list-append-insert-extend",
+        "learning-python::list-remove-pop-clear"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::graph-nodes-and-edges",
+      "label": "Graph Nodes and Edges",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::abstract-data-types-overview"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::adjacency-list-representation",
+      "label": "Adjacency List Representation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::graph-nodes-and-edges",
+        "learning-python::dictionary-type",
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::breadth-first-search-bfs",
+      "label": "Breadth-First Search BFS",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::adjacency-list-representation",
+        "learning-python::queue-fifo-structure",
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::bfs-color-tracking",
+      "label": "BFS Color Tracking",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::breadth-first-search-bfs",
+        "learning-python::dictionary-type"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::bfs-for-path-finding",
+      "label": "BFS for Path Finding",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::breadth-first-search-bfs",
+        "learning-python::bfs-color-tracking"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::depth-first-search-dfs",
+      "label": "Depth-First Search DFS",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::adjacency-list-representation",
+        "learning-python::stack-lifo-structure",
+        "learning-python::recursion-concept"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dfs-with-recursion",
+      "label": "DFS with Recursion",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::depth-first-search-dfs",
+        "learning-python::recursion-concept",
+        "learning-python::recursion-base-case"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dfs-and-bfs-for-maze-solving",
+      "label": "DFS and BFS for Maze Solving",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::bfs-for-path-finding",
+        "learning-python::dfs-with-recursion"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::sorting-algorithms-overview",
+      "label": "Sorting Algorithms Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::list-type",
+        "learning-python::list-sort-reverse-copy"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::bubble-sort",
+      "label": "Bubble Sort",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sorting-algorithms-overview",
+        "learning-python::for-loop-over-sequence",
+        "learning-python::nested-loops"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::selection-sort",
+      "label": "Selection Sort",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sorting-algorithms-overview",
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::insertion-sort",
+      "label": "Insertion Sort",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sorting-algorithms-overview",
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::binary-search-concept",
+      "label": "Binary Search Concept",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sorting-algorithms-overview",
+        "learning-python::list-type",
+        "learning-python::range-with-start-stop-step"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::time-complexity-big-o-overview",
+      "label": "Time Complexity Big-O Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sorting-algorithms-overview",
+        "learning-python::binary-search-concept"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::space-complexity-overview",
+      "label": "Space Complexity Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::time-complexity-big-o-overview",
+        "learning-python::recursion-depth-and-stack"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::linked-list-concept",
+      "label": "Linked List Concept",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::abstract-data-types-overview",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::tree-data-structure-concept",
+      "label": "Tree Data Structure Concept",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::abstract-data-types-overview",
+        "learning-python::graph-nodes-and-edges"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::binary-tree-basics",
+      "label": "Binary Tree Basics",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::tree-data-structure-concept"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::machine-learning-overview",
+      "label": "Machine Learning Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::supervised-vs-unsupervised-learning",
+      "label": "Supervised vs Unsupervised Learning",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::machine-learning-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::keras-library-overview",
+      "label": "keras Library Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::import-statement",
+        "learning-python::standard-library-overview",
+        "learning-python::numpy-library-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::sequential-model",
+      "label": "Sequential Model",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::keras-library-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dense-fully-connected-layers",
+      "label": "Dense Fully Connected Layers",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sequential-model",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::activation-functions-relu-softmax",
+      "label": "Activation Functions relu softmax",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dense-fully-connected-layers",
+        "learning-python::math-sin-cos-pi"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::conv2d-convolutional-layers",
+      "label": "Conv2D Convolutional Layers",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sequential-model",
+        "learning-python::pixel-data-and-image-arrays"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::maxpooling2d-pooling-layers",
+      "label": "MaxPooling2D Pooling Layers",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::conv2d-convolutional-layers"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dropout-regularization",
+      "label": "Dropout Regularization",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dense-fully-connected-layers",
+        "learning-python::overfitting-concept"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::flatten-layer",
+      "label": "Flatten Layer",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::conv2d-convolutional-layers",
+        "learning-python::reshaping-arrays"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::model-compile",
+      "label": "model.compile()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sequential-model",
+        "learning-python::categorical-crossentropy-loss",
+        "learning-python::adam-optimizer",
+        "learning-python::accuracy-metric"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::model-fit-training",
+      "label": "model.fit() Training",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::model-compile",
+        "learning-python::batch-size-and-epochs",
+        "learning-python::training-vs-validation-vs-test-sets"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::model-evaluate-testing",
+      "label": "model.evaluate() Testing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::model-fit-training",
+        "learning-python::training-vs-validation-vs-test-sets"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::model-predict-inference",
+      "label": "model.predict() Inference",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::model-compile",
+        "learning-python::np-array-creating-arrays"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::categorical-crossentropy-loss",
+      "label": "Categorical Crossentropy Loss",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sequential-model",
+        "learning-python::sum-function"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::adam-optimizer",
+      "label": "Adam Optimizer",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sequential-model",
+        "learning-python::machine-learning-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::accuracy-metric",
+      "label": "Accuracy Metric",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::machine-learning-overview",
+        "learning-python::sum-function"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::batch-size-and-epochs",
+      "label": "Batch Size and Epochs",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::machine-learning-overview",
+        "learning-python::range-with-start-stop-step"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::mnist-dataset",
+      "label": "MNIST Dataset",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::numpy-library-overview",
+        "learning-python::machine-learning-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::data-normalization",
+      "label": "Data Normalization",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::mnist-dataset",
+        "learning-python::array-operations-and-broadcasting",
+        "learning-python::float-type"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::convolutional-neural-networks",
+      "label": "Convolutional Neural Networks",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::conv2d-convolutional-layers",
+        "learning-python::maxpooling2d-pooling-layers",
+        "learning-python::flatten-layer"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::feedforward-networks",
+      "label": "Feedforward Networks",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dense-fully-connected-layers",
+        "learning-python::activation-functions-relu-softmax"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::recurrent-networks-rnn-overview",
+      "label": "Recurrent Networks RNN Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sequential-model",
+        "learning-python::machine-learning-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::lstm-networks-overview",
+      "label": "LSTM Networks Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::recurrent-networks-rnn-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::autoencoders-overview",
+      "label": "Autoencoders Overview",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::sequential-model",
+        "learning-python::dense-fully-connected-layers"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::training-vs-validation-vs-test-sets",
+      "label": "Training vs Validation vs Test Sets",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::machine-learning-overview",
+        "learning-python::list-type"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::overfitting-concept",
+      "label": "Overfitting Concept",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::machine-learning-overview",
+        "learning-python::training-vs-validation-vs-test-sets"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::feature-extraction",
+      "label": "Feature Extraction",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::conv2d-convolutional-layers",
+        "learning-python::np-array-creating-arrays",
+        "learning-python::machine-learning-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::ipycanvas-canvas-in-jupyter",
+      "label": "ipycanvas Canvas in Jupyter",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::jupyter-notebooks",
+        "learning-python::import-statement"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::mobilechelonian-turtle-in-jupyter",
+      "label": "mobilechelonian Turtle in Jupyter",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::jupyter-notebooks",
+        "learning-python::import-turtle"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::drawing-shapes-on-canvas",
+      "label": "Drawing Shapes on Canvas",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::ipycanvas-canvas-in-jupyter",
+        "learning-python::movement-forward-backward"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::color-bars-in-jupyter",
+      "label": "Color Bars in Jupyter",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::ipycanvas-canvas-in-jupyter",
+        "learning-python::pen-size-and-color"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::event-driven-programming-model",
+      "label": "Event-Driven Programming Model",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::calling-a-function"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::mouse-click-event-handlers",
+      "label": "Mouse Click Event Handlers",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::event-driven-programming-model",
+        "learning-python::turtle-screen-object"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::keyboard-event-handlers",
+      "label": "Keyboard Event Handlers",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::event-driven-programming-model",
+        "learning-python::turtle-screen-object"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::callback-functions",
+      "label": "Callback Functions",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::lambda-functions",
+        "learning-python::event-driven-programming-model"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::animation-loops",
+      "label": "Animation Loops",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::for-loop-with-range",
+        "learning-python::event-driven-programming-model",
+        "learning-python::time-sleep"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::event-queue-concept",
+      "label": "Event Queue Concept",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::event-driven-programming-model",
+        "learning-python::queue-fifo-structure"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::timer-based-events",
+      "label": "Timer-Based Events",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::time-sleep",
+        "learning-python::event-driven-programming-model"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::modularity-in-code",
+      "label": "Modularity in Code",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::creating-custom-modules"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::code-reusability",
+      "label": "Code Reusability",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::modularity-in-code",
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::dry-principle",
+      "label": "DRY Principle",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::code-reusability",
+        "learning-python::modularity-in-code"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::meaningful-names",
+      "label": "Meaningful Names",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::variable-naming-rules",
+        "learning-python::snake-case-convention",
+        "learning-python::meaningful-variable-names"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::code-comments-when-and-why",
+      "label": "Code Comments When and Why",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::single-line-comments",
+        "learning-python::defining-a-function-with-def"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::literate-programming-in-jupyter",
+      "label": "Literate Programming in Jupyter",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::jupyter-notebooks",
+        "learning-python::single-line-comments",
+        "learning-python::docstrings"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::reading-docs-with-help-and-dir",
+      "label": "Reading Docs with help() and dir()",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::dir-list-attributes",
+        "learning-python::help-documentation"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::version-control-basics",
+      "label": "Version Control Basics",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::file-system-navigation",
+        "learning-python::command-line-basics"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::searching-documentation",
+      "label": "Searching Documentation",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::help-documentation",
+        "learning-python::reading-docs-with-help-and-dir"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::code-refactoring",
+      "label": "Code Refactoring",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::modularity-in-code",
+        "learning-python::dry-principle"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::test-driven-thinking",
+      "label": "Test-Driven Thinking",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::assert-statement",
+        "learning-python::syntax-vs-runtime-vs-logic-errors"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pair-programming-concept",
+      "label": "Pair Programming Concept",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::modularity-in-code",
+        "learning-python::meaningful-names"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::named-colors",
+      "label": "Named Colors",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::python-interpreter-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::hex-color-values",
+      "label": "Hex Color Values",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::named-colors",
+        "learning-python::integer-type"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::rgb-color-model",
+      "label": "RGB Color Model",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::named-colors",
+        "learning-python::hex-color-values"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::color-in-turtle-graphics",
+      "label": "Color in Turtle Graphics",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::pen-size-and-color",
+        "learning-python::named-colors"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::background-and-pen-colors",
+      "label": "Background and Pen Colors",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::screen-setup-and-bgcolor",
+        "learning-python::pen-size-and-color",
+        "learning-python::named-colors"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::hsl-color-model",
+      "label": "HSL Color Model",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::rgb-color-model"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::color-theory-basics",
+      "label": "Color Theory Basics",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::named-colors",
+        "learning-python::rgb-color-model"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::transparency-and-alpha",
+      "label": "Transparency and Alpha",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::rgb-color-model",
+        "learning-python::hsl-color-model"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::decomposition",
+      "label": "Decomposition",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::defining-a-function-with-def",
+        "learning-python::modularity-in-code"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::decomposition",
+        "learning-python::if-statement"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::abstraction-in-programming",
+      "label": "Abstraction in Programming",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::decomposition",
+        "learning-python::defining-a-function-with-def",
+        "learning-python::objects-and-classes-overview"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::algorithm-design",
+      "label": "Algorithm Design",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::decomposition",
+        "learning-python::abstraction-in-programming",
+        "learning-python::for-loop-over-sequence"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::pseudocode-writing",
+      "label": "Pseudocode Writing",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::algorithm-design",
+        "learning-python::single-line-comments"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-python::debugging-strategies",
+      "label": "Debugging Strategies",
+      "subject_id": "learning-python",
+      "dependencies": [
+        "learning-python::debugging-with-print",
+        "learning-python::reading-a-traceback",
+        "learning-python::syntax-vs-runtime-vs-logic-errors"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    }
+  ]
+}

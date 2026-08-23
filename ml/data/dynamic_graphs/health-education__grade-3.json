@@ -1,0 +1,625 @@
+{
+  "subject_id": "health-education__grade-3",
+  "title": "Grade 3 Health Education Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations",
+      "color": "SteelBlue"
+    },
+    "FOOD": {
+      "classifier_name": "Food and Nutrition",
+      "color": "Gold"
+    },
+    "GROW": {
+      "classifier_name": "Human Growth and Development",
+      "color": "DarkSlateBlue"
+    },
+    "EMOT": {
+      "classifier_name": "Mental and Emotional Health",
+      "color": "MediumPurple"
+    },
+    "WELL": {
+      "classifier_name": "Personal Health and Wellness",
+      "color": "DarkGreen"
+    },
+    "SAFE": {
+      "classifier_name": "Personal Safety and Violence Prevention",
+      "color": "Crimson"
+    },
+    "SKIL": {
+      "classifier_name": "Skill Standards",
+      "color": "Teal"
+    }
+  },
+  "concepts": [
+    {
+      "id": "health-education__grade-3::health",
+      "label": "Health",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "health-education__grade-3::hunger-and-fullness-signals",
+      "label": "Hunger And Fullness Signals",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::carbohydrates",
+      "label": "Carbohydrates",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::protein",
+      "label": "Protein",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::fats",
+      "label": "Fats",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::nutrition-label",
+      "label": "Nutrition Label",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::carbohydrates",
+        "health-education__grade-3::protein",
+        "health-education__grade-3::fats"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::limiting-caffeinated-drinks",
+      "label": "Limiting Caffeinated Drinks",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::limiting-sugary-drinks",
+      "label": "Limiting Sugary Drinks",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::beverages-for-physical-activity",
+      "label": "Beverages For Physical Activity",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::limiting-caffeinated-drinks",
+        "health-education__grade-3::limiting-sugary-drinks",
+        "health-education__grade-3::benefits-of-physical-activity"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::food-safety-practices",
+      "label": "Food Safety Practices",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::food-preparation-methods",
+      "label": "Food Preparation Methods",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::food-safety-practices"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::family-member-roles",
+      "label": "Family Member Roles",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::peer-roles-in-relationships",
+      "label": "Peer Roles In Relationships",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::healthy-relationships",
+      "label": "Healthy Relationships",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::family-member-roles",
+        "health-education__grade-3::peer-roles-in-relationships"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::puberty",
+      "label": "Puberty",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::stages-of-puberty",
+      "label": "Stages Of Puberty",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::puberty"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::asking-for-help-with-body-changes",
+      "label": "Asking For Help With Body Changes",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::stages-of-puberty",
+        "health-education__grade-3::trusted-adult"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::resilience",
+      "label": "Resilience",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::personal-choices-and-wellbeing",
+      "label": "Personal Choices And Wellbeing",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::resilience"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::coping-with-challenges",
+      "label": "Coping With Challenges",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::resilience"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::who-to-talk-to",
+      "label": "Who To Talk To",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::coping-with-challenges",
+        "health-education__grade-3::trusted-adult"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::mental-health-challenge",
+      "label": "Mental Health Challenge",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::resilience"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::effects-of-mental-health-challenges",
+      "label": "Effects Of Mental Health Challenges",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::mental-health-challenge"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::empathy",
+      "label": "Empathy",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::empathy-in-friendships",
+      "label": "Empathy In Friendships",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::empathy",
+        "health-education__grade-3::healthy-relationships"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::emotions-influence-behavior",
+      "label": "Emotions Influence Behavior",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::resilience"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::expressing-emotions",
+      "label": "Expressing Emotions",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::emotions-influence-behavior"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::bullying",
+      "label": "Bullying",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::healthy-relationships"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::exclusion",
+      "label": "Exclusion",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::healthy-relationships"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::effects-of-bullying-and-exclusion",
+      "label": "Effects Of Bullying And Exclusion",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::bullying",
+        "health-education__grade-3::exclusion"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::kindness-and-respect-for-all-abilities",
+      "label": "Kindness And Respect For All Abilities",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::empathy",
+        "health-education__grade-3::effects-of-bullying-and-exclusion"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::traditional-health-knowledge",
+      "label": "Traditional Health Knowledge",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::benefits-of-physical-activity",
+      "label": "Benefits Of Physical Activity",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::dressing-for-weather",
+      "label": "Dressing For Weather",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::benefits-of-physical-activity"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::cultural-germ-prevention-practices",
+      "label": "Cultural Germ Prevention Practices",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::traditional-health-knowledge"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::why-germ-prevention-practices-work",
+      "label": "Why Germ Prevention Practices Work",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::cultural-germ-prevention-practices"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::sharing-messages-and-images",
+      "label": "Sharing Messages And Images",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::risks-of-sharing-personal-information",
+      "label": "Risks Of Sharing Personal Information",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::sharing-messages-and-images"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::injury-prevention",
+      "label": "Injury Prevention",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::evaluating-safety-behaviors",
+      "label": "Evaluating Safety Behaviors",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::injury-prevention"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::safety-procedures",
+      "label": "Safety Procedures",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::practicing-safety-procedures",
+      "label": "Practicing Safety Procedures",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::safety-procedures"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::trusted-adult",
+      "label": "Trusted Adult",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::identifying-trusted-adults",
+      "label": "Identifying Trusted Adults",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::trusted-adult",
+        "health-education__grade-3::safety-procedures"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::right-to-personal-boundaries",
+      "label": "Right To Personal Boundaries",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::healthy-relationships"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::influences-on-health-behavior",
+      "label": "Influences On Health Behavior",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::validity-of-health-information",
+      "label": "Validity Of Health Information",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::influences-on-health-behavior"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::reliability-of-health-information",
+      "label": "Reliability Of Health Information",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::influences-on-health-behavior"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::verbal-communication",
+      "label": "Verbal Communication",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::nonverbal-communication",
+      "label": "Nonverbal Communication",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::active-listening",
+      "label": "Active Listening",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::verbal-communication",
+        "health-education__grade-3::nonverbal-communication"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::communication-in-decision-making",
+      "label": "Communication In Decision-Making",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::verbal-communication",
+        "health-education__grade-3::nonverbal-communication",
+        "health-education__grade-3::active-listening"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::i-statement",
+      "label": "I-Statement",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::verbal-communication",
+        "health-education__grade-3::expressing-emotions"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::personal-health-goal",
+      "label": "Personal Health Goal",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::determining-need-for-assistance",
+      "label": "Determining Need For Assistance",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::personal-health-goal",
+        "health-education__grade-3::who-to-talk-to"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::examining-health-supporting-practices",
+      "label": "Examining Health-Supporting Practices",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::personal-choices-and-wellbeing",
+        "health-education__grade-3::benefits-of-physical-activity"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__grade-3::identifying-relevant-health-topics",
+      "label": "Identifying Relevant Health Topics",
+      "subject_id": "health-education__grade-3",
+      "dependencies": [
+        "health-education__grade-3::validity-of-health-information",
+        "health-education__grade-3::reliability-of-health-information",
+        "health-education__grade-3::examining-health-supporting-practices"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,1513 @@
+{
+  "subject_id": "unicorns",
+  "title": "Unicorns and Other Mythical Beasts",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "lightcoral"
+    },
+    "UHIST": {
+      "classifier_name": "Unicorn History and Culture",
+      "color": "peachpuff"
+    },
+    "CLASS": {
+      "classifier_name": "Beast Classification",
+      "color": "thistle"
+    },
+    "AIFUN": {
+      "classifier_name": "AI Fundamentals",
+      "color": "powderblue"
+    },
+    "HYPE": {
+      "classifier_name": "AI Hype and Culture",
+      "color": "lightpink"
+    },
+    "EDAI": {
+      "classifier_name": "Education and AI",
+      "color": "palegreen"
+    },
+    "JOBS": {
+      "classifier_name": "Job Displacement",
+      "color": "lightsteelblue"
+    },
+    "TFANT": {
+      "classifier_name": "Technology Fantasies",
+      "color": "plum"
+    },
+    "STORY": {
+      "classifier_name": "Satire and Storytelling",
+      "color": "lightyellow"
+    },
+    "CRIT": {
+      "classifier_name": "Critical Thinking and Media",
+      "color": "aquamarine"
+    }
+  },
+  "concepts": [
+    {
+      "id": "unicorns::mythical-beast",
+      "label": "Mythical Beast",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::unicorn",
+      "label": "Unicorn",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::dragon",
+      "label": "Dragon",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::phoenix",
+      "label": "Phoenix",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::griffin",
+      "label": "Griffin",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::centaur",
+      "label": "Centaur",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::mermaid",
+      "label": "Mermaid",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::minotaur",
+      "label": "Minotaur",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::pegasus",
+      "label": "Pegasus",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::kraken",
+      "label": "Kraken",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::siren",
+      "label": "Siren",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::cyclops",
+      "label": "Cyclops",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::satire",
+      "label": "Satire",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::allegory",
+      "label": "Allegory",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satire"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::fable",
+      "label": "Fable",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satire"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ancient-unicorn-mythology",
+      "label": "Ancient Unicorn Mythology",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::unicorn"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::medieval-unicorn-lore",
+      "label": "Medieval Unicorn Lore",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ancient-unicorn-mythology"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::unicorn-symbolism",
+      "label": "Unicorn Symbolism",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ancient-unicorn-mythology",
+        "unicorns::medieval-unicorn-lore"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::unicorn-in-art-history",
+      "label": "Unicorn in Art History",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::unicorn-symbolism"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::modern-unicorn-culture",
+      "label": "Modern Unicorn Culture",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::unicorn-symbolism",
+        "unicorns::unicorn-in-art-history"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::unicorn-startup-metaphor",
+      "label": "Unicorn Startup Metaphor",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::unicorn",
+        "unicorns::venture-capital"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::billion-dollar-valuation",
+      "label": "Billion Dollar Valuation",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::unicorn-startup-metaphor",
+        "unicorns::venture-capital"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::venture-capital",
+      "label": "Venture Capital",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "UHIST",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::series-b-funding",
+      "label": "Series B Funding",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::venture-capital"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::magical-thinking",
+      "label": "Magical Thinking",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "UHIST",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::unicorn-industrial-complex",
+      "label": "Unicorn-Industrial Complex",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::unicorn-startup-metaphor",
+        "unicorns::billion-dollar-valuation",
+        "unicorns::series-b-funding",
+        "unicorns::magical-thinking"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::mythical-product-market-fit",
+      "label": "Mythical Product-Market Fit",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::unicorn-startup-metaphor",
+        "unicorns::unicorn-industrial-complex"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::unicorn-literacy",
+      "label": "Unicorn Literacy",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::modern-unicorn-culture",
+        "unicorns::unicorn-industrial-complex"
+      ],
+      "taxonomy_id": "UHIST",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::taxonomy",
+      "label": "Taxonomy",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "CLASS",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::beast-classification-system",
+      "label": "Beast Classification System",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast",
+        "unicorns::taxonomy"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::creature-characteristics",
+      "label": "Creature Characteristics",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::mythical-beast",
+        "unicorns::beast-classification-system"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::mythical-vs-real-creatures",
+      "label": "Mythical vs Real Creatures",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::creature-characteristics"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::beast-allegory-mapping",
+      "label": "Beast Allegory Mapping",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::allegory",
+        "unicorns::beast-classification-system"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::allegorical-interpretation",
+      "label": "Allegorical Interpretation",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::allegory",
+        "unicorns::beast-allegory-mapping"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::symbolic-representation",
+      "label": "Symbolic Representation",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::allegory",
+        "unicorns::unicorn-symbolism"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::narrative-archetype",
+      "label": "Narrative Archetype",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::fable",
+        "unicorns::allegorical-interpretation"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::character-as-metaphor",
+      "label": "Character as Metaphor",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::allegorical-interpretation",
+        "unicorns::narrative-archetype"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::bestiary-tradition",
+      "label": "Bestiary Tradition",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::medieval-unicorn-lore",
+        "unicorns::beast-classification-system"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "AIFUN",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::machine-learning"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::generative-ai"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-hallucination",
+      "label": "AI Hallucination",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::large-language-model"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::neural-network",
+      "label": "Neural Network",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::machine-learning"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::natural-language-processing",
+      "label": "Natural Language Processing",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::machine-learning"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-training-data",
+      "label": "AI Training Data",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::machine-learning"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::algorithm",
+      "label": "Algorithm",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::automation",
+      "label": "Automation",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence",
+        "unicorns::algorithm"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::chatbot",
+      "label": "Chatbot",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::large-language-model",
+        "unicorns::natural-language-processing"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-demo-vs-product",
+      "label": "AI Demo vs Product",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence",
+        "unicorns::vaporware"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-capabilities",
+      "label": "AI Capabilities",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence",
+        "unicorns::machine-learning"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-limitations",
+      "label": "AI Limitations",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-capabilities"
+      ],
+      "taxonomy_id": "AIFUN",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::hype-cycle",
+      "label": "Hype Cycle",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "HYPE",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::peak-of-inflated-expect",
+      "label": "Peak of Inflated Expect",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::hype-cycle"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::trough-of-disillusionment",
+      "label": "Trough of Disillusionment",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::peak-of-inflated-expect"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::slope-of-enlightenment",
+      "label": "Slope of Enlightenment",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::trough-of-disillusionment"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::plateau-of-productivity",
+      "label": "Plateau of Productivity",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::slope-of-enlightenment"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-hype-culture",
+      "label": "AI Hype Culture",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence",
+        "unicorns::hype-cycle"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::tech-press-release",
+      "label": "Tech Press Release",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-hype-culture"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::vaporware",
+      "label": "Vaporware",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-hype-culture",
+        "unicorns::tech-press-release"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::breakthrough-announcement",
+      "label": "Breakthrough Announcement",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::tech-press-release",
+        "unicorns::vaporware"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-washing",
+      "label": "AI Washing",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-hype-culture",
+        "unicorns::breakthrough-announcement"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::moving-the-goalposts",
+      "label": "Moving the Goalposts",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-limitations",
+        "unicorns::ai-hype-culture"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::agi-timeline-claims",
+      "label": "AGI Timeline Claims",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::generative-ai",
+        "unicorns::moving-the-goalposts"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-demo-magic",
+      "label": "AI Demo Magic",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::generative-ai",
+        "unicorns::ai-demo-vs-product"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::investor-pitch-deck",
+      "label": "Investor Pitch Deck",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::venture-capital",
+        "unicorns::ai-hype-culture"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::startup-mythology",
+      "label": "Startup Mythology",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::unicorn-startup-metaphor",
+        "unicorns::investor-pitch-deck"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::disruption-narrative",
+      "label": "Disruption Narrative",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-hype-culture",
+        "unicorns::startup-mythology"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-in-education",
+      "label": "AI in Education",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence",
+        "unicorns::adaptive-learning"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::adaptive-learning",
+      "label": "Adaptive Learning",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::machine-learning"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-tutoring-system",
+      "label": "AI Tutoring System",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::large-language-model",
+        "unicorns::adaptive-learning"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::worksheet-obsolescence",
+      "label": "Worksheet Obsolescence",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-in-education",
+        "unicorns::automation"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::digital-literacy",
+      "label": "Digital Literacy",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "EDAI",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::ai-literacy",
+      "label": "AI Literacy",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence",
+        "unicorns::digital-literacy"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::institutional-resistance",
+      "label": "Institutional Resistance",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-in-education",
+        "unicorns::magical-thinking"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::committee-paralysis",
+      "label": "Committee Paralysis",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::institutional-resistance"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ban-vs-embrace-debate",
+      "label": "Ban vs Embrace Debate",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-in-education",
+        "unicorns::institutional-resistance"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ostrich-response",
+      "label": "Ostrich Response",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::institutional-resistance",
+        "unicorns::deer-in-headlights-effect"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::education-technology-gap",
+      "label": "Education Technology Gap",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-in-education",
+        "unicorns::digital-literacy"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::deer-in-headlights-effect",
+      "label": "Deer in Headlights Effect",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::magical-thinking",
+        "unicorns::ai-in-education"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::change-management",
+      "label": "Change Management",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::institutional-resistance",
+        "unicorns::deer-in-headlights-effect"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::future-of-assessment",
+      "label": "Future of Assessment",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-in-education",
+        "unicorns::ai-tutoring-system"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ai-generated-textbook",
+      "label": "AI-Generated Textbook",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::generative-ai",
+        "unicorns::ai-in-education"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ai-generated-textbook",
+        "unicorns::interactive-simulation"
+      ],
+      "taxonomy_id": "EDAI",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::job-displacement",
+      "label": "Job Displacement",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::automation",
+        "unicorns::artificial-intelligence"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::automation-anxiety",
+      "label": "Automation Anxiety",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::job-displacement",
+        "unicorns::magical-thinking"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::workforce-disruption",
+      "label": "Workforce Disruption",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::job-displacement",
+        "unicorns::disruption-narrative"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::skill-obsolescence",
+      "label": "Skill Obsolescence",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::job-displacement",
+        "unicorns::workforce-disruption"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::reskilling",
+      "label": "Reskilling",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::skill-obsolescence"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::upskilling",
+      "label": "Upskilling",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::skill-obsolescence",
+        "unicorns::reskilling"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::human-ai-collaboration",
+      "label": "Human-AI Collaboration",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::artificial-intelligence",
+        "unicorns::job-displacement"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::centaur-workforce",
+      "label": "Centaur Workforce",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::centaur",
+        "unicorns::human-ai-collaboration"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::augmentation-vs-replacement",
+      "label": "Augmentation vs Replacement",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::human-ai-collaboration",
+        "unicorns::centaur-workforce"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::middle-manager-dilemma",
+      "label": "Middle Manager Dilemma",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::job-displacement",
+        "unicorns::committee-paralysis"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::performance-review-paradox",
+      "label": "Performance Review Paradox",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::centaur-workforce",
+        "unicorns::augmentation-vs-replacement"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::linkedin-skill-inflation",
+      "label": "LinkedIn Skill Inflation",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::skill-obsolescence",
+        "unicorns::reskilling"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::coding-bootcamp-myth",
+      "label": "Coding Bootcamp Myth",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::reskilling",
+        "unicorns::upskilling"
+      ],
+      "taxonomy_id": "JOBS",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::technology-fantasy",
+      "label": "Technology Fantasy",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::magical-thinking",
+        "unicorns::vaporware"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::quantum-computing",
+      "label": "Quantum Computing",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::technology-fantasy"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::quantum-supremacy",
+      "label": "Quantum Supremacy",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::quantum-computing"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::five-years-away-syndrome",
+      "label": "Five Years Away Syndrome",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::technology-fantasy",
+        "unicorns::quantum-supremacy"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::blockchain",
+      "label": "Blockchain",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::technology-fantasy"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::distributed-ledger",
+      "label": "Distributed Ledger",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::blockchain"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::bitcoin",
+      "label": "Bitcoin",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::blockchain"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::cryptocurrency",
+      "label": "Cryptocurrency",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::bitcoin"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::ethical-bitcoin-paradox",
+      "label": "Ethical Bitcoin Paradox",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::bitcoin",
+        "unicorns::cryptocurrency"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::carbon-neutral-magic",
+      "label": "Carbon-Neutral Magic",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::ethical-bitcoin-paradox",
+        "unicorns::energy-consumption-paradox"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::energy-consumption-paradox",
+      "label": "Energy Consumption Paradox",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::blockchain",
+        "unicorns::bitcoin"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::self-driving-car",
+      "label": "Self-Driving Car",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::technology-fantasy",
+        "unicorns::artificial-intelligence"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::metaverse",
+      "label": "Metaverse",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::technology-fantasy",
+        "unicorns::artificial-intelligence"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::fusion-power",
+      "label": "Fusion Power",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::technology-fantasy"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::vaporware-taxonomy",
+      "label": "Vaporware Taxonomy",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::taxonomy",
+        "unicorns::vaporware",
+        "unicorns::technology-fantasy"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::perpetual-beta",
+      "label": "Perpetual Beta",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::vaporware",
+        "unicorns::technology-fantasy"
+      ],
+      "taxonomy_id": "TFANT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::satirical-writing",
+      "label": "Satirical Writing",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satire",
+        "unicorns::allegory"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::deadpan-delivery",
+      "label": "Deadpan Delivery",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satirical-writing"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::irony",
+      "label": "Irony",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satire"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::parody",
+      "label": "Parody",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satire",
+        "unicorns::irony"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::dark-humor",
+      "label": "Dark Humor",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satire",
+        "unicorns::irony"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::biting-satire",
+      "label": "Biting Satire",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satirical-writing",
+        "unicorns::dark-humor"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::graphic-novel",
+      "label": "Graphic Novel",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "STORY",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::visual-storytelling",
+      "label": "Visual Storytelling",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::graphic-novel"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::storyboarding",
+      "label": "Storyboarding",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::visual-storytelling"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::character-development",
+      "label": "Character Development",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::graphic-novel",
+        "unicorns::character-as-metaphor"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::narrative-arc",
+      "label": "Narrative Arc",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::graphic-novel",
+        "unicorns::narrative-archetype"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::world-building",
+      "label": "World Building",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::graphic-novel",
+        "unicorns::narrative-arc"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::meta-fiction",
+      "label": "Meta-Fiction",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::satirical-writing",
+        "unicorns::world-building"
+      ],
+      "taxonomy_id": "STORY",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "CRIT",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::media-literacy",
+      "label": "Media Literacy",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::digital-literacy",
+        "unicorns::critical-thinking"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::fact-vs-fiction",
+      "label": "Fact vs Fiction",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::critical-thinking",
+        "unicorns::media-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::source-evaluation",
+      "label": "Source Evaluation",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::media-literacy",
+        "unicorns::fact-vs-fiction"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::claim-verification",
+      "label": "Claim Verification",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::source-evaluation"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::logical-fallacy",
+      "label": "Logical Fallacy",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::critical-thinking"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::critical-thinking",
+        "unicorns::logical-fallacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::appeal-to-novelty",
+      "label": "Appeal to Novelty",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::logical-fallacy",
+        "unicorns::ai-hype-culture"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::real-or-fake-exercise",
+      "label": "Real or Fake Exercise",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::fact-vs-fiction",
+        "unicorns::claim-verification"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::interactive-simulation",
+      "label": "Interactive Simulation",
+      "subject_id": "unicorns",
+      "dependencies": [],
+      "taxonomy_id": "CRIT",
+      "level": "foundational"
+    },
+    {
+      "id": "unicorns::population-dynamics-model",
+      "label": "Population Dynamics Model",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::interactive-simulation",
+        "unicorns::unicorn"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::timeline-visualization",
+      "label": "Timeline Visualization",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::interactive-simulation",
+        "unicorns::ancient-unicorn-mythology"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::hype-cycle-visualization",
+      "label": "Hype Cycle Visualization",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::interactive-simulation",
+        "unicorns::hype-cycle"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "unicorns::venn-diagram-analysis",
+      "label": "Venn Diagram Analysis",
+      "subject_id": "unicorns",
+      "dependencies": [
+        "unicorns::interactive-simulation",
+        "unicorns::ai-capabilities",
+        "unicorns::ai-limitations"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    }
+  ]
+}

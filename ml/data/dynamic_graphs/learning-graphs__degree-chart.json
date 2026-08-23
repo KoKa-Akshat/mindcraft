@@ -1,0 +1,602 @@
+{
+  "subject_id": "learning-graphs__degree-chart",
+  "title": "learning-graphs__degree-chart",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {},
+  "concepts": [
+    {
+      "id": "learning-graphs__degree-chart::graph-theory",
+      "label": "Graph Theory",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__degree-chart::dependency-graph",
+      "label": "Dependency Graph",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::graph-theory"
+      ],
+      "taxonomy_id": "term",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::printed-textbooks",
+      "label": "Printed Textbooks",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-theory"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::learning-theory",
+      "label": "Learning Theory",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__degree-chart::non-linear-learning",
+      "label": "Non-linear Learning",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-theory"
+      ],
+      "taxonomy_id": "term",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::recommendation-engines",
+      "label": "Recommendation Engines",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::non-linear-learning"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::learning-paths",
+      "label": "Learning Paths",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-theory",
+        "learning-graphs__degree-chart::non-linear-learning"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::learning-management-systems",
+      "label": "Learning Management Systems",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-paths"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::content-graph",
+      "label": "Content Graph",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::graph-theory"
+      ],
+      "taxonomy_id": "term",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::adaptive-learning",
+      "label": "Adaptive Learning",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::non-linear-learning",
+        "learning-graphs__degree-chart::learning-management-systems",
+        "learning-graphs__degree-chart::content-graph"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::microsim",
+      "label": "MicroSim",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::adaptive-learning"
+      ],
+      "taxonomy_id": "term",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::intelligent-agents",
+      "label": "Intelligent Agents",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::recommendation-engines",
+        "learning-graphs__degree-chart::adaptive-learning"
+      ],
+      "taxonomy_id": "agents",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::skos",
+      "label": "SKOS",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::knowledge-representation"
+      ],
+      "taxonomy_id": "stand",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::knowledge-representation",
+      "label": "Knowledge Representation",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__degree-chart::course-description",
+      "label": "Course Description",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::knowledge-representation"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::learning-objectives",
+      "label": "Learning Objectives",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::course-description",
+        "learning-graphs__degree-chart::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::bloom-s-taxonomy",
+      "label": "Bloom's Taxonomy",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [],
+      "taxonomy_id": "learning-theory",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__degree-chart::dublin-core",
+      "label": "Dublin Core",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::knowledge-representation"
+      ],
+      "taxonomy_id": "stand",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::foundational-concepts",
+      "label": "Foundational Concepts",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [],
+      "taxonomy_id": "learning-theory",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__degree-chart::hyper-personalization",
+      "label": "Hyper-personalization",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::adaptive-learning",
+        "learning-graphs__degree-chart::intelligent-agents",
+        "learning-graphs__degree-chart::foundational-concepts"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::journey-map",
+      "label": "Journey Map",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-objectives",
+        "learning-graphs__degree-chart::hyper-personalization"
+      ],
+      "taxonomy_id": "ui",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::accessibility",
+      "label": "Accessibility",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-paths",
+        "learning-graphs__degree-chart::learning-management-systems"
+      ],
+      "taxonomy_id": "ui",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::learning-graph",
+      "label": "Learning Graph",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::dependency-graph",
+        "learning-graphs__degree-chart::content-graph"
+      ],
+      "taxonomy_id": "term",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::rhizombic-learning",
+      "label": "Rhizombic Learning",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::non-linear-learning",
+        "learning-graphs__degree-chart::learning-graph"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::graph-visualization",
+      "label": "Graph Visualization",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-graph"
+      ],
+      "taxonomy_id": "ui",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::graph-layout",
+      "label": "Graph Layout",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::graph-visualization"
+      ],
+      "taxonomy_id": "ui",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::javascript",
+      "label": "JavaScript",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [],
+      "taxonomy_id": "ui",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__degree-chart::p5-js",
+      "label": "P5.js",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::javascript"
+      ],
+      "taxonomy_id": "ui",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::vis-js",
+      "label": "vis.js",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::javascript"
+      ],
+      "taxonomy_id": "ui",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::graph-validation",
+      "label": "Graph Validation",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-graph"
+      ],
+      "taxonomy_id": "stand",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::orphaned-concepts",
+      "label": "Orphaned Concepts",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::graph-validation"
+      ],
+      "taxonomy_id": "stand",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::force-directed-graph",
+      "label": "Force Directed Graph",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::graph-layout",
+        "learning-graphs__degree-chart::vis-js"
+      ],
+      "taxonomy_id": "ui",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::goal-concepts",
+      "label": "Goal Concepts",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-objectives",
+        "learning-graphs__degree-chart::learning-graph"
+      ],
+      "taxonomy_id": "term",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::user-interface",
+      "label": "User Interface",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::content-graph",
+        "learning-graphs__degree-chart::graph-visualization"
+      ],
+      "taxonomy_id": "ui",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::chatbot",
+      "label": "Chatbot",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::intelligent-agents",
+        "learning-graphs__degree-chart::user-interface"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::rag",
+      "label": "RAG",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::recommendation-engines",
+        "learning-graphs__degree-chart::goal-concepts",
+        "learning-graphs__degree-chart::user-interface"
+      ],
+      "taxonomy_id": "similarity",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::similarity",
+      "label": "Similarity",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [],
+      "taxonomy_id": "similarity",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__degree-chart::embeddings",
+      "label": "Embeddings",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::similarity"
+      ],
+      "taxonomy_id": "similarity",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::student-similarity",
+      "label": "Student Similarity",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::similarity"
+      ],
+      "taxonomy_id": "similarity",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::feedback-log",
+      "label": "Feedback Log",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-touchpoint"
+      ],
+      "taxonomy_id": "feed",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::feedback-analysis",
+      "label": "Feedback Analysis",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::feedback-log"
+      ],
+      "taxonomy_id": "feed",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::graphrag",
+      "label": "GraphRAG",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::rag",
+        "learning-graphs__degree-chart::embeddings",
+        "learning-graphs__degree-chart::student-similarity"
+      ],
+      "taxonomy_id": "similarity",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::recommendation-engine",
+      "label": "Recommendation Engine",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::recommendation-engines",
+        "learning-graphs__degree-chart::adaptive-learning",
+        "learning-graphs__degree-chart::graphrag"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::learned-concept",
+      "label": "Learned Concept",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::foundational-concepts",
+        "learning-graphs__degree-chart::learning-graph"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::ready-to-learn-concept",
+      "label": "Ready to Learn Concept",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-objectives",
+        "learning-graphs__degree-chart::learned-concept"
+      ],
+      "taxonomy_id": "learning-theory",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::assessment",
+      "label": "Assessment",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::ready-to-learn-concept"
+      ],
+      "taxonomy_id": "feed",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::learning-touchpoint",
+      "label": "Learning Touchpoint",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::ready-to-learn-concept",
+        "learning-graphs__degree-chart::assessment"
+      ],
+      "taxonomy_id": "feed",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::frequently-asked-question",
+      "label": "Frequently Asked Question",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-touchpoint"
+      ],
+      "taxonomy_id": "feed",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::content-similarity",
+      "label": "Content Similarity",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::similarity",
+        "learning-graphs__degree-chart::student-similarity"
+      ],
+      "taxonomy_id": "similarity",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::course-evaluation",
+      "label": "Course Evaluation",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::assessment",
+        "learning-graphs__degree-chart::frequently-asked-question"
+      ],
+      "taxonomy_id": "feed",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::lg-standards",
+      "label": "LG Standards",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::skos"
+      ],
+      "taxonomy_id": "stand",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::learning-agents",
+      "label": "Learning Agents",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::intelligent-agents"
+      ],
+      "taxonomy_id": "agents",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::intelligent-textbooks",
+      "label": "Intelligent Textbooks",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [],
+      "taxonomy_id": "agents",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__degree-chart::lms-interoperability",
+      "label": "LMS Interoperability",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::lg-standards"
+      ],
+      "taxonomy_id": "stand",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::future-developments",
+      "label": "Future Developments",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::learning-agents",
+        "learning-graphs__degree-chart::intelligent-textbooks",
+        "learning-graphs__degree-chart::lms-interoperability"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::course-analytics",
+      "label": "Course Analytics",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::course-evaluation",
+        "learning-graphs__degree-chart::feedback-analysis"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::vector-store",
+      "label": "Vector Store",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::similarity"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__degree-chart::llm",
+      "label": "LLM",
+      "subject_id": "learning-graphs__degree-chart",
+      "dependencies": [
+        "learning-graphs__degree-chart::similarity"
+      ],
+      "taxonomy_id": "ai",
+      "level": "core"
+    }
+  ]
+}

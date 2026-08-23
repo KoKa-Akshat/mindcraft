@@ -1,0 +1,2920 @@
+{
+  "subject_id": "forensic-science",
+  "title": "Forensic Science Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "CSI": {
+      "classifier_name": "Crime Scene Investigation",
+      "color": "DarkSlateBlue"
+    },
+    "PRINTS": {
+      "classifier_name": "Fingerprint Analysis",
+      "color": "DarkGreen"
+    },
+    "TRACE": {
+      "classifier_name": "Trace Evidence",
+      "color": "LimeGreen"
+    },
+    "SERO": {
+      "classifier_name": "Forensic Serology",
+      "color": "Crimson"
+    },
+    "BPA": {
+      "classifier_name": "Bloodstain Pattern Analysis",
+      "color": "DarkRed"
+    },
+    "DNA": {
+      "classifier_name": "Forensic DNA Profiling",
+      "color": "Teal"
+    },
+    "CHEM": {
+      "classifier_name": "Chemical Analysis & Toxicology",
+      "color": "Gold"
+    },
+    "FIRE": {
+      "classifier_name": "Fire, Arson & Explosives",
+      "color": "DarkGoldenrod"
+    },
+    "ANTHRO": {
+      "classifier_name": "Forensic Anthropology",
+      "color": "MediumPurple"
+    },
+    "ENTOM": {
+      "classifier_name": "Forensic Entomology",
+      "color": "OliveDrab"
+    },
+    "ARMS": {
+      "classifier_name": "Firearms, Ballistics & Toolmarks",
+      "color": "DodgerBlue"
+    },
+    "DOCX": {
+      "classifier_name": "Document Examination",
+      "color": "Peru"
+    },
+    "DIGIT": {
+      "classifier_name": "Digital Forensics",
+      "color": "DimGray"
+    },
+    "AVIA": {
+      "classifier_name": "Aviation Crash Forensics",
+      "color": "SaddleBrown"
+    }
+  },
+  "concepts": [
+    {
+      "id": "forensic-science::forensic-science-overview",
+      "label": "Forensic Science Overview",
+      "subject_id": "forensic-science",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "forensic-science::scientific-method-in-forensics",
+      "label": "Scientific Method in Forensics",
+      "subject_id": "forensic-science",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "forensic-science::locard-exchange-principle",
+      "label": "Locard Exchange Principle",
+      "subject_id": "forensic-science",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "forensic-science::daubert-standard",
+      "label": "Daubert Standard",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview",
+        "forensic-science::scientific-method-in-forensics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::frye-standard",
+      "label": "Frye Standard",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview",
+        "forensic-science::scientific-method-in-forensics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::expert-witness-role",
+      "label": "Expert Witness Role",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::expert-witness-ethics",
+      "label": "Expert Witness Ethics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::expert-witness-role"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::evidence-admissibility",
+      "label": "Evidence Admissibility",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::daubert-standard",
+        "forensic-science::frye-standard"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fourth-amendment-rights",
+      "label": "Fourth Amendment Rights",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fifth-amendment-rights",
+      "label": "Fifth Amendment Rights",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::search-and-seizure-law",
+      "label": "Search and Seizure Law",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fourth-amendment-rights"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::warrant-requirements",
+      "label": "Warrant Requirements",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fourth-amendment-rights",
+        "forensic-science::search-and-seizure-law"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::criminal-law-vs-civil-law",
+      "label": "Criminal Law vs Civil Law",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::criminal-vs-civil-standards",
+      "label": "Criminal vs Civil Standards",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::criminal-law-vs-civil-law"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::criminal-justice-structure",
+      "label": "Criminal Justice Structure",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::chain-of-custody",
+      "label": "Chain of Custody",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::seven-s-s-of-crime-scene",
+      "label": "Seven S's of Crime Scene",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::chain-of-custody"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::crime-scene-perimeter-security",
+      "label": "Crime Scene Perimeter Security",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::seven-s-s-of-crime-scene"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::primary-vs-secondary-scenes",
+      "label": "Primary vs Secondary Scenes",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::seven-s-s-of-crime-scene"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::crime-scene-documentation",
+      "label": "Crime Scene Documentation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::seven-s-s-of-crime-scene"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::crime-scene-photography",
+      "label": "Crime Scene Photography",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::crime-scene-documentation"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::crime-scene-sketching",
+      "label": "Crime Scene Sketching",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::crime-scene-documentation"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::scaled-sketch-techniques",
+      "label": "Scaled Sketch Techniques",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::crime-scene-sketching"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::triangulation-measurement",
+      "label": "Triangulation Measurement",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::scaled-sketch-techniques"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::evidence-search-patterns",
+      "label": "Evidence Search Patterns",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::seven-s-s-of-crime-scene"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::grid-search-pattern",
+      "label": "Grid Search Pattern",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::evidence-search-patterns"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::spiral-search-pattern",
+      "label": "Spiral Search Pattern",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::evidence-search-patterns"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::zone-search-pattern",
+      "label": "Zone Search Pattern",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::evidence-search-patterns"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::evidence-identification",
+      "label": "Evidence Identification",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::chain-of-custody"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::evidence-collection-protocols",
+      "label": "Evidence Collection Protocols",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::chain-of-custody",
+        "forensic-science::evidence-identification"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::evidence-packaging-materials",
+      "label": "Evidence Packaging Materials",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::evidence-collection-protocols"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::druggist-fold-technique",
+      "label": "Druggist Fold Technique",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::evidence-packaging-materials"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::biohazard-evidence-containers",
+      "label": "Biohazard Evidence Containers",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::evidence-packaging-materials"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::physical-evidence-types",
+      "label": "Physical Evidence Types",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::evidence-identification"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::trace-evidence",
+      "label": "Trace Evidence",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::physical-evidence-types",
+        "forensic-science::locard-exchange-principle"
+      ],
+      "taxonomy_id": "CSI",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dactyloscopy",
+      "label": "Dactyloscopy",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview",
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::friction-ridge-skin",
+      "label": "Friction Ridge Skin",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::dactyloscopy"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dermal-papillae",
+      "label": "Dermal Papillae",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::friction-ridge-skin"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fingerprint-pattern-loops",
+      "label": "Fingerprint Pattern: Loops",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::friction-ridge-skin"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fingerprint-pattern-whorls",
+      "label": "Fingerprint Pattern: Whorls",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::friction-ridge-skin"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fingerprint-pattern-arches",
+      "label": "Fingerprint Pattern: Arches",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::friction-ridge-skin"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ulnar-vs-radial-loops",
+      "label": "Ulnar vs Radial Loops",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fingerprint-pattern-loops"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::whorl-subtypes",
+      "label": "Whorl Subtypes",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fingerprint-pattern-whorls"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::tented-arch-pattern",
+      "label": "Tented Arch Pattern",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fingerprint-pattern-arches"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::minutiae-points",
+      "label": "Minutiae Points",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::friction-ridge-skin"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ridge-endings",
+      "label": "Ridge Endings",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::minutiae-points"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::bifurcations",
+      "label": "Bifurcations",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::minutiae-points"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::patent-fingerprints",
+      "label": "Patent Fingerprints",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::friction-ridge-skin",
+        "forensic-science::physical-evidence-types"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::plastic-fingerprints",
+      "label": "Plastic Fingerprints",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::friction-ridge-skin",
+        "forensic-science::physical-evidence-types"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::latent-fingerprints",
+      "label": "Latent Fingerprints",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::friction-ridge-skin",
+        "forensic-science::physical-evidence-types"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fingerprint-substrates",
+      "label": "Fingerprint Substrates",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::latent-fingerprints"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::cyanoacrylate-fuming",
+      "label": "Cyanoacrylate Fuming",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::latent-fingerprints",
+        "forensic-science::fingerprint-substrates"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ninhydrin-development",
+      "label": "Ninhydrin Development",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::latent-fingerprints",
+        "forensic-science::fingerprint-substrates"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::silver-nitrate-development",
+      "label": "Silver Nitrate Development",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::latent-fingerprints",
+        "forensic-science::fingerprint-substrates"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::iodine-fuming",
+      "label": "Iodine Fuming",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::latent-fingerprints",
+        "forensic-science::fingerprint-substrates"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::afis-database",
+      "label": "AFIS Database",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::dactyloscopy"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fingerprint-individualization",
+      "label": "Fingerprint Individualization",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::minutiae-points",
+        "forensic-science::ridge-endings",
+        "forensic-science::bifurcations"
+      ],
+      "taxonomy_id": "PRINTS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::hair-anatomy",
+      "label": "Hair Anatomy",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::hair-cuticle-structure",
+      "label": "Hair Cuticle Structure",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::hair-anatomy"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::hair-cortex-structure",
+      "label": "Hair Cortex Structure",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::hair-anatomy"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::hair-medulla-structure",
+      "label": "Hair Medulla Structure",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::hair-anatomy"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::medullary-index-calculation",
+      "label": "Medullary Index Calculation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::hair-medulla-structure"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::human-vs-non-human-hair",
+      "label": "Human vs Non-Human Hair",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::medullary-index-calculation",
+        "forensic-science::hair-cortex-structure",
+        "forensic-science::hair-cuticle-structure"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::hair-scale-patterns",
+      "label": "Hair Scale Patterns",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::hair-cuticle-structure"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::pigment-granules-in-hair",
+      "label": "Pigment Granules in Hair",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::hair-cortex-structure"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::natural-fibers",
+      "label": "Natural Fibers",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::synthetic-fibers",
+      "label": "Synthetic Fibers",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fiber-microscopy",
+      "label": "Fiber Microscopy",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::natural-fibers",
+        "forensic-science::synthetic-fibers"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::burn-testing-of-fibers",
+      "label": "Burn Testing of Fibers",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::natural-fibers",
+        "forensic-science::synthetic-fibers"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::chemical-solubility-testing",
+      "label": "Chemical Solubility Testing",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::natural-fibers",
+        "forensic-science::synthetic-fibers"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::class-evidence-concept",
+      "label": "Class Evidence Concept",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::physical-evidence-types"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::glass-composition",
+      "label": "Glass Composition",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::refractive-index",
+      "label": "Refractive Index",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::glass-composition"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::becke-line-test",
+      "label": "Becke Line Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::refractive-index"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::immersion-oil-technique",
+      "label": "Immersion Oil Technique",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::becke-line-test"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::radial-fracture-lines",
+      "label": "Radial Fracture Lines",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::glass-composition"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::concentric-fracture-lines",
+      "label": "Concentric Fracture Lines",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::glass-composition"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::3r-rule-for-glass",
+      "label": "3R Rule for Glass",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::radial-fracture-lines",
+        "forensic-science::concentric-fracture-lines"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::glass-fracture-sequence",
+      "label": "Glass Fracture Sequence",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::radial-fracture-lines",
+        "forensic-science::concentric-fracture-lines"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::glass-fracture-mechanics",
+      "label": "Glass Fracture Mechanics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::glass-fracture-sequence",
+        "forensic-science::3r-rule-for-glass"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::soil-composition-analysis",
+      "label": "Soil Composition Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::soil-ph-measurement",
+      "label": "Soil pH Measurement",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::soil-composition-analysis"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::particle-size-distribution",
+      "label": "Particle Size Distribution",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::soil-composition-analysis"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::gradient-tube-density",
+      "label": "Gradient Tube Density",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::soil-composition-analysis"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::sand-mineral-analysis",
+      "label": "Sand Mineral Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::soil-composition-analysis"
+      ],
+      "taxonomy_id": "TRACE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::blood-composition",
+      "label": "Blood Composition",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::erythrocytes",
+      "label": "Erythrocytes",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-composition"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::leukocytes",
+      "label": "Leukocytes",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-composition"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::platelets-and-plasma",
+      "label": "Platelets and Plasma",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-composition"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::presumptive-blood-tests",
+      "label": "Presumptive Blood Tests",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-composition"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::kastle-meyer-color-test",
+      "label": "Kastle-Meyer Color Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::presumptive-blood-tests"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::luminol-test",
+      "label": "Luminol Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::presumptive-blood-tests"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fluorescein-test",
+      "label": "Fluorescein Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::presumptive-blood-tests"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::confirmatory-blood-tests",
+      "label": "Confirmatory Blood Tests",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::presumptive-blood-tests"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::abo-blood-typing",
+      "label": "ABO Blood Typing",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-composition"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::rh-factor",
+      "label": "Rh Factor",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-composition"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::agglutination-chemistry",
+      "label": "Agglutination Chemistry",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::abo-blood-typing",
+        "forensic-science::rh-factor"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::secretor-status",
+      "label": "Secretor Status",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::abo-blood-typing"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::semen-detection-psa-test",
+      "label": "Semen Detection (PSA Test)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::salivary-amylase-test",
+      "label": "Salivary Amylase Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::urine-detection",
+      "label": "Urine Detection",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "SERO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::blood-drop-physics",
+      "label": "Blood Drop Physics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-composition"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::surface-tension-of-blood",
+      "label": "Surface Tension of Blood",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-drop-physics"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::blood-viscosity",
+      "label": "Blood Viscosity",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-drop-physics"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::blood-cohesion",
+      "label": "Blood Cohesion",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-drop-physics"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::low-velocity-impact-spatter",
+      "label": "Low-Velocity Impact Spatter",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::surface-tension-of-blood",
+        "forensic-science::blood-viscosity",
+        "forensic-science::blood-cohesion"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::medium-velocity-impact-spatter",
+      "label": "Medium-Velocity Impact Spatter",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::surface-tension-of-blood",
+        "forensic-science::blood-viscosity",
+        "forensic-science::blood-cohesion"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::high-velocity-impact-spatter",
+      "label": "High-Velocity Impact Spatter",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::surface-tension-of-blood",
+        "forensic-science::blood-viscosity",
+        "forensic-science::blood-cohesion"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::angle-of-impact-formula",
+      "label": "Angle of Impact Formula",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::low-velocity-impact-spatter",
+        "forensic-science::medium-velocity-impact-spatter",
+        "forensic-science::high-velocity-impact-spatter"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::area-of-convergence",
+      "label": "Area of Convergence",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::angle-of-impact-formula"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::area-of-origin-in-3d-space",
+      "label": "Area of Origin in 3D Space",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::area-of-convergence"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::stringing-technique",
+      "label": "Stringing Technique",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::area-of-origin-in-3d-space"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::passive-bloodstains",
+      "label": "Passive Bloodstains",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-drop-physics"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::transfer-bloodstains",
+      "label": "Transfer Bloodstains",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-drop-physics"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::cast-off-bloodstains",
+      "label": "Cast-Off Bloodstains",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::medium-velocity-impact-spatter"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::arterial-spurting-pattern",
+      "label": "Arterial Spurting Pattern",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::high-velocity-impact-spatter"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::wipe-vs-swipe-stains",
+      "label": "Wipe vs Swipe Stains",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::transfer-bloodstains"
+      ],
+      "taxonomy_id": "BPA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dna-structure-review",
+      "label": "DNA Structure Review",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::nuclear-dna",
+      "label": "Nuclear DNA",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::dna-structure-review"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::mitochondrial-dna",
+      "label": "Mitochondrial DNA",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::dna-structure-review"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::short-tandem-repeats-strs",
+      "label": "Short Tandem Repeats (STRs)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::nuclear-dna"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::codis-loci",
+      "label": "CODIS Loci",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::short-tandem-repeats-strs"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::polymerase-chain-reaction",
+      "label": "Polymerase Chain Reaction",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::dna-structure-review"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::pcr-primer-design",
+      "label": "PCR Primer Design",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::polymerase-chain-reaction"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dna-denaturation",
+      "label": "DNA Denaturation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::polymerase-chain-reaction"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dna-annealing",
+      "label": "DNA Annealing",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::polymerase-chain-reaction",
+        "forensic-science::pcr-primer-design"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dna-extension",
+      "label": "DNA Extension",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::dna-annealing"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::capillary-electrophoresis",
+      "label": "Capillary Electrophoresis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::short-tandem-repeats-strs",
+        "forensic-science::dna-extension"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::electropherogram-interpretation",
+      "label": "Electropherogram Interpretation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::capillary-electrophoresis"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dna-alleles",
+      "label": "DNA Alleles",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::short-tandem-repeats-strs"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::homozygous-vs-heterozygous",
+      "label": "Homozygous vs Heterozygous",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::dna-alleles"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::y-str-analysis",
+      "label": "Y-STR Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::mitochondrial-dna"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::random-match-probability",
+      "label": "Random Match Probability",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::codis-loci",
+        "forensic-science::dna-alleles"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::product-rule-in-statistics",
+      "label": "Product Rule in Statistics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::random-match-probability"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dna-database-searching",
+      "label": "DNA Database Searching",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::codis-loci",
+        "forensic-science::electropherogram-interpretation"
+      ],
+      "taxonomy_id": "DNA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::pharmacokinetics-adme",
+      "label": "Pharmacokinetics (ADME)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::drug-absorption",
+      "label": "Drug Absorption",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pharmacokinetics-adme"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::drug-distribution",
+      "label": "Drug Distribution",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pharmacokinetics-adme"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::drug-metabolism",
+      "label": "Drug Metabolism",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pharmacokinetics-adme"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::drug-elimination",
+      "label": "Drug Elimination",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pharmacokinetics-adme"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::controlled-substances-act",
+      "label": "Controlled Substances Act",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::drug-schedule-classifications",
+      "label": "Drug Schedule Classifications",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::controlled-substances-act"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::marquis-reagent-test",
+      "label": "Marquis Reagent Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::scott-reagent-test",
+      "label": "Scott Reagent Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::duquenois-levine-test",
+      "label": "Duquenois-Levine Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::gas-chromatography-gc",
+      "label": "Gas Chromatography (GC)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::mass-spectrometry-ms",
+      "label": "Mass Spectrometry (MS)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::gc-ms-analysis",
+      "label": "GC-MS Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::gas-chromatography-gc",
+        "forensic-science::mass-spectrometry-ms"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::lc-ms-ms-analysis",
+      "label": "LC-MS/MS Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::gas-chromatography-gc",
+        "forensic-science::mass-spectrometry-ms"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::blood-alcohol-concentration",
+      "label": "Blood Alcohol Concentration",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-composition"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::bac-retro-extrapolation",
+      "label": "BAC Retro-Extrapolation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blood-alcohol-concentration",
+        "forensic-science::pharmacokinetics-adme"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::cyanide-poisoning",
+      "label": "Cyanide Poisoning",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pharmacokinetics-adme"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::carbon-monoxide-poisoning",
+      "label": "Carbon Monoxide Poisoning",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pharmacokinetics-adme"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::heavy-metal-toxicology",
+      "label": "Heavy Metal Toxicology",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pharmacokinetics-adme"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fire-tetrahedron",
+      "label": "Fire Tetrahedron",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::combustion-chemistry",
+      "label": "Combustion Chemistry",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fire-tetrahedron"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::oxidation-reactions",
+      "label": "Oxidation Reactions",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fire-tetrahedron"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ignition-temperature",
+      "label": "Ignition Temperature",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fire-tetrahedron",
+        "forensic-science::combustion-chemistry"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::flash-point",
+      "label": "Flash Point",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fire-tetrahedron",
+        "forensic-science::ignition-temperature"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::arson-investigation",
+      "label": "Arson Investigation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::evidence-collection-protocols",
+        "forensic-science::fire-tetrahedron"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::accelerant-pour-patterns",
+      "label": "Accelerant Pour Patterns",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::arson-investigation"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::multiple-points-of-origin",
+      "label": "Multiple Points of Origin",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::arson-investigation"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::v-pattern-burn-indicators",
+      "label": "V-Pattern Burn Indicators",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::arson-investigation"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::spalling-in-arson",
+      "label": "Spalling in Arson",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::arson-investigation"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::headspace-analysis",
+      "label": "Headspace Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::gas-chromatography-gc",
+        "forensic-science::arson-investigation"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::spme-technique",
+      "label": "SPME Technique",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::headspace-analysis"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::low-explosives",
+      "label": "Low Explosives",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fire-tetrahedron",
+        "forensic-science::combustion-chemistry"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::high-explosives",
+      "label": "High Explosives",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::fire-tetrahedron",
+        "forensic-science::combustion-chemistry"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::post-blast-analysis",
+      "label": "Post-Blast Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::low-explosives",
+        "forensic-science::high-explosives"
+      ],
+      "taxonomy_id": "FIRE",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::human-osteology",
+      "label": "Human Osteology",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::skeletal-anatomy-206-bones",
+      "label": "Skeletal Anatomy (206 Bones)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::human-osteology"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::pelvic-morphology-analysis",
+      "label": "Pelvic Morphology Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::human-osteology",
+        "forensic-science::skeletal-anatomy-206-bones"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::subpubic-angle-measurement",
+      "label": "Subpubic Angle Measurement",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pelvic-morphology-analysis"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::greater-sciatic-notch",
+      "label": "Greater Sciatic Notch",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::pelvic-morphology-analysis"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::cranial-feature-analysis",
+      "label": "Cranial Feature Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::skeletal-anatomy-206-bones"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::biological-sex-estimation",
+      "label": "Biological Sex Estimation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::subpubic-angle-measurement",
+        "forensic-science::greater-sciatic-notch",
+        "forensic-science::cranial-feature-analysis"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::epiphyseal-fusion",
+      "label": "Epiphyseal Fusion",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::skeletal-anatomy-206-bones"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::cranial-suture-closure",
+      "label": "Cranial Suture Closure",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::cranial-feature-analysis"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::age-at-death-estimation",
+      "label": "Age-at-Death Estimation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::epiphyseal-fusion",
+        "forensic-science::cranial-suture-closure"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::long-bone-measurements",
+      "label": "Long Bone Measurements",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::skeletal-anatomy-206-bones"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::stature-regression-equations",
+      "label": "Stature Regression Equations",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::long-bone-measurements"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::antemortem-trauma",
+      "label": "Antemortem Trauma",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::human-osteology"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::perimortem-trauma",
+      "label": "Perimortem Trauma",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::human-osteology",
+        "forensic-science::antemortem-trauma"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::postmortem-trauma",
+      "label": "Postmortem Trauma",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::human-osteology",
+        "forensic-science::antemortem-trauma"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::bone-trauma-differentiation",
+      "label": "Bone Trauma Differentiation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::antemortem-trauma",
+        "forensic-science::perimortem-trauma",
+        "forensic-science::postmortem-trauma"
+      ],
+      "taxonomy_id": "ANTHRO",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::stages-of-decomposition",
+      "label": "Stages of Decomposition",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fresh-stage-of-decomposition",
+      "label": "Fresh Stage of Decomposition",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::stages-of-decomposition"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::bloat-stage-of-decomposition",
+      "label": "Bloat Stage of Decomposition",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::stages-of-decomposition"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::active-decay-stage",
+      "label": "Active Decay Stage",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::stages-of-decomposition"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::advanced-decay-stage",
+      "label": "Advanced Decay Stage",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::stages-of-decomposition"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dry-remains-stage",
+      "label": "Dry Remains Stage",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::stages-of-decomposition"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::blowfly-lifecycle",
+      "label": "Blowfly Lifecycle",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::stages-of-decomposition"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::calliphoridae-family",
+      "label": "Calliphoridae Family",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blowfly-lifecycle"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::insect-egg-stage",
+      "label": "Insect Egg Stage",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::blowfly-lifecycle"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::larval-instar-stages",
+      "label": "Larval Instar Stages",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::insect-egg-stage"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::blowfly-pupa-stage",
+      "label": "Blowfly Pupa Stage",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::larval-instar-stages"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::accumulated-degree-hours",
+      "label": "Accumulated Degree Hours",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::larval-instar-stages",
+        "forensic-science::blowfly-pupa-stage"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::accumulated-degree-days",
+      "label": "Accumulated Degree Days",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::accumulated-degree-hours"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::minimum-post-mortem-interval",
+      "label": "Minimum Post-Mortem Interval",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::accumulated-degree-hours",
+        "forensic-science::accumulated-degree-days"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::insect-succession-ecology",
+      "label": "Insect Succession Ecology",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::stages-of-decomposition",
+        "forensic-science::calliphoridae-family"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::environmental-variables-in-pmi",
+      "label": "Environmental Variables in PMI",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::minimum-post-mortem-interval",
+        "forensic-science::insect-succession-ecology"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::necrophagous-insects",
+      "label": "Necrophagous Insects",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::calliphoridae-family"
+      ],
+      "taxonomy_id": "ENTOM",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::internal-ballistics",
+      "label": "Internal Ballistics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::rifling-in-firearms",
+      "label": "Rifling in Firearms",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::internal-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::lands-and-grooves",
+      "label": "Lands and Grooves",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::rifling-in-firearms"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::breech-face-markings",
+      "label": "Breech Face Markings",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::internal-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::firing-pin-impressions",
+      "label": "Firing Pin Impressions",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::internal-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ejector-marks",
+      "label": "Ejector Marks",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::internal-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::external-ballistics",
+      "label": "External Ballistics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::internal-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::bullet-trajectory-calculation",
+      "label": "Bullet Trajectory Calculation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::external-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::terminal-ballistics",
+      "label": "Terminal Ballistics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::internal-ballistics",
+        "forensic-science::external-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::entrance-vs-exit-wounds",
+      "label": "Entrance vs Exit Wounds",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::terminal-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::wound-morphology",
+      "label": "Wound Morphology",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::terminal-ballistics",
+        "forensic-science::entrance-vs-exit-wounds"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ricochet-analysis",
+      "label": "Ricochet Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::bullet-trajectory-calculation"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::gunshot-residue-gsr",
+      "label": "Gunshot Residue (GSR)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::internal-ballistics"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::modified-griess-test",
+      "label": "Modified Griess Test",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::gunshot-residue-gsr"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::toolmark-analysis",
+      "label": "Toolmark Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::compression-marks",
+      "label": "Compression Marks",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::toolmark-analysis"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::sliding-marks",
+      "label": "Sliding Marks",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::toolmark-analysis"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::serial-number-restoration",
+      "label": "Serial Number Restoration",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::toolmark-analysis"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::acid-etching-technique",
+      "label": "Acid Etching Technique",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::serial-number-restoration"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::comparison-microscope",
+      "label": "Comparison Microscope",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "ARMS",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::handwriting-analysis",
+      "label": "Handwriting Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::handwriting-characteristics",
+      "label": "Handwriting Characteristics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::handwriting-analysis"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::line-quality-in-writing",
+      "label": "Line Quality in Writing",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::handwriting-characteristics"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::slant-and-spacing-analysis",
+      "label": "Slant and Spacing Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::handwriting-characteristics"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::requested-writing-exemplars",
+      "label": "Requested Writing Exemplars",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::handwriting-analysis"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::unrequested-writing-exemplars",
+      "label": "Unrequested Writing Exemplars",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::handwriting-analysis"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::blind-forgery",
+      "label": "Blind Forgery",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::handwriting-analysis"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::simulated-forgery",
+      "label": "Simulated Forgery",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::handwriting-analysis"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::traced-forgery",
+      "label": "Traced Forgery",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::handwriting-analysis"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ink-chemistry-analysis",
+      "label": "Ink Chemistry Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::paper-chromatography",
+      "label": "Paper Chromatography",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::ink-chemistry-analysis"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::thin-layer-chromatography",
+      "label": "Thin-Layer Chromatography",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::ink-chemistry-analysis",
+        "forensic-science::paper-chromatography"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::counterfeit-detection",
+      "label": "Counterfeit Detection",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::trace-evidence"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::currency-security-features",
+      "label": "Currency Security Features",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::counterfeit-detection"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::watermarks-and-threads",
+      "label": "Watermarks and Threads",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::currency-security-features"
+      ],
+      "taxonomy_id": "DOCX",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::digital-forensics-overview",
+      "label": "Digital Forensics Overview",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-science-overview"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::volatile-vs-non-volatile-data",
+      "label": "Volatile vs Non-Volatile Data",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::digital-forensics-overview"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ram-evidence-collection",
+      "label": "RAM Evidence Collection",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::volatile-vs-non-volatile-data"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::hard-drive-architecture",
+      "label": "Hard Drive Architecture",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::digital-forensics-overview"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ssd-forensics",
+      "label": "SSD Forensics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::hard-drive-architecture"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::write-blocker-hardware",
+      "label": "Write-Blocker Hardware",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::digital-forensics-overview"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::forensic-imaging-process",
+      "label": "Forensic Imaging Process",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::write-blocker-hardware"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::bit-stream-copy",
+      "label": "Bit-Stream Copy",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::forensic-imaging-process"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::md5-hash-function",
+      "label": "MD5 Hash Function",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::digital-forensics-overview"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::sha-256-hash-function",
+      "label": "SHA-256 Hash Function",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::md5-hash-function"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::hash-verification",
+      "label": "Hash Verification",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::md5-hash-function",
+        "forensic-science::sha-256-hash-function",
+        "forensic-science::forensic-imaging-process"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::exif-metadata-recovery",
+      "label": "EXIF Metadata Recovery",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::digital-forensics-overview"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::digital-timestamp-analysis",
+      "label": "Digital Timestamp Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::exif-metadata-recovery"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::geolocation-from-metadata",
+      "label": "Geolocation from Metadata",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::exif-metadata-recovery",
+        "forensic-science::digital-timestamp-analysis"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::network-forensics-basics",
+      "label": "Network Forensics Basics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::digital-forensics-overview"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::ip-address-analysis",
+      "label": "IP Address Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::network-forensics-basics"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::packet-sniffing",
+      "label": "Packet Sniffing",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::network-forensics-basics"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::firewall-log-analysis",
+      "label": "Firewall Log Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::network-forensics-basics",
+        "forensic-science::packet-sniffing"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::encryption-in-digital-forensics",
+      "label": "Encryption in Digital Forensics",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::digital-forensics-overview"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::steganography",
+      "label": "Steganography",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::encryption-in-digital-forensics"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::dark-web-evidence",
+      "label": "Dark Web Evidence",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::digital-forensics-overview",
+        "forensic-science::encryption-in-digital-forensics"
+      ],
+      "taxonomy_id": "DIGIT",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::aircraft-accident-investigation",
+      "label": "Aircraft Accident Investigation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::scientific-method-in-forensics"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::accident-vs-incident-classification",
+      "label": "Accident vs. Incident Classification",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::aircraft-accident-investigation"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::icao-annex-13",
+      "label": "ICAO Annex 13",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::aircraft-accident-investigation"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::national-transportation-safety-board-ntsb",
+      "label": "National Transportation Safety Board (NTSB)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::icao-annex-13"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::go-team-and-investigator-in-charge",
+      "label": "Go-Team and Investigator-in-Charge",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::national-transportation-safety-board-ntsb"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::party-system-of-investigation",
+      "label": "Party System of Investigation",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::national-transportation-safety-board-ntsb"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::debris-field-analysis",
+      "label": "Debris Field Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::aircraft-accident-investigation",
+        "forensic-science::crime-scene-documentation"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::in-flight-breakup-vs-intact-impact",
+      "label": "In-Flight Breakup vs. Intact Impact",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::debris-field-analysis"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::wreckage-reconstruction",
+      "label": "Wreckage Reconstruction",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::in-flight-breakup-vs-intact-impact"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::flight-data-recorder-fdr",
+      "label": "Flight Data Recorder (FDR)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::aircraft-accident-investigation"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::cockpit-voice-recorder-cvr",
+      "label": "Cockpit Voice Recorder (CVR)",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::aircraft-accident-investigation"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::crash-survivable-memory-unit",
+      "label": "Crash-Survivable Memory Unit",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::flight-data-recorder-fdr",
+        "forensic-science::cockpit-voice-recorder-cvr"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::underwater-locator-beacon",
+      "label": "Underwater Locator Beacon",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::crash-survivable-memory-unit"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::radar-and-ads-b-flight-path-reconstruction",
+      "label": "Radar and ADS-B Flight Path Reconstruction",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::flight-data-recorder-fdr"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::metallurgical-failure-analysis",
+      "label": "Metallurgical Failure Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::wreckage-reconstruction",
+        "forensic-science::glass-fracture-mechanics"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::fatigue-versus-overload-fracture",
+      "label": "Fatigue versus Overload Fracture",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::metallurgical-failure-analysis"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::in-flight-fire-and-explosion-patterns",
+      "label": "In-Flight Fire and Explosion Patterns",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::combustion-chemistry",
+        "forensic-science::high-explosives",
+        "forensic-science::wreckage-reconstruction"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::human-factors-analysis",
+      "label": "Human Factors Analysis",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::aircraft-accident-investigation"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::aviation-pathology-and-victim-identification",
+      "label": "Aviation Pathology and Victim Identification",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::short-tandem-repeats-strs",
+        "forensic-science::bone-trauma-differentiation"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    },
+    {
+      "id": "forensic-science::probable-cause-and-crash-survivability",
+      "label": "Probable Cause and Crash Survivability",
+      "subject_id": "forensic-science",
+      "dependencies": [
+        "forensic-science::aircraft-accident-investigation",
+        "forensic-science::fatigue-versus-overload-fracture",
+        "forensic-science::in-flight-fire-and-explosion-patterns",
+        "forensic-science::aviation-pathology-and-victim-identification"
+      ],
+      "taxonomy_id": "AVIA",
+      "level": "core"
+    }
+  ]
+}

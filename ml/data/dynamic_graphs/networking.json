@@ -1,0 +1,3631 @@
+{
+  "subject_id": "networking",
+  "title": "Networking and Communication",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "Gainsboro"
+    },
+    "ARCH": {
+      "classifier_name": "Architecture and Layering",
+      "color": "PaleTurquoise"
+    },
+    "PERF": {
+      "classifier_name": "Performance and Quality of Service",
+      "color": "Lavender"
+    },
+    "PHYS": {
+      "classifier_name": "Physical Layer",
+      "color": "LightYellow"
+    },
+    "LINK": {
+      "classifier_name": "Link Layer and LAN Switching",
+      "color": "LightCoral"
+    },
+    "WIRE": {
+      "classifier_name": "Wireless and Mobility",
+      "color": "Plum"
+    },
+    "NET": {
+      "classifier_name": "Network Layer and Addressing",
+      "color": "SteelBlue"
+    },
+    "ROUT": {
+      "classifier_name": "Routing and Forwarding",
+      "color": "PeachPuff"
+    },
+    "TRANS": {
+      "classifier_name": "Transport Layer",
+      "color": "PaleGreen"
+    },
+    "APP": {
+      "classifier_name": "Application Layer Protocols",
+      "color": "LavenderBlush"
+    },
+    "SEC": {
+      "classifier_name": "Network Security",
+      "color": "MistyRose"
+    },
+    "PROG": {
+      "classifier_name": "Network Programming",
+      "color": "Thistle"
+    },
+    "OPS": {
+      "classifier_name": "Network Operations and Measurement",
+      "color": "MintCream"
+    },
+    "SDN": {
+      "classifier_name": "SDN, NFV, and Emerging Topics",
+      "color": "PowderBlue"
+    },
+    "CAP": {
+      "classifier_name": "Capstone Projects",
+      "color": "Honeydew"
+    }
+  },
+  "concepts": [
+    {
+      "id": "networking::computer-network",
+      "label": "Computer Network",
+      "subject_id": "networking",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "networking::host",
+      "label": "Host",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::computer-network"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::end-system",
+      "label": "End System",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::host"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::server",
+      "label": "Server",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::end-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::client",
+      "label": "Client",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::end-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-node",
+      "label": "Network Node",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::computer-network"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-edge",
+      "label": "Network Edge",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::host",
+        "networking::network-node"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-core",
+      "label": "Network Core",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-node"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::communication-link",
+      "label": "Communication Link",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::computer-network",
+        "networking::network-node"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-interface",
+      "label": "Network Interface",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::host",
+        "networking::communication-link"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::mac-address",
+      "label": "MAC Address",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-interface"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::ip-address",
+      "label": "IP Address",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-interface"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::port-number",
+      "label": "Port Number",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::host",
+        "networking::network-interface"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::protocol",
+      "label": "Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::computer-network"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::standard",
+      "label": "Standard",
+      "subject_id": "networking",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "networking::rfc-document",
+      "label": "RFC Document",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol",
+        "networking::standard"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::ieee-standard",
+      "label": "IEEE Standard",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::standard"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::ietf",
+      "label": "IETF",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol",
+        "networking::rfc-document"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::iso",
+      "label": "ISO",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::standard"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::icann",
+      "label": "ICANN",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::standard"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::bit",
+      "label": "Bit",
+      "subject_id": "networking",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "networking::byte",
+      "label": "Byte",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::frame",
+      "label": "Frame",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::packet",
+      "label": "Packet",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::segment",
+      "label": "Segment",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::datagram",
+      "label": "Datagram",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::message",
+      "label": "Message",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::header",
+      "label": "Header",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::payload",
+      "label": "Payload",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::trailer",
+      "label": "Trailer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::encapsulation",
+      "label": "Encapsulation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::header",
+        "networking::payload"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::decapsulation",
+      "label": "Decapsulation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::encapsulation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "networking::layered-architecture",
+      "label": "Layered Architecture",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol",
+        "networking::encapsulation"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::osi-reference-model",
+      "label": "OSI Reference Model",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::layered-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-ip-model",
+      "label": "TCP IP Model",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::layered-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::physical-layer",
+      "label": "Physical Layer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::osi-reference-model",
+        "networking::tcp-ip-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::data-link-layer",
+      "label": "Data Link Layer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::osi-reference-model",
+        "networking::tcp-ip-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-layer",
+      "label": "Network Layer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::osi-reference-model",
+        "networking::tcp-ip-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::transport-layer",
+      "label": "Transport Layer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::osi-reference-model",
+        "networking::tcp-ip-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::session-layer",
+      "label": "Session Layer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::osi-reference-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::presentation-layer",
+      "label": "Presentation Layer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::osi-reference-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::application-layer",
+      "label": "Application Layer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::osi-reference-model",
+        "networking::tcp-ip-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::end-to-end-principle",
+      "label": "End To End Principle",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::layered-architecture",
+        "networking::tcp-ip-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::separation-of-concerns",
+      "label": "Separation Of Concerns",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::layered-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::service-model",
+      "label": "Service Model",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::connection-oriented",
+      "label": "Connection Oriented",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::transport-layer",
+        "networking::service-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::connectionless",
+      "label": "Connectionless",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::transport-layer",
+        "networking::service-model"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::best-effort-delivery",
+      "label": "Best Effort Delivery",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::connectionless"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::reliable-delivery",
+      "label": "Reliable Delivery",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::connection-oriented"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::stateful-protocol",
+      "label": "Stateful Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol",
+        "networking::connection-oriented"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::stateless-protocol",
+      "label": "Stateless Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol",
+        "networking::connectionless"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::in-band-signaling",
+      "label": "In Band Signaling",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::out-of-band-signaling",
+      "label": "Out Of Band Signaling",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::unicast",
+      "label": "Unicast",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::multicast",
+      "label": "Multicast",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::broadcast",
+      "label": "Broadcast",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::anycast",
+      "label": "Anycast",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "networking::bandwidth",
+      "label": "Bandwidth",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::communication-link"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::throughput",
+      "label": "Throughput",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bandwidth"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::goodput",
+      "label": "Goodput",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::throughput"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::latency",
+      "label": "Latency",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::communication-link"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::propagation-delay",
+      "label": "Propagation Delay",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::communication-link",
+        "networking::latency"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::transmission-delay",
+      "label": "Transmission Delay",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bandwidth",
+        "networking::latency"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::queuing-delay",
+      "label": "Queuing Delay",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::latency"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::processing-delay",
+      "label": "Processing Delay",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::latency"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::round-trip-time",
+      "label": "Round Trip Time",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::latency"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::jitter",
+      "label": "Jitter",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::latency"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::packet-loss",
+      "label": "Packet Loss",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::packet"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::mtu",
+      "label": "MTU",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::communication-link",
+        "networking::packet"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::bandwidth-delay-product",
+      "label": "Bandwidth Delay Product",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bandwidth",
+        "networking::round-trip-time"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::signal",
+      "label": "Signal",
+      "subject_id": "networking",
+      "dependencies": [],
+      "taxonomy_id": "PHYS",
+      "level": "foundational"
+    },
+    {
+      "id": "networking::analog-signal",
+      "label": "Analog Signal",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::signal"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::digital-signal",
+      "label": "Digital Signal",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bit",
+        "networking::signal"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::modulation",
+      "label": "Modulation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::analog-signal",
+        "networking::digital-signal"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::demodulation",
+      "label": "Demodulation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::modulation"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::encoding",
+      "label": "Encoding",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::digital-signal"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::decoding",
+      "label": "Decoding",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::encoding"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::manchester-encoding",
+      "label": "Manchester Encoding",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::encoding"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::nrz-encoding",
+      "label": "NRZ Encoding",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::encoding"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::symbol-rate",
+      "label": "Symbol Rate",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::modulation"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::baud-rate",
+      "label": "Baud Rate",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::symbol-rate"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::channel-capacity",
+      "label": "Channel Capacity",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bandwidth",
+        "networking::signal"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::shannon-theorem",
+      "label": "Shannon Theorem",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::channel-capacity"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::twisted-pair-cable",
+      "label": "Twisted Pair Cable",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::physical-layer"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::coaxial-cable",
+      "label": "Coaxial Cable",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::physical-layer"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::fiber-optic-cable",
+      "label": "Fiber Optic Cable",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::physical-layer"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::wireless-medium",
+      "label": "Wireless Medium",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::physical-layer",
+        "networking::signal"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::attenuation",
+      "label": "Attenuation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::communication-link",
+        "networking::signal"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::noise",
+      "label": "Noise",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::signal"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::interference",
+      "label": "Interference",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::signal",
+        "networking::noise"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::bit-error-rate",
+      "label": "Bit Error Rate",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bit",
+        "networking::packet-loss"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "networking::framing",
+      "label": "Framing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::frame",
+        "networking::data-link-layer"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::bit-stuffing",
+      "label": "Bit Stuffing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::framing"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::byte-stuffing",
+      "label": "Byte Stuffing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::framing"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::parity-check",
+      "label": "Parity Check",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bit"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::checksum",
+      "label": "Checksum",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::byte",
+        "networking::header"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::crc",
+      "label": "CRC",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::checksum"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::forward-error-correction",
+      "label": "Forward Error Correction",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bit-error-rate",
+        "networking::crc"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::automatic-repeat-request",
+      "label": "Automatic Repeat Request",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::reliable-delivery",
+        "networking::bit-error-rate"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::stop-and-wait-protocol",
+      "label": "Stop And Wait Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::automatic-repeat-request"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::sliding-window",
+      "label": "Sliding Window",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::automatic-repeat-request"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::go-back-n",
+      "label": "Go Back N",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::sliding-window"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::selective-repeat",
+      "label": "Selective Repeat",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::sliding-window"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::media-access-control",
+      "label": "Media Access Control",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::mac-address",
+        "networking::data-link-layer"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::aloha-protocol",
+      "label": "ALOHA Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::media-access-control"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::csma",
+      "label": "CSMA",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::media-access-control"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::csma-cd",
+      "label": "CSMA CD",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::csma"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::csma-ca",
+      "label": "CSMA CA",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::csma"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::token-passing",
+      "label": "Token Passing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::media-access-control"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::ethernet",
+      "label": "Ethernet",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ieee-standard",
+        "networking::csma-cd"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::ethernet-frame",
+      "label": "Ethernet Frame",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::frame",
+        "networking::ethernet"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::ethernet-switch",
+      "label": "Ethernet Switch",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ethernet"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::hub",
+      "label": "Hub",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ethernet"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::bridge",
+      "label": "Bridge",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ethernet"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::learning-switch",
+      "label": "Learning Switch",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::mac-address",
+        "networking::ethernet-switch"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::spanning-tree-protocol",
+      "label": "Spanning Tree Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ieee-standard",
+        "networking::bridge"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::broadcast-domain",
+      "label": "Broadcast Domain",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::broadcast",
+        "networking::ethernet-switch"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::collision-domain",
+      "label": "Collision Domain",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::csma-cd",
+        "networking::hub"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::vlan",
+      "label": "VLAN",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ieee-standard",
+        "networking::ethernet-switch"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::vlan-tagging",
+      "label": "VLAN Tagging",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ethernet-frame",
+        "networking::vlan"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::trunk-port",
+      "label": "Trunk Port",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::vlan"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::access-port",
+      "label": "Access Port",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::vlan"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::link-aggregation",
+      "label": "Link Aggregation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::communication-link",
+        "networking::ethernet"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "networking::wireless-lan",
+      "label": "Wireless LAN",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::data-link-layer",
+        "networking::wireless-medium"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::wi-fi",
+      "label": "Wi Fi",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ieee-standard",
+        "networking::wireless-lan"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::access-point",
+      "label": "Access Point",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::wi-fi"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::ssid",
+      "label": "SSID",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::wi-fi"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::bss",
+      "label": "BSS",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::access-point",
+        "networking::ssid"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::ess",
+      "label": "ESS",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bss"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::wi-fi-channel",
+      "label": "Wi Fi Channel",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::wireless-medium",
+        "networking::wi-fi"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::rts-cts",
+      "label": "RTS CTS",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::csma-ca",
+        "networking::wi-fi"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::wi-fi-roaming",
+      "label": "Wi Fi Roaming",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::access-point",
+        "networking::handoff"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::bluetooth",
+      "label": "Bluetooth",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::wireless-medium"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::cellular-network",
+      "label": "Cellular Network",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::wireless-medium"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::4g-lte",
+      "label": "4G LTE",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cellular-network"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::5g-nr",
+      "label": "5G NR",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cellular-network",
+        "networking::4g-lte"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::mobile-ip",
+      "label": "Mobile IP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::cellular-network"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::handoff",
+      "label": "Handoff",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cellular-network"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::link-adaptation",
+      "label": "Link Adaptation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::wireless-medium",
+        "networking::cellular-network"
+      ],
+      "taxonomy_id": "WIRE",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv4",
+      "label": "IPv4",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv4-header",
+      "label": "IPv4 Header",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::header",
+        "networking::ipv4"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv4-address-format",
+      "label": "IPv4 Address Format",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv4-address-class",
+      "label": "IPv4 Address Class",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4-address-format"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::private-ipv4-range",
+      "label": "Private IPv4 Range",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::ipv4-address-format"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::loopback-address",
+      "label": "Loopback Address",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4-address-format"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::cidr-notation",
+      "label": "CIDR Notation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4-address-format",
+        "networking::subnet-mask"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::subnet",
+      "label": "Subnet",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4-address-format"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::subnet-mask",
+      "label": "Subnet Mask",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::subnet"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::subnetting",
+      "label": "Subnetting",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::subnet",
+        "networking::subnet-mask"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::supernetting",
+      "label": "Supernetting",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cidr-notation"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::longest-prefix-match",
+      "label": "Longest Prefix Match",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cidr-notation",
+        "networking::forwarding"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv6",
+      "label": "IPv6",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv6-header",
+      "label": "IPv6 Header",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::header",
+        "networking::ipv6"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv6-address-format",
+      "label": "IPv6 Address Format",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv6"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv6-address-type",
+      "label": "IPv6 Address Type",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv6-address-format"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv6-autoconfiguration",
+      "label": "IPv6 Autoconfiguration",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv6-address-format"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipv4-ipv6-transition",
+      "label": "IPv4 IPv6 Transition",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4",
+        "networking::ipv6"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::dual-stack",
+      "label": "Dual Stack",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4-ipv6-transition"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::tunneling",
+      "label": "Tunneling",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4-ipv6-transition"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::nat64",
+      "label": "NAT64",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4-ipv6-transition",
+        "networking::nat"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::icmp",
+      "label": "ICMP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ping",
+      "label": "Ping",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::icmp"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::traceroute",
+      "label": "Traceroute",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::icmp"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::arp",
+      "label": "ARP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::mac-address",
+        "networking::ip-address"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::ndp",
+      "label": "NDP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv6",
+        "networking::arp"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::nat",
+      "label": "NAT",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipv4",
+        "networking::private-ipv4-range"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::port-address-translation",
+      "label": "Port Address Translation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::port-number",
+        "networking::nat"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::fragmentation",
+      "label": "Fragmentation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::packet",
+        "networking::mtu"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::reassembly",
+      "label": "Reassembly",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::fragmentation"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "networking::forwarding",
+      "label": "Forwarding",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::packet",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::routing",
+      "label": "Routing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::forwarding-table",
+      "label": "Forwarding Table",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::forwarding"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::routing-table",
+      "label": "Routing Table",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::static-route",
+      "label": "Static Route",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::routing-table"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::default-route",
+      "label": "Default Route",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::routing-table"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::routing-algorithm",
+      "label": "Routing Algorithm",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::distance-vector-routing",
+      "label": "Distance Vector Routing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::routing-algorithm"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::bellman-ford-algorithm",
+      "label": "Bellman Ford Algorithm",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::distance-vector-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::rip-protocol",
+      "label": "RIP Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::distance-vector-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::count-to-infinity",
+      "label": "Count To Infinity",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::distance-vector-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::split-horizon",
+      "label": "Split Horizon",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::count-to-infinity"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::poison-reverse",
+      "label": "Poison Reverse",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::count-to-infinity"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::link-state-routing",
+      "label": "Link State Routing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::routing-algorithm"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::dijkstra-algorithm",
+      "label": "Dijkstra Algorithm",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::link-state-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::ospf-protocol",
+      "label": "OSPF Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::link-state-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::path-vector-routing",
+      "label": "Path Vector Routing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::routing-algorithm"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::bgp-protocol",
+      "label": "BGP Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::path-vector-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::autonomous-system",
+      "label": "Autonomous System",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bgp-protocol"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::intradomain-routing",
+      "label": "Intradomain Routing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rip-protocol",
+        "networking::ospf-protocol"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::interdomain-routing",
+      "label": "Interdomain Routing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bgp-protocol",
+        "networking::autonomous-system"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::internet-topology",
+      "label": "Internet Topology",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::computer-network",
+        "networking::autonomous-system"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::tier-1-isp",
+      "label": "Tier 1 ISP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::internet-topology"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::peering",
+      "label": "Peering",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::autonomous-system",
+        "networking::interdomain-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::transit-provider",
+      "label": "Transit Provider",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::autonomous-system",
+        "networking::interdomain-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::multicast-routing",
+      "label": "Multicast Routing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::multicast",
+        "networking::routing-algorithm"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::anycast-routing",
+      "label": "Anycast Routing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::anycast",
+        "networking::routing-algorithm"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "networking::udp",
+      "label": "UDP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::transport-layer",
+        "networking::connectionless"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::udp-datagram",
+      "label": "UDP Datagram",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::datagram",
+        "networking::udp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp",
+      "label": "TCP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::transport-layer",
+        "networking::connection-oriented"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-segment",
+      "label": "TCP Segment",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::segment",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-three-way-handshake",
+      "label": "TCP Three Way Handshake",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-termination",
+      "label": "TCP Termination",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::sequence-number",
+      "label": "Sequence Number",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-segment"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::acknowledgment",
+      "label": "Acknowledgment",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::reliable-delivery",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-window",
+      "label": "TCP Window",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::sliding-window",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::flow-control",
+      "label": "Flow Control",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-window"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::congestion-control",
+      "label": "Congestion Control",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::packet-loss",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::slow-start",
+      "label": "Slow Start",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::congestion-control"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::congestion-avoidance",
+      "label": "Congestion Avoidance",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::congestion-control"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::fast-retransmit",
+      "label": "Fast Retransmit",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::acknowledgment",
+        "networking::congestion-control"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::fast-recovery",
+      "label": "Fast Recovery",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::fast-retransmit"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-reno",
+      "label": "TCP Reno",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::slow-start",
+        "networking::congestion-avoidance",
+        "networking::fast-retransmit",
+        "networking::fast-recovery"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-cubic",
+      "label": "TCP CUBIC",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-reno"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-bbr",
+      "label": "TCP BBR",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::congestion-control"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::retransmission-timer",
+      "label": "Retransmission Timer",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::round-trip-time",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::karn-algorithm",
+      "label": "Karn Algorithm",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::retransmission-timer"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::nagle-algorithm",
+      "label": "Nagle Algorithm",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::jitter",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::sack-option",
+      "label": "SACK Option",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::selective-repeat",
+        "networking::acknowledgment"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::quic-protocol",
+      "label": "QUIC Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::udp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::multipath-tcp",
+      "label": "Multipath TCP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "networking::quality-of-service",
+      "label": "Quality Of Service",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::transport-layer"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::traffic-shaping",
+      "label": "Traffic Shaping",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::quality-of-service"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::token-bucket",
+      "label": "Token Bucket",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::traffic-shaping"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::leaky-bucket",
+      "label": "Leaky Bucket",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::traffic-shaping"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::fair-queuing",
+      "label": "Fair Queuing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::queuing-delay",
+        "networking::quality-of-service"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::scheduling-discipline",
+      "label": "Scheduling Discipline",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::fair-queuing"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::admission-control",
+      "label": "Admission Control",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::quality-of-service"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::differentiated-services",
+      "label": "Differentiated Services",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::quality-of-service"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::integrated-services",
+      "label": "Integrated Services",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::quality-of-service"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::net-neutrality",
+      "label": "Net Neutrality",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::quality-of-service"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "networking::dns",
+      "label": "DNS",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::application-layer"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::dns-hierarchy",
+      "label": "DNS Hierarchy",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::dns-record-type",
+      "label": "DNS Record Type",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::recursive-resolver",
+      "label": "Recursive Resolver",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns-hierarchy"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::authoritative-server",
+      "label": "Authoritative Server",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns-hierarchy"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::root-name-server",
+      "label": "Root Name Server",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns-hierarchy"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::dns-caching",
+      "label": "DNS Caching",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::dnssec",
+      "label": "DNSSEC",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns",
+        "networking::digital-signature"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::http-protocol",
+      "label": "HTTP Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::application-layer",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::http-methods",
+      "label": "HTTP Methods",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-protocol"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::http-status-code",
+      "label": "HTTP Status Code",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-protocol"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::http-headers",
+      "label": "HTTP Headers",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::header",
+        "networking::http-protocol"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::cookie",
+      "label": "Cookie",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-protocol",
+        "networking::http-headers"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::http-one-one",
+      "label": "HTTP One One",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-protocol"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::http-two",
+      "label": "HTTP Two",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-one-one"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::http-three",
+      "label": "HTTP Three",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::quic-protocol",
+        "networking::http-two"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::https",
+      "label": "HTTPS",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-protocol",
+        "networking::tls-protocol"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::rest-architecture",
+      "label": "REST Architecture",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-protocol",
+        "networking::http-methods"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::websocket",
+      "label": "WebSocket",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-protocol"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::grpc",
+      "label": "GRPC",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::http-two"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::smtp",
+      "label": "SMTP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::application-layer",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::imap",
+      "label": "IMAP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::application-layer",
+        "networking::smtp"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::pop3",
+      "label": "POP3",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::application-layer",
+        "networking::smtp"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::ftp",
+      "label": "FTP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::application-layer",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::ssh-protocol",
+      "label": "SSH Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::application-layer",
+        "networking::tcp",
+        "networking::cryptography-basics"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::telnet",
+      "label": "Telnet",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::application-layer",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::dhcp",
+      "label": "DHCP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::application-layer",
+        "networking::subnet-mask",
+        "networking::nat"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::snmp",
+      "label": "SNMP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::application-layer"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::ntp",
+      "label": "NTP",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::application-layer"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "networking::cryptography-basics",
+      "label": "Cryptography Basics",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bit"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::symmetric-encryption",
+      "label": "Symmetric Encryption",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cryptography-basics"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::public-key-cryptography",
+      "label": "Public Key Cryptography",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cryptography-basics"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::hash-function",
+      "label": "Hash Function",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cryptography-basics"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::digital-signature",
+      "label": "Digital Signature",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::public-key-cryptography",
+        "networking::hash-function"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::certificate-authority",
+      "label": "Certificate Authority",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::digital-signature"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::x509-certificate",
+      "label": "X509 Certificate",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::standard",
+        "networking::certificate-authority"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::tls-protocol",
+      "label": "TLS Protocol",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::tcp",
+        "networking::symmetric-encryption",
+        "networking::public-key-cryptography",
+        "networking::x509-certificate"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::tls-handshake",
+      "label": "TLS Handshake",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tls-protocol"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::cipher-suite",
+      "label": "Cipher Suite",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::symmetric-encryption",
+        "networking::tls-protocol"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::ipsec",
+      "label": "IPsec",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::rfc-document",
+        "networking::network-layer",
+        "networking::symmetric-encryption",
+        "networking::public-key-cryptography"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::vpn",
+      "label": "VPN",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ipsec"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::firewall",
+      "label": "Firewall",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::port-number",
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::stateful-firewall",
+      "label": "Stateful Firewall",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::stateful-protocol",
+        "networking::firewall"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::intrusion-detection",
+      "label": "Intrusion Detection",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::firewall"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::intrusion-prevention",
+      "label": "Intrusion Prevention",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::intrusion-detection"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::spoofing-attack",
+      "label": "Spoofing Attack",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::mac-address",
+        "networking::ip-address"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::man-in-the-middle",
+      "label": "Man In The Middle",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol",
+        "networking::tls-protocol"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::ddos-attack",
+      "label": "DDoS Attack",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::computer-network",
+        "networking::packet-loss"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::replay-attack",
+      "label": "Replay Attack",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::syn-flood",
+      "label": "SYN Flood",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-three-way-handshake",
+        "networking::ddos-attack"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::arp-spoofing",
+      "label": "ARP Spoofing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::arp",
+        "networking::spoofing-attack"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::dns-cache-poisoning",
+      "label": "DNS Cache Poisoning",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns-caching",
+        "networking::spoofing-attack"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::defense-in-depth",
+      "label": "Defense In Depth",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::firewall"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::zero-trust-network",
+      "label": "Zero Trust Network",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tls-protocol",
+        "networking::defense-in-depth"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "networking::berkeley-sockets-api",
+      "label": "Berkeley Sockets API",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::application-layer",
+        "networking::udp",
+        "networking::tcp"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcp-socket",
+      "label": "TCP Socket",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp",
+        "networking::berkeley-sockets-api"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::udp-socket",
+      "label": "UDP Socket",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::udp",
+        "networking::berkeley-sockets-api"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::socket-address",
+      "label": "Socket Address",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::ip-address",
+        "networking::port-number",
+        "networking::berkeley-sockets-api"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::bind-operation",
+      "label": "Bind Operation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-socket",
+        "networking::socket-address"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::listen-operation",
+      "label": "Listen Operation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-socket"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::accept-operation",
+      "label": "Accept Operation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::listen-operation"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::connect-operation",
+      "label": "Connect Operation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-socket",
+        "networking::socket-address"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::send-receive-operation",
+      "label": "Send Receive Operation",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-socket",
+        "networking::udp-socket"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::blocking-io",
+      "label": "Blocking IO",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::berkeley-sockets-api"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::non-blocking-io",
+      "label": "Non Blocking IO",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::berkeley-sockets-api"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::asynchronous-io",
+      "label": "Asynchronous IO",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::non-blocking-io"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::select-and-poll",
+      "label": "Select And Poll",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::non-blocking-io"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::epoll-and-kqueue",
+      "label": "Epoll And Kqueue",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::select-and-poll"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::client-server-model",
+      "label": "Client Server Model",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::server",
+        "networking::client"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::peer-to-peer-model",
+      "label": "Peer To Peer Model",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::host"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::nat-traversal",
+      "label": "NAT Traversal",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::nat",
+        "networking::peer-to-peer-model"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::stun-and-turn",
+      "label": "STUN And TURN",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::nat-traversal"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "networking::wire-protocol-design",
+      "label": "Wire Protocol Design",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::protocol",
+        "networking::layered-architecture"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::protocol-versioning",
+      "label": "Protocol Versioning",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::wire-protocol-design"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::wireshark",
+      "label": "Wireshark",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::packet",
+        "networking::application-layer"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tcpdump",
+      "label": "Tcpdump",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::packet",
+        "networking::application-layer"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::packet-capture",
+      "label": "Packet Capture",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::wireshark",
+        "networking::tcpdump"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::iperf",
+      "label": "Iperf",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::throughput"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-namespace",
+      "label": "Network Namespace",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::computer-network"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::linux-bridge",
+      "label": "Linux Bridge",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::bridge",
+        "networking::network-namespace"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::tc-netem",
+      "label": "Tc Netem",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::latency",
+        "networking::packet-loss",
+        "networking::network-namespace"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-logging",
+      "label": "Network Logging",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::computer-network"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::change-control",
+      "label": "Change Control",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-logging"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::configuration-management",
+      "label": "Configuration Management",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::change-control"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "networking::sdn",
+      "label": "SDN",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::control-plane",
+      "label": "Control Plane",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::routing"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::data-plane",
+      "label": "Data Plane",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::forwarding"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::openflow",
+      "label": "OpenFlow",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::sdn",
+        "networking::control-plane"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::sdn-controller",
+      "label": "SDN Controller",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::openflow"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-function-virtualization",
+      "label": "Network Function Virtualization",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::sdn"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::service-mesh",
+      "label": "Service Mesh",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::application-layer",
+        "networking::network-function-virtualization"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::overlay-network",
+      "label": "Overlay Network",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-layer"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::vxlan",
+      "label": "VXLAN",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::overlay-network"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::content-delivery-network",
+      "label": "Content Delivery Network",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::application-layer",
+        "networking::internet-topology"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::edge-computing",
+      "label": "Edge Computing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-core",
+        "networking::content-delivery-network"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::fog-computing",
+      "label": "Fog Computing",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::edge-computing"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::post-quantum-cryptography",
+      "label": "Post Quantum Cryptography",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::cryptography-basics",
+        "networking::tls-protocol"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::low-latency-networking",
+      "label": "Low Latency Networking",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::latency",
+        "networking::jitter"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::ai-workload-networking",
+      "label": "AI Workload Networking",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-core",
+        "networking::low-latency-networking"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::cloud-vpc",
+      "label": "Cloud VPC",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-layer",
+        "networking::overlay-network"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::hybrid-cloud-network",
+      "label": "Hybrid Cloud Network",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::vpn",
+        "networking::cloud-vpc"
+      ],
+      "taxonomy_id": "SDN",
+      "level": "core"
+    },
+    {
+      "id": "networking::capstone-chat-server",
+      "label": "Capstone Chat Server",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::tcp-socket",
+        "networking::bind-operation",
+        "networking::listen-operation",
+        "networking::accept-operation",
+        "networking::wire-protocol-design"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "networking::capstone-mini-dns",
+      "label": "Capstone Mini DNS",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::dns",
+        "networking::recursive-resolver",
+        "networking::dns-caching",
+        "networking::dnssec"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "networking::capstone-sdn-testbed",
+      "label": "Capstone SDN Testbed",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::network-namespace",
+        "networking::openflow",
+        "networking::sdn-controller"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "networking::capstone-network-design",
+      "label": "Capstone Network Design",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::vlan",
+        "networking::subnet-mask",
+        "networking::firewall",
+        "networking::defense-in-depth"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "networking::capstone-p2p-file-share",
+      "label": "Capstone P2P File Share",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::hash-function",
+        "networking::peer-to-peer-model",
+        "networking::nat-traversal",
+        "networking::stun-and-turn"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "networking::incident-postmortem",
+      "label": "Incident Postmortem",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::packet-capture",
+        "networking::network-logging"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "networking::network-benchmarking",
+      "label": "Network Benchmarking",
+      "subject_id": "networking",
+      "dependencies": [
+        "networking::throughput",
+        "networking::jitter",
+        "networking::iperf"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    }
+  ]
+}

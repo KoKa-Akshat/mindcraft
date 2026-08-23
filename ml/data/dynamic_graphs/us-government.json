@@ -1,0 +1,2217 @@
+{
+  "subject_id": "us-government",
+  "title": "US Government",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations of American Democracy",
+      "color": "SteelBlue"
+    },
+    "CONST": {
+      "classifier_name": "The Constitution",
+      "color": "DarkSlateBlue"
+    },
+    "FED": {
+      "classifier_name": "Federalism",
+      "color": "DarkGreen"
+    },
+    "CONG": {
+      "classifier_name": "Congress",
+      "color": "Teal"
+    },
+    "PRES": {
+      "classifier_name": "The Presidency",
+      "color": "DodgerBlue"
+    },
+    "BURO": {
+      "classifier_name": "The Federal Bureaucracy",
+      "color": "OliveDrab"
+    },
+    "JUDI": {
+      "classifier_name": "The Federal Judiciary",
+      "color": "MediumPurple"
+    },
+    "CLIB": {
+      "classifier_name": "Civil Liberties and Civil Rights",
+      "color": "Crimson"
+    },
+    "OPIN": {
+      "classifier_name": "Political Opinion and Media",
+      "color": "Gold"
+    },
+    "ELEC": {
+      "classifier_name": "Elections and Political Participation",
+      "color": "DarkGoldenrod"
+    },
+    "AIGOV": {
+      "classifier_name": "AI and Government",
+      "color": "Orange"
+    },
+    "CRIT": {
+      "classifier_name": "Critical Thinking and Civic Skills",
+      "color": "DeepPink"
+    }
+  },
+  "concepts": [
+    {
+      "id": "us-government::enlightenment-philosophy",
+      "label": "Enlightenment Philosophy",
+      "subject_id": "us-government",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "us-government::natural-rights-theory",
+      "label": "Natural Rights Theory",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enlightenment-philosophy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::social-contract-theory",
+      "label": "Social Contract Theory",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enlightenment-philosophy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::popular-sovereignty",
+      "label": "Popular Sovereignty",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::natural-rights-theory",
+        "us-government::social-contract-theory"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::limited-government",
+      "label": "Limited Government",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::natural-rights-theory",
+        "us-government::social-contract-theory"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::declaration-of-independence",
+      "label": "Declaration of Independence",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enlightenment-philosophy",
+        "us-government::natural-rights-theory",
+        "us-government::social-contract-theory"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::articles-of-confederation",
+      "label": "Articles of Confederation",
+      "subject_id": "us-government",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "us-government::shays-rebellion",
+      "label": "Shays' Rebellion",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::articles-of-confederation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::constitutional-convention-of-1787",
+      "label": "Constitutional Convention of 1787",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::articles-of-confederation",
+        "us-government::shays-rebellion"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::virginia-plan-vs-new-jersey-plan",
+      "label": "Virginia Plan vs New Jersey Plan",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-convention-of-1787"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::great-compromise",
+      "label": "Great Compromise",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-convention-of-1787",
+        "us-government::virginia-plan-vs-new-jersey-plan"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::three-fifths-compromise",
+      "label": "Three-Fifths Compromise",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-convention-of-1787"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::federalists-and-antifederalists",
+      "label": "Federalists and Antifederalists",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-convention-of-1787",
+        "us-government::popular-sovereignty"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::bicameral-legislature",
+      "label": "Bicameral Legislature",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::great-compromise"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::republican-government",
+      "label": "Republican Government",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::popular-sovereignty",
+        "us-government::limited-government"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::constitutional-structure",
+      "label": "Constitutional Structure",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bicameral-legislature",
+        "us-government::republican-government",
+        "us-government::separation-of-powers",
+        "us-government::checks-and-balances",
+        "us-government::great-compromise",
+        "us-government::three-fifths-compromise"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::separation-of-powers",
+      "label": "Separation of Powers",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::limited-government",
+        "us-government::republican-government"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::checks-and-balances",
+      "label": "Checks and Balances",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::separation-of-powers"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::supremacy-clause",
+      "label": "Supremacy Clause",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::federalism"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::necessary-and-proper-clause",
+      "label": "Necessary and Proper Clause",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::enumerated-powers"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::commerce-clause",
+      "label": "Commerce Clause",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::enumerated-powers"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::full-faith-and-credit-clause",
+      "label": "Full Faith and Credit Clause",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::constitutional-amendment-process",
+      "label": "Constitutional Amendment Process",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::bill-of-rights",
+      "label": "Bill of Rights",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-amendment-process",
+        "us-government::federalists-and-antifederalists"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::first-amendment",
+      "label": "First Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bill-of-rights"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::second-amendment",
+      "label": "Second Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bill-of-rights"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::fourth-amendment",
+      "label": "Fourth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bill-of-rights"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::fifth-amendment",
+      "label": "Fifth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bill-of-rights"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::sixth-amendment",
+      "label": "Sixth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bill-of-rights"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::eighth-amendment",
+      "label": "Eighth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bill-of-rights"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::fourteenth-amendment",
+      "label": "Fourteenth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bill-of-rights"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::fifteenth-amendment",
+      "label": "Fifteenth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourteenth-amendment"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::nineteenth-amendment",
+      "label": "Nineteenth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourteenth-amendment"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::twenty-sixth-amendment",
+      "label": "Twenty-Sixth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourteenth-amendment"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::constitutional-interpretation",
+      "label": "Constitutional Interpretation",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::judicial-review"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::originalism",
+      "label": "Originalism",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-interpretation"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::living-constitution-theory",
+      "label": "Living Constitution Theory",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-interpretation"
+      ],
+      "taxonomy_id": "CONST",
+      "level": "core"
+    },
+    {
+      "id": "us-government::federalism",
+      "label": "Federalism",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::separation-of-powers",
+        "us-government::popular-sovereignty"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::enumerated-powers",
+      "label": "Enumerated Powers",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federalism",
+        "us-government::constitutional-structure"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::reserved-powers",
+      "label": "Reserved Powers",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federalism",
+        "us-government::constitutional-structure"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::concurrent-powers",
+      "label": "Concurrent Powers",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federalism",
+        "us-government::enumerated-powers",
+        "us-government::reserved-powers"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::dual-federalism",
+      "label": "Dual Federalism",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federalism",
+        "us-government::enumerated-powers",
+        "us-government::reserved-powers"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::cooperative-federalism",
+      "label": "Cooperative Federalism",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::dual-federalism"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::new-federalism",
+      "label": "New Federalism",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::cooperative-federalism"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::fiscal-federalism",
+      "label": "Fiscal Federalism",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::cooperative-federalism"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::categorical-grants",
+      "label": "Categorical Grants",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fiscal-federalism"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::block-grants",
+      "label": "Block Grants",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fiscal-federalism",
+        "us-government::categorical-grants"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::unfunded-mandates",
+      "label": "Unfunded Mandates",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::categorical-grants"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::nullification-doctrine",
+      "label": "Nullification Doctrine",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federalism",
+        "us-government::reserved-powers"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::preemption-doctrine",
+      "label": "Preemption Doctrine",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::supremacy-clause",
+        "us-government::federalism"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::devolution",
+      "label": "Devolution",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::new-federalism"
+      ],
+      "taxonomy_id": "FED",
+      "level": "core"
+    },
+    {
+      "id": "us-government::house-of-representatives",
+      "label": "House of Representatives",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bicameral-legislature",
+        "us-government::constitutional-structure"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::senate-structure",
+      "label": "Senate Structure",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::bicameral-legislature",
+        "us-government::constitutional-structure",
+        "us-government::great-compromise"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::congressional-committees",
+      "label": "Congressional Committees",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives",
+        "us-government::senate-structure"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::conference-committees",
+      "label": "Conference Committees",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::congressional-committees",
+        "us-government::legislative-process"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::congressional-leadership",
+      "label": "Congressional Leadership",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives",
+        "us-government::senate-structure"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::speaker-of-the-house",
+      "label": "Speaker of the House",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives",
+        "us-government::congressional-leadership"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::filibuster",
+      "label": "Filibuster",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::senate-structure"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::cloture",
+      "label": "Cloture",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::filibuster"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::legislative-process",
+      "label": "Legislative Process",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives",
+        "us-government::senate-structure",
+        "us-government::congressional-committees"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::committee-markup",
+      "label": "Committee Markup",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::congressional-committees",
+        "us-government::legislative-process"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::presidential-veto",
+      "label": "Presidential Veto",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::legislative-process",
+        "us-government::enumerated-presidential-powers"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::pocket-veto",
+      "label": "Pocket Veto",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::presidential-veto"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::veto-override",
+      "label": "Veto Override",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::presidential-veto",
+        "us-government::house-of-representatives",
+        "us-government::senate-structure"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::congressional-oversight",
+      "label": "Congressional Oversight",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives",
+        "us-government::senate-structure",
+        "us-government::checks-and-balances"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::appropriations-process",
+      "label": "Appropriations Process",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::legislative-process",
+        "us-government::congressional-oversight"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::gerrymandering",
+      "label": "Gerrymandering",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives",
+        "us-government::reapportionment-and-redistricting"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::reapportionment-and-redistricting",
+      "label": "Reapportionment and Redistricting",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::congressional-caucuses",
+      "label": "Congressional Caucuses",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives",
+        "us-government::senate-structure",
+        "us-government::political-parties"
+      ],
+      "taxonomy_id": "CONG",
+      "level": "core"
+    },
+    {
+      "id": "us-government::enumerated-presidential-powers",
+      "label": "Enumerated Presidential Powers",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::separation-of-powers"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::informal-presidential-powers",
+      "label": "Informal Presidential Powers",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::executive-orders",
+      "label": "Executive Orders",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers",
+        "us-government::informal-presidential-powers"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::treaty-making-power",
+      "label": "Treaty-Making Power",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers",
+        "us-government::senate-structure"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::commander-in-chief-role",
+      "label": "Commander in Chief Role",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::war-powers-resolution",
+      "label": "War Powers Resolution",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::commander-in-chief-role",
+        "us-government::house-of-representatives",
+        "us-government::senate-structure"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::cabinet",
+      "label": "Cabinet",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers",
+        "us-government::cabinet-departments"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::executive-office-of-the-president",
+      "label": "Executive Office of the President",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers",
+        "us-government::cabinet"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::national-security-council",
+      "label": "National Security Council",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::executive-office-of-the-president"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::office-of-management-and-budget",
+      "label": "Office of Management and Budget",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::executive-office-of-the-president",
+        "us-government::appropriations-process"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::presidential-appointments",
+      "label": "Presidential Appointments",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::executive-privilege",
+      "label": "Executive Privilege",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::informal-presidential-powers",
+        "us-government::checks-and-balances"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::impeachment-process",
+      "label": "Impeachment Process",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::house-of-representatives",
+        "us-government::senate-structure",
+        "us-government::checks-and-balances"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::presidential-succession",
+      "label": "Presidential Succession",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::going-public-strategy",
+      "label": "Going Public Strategy",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::informal-presidential-powers",
+        "us-government::traditional-media",
+        "us-government::social-media-and-politics"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::signing-statements",
+      "label": "Signing Statements",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::executive-orders",
+        "us-government::enumerated-presidential-powers"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "us-government::federal-bureaucracy-structure",
+      "label": "Federal Bureaucracy Structure",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::enumerated-presidential-powers",
+        "us-government::constitutional-structure"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::civil-service-system",
+      "label": "Civil Service System",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-bureaucracy-structure"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::merit-vs-spoils-system",
+      "label": "Merit vs Spoils System",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::civil-service-system"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::independent-regulatory-agencies",
+      "label": "Independent Regulatory Agencies",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-bureaucracy-structure"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::government-corporations",
+      "label": "Government Corporations",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-bureaucracy-structure"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::cabinet-departments",
+      "label": "Cabinet Departments",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-bureaucracy-structure"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::federal-rulemaking-process",
+      "label": "Federal Rulemaking Process",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::independent-regulatory-agencies",
+        "us-government::administrative-law"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::notice-and-comment-rulemaking",
+      "label": "Notice and Comment Rulemaking",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-rulemaking-process"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::administrative-law",
+      "label": "Administrative Law",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-bureaucracy-structure",
+        "us-government::federal-court-structure"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::bureaucratic-accountability",
+      "label": "Bureaucratic Accountability",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-bureaucracy-structure",
+        "us-government::congressional-oversight",
+        "us-government::checks-and-balances"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::iron-triangle",
+      "label": "Iron Triangle",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-bureaucracy-structure",
+        "us-government::congressional-committees",
+        "us-government::interest-groups"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::issue-networks",
+      "label": "Issue Networks",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::iron-triangle"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::regulatory-capture",
+      "label": "Regulatory Capture",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::iron-triangle",
+        "us-government::independent-regulatory-agencies"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::administrative-discretion",
+      "label": "Administrative Discretion",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-rulemaking-process",
+        "us-government::federal-bureaucracy-structure"
+      ],
+      "taxonomy_id": "BURO",
+      "level": "core"
+    },
+    {
+      "id": "us-government::federal-court-structure",
+      "label": "Federal Court Structure",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::separation-of-powers"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::district-courts",
+      "label": "District Courts",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-court-structure"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::circuit-courts-of-appeals",
+      "label": "Circuit Courts of Appeals",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-court-structure",
+        "us-government::district-courts"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::supreme-court",
+      "label": "Supreme Court",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-court-structure",
+        "us-government::circuit-courts-of-appeals"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::judicial-review",
+      "label": "Judicial Review",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::supreme-court",
+        "us-government::constitutional-structure"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::marbury-v-madison",
+      "label": "Marbury v Madison",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::judicial-review"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::judicial-appointment-process",
+      "label": "Judicial Appointment Process",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::supreme-court",
+        "us-government::presidential-appointments"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::senate-confirmation-of-judges",
+      "label": "Senate Confirmation of Judges",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::judicial-appointment-process",
+        "us-government::senate-structure"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::judicial-philosophy",
+      "label": "Judicial Philosophy",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-interpretation"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::precedent-and-stare-decisis",
+      "label": "Precedent and Stare Decisis",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::judicial-review",
+        "us-government::supreme-court"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::writ-of-certiorari",
+      "label": "Writ of Certiorari",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::supreme-court"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::amicus-curiae-briefs",
+      "label": "Amicus Curiae Briefs",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::supreme-court",
+        "us-government::writ-of-certiorari"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::majority-and-dissenting-opinions",
+      "label": "Majority and Dissenting Opinions",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::supreme-court"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::judicial-restraint-vs-activism",
+      "label": "Judicial Restraint vs Activism",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::judicial-philosophy"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::standing-to-sue",
+      "label": "Standing to Sue",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-court-structure"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::political-question-doctrine",
+      "label": "Political Question Doctrine",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::judicial-review",
+        "us-government::standing-to-sue"
+      ],
+      "taxonomy_id": "JUDI",
+      "level": "core"
+    },
+    {
+      "id": "us-government::civil-liberties",
+      "label": "Civil Liberties",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::limited-government",
+        "us-government::bill-of-rights"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::civil-rights",
+      "label": "Civil Rights",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::limited-government",
+        "us-government::fourteenth-amendment"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::selective-incorporation",
+      "label": "Selective Incorporation",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourteenth-amendment",
+        "us-government::civil-liberties"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::due-process-clause",
+      "label": "Due Process Clause",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fifth-amendment",
+        "us-government::fourteenth-amendment"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::equal-protection-clause",
+      "label": "Equal Protection Clause",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourteenth-amendment"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::freedom-of-speech",
+      "label": "Freedom of Speech",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::first-amendment",
+        "us-government::civil-liberties"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::freedom-of-press",
+      "label": "Freedom of Press",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::first-amendment",
+        "us-government::civil-liberties"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::freedom-of-religion",
+      "label": "Freedom of Religion",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::first-amendment"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::establishment-clause",
+      "label": "Establishment Clause",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::freedom-of-religion",
+        "us-government::first-amendment"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::free-exercise-clause",
+      "label": "Free Exercise Clause",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::freedom-of-religion",
+        "us-government::first-amendment"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::freedom-of-assembly",
+      "label": "Freedom of Assembly",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::first-amendment",
+        "us-government::civil-liberties"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::fourth-amendment-protections",
+      "label": "Fourth Amendment Protections",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourth-amendment",
+        "us-government::civil-liberties"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::exclusionary-rule",
+      "label": "Exclusionary Rule",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourth-amendment-protections"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::miranda-rights",
+      "label": "Miranda Rights",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fifth-amendment",
+        "us-government::due-process-clause"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::right-to-counsel",
+      "label": "Right to Counsel",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::sixth-amendment",
+        "us-government::due-process-clause"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::eighth-amendment-protections",
+      "label": "Eighth Amendment Protections",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::eighth-amendment",
+        "us-government::civil-liberties"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::civil-rights-movement-history",
+      "label": "Civil Rights Movement History",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::civil-rights"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::brown-v-board-of-education",
+      "label": "Brown v Board of Education",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::equal-protection-clause",
+        "us-government::civil-rights-movement-history"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::desegregation",
+      "label": "Desegregation",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::brown-v-board-of-education",
+        "us-government::equal-protection-clause"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::affirmative-action",
+      "label": "Affirmative Action",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::equal-protection-clause",
+        "us-government::desegregation"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::voting-rights-act-1965",
+      "label": "Voting Rights Act 1965",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fifteenth-amendment",
+        "us-government::civil-rights",
+        "us-government::civil-rights-movement-history"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::civil-rights-act-1964",
+      "label": "Civil Rights Act 1964",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::equal-protection-clause",
+        "us-government::civil-rights",
+        "us-government::civil-rights-movement-history"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::lgbtq-rights",
+      "label": "LGBTQ Rights",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::equal-protection-clause",
+        "us-government::fourteenth-amendment"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::americans-with-disabilities-act",
+      "label": "Americans with Disabilities Act",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::civil-rights",
+        "us-government::equal-protection-clause"
+      ],
+      "taxonomy_id": "CLIB",
+      "level": "core"
+    },
+    {
+      "id": "us-government::political-socialization",
+      "label": "Political Socialization",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::popular-sovereignty"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::political-ideology",
+      "label": "Political Ideology",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-socialization"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::liberal-conservative-spectrum",
+      "label": "Liberal-Conservative Spectrum",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-ideology"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::libertarianism",
+      "label": "Libertarianism",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-ideology",
+        "us-government::limited-government"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::political-polarization",
+      "label": "Political Polarization",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-ideology",
+        "us-government::liberal-conservative-spectrum",
+        "us-government::political-parties"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::public-opinion-polling",
+      "label": "Public Opinion Polling",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-socialization",
+        "us-government::popular-sovereignty"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::sampling-and-margin-of-error",
+      "label": "Sampling and Margin of Error",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::public-opinion-polling"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::media-framing-effects",
+      "label": "Media Framing Effects",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::traditional-media",
+        "us-government::public-opinion-polling"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::agenda-setting-theory",
+      "label": "Agenda Setting Theory",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::traditional-media",
+        "us-government::media-framing-effects"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::traditional-media",
+      "label": "Traditional Media",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-socialization"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::social-media-and-politics",
+      "label": "Social Media and Politics",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::traditional-media"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::filter-bubbles",
+      "label": "Filter Bubbles",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::social-media-and-politics",
+        "us-government::political-polarization"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::political-knowledge",
+      "label": "Political Knowledge",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-socialization",
+        "us-government::critical-thinking-in-civics"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::ideological-sorting",
+      "label": "Ideological Sorting",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-polarization",
+        "us-government::liberal-conservative-spectrum"
+      ],
+      "taxonomy_id": "OPIN",
+      "level": "core"
+    },
+    {
+      "id": "us-government::types-of-political-participation",
+      "label": "Types of Political Participation",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::popular-sovereignty",
+        "us-government::political-socialization"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::voting-behavior",
+      "label": "Voting Behavior",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-socialization",
+        "us-government::types-of-political-participation"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::voter-turnout",
+      "label": "Voter Turnout",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::voting-behavior"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::voter-registration",
+      "label": "Voter Registration",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::voter-turnout"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::voter-suppression",
+      "label": "Voter Suppression",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::voting-rights-act-1965",
+        "us-government::voter-registration"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::electoral-college",
+      "label": "Electoral College",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::political-parties",
+        "us-government::popular-sovereignty"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::winner-take-all-electoral-system",
+      "label": "Winner-Take-All Electoral System",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::electoral-college",
+        "us-government::political-parties"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::political-parties",
+      "label": "Political Parties",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-socialization",
+        "us-government::popular-sovereignty"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::two-party-system",
+      "label": "Two-Party System",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-parties",
+        "us-government::winner-take-all-electoral-system"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::party-platforms",
+      "label": "Party Platforms",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-parties",
+        "us-government::political-ideology"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::party-realignment",
+      "label": "Party Realignment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-parties",
+        "us-government::liberal-conservative-spectrum"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::interest-groups",
+      "label": "Interest Groups",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-socialization",
+        "us-government::popular-sovereignty",
+        "us-government::types-of-political-participation"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::political-action-committees",
+      "label": "Political Action Committees",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::interest-groups",
+        "us-government::campaign-finance-law"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::campaign-finance-law",
+      "label": "Campaign Finance Law",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::interest-groups"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::super-pacs",
+      "label": "Super PACs",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-action-committees",
+        "us-government::citizens-united-v-fec"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::citizens-united-v-fec",
+      "label": "Citizens United v FEC",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::freedom-of-speech",
+        "us-government::campaign-finance-law",
+        "us-government::political-action-committees"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::bipartisan-campaign-reform-act",
+      "label": "Bipartisan Campaign Reform Act",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::campaign-finance-law"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::primary-elections",
+      "label": "Primary Elections",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::political-parties",
+        "us-government::electoral-college"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::general-elections",
+      "label": "General Elections",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::electoral-college",
+        "us-government::primary-elections"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::midterm-elections",
+      "label": "Midterm Elections",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::general-elections",
+        "us-government::house-of-representatives"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::initiative-and-referendum",
+      "label": "Initiative and Referendum",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::popular-sovereignty",
+        "us-government::types-of-political-participation"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "us-government::ai-in-federal-agencies",
+      "label": "AI in Federal Agencies",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::federal-bureaucracy-structure"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::algorithmic-decision-making",
+      "label": "Algorithmic Decision-Making",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-in-federal-agencies"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::algorithmic-bias",
+      "label": "Algorithmic Bias",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::algorithmic-decision-making",
+        "us-government::equal-protection-clause",
+        "us-government::civil-rights"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::ai-generated-disinformation",
+      "label": "AI-Generated Disinformation",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::social-media-and-politics",
+        "us-government::algorithmic-decision-making"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::ai-and-election-integrity",
+      "label": "AI and Election Integrity",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-in-federal-agencies",
+        "us-government::ai-generated-disinformation"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::deepfakes-in-politics",
+      "label": "Deepfakes in Politics",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-and-election-integrity",
+        "us-government::ai-generated-disinformation",
+        "us-government::social-media-and-politics"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::government-ai-surveillance",
+      "label": "Government AI Surveillance",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-in-federal-agencies",
+        "us-government::fourth-amendment-protections",
+        "us-government::facial-recognition-technology"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::facial-recognition-technology",
+      "label": "Facial Recognition Technology",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourth-amendment-protections",
+        "us-government::algorithmic-decision-making"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::autonomous-weapons-policy",
+      "label": "Autonomous Weapons Policy",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::commander-in-chief-role",
+        "us-government::ai-in-federal-agencies",
+        "us-government::ai-regulatory-frameworks"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::ai-regulatory-frameworks",
+      "label": "AI Regulatory Frameworks",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-in-federal-agencies",
+        "us-government::independent-regulatory-agencies"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::eu-ai-act",
+      "label": "EU AI Act",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-regulatory-frameworks"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::ai-bill-of-rights-blueprint",
+      "label": "AI Bill of Rights Blueprint",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-regulatory-frameworks",
+        "us-government::civil-liberties"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::congressional-ai-oversight",
+      "label": "Congressional AI Oversight",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-regulatory-frameworks",
+        "us-government::congressional-oversight",
+        "us-government::ai-in-federal-agencies"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::ai-and-fourth-amendment",
+      "label": "AI and Fourth Amendment",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::fourth-amendment-protections",
+        "us-government::government-ai-surveillance",
+        "us-government::fourth-amendment"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::predictive-policing",
+      "label": "Predictive Policing",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::ai-in-federal-agencies",
+        "us-government::algorithmic-decision-making"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::ai-in-criminal-justice",
+      "label": "AI in Criminal Justice",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::predictive-policing",
+        "us-government::algorithmic-bias",
+        "us-government::miranda-rights"
+      ],
+      "taxonomy_id": "AIGOV",
+      "level": "core"
+    },
+    {
+      "id": "us-government::critical-thinking-in-civics",
+      "label": "Critical Thinking in Civics",
+      "subject_id": "us-government",
+      "dependencies": [],
+      "taxonomy_id": "CRIT",
+      "level": "foundational"
+    },
+    {
+      "id": "us-government::systems-thinking-in-government",
+      "label": "Systems Thinking in Government",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::critical-thinking-in-civics",
+        "us-government::federalism",
+        "us-government::checks-and-balances"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "us-government::cognitive-bias-in-politics",
+      "label": "Cognitive Bias in Politics",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::critical-thinking-in-civics",
+        "us-government::political-socialization"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "us-government::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::cognitive-bias-in-politics",
+        "us-government::political-knowledge"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "us-government::motivated-reasoning",
+      "label": "Motivated Reasoning",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::cognitive-bias-in-politics",
+        "us-government::political-ideology"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "us-government::misinformation-detection",
+      "label": "Misinformation Detection",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::critical-thinking-in-civics",
+        "us-government::social-media-and-politics"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "us-government::lateral-reading-technique",
+      "label": "Lateral Reading Technique",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::misinformation-detection"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "us-government::fact-checking-methods",
+      "label": "Fact-Checking Methods",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::misinformation-detection",
+        "us-government::lateral-reading-technique"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "us-government::democratic-participation",
+      "label": "Democratic Participation",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::popular-sovereignty",
+        "us-government::types-of-political-participation",
+        "us-government::voter-turnout"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-government::constitutional-democracy",
+      "label": "Constitutional Democracy",
+      "subject_id": "us-government",
+      "dependencies": [
+        "us-government::constitutional-structure",
+        "us-government::popular-sovereignty",
+        "us-government::limited-government",
+        "us-government::civil-liberties",
+        "us-government::civil-rights"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    }
+  ]
+}

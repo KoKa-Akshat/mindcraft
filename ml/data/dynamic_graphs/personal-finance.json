@@ -1,0 +1,2116 @@
+{
+  "subject_id": "personal-finance",
+  "title": "Personal Finance - A Practical Introduction to Modern Financial Literacy",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "#8B4513"
+    },
+    "BANK": {
+      "classifier_name": "Banking & Accounts",
+      "color": "#4169E1"
+    },
+    "BUDG": {
+      "classifier_name": "Budgeting & Planning",
+      "color": "#32CD32"
+    },
+    "CRED": {
+      "classifier_name": "Credit & Debt",
+      "color": "#FF6347"
+    },
+    "INV": {
+      "classifier_name": "Investing & Savings",
+      "color": "#FFD700"
+    },
+    "TAX": {
+      "classifier_name": "Income & Taxes",
+      "color": "#9370DB"
+    },
+    "INS": {
+      "classifier_name": "Insurance & Risk",
+      "color": "#20B2AA"
+    },
+    "LOAN": {
+      "classifier_name": "Loans & Purchases",
+      "color": "#FF8C00"
+    },
+    "SEC": {
+      "classifier_name": "Security & Protection",
+      "color": "#DC143C"
+    },
+    "EDU": {
+      "classifier_name": "Education Planning",
+      "color": "#4682B4"
+    },
+    "CAR": {
+      "classifier_name": "Career & Income",
+      "color": "#FF69B4"
+    },
+    "RET": {
+      "classifier_name": "Retirement Planning",
+      "color": "#708090"
+    }
+  },
+  "concepts": [
+    {
+      "id": "personal-finance::money-management-principles",
+      "label": "Money Management Principles",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::financial-goal-setting",
+      "label": "Financial Goal Setting",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::smart-goals-framework",
+      "label": "SMART Goals Framework",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-goal-setting"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::economic-literacy",
+      "label": "Economic Literacy",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::financial-decision-making",
+      "label": "Financial Decision Making",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::money-management-principles",
+        "personal-finance::economic-literacy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::opportunity-cost",
+      "label": "Opportunity Cost",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::economic-literacy",
+        "personal-finance::financial-decision-making"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::trade-offs",
+      "label": "Trade-offs",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::opportunity-cost"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::time-value-of-money",
+      "label": "Time Value of Money",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::economic-literacy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::net-worth-calculation",
+      "label": "Net Worth Calculation",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::assets-and-liabilities"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::net-worth-tracking",
+      "label": "Net Worth Tracking",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::net-worth-calculation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::assets-and-liabilities",
+      "label": "Assets and Liabilities",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::personal-balance-sheet",
+      "label": "Personal Balance Sheet",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::net-worth-calculation",
+        "personal-finance::assets-and-liabilities"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::income-statement",
+      "label": "Income Statement",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::assets-and-liabilities"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::cash-flow-management",
+      "label": "Cash Flow Management",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::income-statement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::financial-independence",
+      "label": "Financial Independence",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::money-management-principles",
+        "personal-finance::financial-goal-setting",
+        "personal-finance::cash-flow-management"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::wealth-building-strategies",
+      "label": "Wealth Building Strategies",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::time-value-of-money",
+        "personal-finance::financial-independence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::financial-planning-process",
+      "label": "Financial Planning Process",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-goal-setting",
+        "personal-finance::smart-goals-framework",
+        "personal-finance::financial-decision-making"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::commercial-banks",
+      "label": "Commercial Banks",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "BANK",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::credit-unions",
+      "label": "Credit Unions",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "BANK",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::online-banking-services",
+      "label": "Online Banking Services",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::commercial-banks",
+        "personal-finance::credit-unions"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::checking-accounts",
+      "label": "Checking Accounts",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::commercial-banks",
+        "personal-finance::credit-unions"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::savings-accounts",
+      "label": "Savings Accounts",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::commercial-banks",
+        "personal-finance::credit-unions"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::high-yield-savings-accounts",
+      "label": "High-Yield Savings Accounts",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::savings-accounts"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::account-fees",
+      "label": "Account Fees",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::checking-accounts"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::account-features-comparison",
+      "label": "Account Features Comparison",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::checking-accounts",
+        "personal-finance::savings-accounts"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::mobile-banking-apps",
+      "label": "Mobile Banking Apps",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::online-banking-services",
+        "personal-finance::checking-accounts"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::atm-usage",
+      "label": "ATM Usage",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::checking-accounts"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::debit-cards",
+      "label": "Debit Cards",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::checking-accounts"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::account-reconciliation",
+      "label": "Account Reconciliation",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::checking-accounts",
+        "personal-finance::cash-flow-management"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::electronic-payments",
+      "label": "Electronic Payments",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::checking-accounts"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::ach-transfers",
+      "label": "ACH Transfers",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::electronic-payments"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::wire-transfers",
+      "label": "Wire Transfers",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::electronic-payments"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::peer-to-peer-payment-apps",
+      "label": "Peer-to-Peer Payment Apps",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::electronic-payments"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::banking-security",
+      "label": "Banking Security",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::online-banking-services",
+        "personal-finance::mobile-banking-apps"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::fdic-insurance",
+      "label": "FDIC Insurance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::commercial-banks",
+        "personal-finance::credit-unions"
+      ],
+      "taxonomy_id": "BANK",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::personal-budgeting",
+      "label": "Personal Budgeting",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::money-management-principles",
+        "personal-finance::cash-flow-management"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::50-30-20-rule",
+      "label": "50/30/20 Rule",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::personal-budgeting"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::zero-based-budgeting",
+      "label": "Zero-Based Budgeting",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::personal-budgeting"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::envelope-method",
+      "label": "Envelope Method",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::personal-budgeting"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::income-tracking",
+      "label": "Income Tracking",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::income-statement"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::expense-categorization",
+      "label": "Expense Categorization",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::personal-budgeting"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::fixed-expenses",
+      "label": "Fixed Expenses",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::expense-categorization"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::variable-expenses",
+      "label": "Variable Expenses",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::expense-categorization"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::needs-vs-wants-analysis",
+      "label": "Needs vs Wants Analysis",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-decision-making",
+        "personal-finance::expense-categorization"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::emergency-fund",
+      "label": "Emergency Fund",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-goal-setting",
+        "personal-finance::savings-accounts",
+        "personal-finance::personal-budgeting"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::three-month-emergency-fund",
+      "label": "Three-Month Emergency Fund",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::emergency-fund"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::six-month-emergency-fund",
+      "label": "Six-Month Emergency Fund",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::three-month-emergency-fund"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::automatic-savings",
+      "label": "Automatic Savings",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::savings-accounts",
+        "personal-finance::personal-budgeting"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::pay-yourself-first",
+      "label": "Pay Yourself First",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::personal-budgeting",
+        "personal-finance::automatic-savings"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::financial-records-organization",
+      "label": "Financial Records Organization",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::account-reconciliation"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::budget-tracking-tools",
+      "label": "Budget Tracking Tools",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::personal-budgeting"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::spending-patterns-analysis",
+      "label": "Spending Patterns Analysis",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::expense-categorization",
+        "personal-finance::budget-tracking-tools"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::budget-adjustment-strategies",
+      "label": "Budget Adjustment Strategies",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::personal-budgeting",
+        "personal-finance::spending-patterns-analysis"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-score",
+      "label": "Credit Score",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "CRED",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::fico-score",
+      "label": "FICO Score",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-score"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::vantagescore",
+      "label": "VantageScore",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-score"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-report",
+      "label": "Credit Report",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-score"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-bureaus",
+      "label": "Credit Bureaus",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-report"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::building-credit-history",
+      "label": "Building Credit History",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-score"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-utilization-ratio",
+      "label": "Credit Utilization Ratio",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::fico-score",
+        "personal-finance::credit-cards"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::payment-history",
+      "label": "Payment History",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::fico-score"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::length-of-credit-history",
+      "label": "Length of Credit History",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::fico-score",
+        "personal-finance::building-credit-history"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-mix",
+      "label": "Credit Mix",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::fico-score"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::new-credit-inquiries",
+      "label": "New Credit Inquiries",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::fico-score"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-cards",
+      "label": "Credit Cards",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::commercial-banks",
+        "personal-finance::credit-unions"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-card-apr",
+      "label": "Credit Card APR",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-cards"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-card-rewards",
+      "label": "Credit Card Rewards",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-cards"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::responsible-credit-card-use",
+      "label": "Responsible Credit Card Use",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-cards",
+        "personal-finance::credit-card-apr"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::minimum-payments",
+      "label": "Minimum Payments",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-cards",
+        "personal-finance::credit-card-apr"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::consumer-debt",
+      "label": "Consumer Debt",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::assets-and-liabilities"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::secured-debt",
+      "label": "Secured Debt",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::unsecured-debt",
+      "label": "Unsecured Debt",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::good-debt-vs-bad-debt",
+      "label": "Good Debt vs Bad Debt",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt",
+        "personal-finance::opportunity-cost"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::interest-rate-calculation",
+      "label": "Interest Rate Calculation",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-card-apr"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::debt-avalanche-method",
+      "label": "Debt Avalanche Method",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt",
+        "personal-finance::interest-rate-calculation"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::debt-snowball-method",
+      "label": "Debt Snowball Method",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::predatory-lending",
+      "label": "Predatory Lending",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt",
+        "personal-finance::interest-rate-calculation"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::payday-loans",
+      "label": "Payday Loans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::predatory-lending"
+      ],
+      "taxonomy_id": "CRED",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::certificates-of-deposit",
+      "label": "Certificates of Deposit",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::savings-accounts",
+        "personal-finance::time-value-of-money"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::investment-fundamentals",
+      "label": "Investment Fundamentals",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::assets-and-liabilities",
+        "personal-finance::savings-accounts"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::risk-and-return",
+      "label": "Risk and Return",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-fundamentals"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::risk-tolerance",
+      "label": "Risk Tolerance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::risk-and-return"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::investment-time-horizon",
+      "label": "Investment Time Horizon",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-goal-setting",
+        "personal-finance::risk-and-return"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::stock-market",
+      "label": "Stock Market",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-fundamentals"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::individual-stocks",
+      "label": "Individual Stocks",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::stock-market"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::market-indices",
+      "label": "Market Indices",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::stock-market"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::bonds",
+      "label": "Bonds",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-fundamentals"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::fixed-income-securities",
+      "label": "Fixed Income Securities",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::bonds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::treasury-bonds",
+      "label": "Treasury Bonds",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::bonds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::corporate-bonds",
+      "label": "Corporate Bonds",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::bonds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::municipal-bonds",
+      "label": "Municipal Bonds",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::bonds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::mutual-funds",
+      "label": "Mutual Funds",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::stock-market",
+        "personal-finance::bonds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::exchange-traded-funds",
+      "label": "Exchange-Traded Funds",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::stock-market",
+        "personal-finance::mutual-funds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::index-funds",
+      "label": "Index Funds",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::market-indices",
+        "personal-finance::exchange-traded-funds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::active-vs-passive-investing",
+      "label": "Active vs Passive Investing",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::mutual-funds",
+        "personal-finance::index-funds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::expense-ratios",
+      "label": "Expense Ratios",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::mutual-funds",
+        "personal-finance::exchange-traded-funds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::compound-interest",
+      "label": "Compound Interest",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::time-value-of-money"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::rule-of-72",
+      "label": "Rule of 72",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::compound-interest"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::dollar-cost-averaging",
+      "label": "Dollar-Cost Averaging",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::individual-stocks",
+        "personal-finance::mutual-funds"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::asset-allocation",
+      "label": "Asset Allocation",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::risk-tolerance",
+        "personal-finance::investment-time-horizon"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::diversification",
+      "label": "Diversification",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::risk-and-return",
+        "personal-finance::asset-allocation"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::portfolio-rebalancing",
+      "label": "Portfolio Rebalancing",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::asset-allocation",
+        "personal-finance::diversification"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::market-volatility",
+      "label": "Market Volatility",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::risk-and-return",
+        "personal-finance::stock-market"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::bull-market",
+      "label": "Bull Market",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::stock-market"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::bear-market",
+      "label": "Bear Market",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::stock-market"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::investment-account-types",
+      "label": "Investment Account Types",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-fundamentals"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::taxable-investment-accounts",
+      "label": "Taxable Investment Accounts",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-account-types"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::capital-gains",
+      "label": "Capital Gains",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::individual-stocks",
+        "personal-finance::taxable-investment-accounts"
+      ],
+      "taxonomy_id": "INV",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::gross-income",
+      "label": "Gross Income",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::income-statement"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::net-income",
+      "label": "Net Income",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::paycheck-withholding",
+      "label": "Paycheck Withholding",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::w-4-form",
+      "label": "W-4 Form",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::paycheck-withholding"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::w-2-form",
+      "label": "W-2 Form",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income",
+        "personal-finance::paycheck-withholding"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::federal-income-tax",
+      "label": "Federal Income Tax",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::state-income-tax",
+      "label": "State Income Tax",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::fica-taxes",
+      "label": "FICA Taxes",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::tax-filing",
+      "label": "Tax Filing",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::federal-income-tax"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::form-1040",
+      "label": "Form 1040",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::tax-filing"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::standard-deduction",
+      "label": "Standard Deduction",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::tax-filing"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::itemized-deductions",
+      "label": "Itemized Deductions",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::tax-filing"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::tax-credits",
+      "label": "Tax Credits",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::tax-filing"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::tax-deductions",
+      "label": "Tax Deductions",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::tax-filing"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::marginal-tax-rate",
+      "label": "Marginal Tax Rate",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::federal-income-tax"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::effective-tax-rate",
+      "label": "Effective Tax Rate",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::federal-income-tax",
+        "personal-finance::marginal-tax-rate"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::tax-brackets",
+      "label": "Tax Brackets",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::federal-income-tax",
+        "personal-finance::marginal-tax-rate"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::tax-planning",
+      "label": "Tax Planning",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::tax-filing",
+        "personal-finance::tax-credits",
+        "personal-finance::tax-deductions"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::tax-advantaged-accounts",
+      "label": "Tax-Advantaged Accounts",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-account-types",
+        "personal-finance::tax-planning"
+      ],
+      "taxonomy_id": "TAX",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::insurance-principles",
+      "label": "Insurance Principles",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "INS",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::insurance-premium",
+      "label": "Insurance Premium",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::insurance-deductible",
+      "label": "Insurance Deductible",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::co-payment",
+      "label": "Co-payment",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::out-of-pocket-maximum",
+      "label": "Out-of-Pocket Maximum",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::health-insurance",
+      "label": "Health Insurance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::hmo-plans",
+      "label": "HMO Plans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::health-insurance"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::ppo-plans",
+      "label": "PPO Plans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::health-insurance"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::hdhp-plans",
+      "label": "HDHP Plans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::health-insurance"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::health-savings-account",
+      "label": "Health Savings Account",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::hdhp-plans"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::auto-insurance",
+      "label": "Auto Insurance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::liability-coverage",
+      "label": "Liability Coverage",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::auto-insurance"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::collision-coverage",
+      "label": "Collision Coverage",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::auto-insurance"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::comprehensive-coverage",
+      "label": "Comprehensive Coverage",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::auto-insurance"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::renter-s-insurance",
+      "label": "Renter's Insurance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::homeowner-s-insurance",
+      "label": "Homeowner's Insurance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::term-life-insurance",
+      "label": "Term Life Insurance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::whole-life-insurance",
+      "label": "Whole Life Insurance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::disability-insurance",
+      "label": "Disability Insurance",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::umbrella-policy",
+      "label": "Umbrella Policy",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::liability-coverage"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::insurance-claims-process",
+      "label": "Insurance Claims Process",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles",
+        "personal-finance::insurance-premium"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::risk-management-strategy",
+      "label": "Risk Management Strategy",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::insurance-principles",
+        "personal-finance::risk-tolerance"
+      ],
+      "taxonomy_id": "INS",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::auto-loans",
+      "label": "Auto Loans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt",
+        "personal-finance::interest-rate-calculation"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::loan-interest-rates",
+      "label": "Loan Interest Rates",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::interest-rate-calculation"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::loan-term-length",
+      "label": "Loan Term Length",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::auto-loans"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::new-vs-used-vehicles",
+      "label": "New vs Used Vehicles",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::auto-loans"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::vehicle-depreciation",
+      "label": "Vehicle Depreciation",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::new-vs-used-vehicles"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::total-cost-of-ownership",
+      "label": "Total Cost of Ownership",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::auto-loans",
+        "personal-finance::vehicle-depreciation"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::renting-vs-buying",
+      "label": "Renting vs Buying",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::opportunity-cost",
+        "personal-finance::personal-budgeting"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::mortgage",
+      "label": "Mortgage",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt",
+        "personal-finance::interest-rate-calculation"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::fixed-rate-mortgage",
+      "label": "Fixed-Rate Mortgage",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::mortgage"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::adjustable-rate-mortgage",
+      "label": "Adjustable-Rate Mortgage",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::mortgage"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::fha-loans",
+      "label": "FHA Loans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::mortgage"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::conventional-loans",
+      "label": "Conventional Loans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::mortgage"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::down-payment",
+      "label": "Down Payment",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::mortgage"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::closing-costs",
+      "label": "Closing Costs",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::mortgage"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::comparison-shopping",
+      "label": "Comparison Shopping",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::account-features-comparison"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::negotiation-skills",
+      "label": "Negotiation Skills",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-decision-making",
+        "personal-finance::comparison-shopping"
+      ],
+      "taxonomy_id": "LOAN",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::identity-theft",
+      "label": "Identity Theft",
+      "subject_id": "personal-finance",
+      "dependencies": [],
+      "taxonomy_id": "SEC",
+      "level": "foundational"
+    },
+    {
+      "id": "personal-finance::identity-theft-prevention",
+      "label": "Identity Theft Prevention",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::identity-theft"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-monitoring",
+      "label": "Credit Monitoring",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-score",
+        "personal-finance::credit-report",
+        "personal-finance::identity-theft-prevention"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::password-security",
+      "label": "Password Security",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::banking-security"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::two-factor-authentication",
+      "label": "Two-Factor Authentication",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::banking-security",
+        "personal-finance::password-security"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::phishing-scams",
+      "label": "Phishing Scams",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::identity-theft"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::ponzi-schemes",
+      "label": "Ponzi Schemes",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-fundamentals"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::pyramid-schemes",
+      "label": "Pyramid Schemes",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-fundamentals"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::consumer-rights",
+      "label": "Consumer Rights",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::money-management-principles"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::cfpb-protection",
+      "label": "CFPB Protection",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-rights"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::dispute-resolution",
+      "label": "Dispute Resolution",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::credit-cards",
+        "personal-finance::consumer-rights"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::credit-freeze",
+      "label": "Credit Freeze",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::identity-theft-prevention",
+        "personal-finance::credit-monitoring"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::college-cost-estimation",
+      "label": "College Cost Estimation",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-goal-setting"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::net-price-calculator",
+      "label": "Net Price Calculator",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::college-cost-estimation"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::scholarships",
+      "label": "Scholarships",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::college-cost-estimation"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::grants",
+      "label": "Grants",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::college-cost-estimation"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::fafsa",
+      "label": "FAFSA",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::college-cost-estimation"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::federal-student-loans",
+      "label": "Federal Student Loans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt",
+        "personal-finance::fafsa"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::private-student-loans",
+      "label": "Private Student Loans",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::consumer-debt",
+        "personal-finance::fafsa"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::college-roi",
+      "label": "College ROI",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::opportunity-cost",
+        "personal-finance::college-cost-estimation"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::alternative-education-paths",
+      "label": "Alternative Education Paths",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::college-roi"
+      ],
+      "taxonomy_id": "EDU",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::career-exploration",
+      "label": "Career Exploration",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-goal-setting"
+      ],
+      "taxonomy_id": "CAR",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::income-potential-research",
+      "label": "Income Potential Research",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::career-exploration"
+      ],
+      "taxonomy_id": "CAR",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::employee-benefits",
+      "label": "Employee Benefits",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income"
+      ],
+      "taxonomy_id": "CAR",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::total-compensation-package",
+      "label": "Total Compensation Package",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income",
+        "personal-finance::employee-benefits"
+      ],
+      "taxonomy_id": "CAR",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::side-hustles",
+      "label": "Side Hustles",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::gross-income",
+        "personal-finance::career-exploration"
+      ],
+      "taxonomy_id": "CAR",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::salary-negotiation",
+      "label": "Salary Negotiation",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::negotiation-skills",
+        "personal-finance::income-potential-research"
+      ],
+      "taxonomy_id": "CAR",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::professional-development",
+      "label": "Professional Development",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::career-exploration"
+      ],
+      "taxonomy_id": "CAR",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::401-k-plan",
+      "label": "401(k) Plan",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-account-types",
+        "personal-finance::tax-advantaged-accounts"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::traditional-ira",
+      "label": "Traditional IRA",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-account-types",
+        "personal-finance::tax-advantaged-accounts"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::roth-ira",
+      "label": "Roth IRA",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::investment-account-types",
+        "personal-finance::tax-advantaged-accounts"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::employer-matching",
+      "label": "Employer Matching",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::401-k-plan"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::social-security-benefits",
+      "label": "Social Security Benefits",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::federal-income-tax"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::retirement-savings-target",
+      "label": "Retirement Savings Target",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::financial-goal-setting",
+        "personal-finance::compound-interest",
+        "personal-finance::401-k-plan"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "personal-finance::estate-planning-basics",
+      "label": "Estate Planning Basics",
+      "subject_id": "personal-finance",
+      "dependencies": [
+        "personal-finance::assets-and-liabilities",
+        "personal-finance::financial-independence"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    }
+  ]
+}

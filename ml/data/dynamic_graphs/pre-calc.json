@@ -1,0 +1,3363 @@
+{
+  "subject_id": "pre-calc",
+  "title": "AP Pre-Calculus Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "FUNC": {
+      "classifier_name": "Function Fundamentals",
+      "color": "PaleTurquoise"
+    },
+    "RATE": {
+      "classifier_name": "Rates of Change",
+      "color": "Thistle"
+    },
+    "LNQD": {
+      "classifier_name": "Linear and Quadratic",
+      "color": "MistyRose"
+    },
+    "POLY": {
+      "classifier_name": "Polynomial Functions",
+      "color": "Plum"
+    },
+    "RATL": {
+      "classifier_name": "Rational Functions",
+      "color": "SteelBlue"
+    },
+    "TMOD": {
+      "classifier_name": "Transformations and Modeling",
+      "color": "PeachPuff"
+    },
+    "SEQX": {
+      "classifier_name": "Sequences and Exponential",
+      "color": "MintCream"
+    },
+    "LOGR": {
+      "classifier_name": "Logarithmic Functions",
+      "color": "Lavender"
+    },
+    "TRIG": {
+      "classifier_name": "Trigonometric Functions",
+      "color": "Honeydew"
+    },
+    "POLR": {
+      "classifier_name": "Polar and Parametric",
+      "color": "LightYellow"
+    },
+    "VECM": {
+      "classifier_name": "Vectors and Matrices",
+      "color": "LavenderBlush"
+    }
+  },
+  "concepts": [
+    {
+      "id": "pre-calc::real-number-system",
+      "label": "Real Number System",
+      "subject_id": "pre-calc",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "pre-calc::number-line",
+      "label": "Number Line",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::real-number-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::order-of-operations",
+      "label": "Order of Operations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::real-number-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::variables-and-expressions",
+      "label": "Variables and Expressions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::real-number-system",
+        "pre-calc::order-of-operations"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::coordinate-plane",
+      "label": "Coordinate Plane",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::number-line"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::ordered-pairs",
+      "label": "Ordered Pairs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::coordinate-plane"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::input-and-output",
+      "label": "Input and Output",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::variables-and-expressions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::function-definition",
+      "label": "Function Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::input-and-output"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::function-notation",
+      "label": "Function Notation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::domain",
+      "label": "Domain",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::range",
+      "label": "Range",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::independent-variable",
+      "label": "Independent Variable",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::input-and-output"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::dependent-variable",
+      "label": "Dependent Variable",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::input-and-output",
+        "pre-calc::independent-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::interval-notation",
+      "label": "Interval Notation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::number-line"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::set-builder-notation",
+      "label": "Set-Builder Notation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::variables-and-expressions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vertical-line-test",
+      "label": "Vertical Line Test",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition",
+        "pre-calc::coordinate-plane"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::function-evaluation",
+      "label": "Function Evaluation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-notation"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::piecewise-functions",
+      "label": "Piecewise Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition",
+        "pre-calc::domain",
+        "pre-calc::interval-notation"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::domain-restrictions",
+      "label": "Domain Restrictions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::domain"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::graphing-functions",
+      "label": "Graphing Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::coordinate-plane",
+        "pre-calc::function-notation"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::intercepts",
+      "label": "Intercepts",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::x-intercept",
+      "label": "X-Intercept",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::intercepts"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::y-intercept",
+      "label": "Y-Intercept",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::intercepts"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::increasing-functions",
+      "label": "Increasing Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions",
+        "pre-calc::function-behavior"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::decreasing-functions",
+      "label": "Decreasing Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions",
+        "pre-calc::function-behavior"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::constant-functions",
+      "label": "Constant Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::function-behavior",
+      "label": "Function Behavior",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::positive-and-negative-regions",
+      "label": "Positive and Negative Regions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions",
+        "pre-calc::x-intercept"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::bounded-functions",
+      "label": "Bounded Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::range",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::even-functions",
+      "label": "Even Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions",
+        "pre-calc::symmetry"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::odd-functions",
+      "label": "Odd Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions",
+        "pre-calc::symmetry"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::symmetry",
+      "label": "Symmetry",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::change-in-tandem",
+      "label": "Change in Tandem",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::input-and-output",
+        "pre-calc::independent-variable",
+        "pre-calc::dependent-variable"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::average-rate-of-change",
+      "label": "Average Rate of Change",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::change-in-tandem",
+        "pre-calc::function-notation"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::slope",
+      "label": "Slope",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::average-rate-of-change"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::slope-formula",
+      "label": "Slope Formula",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::slope",
+        "pre-calc::ordered-pairs"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rate-of-change-units",
+      "label": "Rate of Change Units",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::average-rate-of-change"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::secant-line",
+      "label": "Secant Line",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::slope-formula",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::linear-rate-of-change",
+      "label": "Linear Rate of Change",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::slope"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::nonlinear-rate-of-change",
+      "label": "Nonlinear Rate of Change",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::average-rate-of-change",
+        "pre-calc::linear-rate-of-change"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::concavity-from-rates",
+      "label": "Concavity from Rates",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::nonlinear-rate-of-change"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::increasing-rate-of-change",
+      "label": "Increasing Rate of Change",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::nonlinear-rate-of-change",
+        "pre-calc::increasing-functions"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::decreasing-rate-of-change",
+      "label": "Decreasing Rate of Change",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::nonlinear-rate-of-change",
+        "pre-calc::decreasing-functions"
+      ],
+      "taxonomy_id": "RATE",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::linear-function-definition",
+      "label": "Linear Function Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition",
+        "pre-calc::slope"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::slope-intercept-form",
+      "label": "Slope-Intercept Form",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-function-definition",
+        "pre-calc::y-intercept"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::point-slope-form",
+      "label": "Point-Slope Form",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-function-definition",
+        "pre-calc::slope-formula"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::standard-form-of-a-line",
+      "label": "Standard Form of a Line",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-function-definition"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::parallel-lines",
+      "label": "Parallel Lines",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::slope",
+        "pre-calc::linear-function-definition"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::perpendicular-lines",
+      "label": "Perpendicular Lines",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::slope",
+        "pre-calc::linear-function-definition"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::linear-regression",
+      "label": "Linear Regression",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-function-definition",
+        "pre-calc::ordered-pairs"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::residuals",
+      "label": "Residuals",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-regression"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::correlation",
+      "label": "Correlation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-regression"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::quadratic-function-definition",
+      "label": "Quadratic Function Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition",
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::standard-form-of-quadratic",
+      "label": "Standard Form of Quadratic",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::quadratic-function-definition"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vertex-form",
+      "label": "Vertex Form",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::quadratic-function-definition",
+        "pre-calc::completing-the-square"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::factored-form",
+      "label": "Factored Form",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::quadratic-function-definition"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vertex",
+      "label": "Vertex",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vertex-form"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::axis-of-symmetry",
+      "label": "Axis of Symmetry",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vertex",
+        "pre-calc::symmetry"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::parabola",
+      "label": "Parabola",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::quadratic-function-definition",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::completing-the-square",
+      "label": "Completing the Square",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::standard-form-of-quadratic"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::quadratic-formula",
+      "label": "Quadratic Formula",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::standard-form-of-quadratic",
+        "pre-calc::completing-the-square"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::discriminant",
+      "label": "Discriminant",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::quadratic-formula"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::complex-numbers",
+      "label": "Complex Numbers",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::real-number-system"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::imaginary-unit",
+      "label": "Imaginary Unit",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::complex-numbers"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::complex-zeros",
+      "label": "Complex Zeros",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::discriminant",
+        "pre-calc::imaginary-unit"
+      ],
+      "taxonomy_id": "LNQD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polynomial-definition",
+      "label": "Polynomial Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::variables-and-expressions"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::degree-of-a-polynomial",
+      "label": "Degree of a Polynomial",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::leading-coefficient",
+      "label": "Leading Coefficient",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::monomial",
+      "label": "Monomial",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::binomial",
+      "label": "Binomial",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::trinomial",
+      "label": "Trinomial",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polynomial-addition",
+      "label": "Polynomial Addition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polynomial-multiplication",
+      "label": "Polynomial Multiplication",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition",
+        "pre-calc::polynomial-addition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::factoring-polynomials",
+      "label": "Factoring Polynomials",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition",
+        "pre-calc::polynomial-multiplication"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::factor-theorem",
+      "label": "Factor Theorem",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::factoring-polynomials",
+        "pre-calc::zeros-of-polynomials"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::remainder-theorem",
+      "label": "Remainder Theorem",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::factor-theorem",
+        "pre-calc::synthetic-division"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::synthetic-division",
+      "label": "Synthetic Division",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::long-division-of-polynomials",
+      "label": "Long Division of Polynomials",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::zeros-of-polynomials",
+      "label": "Zeros of Polynomials",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition",
+        "pre-calc::x-intercept"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::multiplicity-of-zeros",
+      "label": "Multiplicity of Zeros",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::zeros-of-polynomials"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::real-zeros",
+      "label": "Real Zeros",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::zeros-of-polynomials"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::complex-conjugate-zeros",
+      "label": "Complex Conjugate Zeros",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::zeros-of-polynomials",
+        "pre-calc::complex-zeros"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::fundamental-theorem-of-algebra",
+      "label": "Fundamental Theorem of Algebra",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::degree-of-a-polynomial",
+        "pre-calc::zeros-of-polynomials",
+        "pre-calc::complex-numbers"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polynomial-end-behavior",
+      "label": "Polynomial End Behavior",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::degree-of-a-polynomial",
+        "pre-calc::leading-coefficient"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::leading-term-test",
+      "label": "Leading Term Test",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-end-behavior"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::turning-points",
+      "label": "Turning Points",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-graphs"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polynomial-graphs",
+      "label": "Polynomial Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::zeros-of-polynomials",
+        "pre-calc::multiplicity-of-zeros",
+        "pre-calc::polynomial-end-behavior",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::local-maximum",
+      "label": "Local Maximum",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::turning-points"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::local-minimum",
+      "label": "Local Minimum",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::turning-points"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::global-maximum",
+      "label": "Global Maximum",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::local-maximum"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::global-minimum",
+      "label": "Global Minimum",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::local-minimum"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::intermediate-value-theorem",
+      "label": "Intermediate Value Theorem",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-graphs",
+        "pre-calc::domain"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rational-function-definition",
+      "label": "Rational Function Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polynomial-definition",
+        "pre-calc::function-definition"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rational-expressions",
+      "label": "Rational Expressions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::rational-function-definition"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::simplifying-rational-expr",
+      "label": "Simplifying Rational Expr",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::rational-expressions",
+        "pre-calc::factoring-polynomials"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vertical-asymptotes",
+      "label": "Vertical Asymptotes",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::rational-function-definition",
+        "pre-calc::domain-restrictions"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::horizontal-asymptotes",
+      "label": "Horizontal Asymptotes",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::rational-function-definition",
+        "pre-calc::polynomial-end-behavior"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::slant-asymptotes",
+      "label": "Slant Asymptotes",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::horizontal-asymptotes",
+        "pre-calc::long-division-of-polynomials"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::holes-in-graphs",
+      "label": "Holes in Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::simplifying-rational-expr",
+        "pre-calc::vertical-asymptotes"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rational-function-zeros",
+      "label": "Rational Function Zeros",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::rational-function-definition",
+        "pre-calc::zeros-of-polynomials"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rational-function-domain",
+      "label": "Rational Function Domain",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::rational-function-definition",
+        "pre-calc::domain-restrictions"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::end-behavior-of-rationals",
+      "label": "End Behavior of Rationals",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::horizontal-asymptotes",
+        "pre-calc::slant-asymptotes"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rational-function-graphs",
+      "label": "Rational Function Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vertical-asymptotes",
+        "pre-calc::horizontal-asymptotes",
+        "pre-calc::holes-in-graphs",
+        "pre-calc::rational-function-zeros",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rational-inequalities",
+      "label": "Rational Inequalities",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::rational-function-graphs",
+        "pre-calc::positive-and-negative-regions"
+      ],
+      "taxonomy_id": "RATL",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::parent-functions",
+      "label": "Parent Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::graphing-functions",
+        "pre-calc::linear-function-definition",
+        "pre-calc::quadratic-function-definition",
+        "pre-calc::rational-function-definition"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vertical-translation",
+      "label": "Vertical Translation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parent-functions"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::horizontal-translation",
+      "label": "Horizontal Translation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parent-functions"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vertical-stretch",
+      "label": "Vertical Stretch",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parent-functions"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vertical-compression",
+      "label": "Vertical Compression",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vertical-stretch"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::horizontal-stretch",
+      "label": "Horizontal Stretch",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parent-functions"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::horizontal-compression",
+      "label": "Horizontal Compression",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::horizontal-stretch"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::reflection-over-x-axis",
+      "label": "Reflection Over X-Axis",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parent-functions"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::reflection-over-y-axis",
+      "label": "Reflection Over Y-Axis",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parent-functions"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::combined-transformations",
+      "label": "Combined Transformations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vertical-translation",
+        "pre-calc::horizontal-translation",
+        "pre-calc::vertical-stretch",
+        "pre-calc::horizontal-stretch",
+        "pre-calc::reflection-over-x-axis",
+        "pre-calc::reflection-over-y-axis"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::transformation-order",
+      "label": "Transformation Order",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::combined-transformations"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::writing-transformed-eqns",
+      "label": "Writing Transformed Eqns",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::combined-transformations",
+        "pre-calc::function-notation"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::function-model-selection",
+      "label": "Function Model Selection",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parent-functions",
+        "pre-calc::average-rate-of-change"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::data-analysis-for-models",
+      "label": "Data Analysis for Models",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-model-selection",
+        "pre-calc::ordered-pairs"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::regression-models",
+      "label": "Regression Models",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-regression",
+        "pre-calc::data-analysis-for-models"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::model-assumptions",
+      "label": "Model Assumptions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-model-selection"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::model-validation",
+      "label": "Model Validation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::regression-models",
+        "pre-calc::residuals"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::extrapolation",
+      "label": "Extrapolation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::regression-models"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::interpolation",
+      "label": "Interpolation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::regression-models"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::residual-analysis",
+      "label": "Residual Analysis",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::residuals",
+        "pre-calc::model-validation"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::goodness-of-fit",
+      "label": "Goodness of Fit",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::residual-analysis",
+        "pre-calc::correlation"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::competing-models",
+      "label": "Competing Models",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::goodness-of-fit"
+      ],
+      "taxonomy_id": "TMOD",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sequence-definition",
+      "label": "Sequence Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::arithmetic-sequence",
+      "label": "Arithmetic Sequence",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sequence-definition",
+        "pre-calc::slope"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::common-difference",
+      "label": "Common Difference",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::arithmetic-sequence"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::arithmetic-sequence-formula",
+      "label": "Arithmetic Sequence Formula",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::arithmetic-sequence",
+        "pre-calc::common-difference"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::geometric-sequence",
+      "label": "Geometric Sequence",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sequence-definition"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::common-ratio",
+      "label": "Common Ratio",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::geometric-sequence"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::geometric-sequence-formula",
+      "label": "Geometric Sequence Formula",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::geometric-sequence",
+        "pre-calc::common-ratio"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::recursive-formulas",
+      "label": "Recursive Formulas",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sequence-definition"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::explicit-formulas",
+      "label": "Explicit Formulas",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sequence-definition",
+        "pre-calc::arithmetic-sequence-formula",
+        "pre-calc::geometric-sequence-formula"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sequence-convergence",
+      "label": "Sequence Convergence",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::geometric-sequence",
+        "pre-calc::range"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sequence-divergence",
+      "label": "Sequence Divergence",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::geometric-sequence",
+        "pre-calc::sequence-convergence"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-function-def",
+      "label": "Exponential Function Def",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition",
+        "pre-calc::geometric-sequence"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::base-of-exponential",
+      "label": "Base of Exponential",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::growth-factor",
+      "label": "Growth Factor",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def",
+        "pre-calc::common-ratio"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::decay-factor",
+      "label": "Decay Factor",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def",
+        "pre-calc::common-ratio"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-growth",
+      "label": "Exponential Growth",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def",
+        "pre-calc::growth-factor"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-decay",
+      "label": "Exponential Decay",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def",
+        "pre-calc::decay-factor"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::natural-base-e",
+      "label": "Natural Base e",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::continuous-growth",
+      "label": "Continuous Growth",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::natural-base-e",
+        "pre-calc::exponential-growth"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::compound-interest",
+      "label": "Compound Interest",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-growth",
+        "pre-calc::continuous-growth"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-equations",
+      "label": "Exponential Equations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def",
+        "pre-calc::order-of-operations"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-graphs",
+      "label": "Exponential Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-transformations",
+      "label": "Exponential Transformations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-graphs",
+        "pre-calc::combined-transformations"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-modeling",
+      "label": "Exponential Modeling",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-growth",
+        "pre-calc::exponential-decay",
+        "pre-calc::data-analysis-for-models"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::half-life",
+      "label": "Half-Life",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-decay"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::doubling-time",
+      "label": "Doubling Time",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-growth"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::percent-rate-of-change",
+      "label": "Percent Rate of Change",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::growth-factor",
+        "pre-calc::decay-factor"
+      ],
+      "taxonomy_id": "SEQX",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::logarithm-definition",
+      "label": "Logarithm Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-function-def"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::common-logarithm",
+      "label": "Common Logarithm",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithm-definition"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::natural-logarithm",
+      "label": "Natural Logarithm",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithm-definition",
+        "pre-calc::natural-base-e"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::logarithmic-form",
+      "label": "Logarithmic Form",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithm-definition"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-log-conversion",
+      "label": "Exponential-Log Conversion",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithm-definition",
+        "pre-calc::exponential-equations"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::properties-of-logarithms",
+      "label": "Properties of Logarithms",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithm-definition"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::product-rule-for-logs",
+      "label": "Product Rule for Logs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::properties-of-logarithms"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::quotient-rule-for-logs",
+      "label": "Quotient Rule for Logs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::properties-of-logarithms"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::power-rule-for-logs",
+      "label": "Power Rule for Logs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::properties-of-logarithms"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::change-of-base-formula",
+      "label": "Change of Base Formula",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::properties-of-logarithms",
+        "pre-calc::common-logarithm",
+        "pre-calc::natural-logarithm"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::logarithmic-equations",
+      "label": "Logarithmic Equations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::exponential-log-conversion",
+        "pre-calc::properties-of-logarithms"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::logarithmic-graphs",
+      "label": "Logarithmic Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithm-definition",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::logarithmic-transformations",
+      "label": "Logarithmic Transformations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithmic-graphs",
+        "pre-calc::combined-transformations"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::logarithmic-modeling",
+      "label": "Logarithmic Modeling",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithmic-graphs",
+        "pre-calc::exponential-modeling"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::logarithmic-scale",
+      "label": "Logarithmic Scale",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithm-definition",
+        "pre-calc::number-line"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::semi-log-plot",
+      "label": "Semi-Log Plot",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::logarithmic-scale",
+        "pre-calc::exponential-graphs"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::linearizing-exp-data",
+      "label": "Linearizing Exp Data",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::semi-log-plot",
+        "pre-calc::linear-regression"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::log-log-plots",
+      "label": "Log-Log Plots",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::semi-log-plot"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exponential-regression",
+      "label": "Exponential Regression",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linearizing-exp-data",
+        "pre-calc::regression-models"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::power-regression",
+      "label": "Power Regression",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::log-log-plots",
+        "pre-calc::regression-models"
+      ],
+      "taxonomy_id": "LOGR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::composition-of-functions",
+      "label": "Composition of Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition",
+        "pre-calc::function-notation",
+        "pre-calc::function-evaluation"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::domain-of-compositions",
+      "label": "Domain of Compositions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::composition-of-functions",
+        "pre-calc::domain",
+        "pre-calc::domain-restrictions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::decomposing-functions",
+      "label": "Decomposing Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::composition-of-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::inverse-function-definition",
+      "label": "Inverse Function Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-definition",
+        "pre-calc::composition-of-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::one-to-one-functions",
+      "label": "One-to-One Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::inverse-function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::horizontal-line-test",
+      "label": "Horizontal Line Test",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::one-to-one-functions",
+        "pre-calc::vertical-line-test"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::finding-inverses-algebraically",
+      "label": "Finding Inverses Algebraically",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::inverse-function-definition",
+        "pre-calc::function-notation"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::inverse-function-graphs",
+      "label": "Inverse Function Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::inverse-function-definition",
+        "pre-calc::graphing-functions",
+        "pre-calc::reflection-over-y-axis"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::restricting-domains",
+      "label": "Restricting Domains",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::one-to-one-functions",
+        "pre-calc::domain"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::angle-definition",
+      "label": "Angle Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [],
+      "taxonomy_id": "TRIG",
+      "level": "foundational"
+    },
+    {
+      "id": "pre-calc::degree-measure",
+      "label": "Degree Measure",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::angle-definition"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::radian-measure",
+      "label": "Radian Measure",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::angle-definition",
+        "pre-calc::natural-base-e"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::degree-radian-conversion",
+      "label": "Degree-Radian Conversion",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::degree-measure",
+        "pre-calc::radian-measure"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::arc-length",
+      "label": "Arc Length",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::radian-measure"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sector-area",
+      "label": "Sector Area",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::radian-measure",
+        "pre-calc::arc-length"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::standard-position",
+      "label": "Standard Position",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::angle-definition",
+        "pre-calc::coordinate-plane"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::terminal-side",
+      "label": "Terminal Side",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::standard-position"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::reference-angle",
+      "label": "Reference Angle",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::terminal-side",
+        "pre-calc::degree-measure"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::coterminal-angles",
+      "label": "Coterminal Angles",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::terminal-side",
+        "pre-calc::degree-measure"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::unit-circle-definition",
+      "label": "Unit Circle Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::coordinate-plane",
+        "pre-calc::radian-measure"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::unit-circle-coordinates",
+      "label": "Unit Circle Coordinates",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::unit-circle-definition",
+        "pre-calc::ordered-pairs"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::special-angles",
+      "label": "Special Angles",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::unit-circle-coordinates",
+        "pre-calc::reference-angle"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::quadrantal-angles",
+      "label": "Quadrantal Angles",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::unit-circle-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::signs-by-quadrant",
+      "label": "Signs by Quadrant",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::unit-circle-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sine-function",
+      "label": "Sine Function",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::unit-circle-definition",
+        "pre-calc::unit-circle-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::cosine-function",
+      "label": "Cosine Function",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::unit-circle-definition",
+        "pre-calc::unit-circle-coordinates"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::tangent-function",
+      "label": "Tangent Function",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::reciprocal-trig-functions",
+      "label": "Reciprocal Trig Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function",
+        "pre-calc::tangent-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::secant-function",
+      "label": "Secant Function",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::reciprocal-trig-functions",
+        "pre-calc::cosine-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::cosecant-function",
+      "label": "Cosecant Function",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::reciprocal-trig-functions",
+        "pre-calc::sine-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::cotangent-function",
+      "label": "Cotangent Function",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::reciprocal-trig-functions",
+        "pre-calc::tangent-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::trig-function-evaluation",
+      "label": "Trig Function Evaluation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function",
+        "pre-calc::tangent-function",
+        "pre-calc::special-angles"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::exact-trig-values",
+      "label": "Exact Trig Values",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::trig-function-evaluation",
+        "pre-calc::special-angles"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::right-triangle-trig",
+      "label": "Right Triangle Trig",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::angle-definition",
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function",
+        "pre-calc::tangent-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::soh-cah-toa",
+      "label": "SOH-CAH-TOA",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::right-triangle-trig"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sine-graph",
+      "label": "Sine Graph",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-function",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::cosine-graph",
+      "label": "Cosine Graph",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::cosine-function",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::amplitude",
+      "label": "Amplitude",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-graph",
+        "pre-calc::cosine-graph"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::period",
+      "label": "Period",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-graph",
+        "pre-calc::cosine-graph",
+        "pre-calc::radian-measure"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::midline",
+      "label": "Midline",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-graph",
+        "pre-calc::cosine-graph"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::frequency",
+      "label": "Frequency",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::period"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::phase-shift",
+      "label": "Phase Shift",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-graph",
+        "pre-calc::cosine-graph",
+        "pre-calc::horizontal-translation"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vertical-shift-of-trig",
+      "label": "Vertical Shift of Trig",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-graph",
+        "pre-calc::cosine-graph",
+        "pre-calc::vertical-translation"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sinusoidal-functions",
+      "label": "Sinusoidal Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::amplitude",
+        "pre-calc::period",
+        "pre-calc::midline",
+        "pre-calc::phase-shift",
+        "pre-calc::vertical-shift-of-trig"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::tangent-graph",
+      "label": "Tangent Graph",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::tangent-function",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::period-of-tangent",
+      "label": "Period of Tangent",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::tangent-graph",
+        "pre-calc::period"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::asymptotes-of-tangent",
+      "label": "Asymptotes of Tangent",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::tangent-graph",
+        "pre-calc::vertical-asymptotes"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::secant-graph",
+      "label": "Secant Graph",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::secant-function",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::cosecant-graph",
+      "label": "Cosecant Graph",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::cosecant-function",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::cotangent-graph",
+      "label": "Cotangent Graph",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::cotangent-function",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::graphing-trig-transformations",
+      "label": "Graphing Trig Transformations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sinusoidal-functions",
+        "pre-calc::combined-transformations"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sinusoidal-modeling",
+      "label": "Sinusoidal Modeling",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sinusoidal-functions",
+        "pre-calc::data-analysis-for-models"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::periodic-data-analysis",
+      "label": "Periodic Data Analysis",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sinusoidal-modeling"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::tidal-models",
+      "label": "Tidal Models",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sinusoidal-modeling"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::temperature-models",
+      "label": "Temperature Models",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sinusoidal-modeling"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::daylight-hour-models",
+      "label": "Daylight Hour Models",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sinusoidal-modeling"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sinusoidal-regression",
+      "label": "Sinusoidal Regression",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sinusoidal-modeling",
+        "pre-calc::regression-models"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::period-from-data",
+      "label": "Period from Data",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::periodic-data-analysis",
+        "pre-calc::period"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::amplitude-from-data",
+      "label": "Amplitude from Data",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::periodic-data-analysis",
+        "pre-calc::amplitude"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::pythagorean-identity",
+      "label": "Pythagorean Identity",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::reciprocal-identities",
+      "label": "Reciprocal Identities",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::reciprocal-trig-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::quotient-identities",
+      "label": "Quotient Identities",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::tangent-function",
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::cofunction-identities",
+      "label": "Cofunction Identities",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function",
+        "pre-calc::reference-angle"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::even-odd-identities",
+      "label": "Even-Odd Identities",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function",
+        "pre-calc::even-functions",
+        "pre-calc::odd-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::sum-and-difference-formulas",
+      "label": "Sum and Difference Formulas",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::pythagorean-identity",
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::double-angle-formulas",
+      "label": "Double Angle Formulas",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sum-and-difference-formulas"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::verifying-identities",
+      "label": "Verifying Identities",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::pythagorean-identity",
+        "pre-calc::reciprocal-identities",
+        "pre-calc::quotient-identities",
+        "pre-calc::cofunction-identities"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::simplifying-trig-expr",
+      "label": "Simplifying Trig Expr",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::verifying-identities"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::arcsine",
+      "label": "Arcsine",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::sine-function",
+        "pre-calc::inverse-function-definition",
+        "pre-calc::restricting-domains"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::arccosine",
+      "label": "Arccosine",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::cosine-function",
+        "pre-calc::inverse-function-definition",
+        "pre-calc::restricting-domains"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::arctangent",
+      "label": "Arctangent",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::tangent-function",
+        "pre-calc::inverse-function-definition",
+        "pre-calc::restricting-domains"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::inverse-trig-domains",
+      "label": "Inverse Trig Domains",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::arcsine",
+        "pre-calc::arccosine",
+        "pre-calc::arctangent",
+        "pre-calc::domain"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::inverse-trig-ranges",
+      "label": "Inverse Trig Ranges",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::arcsine",
+        "pre-calc::arccosine",
+        "pre-calc::arctangent",
+        "pre-calc::range"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::inverse-trig-graphs",
+      "label": "Inverse Trig Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::arcsine",
+        "pre-calc::arccosine",
+        "pre-calc::arctangent",
+        "pre-calc::inverse-function-graphs"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::composing-trig-inverses",
+      "label": "Composing Trig Inverses",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::arcsine",
+        "pre-calc::arccosine",
+        "pre-calc::arctangent",
+        "pre-calc::composition-of-functions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::solving-trig-equations",
+      "label": "Solving Trig Equations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::trig-function-evaluation",
+        "pre-calc::arcsine",
+        "pre-calc::arccosine",
+        "pre-calc::arctangent"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::general-solutions",
+      "label": "General Solutions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::solving-trig-equations",
+        "pre-calc::coterminal-angles"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::solutions-in-an-interval",
+      "label": "Solutions in an Interval",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::solving-trig-equations",
+        "pre-calc::interval-notation"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::trig-inequalities",
+      "label": "Trig Inequalities",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::solving-trig-equations",
+        "pre-calc::positive-and-negative-regions"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::multiple-angle-equations",
+      "label": "Multiple Angle Equations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::solving-trig-equations",
+        "pre-calc::double-angle-formulas"
+      ],
+      "taxonomy_id": "TRIG",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polar-coordinate-system",
+      "label": "Polar Coordinate System",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::coordinate-plane",
+        "pre-calc::radian-measure"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polar-point-plotting",
+      "label": "Polar Point Plotting",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-coordinate-system"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rectangular-to-polar",
+      "label": "Rectangular to Polar",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-coordinate-system",
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polar-to-rectangular",
+      "label": "Polar to Rectangular",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-coordinate-system",
+        "pre-calc::sine-function",
+        "pre-calc::cosine-function"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::multiple-polar-represent",
+      "label": "Multiple Polar Represent",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-coordinate-system",
+        "pre-calc::coterminal-angles"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polar-function-definition",
+      "label": "Polar Function Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-coordinate-system",
+        "pre-calc::function-definition"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polar-graphs",
+      "label": "Polar Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-function-definition",
+        "pre-calc::polar-point-plotting"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::circles-in-polar-form",
+      "label": "Circles in Polar Form",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-graphs"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::cardioids",
+      "label": "Cardioids",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-graphs"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::lima-ons",
+      "label": "Limaçons",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-graphs"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rose-curves",
+      "label": "Rose Curves",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-graphs"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::petal-count-of-roses",
+      "label": "Petal Count of Roses",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::rose-curves"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::symmetry-of-polar-graphs",
+      "label": "Symmetry of Polar Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-graphs",
+        "pre-calc::symmetry"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polar-rate-of-change",
+      "label": "Polar Rate of Change",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-graphs",
+        "pre-calc::average-rate-of-change"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::polar-graph-intersections",
+      "label": "Polar Graph Intersections",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::polar-graphs"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::parametric-equations",
+      "label": "Parametric Equations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::coordinate-plane",
+        "pre-calc::function-definition"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::parameter",
+      "label": "Parameter",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parametric-equations"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::parametric-graphs",
+      "label": "Parametric Graphs",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parametric-equations",
+        "pre-calc::graphing-functions"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::eliminating-the-parameter",
+      "label": "Eliminating the Parameter",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parametric-equations",
+        "pre-calc::function-notation"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::parametric-motion",
+      "label": "Parametric Motion",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parametric-graphs",
+        "pre-calc::parameter"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::position-functions",
+      "label": "Position Functions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parametric-motion"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::velocity-from-parametrics",
+      "label": "Velocity from Parametrics",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parametric-motion",
+        "pre-calc::average-rate-of-change"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::direction-of-motion",
+      "label": "Direction of Motion",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::velocity-from-parametrics"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::parametric-modeling",
+      "label": "Parametric Modeling",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parametric-motion",
+        "pre-calc::data-analysis-for-models"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::projectile-motion-model",
+      "label": "Projectile Motion Model",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::parametric-modeling",
+        "pre-calc::quadratic-function-definition"
+      ],
+      "taxonomy_id": "POLR",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vector-definition",
+      "label": "Vector Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [],
+      "taxonomy_id": "VECM",
+      "level": "foundational"
+    },
+    {
+      "id": "pre-calc::vector-notation",
+      "label": "Vector Notation",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vector-definition"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::magnitude-of-a-vector",
+      "label": "Magnitude of a Vector",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vector-definition",
+        "pre-calc::real-number-system"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::direction-of-a-vector",
+      "label": "Direction of a Vector",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vector-definition",
+        "pre-calc::angle-definition"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::component-form",
+      "label": "Component Form",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vector-definition",
+        "pre-calc::coordinate-plane"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::unit-vectors",
+      "label": "Unit Vectors",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::magnitude-of-a-vector",
+        "pre-calc::component-form"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vector-addition",
+      "label": "Vector Addition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::component-form"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vector-subtraction",
+      "label": "Vector Subtraction",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::component-form",
+        "pre-calc::vector-addition"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::scalar-multiplication",
+      "label": "Scalar Multiplication",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vector-definition",
+        "pre-calc::component-form"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::dot-product",
+      "label": "Dot Product",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::component-form",
+        "pre-calc::vector-addition"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::vector-applications",
+      "label": "Vector Applications",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::vector-addition",
+        "pre-calc::vector-subtraction",
+        "pre-calc::scalar-multiplication"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::matrix-definition",
+      "label": "Matrix Definition",
+      "subject_id": "pre-calc",
+      "dependencies": [],
+      "taxonomy_id": "VECM",
+      "level": "foundational"
+    },
+    {
+      "id": "pre-calc::matrix-dimensions",
+      "label": "Matrix Dimensions",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-definition"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::matrix-addition",
+      "label": "Matrix Addition",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-definition",
+        "pre-calc::matrix-dimensions"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::matrix-subtraction",
+      "label": "Matrix Subtraction",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-definition",
+        "pre-calc::matrix-addition"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::scalar-mult-of-matrices",
+      "label": "Scalar Mult of Matrices",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-definition"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::matrix-multiplication",
+      "label": "Matrix Multiplication",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-definition",
+        "pre-calc::matrix-dimensions"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::identity-matrix",
+      "label": "Identity Matrix",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-definition",
+        "pre-calc::matrix-multiplication"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::determinant",
+      "label": "Determinant",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-definition",
+        "pre-calc::matrix-multiplication"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::inverse-of-a-matrix",
+      "label": "Inverse of a Matrix",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::identity-matrix",
+        "pre-calc::determinant"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::linear-transformations",
+      "label": "Linear Transformations",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-multiplication",
+        "pre-calc::component-form"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::rotation-matrix",
+      "label": "Rotation Matrix",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-transformations",
+        "pre-calc::radian-measure"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::reflection-matrix",
+      "label": "Reflection Matrix",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::linear-transformations"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::matrix-applications",
+      "label": "Matrix Applications",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::matrix-multiplication",
+        "pre-calc::inverse-of-a-matrix",
+        "pre-calc::linear-transformations"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::calculator-strategies",
+      "label": "Calculator Strategies",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::function-evaluation",
+        "pre-calc::exponential-equations",
+        "pre-calc::logarithmic-equations",
+        "pre-calc::solving-trig-equations"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::free-response-strategy",
+      "label": "Free Response Strategy",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::calculator-strategies"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::multiple-choice-strategy",
+      "label": "Multiple Choice Strategy",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::calculator-strategies"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::time-management-on-exams",
+      "label": "Time Management on Exams",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::calculator-strategies"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    },
+    {
+      "id": "pre-calc::showing-work-on-free-resp",
+      "label": "Showing Work on Free Resp",
+      "subject_id": "pre-calc",
+      "dependencies": [
+        "pre-calc::free-response-strategy"
+      ],
+      "taxonomy_id": "VECM",
+      "level": "core"
+    }
+  ]
+}

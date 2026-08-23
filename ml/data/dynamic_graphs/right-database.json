@@ -1,0 +1,2804 @@
+{
+  "subject_id": "right-database",
+  "title": "The Right Database: Architecture Tradeoff Analysis for Distributed and High-Availability Systems",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "ATAM": {
+      "classifier_name": "ATAM Methodology",
+      "color": "DarkSlateBlue"
+    },
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "REL": {
+      "classifier_name": "Relational Databases",
+      "color": "DarkGreen"
+    },
+    "ANAL": {
+      "classifier_name": "Analytical Databases",
+      "color": "LimeGreen"
+    },
+    "KV": {
+      "classifier_name": "Key-Value Stores",
+      "color": "Gold"
+    },
+    "COL": {
+      "classifier_name": "Column-Family Databases",
+      "color": "DarkGoldenrod"
+    },
+    "GRAPH": {
+      "classifier_name": "Graph Databases",
+      "color": "Teal"
+    },
+    "DOC": {
+      "classifier_name": "Document Databases",
+      "color": "DodgerBlue"
+    },
+    "DIST": {
+      "classifier_name": "Distributed Consistency",
+      "color": "Crimson"
+    },
+    "ACID": {
+      "classifier_name": "ACID Transactions",
+      "color": "DarkRed"
+    },
+    "NACID": {
+      "classifier_name": "Distributed ACID and NewSQL",
+      "color": "MediumPurple"
+    },
+    "SCALE": {
+      "classifier_name": "Distributed Scaling",
+      "color": "Indigo"
+    },
+    "HA": {
+      "classifier_name": "High Availability",
+      "color": "OliveDrab"
+    },
+    "VEC": {
+      "classifier_name": "Vector Search and Embeddings",
+      "color": "Orange"
+    },
+    "LLM": {
+      "classifier_name": "LLM Embeddings",
+      "color": "Coral"
+    },
+    "SEL": {
+      "classifier_name": "Database Selection Framework",
+      "color": "DeepPink"
+    }
+  },
+  "concepts": [
+    {
+      "id": "right-database::architecture-tradeoff-analysis",
+      "label": "Architecture Tradeoff Analysis",
+      "subject_id": "right-database",
+      "dependencies": [],
+      "taxonomy_id": "ATAM",
+      "level": "foundational"
+    },
+    {
+      "id": "right-database::quality-attribute-workshop",
+      "label": "Quality Attribute Workshop",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architecture-tradeoff-analysis"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::utility-tree",
+      "label": "Utility Tree",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architecture-tradeoff-analysis",
+        "right-database::quality-attribute-workshop"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::quality-attribute-scenario",
+      "label": "Quality Attribute Scenario",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::utility-tree"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::architectural-driver",
+      "label": "Architectural Driver",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::sensitivity-point",
+      "label": "Sensitivity Point",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::utility-tree",
+        "right-database::architectural-driver"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::tradeoff-point",
+      "label": "Tradeoff Point",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::sensitivity-point"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::architectural-risk",
+      "label": "Architectural Risk",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architectural-driver",
+        "right-database::sensitivity-point"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::non-risk",
+      "label": "Non-Risk",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architectural-risk"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::risk-theme",
+      "label": "Risk Theme",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architectural-risk"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::utility-tree-prioritization",
+      "label": "Utility Tree Prioritization",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::utility-tree",
+        "right-database::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::atam-stakeholder-roles",
+      "label": "ATAM Stakeholder Roles",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architecture-tradeoff-analysis"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::business-driver",
+      "label": "Business Driver",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architecture-tradeoff-analysis",
+        "right-database::atam-stakeholder-roles"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::architectural-approach",
+      "label": "Architectural Approach",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architectural-driver",
+        "right-database::business-driver"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::atam-evaluation-team",
+      "label": "ATAM Evaluation Team",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architecture-tradeoff-analysis",
+        "right-database::atam-stakeholder-roles"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::atam-nine-step-process",
+      "label": "ATAM Nine-Step Process",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architecture-tradeoff-analysis",
+        "right-database::business-driver",
+        "right-database::atam-evaluation-team"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::architectural-decision-record",
+      "label": "Architectural Decision Record",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::tradeoff-point",
+        "right-database::architectural-risk",
+        "right-database::atam-nine-step-process"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::quality-attribute-refinement",
+      "label": "Quality Attribute Refinement",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::utility-tree",
+        "right-database::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::scenario-stimulus",
+      "label": "Scenario Stimulus",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::scenario-response-measure",
+      "label": "Scenario Response Measure",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::quality-attribute-scenario",
+        "right-database::scenario-stimulus"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::atam-output-artifacts",
+      "label": "ATAM Output Artifacts",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atam-nine-step-process",
+        "right-database::architectural-decision-record"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::software-architecture-view",
+      "label": "Software Architecture View",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architectural-approach"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::database-management-system",
+      "label": "Database Management System",
+      "subject_id": "right-database",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "right-database::data-model",
+      "label": "Data Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::schema",
+      "label": "Schema",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::query-language",
+      "label": "Query Language",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system",
+        "right-database::schema"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::database-index",
+      "label": "Database Index",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system",
+        "right-database::schema"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::query-optimizer",
+      "label": "Query Optimizer",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-language",
+        "right-database::database-index"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::storage-engine",
+      "label": "Storage Engine",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::data-serialization",
+      "label": "Data Serialization",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::workload-characterization",
+      "label": "Workload Characterization",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::read-write-ratio",
+      "label": "Read/Write Ratio",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::workload-characterization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::latency-vs-throughput",
+      "label": "Latency vs Throughput",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::workload-characterization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::oltp-workload",
+      "label": "OLTP Workload",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::workload-characterization",
+        "right-database::read-write-ratio"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::olap-workload",
+      "label": "OLAP Workload",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::workload-characterization",
+        "right-database::read-write-ratio"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::htap-workload",
+      "label": "HTAP Workload",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::oltp-workload",
+        "right-database::olap-workload"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::data-volume-scaling",
+      "label": "Data Volume Scaling",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system",
+        "right-database::workload-characterization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::impedance-mismatch",
+      "label": "Impedance Mismatch",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-model",
+        "right-database::query-language"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::query-expressiveness",
+      "label": "Query Expressiveness",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-language",
+        "right-database::query-optimizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::operational-complexity",
+      "label": "Operational Complexity",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "right-database::relational-data-model",
+      "label": "Relational Data Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-model"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::sql",
+      "label": "SQL",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-language",
+        "right-database::relational-data-model"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::primary-key",
+      "label": "Primary Key",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::relational-data-model"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::foreign-key",
+      "label": "Foreign Key",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::relational-data-model",
+        "right-database::primary-key"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::normalization",
+      "label": "Normalization",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::relational-data-model",
+        "right-database::primary-key",
+        "right-database::foreign-key"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::first-normal-form",
+      "label": "First Normal Form",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::normalization"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::third-normal-form",
+      "label": "Third Normal Form",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::normalization",
+        "right-database::first-normal-form"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::join-operation",
+      "label": "Join Operation",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::relational-data-model",
+        "right-database::sql",
+        "right-database::foreign-key"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::b-tree-index",
+      "label": "B-Tree Index",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-index",
+        "right-database::relational-data-model"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::query-execution-plan",
+      "label": "Query Execution Plan",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-optimizer",
+        "right-database::sql",
+        "right-database::b-tree-index"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::stored-procedure",
+      "label": "Stored Procedure",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::sql"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::database-view",
+      "label": "Database View",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::sql",
+        "right-database::relational-data-model"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::transaction-log",
+      "label": "Transaction Log",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::storage-engine"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::write-ahead-log",
+      "label": "Write-Ahead Log",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transaction-log"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::multi-version-concurrency",
+      "label": "Multi-Version Concurrency",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::storage-engine",
+        "right-database::transaction-log"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::lock-based-concurrency",
+      "label": "Lock-Based Concurrency",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::storage-engine"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::deadlock-detection",
+      "label": "Deadlock Detection",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::lock-based-concurrency"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::connection-pooling",
+      "label": "Connection Pooling",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::postgresql",
+      "label": "PostgreSQL",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::relational-data-model",
+        "right-database::sql",
+        "right-database::multi-version-concurrency"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::mysql",
+      "label": "MySQL",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::relational-data-model",
+        "right-database::sql",
+        "right-database::lock-based-concurrency"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::columnar-storage",
+      "label": "Columnar Storage",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::storage-engine",
+        "right-database::olap-workload"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::massively-parallel-processing",
+      "label": "Massively Parallel Processing",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-volume-scaling",
+        "right-database::columnar-storage"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::data-warehouse",
+      "label": "Data Warehouse",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::olap-workload",
+        "right-database::data-model"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::star-schema",
+      "label": "Star Schema",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-warehouse",
+        "right-database::relational-data-model"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::snowflake-schema",
+      "label": "Snowflake Schema",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::star-schema"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::olap-cube",
+      "label": "OLAP Cube",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-warehouse",
+        "right-database::olap-workload"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::etl-pipeline",
+      "label": "ETL Pipeline",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-warehouse",
+        "right-database::apache-parquet-format"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::inmon-architecture",
+      "label": "Inmon Architecture",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-warehouse",
+        "right-database::etl-pipeline"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::kimball-architecture",
+      "label": "Kimball Architecture",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-warehouse",
+        "right-database::star-schema"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::bitmap-index",
+      "label": "Bitmap Index",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-index",
+        "right-database::columnar-storage"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::materialized-view",
+      "label": "Materialized View",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-view",
+        "right-database::data-warehouse"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::query-pushdown",
+      "label": "Query Pushdown",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-optimizer",
+        "right-database::massively-parallel-processing"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::snowflake-database",
+      "label": "Snowflake Database",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::massively-parallel-processing",
+        "right-database::columnar-storage"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::bigquery",
+      "label": "BigQuery",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::massively-parallel-processing",
+        "right-database::columnar-storage"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::apache-parquet-format",
+      "label": "Apache Parquet Format",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-serialization",
+        "right-database::columnar-storage"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::key-value-data-model",
+      "label": "Key-Value Data Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-model"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::hash-table-storage",
+      "label": "Hash Table Storage",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::storage-engine",
+        "right-database::key-value-data-model"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::time-to-live",
+      "label": "Time-to-Live",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::key-value-data-model"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cache-eviction-policy",
+      "label": "Cache Eviction Policy",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::key-value-data-model",
+        "right-database::time-to-live"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::redis",
+      "label": "Redis",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::key-value-data-model",
+        "right-database::hash-table-storage",
+        "right-database::time-to-live"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::dynamodb",
+      "label": "DynamoDB",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::key-value-data-model",
+        "right-database::hash-table-storage"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::read-through-cache",
+      "label": "Read-Through Cache",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cache-eviction-policy",
+        "right-database::redis"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::write-through-cache",
+      "label": "Write-Through Cache",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cache-eviction-policy",
+        "right-database::redis"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::write-behind-cache",
+      "label": "Write-Behind Cache",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cache-eviction-policy",
+        "right-database::redis"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cache-stampede",
+      "label": "Cache Stampede",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cache-eviction-policy",
+        "right-database::read-through-cache"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::hot-key-problem",
+      "label": "Hot Key Problem",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::hash-table-storage",
+        "right-database::key-value-data-model"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::key-expiration",
+      "label": "Key Expiration",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::time-to-live"
+      ],
+      "taxonomy_id": "KV",
+      "level": "core"
+    },
+    {
+      "id": "right-database::column-family-data-model",
+      "label": "Column-Family Data Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-model",
+        "right-database::key-value-data-model"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::wide-row",
+      "label": "Wide Row",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::column-family-data-model"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::lsm-tree",
+      "label": "LSM Tree",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::storage-engine"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::compaction-strategy",
+      "label": "Compaction Strategy",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::lsm-tree"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::bloom-filter",
+      "label": "Bloom Filter",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::lsm-tree"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::apache-cassandra",
+      "label": "Apache Cassandra",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::column-family-data-model",
+        "right-database::wide-row",
+        "right-database::lsm-tree"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::apache-hbase",
+      "label": "Apache HBase",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::column-family-data-model",
+        "right-database::lsm-tree"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::partition-key",
+      "label": "Partition Key",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::column-family-data-model",
+        "right-database::wide-row"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::clustering-column",
+      "label": "Clustering Column",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::column-family-data-model",
+        "right-database::partition-key"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::write-optimized-storage",
+      "label": "Write-Optimized Storage",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::lsm-tree",
+        "right-database::compaction-strategy"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::read-amplification",
+      "label": "Read Amplification",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::lsm-tree",
+        "right-database::bloom-filter"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::write-amplification",
+      "label": "Write Amplification",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::lsm-tree",
+        "right-database::compaction-strategy"
+      ],
+      "taxonomy_id": "COL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::property-graph-model",
+      "label": "Property Graph Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-model"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::rdf-graph-model",
+      "label": "RDF Graph Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-model"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::sparql",
+      "label": "SPARQL",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-language",
+        "right-database::rdf-graph-model"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cypher-query-language",
+      "label": "Cypher Query Language",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-language",
+        "right-database::property-graph-model"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::graph-traversal-algorithm",
+      "label": "Graph Traversal Algorithm",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::property-graph-model"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::depth-first-search",
+      "label": "Depth-First Search",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::graph-traversal-algorithm"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::breadth-first-search",
+      "label": "Breadth-First Search",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::graph-traversal-algorithm"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::shortest-path-algorithm",
+      "label": "Shortest Path Algorithm",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::graph-traversal-algorithm",
+        "right-database::depth-first-search",
+        "right-database::breadth-first-search"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::neo4j",
+      "label": "Neo4j",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::property-graph-model",
+        "right-database::cypher-query-language"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::tigergraph",
+      "label": "TigerGraph",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::property-graph-model",
+        "right-database::graph-traversal-algorithm"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::amazon-neptune",
+      "label": "Amazon Neptune",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::property-graph-model",
+        "right-database::rdf-graph-model"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::distributed-graph-database",
+      "label": "Distributed Graph Database",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::property-graph-model"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::graph-partitioning",
+      "label": "Graph Partitioning",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::distributed-graph-database"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::gsql",
+      "label": "GSQL",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-language",
+        "right-database::tigergraph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::property-graph-model",
+        "right-database::rdf-graph-model"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "right-database::document-data-model",
+      "label": "Document Data Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-model"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::json-document-storage",
+      "label": "JSON Document Storage",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::storage-engine",
+        "right-database::document-data-model"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::bson-format",
+      "label": "BSON Format",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::json-document-storage"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::embedded-document",
+      "label": "Embedded Document",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::document-data-model",
+        "right-database::json-document-storage"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::document-reference",
+      "label": "Document Reference",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::document-data-model",
+        "right-database::primary-key"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::aggregation-pipeline",
+      "label": "Aggregation Pipeline",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::query-language",
+        "right-database::document-data-model"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::schema-flexibility",
+      "label": "Schema Flexibility",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::schema",
+        "right-database::document-data-model"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::mongodb",
+      "label": "MongoDB",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::document-data-model",
+        "right-database::json-document-storage",
+        "right-database::bson-format"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::couchbase",
+      "label": "Couchbase",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::document-data-model",
+        "right-database::json-document-storage"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::compound-index",
+      "label": "Compound Index",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-index",
+        "right-database::document-data-model"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::full-text-search-index",
+      "label": "Full-Text Search Index",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-index",
+        "right-database::document-data-model"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::change-stream",
+      "label": "Change Stream",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::document-data-model",
+        "right-database::mongodb"
+      ],
+      "taxonomy_id": "DOC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cap-theorem",
+      "label": "CAP Theorem",
+      "subject_id": "right-database",
+      "dependencies": [],
+      "taxonomy_id": "DIST",
+      "level": "foundational"
+    },
+    {
+      "id": "right-database::consistency-cap",
+      "label": "Consistency (CAP)",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::availability-cap",
+      "label": "Availability (CAP)",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::partition-tolerance",
+      "label": "Partition Tolerance",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cp-database-system",
+      "label": "CP Database System",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem",
+        "right-database::consistency-cap",
+        "right-database::partition-tolerance"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::ap-database-system",
+      "label": "AP Database System",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem",
+        "right-database::availability-cap",
+        "right-database::partition-tolerance"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::pacelc-model",
+      "label": "PACELC Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::latency-consistency-tradeoff",
+      "label": "Latency-Consistency Tradeoff",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::pacelc-model",
+        "right-database::consistency-cap",
+        "right-database::availability-cap",
+        "right-database::latency-vs-throughput"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::eventual-consistency",
+      "label": "Eventual Consistency",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::availability-cap",
+        "right-database::ap-database-system"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::strong-consistency",
+      "label": "Strong Consistency",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::consistency-cap",
+        "right-database::cp-database-system"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::read-your-writes-consistency",
+      "label": "Read-Your-Writes Consistency",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::eventual-consistency"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::monotonic-read-consistency",
+      "label": "Monotonic Read Consistency",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::eventual-consistency"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::causal-consistency",
+      "label": "Causal Consistency",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::eventual-consistency"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::session-consistency",
+      "label": "Session Consistency",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::read-your-writes-consistency",
+        "right-database::monotonic-read-consistency"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::linearizability",
+      "label": "Linearizability",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::strong-consistency",
+        "right-database::consistency-cap"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::serializability",
+      "label": "Serializability",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::strong-consistency",
+        "right-database::linearizability"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::base-semantics",
+      "label": "BASE Semantics",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::eventual-consistency",
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::conflict-resolution",
+      "label": "Conflict Resolution",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::eventual-consistency"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::vector-clock",
+      "label": "Vector Clock",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::causal-consistency"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::gossip-protocol",
+      "label": "Gossip Protocol",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::eventual-consistency",
+        "right-database::database-replication"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "right-database::atomicity",
+      "label": "Atomicity",
+      "subject_id": "right-database",
+      "dependencies": [],
+      "taxonomy_id": "ACID",
+      "level": "foundational"
+    },
+    {
+      "id": "right-database::consistency-acid",
+      "label": "Consistency (ACID)",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atomicity"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::isolation",
+      "label": "Isolation",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atomicity"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::durability",
+      "label": "Durability",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atomicity",
+        "right-database::transaction-log"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::transaction-isolation-level",
+      "label": "Transaction Isolation Level",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::isolation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::read-uncommitted",
+      "label": "Read Uncommitted",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transaction-isolation-level"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::read-committed",
+      "label": "Read Committed",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transaction-isolation-level",
+        "right-database::read-uncommitted"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::repeatable-read",
+      "label": "Repeatable Read",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transaction-isolation-level",
+        "right-database::read-committed"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::serializable-isolation",
+      "label": "Serializable Isolation",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transaction-isolation-level",
+        "right-database::repeatable-read",
+        "right-database::serializability"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::dirty-read",
+      "label": "Dirty Read",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::read-uncommitted"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::phantom-read",
+      "label": "Phantom Read",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::repeatable-read"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::non-repeatable-read",
+      "label": "Non-Repeatable Read",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::read-committed"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::two-phase-locking",
+      "label": "Two-Phase Locking",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::lock-based-concurrency",
+        "right-database::isolation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::optimistic-concurrency-control",
+      "label": "Optimistic Concurrency Control",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::multi-version-concurrency",
+        "right-database::isolation"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::savepoint",
+      "label": "Savepoint",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atomicity"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::rollback",
+      "label": "Rollback",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atomicity",
+        "right-database::savepoint"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::commit-protocol",
+      "label": "Commit Protocol",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atomicity",
+        "right-database::durability"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::distributed-saga",
+      "label": "Distributed Saga",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atomicity"
+      ],
+      "taxonomy_id": "ACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::two-phase-commit",
+      "label": "Two-Phase Commit",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::commit-protocol",
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::three-phase-commit",
+      "label": "Three-Phase Commit",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::two-phase-commit"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::distributed-transaction-coordinator",
+      "label": "Distributed Transaction Coordinator",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::two-phase-commit"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::saga-orchestration",
+      "label": "Saga Orchestration",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::distributed-saga"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::saga-choreography",
+      "label": "Saga Choreography",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::distributed-saga"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::compensating-transaction",
+      "label": "Compensating Transaction",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::distributed-saga"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::newsql-database",
+      "label": "NewSQL Database",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::atomicity",
+        "right-database::horizontal-scaling",
+        "right-database::strong-consistency",
+        "right-database::htap-workload"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::google-spanner",
+      "label": "Google Spanner",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::newsql-database",
+        "right-database::paxos-protocol",
+        "right-database::raft-consensus-protocol"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cockroachdb",
+      "label": "CockroachDB",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::newsql-database",
+        "right-database::paxos-protocol",
+        "right-database::raft-consensus-protocol"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::yugabytedb",
+      "label": "YugabyteDB",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::newsql-database",
+        "right-database::paxos-protocol",
+        "right-database::raft-consensus-protocol"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::truetime-api",
+      "label": "TrueTime API",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::google-spanner"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::global-transaction-id",
+      "label": "Global Transaction ID",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::two-phase-commit",
+        "right-database::distributed-transaction-coordinator"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cross-shard-transaction",
+      "label": "Cross-Shard Transaction",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::two-phase-commit",
+        "right-database::data-sharding"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::paxos-protocol",
+      "label": "Paxos Protocol",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::raft-consensus-protocol",
+      "label": "Raft Consensus Protocol",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::zab-protocol",
+      "label": "ZAB Protocol",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::cap-theorem",
+        "right-database::leader-election"
+      ],
+      "taxonomy_id": "NACID",
+      "level": "core"
+    },
+    {
+      "id": "right-database::horizontal-scaling",
+      "label": "Horizontal Scaling",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-volume-scaling"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::vertical-scaling",
+      "label": "Vertical Scaling",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-volume-scaling"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::data-sharding",
+      "label": "Data Sharding",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::horizontal-scaling",
+        "right-database::data-model"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::range-based-sharding",
+      "label": "Range-Based Sharding",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-sharding"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::hash-based-sharding",
+      "label": "Hash-Based Sharding",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-sharding",
+        "right-database::hash-table-storage"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::directory-based-sharding",
+      "label": "Directory-Based Sharding",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-sharding"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::geographic-sharding",
+      "label": "Geographic Sharding",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::data-sharding"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::database-replication",
+      "label": "Database Replication",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system",
+        "right-database::horizontal-scaling"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::single-leader-replication",
+      "label": "Single-Leader Replication",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-replication"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::multi-leader-replication",
+      "label": "Multi-Leader Replication",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-replication",
+        "right-database::conflict-resolution"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::leaderless-replication",
+      "label": "Leaderless Replication",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-replication",
+        "right-database::quorum-read-write"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::quorum-read-write",
+      "label": "Quorum Read/Write",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-replication",
+        "right-database::cap-theorem"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::read-replica",
+      "label": "Read Replica",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::single-leader-replication"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::replication-lag",
+      "label": "Replication Lag",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-replication",
+        "right-database::single-leader-replication"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::split-brain-problem",
+      "label": "Split-Brain Problem",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::multi-leader-replication",
+        "right-database::partition-tolerance"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::leader-election",
+      "label": "Leader Election",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::single-leader-replication",
+        "right-database::paxos-protocol",
+        "right-database::raft-consensus-protocol"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::zookeeper-coordination",
+      "label": "ZooKeeper Coordination",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::leader-election"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::etcd",
+      "label": "etcd",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::raft-consensus-protocol",
+        "right-database::leader-election"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "right-database::high-availability",
+      "label": "High Availability",
+      "subject_id": "right-database",
+      "dependencies": [],
+      "taxonomy_id": "HA",
+      "level": "foundational"
+    },
+    {
+      "id": "right-database::five-nines-availability",
+      "label": "Five-Nines Availability",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::sla-decomposition",
+      "label": "SLA Decomposition",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::five-nines-availability"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::failure-domain",
+      "label": "Failure Domain",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability",
+        "right-database::single-point-of-failure"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::single-point-of-failure",
+      "label": "Single Point of Failure",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::active-active-clustering",
+      "label": "Active-Active Clustering",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability",
+        "right-database::database-replication"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::active-passive-clustering",
+      "label": "Active-Passive Clustering",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability",
+        "right-database::single-leader-replication"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::failover",
+      "label": "Failover",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability",
+        "right-database::active-passive-clustering",
+        "right-database::leader-election"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::heartbeat-monitoring",
+      "label": "Heartbeat Monitoring",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability",
+        "right-database::failover"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::chaos-engineering",
+      "label": "Chaos Engineering",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability",
+        "right-database::five-nines-availability"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::mean-time-between-failures",
+      "label": "Mean Time Between Failures",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::mean-time-to-recovery",
+      "label": "Mean Time to Recovery",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability",
+        "right-database::failover"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::geographic-redundancy",
+      "label": "Geographic Redundancy",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::five-nines-availability",
+        "right-database::geographic-sharding"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::multi-region-deployment",
+      "label": "Multi-Region Deployment",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::geographic-redundancy",
+        "right-database::geographic-sharding"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::circuit-breaker-pattern",
+      "label": "Circuit Breaker Pattern",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::high-availability",
+        "right-database::failover"
+      ],
+      "taxonomy_id": "HA",
+      "level": "core"
+    },
+    {
+      "id": "right-database::vector-embedding",
+      "label": "Vector Embedding",
+      "subject_id": "right-database",
+      "dependencies": [],
+      "taxonomy_id": "VEC",
+      "level": "foundational"
+    },
+    {
+      "id": "right-database::embedding-dimensionality",
+      "label": "Embedding Dimensionality",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::vector-embedding"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cosine-similarity",
+      "label": "Cosine Similarity",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::vector-embedding"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::dot-product-similarity",
+      "label": "Dot Product Similarity",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::vector-embedding"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::euclidean-distance",
+      "label": "Euclidean Distance",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::vector-embedding"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::approximate-nearest-neighbor",
+      "label": "Approximate Nearest Neighbor",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::vector-embedding",
+        "right-database::embedding-dimensionality"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::hnsw-index",
+      "label": "HNSW Index",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::approximate-nearest-neighbor",
+        "right-database::database-index"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::ivf-index",
+      "label": "IVF Index",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::approximate-nearest-neighbor",
+        "right-database::database-index"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::flat-vector-index",
+      "label": "Flat Vector Index",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::approximate-nearest-neighbor",
+        "right-database::database-index"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::pgvector-extension",
+      "label": "pgvector Extension",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::postgresql",
+        "right-database::hnsw-index"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::semantic-search",
+      "label": "Semantic Search",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::vector-embedding",
+        "right-database::approximate-nearest-neighbor"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::hybrid-search",
+      "label": "Hybrid Search",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::semantic-search",
+        "right-database::database-index"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::native-vector-search-feature",
+      "label": "Native Vector Search Feature",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-index",
+        "right-database::approximate-nearest-neighbor"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::ann-recall-vs-speed",
+      "label": "ANN Recall vs Speed",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::approximate-nearest-neighbor",
+        "right-database::hnsw-index",
+        "right-database::ivf-index"
+      ],
+      "taxonomy_id": "VEC",
+      "level": "core"
+    },
+    {
+      "id": "right-database::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "right-database",
+      "dependencies": [],
+      "taxonomy_id": "LLM",
+      "level": "foundational"
+    },
+    {
+      "id": "right-database::transformer-architecture",
+      "label": "Transformer Architecture",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::large-language-model"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::tokenization",
+      "label": "Tokenization",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transformer-architecture"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::attention-mechanism",
+      "label": "Attention Mechanism",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transformer-architecture"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::cls-token-pooling",
+      "label": "CLS Token Pooling",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transformer-architecture",
+        "right-database::attention-mechanism"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::mean-pooling",
+      "label": "Mean Pooling",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::transformer-architecture",
+        "right-database::attention-mechanism"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::embedding-model-selection",
+      "label": "Embedding Model Selection",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::large-language-model",
+        "right-database::embedding-dimensionality"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::openai-embeddings-api",
+      "label": "OpenAI Embeddings API",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::large-language-model",
+        "right-database::vector-embedding"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::sentence-transformers",
+      "label": "Sentence Transformers",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::large-language-model",
+        "right-database::vector-embedding"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::self-hosted-embedding-model",
+      "label": "Self-Hosted Embedding Model",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::large-language-model",
+        "right-database::vector-embedding"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::embedding-cost-at-scale",
+      "label": "Embedding Cost at Scale",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::openai-embeddings-api",
+        "right-database::embedding-dimensionality",
+        "right-database::data-volume-scaling"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::re-embedding-migration",
+      "label": "Re-Embedding Migration",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::embedding-model-selection",
+        "right-database::embedding-dimensionality"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::multimodal-embedding",
+      "label": "Multimodal Embedding",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::large-language-model",
+        "right-database::vector-embedding"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::embedding-pipeline-architecture",
+      "label": "Embedding Pipeline Architecture",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::vector-embedding",
+        "right-database::openai-embeddings-api",
+        "right-database::sentence-transformers"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::embedding-model-versioning",
+      "label": "Embedding Model Versioning",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::re-embedding-migration",
+        "right-database::embedding-pipeline-architecture"
+      ],
+      "taxonomy_id": "LLM",
+      "level": "core"
+    },
+    {
+      "id": "right-database::polyglot-persistence",
+      "label": "Polyglot Persistence",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-management-system",
+        "right-database::data-model",
+        "right-database::postgresql",
+        "right-database::redis",
+        "right-database::apache-cassandra",
+        "right-database::neo4j",
+        "right-database::mongodb"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::database-selection-framework",
+      "label": "Database Selection Framework",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::architecture-tradeoff-analysis",
+        "right-database::database-management-system",
+        "right-database::workload-characterization",
+        "right-database::postgresql",
+        "right-database::snowflake-database",
+        "right-database::redis",
+        "right-database::apache-cassandra",
+        "right-database::neo4j",
+        "right-database::mongodb"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::scoring-matrix",
+      "label": "Scoring Matrix",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-selection-framework",
+        "right-database::quality-attribute-scenario",
+        "right-database::data-access-pattern-analysis"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::total-cost-of-ownership",
+      "label": "Total Cost of Ownership",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-selection-framework",
+        "right-database::operational-complexity"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::vendor-lock-in-risk",
+      "label": "Vendor Lock-In Risk",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-selection-framework",
+        "right-database::total-cost-of-ownership"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::database-migration-plan",
+      "label": "Database Migration Plan",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::polyglot-persistence",
+        "right-database::database-selection-framework"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::schema-migration",
+      "label": "Schema Migration",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-migration-plan",
+        "right-database::schema"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::multi-model-database",
+      "label": "Multi-Model Database",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::polyglot-persistence",
+        "right-database::data-model",
+        "right-database::apache-cassandra",
+        "right-database::neo4j",
+        "right-database::mongodb"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::operational-runbook",
+      "label": "Operational Runbook",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::operational-complexity",
+        "right-database::five-nines-availability",
+        "right-database::chaos-engineering"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::team-expertise-factor",
+      "label": "Team Expertise Factor",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::database-selection-framework",
+        "right-database::total-cost-of-ownership"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::database-deprecation-risk",
+      "label": "Database Deprecation Risk",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::vendor-lock-in-risk",
+        "right-database::re-embedding-migration",
+        "right-database::embedding-model-versioning"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    },
+    {
+      "id": "right-database::data-access-pattern-analysis",
+      "label": "Data Access Pattern Analysis",
+      "subject_id": "right-database",
+      "dependencies": [
+        "right-database::workload-characterization",
+        "right-database::read-write-ratio",
+        "right-database::impedance-mismatch"
+      ],
+      "taxonomy_id": "SEL",
+      "level": "core"
+    }
+  ]
+}

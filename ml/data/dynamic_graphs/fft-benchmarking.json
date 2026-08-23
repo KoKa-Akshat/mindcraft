@@ -1,0 +1,6106 @@
+{
+  "subject_id": "fft-benchmarking",
+  "title": "Benchmarking FFT",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "MATH": {
+      "classifier_name": "Mathematical Foundations",
+      "color": "MistyRose"
+    },
+    "SIGP": {
+      "classifier_name": "Signal Processing",
+      "color": "PeachPuff"
+    },
+    "FOUR": {
+      "classifier_name": "Fourier Theory",
+      "color": "LightYellow"
+    },
+    "FFTA": {
+      "classifier_name": "FFT Algorithm",
+      "color": "Honeydew"
+    },
+    "HARD": {
+      "classifier_name": "Hardware Platforms",
+      "color": "PaleTurquoise"
+    },
+    "DSPI": {
+      "classifier_name": "DSP Instructions",
+      "color": "LightSteelBlue"
+    },
+    "PROG": {
+      "classifier_name": "Programming",
+      "color": "Lavender"
+    },
+    "LIBS": {
+      "classifier_name": "FFT Libraries",
+      "color": "LavenderBlush"
+    },
+    "BNCH": {
+      "classifier_name": "Benchmarking",
+      "color": "Thistle"
+    },
+    "PERF": {
+      "classifier_name": "Performance Optimization",
+      "color": "PaleGreen"
+    },
+    "PIPE": {
+      "classifier_name": "Signal Pipeline",
+      "color": "Aquamarine"
+    },
+    "VAPP": {
+      "classifier_name": "Visualization and Applications",
+      "color": "Plum"
+    },
+    "TOOL": {
+      "classifier_name": "Development Environment",
+      "color": "Gainsboro"
+    },
+    "MCIO": {
+      "classifier_name": "Microcontroller I/O",
+      "color": "LightCyan"
+    },
+    "AUDI": {
+      "classifier_name": "Audio and Acoustics",
+      "color": "Moccasin"
+    },
+    "ASMP": {
+      "classifier_name": "Assembly Programming",
+      "color": "LightPink"
+    },
+    "LABM": {
+      "classifier_name": "Laboratory Method",
+      "color": "Khaki"
+    }
+  },
+  "concepts": [
+    {
+      "id": "fft-benchmarking::complex-numbers",
+      "label": "Complex Numbers",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "MATH",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::imaginary-unit",
+      "label": "Imaginary Unit",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-numbers"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::euler-s-formula",
+      "label": "Euler's Formula",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-numbers",
+        "fft-benchmarking::imaginary-unit"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sine-wave",
+      "label": "Sine Wave",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "MATH",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::cosine-wave",
+      "label": "Cosine Wave",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::amplitude",
+      "label": "Amplitude",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frequency",
+      "label": "Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::phase",
+      "label": "Phase",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave",
+        "fft-benchmarking::frequency"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::periodic-functions",
+      "label": "Periodic Functions",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave",
+        "fft-benchmarking::cosine-wave"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::harmonics",
+      "label": "Harmonics",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency",
+        "fft-benchmarking::periodic-functions"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::complex-conjugate",
+      "label": "Complex Conjugate",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-numbers",
+        "fft-benchmarking::imaginary-unit"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::magnitude",
+      "label": "Magnitude",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-numbers",
+        "fft-benchmarking::amplitude"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::unit-circle",
+      "label": "Unit Circle",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave",
+        "fft-benchmarking::cosine-wave"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::hertz",
+      "label": "Hertz",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::time-domain",
+      "label": "Time Domain",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave",
+        "fft-benchmarking::frequency"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frequency-domain",
+      "label": "Frequency Domain",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency",
+        "fft-benchmarking::time-domain"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::analog-signals",
+      "label": "Analog Signals",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave",
+        "fft-benchmarking::amplitude",
+        "fft-benchmarking::frequency"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::digital-signals",
+      "label": "Digital Signals",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::analog-signals"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sampling",
+      "label": "Sampling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::analog-signals",
+        "fft-benchmarking::digital-signals"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sampling-rate",
+      "label": "Sampling Rate",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency",
+        "fft-benchmarking::sampling"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::nyquist-theorem",
+      "label": "Nyquist Theorem",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency",
+        "fft-benchmarking::sampling-rate"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::aliasing",
+      "label": "Aliasing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sampling-rate",
+        "fft-benchmarking::nyquist-theorem"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::quantization",
+      "label": "Quantization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::digital-signals",
+        "fft-benchmarking::sampling"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bit-depth",
+      "label": "Bit Depth",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::quantization"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::adc-conversion",
+      "label": "ADC Conversion",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::analog-signals",
+        "fft-benchmarking::digital-signals",
+        "fft-benchmarking::quantization"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::signal-noise",
+      "label": "Signal Noise",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::analog-signals",
+        "fft-benchmarking::digital-signals"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::signal-to-noise-ratio",
+      "label": "Signal To Noise Ratio",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::amplitude",
+        "fft-benchmarking::signal-noise"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bandwidth",
+      "label": "Bandwidth",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency",
+        "fft-benchmarking::frequency-domain"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::low-pass-filter",
+      "label": "Low Pass Filter",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-domain",
+        "fft-benchmarking::bandwidth"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::band-pass-filter",
+      "label": "Band Pass Filter",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::low-pass-filter"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::windowing-functions",
+      "label": "Windowing Functions",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::periodic-functions",
+        "fft-benchmarking::time-domain"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spectral-leakage",
+      "label": "Spectral Leakage",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-domain",
+        "fft-benchmarking::windowing-functions"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::jean-baptiste-fourier",
+      "label": "Jean Baptiste Fourier",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "FOUR",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::fourier-series",
+      "label": "Fourier Series",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::euler-s-formula",
+        "fft-benchmarking::periodic-functions",
+        "fft-benchmarking::harmonics",
+        "fft-benchmarking::jean-baptiste-fourier"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::continuous-fourier-transform",
+      "label": "Continuous Fourier Transform",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::euler-s-formula",
+        "fft-benchmarking::time-domain",
+        "fft-benchmarking::frequency-domain",
+        "fft-benchmarking::fourier-series"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::discrete-fourier-transform",
+      "label": "Discrete Fourier Transform",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::digital-signals",
+        "fft-benchmarking::sampling",
+        "fft-benchmarking::continuous-fourier-transform"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dft-definition",
+      "label": "DFT Definition",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-numbers",
+        "fft-benchmarking::discrete-fourier-transform"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dft-complexity",
+      "label": "DFT Complexity",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dft-definition"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::inverse-dft",
+      "label": "Inverse DFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dft-definition"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frequency-bins",
+      "label": "Frequency Bins",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-domain",
+        "fft-benchmarking::dft-definition"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bin-resolution",
+      "label": "Bin Resolution",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sampling-rate",
+        "fft-benchmarking::frequency-bins"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spectral-analysis",
+      "label": "Spectral Analysis",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-domain",
+        "fft-benchmarking::dft-definition",
+        "fft-benchmarking::frequency-bins"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::power-spectrum",
+      "label": "Power Spectrum",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::magnitude",
+        "fft-benchmarking::spectral-analysis"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::magnitude-spectrum",
+      "label": "Magnitude Spectrum",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::magnitude",
+        "fft-benchmarking::spectral-analysis"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::phase-spectrum",
+      "label": "Phase Spectrum",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::phase",
+        "fft-benchmarking::spectral-analysis"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frequency-resolution",
+      "label": "Frequency Resolution",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-bins",
+        "fft-benchmarking::bin-resolution"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::zero-padding",
+      "label": "Zero Padding",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dft-definition",
+        "fft-benchmarking::frequency-resolution"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::orthogonality",
+      "label": "Orthogonality",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fourier-series"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fft-algorithm",
+      "label": "FFT Algorithm",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::discrete-fourier-transform",
+        "fft-benchmarking::dft-complexity"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fft-history",
+      "label": "FFT History",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::jean-baptiste-fourier",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cooley-tukey-algorithm",
+      "label": "Cooley Tukey Algorithm",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::fft-history"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::radix-2-fft",
+      "label": "Radix-2 FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cooley-tukey-algorithm"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::radix-4-fft",
+      "label": "Radix-4 FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cooley-tukey-algorithm",
+        "fft-benchmarking::radix-2-fft"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::split-radix-fft",
+      "label": "Split Radix FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::radix-2-fft",
+        "fft-benchmarking::radix-4-fft"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::butterfly-operation",
+      "label": "Butterfly Operation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-numbers",
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::cooley-tukey-algorithm"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::butterfly-diagram",
+      "label": "Butterfly Diagram",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::butterfly-operation"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::twiddle-factors",
+      "label": "Twiddle Factors",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::euler-s-formula",
+        "fft-benchmarking::butterfly-operation"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bit-reversal",
+      "label": "Bit Reversal",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::radix-2-fft"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::in-place-fft",
+      "label": "In Place FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::radix-2-fft",
+        "fft-benchmarking::bit-reversal"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::decimation-in-time",
+      "label": "Decimation In Time",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::radix-2-fft",
+        "fft-benchmarking::butterfly-operation"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::decimation-in-frequency",
+      "label": "Decimation In Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::radix-2-fft",
+        "fft-benchmarking::butterfly-operation"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fft-stages",
+      "label": "FFT Stages",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::radix-2-fft",
+        "fft-benchmarking::butterfly-operation",
+        "fft-benchmarking::butterfly-diagram"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fft-complexity",
+      "label": "FFT Complexity",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dft-complexity",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::o-n-log-n",
+      "label": "O(N log N)",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-complexity"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fft-size",
+      "label": "FFT Size",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::fft-complexity"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::power-of-two-sizes",
+      "label": "Power Of Two Sizes",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::radix-2-fft",
+        "fft-benchmarking::fft-size"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::real-fft",
+      "label": "Real FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::complex-fft"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::complex-fft",
+      "label": "Complex FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-numbers",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::inverse-fft",
+      "label": "Inverse FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::inverse-dft",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::ifft-algorithm",
+      "label": "IFFT Algorithm",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::inverse-fft"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::normalization-factor",
+      "label": "Normalization Factor",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::inverse-fft"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fft-scaling",
+      "label": "FFT Scaling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-size",
+        "fft-benchmarking::normalization-factor"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::microcontroller",
+      "label": "Microcontroller",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "HARD",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::arm-architecture",
+      "label": "ARM Architecture",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::arm-cortex-m-series",
+      "label": "ARM Cortex M Series",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-architecture"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::arm-cortex-m4",
+      "label": "ARM Cortex M4",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m-series"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::arm-cortex-m33",
+      "label": "ARM Cortex M33",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m-series",
+        "fft-benchmarking::arm-cortex-m4"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::raspberry-pi-pico",
+      "label": "Raspberry Pi Pico",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller",
+        "fft-benchmarking::arm-cortex-m-series"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::raspberry-pi-pico-2",
+      "label": "Raspberry Pi Pico 2",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m33",
+        "fft-benchmarking::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::rp2040-chip",
+      "label": "RP2040 Chip",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::rp2350-chip",
+      "label": "RP2350 Chip",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m33",
+        "fft-benchmarking::raspberry-pi-pico-2"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dsp-chip",
+      "label": "DSP Chip",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::general-purpose-cpu",
+      "label": "General Purpose CPU",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::clock-speed",
+      "label": "Clock Speed",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cpu-cycles",
+      "label": "CPU Cycles",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::clock-speed"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::memory-architecture",
+      "label": "Memory Architecture",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cache-memory",
+      "label": "Cache Memory",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-architecture"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::embedded-systems",
+      "label": "Embedded Systems",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller",
+        "fft-benchmarking::memory-architecture"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dsp-instructions",
+      "label": "DSP Instructions",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-architecture",
+        "fft-benchmarking::dsp-chip"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::simd-instructions",
+      "label": "SIMD Instructions",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dsp-instructions"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::mac-instruction",
+      "label": "MAC Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dsp-instructions"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::multiply-accumulate",
+      "label": "Multiply Accumulate",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::mac-instruction"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::saturating-arithmetic",
+      "label": "Saturating Arithmetic",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dsp-instructions",
+        "fft-benchmarking::fixed-point-arithmetic"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fixed-point-arithmetic",
+      "label": "Fixed Point Arithmetic",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "DSPI",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::floating-point-unit",
+      "label": "Floating Point Unit",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-architecture"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fpu-operations",
+      "label": "FPU Operations",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-unit"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::single-precision-float",
+      "label": "Single Precision Float",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-unit",
+        "fft-benchmarking::fpu-operations"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::q-format-numbers",
+      "label": "Q Format Numbers",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fixed-point-arithmetic"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::q15-format",
+      "label": "Q15 Format",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::q-format-numbers"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::q31-format",
+      "label": "Q31 Format",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::q-format-numbers",
+        "fft-benchmarking::q15-format"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::hardware-multiplier",
+      "label": "Hardware Multiplier",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-architecture",
+        "fft-benchmarking::multiply-accumulate"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pipelining",
+      "label": "Pipelining",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-architecture"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::instruction-latency",
+      "label": "Instruction Latency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cpu-cycles",
+        "fft-benchmarking::pipelining"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::real-time-constraints",
+      "label": "Real Time Constraints",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::clock-speed",
+        "fft-benchmarking::cpu-cycles",
+        "fft-benchmarking::instruction-latency"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::c-language",
+      "label": "C Language",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "PROG",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::c-compiler",
+      "label": "C Compiler",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-language"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::gcc-compiler",
+      "label": "GCC Compiler",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-compiler"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::arm-compiler",
+      "label": "ARM Compiler",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-architecture",
+        "fft-benchmarking::c-compiler"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::compiler-optimization",
+      "label": "Compiler Optimization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-compiler"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::optimization-flags",
+      "label": "Optimization Flags",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::compiler-optimization"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::assembly-language",
+      "label": "Assembly Language",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "PROG",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::arm-assembly",
+      "label": "ARM Assembly",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-architecture",
+        "fft-benchmarking::assembly-language"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::thumb-instructions",
+      "label": "Thumb Instructions",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-assembly"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::python-language",
+      "label": "Python Language",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "PROG",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::numpy-library",
+      "label": "NumPy Library",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::python-language"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::scipy-fft",
+      "label": "SciPy FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::numpy-library"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::micropython",
+      "label": "MicroPython",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller",
+        "fft-benchmarking::python-language"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::memory-management",
+      "label": "Memory Management",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-language",
+        "fft-benchmarking::memory-architecture"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::reading-assembly-code",
+      "label": "Reading Assembly Code",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::assembly-language",
+        "fft-benchmarking::arm-assembly"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::disassembly",
+      "label": "Disassembly",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-compiler",
+        "fft-benchmarking::reading-assembly-code"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fft-libraries",
+      "label": "FFT Libraries",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::c-language"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cmsis-dsp-library",
+      "label": "CMSIS DSP Library",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m-series",
+        "fft-benchmarking::dsp-instructions",
+        "fft-benchmarking::fft-libraries"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::kiss-fft",
+      "label": "Kiss FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-language",
+        "fft-benchmarking::fft-libraries"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fftw-library",
+      "label": "FFTW Library",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-language",
+        "fft-benchmarking::fft-libraries"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::arm-math-library",
+      "label": "Arm Math Library",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m-series",
+        "fft-benchmarking::fft-libraries",
+        "fft-benchmarking::cmsis-dsp-library"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pico-sdk-fft",
+      "label": "Pico SDK FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::raspberry-pi-pico",
+        "fft-benchmarking::fft-libraries"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::open-source-fft",
+      "label": "Open Source FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-libraries"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::library-licensing",
+      "label": "Library Licensing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-libraries"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::mit-license",
+      "label": "MIT License",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::library-licensing"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::gpl-license",
+      "label": "GPL License",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::library-licensing"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::library-integration",
+      "label": "Library Integration",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-compiler",
+        "fft-benchmarking::fft-libraries"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::api-documentation",
+      "label": "API Documentation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-libraries",
+        "fft-benchmarking::library-integration"
+      ],
+      "taxonomy_id": "LIBS",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::benchmarking",
+      "label": "Benchmarking",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "BNCH",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::performance-metrics",
+      "label": "Performance Metrics",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::benchmarking"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::execution-time",
+      "label": "Execution Time",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cpu-cycles",
+        "fft-benchmarking::performance-metrics"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::clock-cycles",
+      "label": "Clock Cycles",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cpu-cycles",
+        "fft-benchmarking::execution-time"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::microseconds-per-fft",
+      "label": "Microseconds Per FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-size",
+        "fft-benchmarking::clock-cycles"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::ffts-per-second",
+      "label": "FFTs Per Second",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microseconds-per-fft"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::throughput-metric",
+      "label": "Throughput Metric",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::performance-metrics",
+        "fft-benchmarking::ffts-per-second"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::latency-metric",
+      "label": "Latency Metric",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::performance-metrics",
+        "fft-benchmarking::execution-time"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::memory-usage",
+      "label": "Memory Usage",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-architecture",
+        "fft-benchmarking::performance-metrics"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::code-size",
+      "label": "Code Size",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-compiler",
+        "fft-benchmarking::performance-metrics"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::test-harness",
+      "label": "Test Harness",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::benchmarking",
+        "fft-benchmarking::performance-metrics"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::warm-up-runs",
+      "label": "Warm Up Runs",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cache-memory",
+        "fft-benchmarking::test-harness"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::statistical-sampling",
+      "label": "Statistical Sampling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::test-harness"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::mean-execution-time",
+      "label": "Mean Execution Time",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::execution-time",
+        "fft-benchmarking::statistical-sampling"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::standard-deviation",
+      "label": "Standard Deviation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::statistical-sampling",
+        "fft-benchmarking::mean-execution-time"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::reproducibility",
+      "label": "Reproducibility",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::test-harness",
+        "fft-benchmarking::statistical-sampling"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fair-comparison",
+      "label": "Fair Comparison",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::test-harness",
+        "fft-benchmarking::reproducibility"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::benchmarking-framework",
+      "label": "Benchmarking Framework",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::benchmarking",
+        "fft-benchmarking::test-harness",
+        "fft-benchmarking::fair-comparison"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::integer-fft",
+      "label": "Integer FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::fixed-point-arithmetic"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::floating-point-fft",
+      "label": "Floating Point FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::floating-point-unit"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fixed-point-fft",
+      "label": "Fixed Point FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::fixed-point-arithmetic",
+        "fft-benchmarking::q-format-numbers"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::precision-tradeoffs",
+      "label": "Precision Tradeoffs",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::integer-fft",
+        "fft-benchmarking::floating-point-fft",
+        "fft-benchmarking::fixed-point-fft"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::speed-accuracy-tradeoff",
+      "label": "Speed Accuracy Tradeoff",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-complexity",
+        "fft-benchmarking::precision-tradeoffs"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cache-effects",
+      "label": "Cache Effects",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cache-memory",
+        "fft-benchmarking::memory-access-patterns"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::memory-access-patterns",
+      "label": "Memory Access Patterns",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-architecture"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::loop-unrolling",
+      "label": "Loop Unrolling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::compiler-optimization"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::vectorization",
+      "label": "Vectorization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::simd-instructions",
+        "fft-benchmarking::compiler-optimization"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::real-time-processing",
+      "label": "Real Time Processing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::real-time-constraints",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::streaming-fft",
+      "label": "Streaming FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::real-time-processing"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::block-processing",
+      "label": "Block Processing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-size",
+        "fft-benchmarking::streaming-fft"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::double-buffering",
+      "label": "Double Buffering",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-architecture",
+        "fft-benchmarking::block-processing"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::compiler-settings",
+      "label": "Compiler Settings",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::compiler-optimization",
+        "fft-benchmarking::optimization-flags"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::signal-preprocessing",
+      "label": "Signal Preprocessing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::analog-signals",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dc-offset-removal",
+      "label": "DC Offset Removal",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::signal-preprocessing"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::normalization",
+      "label": "Normalization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::amplitude",
+        "fft-benchmarking::signal-preprocessing"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::window-application",
+      "label": "Window Application",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::windowing-functions",
+        "fft-benchmarking::signal-preprocessing"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::zero-padding-input",
+      "label": "Zero Padding Input",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::zero-padding",
+        "fft-benchmarking::signal-preprocessing"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::post-processing",
+      "label": "Post Processing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectral-analysis",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::magnitude-calculation",
+      "label": "Magnitude Calculation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::magnitude",
+        "fft-benchmarking::magnitude-spectrum",
+        "fft-benchmarking::post-processing"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::phase-calculation",
+      "label": "Phase Calculation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::phase",
+        "fft-benchmarking::phase-spectrum",
+        "fft-benchmarking::post-processing"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::decibel-conversion",
+      "label": "Decibel Conversion",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::magnitude",
+        "fft-benchmarking::magnitude-calculation"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::peak-detection",
+      "label": "Peak Detection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::post-processing",
+        "fft-benchmarking::magnitude-calculation"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frequency-estimation",
+      "label": "Frequency Estimation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-bins",
+        "fft-benchmarking::peak-detection"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dominant-frequency",
+      "label": "Dominant Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::peak-detection",
+        "fft-benchmarking::frequency-estimation"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "VAPP",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::spectrum-plot",
+      "label": "Spectrum Plot",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectral-analysis",
+        "fft-benchmarking::data-visualization"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spectrogram",
+      "label": "Spectrogram",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::time-domain",
+        "fft-benchmarking::frequency-domain",
+        "fft-benchmarking::spectrum-plot"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::waterfall-display",
+      "label": "Waterfall Display",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectrogram"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::time-domain-plot",
+      "label": "Time Domain Plot",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::time-domain",
+        "fft-benchmarking::data-visualization"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::performance-charts",
+      "label": "Performance Charts",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::performance-metrics",
+        "fft-benchmarking::data-visualization"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::comparison-tables",
+      "label": "Comparison Tables",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::performance-metrics",
+        "fft-benchmarking::performance-charts"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::performance-dashboard",
+      "label": "Performance Dashboard",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::performance-charts",
+        "fft-benchmarking::comparison-tables"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::benchmark-results",
+      "label": "Benchmark Results",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::benchmarking-framework",
+        "fft-benchmarking::performance-charts"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::report-generation",
+      "label": "Report Generation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::comparison-tables",
+        "fft-benchmarking::benchmark-results"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::audio-processing",
+      "label": "Audio Processing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::analog-signals",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::music-analysis",
+      "label": "Music Analysis",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::harmonics",
+        "fft-benchmarking::audio-processing"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::voice-recognition",
+      "label": "Voice Recognition",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::audio-processing",
+        "fft-benchmarking::music-analysis"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::noise-cancellation",
+      "label": "Noise Cancellation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::signal-noise",
+        "fft-benchmarking::low-pass-filter",
+        "fft-benchmarking::audio-processing"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spectrum-analyzer",
+      "label": "Spectrum Analyzer",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectral-analysis",
+        "fft-benchmarking::audio-processing"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pitch-detection",
+      "label": "Pitch Detection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency",
+        "fft-benchmarking::music-analysis"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::vibration-analysis",
+      "label": "Vibration Analysis",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::analog-signals",
+        "fft-benchmarking::spectral-analysis"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::machine-monitoring",
+      "label": "Machine Monitoring",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::vibration-analysis"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::radar-processing",
+      "label": "Radar Processing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-domain",
+        "fft-benchmarking::fft-algorithm"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::communication-systems",
+      "label": "Communication Systems",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-domain",
+        "fft-benchmarking::bandwidth"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::software-defined-radio",
+      "label": "Software Defined Radio",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::communication-systems"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sound-processing",
+      "label": "Sound Processing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::analog-signals",
+        "fft-benchmarking::fft-algorithm",
+        "fft-benchmarking::audio-processing"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::benchmarking-framework",
+        "fft-benchmarking::report-generation"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::benchmark-suite",
+      "label": "Benchmark Suite",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::benchmarking-framework",
+        "fft-benchmarking::capstone-project"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::thonny-ide",
+      "label": "Thonny IDE",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "TOOL",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::micropython-firmware",
+      "label": "MicroPython Firmware",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::micropython"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::usb-serial-connection",
+      "label": "USB Serial Connection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::thonny-ide"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::repl",
+      "label": "REPL",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::thonny-ide"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::print-statement",
+      "label": "Print Statement",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::repl"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::script-execution",
+      "label": "Script Execution",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::thonny-ide"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::saving-to-device",
+      "label": "Saving To Device",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::micropython-firmware",
+        "fft-benchmarking::script-execution"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::device-filesystem",
+      "label": "Device Filesystem",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::saving-to-device"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::keyboard-interrupt",
+      "label": "Keyboard Interrupt",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::script-execution"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::micropython-vs-cpython",
+      "label": "MicroPython vs CPython",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::python-language",
+        "fft-benchmarking::micropython"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::general-purpose-io",
+      "label": "General Purpose IO",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microcontroller"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::gpio-pin",
+      "label": "GPIO Pin",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::general-purpose-io"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pin-object",
+      "label": "Pin Object",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::script-execution",
+        "fft-benchmarking::gpio-pin"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::digital-output",
+      "label": "Digital Output",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::pin-object"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::onboard-led",
+      "label": "Onboard LED",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::digital-output"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::logic-high-and-low",
+      "label": "Logic High And Low",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::digital-output"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pin-toggle",
+      "label": "Pin Toggle",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::logic-high-and-low"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sleep-delay",
+      "label": "Sleep Delay",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::script-execution"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::infinite-loop",
+      "label": "Infinite Loop",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::keyboard-interrupt",
+        "fft-benchmarking::sleep-delay"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::firmware-version",
+      "label": "Firmware Version",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::micropython-firmware"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cpu-clock-frequency",
+      "label": "CPU Clock Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::clock-speed"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::ram-versus-flash",
+      "label": "RAM Versus Flash",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-architecture"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::free-memory-query",
+      "label": "Free Memory Query",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::ram-versus-flash"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::filesystem-statistics",
+      "label": "Filesystem Statistics",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::device-filesystem",
+        "fft-benchmarking::ram-versus-flash"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::memory-mapped-register",
+      "label": "Memory Mapped Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-architecture"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cpuid-register",
+      "label": "CPUID Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m33",
+        "fft-benchmarking::memory-mapped-register"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::silicon-revision",
+      "label": "Silicon Revision",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cpuid-register"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::unique-device-id",
+      "label": "Unique Device ID",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-mapped-register"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::serial-peripheral-interface",
+      "label": "Serial Peripheral Interface",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::gpio-pin"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spi-clock-and-data",
+      "label": "SPI Clock And Data",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::serial-peripheral-interface"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::chip-select-line",
+      "label": "Chip Select Line",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::serial-peripheral-interface"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::display-driver-chip",
+      "label": "Display Driver Chip",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::serial-peripheral-interface"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::ssd1306-controller",
+      "label": "SSD1306 Controller",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::display-driver-chip"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::framebuffer",
+      "label": "Framebuffer",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::ssd1306-controller"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::monochrome-display",
+      "label": "Monochrome Display",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::framebuffer"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pixel-coordinates",
+      "label": "Pixel Coordinates",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::framebuffer"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::text-rendering",
+      "label": "Text Rendering",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::pixel-coordinates"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::display-refresh",
+      "label": "Display Refresh",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::framebuffer"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::shared-configuration-module",
+      "label": "Shared Configuration Module",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::saving-to-device"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::digital-input",
+      "label": "Digital Input",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::pin-object"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pull-up-resistor",
+      "label": "Pull Up Resistor",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::digital-input"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::active-low-logic",
+      "label": "Active Low Logic",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::logic-high-and-low",
+        "fft-benchmarking::pull-up-resistor"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::switch-bounce",
+      "label": "Switch Bounce",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::digital-input"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::debouncing",
+      "label": "Debouncing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sleep-delay",
+        "fft-benchmarking::switch-bounce"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::polling-loop",
+      "label": "Polling Loop",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::infinite-loop",
+        "fft-benchmarking::digital-input"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::edge-detection",
+      "label": "Edge Detection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::debouncing",
+        "fft-benchmarking::polling-loop"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::event-loop",
+      "label": "Event Loop",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::polling-loop"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::mode-switching",
+      "label": "Mode Switching",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::edge-detection",
+        "fft-benchmarking::event-loop"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::file-transfer-to-device",
+      "label": "File Transfer To Device",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::device-filesystem"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::mpremote-tool",
+      "label": "mpremote Tool",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::file-transfer-to-device"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::library-directory",
+      "label": "Library Directory",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::file-transfer-to-device"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::import-path",
+      "label": "Import Path",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::library-directory"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::module-import",
+      "label": "Module Import",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::shared-configuration-module",
+        "fft-benchmarking::import-path"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::autorun-main-py",
+      "label": "Autorun main.py",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::device-filesystem"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::standalone-operation",
+      "label": "Standalone Operation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::autorun-main-py"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::code-organization",
+      "label": "Code Organization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::module-import"
+      ],
+      "taxonomy_id": "TOOL",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::mems-microphone",
+      "label": "MEMS Microphone",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "AUDI",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::inmp441-microphone",
+      "label": "INMP441 Microphone",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::mems-microphone"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::digital-microphone-output",
+      "label": "Digital Microphone Output",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::digital-signals",
+        "fft-benchmarking::inmp441-microphone"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::i2s-protocol",
+      "label": "I2S Protocol",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::serial-peripheral-interface"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bit-clock",
+      "label": "Bit Clock",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::i2s-protocol"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::word-select-line",
+      "label": "Word Select Line",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::i2s-protocol"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::i2s-serial-data",
+      "label": "I2S Serial Data",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::i2s-protocol"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::audio-buffer",
+      "label": "Audio Buffer",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::i2s-protocol"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::buffered-read",
+      "label": "Buffered Read",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::audio-buffer"
+      ],
+      "taxonomy_id": "MCIO",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sample-word-format",
+      "label": "Sample Word Format",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bit-depth",
+        "fft-benchmarking::digital-microphone-output"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::twenty-four-bit-in-thirty-two",
+      "label": "Twenty Four Bit In Thirty Two",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sample-word-format"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::arithmetic-right-shift",
+      "label": "Arithmetic Right Shift",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::twenty-four-bit-in-thirty-two"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::unpacking-binary-data",
+      "label": "Unpacking Binary Data",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::buffered-read",
+        "fft-benchmarking::sample-word-format"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::root-mean-square",
+      "label": "Root Mean Square",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::magnitude",
+        "fft-benchmarking::unpacking-binary-data"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sound-level",
+      "label": "Sound Level",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::root-mean-square"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::loudness-perception",
+      "label": "Loudness Perception",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sound-level"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::thonny-plotter",
+      "label": "Thonny Plotter",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::print-statement"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::moving-average",
+      "label": "Moving Average",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sound-level"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::exponential-smoothing",
+      "label": "Exponential Smoothing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::moving-average"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sensor-auto-calibration",
+      "label": "Sensor Auto Calibration",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sound-level"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bar-graph-display",
+      "label": "Bar Graph Display",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::pixel-coordinates",
+        "fft-benchmarking::sound-level"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::decibel-scale",
+      "label": "Decibel Scale",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::decibel-conversion",
+        "fft-benchmarking::sound-level"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::level-meter",
+      "label": "Level Meter",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bar-graph-display",
+        "fft-benchmarking::decibel-scale"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sample-period",
+      "label": "Sample Period",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sampling-rate"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sampling-theorem",
+      "label": "Sampling Theorem",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::nyquist-theorem",
+        "fft-benchmarking::sample-period"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::nyquist-frequency",
+      "label": "Nyquist Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sampling-theorem"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::aliasing-artifact",
+      "label": "Aliasing Artifact",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::aliasing",
+        "fft-benchmarking::nyquist-frequency"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frequency-folding",
+      "label": "Frequency Folding",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::aliasing-artifact"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::anti-aliasing-filter",
+      "label": "Anti Aliasing Filter",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::low-pass-filter",
+        "fft-benchmarking::aliasing-artifact"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::undersampling",
+      "label": "Undersampling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::nyquist-frequency"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::tone-generator",
+      "label": "Tone Generator",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sample-rate-selection",
+      "label": "Sample Rate Selection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::nyquist-frequency",
+        "fft-benchmarking::sample-rate-selection-tradeoff"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sample-rate-selection-tradeoff",
+      "label": "Sample Rate Selection Tradeoff",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sampling-theorem"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::productive-failure",
+      "label": "Productive Failure",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::pitch-detection"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::dynamic-range",
+      "label": "Dynamic Range",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bit-depth"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::full-scale-value",
+      "label": "Full Scale Value",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dynamic-range"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::headroom",
+      "label": "Headroom",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::full-scale-value"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::clipping",
+      "label": "Clipping",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::full-scale-value"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::clipping-distortion",
+      "label": "Clipping Distortion",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::harmonics",
+        "fft-benchmarking::clipping"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::quantization-error",
+      "label": "Quantization Error",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::quantization"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::noise-floor",
+      "label": "Noise Floor",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::signal-noise",
+        "fft-benchmarking::quantization-error"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::amplitude-normalization",
+      "label": "Amplitude Normalization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::normalization",
+        "fft-benchmarking::full-scale-value"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::integer-overflow",
+      "label": "Integer Overflow",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::full-scale-value"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::radians",
+      "label": "Radians",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::unit-circle"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::angular-frequency",
+      "label": "Angular Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency",
+        "fft-benchmarking::radians"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::period-of-a-wave",
+      "label": "Period Of A Wave",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::phase-offset",
+      "label": "Phase Offset",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::phase",
+        "fft-benchmarking::radians"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sine-synthesis",
+      "label": "Sine Synthesis",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave",
+        "fft-benchmarking::angular-frequency"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sample-index-to-time",
+      "label": "Sample Index To Time",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sample-period",
+        "fft-benchmarking::sine-synthesis"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::waveform-plotting",
+      "label": "Waveform Plotting",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::thonny-plotter",
+        "fft-benchmarking::sine-synthesis"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::peak-amplitude",
+      "label": "Peak Amplitude",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::amplitude"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dc-component",
+      "label": "DC Component",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::amplitude"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::signal-synthesis",
+      "label": "Signal Synthesis",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-synthesis"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::superposition-principle",
+      "label": "Superposition Principle",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::signal-synthesis"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::wave-addition",
+      "label": "Wave Addition",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::superposition-principle"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::constructive-interference",
+      "label": "Constructive Interference",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::phase-offset",
+        "fft-benchmarking::wave-addition"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::destructive-interference",
+      "label": "Destructive Interference",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::phase-offset",
+        "fft-benchmarking::wave-addition"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::beat-frequency",
+      "label": "Beat Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wave-addition"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::amplitude-envelope",
+      "label": "Amplitude Envelope",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::beat-frequency"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fundamental-frequency",
+      "label": "Fundamental Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::harmonics"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::overtones",
+      "label": "Overtones",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fundamental-frequency"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::timbre",
+      "label": "Timbre",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::overtones"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::additive-synthesis",
+      "label": "Additive Synthesis",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wave-addition",
+        "fft-benchmarking::overtones"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::correlation",
+      "label": "Correlation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::wave-addition"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::multiply-and-sum",
+      "label": "Multiply And Sum",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::correlation"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dot-product",
+      "label": "Dot Product",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::multiply-and-sum"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::test-frequency",
+      "label": "Test Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-synthesis",
+        "fft-benchmarking::correlation"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::similarity-measure",
+      "label": "Similarity Measure",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::correlation"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::orthogonal-functions",
+      "label": "Orthogonal Functions",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::orthogonality",
+        "fft-benchmarking::dot-product"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::in-phase-component",
+      "label": "In Phase Component",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cosine-wave",
+        "fft-benchmarking::correlation"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::quadrature-component",
+      "label": "Quadrature Component",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::sine-wave",
+        "fft-benchmarking::correlation"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::phase-independence",
+      "label": "Phase Independence",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::in-phase-component",
+        "fft-benchmarking::quadrature-component"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::correlation-magnitude",
+      "label": "Correlation Magnitude",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::magnitude",
+        "fft-benchmarking::phase-independence"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::basis-function",
+      "label": "Basis Function",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::orthogonal-functions"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::projection-onto-basis",
+      "label": "Projection Onto Basis",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dot-product",
+        "fft-benchmarking::basis-function"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frequency-sweep",
+      "label": "Frequency Sweep",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::test-frequency"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bin-index",
+      "label": "Bin Index",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-bins",
+        "fft-benchmarking::frequency-sweep"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bin-center-frequency",
+      "label": "Bin Center Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bin-index"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bin-width",
+      "label": "Bin Width",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bin-resolution",
+        "fft-benchmarking::bin-center-frequency"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spectrum-array",
+      "label": "Spectrum Array",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::correlation-magnitude",
+        "fft-benchmarking::bin-index"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::eight-point-dft-by-hand",
+      "label": "Eight Point DFT By Hand",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dft-definition",
+        "fft-benchmarking::spectrum-array"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::complex-exponential",
+      "label": "Complex Exponential",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::euler-s-formula",
+        "fft-benchmarking::radians"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::real-and-imaginary-parts",
+      "label": "Real And Imaginary Parts",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-exponential"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spectrum-symmetry",
+      "label": "Spectrum Symmetry",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-conjugate",
+        "fft-benchmarking::spectrum-array"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::negative-frequencies",
+      "label": "Negative Frequencies",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectrum-symmetry"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dc-bin",
+      "label": "DC Bin",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dc-component",
+        "fft-benchmarking::bin-index"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::nyquist-bin",
+      "label": "Nyquist Bin",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::nyquist-frequency",
+        "fft-benchmarking::bin-index"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::ground-truth",
+      "label": "Ground Truth",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [],
+      "taxonomy_id": "LABM",
+      "level": "foundational"
+    },
+    {
+      "id": "fft-benchmarking::known-signal-test",
+      "label": "Known Signal Test",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::signal-synthesis",
+        "fft-benchmarking::ground-truth"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::validation-before-trust",
+      "label": "Validation Before Trust",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::known-signal-test"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::numerical-tolerance",
+      "label": "Numerical Tolerance",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::ground-truth"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::absolute-error",
+      "label": "Absolute Error",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::numerical-tolerance"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::relative-error",
+      "label": "Relative Error",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::absolute-error"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bin-exact-frequency",
+      "label": "Bin Exact Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bin-center-frequency",
+        "fft-benchmarking::known-signal-test"
+      ],
+      "taxonomy_id": "FOUR",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::expected-peak",
+      "label": "Expected Peak",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bin-exact-frequency"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::debugging-by-bisection",
+      "label": "Debugging By Bisection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::validation-before-trust"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::test-signal-design",
+      "label": "Test Signal Design",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::known-signal-test"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::algorithmic-complexity",
+      "label": "Algorithmic Complexity",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dft-complexity"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::quadratic-complexity",
+      "label": "Quadratic Complexity",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::algorithmic-complexity"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::operation-counting",
+      "label": "Operation Counting",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::algorithmic-complexity"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::scaling-behavior",
+      "label": "Scaling Behavior",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::quadratic-complexity"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::real-time-budget",
+      "label": "Real Time Budget",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::real-time-constraints",
+        "fft-benchmarking::sample-period"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frame-duration",
+      "label": "Frame Duration",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-size",
+        "fft-benchmarking::real-time-budget"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::processing-deadline",
+      "label": "Processing Deadline",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frame-duration"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::performance-bottleneck",
+      "label": "Performance Bottleneck",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::operation-counting"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::motivation-for-optimization",
+      "label": "Motivation For Optimization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::processing-deadline",
+        "fft-benchmarking::performance-bottleneck"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::divide-and-conquer",
+      "label": "Divide And Conquer",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::motivation-for-optimization"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::even-odd-split",
+      "label": "Even Odd Split",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::divide-and-conquer"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::recursive-decomposition",
+      "label": "Recursive Decomposition",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::even-odd-split"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::subproblem",
+      "label": "Subproblem",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::recursive-decomposition"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::recombination-step",
+      "label": "Recombination Step",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::subproblem"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::logarithmic-stages",
+      "label": "Logarithmic Stages",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::recursive-decomposition"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::complexity-reduction",
+      "label": "Complexity Reduction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::o-n-log-n",
+        "fft-benchmarking::logarithmic-stages"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::power-of-two-constraint",
+      "label": "Power Of Two Constraint",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::power-of-two-sizes",
+        "fft-benchmarking::even-odd-split"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::redundant-computation",
+      "label": "Redundant Computation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::divide-and-conquer"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::symmetry-exploitation",
+      "label": "Symmetry Exploitation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectrum-symmetry",
+        "fft-benchmarking::redundant-computation"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bit-reversal-permutation",
+      "label": "Bit Reversal Permutation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bit-reversal",
+        "fft-benchmarking::even-odd-split"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::index-reversal",
+      "label": "Index Reversal",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bit-reversal-permutation"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::permutation-table",
+      "label": "Permutation Table",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::index-reversal"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::roots-of-unity",
+      "label": "Roots Of Unity",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::unit-circle",
+        "fft-benchmarking::complex-exponential"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::twiddle-factor-table",
+      "label": "Twiddle Factor Table",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::twiddle-factors",
+        "fft-benchmarking::roots-of-unity"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::precomputation",
+      "label": "Precomputation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::twiddle-factor-table"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::lookup-table",
+      "label": "Lookup Table",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::permutation-table",
+        "fft-benchmarking::precomputation"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::loop-invariant-hoisting",
+      "label": "Loop Invariant Hoisting",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::precomputation"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::in-place-reordering",
+      "label": "In Place Reordering",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::in-place-fft",
+        "fft-benchmarking::permutation-table"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::swap-operation",
+      "label": "Swap Operation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::in-place-reordering"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::interleaved-storage",
+      "label": "Interleaved Storage",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::twiddle-factor-table"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::butterfly-structure",
+      "label": "Butterfly Structure",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::butterfly-operation",
+        "fft-benchmarking::recombination-step"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::complex-multiplication",
+      "label": "Complex Multiplication",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-numbers",
+        "fft-benchmarking::real-and-imaginary-parts"
+      ],
+      "taxonomy_id": "MATH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::four-multiply-form",
+      "label": "Four Multiply Form",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::complex-multiplication"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::butterfly-pair",
+      "label": "Butterfly Pair",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::butterfly-structure"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::stage-span",
+      "label": "Stage Span",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fft-stages",
+        "fft-benchmarking::butterfly-pair"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::data-flow-graph",
+      "label": "Data Flow Graph",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::butterfly-diagram"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::butterfly-count",
+      "label": "Butterfly Count",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::logarithmic-stages",
+        "fft-benchmarking::stage-span"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::stage-loop",
+      "label": "Stage Loop",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::stage-span"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cross-add-and-subtract",
+      "label": "Cross Add And Subtract",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::butterfly-structure"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::iterative-fft",
+      "label": "Iterative FFT",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::in-place-reordering",
+        "fft-benchmarking::stage-loop"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::algorithm-assembly",
+      "label": "Algorithm Assembly",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::four-multiply-form",
+        "fft-benchmarking::iterative-fft"
+      ],
+      "taxonomy_id": "FFTA",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::reference-implementation",
+      "label": "Reference Implementation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::validation-before-trust",
+        "fft-benchmarking::algorithm-assembly"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cross-validation",
+      "label": "Cross Validation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::relative-error",
+        "fft-benchmarking::reference-implementation"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::speedup-factor",
+      "label": "Speedup Factor",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::execution-time"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::correctness-before-speed",
+      "label": "Correctness Before Speed",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cross-validation"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::function-decomposition",
+      "label": "Function Decomposition",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::code-organization"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::magnitude-computation",
+      "label": "Magnitude Computation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::magnitude-calculation",
+        "fft-benchmarking::iterative-fft"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fast-magnitude-approximation",
+      "label": "Fast Magnitude Approximation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::magnitude-computation"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::power-versus-magnitude",
+      "label": "Power Versus Magnitude",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::power-spectrum",
+        "fft-benchmarking::magnitude-computation"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bin-averaging-for-display",
+      "label": "Bin Averaging For Display",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bar-graph-display",
+        "fft-benchmarking::bin-index"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::logarithmic-scaling",
+      "label": "Logarithmic Scaling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::decibel-scale"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::square-root-scaling",
+      "label": "Square Root Scaling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bin-averaging-for-display"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spectrum-bars",
+      "label": "Spectrum Bars",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectrum-plot",
+        "fft-benchmarking::bin-averaging-for-display"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frame-capture",
+      "label": "Frame Capture",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::buffered-read",
+        "fft-benchmarking::frame-duration"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::live-spectrum-display",
+      "label": "Live Spectrum Display",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectrum-bars",
+        "fft-benchmarking::frame-capture"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::whistle-test",
+      "label": "Whistle Test",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::tone-generator",
+        "fft-benchmarking::live-spectrum-display"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::half-spectrum-display",
+      "label": "Half Spectrum Display",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectrum-symmetry",
+        "fft-benchmarking::spectrum-bars"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::spectral-leakage-effect",
+      "label": "Spectral Leakage Effect",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectral-leakage",
+        "fft-benchmarking::bin-exact-frequency"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::rectangular-window",
+      "label": "Rectangular Window",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::windowing-functions"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::hanning-window",
+      "label": "Hanning Window",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::windowing-functions",
+        "fft-benchmarking::spectral-leakage-effect"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::hamming-window",
+      "label": "Hamming Window",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::hanning-window"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::blackman-window",
+      "label": "Blackman Window",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::hanning-window"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::main-lobe-width",
+      "label": "Main Lobe Width",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::hanning-window"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::side-lobe-level",
+      "label": "Side Lobe Level",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::main-lobe-width"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::window-tradeoff",
+      "label": "Window Tradeoff",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::main-lobe-width",
+        "fft-benchmarking::side-lobe-level"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::coherent-gain",
+      "label": "Coherent Gain",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::amplitude-normalization",
+        "fft-benchmarking::hanning-window"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::edge-discontinuity",
+      "label": "Edge Discontinuity",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::spectral-leakage-effect"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::window-table",
+      "label": "Window Table",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::precomputation",
+        "fft-benchmarking::hanning-window"
+      ],
+      "taxonomy_id": "SIGP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::argmax-search",
+      "label": "Argmax Search",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::peak-detection",
+        "fft-benchmarking::spectrum-array"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::peak-bin",
+      "label": "Peak Bin",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bin-index",
+        "fft-benchmarking::argmax-search"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bin-to-frequency",
+      "label": "Bin To Frequency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bin-center-frequency",
+        "fft-benchmarking::peak-bin"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frequency-resolution-limit",
+      "label": "Frequency Resolution Limit",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-resolution",
+        "fft-benchmarking::bin-width"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::parabolic-interpolation",
+      "label": "Parabolic Interpolation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::peak-bin"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sub-bin-accuracy",
+      "label": "Sub Bin Accuracy",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frequency-resolution-limit",
+        "fft-benchmarking::parabolic-interpolation"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::local-maximum",
+      "label": "Local Maximum",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::argmax-search"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::threshold-rejection",
+      "label": "Threshold Rejection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::noise-floor",
+        "fft-benchmarking::local-maximum"
+      ],
+      "taxonomy_id": "PIPE",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pitch",
+      "label": "Pitch",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fundamental-frequency"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::musical-note-mapping",
+      "label": "Musical Note Mapping",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bin-to-frequency",
+        "fft-benchmarking::pitch"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::octave",
+      "label": "Octave",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::musical-note-mapping"
+      ],
+      "taxonomy_id": "AUDI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::frame-rate",
+      "label": "Frame Rate",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frame-duration"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::stage-profiling",
+      "label": "Stage Profiling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frame-rate"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::capture-time",
+      "label": "Capture Time",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frame-capture",
+        "fft-benchmarking::stage-profiling"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::compute-time",
+      "label": "Compute Time",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::stage-profiling"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::draw-time",
+      "label": "Draw Time",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::display-refresh",
+        "fft-benchmarking::stage-profiling"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::overlap-processing",
+      "label": "Overlap Processing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::frame-capture"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::hop-size",
+      "label": "Hop Size",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::overlap-processing"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::buffer-swapping",
+      "label": "Buffer Swapping",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::double-buffering",
+        "fft-benchmarking::frame-capture"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::processing-latency",
+      "label": "Processing Latency",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::latency-metric",
+        "fft-benchmarking::frame-rate"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bottleneck-identification",
+      "label": "Bottleneck Identification",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::performance-bottleneck",
+        "fft-benchmarking::stage-profiling"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::millisecond-timer",
+      "label": "Millisecond Timer",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::execution-time"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::microsecond-timer",
+      "label": "Microsecond Timer",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::millisecond-timer"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::timer-resolution",
+      "label": "Timer Resolution",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microsecond-timer"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::counter-wraparound",
+      "label": "Counter Wraparound",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::microsecond-timer"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cycle-counter",
+      "label": "Cycle Counter",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cpu-cycles",
+        "fft-benchmarking::memory-mapped-register"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dwt-unit",
+      "label": "DWT Unit",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m33",
+        "fft-benchmarking::cycle-counter"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cyccnt-register",
+      "label": "CYCCNT Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dwt-unit"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::demcr-register",
+      "label": "DEMCR Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::dwt-unit"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::register-bit-manipulation",
+      "label": "Register Bit Manipulation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cyccnt-register",
+        "fft-benchmarking::demcr-register"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cycles-to-microseconds",
+      "label": "Cycles To Microseconds",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cpu-clock-frequency",
+        "fft-benchmarking::cyccnt-register"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::counter-verification",
+      "label": "Counter Verification",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::validation-before-trust",
+        "fft-benchmarking::cycles-to-microseconds"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cold-start-effect",
+      "label": "Cold Start Effect",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::warm-up-runs"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::warm-up-discard",
+      "label": "Warm Up Discard",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cold-start-effect"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::best-of-n",
+      "label": "Best Of N",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::statistical-sampling"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::minimum-sample",
+      "label": "Minimum Sample",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::best-of-n"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::variance-sources",
+      "label": "Variance Sources",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::standard-deviation"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::interrupt-interference",
+      "label": "Interrupt Interference",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::variance-sources"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::observer-effect",
+      "label": "Observer Effect",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::timing-overhead"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::timing-overhead",
+      "label": "Timing Overhead",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cycles-to-microseconds"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::measurement-discipline",
+      "label": "Measurement Discipline",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::warm-up-discard",
+        "fft-benchmarking::best-of-n"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::prediction-before-measurement",
+      "label": "Prediction Before Measurement",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::measurement-discipline"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::honest-reporting",
+      "label": "Honest Reporting",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::measurement-discipline"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::what-a-benchmark-excludes",
+      "label": "What A Benchmark Excludes",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fair-comparison",
+        "fft-benchmarking::honest-reporting"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::negative-result",
+      "label": "Negative Result",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::honest-reporting"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bytecode-interpretation",
+      "label": "Bytecode Interpretation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::micropython"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::native-code-emitter",
+      "label": "Native Code Emitter",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bytecode-interpretation"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::viper-code-emitter",
+      "label": "Viper Code Emitter",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::native-code-emitter"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::boxed-values",
+      "label": "Boxed Values",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::bytecode-interpretation"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::unboxed-values",
+      "label": "Unboxed Values",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::boxed-values"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::type-annotation",
+      "label": "Type Annotation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::viper-code-emitter"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::machine-types",
+      "label": "Machine Types",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::unboxed-values",
+        "fft-benchmarking::type-annotation"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::abstraction-cost",
+      "label": "Abstraction Cost",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::speedup-factor",
+        "fft-benchmarking::boxed-values"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::language-tradeoff-analysis",
+      "label": "Language Tradeoff Analysis",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-language",
+        "fft-benchmarking::abstraction-cost"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::calling-c-from-micropython",
+      "label": "Calling C From MicroPython",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::c-language",
+        "fft-benchmarking::module-import"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::library-over-handwritten-code",
+      "label": "Library Over Handwritten Code",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::library-integration",
+        "fft-benchmarking::language-tradeoff-analysis"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::instruction-set-architecture",
+      "label": "Instruction Set Architecture",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-architecture"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::armv6-m",
+      "label": "ARMv6-M",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-set-architecture"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::armv7-m",
+      "label": "ARMv7-M",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-set-architecture"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::armv8-m",
+      "label": "ARMv8-M",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::arm-cortex-m33",
+        "fft-benchmarking::instruction-set-architecture"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cortex-m0-plus",
+      "label": "Cortex M0 Plus",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::rp2040-chip",
+        "fft-benchmarking::armv6-m"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fpu-presence-detection",
+      "label": "FPU Presence Detection",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-unit",
+        "fft-benchmarking::cpuid-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::mvfr0-register",
+      "label": "MVFR0 Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fpu-presence-detection"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fpv5-sp-unit",
+      "label": "FPv5-SP Unit",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-unit",
+        "fft-benchmarking::armv8-m"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::capability-probing",
+      "label": "Capability Probing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::validation-before-trust",
+        "fft-benchmarking::fpu-presence-detection"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::hardware-feature-gate",
+      "label": "Hardware Feature Gate",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::capability-probing"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::portability-constraint",
+      "label": "Portability Constraint",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-set-architecture",
+        "fft-benchmarking::cortex-m0-plus"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::failure-root-cause",
+      "label": "Failure Root Cause",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::debugging-by-bisection",
+        "fft-benchmarking::hardware-feature-gate"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::inline-assembler",
+      "label": "Inline Assembler",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::assembly-language",
+        "fft-benchmarking::micropython"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::asm-thumb-decorator",
+      "label": "asm_thumb Decorator",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::thumb-instructions",
+        "fft-benchmarking::inline-assembler"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::cpu-register",
+      "label": "CPU Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-set-architecture"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::general-purpose-register",
+      "label": "General Purpose Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cpu-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::register-allocation",
+      "label": "Register Allocation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::general-purpose-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::move-instruction",
+      "label": "Move Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::general-purpose-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::add-instruction",
+      "label": "Add Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::general-purpose-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::compare-instruction",
+      "label": "Compare Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::general-purpose-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::conditional-branch",
+      "label": "Conditional Branch",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::compare-instruction"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::assembly-label",
+      "label": "Assembly Label",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::conditional-branch"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::assembly-loop",
+      "label": "Assembly Loop",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::conditional-branch",
+        "fft-benchmarking::assembly-label"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::argument-passing-convention",
+      "label": "Argument Passing Convention",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::asm-thumb-decorator",
+        "fft-benchmarking::register-allocation"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::return-value-register",
+      "label": "Return Value Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::argument-passing-convention"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::machine-code",
+      "label": "Machine Code",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-mnemonic"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::instruction-mnemonic",
+      "label": "Instruction Mnemonic",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::assembly-language"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::floating-point-register",
+      "label": "Floating Point Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fpv5-sp-unit",
+        "fft-benchmarking::cpu-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::register-bank-s0-to-s31",
+      "label": "Register Bank s0 to s31",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::load-store-architecture",
+      "label": "Load Store Architecture",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-set-architecture"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::vldr-instruction",
+      "label": "VLDR Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-register",
+        "fft-benchmarking::load-store-architecture"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::vstr-instruction",
+      "label": "VSTR Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::vldr-instruction"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::vadd-instruction",
+      "label": "VADD Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::vsub-instruction",
+      "label": "VSUB Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::vmul-instruction",
+      "label": "VMUL Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::floating-point-register"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::memory-address",
+      "label": "Memory Address",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-mapped-register",
+        "fft-benchmarking::load-store-architecture"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::address-of-buffer",
+      "label": "Address Of Buffer",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-address",
+        "fft-benchmarking::typed-array"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::typed-array",
+      "label": "Typed Array",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-management"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::pointer-arithmetic",
+      "label": "Pointer Arithmetic",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-address"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::byte-offset",
+      "label": "Byte Offset",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::pointer-arithmetic"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::no-allocation-in-timed-region",
+      "label": "No Allocation In Timed Region",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::measurement-discipline",
+        "fft-benchmarking::typed-array"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::assembly-butterfly",
+      "label": "Assembly Butterfly",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::butterfly-structure",
+        "fft-benchmarking::vmul-instruction"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::register-pressure",
+      "label": "Register Pressure",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::register-allocation",
+        "fft-benchmarking::assembly-butterfly"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::register-spilling",
+      "label": "Register Spilling",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::register-pressure"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::scratch-register",
+      "label": "Scratch Register",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::register-allocation"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::stage-parameter-block",
+      "label": "Stage Parameter Block",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::stage-loop",
+        "fft-benchmarking::argument-passing-convention"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::python-assembly-boundary",
+      "label": "Python Assembly Boundary",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::argument-passing-convention",
+        "fft-benchmarking::address-of-buffer"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::work-split-strategy",
+      "label": "Work Split Strategy",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::stage-loop",
+        "fft-benchmarking::python-assembly-boundary"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::assembly-debugging",
+      "label": "Assembly Debugging",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::debugging-by-bisection",
+        "fft-benchmarking::assembly-butterfly"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::bit-for-bit-match",
+      "label": "Bit For Bit Match",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::cross-validation",
+        "fft-benchmarking::assembly-debugging"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::hot-loop",
+      "label": "Hot Loop",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::performance-bottleneck",
+        "fft-benchmarking::work-split-strategy"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::special-case-optimization",
+      "label": "Special Case Optimization",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::hot-loop"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::trivial-twiddle",
+      "label": "Trivial Twiddle",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::twiddle-factor-table",
+        "fft-benchmarking::special-case-optimization"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::multiply-by-one",
+      "label": "Multiply By One",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::trivial-twiddle"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::multiply-by-i",
+      "label": "Multiply By i",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::imaginary-unit",
+        "fft-benchmarking::trivial-twiddle"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::branch-prediction",
+      "label": "Branch Prediction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::pipelining",
+        "fft-benchmarking::conditional-branch"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::unpredictable-branch",
+      "label": "Unpredictable Branch",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::branch-prediction"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::branchless-code",
+      "label": "Branchless Code",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::unpredictable-branch"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::precomputed-swap-list",
+      "label": "Precomputed Swap List",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::permutation-table",
+        "fft-benchmarking::branchless-code"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::code-size-tradeoff",
+      "label": "Code Size Tradeoff",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::code-size",
+        "fft-benchmarking::special-case-optimization"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::loop-overhead",
+      "label": "Loop Overhead",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::hot-loop"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::address-computation-cost",
+      "label": "Address Computation Cost",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::pointer-arithmetic",
+        "fft-benchmarking::loop-overhead"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::optimization-attribution",
+      "label": "Optimization Attribution",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::measurement-discipline",
+        "fft-benchmarking::special-case-optimization"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::instruction-encoding",
+      "label": "Instruction Encoding",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::machine-code"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::opcode",
+      "label": "Opcode",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-encoding"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::encoding-bit-field",
+      "label": "Encoding Bit Field",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-encoding"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::encoding-table",
+      "label": "Encoding Table",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::encoding-bit-field"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::halfword",
+      "label": "Halfword",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-encoding"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::thumb-2-encoding",
+      "label": "Thumb-2 Encoding",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::thumb-instructions",
+        "fft-benchmarking::halfword"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::data-directive",
+      "label": "Data Directive",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::inline-assembler",
+        "fft-benchmarking::thumb-2-encoding"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::raw-machine-word",
+      "label": "Raw Machine Word",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::data-directive"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fused-multiply-add",
+      "label": "Fused Multiply Add",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::multiply-accumulate",
+        "fft-benchmarking::fpv5-sp-unit"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::vfma-instruction",
+      "label": "VFMA Instruction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::encoding-table",
+        "fft-benchmarking::fused-multiply-add"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::fused-rounding",
+      "label": "Fused Rounding",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::single-precision-float",
+        "fft-benchmarking::fused-multiply-add"
+      ],
+      "taxonomy_id": "DSPI",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::assembler-limitation",
+      "label": "Assembler Limitation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::inline-assembler",
+        "fft-benchmarking::data-directive"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::isa-versus-toolchain",
+      "label": "ISA Versus Toolchain",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::instruction-set-architecture",
+        "fft-benchmarking::assembler-limitation"
+      ],
+      "taxonomy_id": "ASMP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::encoding-verification",
+      "label": "Encoding Verification",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::validation-before-trust",
+        "fft-benchmarking::raw-machine-word"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::variant-comparison",
+      "label": "Variant Comparison",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::fair-comparison",
+        "fft-benchmarking::measurement-discipline"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::controlled-variable",
+      "label": "Controlled Variable",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::variant-comparison"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::comparison-matrix",
+      "label": "Comparison Matrix",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::comparison-tables",
+        "fft-benchmarking::variant-comparison"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::ranking-prediction",
+      "label": "Ranking Prediction",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::prediction-before-measurement",
+        "fft-benchmarking::variant-comparison"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::optimization-composition",
+      "label": "Optimization Composition",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::optimization-attribution"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::sub-linear-composition",
+      "label": "Sub Linear Composition",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::optimization-composition"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::integration-cost",
+      "label": "Integration Cost",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::variant-comparison"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::kernel-versus-total-time",
+      "label": "Kernel Versus Total Time",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::what-a-benchmark-excludes",
+        "fft-benchmarking::integration-cost"
+      ],
+      "taxonomy_id": "BNCH",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::data-marshalling-cost",
+      "label": "Data Marshalling Cost",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::memory-access-patterns",
+        "fft-benchmarking::integration-cost"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::surprising-result",
+      "label": "Surprising Result",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::negative-result",
+        "fft-benchmarking::ranking-prediction"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::experimental-design",
+      "label": "Experimental Design",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::measurement-discipline",
+        "fft-benchmarking::controlled-variable"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::research-question",
+      "label": "Research Question",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::experimental-design"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::independent-variable",
+      "label": "Independent Variable",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::experimental-design"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::dependent-variable",
+      "label": "Dependent Variable",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::independent-variable"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::methodology-section",
+      "label": "Methodology Section",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::report-generation",
+        "fft-benchmarking::experimental-design"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::results-presentation",
+      "label": "Results Presentation",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::performance-charts",
+        "fft-benchmarking::methodology-section"
+      ],
+      "taxonomy_id": "VAPP",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::limitations-statement",
+      "label": "Limitations Statement",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::honest-reporting",
+        "fft-benchmarking::results-presentation"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::conclusion-drawing",
+      "label": "Conclusion Drawing",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::results-presentation"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::project-scoping",
+      "label": "Project Scoping",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::research-question"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    },
+    {
+      "id": "fft-benchmarking::peer-review",
+      "label": "Peer Review",
+      "subject_id": "fft-benchmarking",
+      "dependencies": [
+        "fft-benchmarking::honest-reporting"
+      ],
+      "taxonomy_id": "LABM",
+      "level": "core"
+    }
+  ]
+}

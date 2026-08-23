@@ -1,0 +1,2639 @@
+{
+  "subject_id": "quantum-computing",
+  "title": "A Skeptic's Guide to Quantum Computing",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations",
+      "color": "LightSteelBlue"
+    },
+    "BARR": {
+      "classifier_name": "Physics Barriers",
+      "color": "LightCoral"
+    },
+    "HARD": {
+      "classifier_name": "Hardware Platforms",
+      "color": "Plum"
+    },
+    "ALGO": {
+      "classifier_name": "Algorithms and Claims",
+      "color": "PowderBlue"
+    },
+    "HIST": {
+      "classifier_name": "History and Timeline",
+      "color": "PeachPuff"
+    },
+    "HYPE": {
+      "classifier_name": "Hype and Optimistic Claims",
+      "color": "LightPink"
+    },
+    "CRYP": {
+      "classifier_name": "Cryptography Threat",
+      "color": "Thistle"
+    },
+    "ECON": {
+      "classifier_name": "Economics and Investment",
+      "color": "PaleGreen"
+    },
+    "TECH": {
+      "classifier_name": "Technology Assessment",
+      "color": "LightYellow"
+    },
+    "GPT": {
+      "classifier_name": "General Purpose Technology",
+      "color": "Aquamarine"
+    },
+    "BIAS": {
+      "classifier_name": "Cognitive Biases",
+      "color": "MistyRose"
+    },
+    "SYST": {
+      "classifier_name": "Systems Thinking",
+      "color": "Lavender"
+    },
+    "SKEP": {
+      "classifier_name": "Expert Skeptics",
+      "color": "LavenderBlush"
+    },
+    "ETHI": {
+      "classifier_name": "Ethics and Careers",
+      "color": "Honeydew"
+    },
+    "ALT": {
+      "classifier_name": "Better Alternatives",
+      "color": "PaleTurquoise"
+    },
+    "PARA": {
+      "classifier_name": "Historical Parallels",
+      "color": "Gainsboro"
+    },
+    "BREAK": {
+      "classifier_name": "Breakthroughs Required",
+      "color": "LightCoral"
+    },
+    "CRIT": {
+      "classifier_name": "Critical Thinking",
+      "color": "PaleGreen"
+    },
+    "APPLY": {
+      "classifier_name": "Practical Application",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "quantum-computing::classical-computing",
+      "label": "Classical Computing",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::what-is-a-qubit",
+      "label": "What Is a Qubit",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::classical-computing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::superposition-explained",
+      "label": "Superposition Explained",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::what-is-a-qubit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::entanglement-explained",
+      "label": "Entanglement Explained",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::what-is-a-qubit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::quantum-measurement-problem",
+      "label": "Quantum Measurement Problem",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::superposition-explained",
+        "quantum-computing::entanglement-explained"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::theoretical-promise-of-qc",
+      "label": "Theoretical Promise of QC",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::superposition-explained",
+        "quantum-computing::entanglement-explained"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::what-qc-could-supposedly-do",
+      "label": "What QC Could Supposedly Do",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::theoretical-promise-of-qc"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::what-qc-cannot-do",
+      "label": "What QC Cannot Do",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::what-qc-could-supposedly-do"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::qc-vs-classical-computing",
+      "label": "QC vs Classical Computing",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::classical-computing",
+        "quantum-computing::what-qc-could-supposedly-do",
+        "quantum-computing::what-qc-cannot-do"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::decoherence-problem",
+      "label": "Decoherence Problem",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-measurement-problem"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::qubits-are-extremely-fragile",
+      "label": "Qubits Are Extremely Fragile",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::decoherence-problem"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::error-rate-problem",
+      "label": "Error Rate Problem",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qubits-are-extremely-fragile"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::error-correction-overhead",
+      "label": "Error Correction Overhead",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::error-rate-problem"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::1000-physical-per-1-logical",
+      "label": "1000 Physical per 1 Logical",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::error-correction-overhead"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::million-qubit-requirement",
+      "label": "Million Qubit Requirement",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::1000-physical-per-1-logical"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::engineering-vs-physics-barrier",
+      "label": "Engineering vs Physics Barrier",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::decoherence-problem",
+        "quantum-computing::error-rate-problem"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::no-platform-has-solved-it",
+      "label": "No Platform Has Solved It",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::engineering-vs-physics-barrier"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::cryogenic-cooling-requirement",
+      "label": "Cryogenic Cooling Requirement",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qubits-are-extremely-fragile"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::near-absolute-zero-temps",
+      "label": "Near Absolute Zero Temps",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cryogenic-cooling-requirement"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::cryogenic-cost-and-scale",
+      "label": "Cryogenic Cost and Scale",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::near-absolute-zero-temps"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::wiring-and-control-problem",
+      "label": "Wiring and Control Problem",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cryogenic-cooling-requirement"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::energy-consumption-problem",
+      "label": "Energy Consumption Problem",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cryogenic-cost-and-scale",
+        "quantum-computing::wiring-and-control-problem"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::infrastructure-cost",
+      "label": "Infrastructure Cost",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cryogenic-cost-and-scale",
+        "quantum-computing::energy-consumption-problem"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::hardware-scaling-wall",
+      "label": "Hardware Scaling Wall",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::million-qubit-requirement",
+        "quantum-computing::infrastructure-cost"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::connectivity-limitations",
+      "label": "Connectivity Limitations",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qubits-are-extremely-fragile"
+      ],
+      "taxonomy_id": "BARR",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::superconducting-approach",
+      "label": "Superconducting Approach",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cryogenic-cooling-requirement",
+        "quantum-computing::connectivity-limitations"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::trapped-ion-approach",
+      "label": "Trapped Ion Approach",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qubits-are-extremely-fragile",
+        "quantum-computing::connectivity-limitations"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::photonic-approach",
+      "label": "Photonic Approach",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qubits-are-extremely-fragile"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::topological-approach",
+      "label": "Topological Approach",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qubits-are-extremely-fragile"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::neutral-atom-approach",
+      "label": "Neutral Atom Approach",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qubits-are-extremely-fragile"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::platform-comparison",
+      "label": "Platform Comparison",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::superconducting-approach",
+        "quantum-computing::trapped-ion-approach",
+        "quantum-computing::photonic-approach",
+        "quantum-computing::topological-approach",
+        "quantum-computing::neutral-atom-approach"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::each-platform-has-fatal-flaws",
+      "label": "Each Platform Has Fatal Flaws",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::platform-comparison",
+        "quantum-computing::engineering-vs-physics-barrier"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::shor-s-factoring-algorithm",
+      "label": "Shor's Factoring Algorithm",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::theoretical-promise-of-qc"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::grover-s-search-algorithm",
+      "label": "Grover's Search Algorithm",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::theoretical-promise-of-qc"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::quantum-supremacy-defined",
+      "label": "Quantum Supremacy Defined",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::what-qc-could-supposedly-do"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::quantum-advantage-defined",
+      "label": "Quantum Advantage Defined",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-supremacy-defined"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::contrived-benchmarks",
+      "label": "Contrived Benchmarks",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-supremacy-defined",
+        "quantum-computing::quantum-advantage-defined"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::no-real-world-advantage-yet",
+      "label": "No Real-World Advantage Yet",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-advantage-defined",
+        "quantum-computing::contrived-benchmarks"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::narrow-problem-applicability",
+      "label": "Narrow Problem Applicability",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::what-qc-cannot-do",
+        "quantum-computing::shor-s-factoring-algorithm",
+        "quantum-computing::grover-s-search-algorithm"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::classical-computers-keep-up",
+      "label": "Classical Computers Keep Up",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qc-vs-classical-computing",
+        "quantum-computing::no-real-world-advantage-yet"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::feynman-s-1981-idea",
+      "label": "Feynman's 1981 Idea",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::theoretical-promise-of-qc"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::shor-s-algorithm-1994",
+      "label": "Shor's Algorithm 1994",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::shor-s-factoring-algorithm"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::first-lab-demos-1998-2001",
+      "label": "First Lab Demos 1998-2001",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::shor-s-algorithm-1994"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::d-wave-commercial-qc-2007",
+      "label": "D-Wave \"Commercial\" QC 2007",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::first-lab-demos-1998-2001"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::d-wave-sale-to-lockheed-2011",
+      "label": "D-Wave Sale to Lockheed 2011",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::d-wave-commercial-qc-2007"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::google-buys-d-wave-2013",
+      "label": "Google Buys D-Wave 2013",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::d-wave-sale-to-lockheed-2011"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::ibm-cloud-access-2016",
+      "label": "IBM Cloud Access 2016",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::first-lab-demos-1998-2001"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::google-sycamore-claim-2019",
+      "label": "Google Sycamore Claim 2019",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-supremacy-defined",
+        "quantum-computing::ibm-cloud-access-2016"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::ibm-127-qubit-chip-2021",
+      "label": "IBM 127-Qubit Chip 2021",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::ibm-cloud-access-2016"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::ibm-1121-qubit-chip-2023",
+      "label": "IBM 1121-Qubit Chip 2023",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::ibm-127-qubit-chip-2021"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::zero-commercial-roi-by-2025",
+      "label": "Zero Commercial ROI by 2025",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::google-sycamore-claim-2019",
+        "quantum-computing::ibm-1121-qubit-chip-2023"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::timeline-pattern-analysis",
+      "label": "Timeline Pattern Analysis",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::feynman-s-1981-idea",
+        "quantum-computing::shor-s-algorithm-1994",
+        "quantum-computing::first-lab-demos-1998-2001",
+        "quantum-computing::d-wave-commercial-qc-2007",
+        "quantum-computing::google-sycamore-claim-2019",
+        "quantum-computing::ibm-1121-qubit-chip-2023",
+        "quantum-computing::zero-commercial-roi-by-2025"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::3-5-years-away-pattern",
+      "label": "3-5 Years Away Pattern",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::timeline-pattern-analysis"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::40-years-of-promises",
+      "label": "40 Years of Promises",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::timeline-pattern-analysis",
+        "quantum-computing::3-5-years-away-pattern"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::catalog-of-broken-promises",
+      "label": "Catalog of Broken Promises",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::40-years-of-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::d-wave-exaggerated-claims",
+      "label": "D-Wave Exaggerated Claims",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::d-wave-commercial-qc-2007",
+        "quantum-computing::d-wave-sale-to-lockheed-2011",
+        "quantum-computing::catalog-of-broken-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::google-supremacy-overhype",
+      "label": "Google Supremacy Overhype",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::google-sycamore-claim-2019",
+        "quantum-computing::catalog-of-broken-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::ibm-roadmap-revisions",
+      "label": "IBM Roadmap Revisions",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::ibm-127-qubit-chip-2021",
+        "quantum-computing::ibm-1121-qubit-chip-2023",
+        "quantum-computing::catalog-of-broken-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::startup-pitch-exaggeration",
+      "label": "Startup Pitch Exaggeration",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::catalog-of-broken-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::consultant-hype-reports",
+      "label": "Consultant Hype Reports",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::catalog-of-broken-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::mckinsey-450b-projection",
+      "label": "McKinsey $450B Projection",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::consultant-hype-reports"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::media-amplification-effect",
+      "label": "Media Amplification Effect",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::catalog-of-broken-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::moving-goalposts-pattern",
+      "label": "Moving Goalposts Pattern",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::3-5-years-away-pattern",
+        "quantum-computing::catalog-of-broken-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::unfalsifiable-timelines",
+      "label": "Unfalsifiable Timelines",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::3-5-years-away-pattern",
+        "quantum-computing::moving-goalposts-pattern"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::redefining-success",
+      "label": "Redefining Success",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::moving-goalposts-pattern",
+        "quantum-computing::unfalsifiable-timelines"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::fusion-energy-parallel",
+      "label": "Fusion Energy Parallel",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::40-years-of-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::flying-cars-parallel",
+      "label": "Flying Cars Parallel",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::40-years-of-promises"
+      ],
+      "taxonomy_id": "HYPE",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::public-key-encryption-basics",
+      "label": "Public Key Encryption Basics",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::classical-computing"
+      ],
+      "taxonomy_id": "CRYP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::could-qc-break-encryption",
+      "label": "Could QC Break Encryption?",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::shor-s-factoring-algorithm",
+        "quantum-computing::public-key-encryption-basics"
+      ],
+      "taxonomy_id": "CRYP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::massive-qubits-needed",
+      "label": "Massive Qubits Needed",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::million-qubit-requirement",
+        "quantum-computing::could-qc-break-encryption"
+      ],
+      "taxonomy_id": "CRYP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::post-quantum-crypto-exists",
+      "label": "Post-Quantum Crypto Exists",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::public-key-encryption-basics"
+      ],
+      "taxonomy_id": "CRYP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::nist-already-has-standards",
+      "label": "NIST Already Has Standards",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::post-quantum-crypto-exists"
+      ],
+      "taxonomy_id": "CRYP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::harvest-now-decrypt-later",
+      "label": "Harvest Now Decrypt Later",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::could-qc-break-encryption"
+      ],
+      "taxonomy_id": "CRYP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::window-is-already-closing",
+      "label": "Window Is Already Closing",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::massive-qubits-needed",
+        "quantum-computing::nist-already-has-standards"
+      ],
+      "taxonomy_id": "CRYP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::crypto-threat-is-overstated",
+      "label": "Crypto Threat Is Overstated",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::massive-qubits-needed",
+        "quantum-computing::window-is-already-closing"
+      ],
+      "taxonomy_id": "CRYP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::return-on-investment",
+      "label": "Return on Investment",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "ECON",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::net-present-value",
+      "label": "Net Present Value",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::return-on-investment"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::risk-adjusted-returns",
+      "label": "Risk-Adjusted Returns",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::return-on-investment",
+        "quantum-computing::net-present-value"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::expected-value-framework",
+      "label": "Expected Value Framework",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::risk-adjusted-returns"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::probability-of-success",
+      "label": "Probability of Success",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::expected-value-framework"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::opportunity-cost",
+      "label": "Opportunity Cost",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::return-on-investment"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::sunk-cost-trap",
+      "label": "Sunk Cost Trap",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::return-on-investment"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::total-100b-invested",
+      "label": "Total $100B+ Invested",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::return-on-investment"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::zero-revenue-generated",
+      "label": "Zero Revenue Generated",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::total-100b-invested"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::vc-funding-frenzy",
+      "label": "VC Funding Frenzy",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::total-100b-invested"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::corporate-r-d-burn-rate",
+      "label": "Corporate R&D Burn Rate",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::total-100b-invested"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::government-funding-pressure",
+      "label": "Government Funding Pressure",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::total-100b-invested"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::revenue-model-problem",
+      "label": "Revenue Model Problem",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::zero-revenue-generated"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::who-pays-for-qc",
+      "label": "Who Pays for QC?",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::revenue-model-problem"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::customer-demand-evidence",
+      "label": "Customer Demand Evidence",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::who-pays-for-qc"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::no-paying-customers",
+      "label": "No Paying Customers",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::customer-demand-evidence"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::classical-alternatives-cheaper",
+      "label": "Classical Alternatives Cheaper",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qc-vs-classical-computing",
+        "quantum-computing::no-paying-customers"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::cost-per-computation",
+      "label": "Cost Per Computation",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::infrastructure-cost",
+        "quantum-computing::classical-alternatives-cheaper"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::total-cost-of-ownership",
+      "label": "Total Cost of Ownership",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cost-per-computation"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::ionq-ipo-and-stock-decline",
+      "label": "IonQ IPO and Stock Decline",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::vc-funding-frenzy"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::spac-risks-in-qc",
+      "label": "SPAC Risks in QC",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::vc-funding-frenzy"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::rigetti-financial-struggles",
+      "label": "Rigetti Financial Struggles",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::vc-funding-frenzy"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::d-wave-revenue-reality",
+      "label": "D-Wave Revenue Reality",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::d-wave-exaggerated-claims",
+        "quantum-computing::zero-revenue-generated"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::market-valuation-vs-revenue",
+      "label": "Market Valuation vs Revenue",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::ionq-ipo-and-stock-decline",
+        "quantum-computing::spac-risks-in-qc",
+        "quantum-computing::rigetti-financial-struggles",
+        "quantum-computing::d-wave-revenue-reality"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::comparable-company-analysis",
+      "label": "Comparable Company Analysis",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::market-valuation-vs-revenue"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::exit-strategy-problem",
+      "label": "Exit Strategy Problem",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::market-valuation-vs-revenue",
+        "quantum-computing::no-paying-customers"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::acqui-hire-as-only-exit",
+      "label": "Acqui-Hire as Only Exit",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::exit-strategy-problem"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::venture-capital-loss-rates",
+      "label": "Venture Capital Loss Rates",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::vc-funding-frenzy",
+        "quantum-computing::market-valuation-vs-revenue"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::when-to-cut-losses",
+      "label": "When to Cut Losses",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::sunk-cost-trap",
+        "quantum-computing::venture-capital-loss-rates"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::technology-readiness-levels",
+      "label": "Technology Readiness Levels",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "TECH",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::trl-scale-explained",
+      "label": "TRL Scale Explained",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::technology-readiness-levels"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::qc-stuck-at-trl-2-3",
+      "label": "QC Stuck at TRL 2-3",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::trl-scale-explained",
+        "quantum-computing::no-real-world-advantage-yet"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::technology-adoption-curves",
+      "label": "Technology Adoption Curves",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::technology-readiness-levels"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::crossing-the-chasm",
+      "label": "Crossing the Chasm",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::technology-adoption-curves"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::gartner-hype-cycle",
+      "label": "Gartner Hype Cycle",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::technology-adoption-curves"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::peak-of-inflated-expectations",
+      "label": "Peak of Inflated Expectations",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::gartner-hype-cycle"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::trough-of-disillusionment",
+      "label": "Trough of Disillusionment",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::peak-of-inflated-expectations"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::technology-forecasting",
+      "label": "Technology Forecasting",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::technology-adoption-curves"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::base-rate-of-tech-failure",
+      "label": "Base Rate of Tech Failure",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::technology-forecasting"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::prediction-track-records",
+      "label": "Prediction Track Records",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::technology-forecasting",
+        "quantum-computing::base-rate-of-tech-failure"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::science-vs-engineering-gap",
+      "label": "Science vs Engineering Gap",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::engineering-vs-physics-barrier",
+        "quantum-computing::technology-readiness-levels"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::dot-com-bubble-parallel",
+      "label": "Dot-Com Bubble Parallel",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::technology-bubble-dynamics"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::technology-bubble-dynamics",
+      "label": "Technology Bubble Dynamics",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::gartner-hype-cycle",
+        "quantum-computing::base-rate-of-tech-failure"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::general-purpose-technology",
+      "label": "General Purpose Technology",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "GPT",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::gpt-characteristics",
+      "label": "GPT Characteristics",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::general-purpose-technology"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::must-be-broadly-applicable",
+      "label": "Must Be Broadly Applicable",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::gpt-characteristics"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::must-improve-over-time",
+      "label": "Must Improve Over Time",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::gpt-characteristics"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::must-enable-new-innovations",
+      "label": "Must Enable New Innovations",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::gpt-characteristics"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::steam-engine-as-gpt",
+      "label": "Steam Engine as GPT",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::must-be-broadly-applicable",
+        "quantum-computing::must-improve-over-time",
+        "quantum-computing::must-enable-new-innovations"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::electricity-as-gpt",
+      "label": "Electricity as GPT",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::must-be-broadly-applicable",
+        "quantum-computing::must-improve-over-time",
+        "quantum-computing::must-enable-new-innovations"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::transistor-as-gpt",
+      "label": "Transistor as GPT",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::must-be-broadly-applicable",
+        "quantum-computing::must-improve-over-time",
+        "quantum-computing::must-enable-new-innovations"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::internet-as-gpt",
+      "label": "Internet as GPT",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::must-be-broadly-applicable",
+        "quantum-computing::must-improve-over-time",
+        "quantum-computing::must-enable-new-innovations"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::ai-ml-as-emerging-gpt",
+      "label": "AI/ML as Emerging GPT",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::must-be-broadly-applicable",
+        "quantum-computing::must-improve-over-time",
+        "quantum-computing::must-enable-new-innovations"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::qc-fails-every-gpt-test",
+      "label": "QC Fails Every GPT Test",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::must-be-broadly-applicable",
+        "quantum-computing::must-improve-over-time",
+        "quantum-computing::must-enable-new-innovations",
+        "quantum-computing::narrow-problem-applicability"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::qc-is-narrowly-applicable",
+      "label": "QC Is Narrowly Applicable",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qc-fails-every-gpt-test"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::qc-cannot-replace-classical",
+      "label": "QC Cannot Replace Classical",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qc-vs-classical-computing",
+        "quantum-computing::qc-is-narrowly-applicable"
+      ],
+      "taxonomy_id": "GPT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::cognitive-bias-overview",
+      "label": "Cognitive Bias Overview",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "BIAS",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::sunk-cost-fallacy",
+      "label": "Sunk Cost Fallacy",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::anchoring-bias",
+      "label": "Anchoring Bias",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::bandwagon-effect",
+      "label": "Bandwagon Effect",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::dunning-kruger-in-qc",
+      "label": "Dunning-Kruger in QC",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::optimism-bias",
+      "label": "Optimism Bias",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::authority-bias",
+      "label": "Authority Bias",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::fomo-in-qc-investment",
+      "label": "FOMO in QC Investment",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::survivorship-bias",
+      "label": "Survivorship Bias",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::narrative-fallacy",
+      "label": "Narrative Fallacy",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::groupthink",
+      "label": "Groupthink",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::motivated-reasoning",
+      "label": "Motivated Reasoning",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::information-asymmetry",
+      "label": "Information Asymmetry",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::bias-in-tech-forecasting",
+      "label": "Bias in Tech Forecasting",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cognitive-bias-overview",
+        "quantum-computing::technology-forecasting"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::how-biases-compound",
+      "label": "How Biases Compound",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::sunk-cost-fallacy",
+        "quantum-computing::confirmation-bias",
+        "quantum-computing::anchoring-bias",
+        "quantum-computing::bandwagon-effect",
+        "quantum-computing::optimism-bias",
+        "quantum-computing::fomo-in-qc-investment"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "SYST",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::causal-loop-diagrams",
+      "label": "Causal Loop Diagrams",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::systems-thinking"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::reinforcing-feedback-loop",
+      "label": "Reinforcing Feedback Loop",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::causal-loop-diagrams"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::balancing-feedback-loop",
+      "label": "Balancing Feedback Loop",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::causal-loop-diagrams"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::hype-reinforcement-loop",
+      "label": "Hype Reinforcement Loop",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::reinforcing-feedback-loop",
+        "quantum-computing::media-amplification-effect",
+        "quantum-computing::government-funding-pressure"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::sunk-cost-escalation-loop",
+      "label": "Sunk Cost Escalation Loop",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::reinforcing-feedback-loop",
+        "quantum-computing::sunk-cost-trap",
+        "quantum-computing::sunk-cost-fallacy"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::career-incentive-loop",
+      "label": "Career Incentive Loop",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::reinforcing-feedback-loop",
+        "quantum-computing::professor-grant-conflicts"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::geopolitical-arms-race-loop",
+      "label": "Geopolitical Arms Race Loop",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::reinforcing-feedback-loop",
+        "quantum-computing::government-funding-pressure"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::missing-balancing-loop",
+      "label": "Missing Balancing Loop",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::balancing-feedback-loop",
+        "quantum-computing::hype-reinforcement-loop"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::leverage-points",
+      "label": "Leverage Points",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::causal-loop-diagrams",
+        "quantum-computing::missing-balancing-loop"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::self-sustaining-hype-cycle",
+      "label": "Self-Sustaining Hype Cycle",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::hype-reinforcement-loop",
+        "quantum-computing::sunk-cost-escalation-loop",
+        "quantum-computing::career-incentive-loop",
+        "quantum-computing::geopolitical-arms-race-loop"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::breaking-the-hype-loop",
+      "label": "Breaking the Hype Loop",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::leverage-points",
+        "quantum-computing::self-sustaining-hype-cycle"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::gil-kalai-s-math-arguments",
+      "label": "Gil Kalai's Math Arguments",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::error-correction-overhead"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::dyakonov-s-physics-arguments",
+      "label": "Dyakonov's Physics Arguments",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::engineering-vs-physics-barrier"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::controlling-2-1000-parameters",
+      "label": "Controlling 2^1000 Parameters",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::dyakonov-s-physics-arguments"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::levin-s-complexity-doubts",
+      "label": "Levin's Complexity Doubts",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::narrow-problem-applicability"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::laughlin-on-coherence-limits",
+      "label": "Laughlin on Coherence Limits",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::decoherence-problem"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::goldreich-s-cs-perspective",
+      "label": "Goldreich's CS Perspective",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::narrow-problem-applicability"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::skeptics-have-no-funding-bias",
+      "label": "Skeptics Have No Funding Bias",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::information-asymmetry"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::proponents-have-funding-bias",
+      "label": "Proponents Have Funding Bias",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::information-asymmetry"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::why-skeptics-are-ignored",
+      "label": "Why Skeptics Are Ignored",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::skeptics-have-no-funding-bias",
+        "quantum-computing::proponents-have-funding-bias",
+        "quantum-computing::authority-bias"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::ethics-of-qc-education",
+      "label": "Ethics of QC Education",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qc-job-market-reality",
+        "quantum-computing::almost-all-jobs-are-r-d"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::phd-career-risk-in-qc",
+      "label": "PhD Career Risk in QC",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::almost-all-jobs-are-r-d"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::qc-job-market-reality",
+      "label": "QC Job Market Reality",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::no-paying-customers",
+        "quantum-computing::zero-revenue-generated"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::almost-all-jobs-are-r-d",
+      "label": "Almost All Jobs Are R&D",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qc-job-market-reality"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::what-if-the-field-contracts",
+      "label": "What If the Field Contracts?",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::almost-all-jobs-are-r-d",
+        "quantum-computing::when-to-cut-losses"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::transferable-skills-debate",
+      "label": "Transferable Skills Debate",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::phd-career-risk-in-qc"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::professor-grant-conflicts",
+      "label": "Professor Grant Conflicts",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::government-funding-pressure",
+        "quantum-computing::motivated-reasoning"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::string-theory-career-warning",
+      "label": "String Theory Career Warning",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::phd-career-risk-in-qc"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::cold-fusion-career-warning",
+      "label": "Cold Fusion Career Warning",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::phd-career-risk-in-qc"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::student-advising-ethics",
+      "label": "Student Advising Ethics",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::ethics-of-qc-education",
+        "quantum-computing::phd-career-risk-in-qc"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::informed-consent-for-careers",
+      "label": "Informed Consent for Careers",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::student-advising-ethics"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::ethical-investment-duty",
+      "label": "Ethical Investment Duty",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::return-on-investment",
+        "quantum-computing::information-asymmetry"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::fiduciary-responsibility",
+      "label": "Fiduciary Responsibility",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::return-on-investment",
+        "quantum-computing::probability-of-success"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::fomo-drives-bad-qc-decisions",
+      "label": "FOMO Drives Bad QC Decisions",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::fomo-in-qc-investment",
+        "quantum-computing::ethical-investment-duty"
+      ],
+      "taxonomy_id": "ETHI",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::quantum-sensing",
+      "label": "Quantum Sensing",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "ALT",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::atomic-clocks",
+      "label": "Atomic Clocks",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-sensing"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::quantum-magnetometers",
+      "label": "Quantum Magnetometers",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-sensing"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::quantum-gravimeters",
+      "label": "Quantum Gravimeters",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-sensing"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::sensors-already-make-money",
+      "label": "Sensors Already Make Money",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::atomic-clocks",
+        "quantum-computing::quantum-magnetometers",
+        "quantum-computing::quantum-gravimeters"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::sensing-needs-few-qubits",
+      "label": "Sensing Needs Few Qubits",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::quantum-sensing",
+        "quantum-computing::million-qubit-requirement"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::quantum-key-distribution",
+      "label": "Quantum Key Distribution",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::public-key-encryption-basics",
+        "quantum-computing::quantum-sensing"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::risk-adjusted-qs-returns",
+      "label": "Risk-Adjusted QS Returns",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::risk-adjusted-returns",
+        "quantum-computing::sensors-already-make-money",
+        "quantum-computing::sensing-needs-few-qubits"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::classical-ai-hardware",
+      "label": "Classical AI Hardware",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::classical-computing"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::alternative-tech-investments",
+      "label": "Alternative Tech Investments",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::risk-adjusted-qs-returns",
+        "quantum-computing::classical-ai-hardware"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::portfolio-diversification",
+      "label": "Portfolio Diversification",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::risk-adjusted-returns",
+        "quantum-computing::alternative-tech-investments"
+      ],
+      "taxonomy_id": "ALT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::successful-physics-bets",
+      "label": "Successful Physics Bets",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "PARA",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::transistor-investment-payoff",
+      "label": "Transistor Investment Payoff",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::successful-physics-bets"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::laser-investment-payoff",
+      "label": "Laser Investment Payoff",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::successful-physics-bets"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::fiber-optics-payoff",
+      "label": "Fiber Optics Payoff",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::successful-physics-bets"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::gps-atomic-clock-payoff",
+      "label": "GPS Atomic Clock Payoff",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::successful-physics-bets",
+        "quantum-computing::atomic-clocks"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::mri-investment-payoff",
+      "label": "MRI Investment Payoff",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::successful-physics-bets"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::failed-physics-bets",
+      "label": "Failed Physics Bets",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::successful-physics-bets"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::cold-fusion-losses",
+      "label": "Cold Fusion Losses",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::failed-physics-bets"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::theranos-lessons",
+      "label": "Theranos Lessons",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::failed-physics-bets",
+        "quantum-computing::information-asymmetry"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::concorde-economics-failure",
+      "label": "Concorde Economics Failure",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::failed-physics-bets",
+        "quantum-computing::opportunity-cost"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::charismatic-founder-risk",
+      "label": "Charismatic Founder Risk",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::theranos-lessons",
+        "quantum-computing::information-asymmetry"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::when-scientists-mislead",
+      "label": "When Scientists Mislead",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::information-asymmetry",
+        "quantum-computing::charismatic-founder-risk"
+      ],
+      "taxonomy_id": "PARA",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::the-10-required-breakthroughs",
+      "label": "The 10 Required Breakthroughs",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::hardware-scaling-wall",
+        "quantum-computing::each-platform-has-fatal-flaws",
+        "quantum-computing::no-real-world-advantage-yet"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::error-rates-must-drop-100x",
+      "label": "Error Rates Must Drop 100x",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::error-rate-problem",
+        "quantum-computing::the-10-required-breakthroughs"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::need-1000x-more-qubits",
+      "label": "Need 1000x More Qubits",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::million-qubit-requirement",
+        "quantum-computing::the-10-required-breakthroughs"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::coherence-must-improve-100x",
+      "label": "Coherence Must Improve 100x",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::decoherence-problem",
+        "quantum-computing::the-10-required-breakthroughs"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::connectivity-must-improve",
+      "label": "Connectivity Must Improve",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::connectivity-limitations",
+        "quantum-computing::the-10-required-breakthroughs"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::cryogenics-must-scale",
+      "label": "Cryogenics Must Scale",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::cryogenic-cost-and-scale",
+        "quantum-computing::the-10-required-breakthroughs"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::new-algorithms-needed",
+      "label": "New Algorithms Needed",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::narrow-problem-applicability",
+        "quantum-computing::the-10-required-breakthroughs"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::cost-must-drop-dramatically",
+      "label": "Cost Must Drop Dramatically",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::infrastructure-cost",
+        "quantum-computing::the-10-required-breakthroughs"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::all-must-happen-together",
+      "label": "All Must Happen Together",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::error-rates-must-drop-100x",
+        "quantum-computing::need-1000x-more-qubits",
+        "quantum-computing::coherence-must-improve-100x",
+        "quantum-computing::connectivity-must-improve",
+        "quantum-computing::cryogenics-must-scale",
+        "quantum-computing::new-algorithms-needed",
+        "quantum-computing::cost-must-drop-dramatically"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::joint-probability-problem",
+      "label": "Joint Probability Problem",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::probability-of-success",
+        "quantum-computing::all-must-happen-together"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::independent-vs-coupled-risks",
+      "label": "Independent vs Coupled Risks",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::joint-probability-problem"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::each-breakthrough-is-uncertain",
+      "label": "Each Breakthrough Is Uncertain",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::probability-of-success",
+        "quantum-computing::independent-vs-coupled-risks"
+      ],
+      "taxonomy_id": "BREAK",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::critical-thinking-skills",
+      "label": "Critical Thinking Skills",
+      "subject_id": "quantum-computing",
+      "dependencies": [],
+      "taxonomy_id": "CRIT",
+      "level": "foundational"
+    },
+    {
+      "id": "quantum-computing::hype-detection-checklist",
+      "label": "Hype Detection Checklist",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::critical-thinking-skills",
+        "quantum-computing::moving-goalposts-pattern",
+        "quantum-computing::unfalsifiable-timelines"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::red-flags-in-tech-claims",
+      "label": "Red Flags in Tech Claims",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::critical-thinking-skills",
+        "quantum-computing::redefining-success"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::how-to-read-a-press-release",
+      "label": "How to Read a Press Release",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::red-flags-in-tech-claims",
+        "quantum-computing::media-amplification-effect"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::science-journalism-problems",
+      "label": "Science Journalism Problems",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::media-amplification-effect",
+        "quantum-computing::how-to-read-a-press-release"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::base-rate-reasoning",
+      "label": "Base Rate Reasoning",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::base-rate-of-tech-failure",
+        "quantum-computing::critical-thinking-skills"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::extraordinary-claims-rule",
+      "label": "Extraordinary Claims Rule",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::critical-thinking-skills",
+        "quantum-computing::base-rate-reasoning"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::technology-due-diligence",
+      "label": "Technology Due Diligence",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::qc-stuck-at-trl-2-3",
+        "quantum-computing::critical-thinking-skills"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::risk-assessment-framework",
+      "label": "Risk Assessment Framework",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::expected-value-framework",
+        "quantum-computing::critical-thinking-skills"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::bayesian-reasoning-basics",
+      "label": "Bayesian Reasoning Basics",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::probability-of-success",
+        "quantum-computing::critical-thinking-skills"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::applying-skepticism-broadly",
+      "label": "Applying Skepticism Broadly",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::hype-detection-checklist",
+        "quantum-computing::red-flags-in-tech-claims",
+        "quantum-computing::base-rate-reasoning",
+        "quantum-computing::extraordinary-claims-rule"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::fusion-hype-comparison",
+      "label": "Fusion Hype Comparison",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::fusion-energy-parallel",
+        "quantum-computing::applying-skepticism-broadly"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::agi-hype-comparison",
+      "label": "AGI Hype Comparison",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::applying-skepticism-broadly"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::autonomous-vehicle-comparison",
+      "label": "Autonomous Vehicle Comparison",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::applying-skepticism-broadly"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::writing-an-executive-brief",
+      "label": "Writing an Executive Brief",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::crypto-threat-is-overstated",
+        "quantum-computing::qc-cannot-replace-classical",
+        "quantum-computing::each-breakthrough-is-uncertain",
+        "quantum-computing::risk-assessment-framework"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::conducting-red-team-analysis",
+      "label": "Conducting Red Team Analysis",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::the-10-required-breakthroughs",
+        "quantum-computing::each-breakthrough-is-uncertain",
+        "quantum-computing::red-flags-in-tech-claims"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::building-a-claims-tracker",
+      "label": "Building a Claims Tracker",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::catalog-of-broken-promises",
+        "quantum-computing::hype-detection-checklist"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::evaluating-a-pitch-deck",
+      "label": "Evaluating a Pitch Deck",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::how-biases-compound",
+        "quantum-computing::red-flags-in-tech-claims",
+        "quantum-computing::risk-assessment-framework"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::writing-a-critical-review",
+      "label": "Writing a Critical Review",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::science-journalism-problems",
+        "quantum-computing::extraordinary-claims-rule",
+        "quantum-computing::risk-assessment-framework"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::portfolio-allocation-analysis",
+      "label": "Portfolio Allocation Analysis",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::portfolio-diversification",
+        "quantum-computing::each-breakthrough-is-uncertain"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::national-qc-strategy-critique",
+      "label": "National QC Strategy Critique",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::government-funding-pressure",
+        "quantum-computing::risk-adjusted-qs-returns",
+        "quantum-computing::each-breakthrough-is-uncertain",
+        "quantum-computing::portfolio-allocation-analysis"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::board-level-qc-questions",
+      "label": "Board-Level QC Questions",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::when-to-cut-losses",
+        "quantum-computing::fiduciary-responsibility",
+        "quantum-computing::evaluating-a-pitch-deck"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::skeptical-inquiry-method",
+      "label": "Skeptical Inquiry Method",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::how-biases-compound",
+        "quantum-computing::breaking-the-hype-loop",
+        "quantum-computing::applying-skepticism-broadly"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    },
+    {
+      "id": "quantum-computing::making-better-tech-bets",
+      "label": "Making Better Tech Bets",
+      "subject_id": "quantum-computing",
+      "dependencies": [
+        "quantum-computing::alternative-tech-investments",
+        "quantum-computing::each-breakthrough-is-uncertain",
+        "quantum-computing::skeptical-inquiry-method"
+      ],
+      "taxonomy_id": "APPLY",
+      "level": "core"
+    }
+  ]
+}

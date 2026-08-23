@@ -1,0 +1,2205 @@
+{
+  "subject_id": "blockchain",
+  "title": "Blockchain: A Skeptic's Guide to Trust Technologies",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "CRYPT": {
+      "classifier_name": "Cryptography Essentials",
+      "color": "PeachPuff"
+    },
+    "PKI": {
+      "classifier_name": "Public Key Infrastructure",
+      "color": "LightYellow"
+    },
+    "DLT": {
+      "classifier_name": "Distributed Ledger Technology",
+      "color": "PaleGreen"
+    },
+    "CONS": {
+      "classifier_name": "Consensus and Mining",
+      "color": "PowderBlue"
+    },
+    "SCALE": {
+      "classifier_name": "Scalability and Networks",
+      "color": "PaleTurquoise"
+    },
+    "ECOSS": {
+      "classifier_name": "Blockchain Ecosystem",
+      "color": "Thistle"
+    },
+    "COST": {
+      "classifier_name": "Cost and Economics",
+      "color": "MistyRose"
+    },
+    "ATAM": {
+      "classifier_name": "Architecture Tradeoff Analysis",
+      "color": "LightSteelBlue"
+    },
+    "BIAS": {
+      "classifier_name": "Cognitive Bias and Thinking",
+      "color": "Lavender"
+    },
+    "CASE": {
+      "classifier_name": "Case Studies and Use Cases",
+      "color": "Honeydew"
+    },
+    "EMRG": {
+      "classifier_name": "Emerging Technologies",
+      "color": "Aquamarine"
+    },
+    "DECIDE": {
+      "classifier_name": "Decision and Implementation",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "blockchain::trust",
+      "label": "Trust",
+      "subject_id": "blockchain",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "blockchain::digital-trust",
+      "label": "Digital Trust",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::trust"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::network-fundamentals",
+      "label": "Network Fundamentals",
+      "subject_id": "blockchain",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "blockchain::internet-architecture",
+      "label": "Internet Architecture",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::network-fundamentals"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::client-server-model",
+      "label": "Client-Server Model",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::internet-architecture"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::peer-to-peer-networks",
+      "label": "Peer-to-Peer Networks",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::internet-architecture"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::encryption",
+      "label": "Encryption",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::trust",
+        "blockchain::network-fundamentals"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::symmetric-encryption",
+      "label": "Symmetric Encryption",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::encryption"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::asymmetric-encryption",
+      "label": "Asymmetric Encryption",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::encryption"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::public-key",
+      "label": "Public Key",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::asymmetric-encryption"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::private-key",
+      "label": "Private Key",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::asymmetric-encryption"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::key-pair-generation",
+      "label": "Key Pair Generation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::public-key",
+        "blockchain::private-key"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::digital-signature",
+      "label": "Digital Signature",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::key-pair-generation"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::hash-function",
+      "label": "Hash Function",
+      "subject_id": "blockchain",
+      "dependencies": [],
+      "taxonomy_id": "CRYPT",
+      "level": "foundational"
+    },
+    {
+      "id": "blockchain::cryptographic-hash",
+      "label": "Cryptographic Hash",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::hash-function"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::sha-256",
+      "label": "SHA-256",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cryptographic-hash"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::hash-chain",
+      "label": "Hash Chain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cryptographic-hash",
+        "blockchain::data-integrity"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::merkle-tree",
+      "label": "Merkle Tree",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cryptographic-hash",
+        "blockchain::hash-chain"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::data-integrity",
+      "label": "Data Integrity",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::hash-function",
+        "blockchain::trust"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::tamper-evidence",
+      "label": "Tamper Evidence",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::hash-chain",
+        "blockchain::data-integrity"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::non-repudiation",
+      "label": "Non-Repudiation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::digital-signature",
+        "blockchain::data-integrity"
+      ],
+      "taxonomy_id": "CRYPT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::authentication",
+      "label": "Authentication",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::digital-trust",
+        "blockchain::encryption"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::authorization",
+      "label": "Authorization",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::authentication"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::identity-verification",
+      "label": "Identity Verification",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::authentication",
+        "blockchain::digital-signature"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::certificate-authority",
+      "label": "Certificate Authority",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::public-key",
+        "blockchain::identity-verification"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::public-key-infrastructure",
+      "label": "Public Key Infrastructure",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::certificate-authority",
+        "blockchain::key-pair-generation"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::x-509-certificate",
+      "label": "X.509 Certificate",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::public-key-infrastructure"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::certificate-chain",
+      "label": "Certificate Chain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::x-509-certificate",
+        "blockchain::certificate-authority"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::root-certificate",
+      "label": "Root Certificate",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::certificate-chain"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::certificate-revocation",
+      "label": "Certificate Revocation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::x-509-certificate"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::ca-vulnerabilities",
+      "label": "CA Vulnerabilities",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::certificate-authority",
+        "blockchain::public-key-infrastructure"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::ca-compromise-scenarios",
+      "label": "CA Compromise Scenarios",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::ca-vulnerabilities"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::trust-anchor",
+      "label": "Trust Anchor",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::root-certificate",
+        "blockchain::trust"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::centralized-trust",
+      "label": "Centralized Trust",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::trust",
+        "blockchain::client-server-model"
+      ],
+      "taxonomy_id": "PKI",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::decentralized-trust",
+      "label": "Decentralized Trust",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::trust",
+        "blockchain::peer-to-peer-networks"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::distributed-system",
+      "label": "Distributed System",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::peer-to-peer-networks",
+        "blockchain::network-fundamentals"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::distributed-ledger",
+      "label": "Distributed Ledger",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::distributed-system",
+        "blockchain::data-integrity"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::ledger-replication",
+      "label": "Ledger Replication",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::distributed-ledger",
+        "blockchain::distributed-system"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::immutability",
+      "label": "Immutability",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::hash-chain",
+        "blockchain::distributed-ledger"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::append-only-data",
+      "label": "Append-Only Data",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::immutability"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::blockchain-definition",
+      "label": "Blockchain Definition",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::distributed-ledger",
+        "blockchain::hash-chain",
+        "blockchain::immutability"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::block-structure",
+      "label": "Block Structure",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::block-header",
+      "label": "Block Header",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::block-structure",
+        "blockchain::cryptographic-hash"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::block-body",
+      "label": "Block Body",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::block-structure",
+        "blockchain::transaction"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::genesis-block",
+      "label": "Genesis Block",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::block-structure"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::transaction",
+      "label": "Transaction",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::transaction-validation",
+      "label": "Transaction Validation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::transaction",
+        "blockchain::digital-signature"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::transaction-throughput",
+      "label": "Transaction Throughput",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::transaction",
+        "blockchain::network-latency"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::mempool",
+      "label": "Mempool",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::transaction",
+        "blockchain::node"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::node",
+      "label": "Node",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::peer-to-peer-networks"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::full-node",
+      "label": "Full Node",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::node"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::light-node",
+      "label": "Light Node",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::node",
+        "blockchain::full-node"
+      ],
+      "taxonomy_id": "DLT",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::mining",
+      "label": "Mining",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::proof-of-work",
+        "blockchain::node"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::miner",
+      "label": "Miner",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::mining"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::mining-reward",
+      "label": "Mining Reward",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::mining",
+        "blockchain::token"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::difficulty-adjustment",
+      "label": "Difficulty Adjustment",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::mining",
+        "blockchain::nonce"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::nonce",
+      "label": "Nonce",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cryptographic-hash"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::consensus-mechanism",
+      "label": "Consensus Mechanism",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::distributed-system",
+        "blockchain::blockchain-definition"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::proof-of-work",
+      "label": "Proof of Work",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::consensus-mechanism",
+        "blockchain::cryptographic-hash"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::proof-of-stake",
+      "label": "Proof of Stake",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::consensus-mechanism",
+        "blockchain::token"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::delegated-proof-of-stake",
+      "label": "Delegated Proof of Stake",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::proof-of-stake"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::byzantine-fault-tolerance",
+      "label": "Byzantine Fault Tolerance",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::distributed-system",
+        "blockchain::consensus-mechanism"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::byzantine-generals-problem",
+      "label": "Byzantine Generals Problem",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::distributed-system"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::practical-bft",
+      "label": "Practical BFT",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::byzantine-fault-tolerance",
+        "blockchain::byzantine-generals-problem"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::finality",
+      "label": "Finality",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::consensus-mechanism",
+        "blockchain::transaction"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::fork",
+      "label": "Fork",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::consensus-mechanism"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::hard-fork",
+      "label": "Hard Fork",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::fork",
+        "blockchain::governance"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::soft-fork",
+      "label": "Soft Fork",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::fork"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::longest-chain-rule",
+      "label": "Longest Chain Rule",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::proof-of-work",
+        "blockchain::fork"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::network-latency",
+      "label": "Network Latency",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::network-fundamentals",
+        "blockchain::distributed-system"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::scalability",
+      "label": "Scalability",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::transaction-throughput",
+        "blockchain::network-latency"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::scalability-trilemma",
+      "label": "Scalability Trilemma",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::scalability",
+        "blockchain::decentralized-trust",
+        "blockchain::security-attribute"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::throughput-vs-latency",
+      "label": "Throughput vs Latency",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::transaction-throughput",
+        "blockchain::network-latency"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::on-chain-vs-off-chain",
+      "label": "On-Chain vs Off-Chain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::scalability"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::layer-1",
+      "label": "Layer 1",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::scalability"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::layer-2-solutions",
+      "label": "Layer 2 Solutions",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::layer-1",
+        "blockchain::on-chain-vs-off-chain"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::state-channel",
+      "label": "State Channel",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::layer-2-solutions"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::sidechain",
+      "label": "Sidechain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::layer-2-solutions"
+      ],
+      "taxonomy_id": "SCALE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::smart-contract",
+      "label": "Smart Contract",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::transaction"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::smart-contract-risks",
+      "label": "Smart Contract Risks",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::smart-contract"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::oracle-problem",
+      "label": "Oracle Problem",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::smart-contract"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::gas-and-fees",
+      "label": "Gas and Fees",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::transaction",
+        "blockchain::smart-contract"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::token",
+      "label": "Token",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::fungible-token",
+      "label": "Fungible Token",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::token"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::non-fungible-token",
+      "label": "Non-Fungible Token",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::token"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::tokenization",
+      "label": "Tokenization",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::token",
+        "blockchain::fungible-token"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::wallet",
+      "label": "Wallet",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::public-key",
+        "blockchain::private-key",
+        "blockchain::blockchain-definition"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::cold-storage",
+      "label": "Cold Storage",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::wallet"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::hot-wallet",
+      "label": "Hot Wallet",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::wallet"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::permissioned-blockchain",
+      "label": "Permissioned Blockchain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::authorization"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::permissionless-blockchain",
+      "label": "Permissionless Blockchain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::decentralized-trust"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::public-blockchain",
+      "label": "Public Blockchain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::permissionless-blockchain"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::private-blockchain",
+      "label": "Private Blockchain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::permissioned-blockchain"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::consortium-blockchain",
+      "label": "Consortium Blockchain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::permissioned-blockchain",
+        "blockchain::private-blockchain"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::hyperledger",
+      "label": "Hyperledger",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::permissioned-blockchain",
+        "blockchain::private-blockchain"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::ethereum-overview",
+      "label": "Ethereum Overview",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::smart-contract",
+        "blockchain::proof-of-stake"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::bitcoin-overview",
+      "label": "Bitcoin Overview",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::proof-of-work"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::blockchain-generations",
+      "label": "Blockchain Generations",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::ethereum-overview",
+        "blockchain::bitcoin-overview"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::decentralized-application",
+      "label": "Decentralized Application",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::smart-contract",
+        "blockchain::public-blockchain"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::governance",
+      "label": "Governance",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::stakeholder-analysis"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::on-chain-governance",
+      "label": "On-Chain Governance",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::governance",
+        "blockchain::smart-contract"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::off-chain-governance",
+      "label": "Off-Chain Governance",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::governance"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::interoperability",
+      "label": "Interoperability",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::distributed-system"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::cross-chain-bridge",
+      "label": "Cross-Chain Bridge",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::interoperability"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::computational-cost",
+      "label": "Computational Cost",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::proof-of-work",
+        "blockchain::mining"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::energy-consumption",
+      "label": "Energy Consumption",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::computational-cost"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::network-cost-analysis",
+      "label": "Network Cost Analysis",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::computational-cost",
+        "blockchain::network-latency",
+        "blockchain::transaction-cost"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::transaction-cost",
+      "label": "Transaction Cost",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::transaction",
+        "blockchain::gas-and-fees"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::total-cost-of-ownership",
+      "label": "Total Cost of Ownership",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::network-cost-analysis",
+        "blockchain::operating-expense",
+        "blockchain::capital-expense",
+        "blockchain::infrastructure-cost"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::cost-projection-model",
+      "label": "Cost Projection Model",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::total-cost-of-ownership"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::cost-simulation",
+      "label": "Cost Simulation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cost-projection-model"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::total-cost-of-ownership",
+        "blockchain::business-requirement"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::break-even-analysis",
+      "label": "Break-Even Analysis",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cost-benefit-analysis"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::operating-expense",
+      "label": "Operating Expense",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::computational-cost",
+        "blockchain::transaction-cost"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::capital-expense",
+      "label": "Capital Expense",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::infrastructure-cost"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::infrastructure-cost",
+      "label": "Infrastructure Cost",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::node",
+        "blockchain::network-fundamentals"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::cloud-vs-on-premise",
+      "label": "Cloud vs On-Premise",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::infrastructure-cost"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::vendor-lock-in",
+      "label": "Vendor Lock-In",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cloud-vs-on-premise"
+      ],
+      "taxonomy_id": "COST",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::architecture",
+      "label": "Architecture",
+      "subject_id": "blockchain",
+      "dependencies": [],
+      "taxonomy_id": "ATAM",
+      "level": "foundational"
+    },
+    {
+      "id": "blockchain::architecture-tradeoff",
+      "label": "Architecture Tradeoff",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::architecture",
+        "blockchain::quality-attribute"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::atam-overview",
+      "label": "ATAM Overview",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::architecture-tradeoff",
+        "blockchain::stakeholder-analysis"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::quality-attribute",
+      "label": "Quality Attribute",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::architecture",
+        "blockchain::business-requirement"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::quality-attribute-scenario",
+      "label": "Quality Attribute Scenario",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::quality-attribute",
+        "blockchain::scenario-generation"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::utility-tree",
+      "label": "Utility Tree",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::quality-attribute",
+        "blockchain::business-requirement"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::utility-tree-construction",
+      "label": "Utility Tree Construction",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::utility-tree",
+        "blockchain::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::sensitivity-point",
+      "label": "Sensitivity Point",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::atam-overview",
+        "blockchain::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::tradeoff-point",
+      "label": "Tradeoff Point",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::atam-overview",
+        "blockchain::sensitivity-point"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::risk-theme",
+      "label": "Risk Theme",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::architecture-risk",
+        "blockchain::risk-identification"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::architecture-risk",
+      "label": "Architecture Risk",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::atam-overview",
+        "blockchain::architecture"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::risk-identification",
+      "label": "Risk Identification",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::architecture-risk",
+        "blockchain::scenario-generation"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::risk-mitigation",
+      "label": "Risk Mitigation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::risk-identification",
+        "blockchain::risk-theme"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::scenario-generation",
+      "label": "Scenario Generation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::atam-overview",
+        "blockchain::stakeholder-analysis"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::stakeholder-analysis",
+      "label": "Stakeholder Analysis",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::architecture",
+        "blockchain::business-requirement"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::business-requirement",
+      "label": "Business Requirement",
+      "subject_id": "blockchain",
+      "dependencies": [],
+      "taxonomy_id": "ATAM",
+      "level": "foundational"
+    },
+    {
+      "id": "blockchain::functional-requirement",
+      "label": "Functional Requirement",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::business-requirement"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::non-functional-requirement",
+      "label": "Non-Functional Requirement",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::business-requirement",
+        "blockchain::quality-attribute"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::security-attribute",
+      "label": "Security Attribute",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::quality-attribute",
+        "blockchain::encryption"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::performance-attribute",
+      "label": "Performance Attribute",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::quality-attribute",
+        "blockchain::scalability"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::availability-attribute",
+      "label": "Availability Attribute",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::quality-attribute",
+        "blockchain::reliability"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::modifiability",
+      "label": "Modifiability",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::quality-attribute"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::reliability",
+      "label": "Reliability",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::quality-attribute"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::maintainability",
+      "label": "Maintainability",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::quality-attribute",
+        "blockchain::modifiability"
+      ],
+      "taxonomy_id": "ATAM",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::cognitive-bias",
+      "label": "Cognitive Bias",
+      "subject_id": "blockchain",
+      "dependencies": [],
+      "taxonomy_id": "BIAS",
+      "level": "foundational"
+    },
+    {
+      "id": "blockchain::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::sunk-cost-fallacy",
+      "label": "Sunk Cost Fallacy",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::bandwagon-effect",
+      "label": "Bandwagon Effect",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::appeal-to-novelty",
+      "label": "Appeal to Novelty",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::anchoring-bias",
+      "label": "Anchoring Bias",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::status-quo-bias",
+      "label": "Status Quo Bias",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::dunning-kruger-effect",
+      "label": "Dunning-Kruger Effect",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::halo-effect",
+      "label": "Halo Effect",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::survivorship-bias",
+      "label": "Survivorship Bias",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::availability-heuristic",
+      "label": "Availability Heuristic",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::groupthink",
+      "label": "Groupthink",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias",
+        "blockchain::bandwagon-effect"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::bias-checklist",
+      "label": "Bias Checklist",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias",
+        "blockchain::confirmation-bias",
+        "blockchain::sunk-cost-fallacy",
+        "blockchain::bandwagon-effect",
+        "blockchain::appeal-to-novelty",
+        "blockchain::anchoring-bias",
+        "blockchain::status-quo-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::debiasing-techniques",
+      "label": "Debiasing Techniques",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::bias-checklist",
+        "blockchain::critical-thinking"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::evidence-based-evaluation",
+      "label": "Evidence-Based Evaluation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::critical-thinking",
+        "blockchain::debiasing-techniques"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::hype-cycle",
+      "label": "Hype Cycle",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias",
+        "blockchain::appeal-to-novelty"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::technology-readiness-level",
+      "label": "Technology Readiness Level",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::hype-cycle",
+        "blockchain::technology-evaluation"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::supply-chain-use-case",
+      "label": "Supply Chain Use Case",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::case-study-analysis"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::healthcare-use-case",
+      "label": "Healthcare Use Case",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::case-study-analysis"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::financial-services-use-case",
+      "label": "Financial Services Use Case",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::case-study-analysis"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::e-commerce-use-case",
+      "label": "E-Commerce Use Case",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::case-study-analysis"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::retail-use-case",
+      "label": "Retail Use Case",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::case-study-analysis"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::case-study-analysis",
+      "label": "Case Study Analysis",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::evidence-based-evaluation"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::successful-adoption-factors",
+      "label": "Successful Adoption Factors",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::case-study-analysis"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::failed-project-analysis",
+      "label": "Failed Project Analysis",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::case-study-analysis",
+        "blockchain::blockchain-limitations"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::blockchain-limitations",
+      "label": "Blockchain Limitations",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::scalability",
+        "blockchain::smart-contract-risks"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::when-not-to-use-blockchain",
+      "label": "When Not to Use Blockchain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-limitations",
+        "blockchain::alternative-technologies"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::decision-flowchart",
+      "label": "Decision Flowchart",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::when-not-to-use-blockchain",
+        "blockchain::decision-framework"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::alternative-technologies",
+      "label": "Alternative Technologies",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::centralized-database",
+        "blockchain::traditional-pki-vs-dlt"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::centralized-database",
+      "label": "Centralized Database",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::client-server-model",
+        "blockchain::centralized-trust"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::traditional-pki-vs-dlt",
+      "label": "Traditional PKI vs DLT",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::public-key-infrastructure",
+        "blockchain::distributed-ledger"
+      ],
+      "taxonomy_id": "CASE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::hybrid-architecture",
+      "label": "Hybrid Architecture",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::alternative-technologies",
+        "blockchain::traditional-pki-vs-dlt",
+        "blockchain::architecture-tradeoff"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::zero-knowledge-proof",
+      "label": "Zero-Knowledge Proof",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cryptographic-hash",
+        "blockchain::privacy"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::verifiable-credential",
+      "label": "Verifiable Credential",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::zero-knowledge-proof",
+        "blockchain::digital-signature"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::decentralized-identifier",
+      "label": "Decentralized Identifier",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::verifiable-credential",
+        "blockchain::decentralized-trust"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::self-sovereign-identity",
+      "label": "Self-Sovereign Identity",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::decentralized-identifier",
+        "blockchain::identity-verification"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::post-blockchain-tech",
+      "label": "Post-Blockchain Tech",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::zero-knowledge-proof",
+        "blockchain::verifiable-credential",
+        "blockchain::decentralized-identifier"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::emerging-trust-tech",
+      "label": "Emerging Trust Tech",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::post-blockchain-tech",
+        "blockchain::technology-readiness-level"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::privacy",
+      "label": "Privacy",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::trust",
+        "blockchain::encryption"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::data-sovereignty",
+      "label": "Data Sovereignty",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::privacy",
+        "blockchain::regulatory-compliance"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::regulatory-compliance",
+      "label": "Regulatory Compliance",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::blockchain-definition",
+        "blockchain::privacy"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::gdpr-and-blockchain",
+      "label": "GDPR and Blockchain",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::regulatory-compliance",
+        "blockchain::immutability",
+        "blockchain::right-to-be-forgotten"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::right-to-be-forgotten",
+      "label": "Right to Be Forgotten",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::immutability",
+        "blockchain::privacy"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::consortium-governance",
+      "label": "Consortium Governance",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::consortium-blockchain",
+        "blockchain::governance"
+      ],
+      "taxonomy_id": "ECOSS",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::organizational-challenges",
+      "label": "Organizational Challenges",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::consortium-governance",
+        "blockchain::stakeholder-buy-in"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::stakeholder-buy-in",
+      "label": "Stakeholder Buy-In",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::stakeholder-analysis",
+        "blockchain::change-management"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::change-management",
+      "label": "Change Management",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::cognitive-bias",
+        "blockchain::stakeholder-analysis"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::technology-evaluation",
+      "label": "Technology Evaluation",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::evidence-based-evaluation",
+        "blockchain::hype-cycle",
+        "blockchain::cost-benefit-analysis"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::vendor-assessment",
+      "label": "Vendor Assessment",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::technology-evaluation",
+        "blockchain::vendor-lock-in"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::proof-of-concept",
+      "label": "Proof of Concept",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::technology-evaluation"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::pilot-program",
+      "label": "Pilot Program",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::proof-of-concept"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::implementation-roadmap",
+      "label": "Implementation Roadmap",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::pilot-program",
+        "blockchain::decision-framework"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::architecture-report",
+      "label": "Architecture Report",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::atam-overview",
+        "blockchain::utility-tree-construction",
+        "blockchain::risk-mitigation",
+        "blockchain::recommendation-writing"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::decision-framework",
+      "label": "Decision Framework",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::evidence-based-evaluation",
+        "blockchain::atam-overview",
+        "blockchain::bias-checklist"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::recommendation-writing",
+      "label": "Recommendation Writing",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::decision-framework",
+        "blockchain::evidence-based-evaluation"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::presentation-to-management",
+      "label": "Presentation to Management",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::architecture-report",
+        "blockchain::recommendation-writing"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    },
+    {
+      "id": "blockchain::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "blockchain",
+      "dependencies": [
+        "blockchain::architecture-report",
+        "blockchain::presentation-to-management",
+        "blockchain::cost-simulation",
+        "blockchain::hybrid-architecture"
+      ],
+      "taxonomy_id": "DECIDE",
+      "level": "core"
+    }
+  ]
+}

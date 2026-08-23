@@ -1,0 +1,3022 @@
+{
+  "subject_id": "theory-of-knowledge",
+  "title": "Theory of Knowledge (TOK) Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "MistyRose"
+    },
+    "THEO": {
+      "classifier_name": "Theories of Knowledge",
+      "color": "PeachPuff"
+    },
+    "EVID": {
+      "classifier_name": "Evidence and Justification",
+      "color": "LightYellow"
+    },
+    "BIAS": {
+      "classifier_name": "Cognitive Biases",
+      "color": "LightCoral"
+    },
+    "SKEP": {
+      "classifier_name": "Skepticism and Critical Thinking",
+      "color": "PaleTurquoise"
+    },
+    "MISN": {
+      "classifier_name": "Misinformation and Fact Checking",
+      "color": "LightPink"
+    },
+    "ARGU": {
+      "classifier_name": "Reasoning and Argumentation",
+      "color": "PowderBlue"
+    },
+    "AOK": {
+      "classifier_name": "Areas of Knowledge",
+      "color": "Honeydew"
+    },
+    "METH": {
+      "classifier_name": "Discipline Methods",
+      "color": "PaleGreen"
+    },
+    "ETHC": {
+      "classifier_name": "Ethics and Values",
+      "color": "Thistle"
+    },
+    "THEM": {
+      "classifier_name": "Themes and Perspectives",
+      "color": "Lavender"
+    },
+    "ASMT": {
+      "classifier_name": "TOK Assessment and Skills",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "theory-of-knowledge::knowledge",
+      "label": "Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "theory-of-knowledge::belief",
+      "label": "Belief",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::truth",
+      "label": "Truth",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::justification",
+      "label": "Justification",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::belief",
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::evidence",
+      "label": "Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::justification"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::certainty",
+      "label": "Certainty",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::objectivity",
+      "label": "Objectivity",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::subjectivity",
+      "label": "Subjectivity",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::perspective",
+      "label": "Perspective",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::bias",
+      "label": "Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-claims",
+      "label": "Knowledge Claims",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::truth",
+        "theory-of-knowledge::justification"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::personal-knowledge",
+      "label": "Personal Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::shared-knowledge",
+      "label": "Shared Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::personal-knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::propositional-knowledge",
+      "label": "Propositional Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::knowledge-claims"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::procedural-knowledge",
+      "label": "Procedural Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::propositional-knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::acquaintance-knowledge",
+      "label": "Acquaintance Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::propositional-knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::a-priori-knowledge",
+      "label": "A Priori Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::a-posteriori-knowledge",
+      "label": "A Posteriori Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::empirical-evidence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::correspondence-theory",
+      "label": "Correspondence Theory",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::coherence-theory",
+      "label": "Coherence Theory",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::pragmatic-theory-of-truth",
+      "label": "Pragmatic Theory of Truth",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::justified-true-belief",
+      "label": "Justified True Belief",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::belief",
+        "theory-of-knowledge::truth",
+        "theory-of-knowledge::justification"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::gettier-problem",
+      "label": "Gettier Problem",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::justified-true-belief"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::fallibilism",
+      "label": "Fallibilism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::certainty",
+        "theory-of-knowledge::justified-true-belief"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::epistemic-humility",
+      "label": "Epistemic Humility",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::fallibilism",
+        "theory-of-knowledge::certainty"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::intersubjectivity",
+      "label": "Intersubjectivity",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::objectivity",
+        "theory-of-knowledge::subjectivity"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::value-laden-inquiry",
+      "label": "Value-Laden Inquiry",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::objectivity",
+        "theory-of-knowledge::subjectivity",
+        "theory-of-knowledge::bias"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-production",
+      "label": "Knowledge Production",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::methodology"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-dissemination",
+      "label": "Knowledge Dissemination",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-production",
+        "theory-of-knowledge::shared-knowledge"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-validation",
+      "label": "Knowledge Validation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-production",
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::standards-of-evidence"
+      ],
+      "taxonomy_id": "THEO",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::empirical-evidence",
+      "label": "Empirical Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::testimonial-evidence",
+      "label": "Testimonial Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::statistical-evidence",
+      "label": "Statistical Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::anecdotal-evidence",
+      "label": "Anecdotal Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::burden-of-proof",
+      "label": "Burden of Proof",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::justification"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::standards-of-evidence",
+      "label": "Standards of Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::empirical-evidence"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::sufficient-evidence",
+      "label": "Sufficient Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::standards-of-evidence"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::absence-of-evidence",
+      "label": "Absence of Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::burden-of-proof"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::source-evaluation",
+      "label": "Source Evaluation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::credibility"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::provenance",
+      "label": "Provenance",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::source-evaluation"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::corroboration",
+      "label": "Corroboration",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::source-evaluation"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::credibility",
+      "label": "Credibility",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::reliability",
+      "label": "Reliability",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::credibility"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::methodology",
+      "label": "Methodology",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::methods-of-inquiry"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::verification",
+      "label": "Verification",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::credibility"
+      ],
+      "taxonomy_id": "EVID",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::cognitive-biases",
+      "label": "Cognitive Biases",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::bias",
+        "theory-of-knowledge::critical-thinking"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::anchoring-bias",
+      "label": "Anchoring Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::availability-heuristic",
+      "label": "Availability Heuristic",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::cultural-bias",
+      "label": "Cultural Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::culture-and-knowledge"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::selection-bias",
+      "label": "Selection Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::observer-bias",
+      "label": "Observer Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::groupthink",
+      "label": "Groupthink",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::shared-knowledge"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::dunning-kruger-effect",
+      "label": "Dunning-Kruger Effect",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::personal-knowledge"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::motivated-reasoning",
+      "label": "Motivated Reasoning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::belief"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::hindsight-bias",
+      "label": "Hindsight Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::framing-effect",
+      "label": "Framing Effect",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::meaning"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::bandwagon-effect",
+      "label": "Bandwagon Effect",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::groupthink"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::authority-bias",
+      "label": "Authority Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::authority-in-knowledge"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::status-quo-bias",
+      "label": "Status Quo Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::belief-perseverance",
+      "label": "Belief Perseverance",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::belief"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::cognitive-dissonance",
+      "label": "Cognitive Dissonance",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cognitive-biases",
+        "theory-of-knowledge::belief"
+      ],
+      "taxonomy_id": "BIAS",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::skepticism",
+      "label": "Skepticism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::critical-thinking",
+        "theory-of-knowledge::certainty"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::scientific-skepticism",
+      "label": "Scientific Skepticism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::skepticism",
+        "theory-of-knowledge::scientific-method"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::philosophical-skepticism",
+      "label": "Philosophical Skepticism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::skepticism"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::cartesian-doubt",
+      "label": "Cartesian Doubt",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::philosophical-skepticism"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::pyrrhonian-skepticism",
+      "label": "Pyrrhonian Skepticism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::philosophical-skepticism"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::healthy-skepticism",
+      "label": "Healthy Skepticism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::skepticism",
+        "theory-of-knowledge::epistemic-humility"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::pseudoscience",
+      "label": "Pseudoscience",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::scientific-skepticism",
+        "theory-of-knowledge::demarcation-problem"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::demarcation-problem",
+      "label": "Demarcation Problem",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::scientific-method",
+        "theory-of-knowledge::falsifiability"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::unfalsifiable-claims",
+      "label": "Unfalsifiable Claims",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::falsifiability",
+        "theory-of-knowledge::burden-of-proof"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::conspiracy-theories",
+      "label": "Conspiracy Theories",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::motivated-reasoning",
+        "theory-of-knowledge::misinformation"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::denialism",
+      "label": "Denialism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::skepticism",
+        "theory-of-knowledge::belief-perseverance"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::science-denial",
+      "label": "Science Denial",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::denialism",
+        "theory-of-knowledge::scientific-consensus"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::intellectual-virtues",
+      "label": "Intellectual Virtues",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::critical-thinking",
+        "theory-of-knowledge::epistemic-responsibility"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::intellectual-courage",
+      "label": "Intellectual Courage",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::intellectual-virtues"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::open-mindedness",
+      "label": "Open-Mindedness",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::intellectual-virtues",
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::intellectual-honesty",
+      "label": "Intellectual Honesty",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::intellectual-virtues",
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::epistemic-responsibility",
+      "label": "Epistemic Responsibility",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::critical-thinking",
+        "theory-of-knowledge::epistemic-humility"
+      ],
+      "taxonomy_id": "SKEP",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::misinformation",
+      "label": "Misinformation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-claims",
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::disinformation",
+      "label": "Disinformation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::misinformation"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::malinformation",
+      "label": "Malinformation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::misinformation"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::propaganda",
+      "label": "Propaganda",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::disinformation",
+        "theory-of-knowledge::persuasion"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::fact-checking",
+      "label": "Fact Checking",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::misinformation",
+        "theory-of-knowledge::verification"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::claim-verification",
+      "label": "Claim Verification",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::fact-checking",
+        "theory-of-knowledge::source-evaluation"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::source-verification",
+      "label": "Source Verification",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::fact-checking",
+        "theory-of-knowledge::source-evaluation",
+        "theory-of-knowledge::provenance"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::lateral-reading",
+      "label": "Lateral Reading",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::claim-verification",
+        "theory-of-knowledge::digital-literacy"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::debunking",
+      "label": "Debunking",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::fact-checking",
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::prebunking",
+      "label": "Prebunking",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::debunking",
+        "theory-of-knowledge::inoculation-theory"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::inoculation-theory",
+      "label": "Inoculation Theory",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::misinformation",
+        "theory-of-knowledge::persuasion"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::media-literacy",
+      "label": "Media Literacy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::misinformation",
+        "theory-of-knowledge::information-literacy"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::news-literacy",
+      "label": "News Literacy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::media-literacy",
+        "theory-of-knowledge::fact-checking"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::information-literacy",
+      "label": "Information Literacy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::critical-thinking",
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::deepfakes",
+      "label": "Deepfakes",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::synthetic-media",
+        "theory-of-knowledge::disinformation"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::synthetic-media",
+      "label": "Synthetic Media",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::artificial-intelligence",
+        "theory-of-knowledge::disinformation"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::information-warfare",
+      "label": "Information Warfare",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::disinformation",
+        "theory-of-knowledge::propaganda"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::post-truth",
+      "label": "Post-Truth",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::misinformation",
+        "theory-of-knowledge::cognitive-dissonance"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::information-ecosystem",
+      "label": "Information Ecosystem",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::misinformation",
+        "theory-of-knowledge::knowledge-dissemination"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::echo-chambers",
+      "label": "Echo Chambers",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::confirmation-bias",
+        "theory-of-knowledge::information-ecosystem"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::filter-bubbles",
+      "label": "Filter Bubbles",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::algorithmic-bias",
+        "theory-of-knowledge::information-ecosystem"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::viral-misinformation",
+      "label": "Viral Misinformation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::misinformation",
+        "theory-of-knowledge::information-ecosystem"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::bot-networks",
+      "label": "Bot Networks",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::information-warfare"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::astroturfing",
+      "label": "Astroturfing",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::disinformation",
+        "theory-of-knowledge::information-warfare"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::content-moderation",
+      "label": "Content Moderation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::information-ecosystem",
+        "theory-of-knowledge::censorship"
+      ],
+      "taxonomy_id": "MISN",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::argumentation",
+      "label": "Argumentation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::justification",
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::reasoning"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::premises",
+      "label": "Premises",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::argumentation"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::conclusions",
+      "label": "Conclusions",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::argumentation",
+        "theory-of-knowledge::premises"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::inductive-reasoning",
+      "label": "Inductive Reasoning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::argumentation",
+        "theory-of-knowledge::empirical-evidence"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::deductive-reasoning",
+      "label": "Deductive Reasoning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::argumentation"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::persuasion",
+      "label": "Persuasion",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::argumentation"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::valid-arguments",
+      "label": "Valid Arguments",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::deductive-reasoning"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::sound-arguments",
+      "label": "Sound Arguments",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::valid-arguments",
+        "theory-of-knowledge::truth"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::strong-induction",
+      "label": "Strong Induction",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::inductive-reasoning"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::weak-induction",
+      "label": "Weak Induction",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::inductive-reasoning"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::logical-fallacies",
+      "label": "Logical Fallacies",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::argumentation"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::ad-hominem-fallacy",
+      "label": "Ad Hominem Fallacy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::straw-man-fallacy",
+      "label": "Straw Man Fallacy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::appeal-to-authority",
+      "label": "Appeal to Authority",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies",
+        "theory-of-knowledge::authority-in-knowledge"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::false-dilemma",
+      "label": "False Dilemma",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::circular-reasoning",
+      "label": "Circular Reasoning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::red-herring",
+      "label": "Red Herring",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::slippery-slope",
+      "label": "Slippery Slope",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::counterclaims",
+      "label": "Counterclaims",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::argumentation",
+        "theory-of-knowledge::knowledge-claims"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::claim-and-evidence",
+      "label": "Claim and Evidence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-claims",
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::reasoning",
+      "label": "Reasoning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::critical-thinking",
+        "theory-of-knowledge::justification"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::counterexamples",
+      "label": "Counterexamples",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::argumentation",
+        "theory-of-knowledge::valid-arguments"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::reductio-ad-absurdum",
+      "label": "Reductio Ad Absurdum",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::deductive-reasoning",
+        "theory-of-knowledge::counterexamples"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::burden-of-proof-fallacy",
+      "label": "Burden of Proof Fallacy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies",
+        "theory-of-knowledge::burden-of-proof"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::tu-quoque-fallacy",
+      "label": "Tu Quoque Fallacy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::logical-fallacies"
+      ],
+      "taxonomy_id": "ARGU",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::areas-of-knowledge",
+      "label": "Areas of Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::methods-of-inquiry"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::mathematics-aok",
+      "label": "Mathematics AOK",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::natural-sciences-aok",
+      "label": "Natural Sciences AOK",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::human-sciences-aok",
+      "label": "Human Sciences AOK",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::history-aok",
+      "label": "History AOK",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::the-arts-aok",
+      "label": "The Arts AOK",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::ethics-aok",
+      "label": "Ethics AOK",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::indigenous-knowledge",
+      "label": "Indigenous Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::religious-knowledge",
+      "label": "Religious Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::methods-of-inquiry",
+      "label": "Methods of Inquiry",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::interdisciplinary-inquiry",
+      "label": "Interdisciplinary Inquiry",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge",
+        "theory-of-knowledge::historical-revisionism"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::cross-cultural-knowledge",
+      "label": "Cross-Cultural Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::shared-knowledge",
+        "theory-of-knowledge::culture-and-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::epistemological-frameworks",
+      "label": "Epistemological Frameworks",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::justification",
+        "theory-of-knowledge::evidence"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::ways-of-knowing",
+      "label": "Ways of Knowing",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge",
+        "theory-of-knowledge::personal-knowledge"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::scope-and-application",
+      "label": "Scope and Application",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::areas-of-knowledge",
+        "theory-of-knowledge::epistemological-frameworks"
+      ],
+      "taxonomy_id": "AOK",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::axioms",
+      "label": "Axioms",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::mathematics-aok"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::mathematical-proof",
+      "label": "Mathematical Proof",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::axioms",
+        "theory-of-knowledge::deductive-reasoning"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::abstraction",
+      "label": "Abstraction",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::mathematics-aok"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::mathematical-modeling",
+      "label": "Mathematical Modeling",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::mathematics-aok",
+        "theory-of-knowledge::abstraction"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::formal-systems",
+      "label": "Formal Systems",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::axioms",
+        "theory-of-knowledge::mathematical-proof"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::empiricism",
+      "label": "Empiricism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::empirical-evidence",
+        "theory-of-knowledge::methods-of-inquiry"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::rationalism",
+      "label": "Rationalism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::a-priori-knowledge",
+        "theory-of-knowledge::methods-of-inquiry"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::certainty-in-mathematics",
+      "label": "Certainty in Mathematics",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::certainty",
+        "theory-of-knowledge::mathematics-aok",
+        "theory-of-knowledge::formal-systems"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::beauty-in-mathematics",
+      "label": "Beauty in Mathematics",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::mathematics-aok",
+        "theory-of-knowledge::abstraction"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::incompleteness-theorems",
+      "label": "Incompleteness Theorems",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::formal-systems",
+        "theory-of-knowledge::certainty-in-mathematics"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::scientific-method",
+      "label": "Scientific Method",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::methods-of-inquiry",
+        "theory-of-knowledge::natural-sciences-aok"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::falsifiability",
+      "label": "Falsifiability",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::scientific-method"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::hypothesis-testing",
+      "label": "Hypothesis Testing",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::scientific-method",
+        "theory-of-knowledge::statistical-evidence"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::replication",
+      "label": "Replication",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::scientific-method",
+        "theory-of-knowledge::reliability"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::peer-review",
+      "label": "Peer Review",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::scientific-method",
+        "theory-of-knowledge::credibility"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::paradigm",
+      "label": "Paradigm",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::natural-sciences-aok",
+        "theory-of-knowledge::scientific-method"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::paradigm-shift",
+      "label": "Paradigm Shift",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::paradigm",
+        "theory-of-knowledge::anomalies"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::thomas-kuhn",
+      "label": "Thomas Kuhn",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::paradigm",
+        "theory-of-knowledge::paradigm-shift"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::scientific-revolutions",
+      "label": "Scientific Revolutions",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::paradigm-shift",
+        "theory-of-knowledge::thomas-kuhn"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::normal-science",
+      "label": "Normal Science",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::paradigm"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::anomalies",
+      "label": "Anomalies",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::normal-science",
+        "theory-of-knowledge::paradigm"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::theory-and-law",
+      "label": "Theory and Law",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::scientific-method",
+        "theory-of-knowledge::inductive-reasoning"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::scientific-consensus",
+      "label": "Scientific Consensus",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::peer-review",
+        "theory-of-knowledge::replication"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::replication-crisis",
+      "label": "Replication Crisis",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::replication",
+        "theory-of-knowledge::scientific-consensus"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::scientific-models",
+      "label": "Scientific Models",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::scientific-method",
+        "theory-of-knowledge::mathematical-modeling"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::qualitative-methods",
+      "label": "Qualitative Methods",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::methods-of-inquiry",
+        "theory-of-knowledge::human-sciences-aok"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::quantitative-methods",
+      "label": "Quantitative Methods",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::methods-of-inquiry",
+        "theory-of-knowledge::statistical-evidence",
+        "theory-of-knowledge::human-sciences-aok"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::observer-effect",
+      "label": "Observer Effect",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::observer-bias",
+        "theory-of-knowledge::qualitative-methods"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::ethical-constraints",
+      "label": "Ethical Constraints",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::human-sciences-aok",
+        "theory-of-knowledge::ethical-dilemmas"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::cultural-variables",
+      "label": "Cultural Variables",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::human-sciences-aok",
+        "theory-of-knowledge::cultural-bias",
+        "theory-of-knowledge::culture-and-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::surveys-and-sampling",
+      "label": "Surveys and Sampling",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::quantitative-methods",
+        "theory-of-knowledge::selection-bias"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::correlation-and-causation",
+      "label": "Correlation and Causation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::quantitative-methods",
+        "theory-of-knowledge::statistical-evidence"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::controlled-experiments",
+      "label": "Controlled Experiments",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::quantitative-methods",
+        "theory-of-knowledge::scientific-method"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::case-studies",
+      "label": "Case Studies",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::qualitative-methods"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::interpretation-in-research",
+      "label": "Interpretation in Research",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cultural-variables",
+        "theory-of-knowledge::ethical-constraints",
+        "theory-of-knowledge::qualitative-methods"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::primary-sources",
+      "label": "Primary Sources",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::evidence",
+        "theory-of-knowledge::history-aok"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::secondary-sources",
+      "label": "Secondary Sources",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::primary-sources"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::historical-narrative",
+      "label": "Historical Narrative",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::history-aok",
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::historical-revisionism",
+      "label": "Historical Revisionism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::historical-narrative",
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::memory-and-testimony",
+      "label": "Memory and Testimony",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::testimonial-evidence",
+        "theory-of-knowledge::history-aok"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::oral-traditions",
+      "label": "Oral Traditions",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::memory-and-testimony",
+        "theory-of-knowledge::indigenous-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::historical-empathy",
+      "label": "Historical Empathy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::historical-narrative",
+        "theory-of-knowledge::emotion-and-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::anachronism",
+      "label": "Anachronism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::historical-narrative",
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::historiography",
+      "label": "Historiography",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::historical-narrative",
+        "theory-of-knowledge::methodology"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::archive-and-record",
+      "label": "Archive and Record",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::primary-sources",
+        "theory-of-knowledge::knowledge-dissemination"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::aesthetic-knowledge",
+      "label": "Aesthetic Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::the-arts-aok",
+        "theory-of-knowledge::emotion-and-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::artistic-interpretation",
+      "label": "Artistic Interpretation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::aesthetic-knowledge",
+        "theory-of-knowledge::cultural-variables"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::artistic-intent",
+      "label": "Artistic Intent",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::aesthetic-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::audience-reception",
+      "label": "Audience Reception",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::aesthetic-knowledge",
+        "theory-of-knowledge::perspective"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::creativity",
+      "label": "Creativity",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::aesthetic-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::art-and-emotion",
+      "label": "Art and Emotion",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::aesthetic-knowledge",
+        "theory-of-knowledge::emotion-and-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::art-and-culture",
+      "label": "Art and Culture",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::aesthetic-knowledge",
+        "theory-of-knowledge::culture-and-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::censorship-in-art",
+      "label": "Censorship in Art",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::aesthetic-knowledge",
+        "theory-of-knowledge::censorship"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::art-as-knowledge",
+      "label": "Art as Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::aesthetic-knowledge",
+        "theory-of-knowledge::knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::performative-knowledge",
+      "label": "Performative Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::procedural-knowledge",
+        "theory-of-knowledge::aesthetic-knowledge"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::moral-reasoning",
+      "label": "Moral Reasoning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::reasoning",
+        "theory-of-knowledge::ethics-aok"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::deontological-ethics",
+      "label": "Deontological Ethics",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::moral-reasoning"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::consequentialism",
+      "label": "Consequentialism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::moral-reasoning"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::virtue-ethics",
+      "label": "Virtue Ethics",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::moral-reasoning",
+        "theory-of-knowledge::intellectual-virtues"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::moral-relativism",
+      "label": "Moral Relativism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::moral-reasoning",
+        "theory-of-knowledge::subjectivity",
+        "theory-of-knowledge::culture-and-knowledge"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::moral-universalism",
+      "label": "Moral Universalism",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::moral-reasoning",
+        "theory-of-knowledge::objectivity"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::ethical-dilemmas",
+      "label": "Ethical Dilemmas",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::moral-reasoning",
+        "theory-of-knowledge::deontological-ethics",
+        "theory-of-knowledge::consequentialism"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::consent-in-research",
+      "label": "Consent in Research",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::ethical-constraints",
+        "theory-of-knowledge::moral-reasoning"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::representation",
+      "label": "Representation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::shared-knowledge",
+        "theory-of-knowledge::epistemic-injustice"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::intellectual-property",
+      "label": "Intellectual Property",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-production",
+        "theory-of-knowledge::moral-reasoning"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::ethics-of-ai",
+      "label": "Ethics of AI",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::artificial-intelligence",
+        "theory-of-knowledge::moral-reasoning"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::bioethics",
+      "label": "Bioethics",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::moral-reasoning",
+        "theory-of-knowledge::natural-sciences-aok"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::ethical-implications",
+      "label": "Ethical Implications",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::moral-reasoning",
+        "theory-of-knowledge::knowledge-production"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::faith-and-reason",
+      "label": "Faith and Reason",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::belief",
+        "theory-of-knowledge::reasoning",
+        "theory-of-knowledge::religious-knowledge"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::authority-in-knowledge",
+      "label": "Authority in Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::shared-knowledge",
+        "theory-of-knowledge::credibility"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-and-the-knower",
+      "label": "Knowledge and the Knower",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::personal-knowledge",
+        "theory-of-knowledge::ways-of-knowing"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::identity-and-knowledge",
+      "label": "Identity and Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-the-knower",
+        "theory-of-knowledge::information-literacy"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::culture-and-knowledge",
+      "label": "Culture and Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-the-knower",
+        "theory-of-knowledge::shared-knowledge"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::personal-epistemology",
+      "label": "Personal Epistemology",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-the-knower",
+        "theory-of-knowledge::epistemological-frameworks"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::emotion-and-knowledge",
+      "label": "Emotion and Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-the-knower",
+        "theory-of-knowledge::ways-of-knowing"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::intuition",
+      "label": "Intuition",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::ways-of-knowing",
+        "theory-of-knowledge::emotion-and-knowledge"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::sense-perception",
+      "label": "Sense Perception",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::ways-of-knowing",
+        "theory-of-knowledge::empirical-evidence"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::imagination-in-knowing",
+      "label": "Imagination in Knowing",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::ways-of-knowing"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::memory-as-knowledge-source",
+      "label": "Memory as Knowledge Source",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::ways-of-knowing"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::metacognition",
+      "label": "Metacognition",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-the-knower",
+        "theory-of-knowledge::reflective-thinking"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-and-language",
+      "label": "Knowledge and Language",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::language-as-tool",
+      "label": "Language as Tool",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-language"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::language-as-constraint",
+      "label": "Language as Constraint",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-language",
+        "theory-of-knowledge::limits-of-language"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::meaning",
+      "label": "Meaning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-language"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::ambiguity",
+      "label": "Ambiguity",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::meaning"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::translation",
+      "label": "Translation",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::meaning",
+        "theory-of-knowledge::argumentation"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::sapir-whorf-hypothesis",
+      "label": "Sapir-Whorf Hypothesis",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-language",
+        "theory-of-knowledge::linguistic-relativity"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::linguistic-relativity",
+      "label": "Linguistic Relativity",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-language",
+        "theory-of-knowledge::culture-and-knowledge"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::metaphor",
+      "label": "Metaphor",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::meaning",
+        "theory-of-knowledge::persuasion"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::rhetoric",
+      "label": "Rhetoric",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-language",
+        "theory-of-knowledge::argumentation"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::loaded-language",
+      "label": "Loaded Language",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::meaning",
+        "theory-of-knowledge::persuasion"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::definitions",
+      "label": "Definitions",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::meaning",
+        "theory-of-knowledge::valid-arguments"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::limits-of-language",
+      "label": "Limits of Language",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-language",
+        "theory-of-knowledge::ambiguity"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-and-technology",
+      "label": "Knowledge and Technology",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::tools-in-knowledge",
+      "label": "Tools in Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-technology"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::algorithms",
+      "label": "Algorithms",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-technology"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::algorithms"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::artificial-intelligence",
+        "theory-of-knowledge::statistical-evidence"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::algorithmic-bias",
+      "label": "Algorithmic Bias",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::algorithms",
+        "theory-of-knowledge::bias"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::simulations",
+      "label": "Simulations",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-technology",
+        "theory-of-knowledge::mathematical-modeling"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::digital-knowledge-systems",
+      "label": "Digital Knowledge Systems",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-technology",
+        "theory-of-knowledge::shared-knowledge"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::big-data",
+      "label": "Big Data",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-technology",
+        "theory-of-knowledge::statistical-evidence"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::big-data",
+        "theory-of-knowledge::claim-and-evidence"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::digital-literacy",
+      "label": "Digital Literacy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-technology",
+        "theory-of-knowledge::information-literacy"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::epistemology-of-internet",
+      "label": "Epistemology of Internet",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-technology",
+        "theory-of-knowledge::information-ecosystem"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-and-politics",
+      "label": "Knowledge and Politics",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::power-and-knowledge",
+      "label": "Power and Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-politics",
+        "theory-of-knowledge::authority-in-knowledge"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::censorship",
+      "label": "Censorship",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-politics",
+        "theory-of-knowledge::intellectual-freedom"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::intellectual-freedom",
+      "label": "Intellectual Freedom",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-politics"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-and-justice",
+      "label": "Knowledge and Justice",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-and-politics",
+        "theory-of-knowledge::epistemic-injustice"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::politics-of-expertise",
+      "label": "Politics of Expertise",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::power-and-knowledge",
+        "theory-of-knowledge::peer-review"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::trust-in-institutions",
+      "label": "Trust in Institutions",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::power-and-knowledge",
+        "theory-of-knowledge::credibility"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::epistemic-injustice",
+      "label": "Epistemic Injustice",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::power-and-knowledge",
+        "theory-of-knowledge::bias"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::marginalized-knowledge",
+      "label": "Marginalized Knowledge",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::epistemic-injustice",
+        "theory-of-knowledge::interdisciplinary-inquiry"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::gatekeeping",
+      "label": "Gatekeeping",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::power-and-knowledge",
+        "theory-of-knowledge::knowledge-dissemination"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::information-overload",
+      "label": "Information Overload",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::information-ecosystem",
+        "theory-of-knowledge::claim-and-evidence"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::attention-economy",
+      "label": "Attention Economy",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::information-overload",
+        "theory-of-knowledge::filter-bubbles"
+      ],
+      "taxonomy_id": "THEM",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-questions",
+      "label": "Knowledge Questions",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-claims",
+        "theory-of-knowledge::epistemological-frameworks"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::open-ended-questions",
+      "label": "Open-Ended Questions",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-questions"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::debatable-questions",
+      "label": "Debatable Questions",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-questions",
+        "theory-of-knowledge::counterclaims"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::prescribed-titles",
+      "label": "Prescribed Titles",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-questions"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::tok-essay",
+      "label": "TOK Essay",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-questions",
+        "theory-of-knowledge::argumentation",
+        "theory-of-knowledge::prescribed-titles"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::tok-exhibition",
+      "label": "TOK Exhibition",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-questions",
+        "theory-of-knowledge::real-world-objects"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::real-world-objects",
+      "label": "Real-World Objects",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::knowledge-questions",
+        "theory-of-knowledge::claim-and-evidence"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::reflective-thinking",
+      "label": "Reflective Thinking",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::critical-thinking"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::socratic-dialogue",
+      "label": "Socratic Dialogue",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::critical-thinking",
+        "theory-of-knowledge::open-ended-questions"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::inquiry-based-learning",
+      "label": "Inquiry-Based Learning",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::critical-thinking",
+        "theory-of-knowledge::knowledge-questions"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::knowledge-framework",
+      "label": "Knowledge Framework",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::epistemological-frameworks",
+        "theory-of-knowledge::areas-of-knowledge"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::hermeneutics",
+      "label": "Hermeneutics",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::cultural-variables",
+        "theory-of-knowledge::knowledge-and-language"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "theory-of-knowledge::capstone-tok-portfolio",
+      "label": "Capstone TOK Portfolio",
+      "subject_id": "theory-of-knowledge",
+      "dependencies": [
+        "theory-of-knowledge::tok-essay",
+        "theory-of-knowledge::tok-exhibition",
+        "theory-of-knowledge::knowledge-framework"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    }
+  ]
+}

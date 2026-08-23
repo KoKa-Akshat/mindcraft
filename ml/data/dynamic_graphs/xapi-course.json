@@ -1,0 +1,2657 @@
+{
+  "subject_id": "xapi-course",
+  "title": "xAPI for Intelligent Textbooks",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations of xAPI and Learning Standards",
+      "color": "SteelBlue"
+    },
+    "STMT": {
+      "classifier_name": "xAPI Statement Model",
+      "color": "DarkSlateBlue"
+    },
+    "VERB": {
+      "classifier_name": "Verb and Vocabulary Design",
+      "color": "DarkGreen"
+    },
+    "ACTID": {
+      "classifier_name": "Activity, Agent, and Identity",
+      "color": "LimeGreen"
+    },
+    "LRSA": {
+      "classifier_name": "Learning Record Store Architecture",
+      "color": "Gold"
+    },
+    "LRSP": {
+      "classifier_name": "LRS Platforms and Authentication",
+      "color": "DarkGoldenrod"
+    },
+    "IMPL": {
+      "classifier_name": "Implementation in Intelligent Textbooks",
+      "color": "Teal"
+    },
+    "BAND": {
+      "classifier_name": "Bandwidth and Network Optimization",
+      "color": "DodgerBlue"
+    },
+    "MON": {
+      "classifier_name": "Monitoring and Observability",
+      "color": "MediumPurple"
+    },
+    "AID": {
+      "classifier_name": "Synthetic Data and AI-Assisted Testing",
+      "color": "Orange"
+    },
+    "CONF": {
+      "classifier_name": "Conformance, Validation, and Standards Comparison",
+      "color": "Crimson"
+    },
+    "PRIV": {
+      "classifier_name": "Privacy, Compliance, and Organizational Context",
+      "color": "DarkRed"
+    }
+  },
+  "concepts": [
+    {
+      "id": "xapi-course::xapi-standard-overview",
+      "label": "xAPI Standard Overview",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::tin-can-api-history",
+      "label": "Tin Can API History",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::scorm-1-2",
+      "label": "SCORM 1.2",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::scorm-2004",
+      "label": "SCORM 2004",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::scorm-1-2"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::aicc-standard",
+      "label": "AICC Standard",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::cmi5-profile",
+      "label": "CMI5 Profile",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview",
+        "xapi-course::scorm-2004"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::ims-caliper",
+      "label": "IMS Caliper",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::ims-lti",
+      "label": "IMS LTI",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::ims-qti",
+      "label": "IMS QTI",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::learning-standards-ecosystem",
+      "label": "Learning Standards Ecosystem",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview",
+        "xapi-course::scorm-1-2",
+        "xapi-course::aicc-standard",
+        "xapi-course::ims-caliper",
+        "xapi-course::ims-lti",
+        "xapi-course::ims-qti"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-statement-model",
+      "label": "xAPI Statement Model",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::actor-component",
+      "label": "Actor Component",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::verb-component",
+      "label": "Verb Component",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::object-component",
+      "label": "Object Component",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::result-component",
+      "label": "Result Component",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::context-component",
+      "label": "Context Component",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-id-uuid",
+      "label": "Statement ID (UUID)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::timestamp-field",
+      "label": "Timestamp Field",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::stored-timestamp",
+      "label": "Stored Timestamp",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::timestamp-field"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::authority-field",
+      "label": "Authority Field",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-version-field",
+      "label": "Statement Version Field",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::xapi-1-0-3-specification"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-1-0-3-specification",
+      "label": "xAPI 1.0.3 Specification",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview",
+        "xapi-course::tin-can-api-history"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-voiding",
+      "label": "Statement Voiding",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::statement-id-uuid"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::mutable-vs-immutable-lrs",
+      "label": "Mutable vs Immutable LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-voiding",
+        "xapi-course::lrs-architecture"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::activity-provider-ap",
+      "label": "Activity Provider (AP)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::learning-record-provider-lrp",
+      "label": "Learning Record Provider (LRP)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-provider-ap"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::activity-consumer",
+      "label": "Activity Consumer",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-provider-ap"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-conformance",
+      "label": "xAPI Conformance",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-1-0-3-specification"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::adl-verb-registry",
+      "label": "ADL Verb Registry",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::verb-component"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::tincan-verb-vocabulary",
+      "label": "Tincan Verb Vocabulary",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::verb-component",
+        "xapi-course::tin-can-api-history"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::custom-verb-profiles",
+      "label": "Custom Verb Profiles",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry",
+        "xapi-course::tincan-verb-vocabulary"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::verb-iri-namespace",
+      "label": "Verb IRI Namespace",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::verb-component",
+        "xapi-course::custom-verb-profiles"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::activity-iri",
+      "label": "Activity IRI",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::object-component"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::activity-type",
+      "label": "Activity Type",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::object-component",
+        "xapi-course::activity-iri"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::agent-object",
+      "label": "Agent Object",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::actor-component"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::group-object",
+      "label": "Group Object",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::actor-component",
+        "xapi-course::agent-object"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::anonymous-group",
+      "label": "Anonymous Group",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::group-object"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::identified-group",
+      "label": "Identified Group",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::group-object"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::mbox-identifier",
+      "label": "mbox Identifier",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::agent-object"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::mbox-sha1sum-identifier",
+      "label": "mbox_sha1sum Identifier",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::mbox-identifier"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::openid-identifier",
+      "label": "openid Identifier",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::agent-object"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::account-identifier",
+      "label": "Account Identifier",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::agent-object"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::context-activities",
+      "label": "Context Activities",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::context-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::grouping-context-activity",
+      "label": "Grouping Context Activity",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::context-activities"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::parent-context-activity",
+      "label": "Parent Context Activity",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::context-activities"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::category-context-activity",
+      "label": "Category Context Activity",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::context-activities"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::other-context-activity",
+      "label": "Other Context Activity",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::context-activities"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::result-score",
+      "label": "Result Score",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::result-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::result-success",
+      "label": "Result Success",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::result-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::result-completion",
+      "label": "Result Completion",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::result-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::result-duration",
+      "label": "Result Duration",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::result-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::result-response",
+      "label": "Result Response",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::result-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::extensions-xapi",
+      "label": "Extensions (xAPI)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::attachment-object",
+      "label": "Attachment Object",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::sub-statement",
+      "label": "Sub-Statement",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-references",
+      "label": "Statement References",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::statement-id-uuid"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-architecture",
+      "label": "LRS Architecture",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview",
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-storage-models",
+      "label": "LRS Storage Models",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statements-endpoint",
+      "label": "Statements Endpoint",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::agents-endpoint",
+      "label": "Agents Endpoint",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::agent-object"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::activities-endpoint",
+      "label": "Activities Endpoint",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::activity-iri"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::state-endpoint",
+      "label": "State Endpoint",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::about-endpoint",
+      "label": "About Endpoint",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::xapi-1-0-3-specification"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-concurrency",
+      "label": "LRS Concurrency",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::lrs-storage-models"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::conflict-resolution-lrs",
+      "label": "Conflict Resolution (LRS)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-concurrency"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-query-filters",
+      "label": "Statement Query Filters",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statements-endpoint"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::pagination-statementresult",
+      "label": "Pagination (StatementResult)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statements-endpoint",
+        "xapi-course::statement-query-filters"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::more-irl-pagination",
+      "label": "More IRL Pagination",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::pagination-statementresult"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-authentication",
+      "label": "LRS Authentication",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::basic-auth-xapi",
+      "label": "Basic Auth (xAPI)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-authentication"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::oauth-1-0a-xapi",
+      "label": "OAuth 1.0a (xAPI)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-authentication"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::hosted-saas-lrs",
+      "label": "Hosted SaaS LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::self-hosted-open-source-lrs",
+      "label": "Self-Hosted Open Source LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::embedded-lrs",
+      "label": "Embedded LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::trax-lrs",
+      "label": "TRAX LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::self-hosted-open-source-lrs"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::learning-locker-lrs",
+      "label": "Learning Locker LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::self-hosted-open-source-lrs"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::ralph-lrs",
+      "label": "Ralph LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::self-hosted-open-source-lrs"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::watershed-lrs",
+      "label": "Watershed LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::hosted-saas-lrs"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-platform-comparison",
+      "label": "LRS Platform Comparison",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::hosted-saas-lrs",
+        "xapi-course::self-hosted-open-source-lrs",
+        "xapi-course::embedded-lrs",
+        "xapi-course::trax-lrs",
+        "xapi-course::learning-locker-lrs",
+        "xapi-course::ralph-lrs",
+        "xapi-course::watershed-lrs"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-scalability",
+      "label": "LRS Scalability",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::lrs-storage-models"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::multi-tenant-lrs",
+      "label": "Multi-Tenant LRS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::lrs-access-control"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-access-control",
+      "label": "LRS Access Control",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::lrs-authentication"
+      ],
+      "taxonomy_id": "LRSP",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-query-capability",
+      "label": "LRS Query Capability",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statements-endpoint",
+        "xapi-course::statement-query-filters"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-request-logs",
+      "label": "LRS Request Logs",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::lrs-server-log-analysis"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-in-k-12-education",
+      "label": "xAPI in K-12 Education",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-in-higher-education",
+      "label": "xAPI in Higher Education",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-in-corporate-l-d",
+      "label": "xAPI in Corporate L&D",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::k-12-data-governance",
+      "label": "K-12 Data Governance",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-in-k-12-education"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lms-integration-xapi",
+      "label": "LMS Integration (xAPI)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::canvas-lms",
+      "label": "Canvas LMS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lms-integration-xapi"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::moodle-lms",
+      "label": "Moodle LMS",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lms-integration-xapi"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::cross-organizational-interoperability",
+      "label": "Cross-Organizational Interoperability",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-in-k-12-education",
+        "xapi-course::xapi-in-higher-education",
+        "xapi-course::xapi-in-corporate-l-d"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::activity-registration",
+      "label": "Activity Registration",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-iri",
+        "xapi-course::activity-type"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::verb-vocabulary-design",
+      "label": "Verb Vocabulary Design",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry",
+        "xapi-course::custom-verb-profiles",
+        "xapi-course::verb-iri-namespace"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::interactive-component-instrumentation",
+      "label": "Interactive Component Instrumentation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::verb-vocabulary-design"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::simulation-instrumentation",
+      "label": "Simulation Instrumentation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::interactive-component-instrumentation",
+        "xapi-course::microsim-p5-js"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::quiz-instrumentation",
+      "label": "Quiz Instrumentation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::interactive-component-instrumentation"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::adaptive-branching-instrumentation",
+      "label": "Adaptive Branching Instrumentation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::interactive-component-instrumentation"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::learner-identity-management",
+      "label": "Learner Identity Management",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::agent-object",
+        "xapi-course::mbox-identifier"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::anonymous-learner-tracking",
+      "label": "Anonymous Learner Tracking",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::learner-identity-management",
+        "xapi-course::anonymous-group"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::pseudonymization",
+      "label": "Pseudonymization",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::anonymous-learner-tracking"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::level-3-intelligent-textbook",
+      "label": "Level 3 Intelligent Textbook",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "IMPL",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::microsim-p5-js",
+      "label": "MicroSim (p5.js)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::level-3-intelligent-textbook"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::interacted-verb",
+      "label": "Interacted Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry",
+        "xapi-course::interactive-component-instrumentation"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::progressed-verb",
+      "label": "Progressed Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::completed-verb",
+      "label": "Completed Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry",
+        "xapi-course::result-completion"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::attempted-verb",
+      "label": "Attempted Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::passed-verb",
+      "label": "Passed Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry",
+        "xapi-course::result-success"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::failed-verb",
+      "label": "Failed Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry",
+        "xapi-course::result-success"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::experienced-verb",
+      "label": "Experienced Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::scored-verb",
+      "label": "Scored Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry",
+        "xapi-course::result-score"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::launched-verb",
+      "label": "Launched Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::initialized-verb",
+      "label": "Initialized Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::terminated-verb",
+      "label": "Terminated Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::abandoned-verb",
+      "label": "Abandoned Verb",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-verb-registry"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::cmi5-session-lifecycle",
+      "label": "CMI5 Session Lifecycle",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::cmi5-profile",
+        "xapi-course::launched-verb",
+        "xapi-course::initialized-verb",
+        "xapi-course::terminated-verb",
+        "xapi-course::abandoned-verb"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::cmi5-launch-mechanism",
+      "label": "CMI5 Launch Mechanism",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::cmi5-profile",
+        "xapi-course::launched-verb"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::cmi5-vs-xapi-differences",
+      "label": "CMI5 vs xAPI Differences",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::cmi5-profile",
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::scorm-completion-mapping",
+      "label": "SCORM Completion Mapping",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::scorm-2004",
+        "xapi-course::result-completion",
+        "xapi-course::completed-verb"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::scorm-score-mapping",
+      "label": "SCORM Score Mapping",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::scorm-2004",
+        "xapi-course::result-score",
+        "xapi-course::scored-verb"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-statement-patterns",
+      "label": "xAPI Statement Patterns",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::verb-component",
+        "xapi-course::object-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-batching",
+      "label": "Statement Batching",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statements-endpoint",
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::http-2-multiplexing",
+      "label": "HTTP/2 Multiplexing",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-batching"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::payload-minimization",
+      "label": "Payload Minimization",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-batching",
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::offline-statement-queue",
+      "label": "Offline Statement Queue",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-batching",
+        "xapi-course::indexeddb-storage",
+        "xapi-course::localstorage-browser"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::indexeddb-storage",
+      "label": "IndexedDB Storage",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "BAND",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::localstorage-browser",
+      "label": "LocalStorage (Browser)",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "BAND",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::service-worker",
+      "label": "Service Worker",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "BAND",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::background-sync-api",
+      "label": "Background Sync API",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::service-worker"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::progressive-sync-strategy",
+      "label": "Progressive Sync Strategy",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::offline-statement-queue",
+        "xapi-course::background-sync-api"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::delta-encoding",
+      "label": "Delta Encoding",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::payload-minimization"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::selective-verbosity",
+      "label": "Selective Verbosity",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::payload-minimization",
+        "xapi-course::extensions-xapi"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::bandwidth-budget-calculation",
+      "label": "Bandwidth Budget Calculation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-batching",
+        "xapi-course::per-statement-payload-size",
+        "xapi-course::statement-frequency-analysis"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::per-statement-payload-size",
+      "label": "Per-Statement Payload Size",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::payload-minimization"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::http-overhead-analysis",
+      "label": "HTTP Overhead Analysis",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::per-statement-payload-size"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::network-throttling-simulation",
+      "label": "Network Throttling Simulation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::browser-devtools-network-panel"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-frequency-analysis",
+      "label": "Statement Frequency Analysis",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-batching"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::browser-devtools-network-panel",
+      "label": "Browser DevTools Network Panel",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "MON",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::xapi-traffic-capture",
+      "label": "xAPI Traffic Capture",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::browser-devtools-network-panel"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::charles-proxy",
+      "label": "Charles Proxy",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "MON",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::mitmproxy",
+      "label": "mitmproxy",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "MON",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::http-intercept",
+      "label": "HTTP Intercept",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::charles-proxy",
+        "xapi-course::mitmproxy"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::network-waterfall-chart",
+      "label": "Network Waterfall Chart",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::browser-devtools-network-panel",
+        "xapi-course::xapi-traffic-capture"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-payload-inspection",
+      "label": "xAPI Payload Inspection",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-traffic-capture",
+        "xapi-course::http-intercept"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-server-log-analysis",
+      "label": "LRS Server Log Analysis",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::real-time-dashboard",
+      "label": "Real-Time Dashboard",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-payload-inspection",
+        "xapi-course::lrs-server-log-analysis"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::observable-framework",
+      "label": "Observable Framework",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::real-time-dashboard"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::grafana-dashboard",
+      "label": "Grafana Dashboard",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::real-time-dashboard"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::engagement-heatmap",
+      "label": "Engagement Heatmap",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::real-time-dashboard",
+        "xapi-course::engagement-metrics"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-throughput",
+      "label": "Statement Throughput",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-frequency-analysis",
+        "xapi-course::real-time-dashboard"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::synthetic-data-generation",
+      "label": "Synthetic Data Generation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::claude-code-integration"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::claude-code-integration",
+      "label": "Claude Code Integration",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "AID",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::realistic-learner-cohort-simulation",
+      "label": "Realistic Learner Cohort Simulation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::synthetic-data-generation",
+        "xapi-course::learner-archetype-modeling"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-load-testing",
+      "label": "LRS Load Testing",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::realistic-learner-cohort-simulation"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-stress-testing",
+      "label": "xAPI Stress Testing",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-load-testing"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::learner-archetype-modeling",
+      "label": "Learner Archetype Modeling",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::synthetic-data-generation"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::fast-learner-archetype",
+      "label": "Fast Learner Archetype",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::learner-archetype-modeling"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::struggling-learner-archetype",
+      "label": "Struggling Learner Archetype",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::learner-archetype-modeling"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::disengaged-learner-archetype",
+      "label": "Disengaged Learner Archetype",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::learner-archetype-modeling"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::re-learner-archetype",
+      "label": "Re-Learner Archetype",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::learner-archetype-modeling"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::mastery-seeker-archetype",
+      "label": "Mastery-Seeker Archetype",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::learner-archetype-modeling"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::verb-frequency-distribution",
+      "label": "Verb Frequency Distribution",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::verb-component",
+        "xapi-course::realistic-learner-cohort-simulation"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::session-duration-histogram",
+      "label": "Session Duration Histogram",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::result-duration",
+        "xapi-course::realistic-learner-cohort-simulation"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statistical-representativeness",
+      "label": "Statistical Representativeness",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::verb-frequency-distribution",
+        "xapi-course::session-duration-histogram"
+      ],
+      "taxonomy_id": "AID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::adl-conformance-test-suite",
+      "label": "ADL Conformance Test Suite",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-conformance"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-validation",
+      "label": "xAPI Validation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-conformance-test-suite",
+        "xapi-course::statement-structure-validation"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-structure-validation",
+      "label": "Statement Structure Validation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::adl-conformance-test-suite"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::required-field-validation",
+      "label": "Required Field Validation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-structure-validation"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::data-type-validation",
+      "label": "Data Type Validation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-structure-validation"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-competitive-analysis",
+      "label": "xAPI Competitive Analysis",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview",
+        "xapi-course::learning-standards-ecosystem"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-vs-ims-caliper-comparison",
+      "label": "xAPI vs IMS Caliper Comparison",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::ims-caliper",
+        "xapi-course::xapi-competitive-analysis"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-vs-scorm-2004-comparison",
+      "label": "xAPI vs SCORM 2004 Comparison",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::scorm-2004",
+        "xapi-course::xapi-competitive-analysis"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-vs-cmi5-comparison",
+      "label": "xAPI vs CMI5 Comparison",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::cmi5-profile",
+        "xapi-course::xapi-competitive-analysis",
+        "xapi-course::cmi5-vs-xapi-differences"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::proprietary-analytics-sdks",
+      "label": "Proprietary Analytics SDKs",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-competitive-analysis"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::vendor-lock-in-risk",
+      "label": "Vendor Lock-In Risk",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::proprietary-analytics-sdks",
+        "xapi-course::xapi-competitive-analysis"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::implementation-cost-analysis",
+      "label": "Implementation Cost Analysis",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-competitive-analysis"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::instrumentation-granularity",
+      "label": "Instrumentation Granularity",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-competitive-analysis"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::vendor-support-assessment",
+      "label": "Vendor Support Assessment",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-competitive-analysis"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::ferpa-compliance",
+      "label": "FERPA Compliance",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "PRIV",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::coppa-compliance",
+      "label": "COPPA Compliance",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "PRIV",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::gdpr-compliance",
+      "label": "GDPR Compliance",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "PRIV",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::pii-in-xapi-statements",
+      "label": "PII in xAPI Statements",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::agent-object",
+        "xapi-course::ferpa-compliance",
+        "xapi-course::coppa-compliance",
+        "xapi-course::gdpr-compliance"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::actor-pii-concerns",
+      "label": "Actor PII Concerns",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::agent-object",
+        "xapi-course::pii-in-xapi-statements"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::result-extension-pii",
+      "label": "Result Extension PII",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::extensions-xapi",
+        "xapi-course::pii-in-xapi-statements"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::context-extension-pii",
+      "label": "Context Extension PII",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::extensions-xapi",
+        "xapi-course::pii-in-xapi-statements"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::data-retention-policies",
+      "label": "Data Retention Policies",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::pii-in-xapi-statements"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::anonymization-strategies",
+      "label": "Anonymization Strategies",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::pii-in-xapi-statements",
+        "xapi-course::pseudonymization"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::data-minimization-principle",
+      "label": "Data Minimization Principle",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::pii-in-xapi-statements"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-privacy-controls",
+      "label": "LRS Privacy Controls",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-access-control",
+        "xapi-course::pii-in-xapi-statements"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::role-based-access-control-lrs",
+      "label": "Role-Based Access Control (LRS)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-access-control"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::javascript-xapi-client-library",
+      "label": "JavaScript xAPI Client Library",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::statement-construction",
+        "xapi-course::xapi-client-library-design"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-construction",
+      "label": "Statement Construction",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::xapi-statement-patterns",
+        "xapi-course::json-serialization"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::retry-with-backoff-pattern",
+      "label": "Retry-With-Backoff Pattern",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::javascript-xapi-client-library",
+        "xapi-course::xapi-error-handling"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::fetch-api-http",
+      "label": "Fetch API (HTTP)",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "IMPL",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::json-serialization",
+      "label": "JSON Serialization",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "IMPL",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::typescript-type-definitions",
+      "label": "TypeScript Type Definitions",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::json-serialization"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::mkdocs-intelligent-textbook",
+      "label": "MkDocs Intelligent Textbook",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::level-3-intelligent-textbook"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-client-library-design",
+      "label": "xAPI Client Library Design",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::statement-construction"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-vocabulary-profile-design",
+      "label": "xAPI Vocabulary Profile Design",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::custom-verb-profiles",
+        "xapi-course::verb-vocabulary-design"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::custom-activity-types",
+      "label": "Custom Activity Types",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-type",
+        "xapi-course::xapi-vocabulary-profile-design"
+      ],
+      "taxonomy_id": "ACTID",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::extension-namespace-design",
+      "label": "Extension Namespace Design",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::extensions-xapi",
+        "xapi-course::xapi-vocabulary-profile-design"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::cross-platform-analytics",
+      "label": "Cross-Platform Analytics",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-vocabulary-profile-design",
+        "xapi-course::verb-vocabulary-design"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-pipeline-architecture",
+      "label": "xAPI Pipeline Architecture",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-provider-ap",
+        "xapi-course::lrs-architecture",
+        "xapi-course::analytics-layer"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::activity-provider-integration",
+      "label": "Activity Provider Integration",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-provider-ap",
+        "xapi-course::xapi-pipeline-architecture"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::analytics-layer",
+      "label": "Analytics Layer",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::learning-analytics-overview"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::dashboard-layer",
+      "label": "Dashboard Layer",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::real-time-dashboard",
+        "xapi-course::analytics-layer"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::pipeline-failure-points",
+      "label": "Pipeline Failure Points",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-pipeline-architecture"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::pipeline-latency-analysis",
+      "label": "Pipeline Latency Analysis",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-pipeline-architecture"
+      ],
+      "taxonomy_id": "MON",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::client-side-xapi-emission",
+      "label": "Client-Side xAPI Emission",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-provider-ap",
+        "xapi-course::fetch-api-http"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::server-side-xapi-emission",
+      "label": "Server-Side xAPI Emission",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-provider-ap"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-authenticity",
+      "label": "Statement Authenticity",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::client-side-xapi-emission",
+        "xapi-course::server-side-xapi-emission",
+        "xapi-course::authority-field"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-debugging-techniques",
+      "label": "xAPI Debugging Techniques",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-payload-inspection",
+        "xapi-course::xapi-error-handling"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-error-handling",
+      "label": "xAPI Error Handling",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-statement-model",
+        "xapi-course::4xx-error-patterns-lrs",
+        "xapi-course::5xx-error-patterns-lrs"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::4xx-error-patterns-lrs",
+      "label": "4xx Error Patterns (LRS)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-server-log-analysis"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::5xx-error-patterns-lrs",
+      "label": "5xx Error Patterns (LRS)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-server-log-analysis"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::production-readiness-checklist",
+      "label": "Production Readiness Checklist",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-conformance-test-suite",
+        "xapi-course::xapi-implementation-review"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-implementation-review",
+      "label": "xAPI Implementation Review",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::adl-conformance-test-suite"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-security-best-practices",
+      "label": "xAPI Security Best Practices",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-authentication",
+        "xapi-course::https-for-xapi",
+        "xapi-course::token-based-authentication"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::https-for-xapi",
+      "label": "HTTPS for xAPI",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "PRIV",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::token-based-authentication",
+      "label": "Token-Based Authentication",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-authentication"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-version-negotiation",
+      "label": "xAPI Version Negotiation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-1-0-3-specification",
+        "xapi-course::statement-version-field"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::backwards-compatibility-xapi",
+      "label": "Backwards Compatibility (xAPI)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-1-0-3-specification",
+        "xapi-course::xapi-version-negotiation"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-profile-server",
+      "label": "xAPI Profile Server",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::custom-verb-profiles",
+        "xapi-course::xapi-vocabulary-profile-design"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::profile-validation",
+      "label": "Profile Validation",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-profile-server",
+        "xapi-course::xapi-validation"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::learning-analytics-overview",
+      "label": "Learning Analytics Overview",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::engagement-metrics",
+      "label": "Engagement Metrics",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::learning-analytics-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::completion-rate-analysis",
+      "label": "Completion Rate Analysis",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::result-completion",
+        "xapi-course::learning-analytics-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::struggle-pattern-detection",
+      "label": "Struggle Pattern Detection",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::attempted-verb",
+        "xapi-course::passed-verb",
+        "xapi-course::failed-verb",
+        "xapi-course::learning-analytics-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::instructional-design-feedback-loop",
+      "label": "Instructional Design Feedback Loop",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::learning-analytics-overview",
+        "xapi-course::engagement-metrics"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::k-12-privacy-regulations",
+      "label": "K-12 Privacy Regulations",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-in-k-12-education",
+        "xapi-course::ferpa-compliance",
+        "xapi-course::coppa-compliance"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::coppa-safe-harbor",
+      "label": "COPPA Safe Harbor",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::coppa-compliance"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::school-district-data-policy",
+      "label": "School District Data Policy",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::k-12-privacy-regulations",
+        "xapi-course::k-12-data-governance"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::university-data-governance",
+      "label": "University Data Governance",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-in-higher-education"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::corporate-l-d-analytics",
+      "label": "Corporate L&D Analytics",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-in-corporate-l-d",
+        "xapi-course::learning-analytics-overview"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-for-mobile-web",
+      "label": "xAPI for Mobile Web",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-standard-overview",
+        "xapi-course::responsive-web-xapi"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::responsive-web-xapi",
+      "label": "Responsive Web xAPI",
+      "subject_id": "xapi-course",
+      "dependencies": [],
+      "taxonomy_id": "IMPL",
+      "level": "foundational"
+    },
+    {
+      "id": "xapi-course::browser-compatibility-xapi",
+      "label": "Browser Compatibility (xAPI)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::xapi-for-mobile-web",
+        "xapi-course::responsive-web-xapi"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::polyfill-strategy",
+      "label": "Polyfill Strategy",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::browser-compatibility-xapi"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::service-worker-lifecycle",
+      "label": "Service Worker Lifecycle",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::service-worker"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::cache-first-strategy",
+      "label": "Cache-First Strategy",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::service-worker",
+        "xapi-course::service-worker-lifecycle"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::network-first-strategy",
+      "label": "Network-First Strategy",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::service-worker",
+        "xapi-course::service-worker-lifecycle"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-queue-flushing",
+      "label": "Statement Queue Flushing",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::offline-statement-queue",
+        "xapi-course::background-sync-api"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::connectivity-detection",
+      "label": "Connectivity Detection",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::offline-statement-queue"
+      ],
+      "taxonomy_id": "BAND",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::retry-logic-design",
+      "label": "Retry Logic Design",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::retry-with-backoff-pattern",
+        "xapi-course::statement-queue-flushing"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::lrs-endpoint-configuration",
+      "label": "LRS Endpoint Configuration",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::lrs-architecture",
+        "xapi-course::about-endpoint"
+      ],
+      "taxonomy_id": "LRSA",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::activity-provider-configuration",
+      "label": "Activity Provider Configuration",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::activity-provider-ap"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::statement-authority-configuration",
+      "label": "Statement Authority Configuration",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::authority-field"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::xapi-registration-field",
+      "label": "xAPI Registration Field",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::context-component",
+        "xapi-course::xapi-statement-model"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::revision-field-xapi",
+      "label": "Revision Field (xAPI)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::object-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    },
+    {
+      "id": "xapi-course::platform-field-xapi",
+      "label": "Platform Field (xAPI)",
+      "subject_id": "xapi-course",
+      "dependencies": [
+        "xapi-course::context-component"
+      ],
+      "taxonomy_id": "STMT",
+      "level": "core"
+    }
+  ]
+}

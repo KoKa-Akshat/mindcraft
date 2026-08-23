@@ -1,0 +1,2885 @@
+{
+  "subject_id": "digital-citizenship",
+  "title": "Digital Citizenship for Grade 5",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations of Digital Citizenship",
+      "color": "PeachPuff"
+    },
+    "BAL": {
+      "classifier_name": "Media Balance and Wellbeing",
+      "color": "Thistle"
+    },
+    "PRIV": {
+      "classifier_name": "Privacy and Security",
+      "color": "Honeydew"
+    },
+    "FOOT": {
+      "classifier_name": "Digital Footprint and Identity",
+      "color": "MistyRose"
+    },
+    "REL": {
+      "classifier_name": "Relationships and Communication",
+      "color": "LavenderBlush"
+    },
+    "CYB": {
+      "classifier_name": "Cyberbullying and Digital Drama",
+      "color": "LightYellow"
+    },
+    "MIS": {
+      "classifier_name": "Misinformation and News Literacy",
+      "color": "PaleTurquoise"
+    },
+    "CRIT": {
+      "classifier_name": "Critical Thinking",
+      "color": "SteelBlue"
+    },
+    "CAP": {
+      "classifier_name": "Capstone and Synthesis",
+      "color": "Lavender"
+    }
+  },
+  "concepts": [
+    {
+      "id": "digital-citizenship::digital-device",
+      "label": "Digital Device",
+      "subject_id": "digital-citizenship",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-citizenship::internet",
+      "label": "Internet",
+      "subject_id": "digital-citizenship",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-citizenship::web-browser",
+      "label": "Web Browser",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-device",
+        "digital-citizenship::internet"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::website",
+      "label": "Website",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::internet",
+        "digital-citizenship::web-browser"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::online-activity",
+      "label": "Online Activity",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-device",
+        "digital-citizenship::internet"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::online-community",
+      "label": "Online Community",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::internet",
+        "digital-citizenship::online-activity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-world",
+      "label": "Digital World",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::internet",
+        "digital-citizenship::online-community"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::trusted-adult",
+      "label": "Trusted Adult",
+      "subject_id": "digital-citizenship",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "digital-citizenship::school-device",
+      "label": "School Device",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::family-device",
+      "label": "Family Device",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-citizenship",
+      "label": "Digital Citizenship",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-community",
+        "digital-citizenship::digital-world"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-citizen",
+      "label": "Digital Citizen",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizenship"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-rights",
+      "label": "Digital Rights",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizen"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-responsibilities",
+      "label": "Digital Responsibilities",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizen"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-opportunities",
+      "label": "Digital Opportunities",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizen"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::pause-think-act",
+      "label": "Pause Think Act",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizen"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::safe-online-behavior",
+      "label": "Safe Online Behavior",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-responsibilities",
+        "digital-citizenship::pause-think-act"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::legal-online-behavior",
+      "label": "Legal Online Behavior",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-responsibilities"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::ethical-online-behavior",
+      "label": "Ethical Online Behavior",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-responsibilities"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::iste-standards",
+      "label": "ISTE Standards",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizenship"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-etiquette",
+      "label": "Digital Etiquette",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-community",
+        "digital-citizenship::digital-responsibilities"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-threshold",
+      "label": "Digital Threshold",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizen",
+        "digital-citizenship::online-activity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::screen-time",
+      "label": "Screen Time",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-activity",
+        "digital-citizenship::school-device"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::media-balance",
+      "label": "Media Balance",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::heart-activity",
+      "label": "Heart Activity",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::media-balance"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::brain-activity",
+      "label": "Brain Activity",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::media-balance"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::body-activity",
+      "label": "Body Activity",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::media-balance"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::activity-sorting",
+      "label": "Activity Sorting",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::heart-activity",
+        "digital-citizenship::brain-activity",
+        "digital-citizenship::body-activity"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::tired-eyes",
+      "label": "Tired Eyes",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::grumpy-mood",
+      "label": "Grumpy Mood",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::skipped-meal",
+      "label": "Skipped Meal",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::skipped-play",
+      "label": "Skipped Play",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::media-imbalance",
+      "label": "Media Imbalance",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::tired-eyes",
+        "digital-citizenship::grumpy-mood",
+        "digital-citizenship::skipped-meal",
+        "digital-citizenship::skipped-play"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::screen-break",
+      "label": "Screen Break",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::media-imbalance"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::outdoor-time",
+      "label": "Outdoor Time",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::body-activity",
+        "digital-citizenship::screen-break"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::sleep-habits",
+      "label": "Sleep Habits",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::media-imbalance"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::healthy-habits",
+      "label": "Healthy Habits",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::outdoor-time",
+        "digital-citizenship::sleep-habits"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::mindful-use",
+      "label": "Mindful Use",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::media-balance",
+        "digital-citizenship::pause-think-act"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-habit-tracker",
+      "label": "Digital Habit Tracker",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::activity-sorting",
+        "digital-citizenship::screen-break"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::daily-tech-log",
+      "label": "Daily Tech Log",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-habit-tracker"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::offline-activity",
+      "label": "Offline Activity",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::body-activity",
+        "digital-citizenship::screen-break"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::family-media-plan",
+      "label": "Family Media Plan",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::family-device",
+        "digital-citizenship::offline-activity"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::tech-free-zone",
+      "label": "Tech Free Zone",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::offline-activity",
+        "digital-citizenship::family-media-plan"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::wellbeing-check",
+      "label": "Wellbeing Check",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::media-imbalance",
+        "digital-citizenship::healthy-habits"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::personal-information",
+      "label": "Personal Information",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-activity"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::private-information",
+      "label": "Private Information",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::personal-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::full-name",
+      "label": "Full Name",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::home-address",
+      "label": "Home Address",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::school-name",
+      "label": "School Name",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::birthday",
+      "label": "Birthday",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::phone-number",
+      "label": "Phone Number",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::favorite-color",
+      "label": "Favorite Color",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::personal-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::hobby-information",
+      "label": "Hobby Information",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::personal-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::identifying-information",
+      "label": "Identifying Information",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::full-name",
+        "digital-citizenship::home-address",
+        "digital-citizenship::school-name",
+        "digital-citizenship::birthday",
+        "digital-citizenship::phone-number"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::password",
+      "label": "Password",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::website"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::strong-password",
+      "label": "Strong Password",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::password"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::passphrase",
+      "label": "Passphrase",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::strong-password"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::password-sharing",
+      "label": "Password Sharing",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::password",
+        "digital-citizenship::digital-responsibilities"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::sign-out-habit",
+      "label": "Sign Out Habit",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::password",
+        "digital-citizenship::safe-online-behavior"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::account-security",
+      "label": "Account Security",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::strong-password",
+        "digital-citizenship::sign-out-habit"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::two-factor-authentication",
+      "label": "Two Factor Authentication",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::account-security"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::data-tracking",
+      "label": "Data Tracking",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-activity",
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::cookies",
+      "label": "Cookies",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::website",
+        "digital-citizenship::data-tracking"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::targeted-ad",
+      "label": "Targeted Ad",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::data-tracking",
+        "digital-citizenship::cookies"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::clickbait",
+      "label": "Clickbait",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::website",
+        "digital-citizenship::targeted-ad"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::online-scam",
+      "label": "Online Scam",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::clickbait",
+        "digital-citizenship::legal-online-behavior"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::phishing-basics",
+      "label": "Phishing Basics",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-scam",
+        "digital-citizenship::password"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::sign-up-form",
+      "label": "Sign Up Form",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::website",
+        "digital-citizenship::private-information",
+        "digital-citizenship::personal-information"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::app-permission",
+      "label": "App Permission",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-activity",
+        "digital-citizenship::data-tracking"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-footprint",
+      "label": "Digital Footprint",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-activity",
+        "digital-citizenship::digital-threshold"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::permanent-post",
+      "label": "Permanent Post",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-footprint"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::searchable-post",
+      "label": "Searchable Post",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-footprint",
+        "digital-citizenship::website"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::copyable-content",
+      "label": "Copyable Content",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-footprint"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::shareable-content",
+      "label": "Shareable Content",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-footprint"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-trail",
+      "label": "Digital Trail",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-footprint",
+        "digital-citizenship::permanent-post"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::online-reputation",
+      "label": "Online Reputation",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-trail"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-identity",
+      "label": "Digital Identity",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-trail",
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::avatar",
+      "label": "Avatar",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-identity"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::username-choice",
+      "label": "Username Choice",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-identity"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::profile-picture",
+      "label": "Profile Picture",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-identity",
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::public-post",
+      "label": "Public Post",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::permanent-post",
+        "digital-citizenship::shareable-content"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::private-post",
+      "label": "Private Post",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::public-post",
+        "digital-citizenship::private-information"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::post-history",
+      "label": "Post History",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::permanent-post",
+        "digital-citizenship::digital-trail"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::future-audience",
+      "label": "Future Audience",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::permanent-post",
+        "digital-citizenship::online-reputation"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::positive-footprint",
+      "label": "Positive Footprint",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-reputation",
+        "digital-citizenship::future-audience"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::intellectual-property",
+      "label": "Intellectual Property",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::ethical-online-behavior",
+        "digital-citizenship::copyable-content"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::giving-credit",
+      "label": "Giving Credit",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::intellectual-property",
+        "digital-citizenship::ethical-online-behavior"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::citing-source",
+      "label": "Citing Source",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::giving-credit"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::copyright-basics",
+      "label": "Copyright Basics",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::intellectual-property"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::creative-work",
+      "label": "Creative Work",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::copyright-basics"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::footprint-audit",
+      "label": "Footprint Audit",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-trail",
+        "digital-citizenship::positive-footprint"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::online-friend",
+      "label": "Online Friend",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-community",
+        "digital-citizenship::online-activity"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::in-person-friend",
+      "label": "In Person Friend",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-friend"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::online-only-friend",
+      "label": "Online Only Friend",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-friend",
+        "digital-citizenship::in-person-friend"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::stranger-online",
+      "label": "Stranger Online",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-community",
+        "digital-citizenship::online-only-friend"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::tone-in-text",
+      "label": "Tone In Text",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-activity"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::emoji-meaning",
+      "label": "Emoji Meaning",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::tone-in-text"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::text-misunderstanding",
+      "label": "Text Misunderstanding",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::tone-in-text",
+        "digital-citizenship::emoji-meaning"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::group-chat",
+      "label": "Group Chat",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-friend"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::direct-message",
+      "label": "Direct Message",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-friend",
+        "digital-citizenship::private-post"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::video-chat",
+      "label": "Video Chat",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-friend",
+        "digital-citizenship::online-activity"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::voice-chat",
+      "label": "Voice Chat",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-friend",
+        "digital-citizenship::online-activity"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::safe-talk-rule",
+      "label": "Safe Talk Rule",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::trusted-adult",
+        "digital-citizenship::stranger-online"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::warning-sign",
+      "label": "Warning Sign",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::stranger-online",
+        "digital-citizenship::safe-talk-rule"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::stop-conversation",
+      "label": "Stop Conversation",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::safe-talk-rule",
+        "digital-citizenship::warning-sign"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::tell-adult",
+      "label": "Tell Adult",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::trusted-adult",
+        "digital-citizenship::stop-conversation"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::block-feature",
+      "label": "Block Feature",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::stranger-online"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::report-feature",
+      "label": "Report Feature",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::block-feature",
+        "digital-citizenship::digital-responsibilities"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::mute-feature",
+      "label": "Mute Feature",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::block-feature"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::polite-reply",
+      "label": "Polite Reply",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::tone-in-text",
+        "digital-citizenship::digital-etiquette"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::respectful-tone",
+      "label": "Respectful Tone",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::polite-reply",
+        "digital-citizenship::digital-etiquette"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::boundary-setting",
+      "label": "Boundary Setting",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::safe-talk-rule",
+        "digital-citizenship::respectful-tone"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::friend-request",
+      "label": "Friend Request",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-friend",
+        "digital-citizenship::stranger-online"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::online-conflict",
+      "label": "Online Conflict",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-friend",
+        "digital-citizenship::text-misunderstanding"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::cyberbullying",
+      "label": "Cyberbullying",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-conflict",
+        "digital-citizenship::safe-online-behavior"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-drama",
+      "label": "Digital Drama",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-conflict"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::hate-speech",
+      "label": "Hate Speech",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::legal-online-behavior",
+        "digital-citizenship::cyberbullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::mean-comment",
+      "label": "Mean Comment",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-drama"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::online-target",
+      "label": "Online Target",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::cyberbullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::bystander",
+      "label": "Bystander",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::cyberbullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::upstander",
+      "label": "Upstander",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::bystander"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::bully-role",
+      "label": "Bully Role",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::cyberbullying",
+        "digital-citizenship::online-target"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::emotional-impact",
+      "label": "Emotional Impact",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::cyberbullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::hurt-feelings",
+      "label": "Hurt Feelings",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::emotional-impact"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::anger-online",
+      "label": "Anger Online",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::emotional-impact",
+        "digital-citizenship::online-conflict"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::empathy-online",
+      "label": "Empathy Online",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::hurt-feelings",
+        "digital-citizenship::respectful-tone"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::kind-reply",
+      "label": "Kind Reply",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::polite-reply",
+        "digital-citizenship::empathy-online"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::reporting-bullying",
+      "label": "Reporting Bullying",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::cyberbullying",
+        "digital-citizenship::report-feature"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::saving-evidence",
+      "label": "Saving Evidence",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::permanent-post",
+        "digital-citizenship::reporting-bullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::adult-help",
+      "label": "Adult Help",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::trusted-adult",
+        "digital-citizenship::reporting-bullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::conflict-vs-bullying",
+      "label": "Conflict Vs Bullying",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-conflict",
+        "digital-citizenship::cyberbullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::repeated-harm",
+      "label": "Repeated Harm",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::cyberbullying",
+        "digital-citizenship::conflict-vs-bullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::power-imbalance",
+      "label": "Power Imbalance",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::cyberbullying",
+        "digital-citizenship::conflict-vs-bullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::group-pile-on",
+      "label": "Group Pile On",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-drama",
+        "digital-citizenship::mean-comment"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::standing-up-safely",
+      "label": "Standing Up Safely",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::upstander",
+        "digital-citizenship::adult-help"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::information-source",
+      "label": "Information Source",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::website",
+        "digital-citizenship::personal-information"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::news-story",
+      "label": "News Story",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::website",
+        "digital-citizenship::information-source"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::news-literacy",
+      "label": "News Literacy",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story",
+        "digital-citizenship::information-source"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::fact",
+      "label": "Fact",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::opinion",
+      "label": "Opinion",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::misinformation",
+      "label": "Misinformation",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-literacy",
+        "digital-citizenship::fact"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::disinformation",
+      "label": "Disinformation",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::misinformation"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::rumor",
+      "label": "Rumor",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::misinformation"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::hoax",
+      "label": "Hoax",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::disinformation"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::viral-post",
+      "label": "Viral Post",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::shareable-content",
+        "digital-citizenship::misinformation"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::shocking-headline",
+      "label": "Shocking Headline",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::clickbait",
+        "digital-citizenship::news-story"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::emotional-hook",
+      "label": "Emotional Hook",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::clickbait",
+        "digital-citizenship::emotional-impact"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::urgency-cue",
+      "label": "Urgency Cue",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::clickbait"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::curiosity-gap",
+      "label": "Curiosity Gap",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::clickbait"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::fact-check",
+      "label": "Fact Check",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-literacy",
+        "digital-citizenship::misinformation"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::fact-check-steps",
+      "label": "Fact Check Steps",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::fact-check"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::trusted-source",
+      "label": "Trusted Source",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::information-source",
+        "digital-citizenship::fact-check"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::source-comparison",
+      "label": "Source Comparison",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::trusted-source",
+        "digital-citizenship::fact-check"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::date-check",
+      "label": "Date Check",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story",
+        "digital-citizenship::fact-check"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::author-check",
+      "label": "Author Check",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story",
+        "digital-citizenship::fact-check"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::edited-image",
+      "label": "Edited Image",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::disinformation",
+        "digital-citizenship::viral-post"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::slow-down-habit",
+      "label": "Slow Down Habit",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::pause-think-act",
+        "digital-citizenship::emotional-hook",
+        "digital-citizenship::urgency-cue"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::pause-think-act",
+        "digital-citizenship::fact-check"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::curious-mind",
+      "label": "Curious Mind",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::asking-questions",
+      "label": "Asking Questions",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::curious-mind"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::who-said-it",
+      "label": "Who Said It",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::asking-questions",
+        "digital-citizenship::author-check"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::how-they-know",
+      "label": "How They Know",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::asking-questions",
+        "digital-citizenship::author-check"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::what-evidence",
+      "label": "What Evidence",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::asking-questions"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::what-is-missing",
+      "label": "What Is Missing",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::asking-questions"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::evidence",
+      "label": "Evidence",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::what-evidence",
+        "digital-citizenship::fact"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::claim",
+      "label": "Claim",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story",
+        "digital-citizenship::fact"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::reason",
+      "label": "Reason",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::evidence",
+        "digital-citizenship::claim"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::logical-reason",
+      "label": "Logical Reason",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::reason"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::jumping-to-conclusion",
+      "label": "Jumping To Conclusion",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::claim"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::confirming-sources",
+      "label": "Confirming Sources",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::source-comparison",
+        "digital-citizenship::who-said-it"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::comparing-versions",
+      "label": "Comparing Versions",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::source-comparison"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::spotting-bias",
+      "label": "Spotting Bias",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::opinion",
+        "digital-citizenship::author-check"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::checking-feelings",
+      "label": "Checking Feelings",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::emotional-hook"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::pause-before-share",
+      "label": "Pause Before Share",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::pause-think-act",
+        "digital-citizenship::slow-down-habit",
+        "digital-citizenship::critical-thinking"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::asking-for-help",
+      "label": "Asking For Help",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::trusted-adult",
+        "digital-citizenship::critical-thinking"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::healthy-doubt",
+      "label": "Healthy Doubt",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::jumping-to-conclusion"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::open-mindedness",
+      "label": "Open Mindedness",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::healthy-doubt"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::changing-mind",
+      "label": "Changing Mind",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::healthy-doubt",
+        "digital-citizenship::open-mindedness"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::reflective-thinking",
+      "label": "Reflective Thinking",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::open-mindedness"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::digital-citizenship-toolkit",
+      "label": "Digital Citizenship Toolkit",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizenship",
+        "digital-citizenship::critical-thinking"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::personal-pledge",
+      "label": "Personal Pledge",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-citizen",
+        "digital-citizenship::digital-responsibilities"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::habit-tracker-project",
+      "label": "Habit Tracker Project",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-habit-tracker",
+        "digital-citizenship::wellbeing-check"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::upstander-script",
+      "label": "Upstander Script",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::upstander",
+        "digital-citizenship::standing-up-safely"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::fact-check-card",
+      "label": "Fact Check Card",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::fact-check",
+        "digital-citizenship::fact-check-steps"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::critical-thinker-toolkit",
+      "label": "Critical Thinker Toolkit",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::asking-questions"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::antibullying-poster",
+      "label": "Antibullying Poster",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::cyberbullying",
+        "digital-citizenship::upstander"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::mini-lesson",
+      "label": "Mini Lesson",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::fact-check-card",
+        "digital-citizenship::critical-thinker-toolkit"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::public-service-message",
+      "label": "Public Service Message",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::clickbait",
+        "digital-citizenship::mini-lesson"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::family-tech-plan",
+      "label": "Family Tech Plan",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::family-media-plan",
+        "digital-citizenship::personal-pledge"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::buddy-class-sharing",
+      "label": "Buddy Class Sharing",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::mini-lesson",
+        "digital-citizenship::public-service-message"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::classroom-pledge",
+      "label": "Classroom Pledge",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::personal-pledge",
+        "digital-citizenship::digital-citizenship"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::footprint-plan",
+      "label": "Footprint Plan",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::positive-footprint",
+        "digital-citizenship::footprint-audit"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::password-plan",
+      "label": "Password Plan",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::strong-password",
+        "digital-citizenship::account-security"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::safe-talk-plan",
+      "label": "Safe Talk Plan",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::safe-talk-rule",
+        "digital-citizenship::tell-adult"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::media-balance-plan",
+      "label": "Media Balance Plan",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::media-balance",
+        "digital-citizenship::wellbeing-check"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::screen-time-goal",
+      "label": "Screen Time Goal",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time",
+        "digital-citizenship::media-balance-plan"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::reflection-journal",
+      "label": "Reflection Journal",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::reflective-thinking",
+        "digital-citizenship::personal-pledge"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::knowledge-sharing",
+      "label": "Knowledge Sharing",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::buddy-class-sharing",
+        "digital-citizenship::mini-lesson"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::continuous-improvement",
+      "label": "Continuous Improvement",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::reflective-thinking",
+        "digital-citizenship::reflection-journal"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::lifelong-learner",
+      "label": "Lifelong Learner",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::reflective-thinking",
+        "digital-citizenship::continuous-improvement"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::app",
+      "label": "App",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-device",
+        "digital-citizenship::online-activity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::account",
+      "label": "Account",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-activity",
+        "digital-citizenship::app"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::login",
+      "label": "Login",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::account",
+        "digital-citizenship::password"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::search-engine",
+      "label": "Search Engine",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::internet",
+        "digital-citizenship::web-browser"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::url",
+      "label": "URL",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::website"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::address-bar",
+      "label": "Address Bar",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::web-browser",
+        "digital-citizenship::url"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::wifi",
+      "label": "Wifi",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::internet"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::public-wifi",
+      "label": "Public Wifi",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::wifi"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::tablet",
+      "label": "Tablet",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::laptop",
+      "label": "Laptop",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::smartphone",
+      "label": "Smartphone",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::notification",
+      "label": "Notification",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::app",
+        "digital-citizenship::smartphone"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::fomo",
+      "label": "FOMO",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::notification",
+        "digital-citizenship::emotional-impact"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::eye-strain",
+      "label": "Eye Strain",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time",
+        "digital-citizenship::tired-eyes"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::active-vs-passive-use",
+      "label": "Active Vs Passive Use",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::heart-activity",
+        "digital-citizenship::brain-activity",
+        "digital-citizenship::body-activity"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::app-time-limit",
+      "label": "App Time Limit",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::app",
+        "digital-citizenship::screen-break"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::blue-light",
+      "label": "Blue Light",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time",
+        "digital-citizenship::sleep-habits"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::posture",
+      "label": "Posture",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time",
+        "digital-citizenship::body-activity"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::doomscrolling",
+      "label": "Doomscrolling",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time",
+        "digital-citizenship::media-imbalance"
+      ],
+      "taxonomy_id": "BAL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::https",
+      "label": "HTTPS",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::website",
+        "digital-citizenship::url"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::padlock-icon",
+      "label": "Padlock Icon",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::https"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::location-sharing",
+      "label": "Location Sharing",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::private-information",
+        "digital-citizenship::app"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::gps",
+      "label": "GPS",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::smartphone",
+        "digital-citizenship::location-sharing"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::screen-lock",
+      "label": "Screen Lock",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::account-security",
+        "digital-citizenship::smartphone"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::biometric-login",
+      "label": "Biometric Login",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-lock"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::incognito-mode",
+      "label": "Incognito Mode",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::web-browser",
+        "digital-citizenship::data-tracking"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::email-privacy",
+      "label": "Email Privacy",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::private-information",
+        "digital-citizenship::password"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::screenshot",
+      "label": "Screenshot",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::permanent-post",
+        "digital-citizenship::copyable-content"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::photo-tagging",
+      "label": "Photo Tagging",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::profile-picture",
+        "digital-citizenship::shareable-content"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::geotag",
+      "label": "Geotag",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::location-sharing",
+        "digital-citizenship::photo-tagging"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::plagiarism",
+      "label": "Plagiarism",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::giving-credit",
+        "digital-citizenship::citing-source"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::creative-commons",
+      "label": "Creative Commons",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::copyright-basics",
+        "digital-citizenship::creative-work"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::personal-brand",
+      "label": "Personal Brand",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::online-reputation",
+        "digital-citizenship::positive-footprint"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::college-audience",
+      "label": "College Audience",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::future-audience",
+        "digital-citizenship::positive-footprint"
+      ],
+      "taxonomy_id": "FOOT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::netiquette",
+      "label": "Netiquette",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-etiquette",
+        "digital-citizenship::respectful-tone"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::all-caps",
+      "label": "All Caps",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::tone-in-text",
+        "digital-citizenship::polite-reply"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::read-receipt",
+      "label": "Read Receipt",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::direct-message"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::ghosting",
+      "label": "Ghosting",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::direct-message",
+        "digital-citizenship::emotional-impact"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::stranger-danger",
+      "label": "Stranger Danger",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::stranger-online",
+        "digital-citizenship::safe-talk-rule"
+      ],
+      "taxonomy_id": "REL",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::trolling",
+      "label": "Trolling",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-drama",
+        "digital-citizenship::mean-comment"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::exclusion",
+      "label": "Exclusion",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::group-chat",
+        "digital-citizenship::cyberbullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::impersonation",
+      "label": "Impersonation",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-identity",
+        "digital-citizenship::cyberbullying"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::de-escalation",
+      "label": "De-escalation",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::pause-think-act",
+        "digital-citizenship::anger-online"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::repair-harm",
+      "label": "Repair Harm",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::empathy-online",
+        "digital-citizenship::de-escalation"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::apology-online",
+      "label": "Apology Online",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::tone-in-text",
+        "digital-citizenship::repair-harm"
+      ],
+      "taxonomy_id": "CYB",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::satire",
+      "label": "Satire",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story",
+        "digital-citizenship::opinion"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::parody",
+      "label": "Parody",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::satire"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::out-of-context",
+      "label": "Out Of Context",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story",
+        "digital-citizenship::misinformation"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::lateral-reading",
+      "label": "Lateral Reading",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::fact-check",
+        "digital-citizenship::source-comparison"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::headline-vs-article",
+      "label": "Headline Vs Article",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::news-story",
+        "digital-citizenship::shocking-headline"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::algorithm-amplification",
+      "label": "Algorithm Amplification",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::viral-post",
+        "digital-citizenship::data-tracking"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::recommendation-feed",
+      "label": "Recommendation Feed",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::algorithm-amplification",
+        "digital-citizenship::targeted-ad"
+      ],
+      "taxonomy_id": "MIS",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::critical-thinking",
+        "digital-citizenship::healthy-doubt"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::cause-vs-correlation",
+      "label": "Cause Vs Correlation",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::evidence",
+        "digital-citizenship::reason"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::counter-argument",
+      "label": "Counter Argument",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::claim",
+        "digital-citizenship::reason"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::premise",
+      "label": "Premise",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::claim",
+        "digital-citizenship::reason"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::conclusion",
+      "label": "Conclusion",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::premise",
+        "digital-citizenship::reason"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::inference",
+      "label": "Inference",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::evidence",
+        "digital-citizenship::conclusion"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::generalization",
+      "label": "Generalization",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::inference",
+        "digital-citizenship::jumping-to-conclusion"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::stereotype",
+      "label": "Stereotype",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::generalization",
+        "digital-citizenship::spotting-bias"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::anecdote-vs-evidence",
+      "label": "Anecdote Vs Evidence",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::evidence",
+        "digital-citizenship::generalization"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::peer-teaching",
+      "label": "Peer Teaching",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::mini-lesson",
+        "digital-citizenship::buddy-class-sharing"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::self-assessment",
+      "label": "Self Assessment",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::reflective-thinking",
+        "digital-citizenship::reflection-journal"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::goal-setting",
+      "label": "Goal Setting",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::screen-time-goal",
+        "digital-citizenship::self-assessment"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "digital-citizenship::habit-formation",
+      "label": "Habit Formation",
+      "subject_id": "digital-citizenship",
+      "dependencies": [
+        "digital-citizenship::digital-habit-tracker",
+        "digital-citizenship::goal-setting"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    }
+  ]
+}
