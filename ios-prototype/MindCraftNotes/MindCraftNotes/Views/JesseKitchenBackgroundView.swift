@@ -403,6 +403,12 @@ extension Notification.Name {
     static let mcKitchenReady = Notification.Name("mcKitchenReady")
     /// Work-area Manage button → hub page (tutors map + workflow market).
     static let mcOpenHubFromDesk = Notification.Name("mcOpenHubFromDesk")
+    /// Work Dashboard's own Settings dock chip → real Settings directly
+    /// (2026-08-23, real bug fix: the chip was routed through
+    /// mcOpenHubFromDesk, so "Settings" opened the hub page instead -
+    /// AccountManageView is only reachable from a second gear icon
+    /// inside the hub, one level deeper than a student would expect).
+    static let mcOpenSettingsFromDesk = Notification.Name("mcOpenSettingsFromDesk")
 }
 
 /// Breaks WKWebView ↔ coordinator retain cycles that crash on Field Desk reopen.

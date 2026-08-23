@@ -2941,22 +2941,49 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// Opens one of your own real generated book graphs - local data, no
-    /// network round trip, so this is instant unlike `openArchiveBook`.
+    /// Opens one of your own real generated book graphs. Real bug fix
+    /// (2026-08-23): this used to build the lesson from concept LABELS
+    /// only, with chapterBodies always empty - StudySessionView then had
+    /// nothing to show but its own "ask Jesse to build a sim" empty
+    /// state, even for subjects that already have real assembled content
+    /// sitting in Firestore. Now tries the real thing first
+    /// (BookLibraryClient.getBook, same call + section-mapping
+    /// JesseCallSession.syncWorkDashboardLesson already uses correctly),
+    /// falling back to the old concept-graph-only lesson only for
+    /// subjects that genuinely haven't been assembled yet - not a
+    /// regression, since that's exactly what rendered before.
     private func openBundledBook(_ book: BookConceptGraph) {
-        let chapters = Array(book.concepts.prefix(12).map(\.label))
-        let lesson = WorkDashboardLesson(
+        let fallbackChapters = Array(book.concepts.prefix(12).map(\.label))
+        let fallbackLesson = WorkDashboardLesson(
             topic: book.title,
             source: .archive(bookTitle: book.title),
-            chapters: chapters,
+            chapters: fallbackChapters,
             chapterBodies: [],
             definition: "From your archive: \(book.title).",
             question: nil,
             microsims: MicroSimLoader.matching(topic: book.title),
             citations: []
         )
-        archiveSummaryLesson = lesson
-        viewingBook = GeneratedBook(lesson: lesson)
+        archiveSummaryLesson = fallbackLesson
+        viewingBook = GeneratedBook(lesson: fallbackLesson)
+
+        Task {
+            guard let assembled = try? await BookLibraryClient.getBook(subjectId: book.subjectId) else { return }
+            let sections = assembled.chapters.flatMap(\.sections)
+            guard !sections.isEmpty else { return }
+            let lesson = WorkDashboardLesson(
+                topic: assembled.title,
+                source: .archive(bookTitle: assembled.title),
+                chapters: sections.map(\.title),
+                chapterBodies: sections.map { $0.summary.isEmpty ? $0.body : $0.summary },
+                definition: assembled.title,
+                question: nil,
+                microsims: MicroSimLoader.matching(topic: book.title),
+                citations: []
+            )
+            archiveSummaryLesson = lesson
+            viewingBook = GeneratedBook(lesson: lesson)
+        }
     }
 
     /// Opens a book from Dan's wider archive - a real network round trip
@@ -3499,22 +3526,17 @@ struct DeskGridDashboardView: View {
     /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
     /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
-        // No capsule/pill container anymore (2026-08-23, live feedback:
-        // "remove the toolbar" - the app goes full-screen with no visible
-        // toolbar chrome; the items sit straight on the page). Same
-        // actions as before, regrouped into three clusters instead of one
-        // wide row:
-        //   bottom-LEFT  - Friends + Settings, a small quiet icon pair
-        //   bottom-CENTER - Jesse ("put Jesse at the center"): the raccoon
-        //                  itself, opening the same JesseRailView sheet
-        //                  the Answer module box opens (`showJesseRail`) -
-        //                  on this screen that sheet IS Jesse's presence,
-        //                  so its entry point is what gets the center seat
-        //   bottom-RIGHT - Binder / Map / Calendar chips + the
-        //                  ask-anything field, all functioning exactly as
-        //                  before (repositioning only, no rewiring).
+        // Trimmed further (2026-08-23, explicit ask: "it's okay to remove
+        // binder map and calendar because you can kind of see it in the
+        // cache" - the workspace already shows current work directly, so
+        // those 3 shortcuts were redundant). Two clusters left:
+        //   bottom-LEFT  - Friends + Settings, unchanged
+        //   bottom-CENTER - Jesse: now the one "take me back" anchor (see
+        //                  jesseDockCenter's own doc comment)
+        // The ask-anything field moved to bottom-right on its own, no
+        // longer sharing the row with the removed chips.
         // ZStack, not one HStack with Spacers: Jesse stays truly screen-
-        // centered regardless of how the two side clusters' widths differ.
+        // centered regardless of the side cluster's width.
         ZStack {
             jesseDockCenter
             HStack(spacing: 8) {
@@ -3525,19 +3547,10 @@ struct DeskGridDashboardView: View {
                 }
                 binderUtilityIcon("gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
                 Spacer(minLength: 0)
-                dockChip("Binder", system: "book.closed.fill", identifier: "deskGridDock_Binder") { closeBinderContentViewer() }
-                dockChip("Map", system: "map.fill", identifier: "deskGridDock_Map") {
-                    closeBinderContentViewer()
-                    viewingKnowledgeGraphInBinder = true
-                    Task { await knowledgeGraphClient.load() }
-                }
-                dockChip("Calendar", system: "calendar", identifier: "deskGridDock_Calendar", action: onOpenCalendar)
-                // "Ask anything" folded into this existing field (2026-08-22,
-                // explicit ask) - `submitSearch` already does real keyword
-                // routing + a full agent takeover for anything longer.
-                // Fixed width now that the row has no capsule bounding it:
-                // an unbounded field would stretch across the screen center
-                // and sit on top of Jesse.
+                // "Ask anything" (2026-08-22, explicit ask) - `submitSearch`
+                // already does real keyword routing + a full agent takeover
+                // for anything longer. Fixed width so it can't stretch
+                // across the screen center and sit on top of Jesse.
                 searchField(placeholder: "Ask anything…", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
                     .frame(width: 240)
             }
@@ -3561,11 +3574,19 @@ struct DeskGridDashboardView: View {
     /// Jesse's bottom-center seat (2026-08-23, explicit ask: "put Jesse at
     /// the center"). The raccoon is `JesseRailView.raccoonImage` - the
     /// exact static image the search field's content-viewer icon and the
-    /// Jesse rail itself already use, not a new asset - and the action is
-    /// the same `showJesseRail = true` the Answer module box fires, since
-    /// that sheet is Jesse's actual presence on this screen.
+    /// Jesse rail itself already use, not a new asset. Action updated the
+    /// same day per a second explicit ask - see the button's own doc
+    /// comment below for why it's a "home" tap now, not chat.
     private var jesseDockCenter: some View {
-        Button { showJesseRail = true } label: {
+        // 2026-08-23, explicit ask: with Binder/Map/Calendar gone from the
+        // dock, Jesse's icon becomes the one "take me back" anchor - the
+        // workspace itself already shows current work directly ("you can
+        // kind of see it in the cache"), so this returns to that plain
+        // landing state instead of opening the chat sheet. Talking to
+        // Jesse is being redesigned into its own merged Learn/Practice
+        // surface (separate, scoped effort) - this icon is home, not chat,
+        // until that lands.
+        Button { closeBinderContentViewer() } label: {
             VStack(spacing: 2) {
                 JesseRailView.raccoonImage
                     .resizable()

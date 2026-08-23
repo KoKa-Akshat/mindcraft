@@ -146,6 +146,28 @@ struct DeskShellView: View {
                 showHubPage = true
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .mcOpenSettingsFromDesk)) { _ in
+            // Real bug fix (2026-08-23): the dashboard's Settings chip used
+            // to post .mcOpenHubFromDesk, landing on the hub page with no
+            // further action - a second, differently-scoped gear icon
+            // inside the hub was the only way to actually reach
+            // AccountManageView. showManage's own .sheet is declared on
+            // the hub's fullScreenCover content (SwiftUI won't attach a
+            // .sheet from outside a not-yet-presented cover), so both
+            // flags are set together here - the hub mounts and the real
+            // Settings sheet rises on top of it immediately, same shape as
+            // the .mcOpenHubFromDesk handler's own cover-conflict guard.
+            if fieldDeskRoute != nil {
+                fieldDeskRoute = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                    showHubPage = true
+                    showManage = true
+                }
+            } else {
+                showHubPage = true
+                showManage = true
+            }
+        }
         .fullScreenCover(isPresented: $showHubPage) {
             // No floating "Done" pill anymore - the header's own Back
             // button (deskHubBackButton) does the same thing, and having

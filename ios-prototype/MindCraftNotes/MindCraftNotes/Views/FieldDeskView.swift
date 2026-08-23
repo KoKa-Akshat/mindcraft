@@ -817,7 +817,12 @@ struct FieldDeskView: View {
                         onSyncCalendar: { Task { await refreshDeskCalendar() } },
                         onOpenLearnStudio: { showLearnStudio = true },
                         onOpenArchive: { showArchiveWorkflow = true },
-                        onOpenManage: { openManageFromChrome() },
+                        // Real bug fix (2026-08-23): was openManageFromChrome(),
+                        // which posts .mcOpenHubFromDesk - the hub page, not
+                        // real Settings. AccountManageView needs a direct path
+                        // from the dashboard, see .mcOpenSettingsFromDesk's own
+                        // doc comment.
+                        onOpenManage: { NotificationCenter.default.post(name: .mcOpenSettingsFromDesk, object: nil) },
                         studentName: deskChromeName ?? "there"
                     )
                     .id(dashboardStartRail)
