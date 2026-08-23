@@ -5,7 +5,8 @@ import Security
 /// Student's optional bring-your-own AI key for homework help.
 /// The **raw key lives only in the Keychain** — never Firestore, UserDefaults,
 /// or logs. The only hosts this type will send the key to are the provider's
-/// own REST APIs (`api.groq.com`, `api.anthropic.com`).
+/// own REST APIs (`api.groq.com`, `api.anthropic.com`,
+/// `generativelanguage.googleapis.com`).
 @MainActor
 final class StudentAIKeyStore: ObservableObject {
     static let shared = StudentAIKeyStore()
@@ -13,6 +14,14 @@ final class StudentAIKeyStore: ObservableObject {
     enum Provider: String, CaseIterable, Identifiable {
         case groq
         case anthropic
+        /// Google's Gemini API (2026-08-23) - the provider behind the new
+        /// student onboarding flow (`GeminiOnboardingView`): Google offers
+        /// Gemini free to students, so this is the key a brand-new student
+        /// is guided to create. Same BYOK shape as the other two - a plain
+        /// REST API key sent only to Google's own host, never MindCraft's
+        /// backend - the only mechanical difference is that Google takes
+        /// the key as a `?key=` query parameter instead of an auth header.
+        case gemini
 
         var id: String { rawValue }
 
@@ -20,6 +29,7 @@ final class StudentAIKeyStore: ObservableObject {
             switch self {
             case .groq: return "Groq"
             case .anthropic: return "Anthropic"
+            case .gemini: return "Gemini"
             }
         }
 
@@ -27,6 +37,7 @@ final class StudentAIKeyStore: ObservableObject {
             switch self {
             case .groq: return "api.groq.com"
             case .anthropic: return "api.anthropic.com"
+            case .gemini: return "generativelanguage.googleapis.com"
             }
         }
     }
@@ -223,6 +234,8 @@ final class StudentAIKeyStore: ObservableObject {
                 result = await groqChat(key: cred.key, system: system, user: user)
             case .anthropic:
                 result = await anthropicMessage(key: cred.key, system: system, user: user)
+            case .gemini:
+                result = await geminiGenerateContent(key: cred.key, system: system, user: user)
             }
             if case .success = result { return result }
             if case .failure(let err) = result { lastFailure = err }
@@ -278,14 +291,59 @@ final class StudentAIKeyStore: ObservableObject {
         }
     }
 
+    /// Mirrors `groqChat`/`anthropicMessage` exactly - same request/decode
+    /// shape, same never-log-the-key rule. Google's REST API authenticates
+    /// with the raw key as a `?key=` query parameter (not a bearer header),
+    /// so the key rides in the URL - built via URLComponents so it gets
+    /// percent-encoded, and the host is still pinned to the provider's own
+    /// domain before anything is sent.
+    private func geminiGenerateContent(key: String, system: String, user: String) async -> Result<String, SolveError> {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = Provider.gemini.host
+        components.path = "/v1beta/models/gemini-2.5-flash:generateContent"
+        components.queryItems = [URLQueryItem(name: "key", value: key)]
+        guard let url = components.url, url.host == Provider.gemini.host
+        else { return .failure(.unavailable) }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try? JSONSerialization.data(withJSONObject: [
+            "system_instruction": ["parts": [["text": system]]],
+            "contents": [
+                ["role": "user", "parts": [["text": user]]],
+            ],
+            "generationConfig": [
+                "temperature": 0.2,
+                "maxOutputTokens": 1024,
+                // Gemini 2.5 models spend maxOutputTokens on hidden
+                // "thinking" first by default - with a 1024 budget that can
+                // consume the whole allowance and return zero visible text.
+                // Same intent as groqChat's `reasoning_effort: "low"`.
+                "thinkingConfig": ["thinkingBudget": 0],
+            ],
+        ])
+        // Google rejects a bad/malformed API key with 400 INVALID_ARGUMENT,
+        // not 401 - without this flag a wrong pasted key would read as
+        // "could not reach the provider" instead of "key rejected".
+        return await decodeProviderText(request: request, badRequestMeansRejected: true) { json in
+            let candidates = json["candidates"] as? [[String: Any]]
+            let content = candidates?.first?["content"] as? [String: Any]
+            let parts = content?["parts"] as? [[String: Any]]
+            return parts?.compactMap { $0["text"] as? String }.joined()
+        }
+    }
+
     private func decodeProviderText(
         request: URLRequest,
+        badRequestMeansRejected: Bool = false,
         extract: ([String: Any]) -> String?
     ) async -> Result<String, SolveError> {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let http = response as? HTTPURLResponse else { return .failure(.unavailable) }
-            if http.statusCode == 401 || http.statusCode == 403 {
+            if http.statusCode == 401 || http.statusCode == 403
+                || (badRequestMeansRejected && http.statusCode == 400) {
                 return .failure(.rejected)
             }
             guard (200...299).contains(http.statusCode),
