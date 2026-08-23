@@ -317,9 +317,10 @@ struct DeskGridDashboardView: View {
     /// why (the explicit "it does not speak" ask).
     @State private var showCreateBook = false
 
-    // Persistent "Ask anything" bar on the binder's plain landing (2026-08-22).
-    @State private var binderAskDraft = ""
-    @FocusState private var binderAskFocused: Bool
+    /// Friends, embedded in the binder's content-viewer (2026-08-22, same
+    /// mechanism as Archive/Design/Resume/Reports) - reached from the
+    /// bottom dock's "Friends" chip, see `workDock`.
+    @State private var viewingFriends = false
 
     /// True whenever Binder should be showing ANY of the merged-space
     /// content modes above rather than its own normal titles/blurb - the
@@ -330,7 +331,7 @@ struct DeskGridDashboardView: View {
     /// a new mode is exactly the kind of bug this centralizes away).
     private var binderContentViewerActive: Bool {
         viewingUpload != nil || viewingBook != nil || viewingKnowledgeGraphInBinder || viewingArchiveBrowser
-            || viewingDesignStudio || viewingResumeAgent || viewingSessionReports
+            || viewingDesignStudio || viewingResumeAgent || viewingSessionReports || viewingFriends
     }
 
     private func closeBinderContentViewer() {
@@ -341,6 +342,7 @@ struct DeskGridDashboardView: View {
         viewingDesignStudio = false
         viewingResumeAgent = false
         viewingSessionReports = false
+        viewingFriends = false
         archiveSummaryLesson = nil
         archiveSearchQuery = ""
         archiveSearchResults = []
@@ -1675,70 +1677,8 @@ struct DeskGridDashboardView: View {
             content()
                 .padding(.horizontal, 32)
                 .padding(.vertical, 24)
-                .safeAreaInset(edge: .bottom) { binderAskBar }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    /// Persistent "Ask anything" Jesse bar (2026-08-22, explicit ask: "the
-    /// Jesse input... always attached to what is open"). Feeds
-    /// `JesseCallSession.submitTextTurn(_:)` under the same `workDashboard`
-    /// context the dashboard's own greeting already uses, landing in the
-    /// SAME transcript `JesseRailView` renders - "Jesse stays with you"
-    /// whether typed here or opened via the Answer chip. Scoped to the
-    /// binder's plain landing state for this pass (where `binderBookFrame`
-    /// is actually used) - the other content-viewer states (Archive/
-    /// Design/Resume/...) have their own chrome and aren't wrapped here.
-    private var binderAskBar: some View {
-        // A written line on the page, not a floating search control
-        // (2026-08-22, explicit ask: "blend these into the page's
-        // background seamlessly, you shouldn't read like a UI") - no
-        // capsule, no card, no shadow. A thin ink underline (the same
-        // sketch-line language the reference spec asked for), lime only
-        // where the cursor actually is.
-        let ink = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
-        let lime = Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)
-        return HStack(spacing: 10) {
-            Image(systemName: "sparkle")
-                .font(.system(size: 13))
-                .foregroundColor(ink.opacity(binderAskFocused ? 0.75 : 0.35))
-            TextField("Ask anything…", text: $binderAskDraft)
-                .textFieldStyle(.plain)
-                .font(.system(size: 15, weight: .medium, design: .rounded))
-                .foregroundColor(ink)
-                .focused($binderAskFocused)
-                .onSubmit(submitBinderAsk)
-            Button(action: submitBinderAsk) {
-                Image(systemName: "arrow.up")
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(binderAskDraft.isEmpty ? ink.opacity(0.25) : Color(gridHex: "faf6ea"))
-                    .frame(width: 26, height: 26)
-                    .background(Circle().fill(binderAskDraft.isEmpty ? Color.clear : ink))
-            }
-            .buttonStyle(.plain)
-            .disabled(binderAskDraft.isEmpty)
-            .accessibilityIdentifier("deskGridBinderAskSubmit")
-        }
-        .padding(.vertical, 10)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .fill(binderAskFocused ? lime.opacity(0.8) : ink.opacity(0.12))
-                .frame(height: binderAskFocused ? 2 : 1)
-        }
-        .padding(.top, 12)
-        .animation(.easeOut(duration: 0.18), value: binderAskFocused)
-        .accessibilityElement(children: .contain)
-        .overlay(alignment: .topLeading) {
-            Text(verbatim: "askbar").font(.system(size: 1)).foregroundColor(.clear)
-                .accessibilityIdentifier("deskGridBinderAskBar")
-                .allowsHitTesting(false)
-        }
-    }
-
-    private func submitBinderAsk() {
-        let text = binderAskDraft
-        binderAskDraft = ""
-        jesseCall.submitTextTurn(text)
     }
 
     /// Gold binder-ring column - a real HStack sibling between the graph
@@ -1810,6 +1750,9 @@ struct DeskGridDashboardView: View {
         }
         if viewingSessionReports {
             return AnyView(tileInnerCard { SessionReportsView(onClose: closeBinderContentViewer) })
+        }
+        if viewingFriends {
+            return AnyView(tileInnerCard { FriendsView() })
         }
         return nil
     }
@@ -2302,8 +2245,50 @@ struct DeskGridDashboardView: View {
         AnyView(binderLandingBodyContent(ink: ink))
     }
 
+    /// Left workspace (~68%) / gutter dots / right module boxes (2026-08-22,
+    /// explicit ask from the hand sketch + written spec: "Left 65-70%: one
+    /// dominant workspace... Right 30-35%: modular boxes... small progress
+    /// dots between the workspace and the modules." The workspace's own
+    /// content (Knowledge Map, Archive, Chapter Library grid) is exactly
+    /// what was already here - this pass adds the missing right column and
+    /// gutter, it doesn't touch how the workspace itself works. A local
+    /// GeometryReader only proportions these two columns within whatever
+    /// frame the binder already has - it does not feed the root board-scale
+    /// GeometryReader (`WorkArtboard`'s `scale = min(w/1440,h/810)`), so it
+    /// can't reproduce the keyboard-driven shrink bug that fix addressed.
     @ViewBuilder
     private func binderLandingBodyContent(ink: Color) -> some View {
+        GeometryReader { geo in
+            HStack(alignment: .top, spacing: 16) {
+                binderWorkspaceColumn(ink: ink)
+                    .frame(width: geo.size.width * 0.68)
+
+                binderProgressGutter
+
+                moduleBoxColumn(ink: ink)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .overlay(alignment: .bottomTrailing) { binderUtilityRow }
+        .task {
+            // Plain .task, not .task(id:) - keying it to libraryBooksLoaded
+            // and then setting that same flag true INSIDE this task self-
+            // cancels the in-flight fetch the instant the id changes
+            // (confirmed live: the grid silently came back empty). Refresh
+            // after creating a new book is instead a direct, explicit
+            // re-fetch in `onFiled` below, not this task re-running.
+            guard !libraryBooksLoaded else { return }
+            libraryBooksLoaded = true
+            libraryBooks = (try? await BookLibraryClient.listBooks()) ?? []
+        }
+    }
+
+    /// The workspace itself - Knowledge Map, Archive, and the Chapter
+    /// Library grid, unchanged from before this pass. This is "one
+    /// dominant workspace showing the student's current idea, lesson,
+    /// project, or knowledge map" - the left 68% column.
+    @ViewBuilder
+    private func binderWorkspaceColumn(ink: Color) -> some View {
         HStack(alignment: .top, spacing: 18) {
             VStack(spacing: 10) {
                 Button {
@@ -2354,18 +2339,74 @@ struct DeskGridDashboardView: View {
 
             topicTileGrid(ink: ink)
         }
-        .overlay(alignment: .bottomTrailing) { binderUtilityRow }
-        .task {
-            // Plain .task, not .task(id:) - keying it to libraryBooksLoaded
-            // and then setting that same flag true INSIDE this task self-
-            // cancels the in-flight fetch the instant the id changes
-            // (confirmed live: the grid silently came back empty). Refresh
-            // after creating a new book is instead a direct, explicit
-            // re-fetch in `onFiled` below, not this task re-running.
-            guard !libraryBooksLoaded else { return }
-            libraryBooksLoaded = true
-            libraryBooks = (try? await BookLibraryClient.listBooks()) ?? []
+    }
+
+    /// Real progress dots in the gutter between the workspace and the
+    /// module boxes (2026-08-22, explicit ask - and an explicit correction
+    /// after the gold `binderRingSpine` circles were mistaken for this:
+    /// those are decorative binding rings inside the workspace column, this
+    /// is a separate, distinct element in the gutter between the two
+    /// columns). Filled count is real, not decorative filler: how many of
+    /// the loaded Chapter Library books have any recorded progress at all.
+    private var binderProgressGutter: some View {
+        let lime = Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)
+        let ink = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
+        let filled = min(libraryBooks.filter { $0.coveredConcepts > 0 }.count, 5)
+        return VStack(spacing: 10) {
+            ForEach(0..<5, id: \.self) { index in
+                Circle()
+                    .fill(index < filled ? lime : ink.opacity(0.15))
+                    .frame(width: 6, height: 6)
+            }
         }
+        .padding(.top, 6)
+        .accessibilityIdentifier("deskGridBinderProgressGutter")
+    }
+
+    /// Learn / Practice / Create / Answer as real, visible boxes in the
+    /// right column (2026-08-22, explicit correction: these were wrongly
+    /// built as bottom-dock chips - "i told you to display the learn and
+    /// the boxes i had made and the practice and other boxes would move
+    /// onto the screen"). Tapping one transforms the workspace column via
+    /// the same `viewingXxx`/`closeBinderContentViewer` mechanism already
+    /// used throughout this file, per the spec's own principle: "clicking
+    /// Learn, Practice, Create, or Answer transforms that same area
+    /// instead of navigating the student into disconnected pages."
+    @ViewBuilder
+    private func moduleBoxColumn(ink: Color) -> some View {
+        VStack(spacing: 12) {
+            moduleBox("Learn", system: "book.closed.fill", identifier: "deskGridModule_Learn", ink: ink) {
+                closeBinderContentViewer()
+            }
+            moduleBox("Practice", system: "waveform.and.mic", identifier: "deskGridModule_Practice", ink: ink) {
+                openSidebarFlow(.englishPractice)
+            }
+            moduleBox("Create", system: "wand.and.stars", identifier: "deskGridModule_Create", ink: ink) {
+                showCreateBook = true
+            }
+            moduleBox("Answer", system: "bubble.left.and.bubble.right.fill", identifier: "deskGridModule_Answer", ink: ink) {
+                showJesseRail = true
+            }
+        }
+    }
+
+    private func moduleBox(_ title: String, system: String, identifier: String, ink: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 10) {
+                Image(systemName: system)
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundColor(ink)
+                Text(title)
+                    .font(.mcContent(size: 16, weight: .semibold))
+                    .foregroundColor(ink)
+                Spacer(minLength: 0)
+            }
+            .padding(14)
+            .frame(maxWidth: .infinity, minHeight: 84, alignment: .topLeading)
+            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color.white))
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(identifier)
     }
 
     /// Real Chapter Library books as tappable tiles, matching the
@@ -3378,39 +3419,33 @@ struct DeskGridDashboardView: View {
     /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
     /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
-        // Reframed as exactly Learn / Practice / Create / Answer
-        // (2026-08-22, explicit ask from a hand sketch + written spec: "the
-        // large left area is not merely a dashboard preview - it is the
-        // live Binder. Clicking Learn, Practice, Create, or Answer
-        // transforms that same area"). Archive, Design, Reports, Resume,
-        // and Settings stay INSIDE the binder itself (Archive under the
-        // Knowledge Map card, the rest in the compact utility row - see
-        // binderLandingBody / binderUtilityRow), not on this dock.
+        // A genuinely different bottom dock from the four module boxes
+        // (2026-08-22, explicit correction: Learn/Practice/Create/Answer
+        // belong in the workspace's right column, not here - see
+        // `moduleBoxColumn`). This dock is Binder / Map / Calendar /
+        // Friends / Settings, per the spec's own "a separate, minimal
+        // bottom dock for Binder, Map, Calendar, Friends, and Settings."
         HStack(spacing: 8) {
-            // Learn (2026-08-22, real fourth module - not the earlier
-            // "dashboard IS learn" removal, this is a deliberate, symmetric
-            // re-add alongside Practice/Create/Answer): returns the binder
-            // to its plain landing (book tiles + Knowledge Map preview),
-            // matching "Learn - books, lessons, knowledge paths" and the
-            // spec's own principle that the binder's default state already
-            // IS the learning surface, not a separate destination.
-            dockChip("Learn", system: "book.closed.fill", identifier: "deskGridDock_Learn") { closeBinderContentViewer() }
-            // English speaking/writing practice (2026-08-19) - a live Jesse
-            // conversation.
-            dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridDock_Practice") { openSidebarFlow(.englishPractice) }
-            // Create - "ask it to create simulations and guide your own
-            // learning": opens the real topic-in, lessons-out generation
-            // flow (CreateBookView), not DesignStudioView's general
-            // authoring canvas (that lives in the binder's utility row -
-            // see deskGridBinderUtility_Design).
-            dockChip("Create", system: "wand.and.stars", identifier: "deskGridDock_Create") { showCreateBook = true }
-            // Answer (2026-08-22, renamed from "Discuss") - "Answer -
-            // Jesse, mentors, feedback." Same destination as before
-            // (JesseRailView's chat/call card). Dock-only, appears on tap -
-            // Jesse stays quiet and out of the way on landing instead of
-            // always on screen.
-            dockChip("Answer", system: "bubble.left.and.bubble.right.fill", identifier: "deskGridDock_Answer") { showJesseRail = true }
-            searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
+            dockChip("Binder", system: "book.closed.fill", identifier: "deskGridDock_Binder") { closeBinderContentViewer() }
+            dockChip("Map", system: "map.fill", identifier: "deskGridDock_Map") {
+                closeBinderContentViewer()
+                viewingKnowledgeGraphInBinder = true
+                Task { await knowledgeGraphClient.load() }
+            }
+            dockChip("Calendar", system: "calendar", identifier: "deskGridDock_Calendar", action: onOpenCalendar)
+            dockChip("Friends", system: "person.2.fill", identifier: "deskGridDock_Friends") {
+                jesseCall.end()
+                closeBinderContentViewer()
+                viewingFriends = true
+            }
+            dockChip("Settings", system: "gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
+            // "Ask anything" folded into this existing field (2026-08-22,
+            // explicit ask: "ask anything can be done in the search bar
+            // under so no need to put it there") instead of the separate
+            // bar this dock used to also carry - `submitSearch` already
+            // does real keyword routing + a full agent takeover for
+            // anything longer, which IS ask-anything, not a stub.
+            searchField(placeholder: "Ask anything…", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)

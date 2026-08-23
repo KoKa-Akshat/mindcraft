@@ -678,21 +678,6 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
     }
 
-    /// Typed counterpart to `finishListeningTurn()` (2026-08-22) - the new
-    /// persistent "Ask anything" bar at the bottom of the Work Dashboard's
-    /// binder feeds into this instead of voice, landing in the SAME
-    /// `turns` transcript `JesseRailView` already renders - "Jesse stays
-    /// with you" whether the student typed here or opened the rail.
-    func submitTextTurn(_ text: String) {
-        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return }
-        if !isActive {
-            begin(context: "workDashboard")
-        }
-        turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "student", text: trimmed, at: Date()))
-        Task { await askJesse(trimmed) }
-    }
-
     private func finishListeningTurn() {
         let text = liveTranscript.trimmingCharacters(in: .whitespacesAndNewlines)
         stopListening()

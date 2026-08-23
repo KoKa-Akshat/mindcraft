@@ -2654,4 +2654,5 @@ final class MindCraftNotesUITests: XCTestCase {
 
         XCTAssertTrue(app.descendants(matching: .any)["Recents"].waitForExistence(timeout: 8), "expected the system document picker's Recents tab to appear")
     }
+
 }
