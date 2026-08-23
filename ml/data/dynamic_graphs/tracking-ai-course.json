@@ -1,0 +1,2948 @@
+{
+  "subject_id": "tracking-ai-course",
+  "title": "Learning Graph for Tracking AI Course",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "found": {
+      "classifier_name": "Foundational Concepts",
+      "color": "red"
+    },
+    "hist": {
+      "classifier_name": "AI Evolution and History",
+      "color": "orange"
+    },
+    "arch": {
+      "classifier_name": "AI Architectures and Technologies",
+      "color": "gold"
+    },
+    "cap": {
+      "classifier_name": "AI Capabilities and Applications",
+      "color": "green"
+    },
+    "knowledge": {
+      "classifier_name": "Content Generation and Creativity",
+      "color": "blue"
+    },
+    "image": {
+      "classifier_name": "Image Generation",
+      "color": "deepskyblue"
+    },
+    "language": {
+      "classifier_name": "Language Generation",
+      "color": "royalblue"
+    },
+    "know-mgmt": {
+      "classifier_name": "Knowledge Management and Organization",
+      "color": "indigo"
+    },
+    "edu": {
+      "classifier_name": "Educational Transformation",
+      "color": "violet"
+    },
+    "org": {
+      "classifier_name": "Organizational Strategy",
+      "color": "brown"
+    },
+    "bench": {
+      "classifier_name": "Performance Evaluation and Benchmarking",
+      "color": "gray"
+    },
+    "reg": {
+      "classifier_name": "Ethical and Regulatory Considerations",
+      "color": "black"
+    },
+    "best-practices": {
+      "classifier_name": "Best Practices",
+      "color": "olive"
+    },
+    "future": {
+      "classifier_name": "Future Trends and Projections",
+      "color": "teal"
+    },
+    "impl": {
+      "classifier_name": "Implementation",
+      "color": "slategray"
+    },
+    "goal": {
+      "classifier_name": "Final Goals",
+      "color": "gold"
+    }
+  },
+  "concepts": [
+    {
+      "id": "tracking-ai-course::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "tracking-ai-course::exponential-growth",
+      "label": "Exponential Growth",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-organizations",
+      "label": "Knowledge Organizations",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [],
+      "taxonomy_id": "know-mgmt",
+      "level": "foundational"
+    },
+    {
+      "id": "tracking-ai-course::large-language-models",
+      "label": "Large Language Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::large-language-models"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::strategic-implications",
+      "label": "Strategic Implications",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::exponential-growth",
+        "tracking-ai-course::knowledge-organizations"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-benchmarks",
+      "label": "AI Benchmarks",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::large-language-models"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-management",
+      "label": "Knowledge Management",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::content-generation",
+      "label": "Content Generation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::generative-ai"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-timelines",
+      "label": "AI Timelines",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::exponential-growth"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::dartmouth-conference",
+      "label": "Dartmouth Conference",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-history",
+      "label": "AI History",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::dartmouth-conference"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::deep-learning",
+      "label": "Deep Learning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::machine-learning"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::neural-networks",
+      "label": "Neural Networks",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::machine-learning",
+        "tracking-ai-course::deep-learning"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::natural-language-processing",
+      "label": "Natural Language Processing",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::machine-learning"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::expert-systems",
+      "label": "Expert Systems",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::ai-history"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-revolution",
+      "label": "AI Revolution",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::exponential-growth",
+        "tracking-ai-course::ai-timelines",
+        "tracking-ai-course::ai-history"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::generative-ai"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-capability-trajectories",
+      "label": "AI Capability Trajectories",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::exponential-growth",
+        "tracking-ai-course::ai-benchmarks",
+        "tracking-ai-course::ai-timelines"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::eliza",
+      "label": "ELIZA",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-history",
+        "tracking-ai-course::natural-language-processing"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::transformer-architecture",
+      "label": "Transformer Architecture",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::deep-learning",
+        "tracking-ai-course::neural-networks",
+        "tracking-ai-course::natural-language-processing"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::gpt-models",
+      "label": "GPT Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::deep-learning",
+        "tracking-ai-course::transformer-architecture"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::bert",
+      "label": "BERT",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::deep-learning",
+        "tracking-ai-course::transformer-architecture"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::llama-models",
+      "label": "Llama Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::deep-learning",
+        "tracking-ai-course::transformer-architecture"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::claude-models",
+      "label": "Claude Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::deep-learning",
+        "tracking-ai-course::transformer-architecture"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::deepseek-models",
+      "label": "DeepSeek Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::deep-learning",
+        "tracking-ai-course::transformer-architecture"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::alphago",
+      "label": "AlphaGo",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-history",
+        "tracking-ai-course::deep-learning"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::deep-blue",
+      "label": "Deep Blue",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-history"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::watson",
+      "label": "Watson",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-history",
+        "tracking-ai-course::natural-language-processing"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::gans",
+      "label": "GANs",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::deep-learning",
+        "tracking-ai-course::neural-networks"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::diffusion-models",
+      "label": "Diffusion Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::deep-learning",
+        "tracking-ai-course::neural-networks",
+        "tracking-ai-course::gans"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::text-generation",
+      "label": "Text Generation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::natural-language-processing"
+      ],
+      "taxonomy_id": "language",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::image-generation",
+      "label": "Image Generation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::gans",
+        "tracking-ai-course::diffusion-models"
+      ],
+      "taxonomy_id": "image",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::text-to-image-models",
+      "label": "Text-to-Image Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::text-generation",
+        "tracking-ai-course::image-generation"
+      ],
+      "taxonomy_id": "image",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::dall-e",
+      "label": "DALL-E",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::image-generation",
+        "tracking-ai-course::text-to-image-models"
+      ],
+      "taxonomy_id": "image",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::midjourney",
+      "label": "Midjourney",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::image-generation",
+        "tracking-ai-course::text-to-image-models"
+      ],
+      "taxonomy_id": "image",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::stable-diffusion",
+      "label": "Stable Diffusion",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::diffusion-models",
+        "tracking-ai-course::image-generation",
+        "tracking-ai-course::text-to-image-models"
+      ],
+      "taxonomy_id": "image",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::democratization-of-ai",
+      "label": "Democratization of AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::exponential-growth"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-accessibility",
+      "label": "AI Accessibility",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::democratization-of-ai"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::open-source-ai",
+      "label": "Open Source AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::llama-models",
+        "tracking-ai-course::democratization-of-ai"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::proprietary-ai",
+      "label": "Proprietary AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::gpt-models",
+        "tracking-ai-course::bert",
+        "tracking-ai-course::claude-models"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-cost-trends",
+      "label": "AI Cost Trends",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::exponential-growth",
+        "tracking-ai-course::democratization-of-ai",
+        "tracking-ai-course::ai-accessibility"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::local-ai-models",
+      "label": "Local AI Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::open-source-ai"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::cloud-based-ai",
+      "label": "Cloud-Based AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::proprietary-ai"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-adoption-curve",
+      "label": "AI Adoption Curve",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::exponential-growth",
+        "tracking-ai-course::democratization-of-ai",
+        "tracking-ai-course::ai-accessibility"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::disruption-theory",
+      "label": "Disruption Theory",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::exponential-growth",
+        "tracking-ai-course::strategic-implications"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::public-knowledge",
+      "label": "Public Knowledge",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations",
+        "tracking-ai-course::knowledge-management"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::private-knowledge",
+      "label": "Private Knowledge",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations",
+        "tracking-ai-course::knowledge-management"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-integration",
+      "label": "Knowledge Integration",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::public-knowledge",
+        "tracking-ai-course::private-knowledge"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-scope",
+      "label": "Knowledge Scope",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::knowledge-integration"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::personal-knowledge",
+      "label": "Personal Knowledge",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::private-knowledge",
+        "tracking-ai-course::knowledge-scope"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::organizational-knowledge",
+      "label": "Organizational Knowledge",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations",
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::private-knowledge",
+        "tracking-ai-course::knowledge-scope"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::departmental-knowledge",
+      "label": "Departmental Knowledge",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::private-knowledge",
+        "tracking-ai-course::knowledge-scope",
+        "tracking-ai-course::organizational-knowledge"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::project-knowledge",
+      "label": "Project Knowledge",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::private-knowledge",
+        "tracking-ai-course::knowledge-scope",
+        "tracking-ai-course::organizational-knowledge"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-protection",
+      "label": "Knowledge Protection",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::private-knowledge",
+        "tracking-ai-course::knowledge-scope"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::privacy-regulations",
+      "label": "Privacy Regulations",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-protection"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ferpa",
+      "label": "FERPA",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-protection",
+        "tracking-ai-course::privacy-regulations"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::hyperpersonalized-learning",
+      "label": "Hyperpersonalized Learning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::ai-accessibility"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::curriculum-development",
+      "label": "Curriculum Development",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::hyperpersonalized-learning"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-assisted-teaching",
+      "label": "AI-Assisted Teaching",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::curriculum-development"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::assessment-challenges",
+      "label": "Assessment Challenges",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::curriculum-development",
+        "tracking-ai-course::ai-assisted-teaching"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::academic-integrity",
+      "label": "Academic Integrity",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::assessment-challenges"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::research-integrity",
+      "label": "Research Integrity",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::academic-integrity"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::content-authenticity",
+      "label": "Content Authenticity",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::text-generation"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::future-skills-development",
+      "label": "Future Skills Development",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-revolution",
+        "tracking-ai-course::curriculum-development"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-literacy",
+      "label": "AI Literacy",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::ai-accessibility",
+        "tracking-ai-course::future-skills-development"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-worker-productivity",
+      "label": "Knowledge Worker Productivity",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::knowledge-integration"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::business-process-analysis",
+      "label": "Business Process Analysis",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::knowledge-worker-productivity"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::customer-engagement-transformation",
+      "label": "Customer Engagement Transformation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::business-process-analysis"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::product-development-acceleration",
+      "label": "Product Development Acceleration",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::business-process-analysis"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::competitive-advantage",
+      "label": "Competitive Advantage",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::disruption-theory",
+        "tracking-ai-course::business-process-analysis",
+        "tracking-ai-course::customer-engagement-transformation",
+        "tracking-ai-course::product-development-acceleration"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::strategic-response-planning",
+      "label": "Strategic Response Planning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::competitive-advantage"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::impact-assessment",
+      "label": "Impact Assessment",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::ai-revolution",
+        "tracking-ai-course::strategic-response-planning"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::llm-limitations",
+      "label": "LLM Limitations",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::ai-benchmarks",
+        "tracking-ai-course::context-window"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::world-models",
+      "label": "World Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::llm-limitations"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::hallucination-ai",
+      "label": "Hallucination (AI)",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::llm-limitations"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::factual-reliability",
+      "label": "Factual Reliability",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::hallucination-ai"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ethical-considerations",
+      "label": "Ethical Considerations",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::hallucination-ai",
+        "tracking-ai-course::factual-reliability"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::responsible-ai",
+      "label": "Responsible AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::ethical-considerations"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-governance",
+      "label": "AI Governance",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ethical-considerations",
+        "tracking-ai-course::responsible-ai"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-center-of-excellence",
+      "label": "AI Center of Excellence",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-governance"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::organizational-structure",
+      "label": "Organizational Structure",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations",
+        "tracking-ai-course::ai-center-of-excellence"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::centralized-control-models",
+      "label": "Centralized Control Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-governance",
+        "tracking-ai-course::organizational-structure"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::decentralized-control-models",
+      "label": "Decentralized Control Models",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-governance",
+        "tracking-ai-course::organizational-structure"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::implementation-roadmapping",
+      "label": "Implementation Roadmapping",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-response-planning",
+        "tracking-ai-course::ai-center-of-excellence"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::change-management",
+      "label": "Change Management",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-response-planning",
+        "tracking-ai-course::implementation-roadmapping"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::reasoning-capabilities",
+      "label": "Reasoning Capabilities",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::llm-limitations",
+        "tracking-ai-course::world-models"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::one-shot-learning",
+      "label": "One-Shot Learning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::reasoning-capabilities"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::few-shot-learning",
+      "label": "Few-Shot Learning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::reasoning-capabilities",
+        "tracking-ai-course::one-shot-learning"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::zero-shot-learning",
+      "label": "Zero-Shot Learning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::reasoning-capabilities",
+        "tracking-ai-course::one-shot-learning"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::chain-of-thought-reasoning",
+      "label": "Chain-of-Thought Reasoning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::reasoning-capabilities"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::context-window",
+      "label": "Context Window",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::tokens",
+      "label": "Tokens",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::context-window"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::token-limits",
+      "label": "Token Limits",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::context-window",
+        "tracking-ai-course::tokens"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-agents",
+      "label": "AI Agents",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::generative-ai"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::multi-agent-systems",
+      "label": "Multi-Agent Systems",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-agents"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::autonomous-systems",
+      "label": "Autonomous Systems",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-agents",
+        "tracking-ai-course::multi-agent-systems"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-benchmarking",
+      "label": "AI Benchmarking",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-benchmarks"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::imagenet",
+      "label": "ImageNet",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-benchmarks",
+        "tracking-ai-course::image-generation",
+        "tracking-ai-course::ai-benchmarking"
+      ],
+      "taxonomy_id": "image",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::mmlu-benchmark",
+      "label": "MMLU Benchmark",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-benchmarks",
+        "tracking-ai-course::natural-language-processing",
+        "tracking-ai-course::ai-benchmarking"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::humaneval-benchmark",
+      "label": "HumanEval Benchmark",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-benchmarks",
+        "tracking-ai-course::ai-benchmarking"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::question-answering",
+      "label": "Question Answering",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::natural-language-processing"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::response-accuracy",
+      "label": "Response Accuracy",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-benchmarks",
+        "tracking-ai-course::question-answering"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::response-speed",
+      "label": "Response Speed",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::context-window",
+        "tracking-ai-course::tokens"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::model-size",
+      "label": "Model Size",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::neural-networks"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::parameter-count",
+      "label": "Parameter Count",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::neural-networks",
+        "tracking-ai-course::model-size"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::training-data-volume",
+      "label": "Training Data Volume",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::machine-learning",
+        "tracking-ai-course::neural-networks"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::fine-tuning",
+      "label": "Fine-Tuning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::machine-learning",
+        "tracking-ai-course::deep-learning"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::prompt-templates",
+      "label": "Prompt Templates",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::prompt-engineering"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::system-prompts",
+      "label": "System Prompts",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::prompt-engineering",
+        "tracking-ai-course::prompt-templates"
+      ],
+      "taxonomy_id": "arch",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-safety",
+      "label": "AI Safety",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::ethical-considerations",
+        "tracking-ai-course::responsible-ai"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::bias-detection",
+      "label": "Bias Detection",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ethical-considerations",
+        "tracking-ai-course::ai-safety"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::model-alignment",
+      "label": "Model Alignment",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ethical-considerations",
+        "tracking-ai-course::ai-safety",
+        "tracking-ai-course::bias-detection"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-ethics-framework",
+      "label": "AI Ethics Framework",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ethical-considerations",
+        "tracking-ai-course::responsible-ai",
+        "tracking-ai-course::ai-safety"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::fairness-metrics",
+      "label": "Fairness Metrics",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::bias-detection",
+        "tracking-ai-course::ai-ethics-framework"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-transparency",
+      "label": "AI Transparency",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-safety",
+        "tracking-ai-course::ai-ethics-framework"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::explainable-ai",
+      "label": "Explainable AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-transparency"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::educational-technology",
+      "label": "Educational Technology",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations",
+        "tracking-ai-course::hyperpersonalized-learning"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-personalization",
+      "label": "AI Personalization",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::educational-technology"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::adaptive-learning",
+      "label": "Adaptive Learning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::educational-technology",
+        "tracking-ai-course::ai-personalization"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::content-recommendation",
+      "label": "Content Recommendation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::ai-personalization"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-graphs",
+      "label": "Knowledge Graphs",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::knowledge-integration"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::educational-ai-applications",
+      "label": "Educational AI Applications",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::educational-technology"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-generated-lesson-plans",
+      "label": "AI-Generated Lesson Plans",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::curriculum-development",
+        "tracking-ai-course::ai-assisted-teaching",
+        "tracking-ai-course::educational-technology"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-generated-assessments",
+      "label": "AI-Generated Assessments",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::assessment-challenges",
+        "tracking-ai-course::educational-technology"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::microsims",
+      "label": "MicroSims",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::educational-technology",
+        "tracking-ai-course::educational-ai-applications"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::artificial-general-intelligence",
+      "label": "Artificial General Intelligence",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::ai-revolution",
+        "tracking-ai-course::ai-capability-trajectories"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::agi-timeline-predictions",
+      "label": "AGI Timeline Predictions",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-timelines",
+        "tracking-ai-course::artificial-general-intelligence"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::agi-capabilities",
+      "label": "AGI Capabilities",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-general-intelligence"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::human-level-ai",
+      "label": "Human-Level AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-general-intelligence",
+        "tracking-ai-course::agi-capabilities"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::superhuman-ai",
+      "label": "Superhuman AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-general-intelligence",
+        "tracking-ai-course::agi-capabilities",
+        "tracking-ai-course::human-level-ai"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::narrow-ai",
+      "label": "Narrow AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::artificial-general-intelligence"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::task-specific-ai",
+      "label": "Task-Specific AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::narrow-ai"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::domain-specific-knowledge",
+      "label": "Domain-Specific Knowledge",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::private-knowledge",
+        "tracking-ai-course::knowledge-scope"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::code-generation",
+      "label": "Code Generation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::content-generation"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::automated-programming",
+      "label": "Automated Programming",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::code-generation"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::coding-assistants",
+      "label": "Coding Assistants",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::code-generation",
+        "tracking-ai-course::automated-programming"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::vibe-coding",
+      "label": "Vibe Coding",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::code-generation",
+        "tracking-ai-course::coding-assistants"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::code-explanation",
+      "label": "Code Explanation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::code-generation",
+        "tracking-ai-course::coding-assistants"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::prototype-development",
+      "label": "Prototype Development",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::automated-programming",
+        "tracking-ai-course::coding-assistants"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::business-intelligence",
+      "label": "Business Intelligence",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations",
+        "tracking-ai-course::knowledge-worker-productivity",
+        "tracking-ai-course::business-process-analysis"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::data-analysis-automation",
+      "label": "Data Analysis Automation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::business-intelligence"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::report-generation",
+      "label": "Report Generation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::business-intelligence",
+        "tracking-ai-course::data-analysis-automation"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::content-summarization",
+      "label": "Content Summarization",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::text-generation"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::information-extraction",
+      "label": "Information Extraction",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::content-summarization"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::digital-transformation",
+      "label": "Digital Transformation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::ai-revolution",
+        "tracking-ai-course::democratization-of-ai",
+        "tracking-ai-course::business-process-analysis"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::academic-publishing",
+      "label": "Academic Publishing",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::research-integrity"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::plagiarism-detection",
+      "label": "Plagiarism Detection",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::academic-integrity",
+        "tracking-ai-course::content-authenticity",
+        "tracking-ai-course::content-summarization"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::citation-analysis",
+      "label": "Citation Analysis",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::academic-publishing",
+        "tracking-ai-course::plagiarism-detection"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::content-moderation",
+      "label": "Content Moderation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-authenticity",
+        "tracking-ai-course::ai-safety"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-enhanced-research",
+      "label": "AI-Enhanced Research",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::research-integrity",
+        "tracking-ai-course::information-extraction"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::scientific-discovery",
+      "label": "Scientific Discovery",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-enhanced-research"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::copyright-implications",
+      "label": "Copyright Implications",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-authenticity",
+        "tracking-ai-course::content-moderation"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::intellectual-property",
+      "label": "Intellectual Property",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-authenticity",
+        "tracking-ai-course::copyright-implications"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::content-ownership",
+      "label": "Content Ownership",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-authenticity",
+        "tracking-ai-course::intellectual-property"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-generated-content-rights",
+      "label": "AI-Generated Content Rights",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::intellectual-property",
+        "tracking-ai-course::content-ownership"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::educational-rights",
+      "label": "Educational Rights",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::privacy-regulations",
+        "tracking-ai-course::ferpa"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::student-data-protection",
+      "label": "Student Data Protection",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::privacy-regulations",
+        "tracking-ai-course::ferpa",
+        "tracking-ai-course::educational-rights"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::teacher-augmentation",
+      "label": "Teacher Augmentation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::ai-assisted-teaching",
+        "tracking-ai-course::educational-technology"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::administrative-automation",
+      "label": "Administrative Automation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::business-process-analysis"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::resource-allocation",
+      "label": "Resource Allocation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::administrative-automation"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::decision-support-systems",
+      "label": "Decision Support Systems",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::business-intelligence",
+        "tracking-ai-course::administrative-automation"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-forecasting",
+      "label": "AI Forecasting",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-timelines",
+        "tracking-ai-course::ai-capability-trajectories"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::market-analysis",
+      "label": "Market Analysis",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::business-intelligence",
+        "tracking-ai-course::data-analysis-automation",
+        "tracking-ai-course::ai-forecasting"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::competitive-intelligence",
+      "label": "Competitive Intelligence",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::business-intelligence",
+        "tracking-ai-course::market-analysis"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::strategic-planning",
+      "label": "Strategic Planning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::disruption-theory",
+        "tracking-ai-course::strategic-response-planning",
+        "tracking-ai-course::ai-forecasting",
+        "tracking-ai-course::competitive-intelligence"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::organizational-learning",
+      "label": "Organizational Learning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations",
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::knowledge-integration"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-transfer",
+      "label": "Knowledge Transfer",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::knowledge-integration",
+        "tracking-ai-course::organizational-learning"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-retention",
+      "label": "Knowledge Retention",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::organizational-learning",
+        "tracking-ai-course::knowledge-transfer"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-creation",
+      "label": "Knowledge Creation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::knowledge-transfer"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-application",
+      "label": "Knowledge Application",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::organizational-learning",
+        "tracking-ai-course::knowledge-creation"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::institutional-memory",
+      "label": "Institutional Memory",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::organizational-knowledge",
+        "tracking-ai-course::knowledge-transfer",
+        "tracking-ai-course::knowledge-retention"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::language-understanding",
+      "label": "Language Understanding",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::natural-language-processing"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::visual-recognition",
+      "label": "Visual Recognition",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::image-generation"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::multimodal-ai",
+      "label": "Multimodal AI",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::language-understanding",
+        "tracking-ai-course::visual-recognition"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::speech-recognition",
+      "label": "Speech Recognition",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::natural-language-processing",
+        "tracking-ai-course::language-understanding"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::text-to-speech",
+      "label": "Text-to-Speech",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::natural-language-processing",
+        "tracking-ai-course::text-generation",
+        "tracking-ai-course::language-understanding"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::speech-to-text",
+      "label": "Speech-to-Text",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::natural-language-processing",
+        "tracking-ai-course::speech-recognition"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::signal-processing",
+      "label": "Signal Processing",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::speech-recognition",
+        "tracking-ai-course::speech-to-text"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::semantic-understanding",
+      "label": "Semantic Understanding",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::natural-language-processing",
+        "tracking-ai-course::language-understanding"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::contextual-relevance",
+      "label": "Contextual Relevance",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::context-window",
+        "tracking-ai-course::language-understanding",
+        "tracking-ai-course::semantic-understanding"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::content-customization",
+      "label": "Content Customization",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::content-generation",
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::ai-personalization"
+      ],
+      "taxonomy_id": "knowledge",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::user-experience-design",
+      "label": "User Experience Design",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::educational-technology",
+        "tracking-ai-course::ai-personalization",
+        "tracking-ai-course::content-customization"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-interface-design",
+      "label": "AI Interface Design",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::user-experience-design"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::human-ai-collaboration",
+      "label": "Human-AI Collaboration",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::large-language-models",
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::ai-agents"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::augmented-intelligence",
+      "label": "Augmented Intelligence",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::artificial-intelligence",
+        "tracking-ai-course::human-ai-collaboration"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-assistants",
+      "label": "AI Assistants",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::generative-ai",
+        "tracking-ai-course::ai-agents",
+        "tracking-ai-course::human-ai-collaboration"
+      ],
+      "taxonomy_id": "cap",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::digital-workforce",
+      "label": "Digital Workforce",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-agents",
+        "tracking-ai-course::human-ai-collaboration",
+        "tracking-ai-course::ai-assistants"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::job-transformation",
+      "label": "Job Transformation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-revolution",
+        "tracking-ai-course::human-ai-collaboration",
+        "tracking-ai-course::digital-workforce"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::skill-obsolescence",
+      "label": "Skill Obsolescence",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-revolution",
+        "tracking-ai-course::future-skills-development",
+        "tracking-ai-course::job-transformation"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::reskilling-strategies",
+      "label": "Reskilling Strategies",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::future-skills-development",
+        "tracking-ai-course::job-transformation",
+        "tracking-ai-course::skill-obsolescence"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::workforce-development",
+      "label": "Workforce Development",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::future-skills-development",
+        "tracking-ai-course::job-transformation",
+        "tracking-ai-course::reskilling-strategies"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::ai-literacy-programs",
+      "label": "AI Literacy Programs",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-literacy",
+        "tracking-ai-course::workforce-development"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::technology-adoption",
+      "label": "Technology Adoption",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::democratization-of-ai",
+        "tracking-ai-course::ai-accessibility",
+        "tracking-ai-course::ai-adoption-curve"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::resistance-to-change",
+      "label": "Resistance to Change",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-adoption-curve",
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::technology-adoption"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::cultural-transformation",
+      "label": "Cultural Transformation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::resistance-to-change"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::innovation-management",
+      "label": "Innovation Management",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::competitive-advantage",
+        "tracking-ai-course::strategic-planning",
+        "tracking-ai-course::cultural-transformation"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::risk-assessment",
+      "label": "Risk Assessment",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::impact-assessment",
+        "tracking-ai-course::ethical-considerations"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::opportunity-identification",
+      "label": "Opportunity Identification",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::competitive-advantage",
+        "tracking-ai-course::impact-assessment"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::scenario-planning",
+      "label": "Scenario Planning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-forecasting",
+        "tracking-ai-course::strategic-planning",
+        "tracking-ai-course::risk-assessment",
+        "tracking-ai-course::opportunity-identification"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::future-of-work",
+      "label": "Future of Work",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-revolution",
+        "tracking-ai-course::job-transformation",
+        "tracking-ai-course::workforce-development"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::knowledge-economy",
+      "label": "Knowledge Economy",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-organizations",
+        "tracking-ai-course::ai-revolution",
+        "tracking-ai-course::future-of-work"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::information-asymmetry",
+      "label": "Information Asymmetry",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::knowledge-management",
+        "tracking-ai-course::public-knowledge",
+        "tracking-ai-course::private-knowledge"
+      ],
+      "taxonomy_id": "know-mgmt",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::cognitive-enhancement",
+      "label": "Cognitive Enhancement",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::augmented-intelligence"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::learning-acceleration",
+      "label": "Learning Acceleration",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::educational-technology",
+        "tracking-ai-course::adaptive-learning",
+        "tracking-ai-course::cognitive-enhancement"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::educational-outcomes",
+      "label": "Educational Outcomes",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::hyperpersonalized-learning",
+        "tracking-ai-course::assessment-challenges",
+        "tracking-ai-course::educational-technology",
+        "tracking-ai-course::learning-acceleration"
+      ],
+      "taxonomy_id": "edu",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::performance-metrics",
+      "label": "Performance Metrics",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-benchmarks",
+        "tracking-ai-course::assessment-challenges",
+        "tracking-ai-course::educational-outcomes"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::success-indicators",
+      "label": "Success Indicators",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::impact-assessment",
+        "tracking-ai-course::performance-metrics"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::return-on-investment",
+      "label": "Return on Investment",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::impact-assessment",
+        "tracking-ai-course::success-indicators"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::total-cost-of-ownership",
+      "label": "Total Cost of Ownership",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-cost-trends",
+        "tracking-ai-course::impact-assessment",
+        "tracking-ai-course::return-on-investment"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::implementation-strategy",
+      "label": "Implementation Strategy",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-response-planning",
+        "tracking-ai-course::implementation-roadmapping",
+        "tracking-ai-course::change-management"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::technology-integration",
+      "label": "Technology Integration",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::technology-adoption",
+        "tracking-ai-course::implementation-strategy"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::pilot-programs",
+      "label": "Pilot Programs",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::implementation-strategy",
+        "tracking-ai-course::technology-integration"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::scaled-deployment",
+      "label": "Scaled Deployment",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::implementation-strategy",
+        "tracking-ai-course::technology-integration",
+        "tracking-ai-course::pilot-programs"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::continuous-improvement",
+      "label": "Continuous Improvement",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::scaled-deployment"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::feedback-loops",
+      "label": "Feedback Loops",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::continuous-improvement"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::iterative-development",
+      "label": "Iterative Development",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::continuous-improvement",
+        "tracking-ai-course::feedback-loops"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::agile-methodology",
+      "label": "Agile Methodology",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::iterative-development"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::project-management",
+      "label": "Project Management",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::agile-methodology"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::resource-planning",
+      "label": "Resource Planning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::resource-allocation",
+        "tracking-ai-course::project-management"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::stakeholder-engagement",
+      "label": "Stakeholder Engagement",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::project-management"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::executive-sponsorship",
+      "label": "Executive Sponsorship",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::impact-assessment",
+        "tracking-ai-course::project-management",
+        "tracking-ai-course::stakeholder-engagement"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::cross-functional-teams",
+      "label": "Cross-Functional Teams",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::project-management",
+        "tracking-ai-course::stakeholder-engagement"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::technical-infrastructure",
+      "label": "Technical Infrastructure",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::technology-integration"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::data-architecture",
+      "label": "Data Architecture",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::technical-infrastructure"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::system-integration",
+      "label": "System Integration",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::technology-integration",
+        "tracking-ai-course::technical-infrastructure"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::api-management",
+      "label": "API Management",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::technical-infrastructure",
+        "tracking-ai-course::system-integration"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::user-training",
+      "label": "User Training",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-literacy",
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::technology-integration"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::support-systems",
+      "label": "Support Systems",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::technology-integration",
+        "tracking-ai-course::user-training"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::documentation-standards",
+      "label": "Documentation Standards",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::technology-integration",
+        "tracking-ai-course::support-systems"
+      ],
+      "taxonomy_id": "impl",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::version-control",
+      "label": "Version Control",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::technology-integration",
+        "tracking-ai-course::documentation-standards"
+      ],
+      "taxonomy_id": "best-practices",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::testing-protocols",
+      "label": "Testing Protocols",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::technology-integration",
+        "tracking-ai-course::version-control"
+      ],
+      "taxonomy_id": "best-practices",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::quality-assurance",
+      "label": "Quality Assurance",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::testing-protocols"
+      ],
+      "taxonomy_id": "best-practices",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::regulatory-compliance",
+      "label": "Regulatory Compliance",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::privacy-regulations",
+        "tracking-ai-course::ai-governance",
+        "tracking-ai-course::ai-safety"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::industry-standards",
+      "label": "Industry Standards",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-governance",
+        "tracking-ai-course::regulatory-compliance"
+      ],
+      "taxonomy_id": "reg",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::best-practices",
+      "label": "Best Practices",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::change-management",
+        "tracking-ai-course::industry-standards"
+      ],
+      "taxonomy_id": "best-practices",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::case-studies",
+      "label": "Case Studies",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::impact-assessment",
+        "tracking-ai-course::educational-outcomes"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::benchmarking-studies",
+      "label": "Benchmarking Studies",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-benchmarks",
+        "tracking-ai-course::ai-benchmarking",
+        "tracking-ai-course::case-studies"
+      ],
+      "taxonomy_id": "bench",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::trend-analysis",
+      "label": "Trend Analysis",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-capability-trajectories",
+        "tracking-ai-course::ai-forecasting"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::predictive-modeling",
+      "label": "Predictive Modeling",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-forecasting",
+        "tracking-ai-course::trend-analysis"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::scenario-analysis",
+      "label": "Scenario Analysis",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::risk-assessment",
+        "tracking-ai-course::scenario-planning",
+        "tracking-ai-course::predictive-modeling"
+      ],
+      "taxonomy_id": "future",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::impact-assessment",
+        "tracking-ai-course::risk-assessment",
+        "tracking-ai-course::opportunity-identification",
+        "tracking-ai-course::return-on-investment",
+        "tracking-ai-course::total-cost-of-ownership"
+      ],
+      "taxonomy_id": "best-practices",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::value-proposition",
+      "label": "Value Proposition",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::strategic-implications",
+        "tracking-ai-course::competitive-advantage",
+        "tracking-ai-course::opportunity-identification",
+        "tracking-ai-course::return-on-investment"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::competitive-positioning",
+      "label": "Competitive Positioning",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::competitive-advantage",
+        "tracking-ai-course::competitive-intelligence",
+        "tracking-ai-course::value-proposition"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::market-differentiation",
+      "label": "Market Differentiation",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::competitive-advantage",
+        "tracking-ai-course::competitive-positioning"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::sustainable-advantage",
+      "label": "Sustainable Advantage",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::competitive-advantage",
+        "tracking-ai-course::value-proposition",
+        "tracking-ai-course::competitive-positioning",
+        "tracking-ai-course::market-differentiation"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::innovation-strategy",
+      "label": "Innovation Strategy",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::competitive-advantage",
+        "tracking-ai-course::strategic-planning",
+        "tracking-ai-course::innovation-management",
+        "tracking-ai-course::sustainable-advantage"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::technology-roadmap",
+      "label": "Technology Roadmap",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-forecasting",
+        "tracking-ai-course::scenario-planning",
+        "tracking-ai-course::implementation-strategy",
+        "tracking-ai-course::innovation-strategy"
+      ],
+      "taxonomy_id": "org",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::future-readiness",
+      "label": "Future Readiness",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::ai-capability-trajectories",
+        "tracking-ai-course::strategic-response-planning",
+        "tracking-ai-course::ai-forecasting",
+        "tracking-ai-course::scenario-planning",
+        "tracking-ai-course::innovation-strategy",
+        "tracking-ai-course::technology-roadmap"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "tracking-ai-course::moore-s-law",
+      "label": "Moore's Law",
+      "subject_id": "tracking-ai-course",
+      "dependencies": [
+        "tracking-ai-course::exponential-growth"
+      ],
+      "taxonomy_id": "hist",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,4034 @@
+{
+  "subject_id": "calculus",
+  "title": "college placement Calculus Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "LIMIT": {
+      "classifier_name": "Limits",
+      "color": "PeachPuff"
+    },
+    "CONT": {
+      "classifier_name": "Continuity",
+      "color": "LightYellow"
+    },
+    "ASYM": {
+      "classifier_name": "Asymptotes & End Behavior",
+      "color": "Honeydew"
+    },
+    "DERIV": {
+      "classifier_name": "Derivative Basics",
+      "color": "PaleTurquoise"
+    },
+    "DRULE": {
+      "classifier_name": "Derivative Rules",
+      "color": "PowderBlue"
+    },
+    "CHAIN": {
+      "classifier_name": "Chain Rule",
+      "color": "Lavender"
+    },
+    "IMPL": {
+      "classifier_name": "Implicit & Inverse",
+      "color": "LavenderBlush"
+    },
+    "HIGH": {
+      "classifier_name": "Higher-Order Derivatives",
+      "color": "Thistle"
+    },
+    "APPL": {
+      "classifier_name": "Applications",
+      "color": "MintCream"
+    },
+    "ANAL": {
+      "classifier_name": "Analytical Tools",
+      "color": "LightPink"
+    },
+    "CURV": {
+      "classifier_name": "Curve Sketching",
+      "color": "Gainsboro"
+    },
+    "OPT": {
+      "classifier_name": "Optimization",
+      "color": "PaleGreen"
+    },
+    "INTEG": {
+      "classifier_name": "Integration Basics",
+      "color": "Aquamarine"
+    },
+    "RIEM": {
+      "classifier_name": "Riemann Sums",
+      "color": "Plum"
+    },
+    "FTC": {
+      "classifier_name": "Fundamental Theorem",
+      "color": "LightSteelBlue"
+    },
+    "TECH": {
+      "classifier_name": "Integration Techniques",
+      "color": "MistyRose"
+    }
+  },
+  "concepts": [
+    {
+      "id": "calculus::function",
+      "label": "Function",
+      "subject_id": "calculus",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "calculus::domain-and-range",
+      "label": "Domain and Range",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::function-notation",
+      "label": "Function Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::composite-function",
+      "label": "Composite Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::function-notation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inverse-function",
+      "label": "Inverse Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::domain-and-range"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::graphing-functions",
+      "label": "Graphing Functions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::domain-and-range"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::piecewise-function",
+      "label": "Piecewise Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::graphing-functions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::even-and-odd-functions",
+      "label": "Even and Odd Functions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::graphing-functions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::function-transformations",
+      "label": "Function Transformations",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::graphing-functions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::polynomial-function",
+      "label": "Polynomial Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::function-notation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::rational-function",
+      "label": "Rational Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::polynomial-function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::exponential-function",
+      "label": "Exponential Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::function-notation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::logarithmic-function",
+      "label": "Logarithmic Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::exponential-function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::trigonometric-function",
+      "label": "Trigonometric Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::unit-circle",
+      "label": "Unit Circle",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::trigonometric-function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::radian-measure",
+      "label": "Radian Measure",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::unit-circle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::trigonometric-identities",
+      "label": "Trigonometric Identities",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::trigonometric-function",
+        "calculus::unit-circle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::coordinate-system",
+      "label": "Coordinate System",
+      "subject_id": "calculus",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "calculus::number-line",
+      "label": "Number Line",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::coordinate-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::real-numbers",
+      "label": "Real Numbers",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::number-line"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limit",
+      "label": "Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function",
+        "calculus::real-numbers"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limit-notation",
+      "label": "Limit Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::intuitive-limit",
+      "label": "Intuitive Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::one-sided-limit",
+      "label": "One-Sided Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit",
+        "calculus::limit-notation"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::left-hand-limit",
+      "label": "Left-Hand Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::one-sided-limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::right-hand-limit",
+      "label": "Right-Hand Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::one-sided-limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::two-sided-limit",
+      "label": "Two-Sided Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::left-hand-limit",
+        "calculus::right-hand-limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limit-existence",
+      "label": "Limit Existence",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::two-sided-limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limit-laws",
+      "label": "Limit Laws",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit",
+        "calculus::limit-existence"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::sum-rule-for-limits",
+      "label": "Sum Rule for Limits",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-laws"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::product-rule-for-limits",
+      "label": "Product Rule for Limits",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-laws"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::quotient-rule-for-limits",
+      "label": "Quotient Rule for Limits",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-laws"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::constant-multiple-rule",
+      "label": "Constant Multiple Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-laws"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::power-rule-for-limits",
+      "label": "Power Rule for Limits",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-laws"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::direct-substitution",
+      "label": "Direct Substitution",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-laws",
+        "calculus::polynomial-function"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::indeterminate-form",
+      "label": "Indeterminate Form",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::direct-substitution"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::zero-over-zero-form",
+      "label": "Zero Over Zero Form",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indeterminate-form"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::infinity-over-infinity",
+      "label": "Infinity Over Infinity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indeterminate-form"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::algebraic-limit-technique",
+      "label": "Algebraic Limit Technique",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indeterminate-form",
+        "calculus::zero-over-zero-form"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::factoring-for-limits",
+      "label": "Factoring for Limits",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::algebraic-limit-technique"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::rationalization",
+      "label": "Rationalization",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::algebraic-limit-technique"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::complex-fractions",
+      "label": "Complex Fractions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::algebraic-limit-technique"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::squeeze-theorem",
+      "label": "Squeeze Theorem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-laws"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::special-trig-limits",
+      "label": "Special Trig Limits",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::squeeze-theorem",
+        "calculus::trigonometric-function"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::sin-x-over-x-limit",
+      "label": "Sin x Over x Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::special-trig-limits"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limit-of-composition",
+      "label": "Limit of Composition",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::composite-function",
+        "calculus::limit-laws"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limits-from-graphs",
+      "label": "Limits from Graphs",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::graphing-functions",
+        "calculus::intuitive-limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limits-from-tables",
+      "label": "Limits from Tables",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::intuitive-limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::numerical-estimation",
+      "label": "Numerical Estimation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limits-from-tables"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::infinite-limit",
+      "label": "Infinite Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit"
+      ],
+      "taxonomy_id": "LIMIT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuity",
+      "label": "Continuity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit",
+        "calculus::limit-existence"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuity-at-a-point",
+      "label": "Continuity at a Point",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuity"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::three-conditions",
+      "label": "Three Conditions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuity-at-a-point"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuity-on-interval",
+      "label": "Continuity on Interval",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuity-at-a-point"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::one-sided-continuity",
+      "label": "One-Sided Continuity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuity-at-a-point",
+        "calculus::one-sided-limit"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuous-function",
+      "label": "Continuous Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuity-on-interval"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::discontinuity",
+      "label": "Discontinuity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuity"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::removable-discontinuity",
+      "label": "Removable Discontinuity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::discontinuity",
+        "calculus::zero-over-zero-form"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::jump-discontinuity",
+      "label": "Jump Discontinuity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::discontinuity",
+        "calculus::one-sided-limit"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::infinite-discontinuity",
+      "label": "Infinite Discontinuity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::discontinuity",
+        "calculus::infinite-limit"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::essential-discontinuity",
+      "label": "Essential Discontinuity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::discontinuity"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuous-extension",
+      "label": "Continuous Extension",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::removable-discontinuity"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::removing-discontinuities",
+      "label": "Removing Discontinuities",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::removable-discontinuity",
+        "calculus::continuous-extension"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::piecewise-continuity",
+      "label": "Piecewise Continuity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::piecewise-function",
+        "calculus::continuity-at-a-point"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuity-of-composites",
+      "label": "Continuity of Composites",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::composite-function",
+        "calculus::continuous-function"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuity-of-polynomials",
+      "label": "Continuity of Polynomials",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::polynomial-function",
+        "calculus::continuous-function"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuity-of-rationals",
+      "label": "Continuity of Rationals",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::rational-function",
+        "calculus::continuous-function",
+        "calculus::discontinuity"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuity-of-trig",
+      "label": "Continuity of Trig",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::trigonometric-function",
+        "calculus::continuous-function"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuity-of-exp-log",
+      "label": "Continuity of Exp Log",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::exponential-function",
+        "calculus::logarithmic-function",
+        "calculus::continuous-function"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::intermediate-value-thm",
+      "label": "Intermediate Value Thm",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuity-on-interval",
+        "calculus::continuous-function"
+      ],
+      "taxonomy_id": "CONT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::asymptote",
+      "label": "Asymptote",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::infinite-limit",
+        "calculus::discontinuity"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::vertical-asymptote",
+      "label": "Vertical Asymptote",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::asymptote",
+        "calculus::infinite-discontinuity"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::horizontal-asymptote",
+      "label": "Horizontal Asymptote",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::asymptote"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::oblique-asymptote",
+      "label": "Oblique Asymptote",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::horizontal-asymptote",
+        "calculus::rational-function"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limit-at-infinity",
+      "label": "Limit at Infinity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit",
+        "calculus::horizontal-asymptote"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::end-behavior",
+      "label": "End Behavior",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-at-infinity"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::behavior-near-asymptote",
+      "label": "Behavior Near Asymptote",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::vertical-asymptote",
+        "calculus::limit-at-infinity"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::one-sided-infinite-limit",
+      "label": "One-Sided Infinite Limit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::infinite-limit",
+        "calculus::one-sided-limit"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::comparing-growth-rates",
+      "label": "Comparing Growth Rates",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-at-infinity",
+        "calculus::exponential-function"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::dominant-term",
+      "label": "Dominant Term",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::comparing-growth-rates",
+        "calculus::polynomial-function"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::rational-end-behavior",
+      "label": "Rational End Behavior",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::rational-function",
+        "calculus::end-behavior"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::exponential-growth-rate",
+      "label": "Exponential Growth Rate",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::exponential-function",
+        "calculus::comparing-growth-rates"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::logarithmic-growth-rate",
+      "label": "Logarithmic Growth Rate",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::logarithmic-function",
+        "calculus::comparing-growth-rates"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::polynomial-growth-rate",
+      "label": "Polynomial Growth Rate",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::polynomial-function",
+        "calculus::comparing-growth-rates"
+      ],
+      "taxonomy_id": "ASYM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::rate-of-change",
+      "label": "Rate of Change",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::average-rate-of-change",
+      "label": "Average Rate of Change",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::rate-of-change"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::instantaneous-rate",
+      "label": "Instantaneous Rate",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::average-rate-of-change",
+        "calculus::limit"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::difference-quotient",
+      "label": "Difference Quotient",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::average-rate-of-change"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::secant-line",
+      "label": "Secant Line",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::difference-quotient",
+        "calculus::graphing-functions"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::tangent-line",
+      "label": "Tangent Line",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::secant-line",
+        "calculus::limit"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::slope-of-tangent",
+      "label": "Slope of Tangent",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::tangent-line"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-definition",
+      "label": "Derivative Definition",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::slope-of-tangent",
+        "calculus::instantaneous-rate"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limit-definition-deriv",
+      "label": "Limit Definition Deriv",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-definition",
+        "calculus::limit"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-at-a-point",
+      "label": "Derivative at a Point",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-definition-deriv"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-function",
+      "label": "Derivative Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-at-a-point"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-notation",
+      "label": "Derivative Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::prime-notation",
+      "label": "Prime Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-notation"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::leibniz-notation",
+      "label": "Leibniz Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-notation"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::differentiable-function",
+      "label": "Differentiable Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::differentiability",
+      "label": "Differentiability",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differentiable-function"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::differentiability-point",
+      "label": "Differentiability Point",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differentiability",
+        "calculus::derivative-at-a-point"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::one-sided-derivative",
+      "label": "One-Sided Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differentiability-point",
+        "calculus::one-sided-limit"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::non-differentiable-pts",
+      "label": "Non-Differentiable Pts",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differentiability"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::corner-point",
+      "label": "Corner Point",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::non-differentiable-pts"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::cusp",
+      "label": "Cusp",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::non-differentiable-pts"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::vertical-tangent-point",
+      "label": "Vertical Tangent Point",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::non-differentiable-pts",
+        "calculus::tangent-line"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-from-graph",
+      "label": "Derivative from Graph",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function",
+        "calculus::graphing-functions"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-from-table",
+      "label": "Derivative from Table",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function",
+        "calculus::limits-from-tables"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::symmetric-difference",
+      "label": "Symmetric Difference",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::difference-quotient"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::diff-implies-continuous",
+      "label": "Diff Implies Continuous",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differentiability",
+        "calculus::continuous-function"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::continuous-not-implies",
+      "label": "Continuous Not Implies",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::diff-implies-continuous",
+        "calculus::non-differentiable-pts"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::local-linearity",
+      "label": "Local Linearity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::tangent-line",
+        "calculus::differentiable-function"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::tangent-approximation",
+      "label": "Tangent Approximation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::local-linearity"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::instantaneous-velocity",
+      "label": "Instantaneous Velocity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::instantaneous-rate",
+        "calculus::derivative-definition"
+      ],
+      "taxonomy_id": "DERIV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-rules",
+      "label": "Derivative Rules",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::constant-rule",
+      "label": "Constant Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::power-rule-derivative",
+      "label": "Power Rule Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::sum-rule-derivative",
+      "label": "Sum Rule Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::difference-rule-deriv",
+      "label": "Difference Rule Deriv",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::constant-multiple-deriv",
+      "label": "Constant Multiple Deriv",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::linear-combination",
+      "label": "Linear Combination",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::sum-rule-derivative",
+        "calculus::constant-multiple-deriv"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::polynomial-derivative",
+      "label": "Polynomial Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::power-rule-derivative",
+        "calculus::linear-combination"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-x-to-n",
+      "label": "Derivative of x to n",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::power-rule-derivative"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::negative-exponent-deriv",
+      "label": "Negative Exponent Deriv",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-x-to-n"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::fractional-exponent",
+      "label": "Fractional Exponent",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-x-to-n"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-root",
+      "label": "Derivative of Root",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::fractional-exponent"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::product-rule",
+      "label": "Product Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::product-rule-formula",
+      "label": "Product Rule Formula",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::product-rule"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::quotient-rule",
+      "label": "Quotient Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::product-rule"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::quotient-rule-formula",
+      "label": "Quotient Rule Formula",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::quotient-rule"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::reciprocal-rule",
+      "label": "Reciprocal Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::quotient-rule"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-sine",
+      "label": "Derivative of Sine",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules",
+        "calculus::trigonometric-function"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-cosine",
+      "label": "Derivative of Cosine",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-sine"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-tangent",
+      "label": "Derivative of Tangent",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-sine",
+        "calculus::derivative-of-cosine",
+        "calculus::quotient-rule"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-cotangent",
+      "label": "Derivative of Cotangent",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-tangent"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-secant",
+      "label": "Derivative of Secant",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-sine",
+        "calculus::derivative-of-cosine",
+        "calculus::quotient-rule"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-cosecant",
+      "label": "Derivative of Cosecant",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-secant"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-e-to-x",
+      "label": "Derivative of e to x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules",
+        "calculus::exponential-function"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-a-to-x",
+      "label": "Derivative of a to x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-e-to-x"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-ln-x",
+      "label": "Derivative of ln x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-rules",
+        "calculus::logarithmic-function"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-log-x",
+      "label": "Derivative of log x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-ln-x"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::combining-rules",
+      "label": "Combining Rules",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::linear-combination",
+        "calculus::product-rule",
+        "calculus::quotient-rule"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::simplifying-first",
+      "label": "Simplifying First",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::combining-rules"
+      ],
+      "taxonomy_id": "DRULE",
+      "level": "core"
+    },
+    {
+      "id": "calculus::chain-rule",
+      "label": "Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::composite-function",
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::chain-rule-formula",
+      "label": "Chain Rule Formula",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::composition-derivative",
+      "label": "Composition Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inside-function",
+      "label": "Inside Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::outside-function",
+      "label": "Outside Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::nested-chain-rule",
+      "label": "Nested Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::leibniz-chain-rule",
+      "label": "Leibniz Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula",
+        "calculus::leibniz-notation"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-f-of-g",
+      "label": "Derivative of f of g",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::composition-derivative"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::recognizing-composition",
+      "label": "Recognizing Composition",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::inside-function",
+        "calculus::outside-function"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::power-chain-rule",
+      "label": "Power Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula",
+        "calculus::power-rule-derivative"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::trig-chain-rule",
+      "label": "Trig Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula",
+        "calculus::derivative-of-sine"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::exponential-chain-rule",
+      "label": "Exponential Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula",
+        "calculus::derivative-of-e-to-x"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::log-chain-rule",
+      "label": "Log Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula",
+        "calculus::derivative-of-ln-x"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::multiple-chain-rule",
+      "label": "Multiple Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::nested-chain-rule"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::general-power-rule",
+      "label": "General Power Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::power-chain-rule"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::combining-chain-rule",
+      "label": "Combining Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::chain-rule-formula",
+        "calculus::combining-rules"
+      ],
+      "taxonomy_id": "CHAIN",
+      "level": "core"
+    },
+    {
+      "id": "calculus::implicit-function",
+      "label": "Implicit Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::function"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::implicit-equation",
+      "label": "Implicit Equation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::implicit-function"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::implicit-differentiation",
+      "label": "Implicit Differentiation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::implicit-equation",
+        "calculus::chain-rule"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::dy-dx-implicitly",
+      "label": "dy dx Implicitly",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::implicit-differentiation"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::treating-y-as-function",
+      "label": "Treating y as Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::implicit-differentiation"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::implicit-chain-rule",
+      "label": "Implicit Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::implicit-differentiation",
+        "calculus::chain-rule"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::solving-for-dy-dx",
+      "label": "Solving for dy dx",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::dy-dx-implicitly"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::second-deriv-implicit",
+      "label": "Second Deriv Implicit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::solving-for-dy-dx"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::tangent-line-implicit",
+      "label": "Tangent Line Implicit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::solving-for-dy-dx",
+        "calculus::tangent-line"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inverse-function-thm",
+      "label": "Inverse Function Thm",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::inverse-function",
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-inverse",
+      "label": "Derivative of Inverse",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::inverse-function-thm"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inverse-deriv-formula",
+      "label": "Inverse Deriv Formula",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-inverse"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::graphical-inverse-deriv",
+      "label": "Graphical Inverse Deriv",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-inverse",
+        "calculus::graphing-functions"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-arcsin",
+      "label": "Derivative of Arcsin",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-inverse",
+        "calculus::trigonometric-function"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-arccos",
+      "label": "Derivative of Arccos",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-arcsin"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-arctan",
+      "label": "Derivative of Arctan",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-arcsin"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-arcsec",
+      "label": "Derivative of Arcsec",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-arctan"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-arccsc",
+      "label": "Derivative of Arccsc",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-arcsec"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-arccot",
+      "label": "Derivative of Arccot",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-arctan"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inverse-trig-domain",
+      "label": "Inverse Trig Domain",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-arcsin"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::logarithmic-differentiate",
+      "label": "Logarithmic Differentiate",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-of-ln-x",
+        "calculus::implicit-differentiation"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::differentiating-products",
+      "label": "Differentiating Products",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::logarithmic-differentiate"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::differentiating-powers",
+      "label": "Differentiating Powers",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::logarithmic-differentiate"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::variable-exponents",
+      "label": "Variable Exponents",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differentiating-powers"
+      ],
+      "taxonomy_id": "IMPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::higher-order-derivative",
+      "label": "Higher-Order Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::second-derivative",
+      "label": "Second Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::higher-order-derivative"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::third-derivative",
+      "label": "Third Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::second-derivative"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::nth-derivative",
+      "label": "nth Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::third-derivative"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::second-deriv-notation",
+      "label": "Second Deriv Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::second-derivative"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::f-double-prime",
+      "label": "f Double Prime",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::second-deriv-notation"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::d2y-dx2-notation",
+      "label": "d2y dx2 Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::second-deriv-notation"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::velocity-from-position",
+      "label": "Velocity from Position",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::instantaneous-velocity",
+        "calculus::second-derivative"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::acceleration",
+      "label": "Acceleration",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::velocity-from-position"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::jerk",
+      "label": "Jerk",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::acceleration",
+        "calculus::third-derivative"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::position-velocity-accel",
+      "label": "Position Velocity Accel",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::velocity-from-position",
+        "calculus::acceleration"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::speed-vs-velocity",
+      "label": "Speed vs Velocity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::velocity-from-position"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::direction-of-motion",
+      "label": "Direction of Motion",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::speed-vs-velocity"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::speeding-up-slowing",
+      "label": "Speeding Up Slowing",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::acceleration",
+        "calculus::direction-of-motion"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::higher-trig-derivatives",
+      "label": "Higher Trig Derivatives",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::nth-derivative",
+        "calculus::derivative-of-sine"
+      ],
+      "taxonomy_id": "HIGH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::related-rates",
+      "label": "Related Rates",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::implicit-differentiation",
+        "calculus::instantaneous-rate"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::related-rates-setup",
+      "label": "Related Rates Setup",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::implicit-in-context",
+      "label": "Implicit in Context",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates",
+        "calculus::implicit-differentiation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::rate-variables",
+      "label": "Rate Variables",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates-setup"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::related-rates-diagram",
+      "label": "Related Rates Diagram",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates-setup"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::ladder-problem",
+      "label": "Ladder Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates",
+        "calculus::related-rates-diagram"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::balloon-problem",
+      "label": "Balloon Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates",
+        "calculus::related-rates-diagram"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::shadow-problem",
+      "label": "Shadow Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates",
+        "calculus::related-rates-diagram"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::conical-tank-problem",
+      "label": "Conical Tank Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates",
+        "calculus::related-rates-diagram"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::distance-rate-problem",
+      "label": "Distance Rate Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::related-rates",
+        "calculus::related-rates-diagram"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::linear-approximation",
+      "label": "Linear Approximation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::local-linearity",
+        "calculus::tangent-approximation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::tangent-line-approx",
+      "label": "Tangent Line Approx",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::linear-approximation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::linearization-formula",
+      "label": "Linearization Formula",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::linear-approximation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::error-in-approximation",
+      "label": "Error in Approximation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::linear-approximation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::differential",
+      "label": "Differential",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::leibniz-notation",
+        "calculus::linear-approximation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::dy-notation",
+      "label": "dy Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differential"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::dx-notation",
+      "label": "dx Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differential"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::differential-approx",
+      "label": "Differential Approx",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::differential",
+        "calculus::error-in-approximation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::marginal-analysis",
+      "label": "Marginal Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function",
+        "calculus::instantaneous-rate"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::marginal-cost",
+      "label": "Marginal Cost",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::marginal-analysis"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::marginal-revenue",
+      "label": "Marginal Revenue",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::marginal-analysis"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::marginal-profit",
+      "label": "Marginal Profit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::marginal-cost",
+        "calculus::marginal-revenue"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::economics-interpretation",
+      "label": "Economics Interpretation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::marginal-analysis"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::units-of-derivative",
+      "label": "Units of Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function",
+        "calculus::instantaneous-rate"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::rate-interpretation",
+      "label": "Rate Interpretation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::units-of-derivative"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-in-context",
+      "label": "Derivative in Context",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::rate-interpretation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::population-rate",
+      "label": "Population Rate",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-in-context"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::temperature-rate",
+      "label": "Temperature Rate",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-in-context"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::concentration-rate",
+      "label": "Concentration Rate",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-in-context"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::l-hospital-s-rule",
+      "label": "L'Hospital's Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indeterminate-form",
+        "calculus::zero-over-zero-form",
+        "calculus::infinity-over-infinity"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::l-hospital-conditions",
+      "label": "L'Hospital Conditions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::l-hospital-s-rule"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::zero-over-zero-apply",
+      "label": "Zero Over Zero Apply",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::l-hospital-s-rule",
+        "calculus::zero-over-zero-form"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inf-over-inf-apply",
+      "label": "Inf Over Inf Apply",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::l-hospital-s-rule",
+        "calculus::infinity-over-infinity"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::indeterminate-products",
+      "label": "Indeterminate Products",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::l-hospital-s-rule"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::zero-times-infinity",
+      "label": "Zero Times Infinity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indeterminate-products"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::indeterminate-powers",
+      "label": "Indeterminate Powers",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::l-hospital-s-rule"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::one-to-infinity",
+      "label": "One to Infinity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indeterminate-powers"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::repeated-l-hospital",
+      "label": "Repeated L'Hospital",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::l-hospital-s-rule"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::verify-l-hospital",
+      "label": "Verify L'Hospital",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::l-hospital-conditions"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::mean-value-theorem",
+      "label": "Mean Value Theorem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuous-function",
+        "calculus::differentiable-function"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::mvt-statement",
+      "label": "MVT Statement",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::mean-value-theorem"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::mvt-conditions",
+      "label": "MVT Conditions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::mean-value-theorem"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::mvt-conclusion",
+      "label": "MVT Conclusion",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::mvt-statement"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::rolle-s-theorem",
+      "label": "Rolle's Theorem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::mean-value-theorem"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::rolle-s-conditions",
+      "label": "Rolle's Conditions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::rolle-s-theorem"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::mvt-applications",
+      "label": "MVT Applications",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::mvt-conclusion"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::average-vs-instant-mvt",
+      "label": "Average vs Instant MVT",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::mvt-applications",
+        "calculus::average-rate-of-change",
+        "calculus::instantaneous-rate"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::extreme-value-theorem",
+      "label": "Extreme Value Theorem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::continuous-function",
+        "calculus::continuity-on-interval"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::evt-statement",
+      "label": "EVT Statement",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::extreme-value-theorem"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::evt-conditions",
+      "label": "EVT Conditions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::extreme-value-theorem"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::global-maximum",
+      "label": "Global Maximum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::extreme-value-theorem"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::global-minimum",
+      "label": "Global Minimum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::extreme-value-theorem"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::local-maximum",
+      "label": "Local Maximum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::local-minimum",
+      "label": "Local Minimum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::critical-point",
+      "label": "Critical Point",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function",
+        "calculus::local-maximum",
+        "calculus::local-minimum"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::critical-number",
+      "label": "Critical Number",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::critical-point"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::where-f-prime-zero",
+      "label": "Where f Prime Zero",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::critical-number"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::where-f-prime-dne",
+      "label": "Where f Prime DNE",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::critical-number",
+        "calculus::non-differentiable-pts"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::first-derivative-test",
+      "label": "First Derivative Test",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::critical-point",
+        "calculus::where-f-prime-zero"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::sign-chart",
+      "label": "Sign Chart",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::first-derivative-test"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::increasing-function",
+      "label": "Increasing Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::first-derivative-test"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::decreasing-function",
+      "label": "Decreasing Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::first-derivative-test"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::monotonicity",
+      "label": "Monotonicity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::increasing-function",
+        "calculus::decreasing-function"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::sign-change-analysis",
+      "label": "Sign Change Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::sign-chart"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::second-derivative-test",
+      "label": "Second Derivative Test",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::second-derivative",
+        "calculus::critical-point"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::concavity",
+      "label": "Concavity",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::second-derivative"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::concave-up",
+      "label": "Concave Up",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::concavity"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::concave-down",
+      "label": "Concave Down",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::concavity"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inflection-point",
+      "label": "Inflection Point",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::concavity",
+        "calculus::concave-up",
+        "calculus::concave-down"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::point-of-inflection",
+      "label": "Point of Inflection",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::inflection-point"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::candidates-test",
+      "label": "Candidates Test",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::global-maximum",
+        "calculus::global-minimum",
+        "calculus::critical-number"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::closed-interval-method",
+      "label": "Closed Interval Method",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::candidates-test"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::endpoint-extrema",
+      "label": "Endpoint Extrema",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::closed-interval-method"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "calculus::curve-sketching",
+      "label": "Curve Sketching",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::first-derivative-test",
+        "calculus::concavity"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::complete-curve-analysis",
+      "label": "Complete Curve Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::f-f-prime-f-dbl-prime",
+      "label": "f f Prime f Dbl Prime",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::curve-sketching",
+        "calculus::second-derivative"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::graph-from-derivative",
+      "label": "Graph from Derivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::f-f-prime-f-dbl-prime"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-from-graph-276",
+      "label": "Derivative from Graph",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::graph-from-derivative"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::connecting-three-graphs",
+      "label": "Connecting Three Graphs",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::f-f-prime-f-dbl-prime",
+        "calculus::graph-from-derivative",
+        "calculus::derivative-from-graph-276"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::domain-analysis",
+      "label": "Domain Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::domain-and-range",
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::intercept-analysis",
+      "label": "Intercept Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::symmetry-analysis",
+      "label": "Symmetry Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::even-and-odd-functions",
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::asymptote-analysis",
+      "label": "Asymptote Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::asymptote",
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::increasing-decreasing",
+      "label": "Increasing Decreasing",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::increasing-function",
+        "calculus::decreasing-function",
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::local-extrema-analysis",
+      "label": "Local Extrema Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::first-derivative-test",
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::concavity-analysis",
+      "label": "Concavity Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::concavity",
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inflection-analysis",
+      "label": "Inflection Analysis",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::inflection-point",
+        "calculus::curve-sketching"
+      ],
+      "taxonomy_id": "CURV",
+      "level": "core"
+    },
+    {
+      "id": "calculus::optimization",
+      "label": "Optimization",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::critical-point",
+        "calculus::candidates-test"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::optimization-problem",
+      "label": "Optimization Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::optimization"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::objective-function",
+      "label": "Objective Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::optimization-problem"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::constraint-equation",
+      "label": "Constraint Equation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::optimization-problem"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::primary-equation",
+      "label": "Primary Equation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::objective-function",
+        "calculus::constraint-equation"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::setting-up-optimization",
+      "label": "Setting Up Optimization",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::primary-equation"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::maximizing-area",
+      "label": "Maximizing Area",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::setting-up-optimization"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::minimizing-distance",
+      "label": "Minimizing Distance",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::setting-up-optimization"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::minimizing-cost",
+      "label": "Minimizing Cost",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::setting-up-optimization"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::maximizing-volume",
+      "label": "Maximizing Volume",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::setting-up-optimization"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::fencing-problem",
+      "label": "Fencing Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::maximizing-area"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::box-problem",
+      "label": "Box Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::maximizing-volume"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::can-problem",
+      "label": "Can Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::maximizing-volume"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::closest-point-problem",
+      "label": "Closest Point Problem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::minimizing-distance"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::maximum-profit",
+      "label": "Maximum Profit",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::minimizing-cost",
+        "calculus::marginal-profit"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::applied-optimization",
+      "label": "Applied Optimization",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::optimization-problem"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::verifying-maximum",
+      "label": "Verifying Maximum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::second-derivative-test",
+        "calculus::candidates-test"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::verifying-minimum",
+      "label": "Verifying Minimum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::second-derivative-test",
+        "calculus::candidates-test"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::second-deriv-verify",
+      "label": "Second Deriv Verify",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::verifying-maximum",
+        "calculus::verifying-minimum"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::endpoint-consideration",
+      "label": "Endpoint Consideration",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::endpoint-extrema",
+        "calculus::optimization-problem"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::practical-domain",
+      "label": "Practical Domain",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::domain-and-range",
+        "calculus::optimization-problem"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "calculus::antiderivative",
+      "label": "Antiderivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::derivative-function"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::indefinite-integral",
+      "label": "Indefinite Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::antiderivative"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-notation",
+      "label": "Integral Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integrand",
+      "label": "Integrand",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-notation"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::variable-of-integration",
+      "label": "Variable of Integration",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-notation"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::constant-of-integration",
+      "label": "Constant of Integration",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::general-antiderivative",
+      "label": "General Antiderivative",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::constant-of-integration"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::particular-antideriv",
+      "label": "Particular Antideriv",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::general-antiderivative"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::power-rule-integration",
+      "label": "Power Rule Integration",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::power-rule-derivative"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::constant-rule-integr",
+      "label": "Constant Rule Integr",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::sum-rule-integration",
+      "label": "Sum Rule Integration",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::difference-rule-integr",
+      "label": "Difference Rule Integr",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::constant-multiple-integ",
+      "label": "Constant Multiple Integ",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::basic-trig-integrals",
+      "label": "Basic Trig Integrals",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::derivative-of-sine"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-sin-x",
+      "label": "Integral of Sin x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::basic-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-cos-x",
+      "label": "Integral of Cos x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::basic-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-sec-squared",
+      "label": "Integral of Sec Squared",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::basic-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-csc-squared",
+      "label": "Integral of Csc Squared",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::basic-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-sec-tan",
+      "label": "Integral of Sec Tan",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::basic-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-csc-cot",
+      "label": "Integral of Csc Cot",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::basic-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-e-to-x",
+      "label": "Integral of e to x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::derivative-of-e-to-x"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-a-to-x",
+      "label": "Integral of a to x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-of-e-to-x"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-1-over-x",
+      "label": "Integral of 1 Over x",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::derivative-of-ln-x"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::natural-log-integral",
+      "label": "Natural Log Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-of-1-over-x"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::inverse-trig-integrals",
+      "label": "Inverse Trig Integrals",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::derivative-of-arcsin"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::arcsin-integral",
+      "label": "Arcsin Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::inverse-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::arctan-integral",
+      "label": "Arctan Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::inverse-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::arcsec-integral",
+      "label": "Arcsec Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::inverse-trig-integrals"
+      ],
+      "taxonomy_id": "INTEG",
+      "level": "core"
+    },
+    {
+      "id": "calculus::riemann-sum",
+      "label": "Riemann Sum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::average-rate-of-change",
+        "calculus::indefinite-integral"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::left-riemann-sum",
+      "label": "Left Riemann Sum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::riemann-sum"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::right-riemann-sum",
+      "label": "Right Riemann Sum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::riemann-sum"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::midpoint-riemann-sum",
+      "label": "Midpoint Riemann Sum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::riemann-sum"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::trapezoidal-rule",
+      "label": "Trapezoidal Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::riemann-sum"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::summation-notation",
+      "label": "Summation Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::riemann-sum"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::sigma-notation",
+      "label": "Sigma Notation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::summation-notation"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::index-of-summation",
+      "label": "Index of Summation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::sigma-notation"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limit-of-riemann-sum",
+      "label": "Limit of Riemann Sum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::riemann-sum",
+        "calculus::limit"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::definite-integral",
+      "label": "Definite Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::limit-of-riemann-sum"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::definite-integral-notat",
+      "label": "Definite Integral Notat",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::definite-integral"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::limits-of-integration",
+      "label": "Limits of Integration",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::definite-integral-notat"
+      ],
+      "taxonomy_id": "RIEM",
+      "level": "core"
+    },
+    {
+      "id": "calculus::fundamental-theorem",
+      "label": "Fundamental Theorem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::definite-integral",
+        "calculus::antiderivative"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::ftc-part-one",
+      "label": "FTC Part One",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::fundamental-theorem"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::ftc-part-two",
+      "label": "FTC Part Two",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::fundamental-theorem"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::evaluation-theorem",
+      "label": "Evaluation Theorem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::ftc-part-two"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::accumulation-function",
+      "label": "Accumulation Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::ftc-part-one"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-as-function",
+      "label": "Integral as Function",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::accumulation-function"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::derivative-of-integral",
+      "label": "Derivative of Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::ftc-part-one"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::ftc-chain-rule",
+      "label": "FTC Chain Rule",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::ftc-part-one",
+        "calculus::chain-rule"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::net-change-theorem",
+      "label": "Net Change Theorem",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::ftc-part-two"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::net-signed-area",
+      "label": "Net Signed Area",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::definite-integral"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::area-under-curve",
+      "label": "Area Under Curve",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::net-signed-area"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-properties",
+      "label": "Integral Properties",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::definite-integral"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::additivity-property",
+      "label": "Additivity Property",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-properties"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::reversing-limits",
+      "label": "Reversing Limits",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-properties"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::zero-width-integral",
+      "label": "Zero Width Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-properties"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-of-sum",
+      "label": "Integral of Sum",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-properties"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integral-bounds-split",
+      "label": "Integral Bounds Split",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::additivity-property"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::comparison-property",
+      "label": "Comparison Property",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::integral-properties"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::even-function-integral",
+      "label": "Even Function Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::even-and-odd-functions",
+        "calculus::integral-properties"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::odd-function-integral",
+      "label": "Odd Function Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::even-and-odd-functions",
+        "calculus::integral-properties"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::average-value",
+      "label": "Average Value",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::definite-integral"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::average-value-formula",
+      "label": "Average Value Formula",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::average-value"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::mean-value-integral",
+      "label": "Mean Value Integral",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::average-value",
+        "calculus::mean-value-theorem"
+      ],
+      "taxonomy_id": "FTC",
+      "level": "core"
+    },
+    {
+      "id": "calculus::u-substitution",
+      "label": "u-Substitution",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::chain-rule"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::substitution-method",
+      "label": "Substitution Method",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::u-substitution"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::choosing-u",
+      "label": "Choosing u",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::substitution-method"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::du-calculation",
+      "label": "du Calculation",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::substitution-method"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::back-substitution",
+      "label": "Back Substitution",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::substitution-method"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::definite-substitution",
+      "label": "Definite Substitution",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::u-substitution",
+        "calculus::definite-integral"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::changing-bounds",
+      "label": "Changing Bounds",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::definite-substitution"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::long-division-method",
+      "label": "Long Division Method",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::rational-function"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::completing-square",
+      "label": "Completing Square",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::partial-fractions",
+      "label": "Partial Fractions",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::indefinite-integral",
+        "calculus::rational-function"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    },
+    {
+      "id": "calculus::integration-strategy",
+      "label": "Integration Strategy",
+      "subject_id": "calculus",
+      "dependencies": [
+        "calculus::u-substitution",
+        "calculus::long-division-method",
+        "calculus::completing-square"
+      ],
+      "taxonomy_id": "TECH",
+      "level": "core"
+    }
+  ]
+}

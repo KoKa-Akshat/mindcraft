@@ -1,0 +1,2136 @@
+{
+  "subject_id": "intro-to-physics-course",
+  "title": "High School Physics Course",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation",
+      "color": "red"
+    },
+    "KINEM": {
+      "classifier_name": "Kinematics",
+      "color": "orange"
+    },
+    "DYNAM": {
+      "classifier_name": "Dynamics",
+      "color": "gold"
+    },
+    "ENRGY": {
+      "classifier_name": "Energy",
+      "color": "green"
+    },
+    "MOMNT": {
+      "classifier_name": "Momentum",
+      "color": "cyan"
+    },
+    "ROTAT": {
+      "classifier_name": "Rotation",
+      "color": "blue"
+    },
+    "OSCIL": {
+      "classifier_name": "Oscillations",
+      "color": "indigo"
+    },
+    "WAVES": {
+      "classifier_name": "Waves",
+      "color": "violet"
+    },
+    "SOUND": {
+      "classifier_name": "Sound",
+      "color": "purple"
+    },
+    "LIGHT": {
+      "classifier_name": "Light",
+      "color": "yellow"
+    },
+    "OPTIC": {
+      "classifier_name": "Optics",
+      "color": "pink"
+    },
+    "ELECT": {
+      "classifier_name": "Electricity",
+      "color": "teal"
+    }
+  },
+  "concepts": [
+    {
+      "id": "intro-to-physics-course::scientific-method",
+      "label": "Scientific Method",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-physics-course::measurement",
+      "label": "Measurement",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::si-units",
+      "label": "SI Units",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::unit-conversion",
+      "label": "Unit Conversion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::si-units"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::significant-figures",
+      "label": "Significant Figures",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::dimensional-analysis",
+      "label": "Dimensional Analysis",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::si-units",
+        "intro-to-physics-course::unit-conversion"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::error-analysis",
+      "label": "Error Analysis",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::measurement",
+        "intro-to-physics-course::significant-figures"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::precision-vs-accuracy",
+      "label": "Precision vs Accuracy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::measurement",
+        "intro-to-physics-course::error-analysis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::scalars",
+      "label": "Scalars",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::vectors",
+      "label": "Vectors",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::scalars"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::vector-addition",
+      "label": "Vector Addition",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vectors"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::vector-subtraction",
+      "label": "Vector Subtraction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vectors"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::vector-components",
+      "label": "Vector Components",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vectors",
+        "intro-to-physics-course::trigonometry-for-physics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::dot-product",
+      "label": "Dot Product",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vectors"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::cross-product",
+      "label": "Cross Product",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vectors"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::graphical-analysis",
+      "label": "Graphical Analysis",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::scientific-notation",
+      "label": "Scientific Notation",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::measurement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::trigonometry-for-physics",
+      "label": "Trigonometry for Physics",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-physics-course::proportional-reasoning",
+      "label": "Proportional Reasoning",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-physics-course::displacement",
+      "label": "Displacement",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vectors"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::distance",
+      "label": "Distance",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::scalars"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::speed",
+      "label": "Speed",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::distance",
+        "intro-to-physics-course::si-units"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::velocity",
+      "label": "Velocity",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::displacement",
+        "intro-to-physics-course::speed"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::acceleration",
+      "label": "Acceleration",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::velocity"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::linear-motion",
+      "label": "Linear Motion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::displacement",
+        "intro-to-physics-course::velocity"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::uniform-motion",
+      "label": "Uniform Motion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::velocity"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::uniformly-accelerated-motion",
+      "label": "Uniformly Accelerated Motion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::acceleration",
+        "intro-to-physics-course::uniform-motion"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::position-time-graphs",
+      "label": "Position-Time Graphs",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::graphical-analysis",
+        "intro-to-physics-course::displacement"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::velocity-time-graphs",
+      "label": "Velocity-Time Graphs",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::graphical-analysis",
+        "intro-to-physics-course::velocity"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::acceleration-time-graphs",
+      "label": "Acceleration-Time Graphs",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::graphical-analysis",
+        "intro-to-physics-course::acceleration"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::kinematic-equations",
+      "label": "Kinematic Equations",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::dimensional-analysis",
+        "intro-to-physics-course::uniformly-accelerated-motion"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::free-fall",
+      "label": "Free Fall",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::uniformly-accelerated-motion",
+        "intro-to-physics-course::acceleration"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::projectile-motion",
+      "label": "Projectile Motion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vector-components",
+        "intro-to-physics-course::uniformly-accelerated-motion"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::horizontal-projection",
+      "label": "Horizontal Projection",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::projectile-motion"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::angled-projection",
+      "label": "Angled Projection",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::projectile-motion",
+        "intro-to-physics-course::trigonometry-for-physics"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::relative-velocity",
+      "label": "Relative Velocity",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vector-addition",
+        "intro-to-physics-course::velocity"
+      ],
+      "taxonomy_id": "KINEM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::force",
+      "label": "Force",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vectors"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::net-force",
+      "label": "Net Force",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vector-addition",
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::newton-s-first-law",
+      "label": "Newton's First Law",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force",
+        "intro-to-physics-course::inertia"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::inertia",
+      "label": "Inertia",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [],
+      "taxonomy_id": "DYNAM",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-physics-course::newton-s-second-law",
+      "label": "Newton's Second Law",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::net-force",
+        "intro-to-physics-course::acceleration"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::newton-s-third-law",
+      "label": "Newton's Third Law",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::action-reaction-pairs",
+      "label": "Action-Reaction Pairs",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::newton-s-third-law"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::equilibrium",
+      "label": "Equilibrium",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::net-force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::static-equilibrium",
+      "label": "Static Equilibrium",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::equilibrium"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::dynamic-equilibrium",
+      "label": "Dynamic Equilibrium",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::equilibrium",
+        "intro-to-physics-course::uniform-motion"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::friction",
+      "label": "Friction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::static-friction",
+      "label": "Static Friction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::friction",
+        "intro-to-physics-course::static-equilibrium"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::kinetic-friction",
+      "label": "Kinetic Friction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::friction"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::coefficient-of-friction",
+      "label": "Coefficient of Friction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::friction"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::weight",
+      "label": "Weight",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::mass-vs-weight",
+      "label": "Mass vs Weight",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::weight"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::normal-force",
+      "label": "Normal Force",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::tension",
+      "label": "Tension",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::inclined-plane",
+      "label": "Inclined Plane",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::newton-s-second-law",
+        "intro-to-physics-course::normal-force",
+        "intro-to-physics-course::trigonometry-for-physics"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::atwood-machine",
+      "label": "Atwood Machine",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::newton-s-second-law",
+        "intro-to-physics-course::tension"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::pulley-systems",
+      "label": "Pulley Systems",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::newton-s-second-law",
+        "intro-to-physics-course::tension"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::centripetal-force",
+      "label": "Centripetal Force",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::centripetal-acceleration",
+      "label": "Centripetal Acceleration",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::acceleration",
+        "intro-to-physics-course::centripetal-force"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::banked-curves",
+      "label": "Banked Curves",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::inclined-plane",
+        "intro-to-physics-course::centripetal-acceleration"
+      ],
+      "taxonomy_id": "DYNAM",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::work",
+      "label": "Work",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force",
+        "intro-to-physics-course::displacement"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::work-by-constant-force",
+      "label": "Work by Constant Force",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::work"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::work-by-variable-force",
+      "label": "Work by Variable Force",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::work"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::work-energy-theorem",
+      "label": "Work-Energy Theorem",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::work",
+        "intro-to-physics-course::kinetic-energy"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::kinetic-energy",
+      "label": "Kinetic Energy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::velocity",
+        "intro-to-physics-course::mass-vs-weight"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::potential-energy",
+      "label": "Potential Energy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [],
+      "taxonomy_id": "ENRGY",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-physics-course::gravitational-potential-energy",
+      "label": "Gravitational Potential Energy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::potential-energy",
+        "intro-to-physics-course::weight"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::elastic-potential-energy",
+      "label": "Elastic Potential Energy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::potential-energy"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::conservative-forces",
+      "label": "Conservative Forces",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force",
+        "intro-to-physics-course::potential-energy"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::non-conservative-forces",
+      "label": "Non-conservative Forces",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::conservation-of-energy",
+      "label": "Conservation of Energy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::work-energy-theorem",
+        "intro-to-physics-course::potential-energy"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::mechanical-energy",
+      "label": "Mechanical Energy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::kinetic-energy",
+        "intro-to-physics-course::potential-energy"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::energy-diagrams",
+      "label": "Energy Diagrams",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::graphical-analysis",
+        "intro-to-physics-course::mechanical-energy"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::power",
+      "label": "Power",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::work",
+        "intro-to-physics-course::si-units"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::efficiency",
+      "label": "Efficiency",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::power",
+        "intro-to-physics-course::proportional-reasoning"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::simple-machines",
+      "label": "Simple Machines",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::work"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::mechanical-advantage",
+      "label": "Mechanical Advantage",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::simple-machines",
+        "intro-to-physics-course::efficiency"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::lever",
+      "label": "Lever",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::torque",
+        "intro-to-physics-course::simple-machines"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::pulley-as-machine",
+      "label": "Pulley as Machine",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::simple-machines"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::inclined-plane-as-machine",
+      "label": "Inclined Plane as Machine",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::inclined-plane",
+        "intro-to-physics-course::simple-machines"
+      ],
+      "taxonomy_id": "ENRGY",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::linear-momentum",
+      "label": "Linear Momentum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::velocity",
+        "intro-to-physics-course::mass-vs-weight"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::impulse",
+      "label": "Impulse",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force",
+        "intro-to-physics-course::si-units"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::impulse-momentum-theorem",
+      "label": "Impulse-Momentum Theorem",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::impulse",
+        "intro-to-physics-course::linear-momentum"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::conservation-of-momentum",
+      "label": "Conservation of Momentum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::linear-momentum"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::elastic-collisions",
+      "label": "Elastic Collisions",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::conservation-of-momentum",
+        "intro-to-physics-course::conservation-of-energy"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::inelastic-collisions",
+      "label": "Inelastic Collisions",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::conservation-of-momentum"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::perfectly-inelastic-collisions",
+      "label": "Perfectly Inelastic Collisions",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::inelastic-collisions"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::2d-collisions",
+      "label": "2D Collisions",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::conservation-of-momentum",
+        "intro-to-physics-course::vector-components"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::center-of-mass",
+      "label": "Center of Mass",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mass-vs-weight"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::rocket-propulsion",
+      "label": "Rocket Propulsion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::conservation-of-momentum",
+        "intro-to-physics-course::action-reaction-pairs"
+      ],
+      "taxonomy_id": "MOMNT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::angular-displacement",
+      "label": "Angular Displacement",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::vectors"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::angular-velocity",
+      "label": "Angular Velocity",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::angular-displacement"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::angular-acceleration",
+      "label": "Angular Acceleration",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::angular-velocity"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::rotational-kinematics",
+      "label": "Rotational Kinematics",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::angular-velocity",
+        "intro-to-physics-course::angular-acceleration"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::torque",
+      "label": "Torque",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force",
+        "intro-to-physics-course::angular-displacement"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::rotational-inertia",
+      "label": "Rotational Inertia",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mass-vs-weight",
+        "intro-to-physics-course::torque"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::rotational-kinetic-energy",
+      "label": "Rotational Kinetic Energy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::angular-velocity",
+        "intro-to-physics-course::kinetic-energy"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::angular-momentum",
+      "label": "Angular Momentum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::angular-velocity",
+        "intro-to-physics-course::linear-momentum"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::conservation-of-angular-momentum",
+      "label": "Conservation of Angular Momentum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::angular-momentum"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::rolling-motion",
+      "label": "Rolling Motion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::rotational-kinematics",
+        "intro-to-physics-course::linear-motion"
+      ],
+      "taxonomy_id": "ROTAT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::simple-harmonic-motion",
+      "label": "Simple Harmonic Motion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::acceleration"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::restoring-force",
+      "label": "Restoring Force",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force",
+        "intro-to-physics-course::simple-harmonic-motion"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::amplitude",
+      "label": "Amplitude",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::simple-harmonic-motion"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::period",
+      "label": "Period",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::simple-harmonic-motion"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::frequency",
+      "label": "Frequency",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::period"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::angular-frequency",
+      "label": "Angular Frequency",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::frequency",
+        "intro-to-physics-course::angular-velocity"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::hooke-s-law",
+      "label": "Hooke's Law",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::force",
+        "intro-to-physics-course::restoring-force"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::spring-constant",
+      "label": "Spring Constant",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::hooke-s-law"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::pendulum",
+      "label": "Pendulum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::simple-harmonic-motion"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::simple-pendulum",
+      "label": "Simple Pendulum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::pendulum",
+        "intro-to-physics-course::torque"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::physical-pendulum",
+      "label": "Physical Pendulum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::simple-pendulum",
+        "intro-to-physics-course::rotational-inertia"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::damped-harmonic-motion",
+      "label": "Damped Harmonic Motion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::simple-harmonic-motion",
+        "intro-to-physics-course::non-conservative-forces"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::forced-oscillations",
+      "label": "Forced Oscillations",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::simple-harmonic-motion",
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::resonance",
+      "label": "Resonance",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::frequency",
+        "intro-to-physics-course::forced-oscillations"
+      ],
+      "taxonomy_id": "OSCIL",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::mechanical-waves",
+      "label": "Mechanical Waves",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [],
+      "taxonomy_id": "WAVES",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-physics-course::transverse-waves",
+      "label": "Transverse Waves",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mechanical-waves"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::longitudinal-waves",
+      "label": "Longitudinal Waves",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mechanical-waves"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wave-properties",
+      "label": "Wave Properties",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mechanical-waves"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wavelength",
+      "label": "Wavelength",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-properties"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wave-frequency",
+      "label": "Wave Frequency",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-properties",
+        "intro-to-physics-course::frequency"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wave-period",
+      "label": "Wave Period",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-properties",
+        "intro-to-physics-course::period"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wave-speed",
+      "label": "Wave Speed",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wavelength",
+        "intro-to-physics-course::wave-frequency"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wave-interference",
+      "label": "Wave Interference",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mechanical-waves"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::constructive-interference",
+      "label": "Constructive Interference",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-interference"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::destructive-interference",
+      "label": "Destructive Interference",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-interference"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::superposition-principle",
+      "label": "Superposition Principle",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-interference"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::standing-waves",
+      "label": "Standing Waves",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::superposition-principle",
+        "intro-to-physics-course::wave-reflection"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::nodes-and-antinodes",
+      "label": "Nodes and Antinodes",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::standing-waves"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wave-reflection",
+      "label": "Wave Reflection",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mechanical-waves"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wave-refraction",
+      "label": "Wave Refraction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mechanical-waves"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::wave-diffraction",
+      "label": "Wave Diffraction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mechanical-waves"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::doppler-effect",
+      "label": "Doppler Effect",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-speed",
+        "intro-to-physics-course::relative-velocity"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::shock-waves",
+      "label": "Shock Waves",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::doppler-effect",
+        "intro-to-physics-course::wave-speed"
+      ],
+      "taxonomy_id": "WAVES",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::sound-waves",
+      "label": "Sound Waves",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::longitudinal-waves"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::speed-of-sound",
+      "label": "Speed of Sound",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-speed",
+        "intro-to-physics-course::sound-waves"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::sound-intensity",
+      "label": "Sound Intensity",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::sound-waves",
+        "intro-to-physics-course::power"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::decibel-scale",
+      "label": "Decibel Scale",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::sound-intensity",
+        "intro-to-physics-course::scientific-notation"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::pitch",
+      "label": "Pitch",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-frequency",
+        "intro-to-physics-course::sound-waves"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::loudness",
+      "label": "Loudness",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::sound-intensity"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::ultrasound",
+      "label": "Ultrasound",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::sound-waves",
+        "intro-to-physics-course::wave-frequency"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::infrasound",
+      "label": "Infrasound",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::sound-waves",
+        "intro-to-physics-course::wave-frequency"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::beats",
+      "label": "Beats",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-interference",
+        "intro-to-physics-course::sound-waves"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::harmonics",
+      "label": "Harmonics",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::standing-waves",
+        "intro-to-physics-course::sound-waves"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::acoustic-resonance",
+      "label": "Acoustic Resonance",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::resonance",
+        "intro-to-physics-course::sound-waves"
+      ],
+      "taxonomy_id": "SOUND",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::light-waves",
+      "label": "Light Waves",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mechanical-waves"
+      ],
+      "taxonomy_id": "LIGHT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::electromagnetic-spectrum",
+      "label": "Electromagnetic Spectrum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::light-waves"
+      ],
+      "taxonomy_id": "LIGHT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::visible-spectrum",
+      "label": "Visible Spectrum",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electromagnetic-spectrum"
+      ],
+      "taxonomy_id": "LIGHT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::speed-of-light",
+      "label": "Speed of Light",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-speed",
+        "intro-to-physics-course::light-waves"
+      ],
+      "taxonomy_id": "LIGHT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::luminous-intensity",
+      "label": "Luminous Intensity",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::light-waves"
+      ],
+      "taxonomy_id": "LIGHT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::reflection",
+      "label": "Reflection",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-reflection",
+        "intro-to-physics-course::light-waves"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::law-of-reflection",
+      "label": "Law of Reflection",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::reflection"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::plane-mirrors",
+      "label": "Plane Mirrors",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::law-of-reflection"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::spherical-mirrors",
+      "label": "Spherical Mirrors",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::law-of-reflection"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::concave-mirrors",
+      "label": "Concave Mirrors",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::spherical-mirrors"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::convex-mirrors",
+      "label": "Convex Mirrors",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::spherical-mirrors"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::mirror-equation",
+      "label": "Mirror Equation",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::dimensional-analysis",
+        "intro-to-physics-course::spherical-mirrors"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::magnification",
+      "label": "Magnification",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::mirror-equation"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::refraction",
+      "label": "Refraction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-refraction",
+        "intro-to-physics-course::light-waves"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::snell-s-law",
+      "label": "Snell's Law",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::refraction",
+        "intro-to-physics-course::index-of-refraction"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::index-of-refraction",
+      "label": "Index of Refraction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::refraction",
+        "intro-to-physics-course::speed-of-light"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::total-internal-reflection",
+      "label": "Total Internal Reflection",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::refraction",
+        "intro-to-physics-course::snell-s-law"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::critical-angle",
+      "label": "Critical Angle",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::total-internal-reflection",
+        "intro-to-physics-course::trigonometry-for-physics"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::lenses",
+      "label": "Lenses",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::refraction"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::convex-lenses",
+      "label": "Convex Lenses",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::lenses"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::concave-lenses",
+      "label": "Concave Lenses",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::lenses"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::lens-equation",
+      "label": "Lens Equation",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::dimensional-analysis",
+        "intro-to-physics-course::lenses"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::thin-lens-formula",
+      "label": "Thin Lens Formula",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::lens-equation"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::ray-diagrams",
+      "label": "Ray Diagrams",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::graphical-analysis",
+        "intro-to-physics-course::lenses"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::focal-length",
+      "label": "Focal Length",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::lenses"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::real-images",
+      "label": "Real Images",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::lenses"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::virtual-images",
+      "label": "Virtual Images",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::lenses"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::dispersion",
+      "label": "Dispersion",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::refraction",
+        "intro-to-physics-course::visible-spectrum"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::prism",
+      "label": "Prism",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::dispersion"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::color-addition",
+      "label": "Color Addition",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::visible-spectrum"
+      ],
+      "taxonomy_id": "LIGHT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::color-subtraction",
+      "label": "Color Subtraction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::visible-spectrum"
+      ],
+      "taxonomy_id": "LIGHT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::optical-diffraction",
+      "label": "Optical Diffraction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::wave-diffraction",
+        "intro-to-physics-course::light-waves"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::young-s-double-slit",
+      "label": "Young's Double Slit",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::optical-diffraction",
+        "intro-to-physics-course::wave-interference"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::single-slit-diffraction",
+      "label": "Single Slit Diffraction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::optical-diffraction"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::diffraction-grating",
+      "label": "Diffraction Grating",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::optical-diffraction"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::polarization",
+      "label": "Polarization",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::light-waves"
+      ],
+      "taxonomy_id": "OPTIC",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::electric-charge",
+      "label": "Electric Charge",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [],
+      "taxonomy_id": "ELECT",
+      "level": "foundational"
+    },
+    {
+      "id": "intro-to-physics-course::positive-charge",
+      "label": "Positive Charge",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::negative-charge",
+      "label": "Negative Charge",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::conservation-of-charge",
+      "label": "Conservation of Charge",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::conductors",
+      "label": "Conductors",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::insulators",
+      "label": "Insulators",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::semiconductors",
+      "label": "Semiconductors",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::conductors",
+        "intro-to-physics-course::insulators"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::superconductors",
+      "label": "Superconductors",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::conductors"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::charging-by-friction",
+      "label": "Charging by Friction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::charging-by-contact",
+      "label": "Charging by Contact",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::charging-by-induction",
+      "label": "Charging by Induction",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::grounding",
+      "label": "Grounding",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge",
+        "intro-to-physics-course::conductors"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::coulomb-s-law",
+      "label": "Coulomb's Law",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-charge",
+        "intro-to-physics-course::force"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::electric-force",
+      "label": "Electric Force",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::coulomb-s-law"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::electric-field",
+      "label": "Electric Field",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-force"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::electric-field-lines",
+      "label": "Electric Field Lines",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-field"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::field-strength",
+      "label": "Field Strength",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-field"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::electric-potential-energy",
+      "label": "Electric Potential Energy",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::potential-energy",
+        "intro-to-physics-course::electric-charge"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::electric-potential",
+      "label": "Electric Potential",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-potential-energy"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    },
+    {
+      "id": "intro-to-physics-course::voltage",
+      "label": "Voltage",
+      "subject_id": "intro-to-physics-course",
+      "dependencies": [
+        "intro-to-physics-course::electric-potential"
+      ],
+      "taxonomy_id": "ELECT",
+      "level": "core"
+    }
+  ]
+}

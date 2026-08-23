@@ -1,0 +1,3216 @@
+{
+  "subject_id": "ancient-history",
+  "title": "Ancient History: Origins to 1200 CE",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "METH": {
+      "classifier_name": "Methodology and Historical Skills",
+      "color": "SteelBlue"
+    },
+    "THEME": {
+      "classifier_name": "Thematic Axes",
+      "color": "DarkSlateBlue"
+    },
+    "COSMIC": {
+      "classifier_name": "Cosmic and Biological Origins",
+      "color": "Indigo"
+    },
+    "HOMIN": {
+      "classifier_name": "Hominin Evolution",
+      "color": "DarkOrchid"
+    },
+    "PALEO": {
+      "classifier_name": "Paleolithic Humanity",
+      "color": "MediumPurple"
+    },
+    "NEO": {
+      "classifier_name": "Neolithic Revolution",
+      "color": "OliveDrab"
+    },
+    "BRONZE": {
+      "classifier_name": "Bronze Age and Primary Civilizations",
+      "color": "DarkGoldenrod"
+    },
+    "CLASS": {
+      "classifier_name": "Classical Empires",
+      "color": "Crimson"
+    },
+    "AXIAL": {
+      "classifier_name": "Axial Age and World Religions",
+      "color": "DeepPink"
+    },
+    "POSTC": {
+      "classifier_name": "Post-Classical World",
+      "color": "Teal"
+    },
+    "ISLAM": {
+      "classifier_name": "Islamic Civilization",
+      "color": "DarkGreen"
+    },
+    "AMER": {
+      "classifier_name": "Pre-Columbian Americas",
+      "color": "Orange"
+    },
+    "BRIDGE": {
+      "classifier_name": "Eve of Integration",
+      "color": "DimGray"
+    }
+  },
+  "concepts": [
+    {
+      "id": "ancient-history::big-era-framework",
+      "label": "Big Era Framework",
+      "subject_id": "ancient-history",
+      "dependencies": [],
+      "taxonomy_id": "METH",
+      "level": "foundational"
+    },
+    {
+      "id": "ancient-history::three-thematic-axes",
+      "label": "Three Thematic Axes",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::big-era-framework"
+      ],
+      "taxonomy_id": "THEME",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::humans-and-environment-theme",
+      "label": "Humans And Environment Theme",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::three-thematic-axes"
+      ],
+      "taxonomy_id": "THEME",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::humans-and-other-humans-theme",
+      "label": "Humans And Other Humans Theme",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::three-thematic-axes"
+      ],
+      "taxonomy_id": "THEME",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::humans-and-ideas-theme",
+      "label": "Humans And Ideas Theme",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::three-thematic-axes"
+      ],
+      "taxonomy_id": "THEME",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::aha-tuning-competencies",
+      "label": "AHA Tuning Competencies",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::big-era-framework"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::chronological-reasoning",
+      "label": "Chronological Reasoning",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::aha-tuning-competencies"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::contextualization",
+      "label": "Contextualization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::aha-tuning-competencies"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::historical-argumentation",
+      "label": "Historical Argumentation",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::aha-tuning-competencies"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::historical-synthesis",
+      "label": "Historical Synthesis",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::aha-tuning-competencies"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::research-information-literacy",
+      "label": "Research Information Literacy",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::aha-tuning-competencies"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::historical-communication",
+      "label": "Historical Communication",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::aha-tuning-competencies"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::periodization",
+      "label": "Periodization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::chronological-reasoning"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::causation-in-history",
+      "label": "Causation In History",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::chronological-reasoning",
+        "ancient-history::contextualization"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::primary-source-analysis",
+      "label": "Primary Source Analysis",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::research-information-literacy"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::secondary-source-analysis",
+      "label": "Secondary Source Analysis",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::research-information-literacy"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::historical-bias-detection",
+      "label": "Historical Bias Detection",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::primary-source-analysis",
+        "ancient-history::secondary-source-analysis"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::comparative-history-method",
+      "label": "Comparative History Method",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::contextualization",
+        "ancient-history::historical-argumentation"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::systems-thinking-in-history",
+      "label": "Systems Thinking In History",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::causation-in-history"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::historiography",
+      "label": "Historiography",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::secondary-source-analysis",
+        "ancient-history::historical-bias-detection"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::big-bang",
+      "label": "Big Bang",
+      "subject_id": "ancient-history",
+      "dependencies": [],
+      "taxonomy_id": "COSMIC",
+      "level": "foundational"
+    },
+    {
+      "id": "ancient-history::cosmic-inflation",
+      "label": "Cosmic Inflation",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::big-bang"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::stellar-nucleosynthesis",
+      "label": "Stellar Nucleosynthesis",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::big-bang"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::formation-of-galaxies",
+      "label": "Formation Of Galaxies",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::cosmic-inflation",
+        "ancient-history::stellar-nucleosynthesis"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::formation-of-solar-system",
+      "label": "Formation Of Solar System",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::stellar-nucleosynthesis",
+        "ancient-history::formation-of-galaxies"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::formation-of-earth",
+      "label": "Formation Of Earth",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::formation-of-solar-system"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::geological-time-scale",
+      "label": "Geological Time Scale",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::formation-of-earth"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::origin-of-life",
+      "label": "Origin Of Life",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::formation-of-earth",
+        "ancient-history::geological-time-scale"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::single-celled-organisms",
+      "label": "Single-Celled Organisms",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::origin-of-life"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::photosynthesis-evolution",
+      "label": "Photosynthesis Evolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::single-celled-organisms"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::cambrian-explosion",
+      "label": "Cambrian Explosion",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::photosynthesis-evolution"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mass-extinction-events",
+      "label": "Mass Extinction Events",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::geological-time-scale",
+        "ancient-history::cambrian-explosion"
+      ],
+      "taxonomy_id": "COSMIC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mammalian-radiation",
+      "label": "Mammalian Radiation",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::mass-extinction-events"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::primate-evolution",
+      "label": "Primate Evolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::mammalian-radiation"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hominin-evolution",
+      "label": "Hominin Evolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::primate-evolution"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::bipedalism",
+      "label": "Bipedalism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hominin-evolution"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::australopithecus",
+      "label": "Australopithecus",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hominin-evolution",
+        "ancient-history::bipedalism"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::homo-habilis",
+      "label": "Homo Habilis",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::australopithecus",
+        "ancient-history::lomekwi-stone-tools"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::homo-erectus",
+      "label": "Homo Erectus",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-habilis",
+        "ancient-history::stone-tool-technology"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::stone-tool-technology",
+      "label": "Stone Tool Technology",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-habilis",
+        "ancient-history::lomekwi-stone-tools"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::control-of-fire",
+      "label": "Control Of Fire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-erectus"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::homo-sapiens-emergence",
+      "label": "Homo Sapiens Emergence",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-erectus"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::cognitive-revolution",
+      "label": "Cognitive Revolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-sapiens-emergence"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::symbolic-thought",
+      "label": "Symbolic Thought",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::cognitive-revolution"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::paleolithic-period",
+      "label": "Paleolithic Period",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::geological-time-scale",
+        "ancient-history::stone-tool-technology"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hunter-gatherer-societies",
+      "label": "Hunter-Gatherer Societies",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-sapiens-emergence",
+        "ancient-history::paleolithic-period"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::band-level-organization",
+      "label": "Band-Level Organization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hunter-gatherer-societies"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::out-of-africa-migration",
+      "label": "Out Of Africa Migration",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-sapiens-emergence",
+        "ancient-history::hunter-gatherer-societies"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::peopling-of-eurasia",
+      "label": "Peopling Of Eurasia",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::out-of-africa-migration"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::peopling-of-australia",
+      "label": "Peopling Of Australia",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::out-of-africa-migration",
+        "ancient-history::sundaland-and-sahul"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::peopling-of-americas",
+      "label": "Peopling Of Americas",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::out-of-africa-migration",
+        "ancient-history::bering-land-bridge"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::bering-land-bridge",
+      "label": "Bering Land Bridge",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::ice-age-climate"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::ice-age-climate",
+      "label": "Ice Age Climate",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::geological-time-scale"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::last-glacial-maximum",
+      "label": "Last Glacial Maximum",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::ice-age-climate"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::megafauna-extinctions",
+      "label": "Megafauna Extinctions",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::peopling-of-americas",
+        "ancient-history::last-glacial-maximum"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::cave-art",
+      "label": "Cave Art",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::symbolic-thought",
+        "ancient-history::peopling-of-eurasia"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::venus-figurines",
+      "label": "Venus Figurines",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::symbolic-thought",
+        "ancient-history::peopling-of-eurasia"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::burial-practices",
+      "label": "Burial Practices",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::symbolic-thought",
+        "ancient-history::neanderthals"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::animism",
+      "label": "Animism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::symbolic-thought"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::language-evolution",
+      "label": "Language Evolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::cognitive-revolution",
+        "ancient-history::symbolic-thought"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::stone-age-toolkits",
+      "label": "Stone Age Toolkits",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::stone-tool-technology",
+        "ancient-history::paleolithic-period"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mesolithic-period",
+      "label": "Mesolithic Period",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::paleolithic-period",
+        "ancient-history::ice-age-climate"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::neanderthals",
+      "label": "Neanderthals",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-erectus"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::denisovans",
+      "label": "Denisovans",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-erectus"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sapiens-neanderthal-contact",
+      "label": "Sapiens-Neanderthal Contact",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-sapiens-emergence",
+        "ancient-history::neanderthals",
+        "ancient-history::ancient-dna-revolution"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::microliths",
+      "label": "Microliths",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::stone-age-toolkits",
+        "ancient-history::mesolithic-period"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::coastal-migration-routes",
+      "label": "Coastal Migration Routes",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::out-of-africa-migration"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::ethnographic-analogy",
+      "label": "Ethnographic Analogy",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::comparative-history-method",
+        "ancient-history::hunter-gatherer-societies"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::foraging-lifeways",
+      "label": "Foraging Lifeways",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hunter-gatherer-societies"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::gender-in-foraging-bands",
+      "label": "Gender In Foraging Bands",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::band-level-organization",
+        "ancient-history::foraging-lifeways"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::neolithic-revolution",
+      "label": "Neolithic Revolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::ice-age-climate",
+        "ancient-history::gender-in-foraging-bands"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::plant-domestication",
+      "label": "Plant Domestication",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::neolithic-revolution"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::animal-domestication",
+      "label": "Animal Domestication",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::neolithic-revolution"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::fertile-crescent",
+      "label": "Fertile Crescent",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::plant-domestication",
+        "ancient-history::animal-domestication"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::wheat-and-barley-origins",
+      "label": "Wheat And Barley Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::fertile-crescent"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::rice-domestication",
+      "label": "Rice Domestication",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::plant-domestication"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::maize-domestication",
+      "label": "Maize Domestication",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::plant-domestication"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sedentism",
+      "label": "Sedentism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::neolithic-revolution",
+        "ancient-history::wheat-and-barley-origins"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::agricultural-villages",
+      "label": "Agricultural Villages",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::sedentism"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::catalhoyuk",
+      "label": "Catalhoyuk",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::agricultural-villages"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::jericho",
+      "label": "Jericho",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::agricultural-villages"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::pottery-origins",
+      "label": "Pottery Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::agricultural-villages"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::neolithic-population-growth",
+      "label": "Neolithic Population Growth",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::neolithic-revolution",
+        "ancient-history::sedentism"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::social-stratification",
+      "label": "Social Stratification",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::neolithic-population-growth"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::surplus-food-production",
+      "label": "Surplus Food Production",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::neolithic-revolution",
+        "ancient-history::social-stratification"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::bronze-age",
+      "label": "Bronze Age",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::metallurgy-origins",
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::metallurgy-origins",
+      "label": "Metallurgy Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::social-stratification",
+        "ancient-history::surplus-food-production"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::urban-revolution",
+      "label": "Urban Revolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::social-stratification",
+        "ancient-history::surplus-food-production"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::writing-systems",
+      "label": "Writing Systems",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::cuneiform",
+      "label": "Cuneiform",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::writing-systems",
+        "ancient-history::sumer"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hieroglyphics",
+      "label": "Hieroglyphics",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::writing-systems",
+        "ancient-history::egyptian-civilization"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::indus-script",
+      "label": "Indus Script",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::writing-systems",
+        "ancient-history::indus-valley-civilization"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::oracle-bone-script",
+      "label": "Oracle Bone Script",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::writing-systems",
+        "ancient-history::shang-dynasty"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mesopotamian-civilization",
+      "label": "Mesopotamian Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::fertile-crescent",
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sumer",
+      "label": "Sumer",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::mesopotamian-civilization"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::akkadian-empire",
+      "label": "Akkadian Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::sumer"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::babylonia",
+      "label": "Babylonia",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::akkadian-empire"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hammurabi-code",
+      "label": "Hammurabi Code",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::babylonia",
+        "ancient-history::writing-systems"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::egyptian-civilization",
+      "label": "Egyptian Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::old-kingdom-egypt",
+      "label": "Old Kingdom Egypt",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::egyptian-civilization",
+        "ancient-history::pyramid-construction"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::middle-kingdom-egypt",
+      "label": "Middle Kingdom Egypt",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::old-kingdom-egypt"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::new-kingdom-egypt",
+      "label": "New Kingdom Egypt",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::middle-kingdom-egypt"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::pharaoh-kingship",
+      "label": "Pharaoh Kingship",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::egyptian-civilization",
+        "ancient-history::old-kingdom-egypt"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::egyptian-religion",
+      "label": "Egyptian Religion",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::egyptian-civilization"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::pyramid-construction",
+      "label": "Pyramid Construction",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::egyptian-civilization",
+        "ancient-history::metallurgy-origins"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::indus-valley-civilization",
+      "label": "Indus Valley Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::harappa-and-mohenjo-daro",
+      "label": "Harappa And Mohenjo-Daro",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::indus-valley-civilization"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::yellow-river-civilization",
+      "label": "Yellow River Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::shang-dynasty",
+      "label": "Shang Dynasty",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::yellow-river-civilization"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::zhou-dynasty",
+      "label": "Zhou Dynasty",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::shang-dynasty"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mandate-of-heaven",
+      "label": "Mandate Of Heaven",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::zhou-dynasty"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::olmec-civilization",
+      "label": "Olmec Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::urban-revolution",
+        "ancient-history::maize-domestication"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mesoamerican-origins",
+      "label": "Mesoamerican Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::maize-domestication"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::primary-vs-secondary-civ",
+      "label": "Primary Vs Secondary Civ",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::mesopotamian-civilization",
+        "ancient-history::egyptian-civilization",
+        "ancient-history::indus-valley-civilization",
+        "ancient-history::yellow-river-civilization",
+        "ancient-history::olmec-civilization",
+        "ancient-history::comparative-history-method"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::late-bronze-age-system",
+      "label": "Late Bronze Age System",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::bronze-age",
+        "ancient-history::egyptian-civilization",
+        "ancient-history::new-kingdom-egypt",
+        "ancient-history::hittite-empire"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hittite-empire",
+      "label": "Hittite Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::bronze-age"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::minoan-civilization",
+      "label": "Minoan Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::bronze-age"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mycenaean-civilization",
+      "label": "Mycenaean Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::minoan-civilization"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::phoenicians",
+      "label": "Phoenicians",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::bronze-age"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::phoenician-alphabet",
+      "label": "Phoenician Alphabet",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::writing-systems",
+        "ancient-history::phoenicians"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hebrew-tribes-origins",
+      "label": "Hebrew Tribes Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::bronze-age",
+        "ancient-history::new-kingdom-egypt"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::late-bronze-age-collapse",
+      "label": "Late Bronze Age Collapse",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::late-bronze-age-system",
+        "ancient-history::systems-thinking-in-history"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::iron-age-transition",
+      "label": "Iron Age Transition",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::late-bronze-age-collapse"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::iron-age",
+      "label": "Iron Age",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::iron-age-transition",
+        "ancient-history::iron-metallurgy"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::iron-metallurgy",
+      "label": "Iron Metallurgy",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::metallurgy-origins",
+        "ancient-history::late-bronze-age-collapse"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::greek-polis",
+      "label": "Greek Polis",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::mycenaean-civilization",
+        "ancient-history::iron-age"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::athenian-democracy",
+      "label": "Athenian Democracy",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::greek-polis"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::spartan-society",
+      "label": "Spartan Society",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::greek-polis"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::persian-wars",
+      "label": "Persian Wars",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::athenian-democracy",
+        "ancient-history::achaemenid-empire"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::achaemenid-empire",
+      "label": "Achaemenid Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::iron-age",
+        "ancient-history::cyrus-the-great"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::cyrus-the-great",
+      "label": "Cyrus The Great",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::iron-age"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::darius-and-royal-road",
+      "label": "Darius And Royal Road",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::achaemenid-empire",
+        "ancient-history::cyrus-the-great"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::zoroastrianism",
+      "label": "Zoroastrianism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::achaemenid-empire"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::peloponnesian-war",
+      "label": "Peloponnesian War",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::athenian-democracy",
+        "ancient-history::spartan-society"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::alexander-the-great",
+      "label": "Alexander The Great",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::achaemenid-empire",
+        "ancient-history::peloponnesian-war"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hellenistic-world",
+      "label": "Hellenistic World",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::alexander-the-great"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::ptolemaic-egypt",
+      "label": "Ptolemaic Egypt",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::new-kingdom-egypt",
+        "ancient-history::hellenistic-world"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::seleucid-empire",
+      "label": "Seleucid Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hellenistic-world"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::library-of-alexandria",
+      "label": "Library Of Alexandria",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::ptolemaic-egypt"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::roman-republic",
+      "label": "Roman Republic",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::iron-age",
+        "ancient-history::phoenicians"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::punic-wars",
+      "label": "Punic Wars",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::phoenicians",
+        "ancient-history::roman-republic"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::roman-empire",
+      "label": "Roman Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-republic",
+        "ancient-history::augustus-and-principate"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::pax-romana",
+      "label": "Pax Romana",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-empire",
+        "ancient-history::augustus-and-principate"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::roman-law",
+      "label": "Roman Law",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-republic"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::roman-engineering",
+      "label": "Roman Engineering",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-empire"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::augustus-and-principate",
+      "label": "Augustus And Principate",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-republic"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::christianity-origins",
+      "label": "Christianity Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-empire",
+        "ancient-history::jesus-of-nazareth",
+        "ancient-history::second-temple-judaism"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::jesus-of-nazareth",
+      "label": "Jesus Of Nazareth",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::second-temple-judaism"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::pauline-mission",
+      "label": "Pauline Mission",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::christianity-origins"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::diocletian-reforms",
+      "label": "Diocletian Reforms",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-empire",
+        "ancient-history::crisis-of-third-century"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::constantine-conversion",
+      "label": "Constantine Conversion",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::diocletian-reforms",
+        "ancient-history::christianity-origins"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::crisis-of-third-century",
+      "label": "Crisis Of Third Century",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-empire"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::qin-dynasty",
+      "label": "Qin Dynasty",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::zhou-dynasty",
+        "ancient-history::legalism"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::han-dynasty",
+      "label": "Han Dynasty",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::qin-dynasty"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::confucianism",
+      "label": "Confucianism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::zhou-dynasty",
+        "ancient-history::axial-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::daoism",
+      "label": "Daoism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::zhou-dynasty",
+        "ancient-history::axial-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::legalism",
+      "label": "Legalism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::zhou-dynasty",
+        "ancient-history::axial-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::silk-road-origins",
+      "label": "Silk Road Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::achaemenid-empire",
+        "ancient-history::han-dynasty"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::maurya-empire",
+      "label": "Maurya Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::iron-age"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::ashoka",
+      "label": "Ashoka",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::maurya-empire",
+        "ancient-history::buddhism-origins"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::buddhism-origins",
+      "label": "Buddhism Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::gautama-buddha",
+        "ancient-history::vedic-religion",
+        "ancient-history::upanishads",
+        "ancient-history::axial-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::gautama-buddha",
+      "label": "Gautama Buddha",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::vedic-religion",
+        "ancient-history::upanishads"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::vedic-religion",
+      "label": "Vedic Religion",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::iron-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::upanishads",
+      "label": "Upanishads",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::vedic-religion",
+        "ancient-history::axial-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hindu-synthesis",
+      "label": "Hindu Synthesis",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::vedic-religion",
+        "ancient-history::gupta-empire"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::caste-system",
+      "label": "Caste System",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::vedic-religion"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::gupta-empire",
+      "label": "Gupta Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::maurya-empire"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sanskrit-literature",
+      "label": "Sanskrit Literature",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::vedic-religion",
+        "ancient-history::gupta-empire",
+        "ancient-history::proto-indo-european"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::indian-mathematics",
+      "label": "Indian Mathematics",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::gupta-empire"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::parthian-empire",
+      "label": "Parthian Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::achaemenid-empire",
+        "ancient-history::seleucid-empire"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sasanian-empire",
+      "label": "Sasanian Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::parthian-empire",
+        "ancient-history::zoroastrianism"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::axial-age",
+      "label": "Axial Age",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::iron-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::greek-philosophy",
+      "label": "Greek Philosophy",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::greek-polis",
+        "ancient-history::axial-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::socrates",
+      "label": "Socrates",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::greek-philosophy"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::plato",
+      "label": "Plato",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::socrates"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::aristotle",
+      "label": "Aristotle",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::plato"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hebrew-monotheism",
+      "label": "Hebrew Monotheism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hebrew-tribes-origins",
+        "ancient-history::axial-age"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hebrew-prophets",
+      "label": "Hebrew Prophets",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hebrew-tribes-origins",
+        "ancient-history::hebrew-monotheism"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::second-temple-judaism",
+      "label": "Second Temple Judaism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hebrew-monotheism",
+        "ancient-history::hebrew-prophets"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mahayana-buddhism",
+      "label": "Mahayana Buddhism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::buddhism-origins"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::theravada-buddhism",
+      "label": "Theravada Buddhism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::buddhism-origins"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::early-spread-of-buddhism",
+      "label": "Early Spread Of Buddhism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::ashoka",
+        "ancient-history::buddhism-origins",
+        "ancient-history::silk-road-origins"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::roman-indian-ocean-trade",
+      "label": "Roman-Indian Ocean Trade",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-empire",
+        "ancient-history::gupta-empire"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::universal-religion-concept",
+      "label": "Universal Religion Concept",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::christianity-origins",
+        "ancient-history::buddhism-origins"
+      ],
+      "taxonomy_id": "AXIAL",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::imperial-bureaucracy",
+      "label": "Imperial Bureaucracy",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-empire",
+        "ancient-history::han-dynasty"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::tribute-systems",
+      "label": "Tribute Systems",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::achaemenid-empire",
+        "ancient-history::han-dynasty"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::frontier-strategy",
+      "label": "Frontier Strategy",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::roman-empire",
+        "ancient-history::han-dynasty"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::late-antiquity",
+      "label": "Late Antiquity",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::crisis-of-third-century",
+        "ancient-history::constantine-conversion"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::fall-of-western-rome",
+      "label": "Fall Of Western Rome",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::late-antiquity"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::byzantine-empire",
+      "label": "Byzantine Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::late-antiquity",
+        "ancient-history::fall-of-western-rome"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::justinian",
+      "label": "Justinian",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::byzantine-empire"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hagia-sophia",
+      "label": "Hagia Sophia",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::justinian"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::greek-fire",
+      "label": "Greek Fire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::byzantine-empire"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::byzantine-iconoclasm",
+      "label": "Byzantine Iconoclasm",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::byzantine-empire",
+        "ancient-history::eastern-orthodox-church"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::eastern-orthodox-church",
+      "label": "Eastern Orthodox Church",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::byzantine-empire",
+        "ancient-history::christianity-origins"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::origins-of-islam",
+      "label": "Origins Of Islam",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::muhammad",
+        "ancient-history::quran",
+        "ancient-history::hebrew-monotheism"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::muhammad",
+      "label": "Muhammad",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hebrew-monotheism"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::quran",
+      "label": "Quran",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::muhammad"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hijra",
+      "label": "Hijra",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::muhammad"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::five-pillars-of-islam",
+      "label": "Five Pillars Of Islam",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::origins-of-islam",
+        "ancient-history::quran"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sunni-shia-split",
+      "label": "Sunni-Shia Split",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::origins-of-islam",
+        "ancient-history::rashidun-caliphate"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::rashidun-caliphate",
+      "label": "Rashidun Caliphate",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hijra",
+        "ancient-history::five-pillars-of-islam"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::umayyad-caliphate",
+      "label": "Umayyad Caliphate",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::rashidun-caliphate",
+        "ancient-history::sunni-shia-split"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::abbasid-caliphate",
+      "label": "Abbasid Caliphate",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::umayyad-caliphate"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::baghdad-house-of-wisdom",
+      "label": "Baghdad House Of Wisdom",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::abbasid-caliphate"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::islamic-golden-age",
+      "label": "Islamic Golden Age",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::abbasid-caliphate",
+        "ancient-history::baghdad-house-of-wisdom",
+        "ancient-history::indian-mathematics"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::dar-al-islam",
+      "label": "Dar Al-Islam",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::origins-of-islam",
+        "ancient-history::abbasid-caliphate"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sufism",
+      "label": "Sufism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::dar-al-islam"
+      ],
+      "taxonomy_id": "ISLAM",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::tang-dynasty",
+      "label": "Tang Dynasty",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::han-dynasty"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::tang-cosmopolitanism",
+      "label": "Tang Cosmopolitanism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::tang-dynasty",
+        "ancient-history::silk-road-origins"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::grand-canal-of-china",
+      "label": "Grand Canal Of China",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::tang-dynasty"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::examination-system",
+      "label": "Examination System",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::confucianism",
+        "ancient-history::tang-dynasty"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::buddhism-in-china",
+      "label": "Buddhism In China",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::han-dynasty",
+        "ancient-history::buddhism-origins",
+        "ancient-history::early-spread-of-buddhism"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::chan-buddhism",
+      "label": "Chan Buddhism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::buddhism-in-china",
+        "ancient-history::daoism"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::early-song-dynasty",
+      "label": "Early Song Dynasty",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::tang-dynasty"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::carolingian-empire",
+      "label": "Carolingian Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::charlemagne"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::charlemagne",
+      "label": "Charlemagne",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::late-antiquity",
+        "ancient-history::western-christendom"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::feudalism",
+      "label": "Feudalism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::carolingian-empire"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::manorialism",
+      "label": "Manorialism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::carolingian-empire"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::western-christendom",
+      "label": "Western Christendom",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::christianity-origins",
+        "ancient-history::constantine-conversion",
+        "ancient-history::late-antiquity"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::papacy",
+      "label": "Papacy",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::christianity-origins",
+        "ancient-history::western-christendom"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::monasticism",
+      "label": "Monasticism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::christianity-origins",
+        "ancient-history::western-christendom"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::vikings",
+      "label": "Vikings",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::carolingian-empire"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::kievan-rus",
+      "label": "Kievan Rus",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::vikings",
+        "ancient-history::eastern-orthodox-church"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::trans-saharan-trade",
+      "label": "Trans-Saharan Trade",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::animal-domestication",
+        "ancient-history::dar-al-islam"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::ghana-empire",
+      "label": "Ghana Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::trans-saharan-trade",
+        "ancient-history::metallurgy-origins"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::bantu-migrations",
+      "label": "Bantu Migrations",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::animal-domestication",
+        "ancient-history::metallurgy-origins"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::aksum",
+      "label": "Aksum",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::bantu-migrations",
+        "ancient-history::christianity-origins"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::indian-ocean-trade",
+      "label": "Indian Ocean Trade",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::gupta-empire",
+        "ancient-history::dar-al-islam",
+        "ancient-history::monsoon-trade-winds"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::monsoon-trade-winds",
+      "label": "Monsoon Trade Winds",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::geological-time-scale",
+        "ancient-history::ice-age-climate"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::srivijaya",
+      "label": "Srivijaya",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::indian-ocean-trade",
+        "ancient-history::buddhism-in-china"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::chola-dynasty",
+      "label": "Chola Dynasty",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::gupta-empire",
+        "ancient-history::indian-ocean-trade"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::heian-japan",
+      "label": "Heian Japan",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::buddhism-in-china",
+        "ancient-history::korean-three-kingdoms"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::tale-of-genji",
+      "label": "Tale Of Genji",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::heian-japan"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::korean-three-kingdoms",
+      "label": "Korean Three Kingdoms",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::buddhism-in-china",
+        "ancient-history::han-dynasty"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::khmer-empire",
+      "label": "Khmer Empire",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hindu-synthesis",
+        "ancient-history::buddhism-in-china"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::angkor-wat",
+      "label": "Angkor Wat",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::khmer-empire"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::buddhism-in-east-se-asia",
+      "label": "Buddhism In East SE Asia",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::buddhism-in-china",
+        "ancient-history::heian-japan",
+        "ancient-history::korean-three-kingdoms",
+        "ancient-history::khmer-empire"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::classic-maya-civilization",
+      "label": "Classic Maya Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::olmec-civilization",
+        "ancient-history::mesoamerican-origins",
+        "ancient-history::maya-calendar"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::maya-calendar",
+      "label": "Maya Calendar",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::writing-systems",
+        "ancient-history::olmec-civilization"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::teotihuacan",
+      "label": "Teotihuacan",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::mesoamerican-origins",
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::toltec-civilization",
+      "label": "Toltec Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::teotihuacan",
+        "ancient-history::classic-maya-civilization"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::polynesian-expansion",
+      "label": "Polynesian Expansion",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::peopling-of-australia"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::world-in-1200-ce",
+      "label": "World In 1200 CE",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::early-song-dynasty",
+        "ancient-history::dar-al-islam",
+        "ancient-history::feudalism"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::song-economic-revolution",
+      "label": "Song Economic Revolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::early-song-dynasty"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::chinese-iron-industry",
+      "label": "Chinese Iron Industry",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::song-economic-revolution",
+        "ancient-history::iron-metallurgy"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::paper-money-origins",
+      "label": "Paper Money Origins",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::song-economic-revolution"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::mature-dar-al-islam",
+      "label": "Mature Dar Al-Islam",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::dar-al-islam",
+        "ancient-history::islamic-golden-age"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::european-urban-revival",
+      "label": "European Urban Revival",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::three-field-system",
+        "ancient-history::feudalism"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::three-field-system",
+      "label": "Three-Field System",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::feudalism"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::high-medieval-universities",
+      "label": "High Medieval Universities",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::western-christendom",
+        "ancient-history::monasticism",
+        "ancient-history::european-urban-revival"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::indian-ocean-maturity",
+      "label": "Indian Ocean Maturity",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::indian-ocean-trade",
+        "ancient-history::mature-dar-al-islam"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::pre-mongol-eurasia",
+      "label": "Pre-Mongol Eurasia",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::world-in-1200-ce",
+        "ancient-history::early-song-dynasty"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::eve-of-integration",
+      "label": "Eve Of Integration",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::world-in-1200-ce",
+        "ancient-history::periodization"
+      ],
+      "taxonomy_id": "BRIDGE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sahelanthropus",
+      "label": "Sahelanthropus",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hominin-evolution",
+        "ancient-history::bipedalism"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::ardipithecus",
+      "label": "Ardipithecus",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hominin-evolution",
+        "ancient-history::bipedalism"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::paranthropus",
+      "label": "Paranthropus",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::australopithecus"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::homo-naledi",
+      "label": "Homo Naledi",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-erectus"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::homo-floresiensis",
+      "label": "Homo Floresiensis",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-erectus"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::jebel-irhoud-finds",
+      "label": "Jebel Irhoud Finds",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-sapiens-emergence",
+        "ancient-history::periodization"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::cave-painting",
+      "label": "Cave Painting",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::cave-art",
+        "ancient-history::pigment-technology"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::pigment-technology",
+      "label": "Pigment Technology",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::symbolic-thought",
+        "ancient-history::cave-art"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::hand-stencils",
+      "label": "Hand Stencils",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::cave-painting"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::lascaux-cave",
+      "label": "Lascaux Cave",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::cave-painting"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::chauvet-cave",
+      "label": "Chauvet Cave",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::cave-painting"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sulawesi-cave-art",
+      "label": "Sulawesi Cave Art",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::cave-painting",
+        "ancient-history::peopling-of-australia"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::lion-man-sculpture",
+      "label": "Lion-Man Sculpture",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::symbolic-thought",
+        "ancient-history::venus-figurines"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::blombos-engravings",
+      "label": "Blombos Engravings",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::symbolic-thought",
+        "ancient-history::out-of-africa-migration"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::g-bekli-tepe",
+      "label": "Göbekli Tepe",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::pre-pottery-neolithic",
+        "ancient-history::hunter-gatherer-societies"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::karahan-tepe",
+      "label": "Karahan Tepe",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::g-bekli-tepe"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::tas-tepeler-complex",
+      "label": "Tas Tepeler Complex",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::g-bekli-tepe",
+        "ancient-history::karahan-tepe"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::pre-pottery-neolithic",
+      "label": "Pre-Pottery Neolithic",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::sedentism",
+        "ancient-history::gender-in-foraging-bands"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::misliya-cave",
+      "label": "Misliya Cave",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::homo-sapiens-emergence",
+        "ancient-history::out-of-africa-migration"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::madjedbebe-site",
+      "label": "Madjedbebe Site",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::peopling-of-australia"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::white-sands-footprints",
+      "label": "White Sands Footprints",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::peopling-of-americas"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::ancient-dna-revolution",
+      "label": "Ancient DNA Revolution",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::secondary-source-analysis",
+        "ancient-history::research-information-literacy"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::yamnaya-migration",
+      "label": "Yamnaya Migration",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::bronze-age",
+        "ancient-history::steppe-pastoralism",
+        "ancient-history::ancient-dna-revolution"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::lidar-archaeology",
+      "label": "LIDAR Archaeology",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::primary-source-analysis",
+        "ancient-history::research-information-literacy"
+      ],
+      "taxonomy_id": "METH",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::aguada-fenix",
+      "label": "Aguada Fenix",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::lidar-archaeology",
+        "ancient-history::mesoamerican-origins"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::doggerland",
+      "label": "Doggerland",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::ice-age-climate",
+        "ancient-history::mesolithic-period"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sundaland-and-sahul",
+      "label": "Sundaland And Sahul",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::ice-age-climate"
+      ],
+      "taxonomy_id": "PALEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::lomekwi-stone-tools",
+      "label": "Lomekwi Stone Tools",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::bipedalism"
+      ],
+      "taxonomy_id": "HOMIN",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::igbo-ukwu",
+      "label": "Igbo-Ukwu",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::metallurgy-origins",
+        "ancient-history::bantu-migrations"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::kilwa-kisiwani",
+      "label": "Kilwa Kisiwani",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::dar-al-islam",
+        "ancient-history::indian-ocean-trade",
+        "ancient-history::bantu-migrations"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::sanxingdui",
+      "label": "Sanxingdui",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::metallurgy-origins",
+        "ancient-history::shang-dynasty"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::liangzhu-culture",
+      "label": "Liangzhu Culture",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::neolithic-revolution",
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::erlitou-site",
+      "label": "Erlitou Site",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::urban-revolution",
+        "ancient-history::yellow-river-civilization"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::caral-supe-civilization",
+      "label": "Caral-Supe Civilization",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::urban-revolution",
+        "ancient-history::mesoamerican-origins"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::cahokia",
+      "label": "Cahokia",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::maize-domestication",
+        "ancient-history::urban-revolution"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::chaco-canyon",
+      "label": "Chaco Canyon",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::maize-domestication",
+        "ancient-history::mesoamerican-origins"
+      ],
+      "taxonomy_id": "AMER",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::stonehenge",
+      "label": "Stonehenge",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::sedentism",
+        "ancient-history::metallurgy-origins"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::4-2-ka-event",
+      "label": "4.2 Ka Event",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::ice-age-climate",
+        "ancient-history::akkadian-empire"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::late-antique-little-ice-age",
+      "label": "Late Antique Little Ice Age",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::late-antiquity",
+        "ancient-history::ice-age-climate"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::justinianic-plague",
+      "label": "Justinianic Plague",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::justinian",
+        "ancient-history::late-antique-little-ice-age"
+      ],
+      "taxonomy_id": "POSTC",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::proto-indo-european",
+      "label": "Proto-Indo-European",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::yamnaya-migration"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::steppe-pastoralism",
+      "label": "Steppe Pastoralism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::animal-domestication"
+      ],
+      "taxonomy_id": "BRONZE",
+      "level": "core"
+    },
+    {
+      "id": "ancient-history::antikythera-mechanism",
+      "label": "Antikythera Mechanism",
+      "subject_id": "ancient-history",
+      "dependencies": [
+        "ancient-history::hellenistic-world",
+        "ancient-history::library-of-alexandria"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    }
+  ]
+}

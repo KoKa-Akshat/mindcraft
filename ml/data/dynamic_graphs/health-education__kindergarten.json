@@ -1,0 +1,492 @@
+{
+  "subject_id": "health-education__kindergarten",
+  "title": "Kindergarten Health Education Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations",
+      "color": "SteelBlue"
+    },
+    "FOOD": {
+      "classifier_name": "Food and Nutrition",
+      "color": "Gold"
+    },
+    "GROW": {
+      "classifier_name": "Human Growth and Development",
+      "color": "DarkSlateBlue"
+    },
+    "EMOT": {
+      "classifier_name": "Mental and Emotional Health",
+      "color": "MediumPurple"
+    },
+    "WELL": {
+      "classifier_name": "Personal Health and Wellness",
+      "color": "DarkGreen"
+    },
+    "SAFE": {
+      "classifier_name": "Personal Safety and Violence Prevention",
+      "color": "Crimson"
+    },
+    "SKIL": {
+      "classifier_name": "Skill Standards",
+      "color": "Teal"
+    }
+  },
+  "concepts": [
+    {
+      "id": "health-education__kindergarten::health",
+      "label": "Health",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "health-education__kindergarten::food-group",
+      "label": "Food Group",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::fruits-group",
+      "label": "Fruits Group",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::food-group"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::vegetables-group",
+      "label": "Vegetables Group",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::food-group"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::grains-group",
+      "label": "Grains Group",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::food-group"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::protein-foods-group",
+      "label": "Protein Foods Group",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::food-group"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::dairy-group",
+      "label": "Dairy Group",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::food-group"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::cultural-food-tradition",
+      "label": "Cultural Food Tradition",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::food-group"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::hydration",
+      "label": "Hydration",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::hunger-signal",
+      "label": "Hunger Signal",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::unsafe-food",
+      "label": "Unsafe Food",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::food-group"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::family",
+      "label": "Family",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::family-structure",
+      "label": "Family Structure",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::family"
+      ],
+      "taxonomy_id": "GROW",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::feelings",
+      "label": "Feelings",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::naming-feelings",
+      "label": "Naming Feelings",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::strong-feelings",
+      "label": "Strong Feelings",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::asking-for-help",
+      "label": "Asking For Help",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::strong-feelings",
+        "health-education__kindergarten::trusted-adult"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::trusted-adult",
+      "label": "Trusted Adult",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::prolonged-sadness",
+      "label": "Prolonged Sadness",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::naming-feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::kindness",
+      "label": "Kindness",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::feelings"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::kind-behavior",
+      "label": "Kind Behavior",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::kindness"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::unkind-behavior",
+      "label": "Unkind Behavior",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::kindness"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::including-others",
+      "label": "Including Others",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::kind-behavior",
+        "health-education__kindergarten::unkind-behavior"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::germs",
+      "label": "Germs",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::handwashing",
+      "label": "Handwashing",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::germs"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::covering-coughs",
+      "label": "Covering Coughs",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::germs"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::physical-activity",
+      "label": "Physical Activity",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::daily-movement",
+      "label": "Daily Movement",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::physical-activity"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::healthy-technology-use",
+      "label": "Healthy Technology Use",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::safety-rules",
+      "label": "Safety Rules",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::injury-prevention",
+      "label": "Injury Prevention",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::safety-rules"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::community-safety-practice",
+      "label": "Community Safety Practice",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::safety-rules"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::school-emergency",
+      "label": "School Emergency",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::emergency"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::safe-place",
+      "label": "Safe Place",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::school-emergency"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::body-parts",
+      "label": "Body Parts",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::correct-body-part-names",
+      "label": "Correct Body Part Names",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::body-parts"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::positive-health-influence",
+      "label": "Positive Health Influence",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::negative-health-influence",
+      "label": "Negative Health Influence",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::health-decision",
+      "label": "Health Decision",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::positive-health-influence",
+        "health-education__kindergarten::negative-health-influence"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::personal-health-goal",
+      "label": "Personal Health Goal",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::personal-health-needs",
+        "health-education__kindergarten::personal-health-wants"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::personal-health-needs",
+      "label": "Personal Health Needs",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::personal-health-wants",
+      "label": "Personal Health Wants",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::emergency",
+      "label": "Emergency",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::health"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::personal-care-practice",
+      "label": "Personal Care Practice",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::handwashing",
+        "health-education__kindergarten::covering-coughs"
+      ],
+      "taxonomy_id": "WELL",
+      "level": "core"
+    },
+    {
+      "id": "health-education__kindergarten::emotions-vocabulary",
+      "label": "Emotions Vocabulary",
+      "subject_id": "health-education__kindergarten",
+      "dependencies": [
+        "health-education__kindergarten::naming-feelings",
+        "health-education__kindergarten::prolonged-sadness"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    }
+  ]
+}

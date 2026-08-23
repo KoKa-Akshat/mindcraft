@@ -1,0 +1,2157 @@
+{
+  "subject_id": "modeling-healthcare-data",
+  "title": "Modeling Healthcare Data with Graphs",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "GTECH": {
+      "classifier_name": "Graph Technologies",
+      "color": "DarkGreen"
+    },
+    "HCARE": {
+      "classifier_name": "Healthcare Domain",
+      "color": "Teal"
+    },
+    "PAT": {
+      "classifier_name": "Patient Data",
+      "color": "LimeGreen"
+    },
+    "PROV": {
+      "classifier_name": "Provider Operations",
+      "color": "OliveDrab"
+    },
+    "PAYER": {
+      "classifier_name": "Payer & Insurance",
+      "color": "Gold"
+    },
+    "FIN": {
+      "classifier_name": "Financial & Business",
+      "color": "DarkGoldenrod"
+    },
+    "FRAUD": {
+      "classifier_name": "Fraud & Compliance",
+      "color": "DarkRed"
+    },
+    "ANAL": {
+      "classifier_name": "Graph Analytics",
+      "color": "DeepPink"
+    },
+    "AI": {
+      "classifier_name": "AI & Machine Learning",
+      "color": "Orange"
+    },
+    "SEC": {
+      "classifier_name": "Security & Privacy",
+      "color": "Crimson"
+    },
+    "GOV": {
+      "classifier_name": "Data Governance",
+      "color": "DarkSlateBlue"
+    },
+    "CAP": {
+      "classifier_name": "Capstone & Career",
+      "color": "DimGray"
+    }
+  },
+  "concepts": [
+    {
+      "id": "modeling-healthcare-data::graph-theory-basics",
+      "label": "Graph Theory Basics",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "modeling-healthcare-data::node",
+      "label": "Node",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-theory-basics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::edge",
+      "label": "Edge",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-theory-basics",
+        "modeling-healthcare-data::node"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-database",
+      "label": "Graph Database",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-theory-basics",
+        "modeling-healthcare-data::node",
+        "modeling-healthcare-data::edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::labeled-property-graph",
+      "label": "Labeled Property Graph",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-database"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::node-property",
+      "label": "Node Property",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::node",
+        "modeling-healthcare-data::labeled-property-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::edge-property",
+      "label": "Edge Property",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::edge",
+        "modeling-healthcare-data::labeled-property-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::directed-graph",
+      "label": "Directed Graph",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-theory-basics",
+        "modeling-healthcare-data::node",
+        "modeling-healthcare-data::edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::directed-acyclic-graph",
+      "label": "Directed Acyclic Graph",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::directed-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-traversal",
+      "label": "Graph Traversal",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-theory-basics",
+        "modeling-healthcare-data::node",
+        "modeling-healthcare-data::edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-path",
+      "label": "Graph Path",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-traversal"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-query",
+      "label": "Graph Query",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-database",
+        "modeling-healthcare-data::graph-traversal"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::relational-database",
+      "label": "Relational Database",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "modeling-healthcare-data::database-schema",
+      "label": "Database Schema",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::relational-database"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-model",
+      "label": "Data Model",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::relational-database",
+        "modeling-healthcare-data::database-schema"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-system",
+      "label": "Healthcare System",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [],
+      "taxonomy_id": "HCARE",
+      "level": "foundational"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-cost",
+      "label": "Healthcare Cost",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::per-person-healthcare-cost",
+      "label": "Per-Person Healthcare Cost",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-cost"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::fee-for-service-model",
+      "label": "Fee-For-Service Model",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system",
+        "modeling-healthcare-data::healthcare-cost"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::value-based-care",
+      "label": "Value-Based Care",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system",
+        "modeling-healthcare-data::fee-for-service-model"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-payer",
+      "label": "Healthcare Payer",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-provider",
+      "label": "Healthcare Provider",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-patient",
+      "label": "Healthcare Patient",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::electronic-health-record",
+      "label": "Electronic Health Record",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-patient"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::medical-coding-system",
+      "label": "Medical Coding System",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::icd-code",
+      "label": "ICD Code",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medical-coding-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::cpt-code",
+      "label": "CPT Code",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medical-coding-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::hcpcs-code",
+      "label": "HCPCS Code",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medical-coding-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::drug-code",
+      "label": "Drug Code",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medical-coding-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::medical-terminology",
+      "label": "Medical Terminology",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::clinical-workflow",
+      "label": "Clinical Workflow",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider",
+        "modeling-healthcare-data::healthcare-patient"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::patient-demographics",
+      "label": "Patient Demographics",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-patient"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::medical-encounter",
+      "label": "Medical Encounter",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider",
+        "modeling-healthcare-data::healthcare-patient"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-interoperability",
+      "label": "Healthcare Interoperability",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::electronic-health-record"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-data-exchange",
+      "label": "Healthcare Data Exchange",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::electronic-health-record",
+        "modeling-healthcare-data::healthcare-interoperability"
+      ],
+      "taxonomy_id": "HCARE",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::cypher-query-language",
+      "label": "Cypher Query Language",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-query"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::gql-standard",
+      "label": "GQL Standard",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-query"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::gsql",
+      "label": "GSQL",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-query"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-pattern-matching",
+      "label": "Graph Pattern Matching",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-query",
+        "modeling-healthcare-data::cypher-query-language"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-query-optimization",
+      "label": "Graph Query Optimization",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-query",
+        "modeling-healthcare-data::graph-pattern-matching"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-index",
+      "label": "Graph Index",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-database",
+        "modeling-healthcare-data::graph-query-optimization"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::query-performance",
+      "label": "Query Performance",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-query-optimization",
+        "modeling-healthcare-data::graph-index"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::path-query",
+      "label": "Path Query",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-path",
+        "modeling-healthcare-data::cypher-query-language"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::subgraph-query",
+      "label": "Subgraph Query",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-query",
+        "modeling-healthcare-data::cypher-query-language"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::aggregate-query",
+      "label": "Aggregate Query",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-query",
+        "modeling-healthcare-data::cypher-query-language"
+      ],
+      "taxonomy_id": "GTECH",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::patient-record",
+      "label": "Patient Record",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-patient",
+        "modeling-healthcare-data::electronic-health-record"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::patient-id",
+      "label": "Patient ID",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-patient",
+        "modeling-healthcare-data::patient-record"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::patient-history",
+      "label": "Patient History",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::patient-record"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::disease",
+      "label": "Disease",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medical-terminology"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::medical-condition",
+      "label": "Medical Condition",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medical-terminology",
+        "modeling-healthcare-data::disease"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::symptom",
+      "label": "Symptom",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medical-terminology"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::diagnosis",
+      "label": "Diagnosis",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medical-terminology",
+        "modeling-healthcare-data::disease",
+        "modeling-healthcare-data::symptom"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::treatment-plan",
+      "label": "Treatment Plan",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::diagnosis"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::prescription",
+      "label": "Prescription",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::drug-code",
+        "modeling-healthcare-data::treatment-plan"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::medication",
+      "label": "Medication",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::drug-code"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::dosage",
+      "label": "Dosage",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::prescription",
+        "modeling-healthcare-data::medication"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::drug-interaction",
+      "label": "Drug Interaction",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::medication"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::adverse-event",
+      "label": "Adverse Event",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::prescription",
+        "modeling-healthcare-data::medication"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::allergy",
+      "label": "Allergy",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::patient-record",
+        "modeling-healthcare-data::medication"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::immunization",
+      "label": "Immunization",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::patient-record"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::lab-test",
+      "label": "Lab Test",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::patient-record"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::lab-result",
+      "label": "Lab Result",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::lab-test"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::vital-sign",
+      "label": "Vital Sign",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::patient-record"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::care-plan",
+      "label": "Care Plan",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::treatment-plan"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::treatment-timeline",
+      "label": "Treatment Timeline",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::treatment-plan",
+        "modeling-healthcare-data::care-plan"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::patient-journey",
+      "label": "Patient Journey",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::patient-record",
+        "modeling-healthcare-data::treatment-timeline"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::chronic-disease-management",
+      "label": "Chronic Disease Management",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::disease",
+        "modeling-healthcare-data::care-plan"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::preventive-care",
+      "label": "Preventive Care",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-patient",
+        "modeling-healthcare-data::care-plan"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::patient-outcome",
+      "label": "Patient Outcome",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::care-plan"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::quality-of-life-metric",
+      "label": "Quality of Life Metric",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::patient-outcome"
+      ],
+      "taxonomy_id": "PAT",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::primary-care-provider",
+      "label": "Primary Care Provider",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::specialist-provider",
+      "label": "Specialist Provider",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider",
+        "modeling-healthcare-data::primary-care-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::hospital",
+      "label": "Hospital",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::clinic",
+      "label": "Clinic",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::outpatient-facility",
+      "label": "Outpatient Facility",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::clinic"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::inpatient-care",
+      "label": "Inpatient Care",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::hospital"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::emergency-department",
+      "label": "Emergency Department",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::hospital"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-network",
+      "label": "Provider Network",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-schedule",
+      "label": "Provider Schedule",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::appointment",
+      "label": "Appointment",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::provider-schedule"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::referral",
+      "label": "Referral",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::primary-care-provider",
+        "modeling-healthcare-data::specialist-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-credential",
+      "label": "Provider Credential",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::medical-license",
+      "label": "Medical License",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::provider-credential"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::board-certification",
+      "label": "Board Certification",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::provider-credential"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-rating",
+      "label": "Provider Rating",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-capacity",
+      "label": "Provider Capacity",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::provider-schedule"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-specialization",
+      "label": "Provider Specialization",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::specialist-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::hospital-department",
+      "label": "Hospital Department",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::hospital"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::care-team",
+      "label": "Care Team",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::multidisciplinary-team",
+      "label": "Multidisciplinary Team",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::care-team"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-performance",
+      "label": "Provider Performance",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-provider",
+        "modeling-healthcare-data::provider-rating"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::clinical-guideline",
+      "label": "Clinical Guideline",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::treatment-plan"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::best-practice",
+      "label": "Best Practice",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::clinical-guideline"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::evidence-based-medicine",
+      "label": "Evidence-Based Medicine",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::clinical-guideline",
+        "modeling-healthcare-data::best-practice"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::clinical-protocol",
+      "label": "Clinical Protocol",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::clinical-guideline"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::insurance-claim",
+      "label": "Insurance Claim",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-payer",
+        "modeling-healthcare-data::medical-encounter"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::claim-processing",
+      "label": "Claim Processing",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-claim"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::claim-adjudication",
+      "label": "Claim Adjudication",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::claim-processing"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::claim-denial",
+      "label": "Claim Denial",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::claim-adjudication"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::claim-dispute",
+      "label": "Claim Dispute",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::claim-denial"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::insurance-policy",
+      "label": "Insurance Policy",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-payer"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::coverage",
+      "label": "Coverage",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-policy"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::benefit-plan",
+      "label": "Benefit Plan",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-policy"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::copayment",
+      "label": "Copayment",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::coverage"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::deductible",
+      "label": "Deductible",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::coverage"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::out-of-pocket-maximum",
+      "label": "Out-Of-Pocket Maximum",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::coverage",
+        "modeling-healthcare-data::copayment",
+        "modeling-healthcare-data::deductible"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::premium",
+      "label": "Premium",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-policy"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::formulary",
+      "label": "Formulary",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::formulary-rule"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::formulary-rule",
+      "label": "Formulary Rule",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::drug-code",
+        "modeling-healthcare-data::medication"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::pharmacy-benefit-manager",
+      "label": "Pharmacy Benefit Manager",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-payer",
+        "modeling-healthcare-data::formulary"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::prior-authorization",
+      "label": "Prior Authorization",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::claim-processing",
+        "modeling-healthcare-data::coverage"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::utilization-review",
+      "label": "Utilization Review",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::claim-processing"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::medical-necessity",
+      "label": "Medical Necessity",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::utilization-review"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::allowed-amount",
+      "label": "Allowed Amount",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::claim-adjudication"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::reimbursement",
+      "label": "Reimbursement",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::claim-adjudication",
+        "modeling-healthcare-data::allowed-amount"
+      ],
+      "taxonomy_id": "PAYER",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-cost-analysis",
+      "label": "Healthcare Cost Analysis",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-cost",
+        "modeling-healthcare-data::insurance-claim"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::revenue-cycle",
+      "label": "Revenue Cycle",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-claim",
+        "modeling-healthcare-data::reimbursement"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::billing-code",
+      "label": "Billing Code",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::icd-code",
+        "modeling-healthcare-data::cpt-code",
+        "modeling-healthcare-data::hcpcs-code"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::charge-master",
+      "label": "Charge Master",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::billing-code"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::cost-of-care",
+      "label": "Cost Of Care",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-cost-analysis"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::revenue",
+      "label": "Revenue",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::revenue-cycle"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::profitability",
+      "label": "Profitability",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::cost-of-care",
+        "modeling-healthcare-data::revenue"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::operating-margin",
+      "label": "Operating Margin",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::profitability"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::payer-mix",
+      "label": "Payer Mix",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-payer",
+        "modeling-healthcare-data::profitability"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::contract-negotiation",
+      "label": "Contract Negotiation",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-payer",
+        "modeling-healthcare-data::healthcare-provider"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-compensation",
+      "label": "Provider Compensation",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::reimbursement",
+        "modeling-healthcare-data::contract-negotiation"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::capitation",
+      "label": "Capitation",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::value-based-care",
+        "modeling-healthcare-data::provider-compensation"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::risk-adjustment",
+      "label": "Risk Adjustment",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-cost-analysis",
+        "modeling-healthcare-data::capitation"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::quality-metric",
+      "label": "Quality Metric",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::patient-outcome",
+        "modeling-healthcare-data::provider-performance"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::value-based-payment",
+      "label": "Value-Based Payment",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::value-based-care",
+        "modeling-healthcare-data::capitation",
+        "modeling-healthcare-data::quality-metric"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-fraud",
+      "label": "Healthcare Fraud",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-claim"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::fraud-detection",
+      "label": "Fraud Detection",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-fraud"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::waste-in-healthcare",
+      "label": "Waste In Healthcare",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-cost-analysis"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::abuse-detection",
+      "label": "Abuse Detection",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-fraud",
+        "modeling-healthcare-data::waste-in-healthcare"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::upcoding",
+      "label": "Upcoding",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-claim",
+        "modeling-healthcare-data::billing-code"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::unbundling",
+      "label": "Unbundling",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-claim",
+        "modeling-healthcare-data::billing-code"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::phantom-billing",
+      "label": "Phantom Billing",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-claim"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::duplicate-claim",
+      "label": "Duplicate Claim",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::insurance-claim"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::kickback-scheme",
+      "label": "Kickback Scheme",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::referral",
+        "modeling-healthcare-data::healthcare-fraud"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::referral-network-analysis",
+      "label": "Referral Network Analysis",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::referral",
+        "modeling-healthcare-data::fraud-detection"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::community-detection",
+      "label": "Community Detection",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::provider-network",
+        "modeling-healthcare-data::referral-network-analysis"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::anomaly-detection",
+      "label": "Anomaly Detection",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::fraud-detection"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::behavioral-health-fraud",
+      "label": "Behavioral Health Fraud",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-fraud",
+        "modeling-healthcare-data::fraud-detection"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::dme-fraud",
+      "label": "DME Fraud",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-fraud",
+        "modeling-healthcare-data::fraud-detection"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::provider-network-fraud",
+      "label": "Provider Network Fraud",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::provider-network",
+        "modeling-healthcare-data::healthcare-fraud",
+        "modeling-healthcare-data::referral-network-analysis"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-algorithm",
+      "label": "Graph Algorithm",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-theory-basics",
+        "modeling-healthcare-data::graph-database"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::shortest-path-algorithm",
+      "label": "Shortest Path Algorithm",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-path",
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::centrality-measure",
+      "label": "Centrality Measure",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::pagerank-algorithm",
+      "label": "Pagerank Algorithm",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::centrality-measure"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::betweenness-centrality",
+      "label": "Betweenness Centrality",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::centrality-measure"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::degree-centrality",
+      "label": "Degree Centrality",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::centrality-measure"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::clustering-coefficient",
+      "label": "Clustering Coefficient",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::connected-components",
+      "label": "Connected Components",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::cycle-detection",
+      "label": "Cycle Detection",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::directed-acyclic-graph",
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-pattern-recognition",
+      "label": "Graph Pattern Recognition",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-pattern-matching",
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::similarity-measure",
+      "label": "Similarity Measure",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::link-prediction",
+      "label": "Link Prediction",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-embedding",
+      "label": "Graph Embedding",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-algorithm"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::node-embedding",
+      "label": "Node Embedding",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::node-property",
+        "modeling-healthcare-data::graph-embedding"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-neural-network",
+      "label": "Graph Neural Network",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-embedding",
+        "modeling-healthcare-data::node-embedding"
+      ],
+      "taxonomy_id": "ANAL",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [],
+      "taxonomy_id": "AI",
+      "level": "foundational"
+    },
+    {
+      "id": "modeling-healthcare-data::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::artificial-intelligence"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::artificial-intelligence",
+        "modeling-healthcare-data::machine-learning"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::vector-store",
+      "label": "Vector Store",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::large-language-model"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::vector-embedding",
+      "label": "Vector Embedding",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-embedding",
+        "modeling-healthcare-data::vector-store"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::semantic-search",
+      "label": "Semantic Search",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::vector-store",
+        "modeling-healthcare-data::vector-embedding"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::rag-architecture",
+      "label": "RAG Architecture",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::large-language-model",
+        "modeling-healthcare-data::vector-store"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-database",
+        "modeling-healthcare-data::labeled-property-graph"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-and-llm-integration",
+      "label": "Graph And LLM Integration",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::large-language-model",
+        "modeling-healthcare-data::knowledge-graph"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::clinical-decision-support",
+      "label": "Clinical Decision Support",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::diagnosis",
+        "modeling-healthcare-data::clinical-guideline",
+        "modeling-healthcare-data::machine-learning"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::clinical-discovery",
+      "label": "Clinical Discovery",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::machine-learning",
+        "modeling-healthcare-data::clinical-decision-support"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::recommendation-system",
+      "label": "Recommendation System",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::machine-learning"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::predictive-analytics",
+      "label": "Predictive Analytics",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::machine-learning"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::risk-stratification",
+      "label": "Risk Stratification",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::predictive-analytics"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::population-health-analytics",
+      "label": "Population Health Analytics",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::predictive-analytics",
+        "modeling-healthcare-data::risk-stratification"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::hipaa",
+      "label": "HIPAA",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::healthcare-system"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::protected-health-information",
+      "label": "Protected Health Information",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::electronic-health-record",
+        "modeling-healthcare-data::hipaa"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-privacy",
+      "label": "Data Privacy",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::hipaa",
+        "modeling-healthcare-data::protected-health-information"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-security",
+      "label": "Data Security",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::protected-health-information",
+        "modeling-healthcare-data::data-privacy"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::access-control",
+      "label": "Access Control",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::data-security"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::role-based-access-control",
+      "label": "Role-Based Access Control",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::access-control"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::authentication",
+      "label": "Authentication",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::access-control"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::authorization",
+      "label": "Authorization",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::access-control",
+        "modeling-healthcare-data::authentication"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::audit-trail",
+      "label": "Audit Trail",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::data-security",
+        "modeling-healthcare-data::authorization"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::de-identification",
+      "label": "De-Identification",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::protected-health-information",
+        "modeling-healthcare-data::data-privacy"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::metadata-management",
+      "label": "Metadata Management",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::data-model"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-lineage",
+      "label": "Data Lineage",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::metadata-management"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-provenance",
+      "label": "Data Provenance",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::data-lineage"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-quality",
+      "label": "Data Quality",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::data-model"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-traceability",
+      "label": "Data Traceability",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::data-lineage"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-governance-framework",
+      "label": "Data Governance Framework",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::metadata-management",
+        "modeling-healthcare-data::data-quality"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::master-data-management",
+      "label": "Master Data Management",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::metadata-management",
+        "modeling-healthcare-data::data-governance-framework"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::data-stewardship",
+      "label": "Data Stewardship",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::data-governance-framework"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::explainability",
+      "label": "Explainability",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::clinical-decision-support",
+        "modeling-healthcare-data::data-lineage"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::transparency",
+      "label": "Transparency",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::audit-trail",
+        "modeling-healthcare-data::explainability"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-database",
+        "modeling-healthcare-data::labeled-property-graph",
+        "modeling-healthcare-data::knowledge-graph",
+        "modeling-healthcare-data::clinical-decision-support"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::project-presentation",
+      "label": "Project Presentation",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::capstone-project"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::graph-career-path",
+      "label": "Graph Career Path",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::capstone-project"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::healthcare-analytics-platform",
+      "label": "Healthcare Analytics Platform",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::graph-database",
+        "modeling-healthcare-data::machine-learning",
+        "modeling-healthcare-data::knowledge-graph",
+        "modeling-healthcare-data::clinical-decision-support"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "modeling-healthcare-data::real-world-implementation",
+      "label": "Real-World Implementation",
+      "subject_id": "modeling-healthcare-data",
+      "dependencies": [
+        "modeling-healthcare-data::capstone-project",
+        "modeling-healthcare-data::healthcare-analytics-platform"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    }
+  ]
+}

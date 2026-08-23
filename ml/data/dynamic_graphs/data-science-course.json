@@ -1,0 +1,3207 @@
+{
+  "subject_id": "data-science-course",
+  "title": "Introduction to Data Science with Python",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "PYENV": {
+      "classifier_name": "Python Environment",
+      "color": "PeachPuff"
+    },
+    "DSTRC": {
+      "classifier_name": "Data Structures",
+      "color": "LightYellow"
+    },
+    "CLEAN": {
+      "classifier_name": "Data Cleaning",
+      "color": "Honeydew"
+    },
+    "VIZ": {
+      "classifier_name": "Visualization",
+      "color": "PaleTurquoise"
+    },
+    "STATS": {
+      "classifier_name": "Statistics",
+      "color": "LightSteelBlue"
+    },
+    "REGR": {
+      "classifier_name": "Regression",
+      "color": "Lavender"
+    },
+    "EVAL": {
+      "classifier_name": "Model Evaluation",
+      "color": "LavenderBlush"
+    },
+    "ADVR": {
+      "classifier_name": "Advanced Regression",
+      "color": "Thistle"
+    },
+    "NUMPY": {
+      "classifier_name": "NumPy Computing",
+      "color": "MintCream"
+    },
+    "ML": {
+      "classifier_name": "Machine Learning",
+      "color": "PaleGreen"
+    },
+    "NN": {
+      "classifier_name": "Neural Networks",
+      "color": "Aquamarine"
+    },
+    "TORCH": {
+      "classifier_name": "PyTorch",
+      "color": "PowderBlue"
+    },
+    "BEST": {
+      "classifier_name": "Best Practices",
+      "color": "Plum"
+    },
+    "PROJ": {
+      "classifier_name": "Projects",
+      "color": "LightPink"
+    }
+  },
+  "concepts": [
+    {
+      "id": "data-science-course::data-science",
+      "label": "Data Science",
+      "subject_id": "data-science-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "data-science-course::python-programming",
+      "label": "Python Programming",
+      "subject_id": "data-science-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "data-science-course::jupyter-notebooks",
+      "label": "Jupyter Notebooks",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-programming"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data",
+      "label": "Data",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::variables",
+      "label": "Variables",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-programming"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-types",
+      "label": "Data Types",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data",
+        "data-science-course::variables"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::numerical-data",
+      "label": "Numerical Data",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-types"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::categorical-data",
+      "label": "Categorical Data",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-types"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::ordinal-data",
+      "label": "Ordinal Data",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::categorical-data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::nominal-data",
+      "label": "Nominal Data",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::categorical-data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::measurement-scales",
+      "label": "Measurement Scales",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::numerical-data",
+        "data-science-course::categorical-data",
+        "data-science-course::ordinal-data",
+        "data-science-course::nominal-data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::independent-variable",
+      "label": "Independent Variable",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::variables",
+        "data-science-course::data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::dependent-variable",
+      "label": "Dependent Variable",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::variables",
+        "data-science-course::data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::dataset",
+      "label": "Dataset",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::observation",
+      "label": "Observation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataset"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::feature",
+      "label": "Feature",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataset",
+        "data-science-course::independent-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::target-variable",
+      "label": "Target Variable",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dependent-variable",
+        "data-science-course::dataset"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-science-workflow",
+      "label": "Data Science Workflow",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-science",
+        "data-science-course::data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::problem-definition",
+      "label": "Problem Definition",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-science-workflow"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-collection",
+      "label": "Data Collection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-science-workflow",
+        "data-science-course::problem-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::python-installation",
+      "label": "Python Installation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-programming"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::package-management",
+      "label": "Package Management",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-installation"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::pip",
+      "label": "Pip",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::package-management"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::conda-environment",
+      "label": "Conda Environment",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::package-management"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::virtual-environment",
+      "label": "Virtual Environment",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::package-management"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::ide-setup",
+      "label": "IDE Setup",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-installation"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::vs-code",
+      "label": "VS Code",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::ide-setup"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::notebook-cells",
+      "label": "Notebook Cells",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::jupyter-notebooks"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::code-cell",
+      "label": "Code Cell",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::notebook-cells"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::markdown-cell",
+      "label": "Markdown Cell",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::notebook-cells"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::cell-execution",
+      "label": "Cell Execution",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::code-cell"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::kernel",
+      "label": "Kernel",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::jupyter-notebooks",
+        "data-science-course::cell-execution"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::import-statement",
+      "label": "Import Statement",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-programming"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::python-libraries",
+      "label": "Python Libraries",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::import-statement",
+        "data-science-course::package-management"
+      ],
+      "taxonomy_id": "PYENV",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::documentation",
+      "label": "Documentation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-programming"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::lists",
+      "label": "Lists",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::variables"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::dictionaries",
+      "label": "Dictionaries",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::variables"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::tuples",
+      "label": "Tuples",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::variables"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::arrays",
+      "label": "Arrays",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::lists"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::pandas-library",
+      "label": "Pandas Library",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-libraries",
+        "data-science-course::arrays"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::dataframe",
+      "label": "DataFrame",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pandas-library"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::series",
+      "label": "Series",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pandas-library"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::index",
+      "label": "Index",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::column",
+      "label": "Column",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::row",
+      "label": "Row",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-loading",
+      "label": "Data Loading",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pandas-library",
+        "data-science-course::dataset"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::csv-files",
+      "label": "CSV Files",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-loading"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::read-csv",
+      "label": "Read CSV",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::csv-files",
+        "data-science-course::pandas-library"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-inspection",
+      "label": "Data Inspection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::head-method",
+      "label": "Head Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-inspection"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::tail-method",
+      "label": "Tail Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-inspection"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::shape-attribute",
+      "label": "Shape Attribute",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-inspection"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::info-method",
+      "label": "Info Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-inspection"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::describe-method",
+      "label": "Describe Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-inspection"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-selection",
+      "label": "Data Selection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe",
+        "data-science-course::index",
+        "data-science-course::column"
+      ],
+      "taxonomy_id": "DSTRC",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::missing-values",
+      "label": "Missing Values",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe",
+        "data-science-course::data"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::nan",
+      "label": "NaN",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::missing-values"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::null-detection",
+      "label": "Null Detection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::nan"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::dropna-method",
+      "label": "Dropna Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::null-detection"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::fillna-method",
+      "label": "Fillna Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::null-detection"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::imputation",
+      "label": "Imputation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::fillna-method",
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-type-conversion",
+      "label": "Data Type Conversion",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-types",
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::duplicate-detection",
+      "label": "Duplicate Detection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::duplicate-removal",
+      "label": "Duplicate Removal",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::duplicate-detection"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::outliers",
+      "label": "Outliers",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe",
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::outlier-detection",
+      "label": "Outlier Detection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::outliers",
+        "data-science-course::histogram"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-validation",
+      "label": "Data Validation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe",
+        "data-science-course::missing-values"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::string-cleaning",
+      "label": "String Cleaning",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::column-renaming",
+      "label": "Column Renaming",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-filtering",
+      "label": "Data Filtering",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-selection"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::boolean-indexing",
+      "label": "Boolean Indexing",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-filtering",
+        "data-science-course::lists"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::query-method",
+      "label": "Query Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-filtering"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-transformation",
+      "label": "Data Transformation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::feature-scaling",
+      "label": "Feature Scaling",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-transformation",
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::normalization",
+      "label": "Normalization",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::feature-scaling"
+      ],
+      "taxonomy_id": "CLEAN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data",
+        "data-science-course::data-science"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::matplotlib-library",
+      "label": "Matplotlib Library",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-libraries",
+        "data-science-course::data-visualization"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::figure",
+      "label": "Figure",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::matplotlib-library"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::axes",
+      "label": "Axes",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::figure"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::plot-function",
+      "label": "Plot Function",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::axes"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::line-plot",
+      "label": "Line Plot",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::plot-function"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::scatter-plot",
+      "label": "Scatter Plot",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::plot-function"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::bar-chart",
+      "label": "Bar Chart",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::plot-function"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::histogram",
+      "label": "Histogram",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::plot-function",
+        "data-science-course::distribution"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::box-plot",
+      "label": "Box Plot",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::plot-function",
+        "data-science-course::quartiles"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::pie-chart",
+      "label": "Pie Chart",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::plot-function"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::subplot",
+      "label": "Subplot",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::figure"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::figure-size",
+      "label": "Figure Size",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::figure"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::title",
+      "label": "Title",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::axes"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::axis-labels",
+      "label": "Axis Labels",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::axes"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::legend",
+      "label": "Legend",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::axes"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::color",
+      "label": "Color",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::axes"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::markers",
+      "label": "Markers",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::scatter-plot"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::line-styles",
+      "label": "Line Styles",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::line-plot"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::grid",
+      "label": "Grid",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::axes"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::annotations",
+      "label": "Annotations",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::axes"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::save-figure",
+      "label": "Save Figure",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::figure"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::plot-customization",
+      "label": "Plot Customization",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::title",
+        "data-science-course::axis-labels",
+        "data-science-course::legend",
+        "data-science-course::color"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::seaborn-library",
+      "label": "Seaborn Library",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::matplotlib-library",
+        "data-science-course::statistical-plots"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::statistical-plots",
+      "label": "Statistical Plots",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-visualization",
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "VIZ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::descriptive-statistics",
+      "label": "Descriptive Statistics",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data",
+        "data-science-course::measurement-scales"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::mean",
+      "label": "Mean",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::median",
+      "label": "Median",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::mode",
+      "label": "Mode",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::range",
+      "label": "Range",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::variance",
+      "label": "Variance",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::mean"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::standard-deviation",
+      "label": "Standard Deviation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::variance"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::quartiles",
+      "label": "Quartiles",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::median"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::percentiles",
+      "label": "Percentiles",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::quartiles"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::interquartile-range",
+      "label": "Interquartile Range",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::quartiles"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::skewness",
+      "label": "Skewness",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::mean",
+        "data-science-course::median"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::kurtosis",
+      "label": "Kurtosis",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::skewness"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::distribution",
+      "label": "Distribution",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::normal-distribution",
+      "label": "Normal Distribution",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::distribution",
+        "data-science-course::mean",
+        "data-science-course::standard-deviation"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::probability",
+      "label": "Probability",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::distribution"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::random-variables",
+      "label": "Random Variables",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::probability",
+        "data-science-course::variables"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::expected-value",
+      "label": "Expected Value",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::random-variables",
+        "data-science-course::mean"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::sample",
+      "label": "Sample",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataset",
+        "data-science-course::probability"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::population",
+      "label": "Population",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::sample"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::sampling",
+      "label": "Sampling",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::sample",
+        "data-science-course::population"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::central-limit-theorem",
+      "label": "Central Limit Theorem",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::normal-distribution",
+        "data-science-course::sampling"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::confidence-interval",
+      "label": "Confidence Interval",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::central-limit-theorem",
+        "data-science-course::standard-deviation"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::hypothesis-testing",
+      "label": "Hypothesis Testing",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::confidence-interval",
+        "data-science-course::probability"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::p-value",
+      "label": "P-Value",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::hypothesis-testing"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::statistical-significance",
+      "label": "Statistical Significance",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::p-value"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::correlation",
+      "label": "Correlation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::independent-variable",
+        "data-science-course::dependent-variable",
+        "data-science-course::descriptive-statistics"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::covariance",
+      "label": "Covariance",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::correlation",
+        "data-science-course::variance"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::pearson-correlation",
+      "label": "Pearson Correlation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::correlation"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::spearman-correlation",
+      "label": "Spearman Correlation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::correlation",
+        "data-science-course::ordinal-data"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::correlation-matrix",
+      "label": "Correlation Matrix",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pearson-correlation",
+        "data-science-course::dataframe"
+      ],
+      "taxonomy_id": "STATS",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::regression-analysis",
+      "label": "Regression Analysis",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::correlation",
+        "data-science-course::independent-variable",
+        "data-science-course::dependent-variable"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::linear-regression",
+      "label": "Linear Regression",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regression-analysis"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::simple-linear-regression",
+      "label": "Simple Linear Regression",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::linear-regression"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::regression-line",
+      "label": "Regression Line",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::simple-linear-regression",
+        "data-science-course::line-plot"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::slope",
+      "label": "Slope",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regression-line"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::intercept",
+      "label": "Intercept",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regression-line"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::least-squares-method",
+      "label": "Least Squares Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::residuals",
+        "data-science-course::sum-of-squared-errors"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::residuals",
+      "label": "Residuals",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::simple-linear-regression",
+        "data-science-course::prediction"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::sum-of-squared-errors",
+      "label": "Sum of Squared Errors",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::residuals"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::ordinary-least-squares",
+      "label": "Ordinary Least Squares",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::least-squares-method"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::regression-coefficients",
+      "label": "Regression Coefficients",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::slope",
+        "data-science-course::intercept"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::coefficient-interpretation",
+      "label": "Coefficient Interpretation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regression-coefficients"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::prediction",
+      "label": "Prediction",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::simple-linear-regression"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::fitted-values",
+      "label": "Fitted Values",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::prediction"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::regression-equation",
+      "label": "Regression Equation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regression-coefficients"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::line-of-best-fit",
+      "label": "Line of Best Fit",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::least-squares-method",
+        "data-science-course::regression-line"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::assumptions-of-regression",
+      "label": "Assumptions of Regression",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::linear-regression"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::linearity-assumption",
+      "label": "Linearity Assumption",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::assumptions-of-regression"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::homoscedasticity",
+      "label": "Homoscedasticity",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::assumptions-of-regression",
+        "data-science-course::residuals"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::independence-assumption",
+      "label": "Independence Assumption",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::assumptions-of-regression"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::normality-of-residuals",
+      "label": "Normality of Residuals",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::assumptions-of-regression",
+        "data-science-course::residuals",
+        "data-science-course::normal-distribution"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::scikit-learn-library",
+      "label": "Scikit-learn Library",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-libraries",
+        "data-science-course::linear-regression"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::linearregression-class",
+      "label": "LinearRegression Class",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::scikit-learn-library"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::fit-method",
+      "label": "Fit Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::linearregression-class"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::predict-method",
+      "label": "Predict Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::linearregression-class",
+        "data-science-course::prediction"
+      ],
+      "taxonomy_id": "REGR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-performance",
+      "label": "Model Performance",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::prediction",
+        "data-science-course::linear-regression"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::training-data",
+      "label": "Training Data",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataset",
+        "data-science-course::model-performance"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::testing-data",
+      "label": "Testing Data",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dataset",
+        "data-science-course::model-performance"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::train-test-split",
+      "label": "Train Test Split",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::training-data",
+        "data-science-course::testing-data",
+        "data-science-course::scikit-learn-library"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::validation-data",
+      "label": "Validation Data",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::training-data",
+        "data-science-course::testing-data"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::r-squared",
+      "label": "R-Squared",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-performance",
+        "data-science-course::sum-of-squared-errors"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::adjusted-r-squared",
+      "label": "Adjusted R-Squared",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::r-squared",
+        "data-science-course::multiple-linear-regression"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::mean-squared-error",
+      "label": "Mean Squared Error",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-performance",
+        "data-science-course::sum-of-squared-errors"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::root-mean-squared-error",
+      "label": "Root Mean Squared Error",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::mean-squared-error"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::mean-absolute-error",
+      "label": "Mean Absolute Error",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-performance",
+        "data-science-course::residuals"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::residual-analysis",
+      "label": "Residual Analysis",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::residuals",
+        "data-science-course::residual-plot"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::residual-plot",
+      "label": "Residual Plot",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::residuals",
+        "data-science-course::scatter-plot"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::overfitting",
+      "label": "Overfitting",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-performance",
+        "data-science-course::model-complexity"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::underfitting",
+      "label": "Underfitting",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-performance",
+        "data-science-course::model-complexity"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::bias",
+      "label": "Bias",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::overfitting",
+        "data-science-course::underfitting"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::variance-171",
+      "label": "Variance",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::overfitting",
+        "data-science-course::variance"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::bias-variance-tradeoff",
+      "label": "Bias-Variance Tradeoff",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::bias",
+        "data-science-course::variance-171"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-complexity",
+      "label": "Model Complexity",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::linear-regression",
+        "data-science-course::model-performance"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::cross-validation",
+      "label": "Cross-Validation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::train-test-split",
+        "data-science-course::overfitting"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::k-fold-cross-validation",
+      "label": "K-Fold Cross-Validation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::cross-validation"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::leave-one-out-cv",
+      "label": "Leave One Out CV",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::cross-validation"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::holdout-method",
+      "label": "Holdout Method",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::train-test-split"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-selection",
+      "label": "Model Selection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::cross-validation",
+        "data-science-course::bias-variance-tradeoff"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::hyperparameters",
+      "label": "Hyperparameters",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-selection"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-comparison",
+      "label": "Model Comparison",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-selection",
+        "data-science-course::r-squared"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::multiple-linear-regression",
+      "label": "Multiple Linear Regression",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::linear-regression",
+        "data-science-course::multiple-predictors"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::multiple-predictors",
+      "label": "Multiple Predictors",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::independent-variable",
+        "data-science-course::feature"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::multicollinearity",
+      "label": "Multicollinearity",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::multiple-linear-regression",
+        "data-science-course::correlation"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::variance-inflation-factor",
+      "label": "Variance Inflation Factor",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::multicollinearity"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::feature-selection",
+      "label": "Feature Selection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::multiple-linear-regression",
+        "data-science-course::feature"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::forward-selection",
+      "label": "Forward Selection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::feature-selection"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::backward-elimination",
+      "label": "Backward Elimination",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::feature-selection"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::stepwise-selection",
+      "label": "Stepwise Selection",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::forward-selection",
+        "data-science-course::backward-elimination"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::categorical-variables",
+      "label": "Categorical Variables",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::categorical-data",
+        "data-science-course::multiple-linear-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::dummy-variables",
+      "label": "Dummy Variables",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::categorical-variables"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::one-hot-encoding",
+      "label": "One-Hot Encoding",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::dummy-variables"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::interaction-terms",
+      "label": "Interaction Terms",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::multiple-linear-regression",
+        "data-science-course::feature-engineering"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::polynomial-features",
+      "label": "Polynomial Features",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::multiple-linear-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::feature-engineering",
+      "label": "Feature Engineering",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::feature",
+        "data-science-course::data-transformation"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::feature-importance",
+      "label": "Feature Importance",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::feature-selection",
+        "data-science-course::regression-coefficients"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::numpy-library",
+      "label": "NumPy Library",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-libraries",
+        "data-science-course::arrays"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::numpy-array",
+      "label": "NumPy Array",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::numpy-library"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::array-creation",
+      "label": "Array Creation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::numpy-array"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::array-shape",
+      "label": "Array Shape",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::numpy-array"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::array-indexing",
+      "label": "Array Indexing",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::numpy-array"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::array-slicing",
+      "label": "Array Slicing",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::array-indexing"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::broadcasting",
+      "label": "Broadcasting",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::numpy-array",
+        "data-science-course::element-wise-operations"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::vectorized-operations",
+      "label": "Vectorized Operations",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::numpy-array"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::element-wise-operations",
+      "label": "Element-wise Operations",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::vectorized-operations"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::matrix-operations",
+      "label": "Matrix Operations",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::numpy-array"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::dot-product",
+      "label": "Dot Product",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::matrix-operations"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::matrix-multiplication",
+      "label": "Matrix Multiplication",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::matrix-operations"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::transpose",
+      "label": "Transpose",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::matrix-operations"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::linear-algebra",
+      "label": "Linear Algebra",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::matrix-operations"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::computational-efficiency",
+      "label": "Computational Efficiency",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::vectorized-operations",
+        "data-science-course::numpy-library"
+      ],
+      "taxonomy_id": "NUMPY",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::non-linear-regression",
+      "label": "Non-linear Regression",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::linear-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::polynomial-regression",
+      "label": "Polynomial Regression",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::non-linear-regression",
+        "data-science-course::polynomial-features"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::degree-of-polynomial",
+      "label": "Degree of Polynomial",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::polynomial-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::curve-fitting",
+      "label": "Curve Fitting",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::non-linear-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::transformation",
+      "label": "Transformation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-transformation",
+        "data-science-course::non-linear-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::log-transformation",
+      "label": "Log Transformation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::transformation"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::feature-transformation",
+      "label": "Feature Transformation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::transformation",
+        "data-science-course::feature-engineering"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-flexibility",
+      "label": "Model Flexibility",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-complexity",
+        "data-science-course::non-linear-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::regularization",
+      "label": "Regularization",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::overfitting",
+        "data-science-course::multiple-linear-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::ridge-regression",
+      "label": "Ridge Regression",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regularization"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::lasso-regression",
+      "label": "Lasso Regression",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regularization"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::elastic-net",
+      "label": "Elastic Net",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::ridge-regression",
+        "data-science-course::lasso-regression"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::regularization-parameter",
+      "label": "Regularization Parameter",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regularization"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::lambda-parameter",
+      "label": "Lambda Parameter",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regularization-parameter"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::shrinkage",
+      "label": "Shrinkage",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::regularization",
+        "data-science-course::regression-coefficients"
+      ],
+      "taxonomy_id": "ADVR",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-science",
+        "data-science-course::linear-regression"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::supervised-learning",
+      "label": "Supervised Learning",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::machine-learning",
+        "data-science-course::target-variable"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::unsupervised-learning",
+      "label": "Unsupervised Learning",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::machine-learning"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::classification",
+      "label": "Classification",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::supervised-learning"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::clustering",
+      "label": "Clustering",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::unsupervised-learning"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::training-process",
+      "label": "Training Process",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::supervised-learning",
+        "data-science-course::model-training"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::learning-algorithm",
+      "label": "Learning Algorithm",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::machine-learning"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-training",
+      "label": "Model Training",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::learning-algorithm",
+        "data-science-course::training-data"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::generalization",
+      "label": "Generalization",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-training",
+        "data-science-course::testing-data"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::training-error",
+      "label": "Training Error",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-training",
+        "data-science-course::mean-squared-error"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::test-error",
+      "label": "Test Error",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::generalization",
+        "data-science-course::mean-squared-error"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::prediction-error",
+      "label": "Prediction Error",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::test-error"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::loss-function",
+      "label": "Loss Function",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::cost-function",
+        "data-science-course::mean-squared-error"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::cost-function",
+      "label": "Cost Function",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::least-squares-method"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::optimization",
+      "label": "Optimization",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::cost-function"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::gradient-descent",
+      "label": "Gradient Descent",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::optimization"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::learning-rate",
+      "label": "Learning Rate",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::gradient-descent"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::convergence",
+      "label": "Convergence",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::gradient-descent"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::local-minimum",
+      "label": "Local Minimum",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::optimization"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::global-minimum",
+      "label": "Global Minimum",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::local-minimum"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::neural-networks",
+      "label": "Neural Networks",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::machine-learning"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::artificial-neuron",
+      "label": "Artificial Neuron",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::neural-networks"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::perceptron",
+      "label": "Perceptron",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::artificial-neuron"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::activation-function",
+      "label": "Activation Function",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::artificial-neuron"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::sigmoid-function",
+      "label": "Sigmoid Function",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::activation-function"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::relu-function",
+      "label": "ReLU Function",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::activation-function"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::input-layer",
+      "label": "Input Layer",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::neural-networks",
+        "data-science-course::feature"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::hidden-layer",
+      "label": "Hidden Layer",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::neural-networks"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::output-layer",
+      "label": "Output Layer",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::neural-networks",
+        "data-science-course::target-variable"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::weights",
+      "label": "Weights",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::artificial-neuron",
+        "data-science-course::regression-coefficients"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::biases",
+      "label": "Biases",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::artificial-neuron",
+        "data-science-course::intercept"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::forward-propagation",
+      "label": "Forward Propagation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::input-layer",
+        "data-science-course::hidden-layer",
+        "data-science-course::output-layer"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::backpropagation",
+      "label": "Backpropagation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::forward-propagation",
+        "data-science-course::gradient-descent"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::deep-learning",
+      "label": "Deep Learning",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::neural-networks",
+        "data-science-course::hidden-layer"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::network-architecture",
+      "label": "Network Architecture",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::neural-networks"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::epochs",
+      "label": "Epochs",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::training-process",
+        "data-science-course::training-loop"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::batch-size",
+      "label": "Batch Size",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::training-process"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::mini-batch",
+      "label": "Mini-batch",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::batch-size"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::stochastic-gradient",
+      "label": "Stochastic Gradient",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::gradient-descent",
+        "data-science-course::mini-batch"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::vanishing-gradient",
+      "label": "Vanishing Gradient",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::backpropagation",
+        "data-science-course::sigmoid-function"
+      ],
+      "taxonomy_id": "NN",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::pytorch-library",
+      "label": "PyTorch Library",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::python-libraries",
+        "data-science-course::neural-networks"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::tensors",
+      "label": "Tensors",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pytorch-library",
+        "data-science-course::numpy-array"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::tensor-operations",
+      "label": "Tensor Operations",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::tensors"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::autograd",
+      "label": "Autograd",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pytorch-library"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::automatic-differentiation",
+      "label": "Automatic Differentiation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::gradient-descent",
+        "data-science-course::autograd"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::computational-graph",
+      "label": "Computational Graph",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::autograd"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::neural-network-module",
+      "label": "Neural Network Module",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pytorch-library"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::sequential-model",
+      "label": "Sequential Model",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::neural-network-module"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::linear-layer",
+      "label": "Linear Layer",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::sequential-model"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::loss-functions-pytorch",
+      "label": "Loss Functions PyTorch",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pytorch-library",
+        "data-science-course::loss-function"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::optimizer",
+      "label": "Optimizer",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pytorch-library",
+        "data-science-course::optimization"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::sgd-optimizer",
+      "label": "SGD Optimizer",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::optimizer",
+        "data-science-course::gradient-descent"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::adam-optimizer",
+      "label": "Adam Optimizer",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::optimizer"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::training-loop",
+      "label": "Training Loop",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::sequential-model",
+        "data-science-course::loss-functions-pytorch",
+        "data-science-course::optimizer"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-evaluation-pytorch",
+      "label": "Model Evaluation PyTorch",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::training-loop",
+        "data-science-course::model-performance"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::gpu-computing",
+      "label": "GPU Computing",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::pytorch-library",
+        "data-science-course::computational-efficiency"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::cuda",
+      "label": "CUDA",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::gpu-computing"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-saving",
+      "label": "Model Saving",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::training-loop"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-loading",
+      "label": "Model Loading",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-saving"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::transfer-learning",
+      "label": "Transfer Learning",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::deep-learning",
+        "data-science-course::model-loading"
+      ],
+      "taxonomy_id": "TORCH",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::explainable-ai",
+      "label": "Explainable AI",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::machine-learning"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-interpretability",
+      "label": "Model Interpretability",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::coefficient-interpretation",
+        "data-science-course::explainable-ai"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::feature-importance-analysis",
+      "label": "Feature Importance Analysis",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::feature-importance",
+        "data-science-course::model-interpretability"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::shap-values",
+      "label": "SHAP Values",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::feature-importance-analysis"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-documentation",
+      "label": "Model Documentation",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::documentation",
+        "data-science-course::model-interpretability"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::reproducibility",
+      "label": "Reproducibility",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::model-documentation"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::random-seed",
+      "label": "Random Seed",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::random-variables",
+        "data-science-course::reproducibility"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::version-control",
+      "label": "Version Control",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::reproducibility"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::git",
+      "label": "Git",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::version-control"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-ethics",
+      "label": "Data Ethics",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-science",
+        "data-science-course::explainable-ai"
+      ],
+      "taxonomy_id": "BEST",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-science-workflow"
+      ],
+      "taxonomy_id": "PROJ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::end-to-end-pipeline",
+      "label": "End-to-End Pipeline",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-science-workflow",
+        "data-science-course::capstone-project"
+      ],
+      "taxonomy_id": "PROJ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::model-deployment",
+      "label": "Model Deployment",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::training-loop",
+        "data-science-course::end-to-end-pipeline"
+      ],
+      "taxonomy_id": "PROJ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::results-communication",
+      "label": "Results Communication",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::data-visualization",
+        "data-science-course::model-documentation"
+      ],
+      "taxonomy_id": "PROJ",
+      "level": "core"
+    },
+    {
+      "id": "data-science-course::data-driven-decisions",
+      "label": "Data-Driven Decisions",
+      "subject_id": "data-science-course",
+      "dependencies": [
+        "data-science-course::results-communication",
+        "data-science-course::data-science"
+      ],
+      "taxonomy_id": "PROJ",
+      "level": "core"
+    }
+  ]
+}

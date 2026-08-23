@@ -1,0 +1,4146 @@
+{
+  "subject_id": "learning-graphs__docs",
+  "title": "Learning Graphs: The Key to Intelligent Textbooks",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Concept Graph Foundations",
+      "color": "SteelBlue"
+    },
+    "DEPEND": {
+      "classifier_name": "Concept Dependency & Prerequisites",
+      "color": "DarkSlateBlue"
+    },
+    "TAXON": {
+      "classifier_name": "Concept Taxonomies & Ontologies",
+      "color": "DarkGreen"
+    },
+    "QUAL": {
+      "classifier_name": "Graph Quality & Validation",
+      "color": "LimeGreen"
+    },
+    "EDUF": {
+      "classifier_name": "Educational Theory Foundations",
+      "color": "Gold"
+    },
+    "LSCI": {
+      "classifier_name": "Education & Learning Sciences",
+      "color": "DarkGoldenrod"
+    },
+    "PERS": {
+      "classifier_name": "Learning Paths & Personalization",
+      "color": "Khaki"
+    },
+    "AI": {
+      "classifier_name": "Intelligent Agents & Generative AI",
+      "color": "Teal"
+    },
+    "ASSESS": {
+      "classifier_name": "Assessment & Feedback",
+      "color": "DodgerBlue"
+    },
+    "VISCORE": {
+      "classifier_name": "Vis.js Fundamentals & Styling",
+      "color": "LightSkyBlue"
+    },
+    "VISLAYOUT": {
+      "classifier_name": "Graph Layout, Physics & Interactivity",
+      "color": "Crimson"
+    },
+    "VISTOOLS": {
+      "classifier_name": "Graph Clustering & Editing Tools",
+      "color": "DarkRed"
+    },
+    "DATA": {
+      "classifier_name": "Data Formats & File Standards",
+      "color": "MediumPurple"
+    },
+    "TEXTBOOK": {
+      "classifier_name": "Intelligent Textbooks & MicroSims",
+      "color": "Indigo"
+    },
+    "LMS": {
+      "classifier_name": "LMS & Deployment Infrastructure",
+      "color": "DarkOrchid"
+    },
+    "SKILL": {
+      "classifier_name": "Agent Skills for Learning Graph Generation",
+      "color": "HotPink"
+    }
+  },
+  "concepts": [
+    {
+      "id": "learning-graphs__docs::concept",
+      "label": "Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::concept-graph",
+      "label": "Concept Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::content-graph",
+      "label": "Content Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-graph",
+      "label": "Dependency Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-graph",
+      "label": "Learning Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dependency-graph",
+        "learning-graphs__docs::knowledge-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::directed-graph",
+      "label": "Directed Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::directed-acyclic-graph-dag",
+      "label": "Directed Acyclic Graph (DAG)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::directed-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node",
+      "label": "Node",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::edge",
+      "label": "Edge",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::hierarchy",
+      "label": "Hierarchy",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-representation",
+      "label": "Graph Representation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node",
+        "learning-graphs__docs::edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::cluster-graph",
+      "label": "Cluster (Graph)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::journey-map",
+      "label": "Journey Map",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::hybrid-graph",
+      "label": "Hybrid Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-graph",
+        "learning-graphs__docs::content-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-label",
+      "label": "Concept Label",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::preferred-label",
+      "label": "Preferred Label",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::alternate-label",
+      "label": "Alternate Label",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::skos",
+      "label": "SKOS",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::preferred-label",
+        "learning-graphs__docs::alternate-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::iso-iec-11179",
+      "label": "ISO/IEC 11179",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dublin-core-metadata",
+      "label": "Dublin Core Metadata",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::controlled-vocabulary",
+      "label": "Controlled Vocabulary",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::skos"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-definition",
+      "label": "Concept Definition",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::textbook-index",
+      "label": "Textbook Index",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::named-concept",
+      "label": "Named Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-dependency",
+      "label": "Concept Dependency",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph",
+        "learning-graphs__docs::node",
+        "learning-graphs__docs::edge"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::prerequisite-relationship",
+      "label": "Prerequisite Relationship",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::prerequisite-chain",
+      "label": "Prerequisite Chain",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-relationship"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::prerequisite-concept",
+      "label": "Prerequisite Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-relationship"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::foundational-concept",
+      "label": "Foundational Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::goal-concept",
+      "label": "Goal Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::immediate-goal",
+      "label": "Immediate Goal",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::goal-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::intermediate-goal",
+      "label": "Intermediate Goal",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::goal-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::ultimate-goal",
+      "label": "Ultimate Goal",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::goal-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-goal",
+      "label": "Learning Goal",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::goal-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::ready-to-learn-concept",
+      "label": "Ready-to-Learn Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::foundational-concept",
+        "learning-graphs__docs::prerequisite-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learned-concept",
+      "label": "Learned Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::ready-to-learn-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::skill-gap",
+      "label": "Skill Gap",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learned-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::transitive-dependency",
+      "label": "Transitive Dependency",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-chain"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::hop-count",
+      "label": "Hop Count",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::transitive-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-analysis",
+      "label": "Dependency Analysis",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency",
+        "learning-graphs__docs::hop-count"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-taxonomy",
+      "label": "Concept Taxonomy",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::named-concept",
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::ontology",
+      "label": "Ontology",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomyid",
+      "label": "TaxonomyID",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-classifier",
+      "label": "Taxonomy Classifier",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomyid"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-category",
+      "label": "Taxonomy Category",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomyid"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-distribution-report",
+      "label": "Taxonomy Distribution Report",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-legend",
+      "label": "Taxonomy Legend",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-group",
+      "label": "Node Group",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-to-taxonomy-mapping",
+      "label": "Concept-to-Taxonomy Mapping",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomyid",
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::balanced-taxonomy",
+      "label": "Balanced Taxonomy",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-distribution-report"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::miscellaneous-category",
+      "label": "Miscellaneous Category",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::abstraction-graph",
+      "label": "Abstraction (Graph)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::clustering-graph",
+      "label": "Clustering (Graph)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cluster-graph",
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-graph-validation",
+      "label": "Learning Graph Validation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::directed-acyclic-graph-dag",
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-quality-metric",
+      "label": "Graph Quality Metric",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::orphaned-node",
+      "label": "Orphaned Node",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::disconnected-subgraph",
+      "label": "Disconnected Subgraph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::cycle-detection",
+      "label": "Cycle Detection",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::directed-acyclic-graph-dag"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::self-dependency-prevention",
+      "label": "Self-Dependency Prevention",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::indegree",
+      "label": "Indegree",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::out-degree",
+      "label": "Out-Degree",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-degree",
+      "label": "Node Degree",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::indegree",
+        "learning-graphs__docs::out-degree"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::full-coverage-check",
+      "label": "Full Coverage Check",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::disconnected-subgraph"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::structural-check",
+      "label": "Structural Check",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-connectivity",
+      "label": "Graph Connectivity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::disconnected-subgraph"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::quality-metrics-report",
+      "label": "Quality Metrics Report",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-quality-metric",
+        "learning-graphs__docs::orphaned-node",
+        "learning-graphs__docs::disconnected-subgraph",
+        "learning-graphs__docs::cycle-detection"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::third-party-certification",
+      "label": "Third-Party Certification",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::quality-metrics-report"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::bloom-s-taxonomy",
+      "label": "Bloom's Taxonomy",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "EDUF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::cognitive-domain",
+      "label": "Cognitive Domain",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::affective-domain",
+      "label": "Affective Domain",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::psychomotor-domain",
+      "label": "Psychomotor Domain",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::remembering",
+      "label": "Remembering",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitive-domain"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::understanding",
+      "label": "Understanding",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitive-domain"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::applying",
+      "label": "Applying",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitive-domain"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::analyzing",
+      "label": "Analyzing",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitive-domain"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::evaluating",
+      "label": "Evaluating",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitive-domain"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::creating",
+      "label": "Creating",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitive-domain"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-objective",
+      "label": "Learning Objective",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::instructional-design",
+      "label": "Instructional Design",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-objective",
+        "learning-graphs__docs::constructivism",
+        "learning-graphs__docs::cognitivism",
+        "learning-graphs__docs::behaviorism"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::scaffolding",
+      "label": "Scaffolding",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::instructional-design"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::constructivism",
+      "label": "Constructivism",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "EDUF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::zone-of-proximal-development",
+      "label": "Zone of Proximal Development",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::constructivism"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::rhizombic-learning",
+      "label": "Rhizombic Learning",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::constructivism"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::non-linear-learning-path",
+      "label": "Non-Linear Learning Path",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::rhizombic-learning",
+        "learning-graphs__docs::connectivism"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::self-directed-exploration",
+      "label": "Self-Directed Exploration",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::rhizombic-learning"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::emergent-knowledge-structure",
+      "label": "Emergent Knowledge Structure",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::rhizombic-learning"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::mastery-learning",
+      "label": "Mastery Learning",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::scaffolding",
+        "learning-graphs__docs::zone-of-proximal-development"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::curriculum-design",
+      "label": "Curriculum Design",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-objective",
+        "learning-graphs__docs::instructional-design"
+      ],
+      "taxonomy_id": "EDUF",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-path",
+      "label": "Learning Path",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency",
+        "learning-graphs__docs::curriculum-design"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::personalized-learning-path",
+      "label": "Personalized Learning Path",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-path"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::adaptive-learning",
+      "label": "Adaptive Learning",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::mastery-learning",
+        "learning-graphs__docs::learning-path"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::adaptive-learning-path",
+      "label": "Adaptive Learning Path",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::adaptive-learning"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::adaptive-algorithm",
+      "label": "Adaptive Algorithm",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::adaptive-learning"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::hyper-personalization",
+      "label": "Hyper-Personalization",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::personalized-learning-path",
+        "learning-graphs__docs::adaptive-learning"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::hyper-customized-lesson-plan",
+      "label": "Hyper-Customized Lesson Plan",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::hyper-personalization"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::custom-learning-plan",
+      "label": "Custom Learning Plan",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::hyper-customized-lesson-plan"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::content-recommendation-engine",
+      "label": "Content Recommendation Engine",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::adaptive-algorithm"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::recommendation-engine",
+      "label": "Recommendation Engine",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::content-recommendation-engine"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-similarity",
+      "label": "Concept Similarity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::student-similarity",
+      "label": "Student Similarity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::recommendation-engine"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::content-similarity",
+      "label": "Content Similarity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::recommendation-engine"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::similarity-metric",
+      "label": "Similarity Metric",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-similarity",
+        "learning-graphs__docs::student-similarity",
+        "learning-graphs__docs::content-similarity"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "AI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::intelligent-agent",
+      "label": "Intelligent Agent",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::generative-ai"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::agent-autonomy",
+      "label": "Agent Autonomy",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::multi-agent-collaboration",
+      "label": "Multi-Agent Collaboration",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::tool-use-agent",
+      "label": "Tool Use (Agent)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::iterative-workflow",
+      "label": "Iterative Workflow",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-agent"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::llm-generated-dependency-graph",
+      "label": "LLM-Generated Dependency Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::generative-ai",
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::generative-ai"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::chatbot",
+      "label": "Chatbot",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-agent",
+        "learning-graphs__docs::prompt-engineering"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::retrieval-augmented-generation",
+      "label": "Retrieval-Augmented Generation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::generative-ai"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graphrag",
+      "label": "GraphRAG",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::retrieval-augmented-generation",
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-agent",
+      "label": "Learning Agent",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-agent",
+        "learning-graphs__docs::adaptive-learning"
+      ],
+      "taxonomy_id": "AI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::assessment",
+      "label": "Assessment",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-objective"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::formative-feedback",
+      "label": "Formative Feedback",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::assessment"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::personalized-feedback-loop",
+      "label": "Personalized Feedback Loop",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::formative-feedback",
+        "learning-graphs__docs::hyper-personalization"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::formative-feedback"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::feedback-log",
+      "label": "Feedback Log",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::feedback-loop"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::feedback-analysis",
+      "label": "Feedback Analysis",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::feedback-log"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::course-evaluation",
+      "label": "Course Evaluation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::assessment"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-touchpoint",
+      "label": "Learning Touchpoint",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::assessment"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::frequently-asked-question",
+      "label": "Frequently Asked Question",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-touchpoint"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::quiz",
+      "label": "Quiz",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::assessment"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::multiple-choice-question",
+      "label": "Multiple-Choice Question",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::quiz"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::quiz-distractor",
+      "label": "Quiz Distractor",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::multiple-choice-question"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::true-false-question",
+      "label": "True/False Question",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::quiz"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::vis-js",
+      "label": "Vis.js",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "VISCORE",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::vis-network-library",
+      "label": "Vis-Network Library",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::vis-js"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dataset",
+      "label": "DataSet",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::vis-network-library"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::network-container",
+      "label": "Network Container",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::vis-network-library"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::network-initialization",
+      "label": "Network Initialization",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset",
+        "learning-graphs__docs::network-container"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::json-data-format",
+      "label": "JSON Data Format",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::force-directed-graph",
+      "label": "Force-Directed Graph",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-representation"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::force-directed-graph-layout",
+      "label": "Force-Directed Graph Layout",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::force-directed-graph",
+        "learning-graphs__docs::physics-simulation"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::legend-display",
+      "label": "Legend Display",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-category",
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-shape",
+      "label": "Node Shape",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-background-color",
+      "label": "Node Background Color",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-size",
+      "label": "Node Size",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-font-color",
+      "label": "Node Font Color",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-border-width",
+      "label": "Node Border Width",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-border-color",
+      "label": "Node Border Color",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-opacity",
+      "label": "Node Opacity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-icon",
+      "label": "Node Icon",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-image",
+      "label": "Node Image",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-shadow",
+      "label": "Node Shadow",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::custom-canvas-shape",
+      "label": "Custom Canvas Shape",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node-shape"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-label",
+      "label": "Edge Label",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-color",
+      "label": "Edge Color",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-width",
+      "label": "Edge Width",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-dashes",
+      "label": "Edge Dashes",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-smoothing",
+      "label": "Edge Smoothing",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::edge-width"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::cubic-bezier-curve",
+      "label": "Cubic Bezier Curve",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::edge-smoothing"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-arrows",
+      "label": "Edge Arrows",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-font",
+      "label": "Edge Font",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::edge-label"
+      ],
+      "taxonomy_id": "VISCORE",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::physics-simulation",
+      "label": "Physics Simulation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::network-initialization"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::barnes-hut-solver",
+      "label": "Barnes-Hut Solver",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::physics-simulation"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::forceatlas2-layout",
+      "label": "ForceAtlas2 Layout",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::physics-simulation"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::repulsion-solver",
+      "label": "Repulsion Solver",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::physics-simulation"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::central-gravity",
+      "label": "Central Gravity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::physics-simulation"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::damping",
+      "label": "Damping",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::physics-simulation"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::hierarchical-layout",
+      "label": "Hierarchical Layout",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::network-initialization"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::layout-direction",
+      "label": "Layout Direction",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::hierarchical-layout"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::fixed-node-position",
+      "label": "Fixed Node Position",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::physics-simulation"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-pinning",
+      "label": "Node Pinning",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::fixed-node-position"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::spring-length-parameter",
+      "label": "Spring Length Parameter",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::barnes-hut-solver",
+        "learning-graphs__docs::forceatlas2-layout"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::stabilization",
+      "label": "Stabilization",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::physics-simulation"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-layout-algorithm",
+      "label": "Graph Layout Algorithm",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::force-directed-graph-layout",
+        "learning-graphs__docs::hierarchical-layout"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-tooltip",
+      "label": "Node Tooltip",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::hover-state"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-tooltip",
+      "label": "Edge Tooltip",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::hover-state"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::hover-state",
+      "label": "Hover State",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::double-click-event",
+      "label": "Double-Click Event",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::click-event-handling"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-inspector",
+      "label": "Node Inspector",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::double-click-event"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::click-event-handling",
+      "label": "Click Event Handling",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-url-property",
+      "label": "Node URL Property",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::click-event-handling"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::clickable-node",
+      "label": "Clickable Node",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node-url-property"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::search-feature-graph",
+      "label": "Search Feature (Graph)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::type-ahead-filtering",
+      "label": "Type-Ahead Filtering",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::search-feature-graph"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::focus-node-navigation",
+      "label": "Focus Node Navigation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::search-feature-graph"
+      ],
+      "taxonomy_id": "VISLAYOUT",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-cluster",
+      "label": "Graph Cluster",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cluster-graph"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::composite-node",
+      "label": "Composite Node",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-cluster"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::cluster-expand-collapse",
+      "label": "Cluster Expand/Collapse",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::composite-node"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::group-visibility-checkbox",
+      "label": "Group Visibility Checkbox",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node-group",
+        "learning-graphs__docs::cluster-expand-collapse"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::group-styling",
+      "label": "Group Styling",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node-group"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::domain-attribute-clustering",
+      "label": "Domain Attribute (Clustering)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-cluster"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-editor",
+      "label": "Graph Editor",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dataset"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-property-editor",
+      "label": "Node Property Editor",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-editor"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-property-editor",
+      "label": "Edge Property Editor",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-editor"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::json-graph-import",
+      "label": "JSON Graph Import",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-editor",
+        "learning-graphs__docs::json"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::json-graph-export",
+      "label": "JSON Graph Export",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-editor",
+        "learning-graphs__docs::json"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-enricher-script",
+      "label": "Node Enricher Script",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json-graph-import"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::data-validation-on-import",
+      "label": "Data Validation on Import",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json-graph-import"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::orphaned-node-detection",
+      "label": "Orphaned Node Detection",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::orphaned-node",
+        "learning-graphs__docs::data-validation-on-import"
+      ],
+      "taxonomy_id": "VISTOOLS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::json",
+      "label": "JSON",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::json-schema",
+      "label": "JSON Schema",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::csv",
+      "label": "CSV",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::yaml",
+      "label": "YAML",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::markdown",
+      "label": "Markdown",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::csv-to-json-conversion",
+      "label": "CSV to JSON Conversion",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json",
+        "learning-graphs__docs::csv"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::groups-json",
+      "label": "groups.json",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json",
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph",
+        "learning-graphs__docs::generative-ai",
+        "learning-graphs__docs::mkdocs"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::microsim",
+      "label": "MicroSim",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::p5-js"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::p5-js",
+      "label": "p5.js",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::javascript"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::javascript",
+      "label": "JavaScript",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::interactive-visualization",
+      "label": "Interactive Visualization",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::vis-js",
+        "learning-graphs__docs::microsim"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::interactive-simulation",
+      "label": "Interactive Simulation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::microsim"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::book-build-workflow",
+      "label": "Book Build Workflow",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-textbook",
+        "learning-graphs__docs::learning-path",
+        "learning-graphs__docs::github-pages"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::book-metrics",
+      "label": "Book Metrics",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::book-build-workflow"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::chapter-metrics",
+      "label": "Chapter Metrics",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::book-build-workflow"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::content-generation-pipeline",
+      "label": "Content Generation Pipeline",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::book-build-workflow",
+        "learning-graphs__docs::generative-ai"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::quality-gate",
+      "label": "Quality Gate",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::content-generation-pipeline",
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-to-content-viewer",
+      "label": "Concept-to-Content Viewer",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-textbook",
+        "learning-graphs__docs::learning-path"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-path-recommendation",
+      "label": "Learning Path Recommendation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-path",
+        "learning-graphs__docs::content-recommendation-engine"
+      ],
+      "taxonomy_id": "TEXTBOOK",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-management-system-lms",
+      "label": "Learning Management System (LMS)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "LMS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::lms-integration",
+      "label": "LMS Integration",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-management-system-lms",
+        "learning-graphs__docs::learning-graph"
+      ],
+      "taxonomy_id": "LMS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::mkdocs",
+      "label": "MkDocs",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::markdown",
+        "learning-graphs__docs::yaml"
+      ],
+      "taxonomy_id": "LMS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::github-pages",
+      "label": "GitHub Pages",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::git"
+      ],
+      "taxonomy_id": "LMS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::git",
+      "label": "Git",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "LMS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::case-study",
+      "label": "Case Study",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-textbook"
+      ],
+      "taxonomy_id": "LMS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::real-world-application",
+      "label": "Real-World Application",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::case-study"
+      ],
+      "taxonomy_id": "LMS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::cognitivism",
+      "label": "Cognitivism",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "LSCI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::behaviorism",
+      "label": "Behaviorism",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "LSCI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::connectivism",
+      "label": "Connectivism",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "LSCI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::andragogy",
+      "label": "Andragogy",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [],
+      "taxonomy_id": "LSCI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__docs::cognitive-load-theory",
+      "label": "Cognitive Load Theory",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitivism"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::working-memory-constraint",
+      "label": "Working Memory Constraint",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitive-load-theory"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::schema-theory",
+      "label": "Schema Theory",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::cognitivism"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::prior-knowledge-activation",
+      "label": "Prior Knowledge Activation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::schema-theory",
+        "learning-graphs__docs::foundational-concept"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::chunking-cognitive-load",
+      "label": "Chunking (Cognitive Load)",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::working-memory-constraint"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::knowledge-space-theory",
+      "label": "Knowledge Space Theory",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency",
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-progression",
+      "label": "Learning Progression",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-objective",
+        "learning-graphs__docs::curriculum-design"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::spiral-curriculum",
+      "label": "Spiral Curriculum",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-progression"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::backward-design",
+      "label": "Backward Design",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-objective"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::constructive-alignment",
+      "label": "Constructive Alignment",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::backward-design"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::topological-sort",
+      "label": "Topological Sort",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::directed-acyclic-graph-dag"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::partial-order",
+      "label": "Partial Order",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::prerequisite-based-sequencing",
+      "label": "Prerequisite-Based Sequencing",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::topological-sort",
+        "learning-graphs__docs::partial-order"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::content-sequencing-algorithm",
+      "label": "Content Sequencing Algorithm",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-based-sequencing"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::competency-based-education",
+      "label": "Competency-Based Education",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-objective",
+        "learning-graphs__docs::andragogy"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::differentiated-instruction",
+      "label": "Differentiated Instruction",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::adaptive-learning"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::universal-design-for-learning",
+      "label": "Universal Design for Learning",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::differentiated-instruction"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-trajectory",
+      "label": "Learning Trajectory",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-path",
+        "learning-graphs__docs::prerequisite-based-sequencing"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::spaced-repetition",
+      "label": "Spaced Repetition",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::mastery-learning"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::retrieval-practice",
+      "label": "Retrieval Practice",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::spaced-repetition"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::interleaved-practice",
+      "label": "Interleaved Practice",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::spaced-repetition"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::desirable-difficulty",
+      "label": "Desirable Difficulty",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::retrieval-practice",
+        "learning-graphs__docs::interleaved-practice"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::metacognition",
+      "label": "Metacognition",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::instructional-design"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::self-regulated-learning",
+      "label": "Self-Regulated Learning",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::metacognition"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::growth-mindset",
+      "label": "Growth Mindset",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::self-regulated-learning"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::vygotsky-s-social-theory",
+      "label": "Vygotsky's Social Theory",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::zone-of-proximal-development"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::nine-events-of-instruction",
+      "label": "Nine Events of Instruction",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::instructional-design"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::just-in-time-learning",
+      "label": "Just-in-Time Learning",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::adaptive-learning"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::curriculum-alignment",
+      "label": "Curriculum Alignment",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::curriculum-design",
+        "learning-graphs__docs::learning-progression"
+      ],
+      "taxonomy_id": "LSCI",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::agent-skill",
+      "label": "Agent Skill",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::intelligent-agent",
+        "learning-graphs__docs::tool-use-agent"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::claude-code",
+      "label": "Claude Code",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::agent-skill"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::skill-invocation",
+      "label": "Skill Invocation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::claude-code"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::course-description-scoring",
+      "label": "Course Description Scoring",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::bloom-s-taxonomy",
+        "learning-graphs__docs::skill-invocation"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-list-generation",
+      "label": "Concept List Generation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label",
+        "learning-graphs__docs::generative-ai",
+        "learning-graphs__docs::course-description-scoring"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-list-review",
+      "label": "Concept List Review",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-list-generation"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-csv-generation",
+      "label": "Dependency CSV Generation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency",
+        "learning-graphs__docs::concept-list-review"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::automated-quality-validation",
+      "label": "Automated Quality Validation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-quality-metric",
+        "learning-graphs__docs::dependency-csv-generation"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-generation-step",
+      "label": "Taxonomy Generation Step",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy",
+        "learning-graphs__docs::automated-quality-validation"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::pipeline-session-log",
+      "label": "Pipeline Session Log",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-generation-step"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::iterative-graph-regeneration",
+      "label": "Iterative Graph Regeneration",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::quality-metrics-report",
+        "learning-graphs__docs::pipeline-session-log"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::human-in-the-loop-review",
+      "label": "Human-in-the-Loop Review",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-list-review",
+        "learning-graphs__docs::iterative-graph-regeneration"
+      ],
+      "taxonomy_id": "SKILL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::directed-edge",
+      "label": "Directed Edge",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::edge",
+        "learning-graphs__docs::directed-graph"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::incoming-edge",
+      "label": "Incoming Edge",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::directed-edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::outgoing-edge",
+      "label": "Outgoing Edge",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::directed-edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-path",
+      "label": "Graph Path",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-representation",
+        "learning-graphs__docs::directed-edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::path-length",
+      "label": "Path Length",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-path"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::reachability",
+      "label": "Reachability",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-path"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::ancestor-concept",
+      "label": "Ancestor Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::reachability",
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::descendant-concept",
+      "label": "Descendant Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::reachability",
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::source-node",
+      "label": "Source Node",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::incoming-edge",
+        "learning-graphs__docs::outgoing-edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::sink-node",
+      "label": "Sink Node",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::incoming-edge",
+        "learning-graphs__docs::outgoing-edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::terminal-concept",
+      "label": "Terminal Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::sink-node",
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::root-concept",
+      "label": "Root Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::source-node",
+        "learning-graphs__docs::foundational-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::weak-connectivity",
+      "label": "Weak Connectivity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-connectivity"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::strong-connectivity",
+      "label": "Strong Connectivity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::weak-connectivity"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::connected-component",
+      "label": "Connected Component",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::weak-connectivity"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::adjacency-list",
+      "label": "Adjacency List",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-representation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::adjacency-matrix",
+      "label": "Adjacency Matrix",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-representation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-traversal",
+      "label": "Graph Traversal",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-path"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::depth-first-search",
+      "label": "Depth-First Search",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-traversal"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::breadth-first-search",
+      "label": "Breadth-First Search",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-traversal"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-density",
+      "label": "Graph Density",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node-degree"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::transitive-closure",
+      "label": "Transitive Closure",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::transitive-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::transitive-reduction",
+      "label": "Transitive Reduction",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::transitive-closure"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::redundant-dependency",
+      "label": "Redundant Dependency",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::transitive-reduction"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::bottleneck-concept",
+      "label": "Bottleneck Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::indegree",
+        "learning-graphs__docs::out-degree"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::critical-path",
+      "label": "Critical Path",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-chain",
+        "learning-graphs__docs::path-length"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::maximum-path-length",
+      "label": "Maximum Path Length",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::path-length"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-depth",
+      "label": "Dependency Depth",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::path-length",
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-centrality",
+      "label": "Concept Centrality",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::indegree",
+        "learning-graphs__docs::out-degree"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::betweenness-centrality",
+      "label": "Betweenness Centrality",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-centrality"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::degree-distribution",
+      "label": "Degree Distribution",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node-degree"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-diameter",
+      "label": "Graph Diameter",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::path-length"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-schema",
+      "label": "Graph Schema",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-representation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-direction",
+      "label": "Edge Direction",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::directed-edge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::unique-concept-identifier",
+      "label": "Unique Concept Identifier",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-granularity",
+      "label": "Concept Granularity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::atomic-concept",
+      "label": "Atomic Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-granularity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::composite-concept",
+      "label": "Composite Concept",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-granularity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::label-ambiguity",
+      "label": "Label Ambiguity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::label-normalization",
+      "label": "Label Normalization",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::label-ambiguity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::synonym-management",
+      "label": "Synonym Management",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::alternate-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::homonym-disambiguation",
+      "label": "Homonym Disambiguation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::label-ambiguity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::naming-convention",
+      "label": "Naming Convention",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::metadata-field",
+      "label": "Metadata Field",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dublin-core-metadata"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dublin-core-title",
+      "label": "Dublin Core Title",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::metadata-field",
+        "learning-graphs__docs::dublin-core-metadata"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dublin-core-description",
+      "label": "Dublin Core Description",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::metadata-field",
+        "learning-graphs__docs::dublin-core-metadata"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::skos-preferred-label",
+      "label": "SKOS Preferred Label",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::skos",
+        "learning-graphs__docs::preferred-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::skos-alternate-label",
+      "label": "SKOS Alternate Label",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::skos",
+        "learning-graphs__docs::alternate-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::skos-broader-relation",
+      "label": "SKOS Broader Relation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::skos"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::skos-narrower-relation",
+      "label": "SKOS Narrower Relation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::skos"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::skos-related-relation",
+      "label": "SKOS Related Relation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::skos"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::semantic-relationship",
+      "label": "Semantic Relationship",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::skos-broader-relation",
+        "learning-graphs__docs::skos-narrower-relation",
+        "learning-graphs__docs::skos-related-relation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::machine-readable-metadata",
+      "label": "Machine-Readable Metadata",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::metadata-field"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::concept-provenance",
+      "label": "Concept Provenance",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::metadata-validation",
+      "label": "Metadata Validation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::metadata-field",
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::vocabulary-governance",
+      "label": "Vocabulary Governance",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::controlled-vocabulary"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-assertion",
+      "label": "Dependency Assertion",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::direct-dependency",
+      "label": "Direct Dependency",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::indirect-dependency",
+      "label": "Indirect Dependency",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::transitive-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::necessary-prerequisite",
+      "label": "Necessary Prerequisite",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-relationship"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::recommended-prerequisite",
+      "label": "Recommended Prerequisite",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-relationship"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-rationale",
+      "label": "Dependency Rationale",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dependency-assertion"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-confidence",
+      "label": "Dependency Confidence",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dependency-rationale"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-provenance",
+      "label": "Edge Provenance",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::edge",
+        "learning-graphs__docs::concept-provenance"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-review",
+      "label": "Dependency Review",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-dependency"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-gap",
+      "label": "Dependency Gap",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dependency-review"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::overconstraint",
+      "label": "Overconstraint",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::necessary-prerequisite",
+        "learning-graphs__docs::dependency-review"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::underconstraint",
+      "label": "Underconstraint",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::necessary-prerequisite",
+        "learning-graphs__docs::dependency-review"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::false-prerequisite",
+      "label": "False Prerequisite",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dependency-review"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-sequence",
+      "label": "Learning Sequence",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-chain"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::parallel-learning-paths",
+      "label": "Parallel Learning Paths",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-sequence"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::alternative-prerequisite",
+      "label": "Alternative Prerequisite",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::recommended-prerequisite"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::co-prerequisite",
+      "label": "Co-Prerequisite",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::prerequisite-relationship"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::prerequisite-frontier",
+      "label": "Prerequisite Frontier",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::ready-to-learn-concept"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::mastery-prerequisite",
+      "label": "Mastery Prerequisite",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::necessary-prerequisite"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-inference",
+      "label": "Dependency Inference",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::llm-generated-dependency-graph",
+        "learning-graphs__docs::dependency-review"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::human-dependency-review",
+      "label": "Human Dependency Review",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dependency-review"
+      ],
+      "taxonomy_id": "DEPEND",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::classification-scheme",
+      "label": "Classification Scheme",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::polyhierarchy",
+      "label": "Polyhierarchy",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::classification-scheme"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::exclusive-category",
+      "label": "Exclusive Category",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::category-boundary",
+      "label": "Category Boundary",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::category-balance",
+      "label": "Category Balance",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::balanced-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::category-coverage",
+      "label": "Category Coverage",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::category-balance"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::category-overlap",
+      "label": "Category Overlap",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::category-boundary"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::category-assignment",
+      "label": "Category Assignment",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-to-taxonomy-mapping"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-depth",
+      "label": "Taxonomy Depth",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-breadth",
+      "label": "Taxonomy Breadth",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-drift",
+      "label": "Taxonomy Drift",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::ontology-class",
+      "label": "Ontology Class",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::ontology"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::ontology-property",
+      "label": "Ontology Property",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::ontology"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::semantic-type",
+      "label": "Semantic Type",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::ontology-class"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::hierarchical-relation",
+      "label": "Hierarchical Relation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::ontology"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::associative-relation",
+      "label": "Associative Relation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::ontology"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-validation",
+      "label": "Taxonomy Validation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::concept-taxonomy",
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::schema-validation",
+      "label": "Schema Validation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json-schema",
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::referential-integrity",
+      "label": "Referential Integrity",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::duplicate-concept-detection",
+      "label": "Duplicate Concept Detection",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::missing-dependency",
+      "label": "Missing Dependency",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::disconnected-subgraph"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::invalid-dependency-id",
+      "label": "Invalid Dependency ID",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph-validation"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-completeness",
+      "label": "Graph Completeness",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::full-coverage-check"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::pedagogical-coherence",
+      "label": "Pedagogical Coherence",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-graph-validation",
+        "learning-graphs__docs::learning-progression"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::dependency-plausibility",
+      "label": "Dependency Plausibility",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::dependency-review",
+        "learning-graphs__docs::pedagogical-coherence"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::graph-quality-score",
+      "label": "Graph Quality Score",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::quality-metrics-report"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::validation-threshold",
+      "label": "Validation Threshold",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::graph-quality-score"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::automated-validator",
+      "label": "Automated Validator",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::schema-validation",
+        "learning-graphs__docs::graph-quality-score"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::validation-warning",
+      "label": "Validation Warning",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::automated-validator"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::validation-error",
+      "label": "Validation Error",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::automated-validator"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::data-pipeline",
+      "label": "Data Pipeline",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json",
+        "learning-graphs__docs::csv"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::csv-header",
+      "label": "CSV Header",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::csv"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::pipe-delimited-field",
+      "label": "Pipe-Delimited Field",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::csv"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::node-record",
+      "label": "Node Record",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::csv-header"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::edge-record",
+      "label": "Edge Record",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::csv-header"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::group-record",
+      "label": "Group Record",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::csv-header"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::metadata-record",
+      "label": "Metadata Record",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::csv-header"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::schema-conformance",
+      "label": "Schema Conformance",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json-schema"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::version-metadata",
+      "label": "Version Metadata",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::metadata-field"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::license-metadata",
+      "label": "License Metadata",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::metadata-field"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::taxonomy-name-mapping",
+      "label": "Taxonomy Name Mapping",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::taxonomyid",
+        "learning-graphs__docs::taxonomy-category"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::color-configuration",
+      "label": "Color Configuration",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::node-group"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::json-serialization",
+      "label": "JSON Serialization",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::json"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::data-transformation",
+      "label": "Data Transformation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::csv-to-json-conversion"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::reproducible-generation",
+      "label": "Reproducible Generation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::data-pipeline",
+        "learning-graphs__docs::data-transformation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learner-model",
+      "label": "Learner Model",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-path",
+        "learning-graphs__docs::adaptive-learning"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::mastery-state",
+      "label": "Mastery State",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learner-model"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::mastery-threshold",
+      "label": "Mastery Threshold",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::mastery-state",
+        "learning-graphs__docs::mastery-learning"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::knowledge-state",
+      "label": "Knowledge State",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learner-model"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::knowledge-component",
+      "label": "Knowledge Component",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::knowledge-state"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-evidence",
+      "label": "Learning Evidence",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::assessment"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::diagnostic-assessment",
+      "label": "Diagnostic Assessment",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::assessment"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::summative-assessment",
+      "label": "Summative Assessment",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::assessment"
+      ],
+      "taxonomy_id": "ASSESS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::competency-model",
+      "label": "Competency Model",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::knowledge-component",
+        "learning-graphs__docs::competency-based-education"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::learning-path-constraint",
+      "label": "Learning Path Constraint",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::learning-path",
+        "learning-graphs__docs::competency-model"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::readiness-estimation",
+      "label": "Readiness Estimation",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::knowledge-state",
+        "learning-graphs__docs::ready-to-learn-concept"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__docs::personalized-sequencing",
+      "label": "Personalized Sequencing",
+      "subject_id": "learning-graphs__docs",
+      "dependencies": [
+        "learning-graphs__docs::personalized-learning-path",
+        "learning-graphs__docs::readiness-estimation"
+      ],
+      "taxonomy_id": "PERS",
+      "level": "core"
+    }
+  ]
+}

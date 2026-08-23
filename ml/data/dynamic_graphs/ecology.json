@@ -1,0 +1,4085 @@
+{
+  "subject_id": "ecology",
+  "title": "Ecology: Systems Thinking for a Changing Planet",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "ECOS": {
+      "classifier_name": "Ecosystems and Biomes",
+      "color": "PaleGreen"
+    },
+    "ENFL": {
+      "classifier_name": "Energy Flow",
+      "color": "LightYellow"
+    },
+    "CYCL": {
+      "classifier_name": "Biogeochemical Cycles",
+      "color": "PowderBlue"
+    },
+    "INTR": {
+      "classifier_name": "Species Interactions",
+      "color": "PeachPuff"
+    },
+    "BIOD": {
+      "classifier_name": "Biodiversity and Services",
+      "color": "Plum"
+    },
+    "POPU": {
+      "classifier_name": "Population Ecology",
+      "color": "LightPink"
+    },
+    "ERTH": {
+      "classifier_name": "Earth Systems",
+      "color": "Thistle"
+    },
+    "LAND": {
+      "classifier_name": "Land, Water, and Energy Use",
+      "color": "PaleTurquoise"
+    },
+    "POLL": {
+      "classifier_name": "Pollution",
+      "color": "MistyRose"
+    },
+    "GLOB": {
+      "classifier_name": "Global Change",
+      "color": "LightSteelBlue"
+    },
+    "SYST": {
+      "classifier_name": "Systems Thinking",
+      "color": "Honeydew"
+    },
+    "CRIT": {
+      "classifier_name": "Critical Thinking and Literacy",
+      "color": "Lavender"
+    }
+  },
+  "concepts": [
+    {
+      "id": "ecology::ecology",
+      "label": "Ecology",
+      "subject_id": "ecology",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ecology::ecosystem",
+      "label": "Ecosystem",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biotic-factors",
+      "label": "Biotic Factors",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::abiotic-factors",
+      "label": "Abiotic Factors",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biodiversity",
+      "label": "Biodiversity",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecology",
+        "ecology::species"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::species",
+      "label": "Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::population",
+      "label": "Population",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::community",
+      "label": "Community",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::population"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::habitat",
+      "label": "Habitat",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem",
+        "ecology::abiotic-factors"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::niche",
+      "label": "Niche",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::habitat"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biosphere",
+      "label": "Biosphere",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biome",
+      "label": "Biome",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem",
+        "ecology::habitat"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::energy",
+      "label": "Energy",
+      "subject_id": "ecology",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ecology::matter",
+      "label": "Matter",
+      "subject_id": "ecology",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ecology::nutrients",
+      "label": "Nutrients",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::matter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::photosynthesis",
+      "label": "Photosynthesis",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::matter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cellular-respiration",
+      "label": "Cellular Respiration",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::photosynthesis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::organic-molecules",
+      "label": "Organic Molecules",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::matter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::inorganic-molecules",
+      "label": "Inorganic Molecules",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::matter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::water-properties",
+      "label": "Water Properties",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::matter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::terrestrial-biomes",
+      "label": "Terrestrial Biomes",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biome"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::tropical-rainforest",
+      "label": "Tropical Rainforest",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::terrestrial-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::temperate-forest",
+      "label": "Temperate Forest",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::terrestrial-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::desert-biome",
+      "label": "Desert Biome",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::terrestrial-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::tundra-biome",
+      "label": "Tundra Biome",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::terrestrial-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::grassland-biome",
+      "label": "Grassland Biome",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::terrestrial-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::chaparral-biome",
+      "label": "Chaparral Biome",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::terrestrial-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::taiga-biome",
+      "label": "Taiga Biome",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::terrestrial-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::aquatic-biomes",
+      "label": "Aquatic Biomes",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biome",
+        "ecology::water-properties"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::freshwater-ecosystems",
+      "label": "Freshwater Ecosystems",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::aquatic-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::rivers-and-streams",
+      "label": "Rivers and Streams",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::freshwater-ecosystems"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::lakes-and-ponds",
+      "label": "Lakes and Ponds",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::freshwater-ecosystems"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::wetlands",
+      "label": "Wetlands",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::freshwater-ecosystems"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::estuaries",
+      "label": "Estuaries",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::freshwater-ecosystems",
+        "ecology::marine-ecosystems"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::open-ocean",
+      "label": "Open Ocean",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::marine-ecosystems"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::coral-reefs",
+      "label": "Coral Reefs",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::marine-ecosystems"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::deep-ocean",
+      "label": "Deep Ocean",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::marine-ecosystems"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::marine-ecosystems",
+      "label": "Marine Ecosystems",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::aquatic-biomes"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::producers",
+      "label": "Producers",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::photosynthesis",
+        "ecology::trophic-levels"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::consumers",
+      "label": "Consumers",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::cellular-respiration",
+        "ecology::trophic-levels"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::decomposers",
+      "label": "Decomposers",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::cellular-respiration",
+        "ecology::trophic-levels"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::trophic-levels",
+      "label": "Trophic Levels",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::ecosystem"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::food-chains",
+      "label": "Food Chains",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::producers",
+        "ecology::consumers",
+        "ecology::decomposers"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::food-webs",
+      "label": "Food Webs",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::food-chains"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::energy-pyramids",
+      "label": "Energy Pyramids",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::trophic-levels",
+        "ecology::ten-percent-rule"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::primary-productivity",
+      "label": "Primary Productivity",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::photosynthesis",
+        "ecology::producers"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::gross-primary-productivity",
+      "label": "Gross Primary Productivity",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::primary-productivity"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::net-primary-productivity",
+      "label": "Net Primary Productivity",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::gross-primary-productivity",
+        "ecology::cellular-respiration"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ten-percent-rule",
+      "label": "Ten Percent Rule",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::trophic-levels",
+        "ecology::energy-transfer"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::energy-transfer",
+      "label": "Energy Transfer",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::trophic-levels"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biomass",
+      "label": "Biomass",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::primary-productivity"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::autotrophs",
+      "label": "Autotrophs",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::photosynthesis"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::heterotrophs",
+      "label": "Heterotrophs",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::cellular-respiration",
+        "ecology::consumers"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::chemosynthesis",
+      "label": "Chemosynthesis",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::deep-ocean"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::thermodynamics-in-ecology",
+      "label": "Thermodynamics in Ecology",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::energy-transfer"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::entropy-in-ecosystems",
+      "label": "Entropy in Ecosystems",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::thermodynamics-in-ecology"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::solar-energy-input",
+      "label": "Solar Energy Input",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::energy-loss-as-heat",
+      "label": "Energy Loss as Heat",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::thermodynamics-in-ecology",
+        "ecology::cellular-respiration"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::trophic-efficiency",
+      "label": "Trophic Efficiency",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ten-percent-rule",
+        "ecology::energy-transfer"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::net-ecosystem-production",
+      "label": "Net Ecosystem Production",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::net-primary-productivity",
+        "ecology::cellular-respiration"
+      ],
+      "taxonomy_id": "ENFL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biogeochemical-cycles",
+      "label": "Biogeochemical Cycles",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::matter",
+        "ecology::nutrients",
+        "ecology::ecosystem"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::carbon-cycle",
+      "label": "Carbon Cycle",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biogeochemical-cycles"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nitrogen-cycle",
+      "label": "Nitrogen Cycle",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biogeochemical-cycles"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::phosphorus-cycle",
+      "label": "Phosphorus Cycle",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biogeochemical-cycles"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::hydrologic-cycle",
+      "label": "Hydrologic Cycle",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biogeochemical-cycles",
+        "ecology::water-properties"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nitrogen-fixation",
+      "label": "Nitrogen Fixation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nitrogen-cycle",
+        "ecology::nutrients"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nitrification",
+      "label": "Nitrification",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nitrogen-cycle",
+        "ecology::nitrogen-fixation"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::denitrification",
+      "label": "Denitrification",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nitrogen-cycle",
+        "ecology::nitrification"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::carbon-sequestration",
+      "label": "Carbon Sequestration",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::carbon-cycle"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::carbon-dioxide",
+      "label": "Carbon Dioxide",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::matter",
+        "ecology::carbon-cycle"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::methane",
+      "label": "Methane",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::matter",
+        "ecology::carbon-cycle"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::evaporation",
+      "label": "Evaporation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::hydrologic-cycle",
+        "ecology::water-properties"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::transpiration",
+      "label": "Transpiration",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::hydrologic-cycle",
+        "ecology::photosynthesis"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::precipitation",
+      "label": "Precipitation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::hydrologic-cycle",
+        "ecology::evaporation"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::runoff",
+      "label": "Runoff",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::hydrologic-cycle",
+        "ecology::precipitation"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::groundwater",
+      "label": "Groundwater",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::hydrologic-cycle",
+        "ecology::runoff"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::aquifer",
+      "label": "Aquifer",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::groundwater"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nutrient-cycling",
+      "label": "Nutrient Cycling",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biogeochemical-cycles",
+        "ecology::decomposers"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::decomposition",
+      "label": "Decomposition",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::decomposers",
+        "ecology::nutrient-cycling"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::phosphorus-runoff",
+      "label": "Phosphorus Runoff",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::phosphorus-cycle",
+        "ecology::runoff"
+      ],
+      "taxonomy_id": "CYCL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::predation",
+      "label": "Predation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::consumers",
+        "ecology::competition"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::competition",
+      "label": "Competition",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::niche"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::mutualism",
+      "label": "Mutualism",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::symbiosis"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::commensalism",
+      "label": "Commensalism",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::symbiosis"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::parasitism",
+      "label": "Parasitism",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::symbiosis"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::symbiosis",
+      "label": "Symbiosis",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biotic-factors",
+        "ecology::species"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::herbivory",
+      "label": "Herbivory",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::consumers",
+        "ecology::producers"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::keystone-species",
+      "label": "Keystone Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::community",
+        "ecology::food-webs"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::indicator-species",
+      "label": "Indicator Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::biodiversity"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::foundation-species",
+      "label": "Foundation Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::community"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::invasive-species",
+      "label": "Invasive Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::native-species"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::native-species",
+      "label": "Native Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::habitat"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::coevolution",
+      "label": "Coevolution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::predation",
+        "ecology::symbiosis"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::mimicry",
+      "label": "Mimicry",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::predation",
+        "ecology::adaptations"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::camouflage",
+      "label": "Camouflage",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::predation",
+        "ecology::adaptations"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::competitive-exclusion",
+      "label": "Competitive Exclusion",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::competition",
+        "ecology::niche"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::resource-partitioning",
+      "label": "Resource Partitioning",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::competition",
+        "ecology::competitive-exclusion"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::predator-prey-dynamics",
+      "label": "Predator-Prey Dynamics",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::predation",
+        "ecology::population"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ecological-niche",
+      "label": "Ecological Niche",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::niche"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::interspecific-competition",
+      "label": "Interspecific Competition",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::competition",
+        "ecology::species"
+      ],
+      "taxonomy_id": "INTR",
+      "level": "core"
+    },
+    {
+      "id": "ecology::genetic-diversity",
+      "label": "Genetic Diversity",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biodiversity"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::species-diversity",
+      "label": "Species Diversity",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biodiversity",
+        "ecology::species"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ecosystem-diversity",
+      "label": "Ecosystem Diversity",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biodiversity",
+        "ecology::ecosystem"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ecosystem-services",
+      "label": "Ecosystem Services",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem",
+        "ecology::biodiversity"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::provisioning-services",
+      "label": "Provisioning Services",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem-services"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::regulating-services",
+      "label": "Regulating Services",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem-services"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cultural-services",
+      "label": "Cultural Services",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem-services"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::supporting-services",
+      "label": "Supporting Services",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem-services"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::island-biogeography",
+      "label": "Island Biogeography",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species-area-relationship",
+        "ecology::biodiversity"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::species-area-relationship",
+      "label": "Species-Area Relationship",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biodiversity",
+        "ecology::habitat"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ecological-tolerance",
+      "label": "Ecological Tolerance",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::abiotic-factors"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::tolerance-range",
+      "label": "Tolerance Range",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecological-tolerance"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::adaptations",
+      "label": "Adaptations",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::natural-selection"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::natural-selection",
+      "label": "Natural Selection",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::species",
+        "ecology::genetic-diversity"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::natural-disruptions",
+      "label": "Natural Disruptions",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecosystem",
+        "ecology::abiotic-factors"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ecological-succession",
+      "label": "Ecological Succession",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::natural-disruptions",
+        "ecology::community"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::primary-succession",
+      "label": "Primary Succession",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecological-succession"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::secondary-succession",
+      "label": "Secondary Succession",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecological-succession"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::pioneer-species",
+      "label": "Pioneer Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::primary-succession"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::climax-community",
+      "label": "Climax Community",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecological-succession",
+        "ecology::secondary-succession"
+      ],
+      "taxonomy_id": "BIOD",
+      "level": "core"
+    },
+    {
+      "id": "ecology::population-size",
+      "label": "Population Size",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::population-density",
+      "label": "Population Density",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population-size",
+        "ecology::habitat"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::population-distribution",
+      "label": "Population Distribution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population-size",
+        "ecology::habitat"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::generalist-species",
+      "label": "Generalist Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::niche",
+        "ecology::ecological-tolerance"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::specialist-species",
+      "label": "Specialist Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::niche",
+        "ecology::ecological-tolerance"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::r-selected-species",
+      "label": "R-Selected Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::k-selected-species",
+        "ecology::exponential-growth"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::k-selected-species",
+      "label": "K-Selected Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::carrying-capacity"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::survivorship-curves",
+      "label": "Survivorship Curves",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::type-i-survivorship",
+        "ecology::type-ii-survivorship",
+        "ecology::type-iii-survivorship"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::type-i-survivorship",
+      "label": "Type I Survivorship",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::birth-rate",
+        "ecology::death-rate"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::type-ii-survivorship",
+      "label": "Type II Survivorship",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::birth-rate",
+        "ecology::death-rate"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::type-iii-survivorship",
+      "label": "Type III Survivorship",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::birth-rate",
+        "ecology::death-rate"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::carrying-capacity",
+      "label": "Carrying Capacity",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::limiting-factors"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::exponential-growth",
+      "label": "Exponential Growth",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::birth-rate"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::logistic-growth",
+      "label": "Logistic Growth",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::exponential-growth",
+        "ecology::carrying-capacity"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::overshoot",
+      "label": "Overshoot",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::logistic-growth",
+        "ecology::carrying-capacity"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::population-crash",
+      "label": "Population Crash",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::overshoot"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::limiting-factors",
+      "label": "Limiting Factors",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::abiotic-factors"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::density-dependent-factors",
+      "label": "Density-Dependent Factors",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::limiting-factors",
+        "ecology::population-density"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::density-independent-factors",
+      "label": "Density-Independent Factors",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::limiting-factors"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::birth-rate",
+      "label": "Birth Rate",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::death-rate",
+      "label": "Death Rate",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::immigration",
+      "label": "Immigration",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::population-distribution"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::emigration",
+      "label": "Emigration",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::population-distribution"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::age-structure-diagrams",
+      "label": "Age Structure Diagrams",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::birth-rate",
+        "ecology::death-rate",
+        "ecology::population"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::total-fertility-rate",
+      "label": "Total Fertility Rate",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::birth-rate",
+        "ecology::population"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::rule-of-seventy",
+      "label": "Rule of Seventy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::exponential-growth"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::demographic-transition",
+      "label": "Demographic Transition",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::human-population-growth",
+        "ecology::total-fertility-rate"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::human-population-growth",
+      "label": "Human Population Growth",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::exponential-growth"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::population-momentum",
+      "label": "Population Momentum",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::age-structure-diagrams",
+        "ecology::demographic-transition"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::zero-population-growth",
+      "label": "Zero Population Growth",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::birth-rate",
+        "ecology::death-rate",
+        "ecology::carrying-capacity"
+      ],
+      "taxonomy_id": "POPU",
+      "level": "core"
+    },
+    {
+      "id": "ecology::plate-tectonics",
+      "label": "Plate Tectonics",
+      "subject_id": "ecology",
+      "dependencies": [],
+      "taxonomy_id": "ERTH",
+      "level": "foundational"
+    },
+    {
+      "id": "ecology::convergent-boundaries",
+      "label": "Convergent Boundaries",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::plate-tectonics"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::divergent-boundaries",
+      "label": "Divergent Boundaries",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::plate-tectonics"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::transform-boundaries",
+      "label": "Transform Boundaries",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::plate-tectonics"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::soil-formation",
+      "label": "Soil Formation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::plate-tectonics",
+        "ecology::abiotic-factors"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::soil-erosion",
+      "label": "Soil Erosion",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::soil-formation"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::soil-horizons",
+      "label": "Soil Horizons",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::soil-formation"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::soil-texture-triangle",
+      "label": "Soil Texture Triangle",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::soil-composition"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::soil-composition",
+      "label": "Soil Composition",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::soil-formation"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::earth-s-atmosphere",
+      "label": "Earth's Atmosphere",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::abiotic-factors"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::atmospheric-layers",
+      "label": "Atmospheric Layers",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::earth-s-atmosphere"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::troposphere",
+      "label": "Troposphere",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::atmospheric-layers"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::stratosphere",
+      "label": "Stratosphere",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::atmospheric-layers"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::global-wind-patterns",
+      "label": "Global Wind Patterns",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::earth-s-atmosphere",
+        "ecology::coriolis-effect"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::coriolis-effect",
+      "label": "Coriolis Effect",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::solar-radiation"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::convection-cells",
+      "label": "Convection Cells",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::earth-s-atmosphere",
+        "ecology::energy"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::watersheds",
+      "label": "Watersheds",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::runoff",
+        "ecology::groundwater"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::solar-radiation",
+      "label": "Solar Radiation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::solar-energy-input"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::seasons",
+      "label": "Seasons",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::solar-radiation"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::climate-patterns",
+      "label": "Climate Patterns",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-wind-patterns",
+        "ecology::solar-radiation",
+        "ecology::seasons"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::rain-shadow-effect",
+      "label": "Rain Shadow Effect",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-wind-patterns",
+        "ecology::precipitation"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::el-nino",
+      "label": "El Nino",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::enso-cycle"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::la-nina",
+      "label": "La Nina",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::enso-cycle"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::enso-cycle",
+      "label": "ENSO Cycle",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::climate-patterns",
+        "ecology::ocean-warming"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::albedo",
+      "label": "Albedo",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::solar-radiation"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::tragedy-of-the-commons",
+      "label": "Tragedy of the Commons",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::population"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::clearcutting",
+      "label": "Clearcutting",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::deforestation"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::deforestation",
+      "label": "Deforestation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::conservation",
+        "ecology::terrestrial-biomes"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::green-revolution",
+      "label": "Green Revolution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::agricultural-impacts"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::agricultural-impacts",
+      "label": "Agricultural Impacts",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::soil-formation"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::monoculture",
+      "label": "Monoculture",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::agricultural-impacts"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::polyculture",
+      "label": "Polyculture",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainable-agriculture"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::salinization",
+      "label": "Salinization",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::irrigation-methods",
+        "ecology::soil-composition"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::waterlogging",
+      "label": "Waterlogging",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::irrigation-methods"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::aquifer-depletion",
+      "label": "Aquifer Depletion",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::aquifer",
+        "ecology::irrigation-methods"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::irrigation-methods",
+      "label": "Irrigation Methods",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::agricultural-impacts",
+        "ecology::aquifer"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::pest-control-methods",
+      "label": "Pest Control Methods",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::pesticides"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::pesticides",
+      "label": "Pesticides",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::agricultural-impacts",
+        "ecology::herbivory"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biological-pest-control",
+      "label": "Biological Pest Control",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::pest-control-methods",
+        "ecology::predation"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::integrated-pest-management",
+      "label": "Integrated Pest Management",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::pest-control-methods",
+        "ecology::biological-pest-control",
+        "ecology::sustainable-agriculture"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::meat-production",
+      "label": "Meat Production",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::consumers",
+        "ecology::agricultural-impacts"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cafos",
+      "label": "CAFOs",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::meat-production"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::overfishing",
+      "label": "Overfishing",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::maximum-sustainable-yield",
+        "ecology::open-ocean"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::bycatch",
+      "label": "Bycatch",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::overfishing"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::surface-mining",
+      "label": "Surface Mining",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nonrenewable-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::subsurface-mining",
+      "label": "Subsurface Mining",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nonrenewable-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::urbanization",
+      "label": "Urbanization",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::population",
+        "ecology::human-population-growth"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::impervious-surfaces",
+      "label": "Impervious Surfaces",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::urbanization",
+        "ecology::runoff"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::urban-heat-island",
+      "label": "Urban Heat Island",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::urbanization",
+        "ecology::solar-radiation"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ecological-footprint",
+      "label": "Ecological Footprint",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::global-energy-consumption"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::sustainability",
+      "label": "Sustainability",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecology",
+        "ecology::energy"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::sustainable-agriculture",
+      "label": "Sustainable Agriculture",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::agricultural-impacts"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::crop-rotation",
+      "label": "Crop Rotation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainable-agriculture"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::no-till-farming",
+      "label": "No-Till Farming",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainable-agriculture",
+        "ecology::soil-erosion"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::aquaculture",
+      "label": "Aquaculture",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::overfishing"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::sustainable-forestry",
+      "label": "Sustainable Forestry",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::clearcutting"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::urban-runoff-reduction",
+      "label": "Urban Runoff Reduction",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::impervious-surfaces",
+        "ecology::runoff"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::conservation",
+      "label": "Conservation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::biodiversity"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::preservation",
+      "label": "Preservation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::biodiversity"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::maximum-sustainable-yield",
+      "label": "Maximum Sustainable Yield",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability",
+        "ecology::population"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::renewable-resources",
+      "label": "Renewable Resources",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::sustainability"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nonrenewable-resources",
+      "label": "Nonrenewable Resources",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::sustainability"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::global-energy-consumption",
+      "label": "Global Energy Consumption",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::renewable-resources",
+        "ecology::nonrenewable-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::fossil-fuels",
+      "label": "Fossil Fuels",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nonrenewable-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::coal",
+      "label": "Coal",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::fossil-fuels"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::oil",
+      "label": "Oil",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::fossil-fuels"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::natural-gas",
+      "label": "Natural Gas",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::fossil-fuels"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nuclear-power",
+      "label": "Nuclear Power",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::nonrenewable-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nuclear-fission",
+      "label": "Nuclear Fission",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nuclear-power"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nuclear-fusion",
+      "label": "Nuclear Fusion",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nuclear-power"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::radioactive-half-life",
+      "label": "Radioactive Half-Life",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nuclear-power"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nuclear-waste",
+      "label": "Nuclear Waste",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::nuclear-power",
+        "ecology::radioactive-half-life"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biomass-energy",
+      "label": "Biomass Energy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::renewable-resources",
+        "ecology::biomass"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::solar-energy",
+      "label": "Solar Energy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::renewable-resources",
+        "ecology::solar-radiation"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::active-solar-energy",
+      "label": "Active Solar Energy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::solar-energy"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::passive-solar-energy",
+      "label": "Passive Solar Energy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::solar-energy"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::photovoltaic-cells",
+      "label": "Photovoltaic Cells",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::solar-energy"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::hydroelectric-power",
+      "label": "Hydroelectric Power",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::renewable-resources",
+        "ecology::hydrologic-cycle"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::geothermal-energy",
+      "label": "Geothermal Energy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::renewable-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::hydrogen-fuel-cells",
+      "label": "Hydrogen Fuel Cells",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::renewable-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::wind-energy",
+      "label": "Wind Energy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::renewable-resources",
+        "ecology::global-wind-patterns"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::energy-conservation",
+      "label": "Energy Conservation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy-efficiency"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cogeneration",
+      "label": "Cogeneration",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy-conservation"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::energy-return-on-investment",
+      "label": "Energy Return on Investment",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-energy-consumption",
+        "ecology::renewable-resources",
+        "ecology::nonrenewable-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::energy-efficiency",
+      "label": "Energy Efficiency",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::energy",
+        "ecology::sustainability"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "ecology::air-pollution",
+      "label": "Air Pollution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::earth-s-atmosphere"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::primary-pollutants",
+      "label": "Primary Pollutants",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::secondary-pollutants",
+      "label": "Secondary Pollutants",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::primary-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::criteria-air-pollutants",
+      "label": "Criteria Air Pollutants",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution",
+        "ecology::clean-air-act"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::carbon-monoxide",
+      "label": "Carbon Monoxide",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::criteria-air-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::sulfur-dioxide",
+      "label": "Sulfur Dioxide",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::criteria-air-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nitrogen-oxides",
+      "label": "Nitrogen Oxides",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::criteria-air-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ground-level-ozone",
+      "label": "Ground-Level Ozone",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::secondary-pollutants",
+        "ecology::nitrogen-oxides",
+        "ecology::volatile-organic-compounds"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::particulate-matter",
+      "label": "Particulate Matter",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::criteria-air-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::lead-pollution",
+      "label": "Lead Pollution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::criteria-air-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::volatile-organic-compounds",
+      "label": "Volatile Organic Compounds",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::primary-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::photochemical-smog",
+      "label": "Photochemical Smog",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ground-level-ozone",
+        "ecology::volatile-organic-compounds"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::thermal-inversion",
+      "label": "Thermal Inversion",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::troposphere",
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::indoor-air-pollutants",
+      "label": "Indoor Air Pollutants",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::radon",
+      "label": "Radon",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::indoor-air-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::asbestos",
+      "label": "Asbestos",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::indoor-air-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::acid-rain",
+      "label": "Acid Rain",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sulfur-dioxide",
+        "ecology::nitrogen-oxides",
+        "ecology::precipitation"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::noise-pollution",
+      "label": "Noise Pollution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::clean-air-act",
+      "label": "Clean Air Act",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::catalytic-converters",
+      "label": "Catalytic Converters",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::primary-pollutants",
+        "ecology::clean-air-act"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::point-source-pollution",
+      "label": "Point Source Pollution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nonpoint-source-pollution",
+      "label": "Nonpoint Source Pollution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution",
+        "ecology::runoff"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::endocrine-disruptors",
+      "label": "Endocrine Disruptors",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::persistent-organic-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::wetland-destruction",
+      "label": "Wetland Destruction",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::wetlands",
+        "ecology::urbanization"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::eutrophication",
+      "label": "Eutrophication",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::phosphorus-runoff",
+        "ecology::nutrients"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::algal-blooms",
+      "label": "Algal Blooms",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::eutrophication"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::dead-zones",
+      "label": "Dead Zones",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::algal-blooms",
+        "ecology::dissolved-oxygen"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::dissolved-oxygen",
+      "label": "Dissolved Oxygen",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::water-properties",
+        "ecology::freshwater-ecosystems"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biological-oxygen-demand",
+      "label": "Biological Oxygen Demand",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::dissolved-oxygen",
+        "ecology::decomposition"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::thermal-pollution",
+      "label": "Thermal Pollution",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::water-properties",
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::persistent-organic-pollutants",
+      "label": "Persistent Organic Pollutants",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::pesticides",
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::bioaccumulation",
+      "label": "Bioaccumulation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::trophic-levels",
+        "ecology::pesticides"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biomagnification",
+      "label": "Biomagnification",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::bioaccumulation"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::solid-waste-disposal",
+      "label": "Solid Waste Disposal",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::urbanization",
+        "ecology::sustainability"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::landfills",
+      "label": "Landfills",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::solid-waste-disposal"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::incineration",
+      "label": "Incineration",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::solid-waste-disposal"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::recycling",
+      "label": "Recycling",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::waste-reduction"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::waste-reduction",
+      "label": "Waste Reduction",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::sustainability"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::sewage-treatment",
+      "label": "Sewage Treatment",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::clean-water-act"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ld50",
+      "label": "LD50",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::dose-response-curves"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::dose-response-curves",
+      "label": "Dose-Response Curves",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::threshold-effects",
+      "label": "Threshold Effects",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::dose-response-curves"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::pathogens",
+      "label": "Pathogens",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::parasitism",
+        "ecology::death-rate"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::clean-water-act",
+      "label": "Clean Water Act",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::point-source-pollution",
+        "ecology::nonpoint-source-pollution"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cercla-superfund",
+      "label": "CERCLA Superfund",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::clean-water-act",
+        "ecology::persistent-organic-pollutants"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ozone-layer",
+      "label": "Ozone Layer",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::stratosphere"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::stratospheric-ozone-depletion",
+      "label": "Stratospheric Ozone Depletion",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ozone-layer",
+        "ecology::chlorofluorocarbons"
+      ],
+      "taxonomy_id": "POLL",
+      "level": "core"
+    },
+    {
+      "id": "ecology::chlorofluorocarbons",
+      "label": "Chlorofluorocarbons",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::air-pollution"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::montreal-protocol",
+      "label": "Montreal Protocol",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::stratospheric-ozone-depletion"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::greenhouse-effect",
+      "label": "Greenhouse Effect",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::carbon-dioxide",
+        "ecology::solar-radiation"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::greenhouse-gases",
+      "label": "Greenhouse Gases",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::greenhouse-effect",
+        "ecology::carbon-dioxide",
+        "ecology::methane"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::global-climate-change",
+      "label": "Global Climate Change",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::greenhouse-gases"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::climate-change-evidence",
+      "label": "Climate Change Evidence",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-climate-change",
+        "ecology::climate-patterns"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::climate-models",
+      "label": "Climate Models",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-climate-change",
+        "ecology::statistical-literacy"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ocean-warming",
+      "label": "Ocean Warming",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-climate-change",
+        "ecology::open-ocean"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ocean-acidification",
+      "label": "Ocean Acidification",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::carbon-dioxide",
+        "ecology::global-climate-change"
+      ],
+      "taxonomy_id": "ECOS",
+      "level": "core"
+    },
+    {
+      "id": "ecology::sea-level-rise",
+      "label": "Sea Level Rise",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ocean-warming",
+        "ecology::albedo"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::coral-bleaching",
+      "label": "Coral Bleaching",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ocean-warming",
+        "ecology::coral-reefs"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ice-albedo-feedback",
+      "label": "Ice-Albedo Feedback",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::albedo",
+        "ecology::reinforcing-feedback"
+      ],
+      "taxonomy_id": "ERTH",
+      "level": "core"
+    },
+    {
+      "id": "ecology::permafrost-methane-release",
+      "label": "Permafrost Methane Release",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::methane",
+        "ecology::global-climate-change",
+        "ecology::reinforcing-feedback"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::tipping-points",
+      "label": "Tipping Points",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-climate-change",
+        "ecology::threshold"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::endangered-species",
+      "label": "Endangered Species",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biodiversity",
+        "ecology::habitat-loss"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::habitat-loss",
+      "label": "Habitat Loss",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::urbanization",
+        "ecology::deforestation"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::hippo-framework",
+      "label": "HIPPO Framework",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::endangered-species",
+        "ecology::invasive-species",
+        "ecology::human-population-growth",
+        "ecology::overexploitation"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::overexploitation",
+      "label": "Overexploitation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::overfishing",
+        "ecology::maximum-sustainable-yield"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::endangered-species-act",
+      "label": "Endangered Species Act",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::endangered-species"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cites",
+      "label": "CITES",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::endangered-species",
+        "ecology::overexploitation"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::kyoto-protocol",
+      "label": "Kyoto Protocol",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-climate-change"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::paris-agreement",
+      "label": "Paris Agreement",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-climate-change",
+        "ecology::kyoto-protocol"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::carbon-tax",
+      "label": "Carbon Tax",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-climate-change",
+        "ecology::cap-and-trade"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cap-and-trade",
+      "label": "Cap and Trade",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::global-climate-change"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::biodiversity-hotspots",
+      "label": "Biodiversity Hotspots",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::biodiversity",
+        "ecology::habitat-loss"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::habitat-fragmentation",
+      "label": "Habitat Fragmentation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::habitat-loss",
+        "ecology::island-biogeography"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::wildlife-corridors",
+      "label": "Wildlife Corridors",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::habitat-fragmentation"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::species-extinction",
+      "label": "Species Extinction",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::habitat-loss",
+        "ecology::overexploitation"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::system",
+      "label": "System",
+      "subject_id": "ecology",
+      "dependencies": [],
+      "taxonomy_id": "SYST",
+      "level": "foundational"
+    },
+    {
+      "id": "ecology::stocks-and-flows",
+      "label": "Stocks and Flows",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::feedback-loops",
+      "label": "Feedback Loops",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::reinforcing-feedback",
+      "label": "Reinforcing Feedback",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::feedback-loops"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::balancing-feedback",
+      "label": "Balancing Feedback",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::feedback-loops"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::causal-loop-diagrams",
+      "label": "Causal Loop Diagrams",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::feedback-loops",
+        "ecology::reinforcing-feedback",
+        "ecology::balancing-feedback"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::stock-and-flow-diagrams",
+      "label": "Stock and Flow Diagrams",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::stocks-and-flows"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::leverage-points",
+      "label": "Leverage Points",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::feedback-loops",
+        "ecology::systems-thinking"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::emergence",
+      "label": "Emergence",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::complex-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::resilience",
+      "label": "Resilience",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system",
+        "ecology::balancing-feedback"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::regime-shifts",
+      "label": "Regime Shifts",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::resilience",
+        "ecology::threshold"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::scale-and-hierarchy",
+      "label": "Scale and Hierarchy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::mental-models",
+      "label": "Mental Models",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::systems-thinking"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::unintended-consequences",
+      "label": "Unintended Consequences",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::feedback-loops",
+        "ecology::cascading-effects"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::time-delays",
+      "label": "Time Delays",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::feedback-loops",
+        "ecology::stocks-and-flows"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::nonlinear-change",
+      "label": "Nonlinear Change",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::tipping-points",
+        "ecology::complex-systems"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::complex-systems",
+      "label": "Complex Systems",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system",
+        "ecology::feedback-loops"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::dynamic-equilibrium",
+      "label": "Dynamic Equilibrium",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::balancing-feedback",
+        "ecology::stocks-and-flows"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::positive-feedback",
+      "label": "Positive Feedback",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::reinforcing-feedback"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::negative-feedback",
+      "label": "Negative Feedback",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::balancing-feedback"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::system-boundaries",
+      "label": "System Boundaries",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::interconnectedness",
+      "label": "Interconnectedness",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system",
+        "ecology::feedback-loops"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::trade-offs",
+      "label": "Trade-Offs",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::systems-thinking"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cascading-effects",
+      "label": "Cascading Effects",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::feedback-loops",
+        "ecology::food-webs"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::adaptive-management",
+      "label": "Adaptive Management",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::systems-thinking",
+        "ecology::resilience"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::precautionary-principle",
+      "label": "Precautionary Principle",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::risk-assessment",
+        "ecology::systems-thinking"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::ecosystem-resilience",
+      "label": "Ecosystem Resilience",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::resilience",
+        "ecology::ecosystem"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::threshold",
+      "label": "Threshold",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::system"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::tipping-point-dynamics",
+      "label": "Tipping Point Dynamics",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::tipping-points",
+        "ecology::regime-shifts"
+      ],
+      "taxonomy_id": "SYST",
+      "level": "core"
+    },
+    {
+      "id": "ecology::scientific-method",
+      "label": "Scientific Method",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::hypothesis"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::hypothesis",
+      "label": "Hypothesis",
+      "subject_id": "ecology",
+      "dependencies": [],
+      "taxonomy_id": "CRIT",
+      "level": "foundational"
+    },
+    {
+      "id": "ecology::theory",
+      "label": "Theory",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::hypothesis",
+        "ecology::replication"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::scientific-law",
+      "label": "Scientific Law",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::theory"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::peer-review",
+      "label": "Peer Review",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-method"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::replication",
+      "label": "Replication",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-method"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::scientific-consensus",
+      "label": "Scientific Consensus",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::peer-review",
+        "ecology::replication"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::logical-fallacies",
+      "label": "Logical Fallacies",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-method"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::false-dichotomy",
+      "label": "False Dichotomy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::appeal-to-nature",
+      "label": "Appeal to Nature",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cherry-picking-data",
+      "label": "Cherry-Picking Data",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::logical-fallacies",
+        "ecology::statistical-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::anecdotal-evidence",
+      "label": "Anecdotal Evidence",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::logical-fallacies"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::correlation-vs-causation",
+      "label": "Correlation vs Causation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::logical-fallacies",
+        "ecology::statistical-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::source-evaluation",
+      "label": "Source Evaluation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-method",
+        "ecology::primary-research"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::conflicts-of-interest",
+      "label": "Conflicts of Interest",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::source-evaluation"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::primary-research",
+      "label": "Primary Research",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::peer-review",
+        "ecology::scientific-method"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::media-coverage-of-science",
+      "label": "Media Coverage of Science",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::primary-research"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::statistical-literacy",
+      "label": "Statistical Literacy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-method"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::sample-size",
+      "label": "Sample Size",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::statistical-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::confidence-intervals",
+      "label": "Confidence Intervals",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::statistical-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::margin-of-error",
+      "label": "Margin of Error",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::statistical-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::media-literacy",
+      "label": "Media Literacy",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::media-coverage-of-science",
+        "ecology::source-evaluation"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::headline-distortion",
+      "label": "Headline Distortion",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::media-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::algorithm-amplification",
+      "label": "Algorithm Amplification",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::media-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::constructive-skepticism",
+      "label": "Constructive Skepticism",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-consensus",
+        "ecology::logical-fallacies",
+        "ecology::source-evaluation"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::environmental-misinformation",
+      "label": "Environmental Misinformation",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::constructive-skepticism",
+        "ecology::media-literacy",
+        "ecology::source-evaluation"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::climate-change-denial",
+      "label": "Climate Change Denial",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::environmental-misinformation",
+        "ecology::global-climate-change"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "ecology::greenwashing",
+      "label": "Greenwashing",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::environmental-misinformation",
+        "ecology::sustainability"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::fact-checking-methods",
+      "label": "Fact-Checking Methods",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::source-evaluation",
+        "ecology::environmental-misinformation"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::data-visualization-misuse",
+      "label": "Data Visualization Misuse",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::cherry-picking-data",
+        "ecology::statistical-literacy"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::pseudoscience",
+      "label": "Pseudoscience",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-method",
+        "ecology::constructive-skepticism"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::conspiracy-thinking",
+      "label": "Conspiracy Thinking",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::constructive-skepticism",
+        "ecology::pseudoscience"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::mental-models",
+        "ecology::constructive-skepticism"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::science-communication",
+      "label": "Science Communication",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-consensus",
+        "ecology::evidence-based-arguments"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::evidence-based-arguments",
+      "label": "Evidence-Based Arguments",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-method",
+        "ecology::statistical-literacy",
+        "ecology::source-evaluation"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::risk-assessment",
+      "label": "Risk Assessment",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::statistical-literacy",
+        "ecology::ld50"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::risk-assessment",
+        "ecology::trade-offs"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::environmental-justice",
+      "label": "Environmental Justice",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::urbanization",
+        "ecology::environmental-misinformation"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::citizen-science",
+      "label": "Citizen Science",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::scientific-method",
+        "ecology::population"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    },
+    {
+      "id": "ecology::environmental-ethics",
+      "label": "Environmental Ethics",
+      "subject_id": "ecology",
+      "dependencies": [
+        "ecology::ecology",
+        "ecology::sustainability"
+      ],
+      "taxonomy_id": "CRIT",
+      "level": "core"
+    }
+  ]
+}

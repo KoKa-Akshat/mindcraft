@@ -1,0 +1,2038 @@
+{
+  "subject_id": "asl-book",
+  "title": "Introduction to American Sign Language (ASL)",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "PEOP": {
+      "classifier_name": "People & Family",
+      "color": "PowderBlue"
+    },
+    "GRAM": {
+      "classifier_name": "Grammar & Expression",
+      "color": "Thistle"
+    },
+    "CULT": {
+      "classifier_name": "Culture & Communication",
+      "color": "PaleTurquoise"
+    },
+    "CONV": {
+      "classifier_name": "Conversation Basics",
+      "color": "LightYellow"
+    },
+    "EMOT": {
+      "classifier_name": "Emotions & Feelings",
+      "color": "LightPink"
+    },
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "PRON": {
+      "classifier_name": "Pronouns & Reference",
+      "color": "PaleGreen"
+    },
+    "VERB": {
+      "classifier_name": "Action Verbs",
+      "color": "LightSteelBlue"
+    },
+    "BASIC": {
+      "classifier_name": "Alphabet & Numbers",
+      "color": "PeachPuff"
+    },
+    "FOOD": {
+      "classifier_name": "Food & Eating",
+      "color": "Plum"
+    },
+    "DESC": {
+      "classifier_name": "Descriptive Words",
+      "color": "Lavender"
+    },
+    "ANIM": {
+      "classifier_name": "Animals & Nature",
+      "color": "Aquamarine"
+    }
+  },
+  "concepts": [
+    {
+      "id": "asl-book::american-sign-language",
+      "label": "American Sign Language",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::visual-communication",
+        "asl-book::manual-communication",
+        "asl-book::sign-language-interpreter",
+        "asl-book::asl-recognition",
+        "asl-book::regional-sign-variation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::deaf-community",
+      "label": "Deaf Community",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::deaf-culture",
+        "asl-book::deaf-identity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::deaf-culture",
+      "label": "Deaf Culture",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::deaf-identity",
+        "asl-book::gallaudet-university",
+        "asl-book::sign-language-interpreter",
+        "asl-book::deaf-school",
+        "asl-book::asl-recognition",
+        "asl-book::deaf-art",
+        "asl-book::regional-sign-variation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::visual-communication",
+      "label": "Visual Communication",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::handshape",
+        "asl-book::palm-orientation",
+        "asl-book::movement",
+        "asl-book::location",
+        "asl-book::facial-expression",
+        "asl-book::visual-alert-system",
+        "asl-book::captioning",
+        "asl-book::eye-contact"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::manual-communication",
+      "label": "Manual Communication",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::handshape",
+        "asl-book::palm-orientation",
+        "asl-book::movement",
+        "asl-book::location"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::handshape",
+      "label": "Handshape",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::fingerspelling",
+        "asl-book::number-1",
+        "asl-book::number-2",
+        "asl-book::number-3",
+        "asl-book::number-4",
+        "asl-book::number-5",
+        "asl-book::hello",
+        "asl-book::goodbye",
+        "asl-book::please",
+        "asl-book::thank-you",
+        "asl-book::excuse-me",
+        "asl-book::sorry",
+        "asl-book::yes",
+        "asl-book::no",
+        "asl-book::help",
+        "asl-book::finished",
+        "asl-book::name",
+        "asl-book::what",
+        "asl-book::who",
+        "asl-book::where",
+        "asl-book::when",
+        "asl-book::why",
+        "asl-book::i",
+        "asl-book::you",
+        "asl-book::he-she",
+        "asl-book::this",
+        "asl-book::that",
+        "asl-book::here",
+        "asl-book::there",
+        "asl-book::love",
+        "asl-book::like",
+        "asl-book::dislike",
+        "asl-book::family",
+        "asl-book::friend",
+        "asl-book::teacher",
+        "asl-book::student",
+        "asl-book::boy",
+        "asl-book::girl",
+        "asl-book::food",
+        "asl-book::eat",
+        "asl-book::drink",
+        "asl-book::animal",
+        "asl-book::tree",
+        "asl-book::flower",
+        "asl-book::sun",
+        "asl-book::rain",
+        "asl-book::color",
+        "asl-book::big",
+        "asl-book::small",
+        "asl-book::hot",
+        "asl-book::cold",
+        "asl-book::fast",
+        "asl-book::slow",
+        "asl-book::new",
+        "asl-book::old",
+        "asl-book::good",
+        "asl-book::bad",
+        "asl-book::beautiful",
+        "asl-book::play",
+        "asl-book::run",
+        "asl-book::jump",
+        "asl-book::walk",
+        "asl-book::sit",
+        "asl-book::stand",
+        "asl-book::sleep",
+        "asl-book::read",
+        "asl-book::write",
+        "asl-book::draw",
+        "asl-book::watch",
+        "asl-book::learn",
+        "asl-book::teach",
+        "asl-book::perform"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::palm-orientation",
+      "label": "Palm Orientation",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::fingerspelling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::movement",
+      "label": "Movement",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::fingerspelling",
+        "asl-book::hello",
+        "asl-book::goodbye",
+        "asl-book::please",
+        "asl-book::thank-you",
+        "asl-book::excuse-me",
+        "asl-book::sorry",
+        "asl-book::help",
+        "asl-book::finished",
+        "asl-book::name",
+        "asl-book::eat",
+        "asl-book::drink",
+        "asl-book::fast",
+        "asl-book::slow",
+        "asl-book::play",
+        "asl-book::run",
+        "asl-book::jump",
+        "asl-book::walk",
+        "asl-book::sit",
+        "asl-book::stand",
+        "asl-book::sleep",
+        "asl-book::read",
+        "asl-book::write",
+        "asl-book::draw",
+        "asl-book::watch",
+        "asl-book::learn",
+        "asl-book::teach",
+        "asl-book::perform",
+        "asl-book::depicting-verb"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::location",
+      "label": "Location",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::fingerspelling",
+        "asl-book::i",
+        "asl-book::you",
+        "asl-book::he-she",
+        "asl-book::this",
+        "asl-book::that",
+        "asl-book::here",
+        "asl-book::there",
+        "asl-book::signing-space"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::facial-expression",
+      "label": "Facial Expression",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::sorry",
+        "asl-book::happy",
+        "asl-book::sad",
+        "asl-book::angry",
+        "asl-book::excited",
+        "asl-book::nervous",
+        "asl-book::scared",
+        "asl-book::worried",
+        "asl-book::calm",
+        "asl-book::surprised",
+        "asl-book::confused",
+        "asl-book::tired",
+        "asl-book::proud",
+        "asl-book::embarrassed",
+        "asl-book::shy",
+        "asl-book::brave",
+        "asl-book::love",
+        "asl-book::like",
+        "asl-book::dislike",
+        "asl-book::emotion-intensity",
+        "asl-book::hungry",
+        "asl-book::thirsty",
+        "asl-book::delicious",
+        "asl-book::big",
+        "asl-book::small",
+        "asl-book::hot",
+        "asl-book::cold",
+        "asl-book::good",
+        "asl-book::bad",
+        "asl-book::beautiful",
+        "asl-book::perform",
+        "asl-book::role-shift",
+        "asl-book::rhetorical-question",
+        "asl-book::non-manual-signal",
+        "asl-book::eye-contact",
+        "asl-book::storytelling",
+        "asl-book::self-expression"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::fingerspelling",
+      "label": "Fingerspelling",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::asl-alphabet",
+        "asl-book::fingerspelling-speed",
+        "asl-book::clarity-in-fingerspelling",
+        "asl-book::name"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::asl-alphabet",
+      "label": "ASL Alphabet",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::letter-a-through-e",
+        "asl-book::letter-f-through-j",
+        "asl-book::letter-k-through-o",
+        "asl-book::letter-p-through-t",
+        "asl-book::letter-u-through-z",
+        "asl-book::double-letters"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::letter-a-through-e",
+      "label": "Letter A Through E",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "BASIC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::letter-f-through-j",
+      "label": "Letter F Through J",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "BASIC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::letter-k-through-o",
+      "label": "Letter K Through O",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "BASIC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::letter-p-through-t",
+      "label": "Letter P Through T",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "BASIC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::letter-u-through-z",
+      "label": "Letter U Through Z",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "BASIC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::double-letters",
+      "label": "Double Letters",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "BASIC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::fingerspelling-speed",
+      "label": "Fingerspelling Speed",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::clarity-in-fingerspelling"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::clarity-in-fingerspelling",
+      "label": "Clarity in Fingerspelling",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::signing-clearly"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::number-1",
+      "label": "Number 1",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::numbers-6-10"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::number-2",
+      "label": "Number 2",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::numbers-6-10"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::number-3",
+      "label": "Number 3",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::numbers-6-10"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::number-4",
+      "label": "Number 4",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::numbers-6-10"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::number-5",
+      "label": "Number 5",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::numbers-6-10"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::numbers-6-10",
+      "label": "Numbers 6-10",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::counting-to-20",
+        "asl-book::age-signs",
+        "asl-book::time-expressions",
+        "asl-book::listing"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::counting-to-20",
+      "label": "Counting to 20",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::counting-to-100"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::counting-to-100",
+      "label": "Counting to 100",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "BASIC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::age-signs",
+      "label": "Age Signs",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "BASIC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::time-expressions",
+      "label": "Time Expressions",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::good-morning",
+        "asl-book::breakfast",
+        "asl-book::lunch",
+        "asl-book::dinner",
+        "asl-book::time-marker"
+      ],
+      "taxonomy_id": "BASIC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::hello",
+      "label": "Hello",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::good-morning"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::goodbye",
+      "label": "Goodbye",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::good-morning",
+      "label": "Good Morning",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::please",
+      "label": "Please",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::thank-you",
+      "label": "Thank You",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::you-re-welcome"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::you-re-welcome",
+      "label": "You're Welcome",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::excuse-me",
+      "label": "Excuse Me",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::sorry",
+      "label": "Sorry",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::yes",
+      "label": "Yes",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::maybe",
+        "asl-book::i-don-t-know"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::no",
+      "label": "No",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::maybe",
+        "asl-book::i-don-t-know",
+        "asl-book::negation"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::maybe",
+      "label": "Maybe",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::i-don-t-know",
+      "label": "I Don't Know",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::help",
+      "label": "Help",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::finished",
+      "label": "Finished",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::name",
+      "label": "Name",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CONV",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::what",
+      "label": "What",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::question-formation"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::who",
+      "label": "Who",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::question-formation"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::where",
+      "label": "Where",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::question-formation"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::when",
+      "label": "When",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::question-formation"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::why",
+      "label": "Why",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::question-formation"
+      ],
+      "taxonomy_id": "CONV",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::i",
+      "label": "I",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::we",
+        "asl-book::they",
+        "asl-book::signing-space",
+        "asl-book::indexing",
+        "asl-book::role-shift",
+        "asl-book::subject-verb-object",
+        "asl-book::agreement-verb"
+      ],
+      "taxonomy_id": "PRON",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::you",
+      "label": "You",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::we",
+        "asl-book::they",
+        "asl-book::signing-space",
+        "asl-book::indexing",
+        "asl-book::role-shift",
+        "asl-book::subject-verb-object",
+        "asl-book::agreement-verb"
+      ],
+      "taxonomy_id": "PRON",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::he-she",
+      "label": "He/She",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::role-shift"
+      ],
+      "taxonomy_id": "PRON",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::we",
+      "label": "We",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::they",
+      "label": "They",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::this",
+      "label": "This",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::that",
+      "label": "That",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::here",
+      "label": "Here",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::there",
+      "label": "There",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::signing-space",
+      "label": "Signing Space",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::directionality",
+        "asl-book::indexing",
+        "asl-book::topicalization",
+        "asl-book::negation",
+        "asl-book::question-formation",
+        "asl-book::classifier",
+        "asl-book::role-shift",
+        "asl-book::time-marker",
+        "asl-book::subject-verb-object",
+        "asl-book::spatial-reference",
+        "asl-book::conditional-statement",
+        "asl-book::listing",
+        "asl-book::signing-clearly",
+        "asl-book::storytelling",
+        "asl-book::self-expression"
+      ],
+      "taxonomy_id": "PRON",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::directionality",
+      "label": "Directionality",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::classifier",
+        "asl-book::spatial-reference",
+        "asl-book::agreement-verb"
+      ],
+      "taxonomy_id": "PRON",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::indexing",
+      "label": "Indexing",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::topicalization",
+      "label": "Topicalization",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::negation",
+      "label": "Negation",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PRON",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::question-formation",
+      "label": "Question Formation",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::rhetorical-question",
+        "asl-book::conditional-statement",
+        "asl-book::question-face"
+      ],
+      "taxonomy_id": "PRON",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::happy",
+      "label": "Happy",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::feeling-words"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::sad",
+      "label": "Sad",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::feeling-words"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::angry",
+      "label": "Angry",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::feeling-words"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::excited",
+      "label": "Excited",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::nervous",
+      "label": "Nervous",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::scared",
+      "label": "Scared",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::worried",
+      "label": "Worried",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::calm",
+      "label": "Calm",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::surprised",
+      "label": "Surprised",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::confused",
+      "label": "Confused",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::tired",
+      "label": "Tired",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::proud",
+      "label": "Proud",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::embarrassed",
+      "label": "Embarrassed",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::shy",
+      "label": "Shy",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::brave",
+      "label": "Brave",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::love",
+      "label": "Love",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::like",
+      "label": "Like",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::favorite",
+        "asl-book::like-preference"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::dislike",
+      "label": "Dislike",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::don-t-like"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::feeling-words",
+      "label": "Feeling Words",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::emotion-intensity"
+      ],
+      "taxonomy_id": "EMOT",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::emotion-intensity",
+      "label": "Emotion Intensity",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "EMOT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::family",
+      "label": "Family",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::mother",
+        "asl-book::father",
+        "asl-book::sister",
+        "asl-book::brother",
+        "asl-book::grandmother",
+        "asl-book::grandfather",
+        "asl-book::aunt",
+        "asl-book::uncle",
+        "asl-book::baby"
+      ],
+      "taxonomy_id": "PEOP",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::mother",
+      "label": "Mother",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::grandmother",
+        "asl-book::grandfather"
+      ],
+      "taxonomy_id": "PEOP",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::father",
+      "label": "Father",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::grandmother",
+        "asl-book::grandfather"
+      ],
+      "taxonomy_id": "PEOP",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::sister",
+      "label": "Sister",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::brother",
+      "label": "Brother",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::grandmother",
+      "label": "Grandmother",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::grandfather",
+      "label": "Grandfather",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::aunt",
+      "label": "Aunt",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::uncle",
+      "label": "Uncle",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::baby",
+      "label": "Baby",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::friend",
+      "label": "Friend",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::teacher",
+      "label": "Teacher",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::student",
+      "label": "Student",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::boy",
+      "label": "Boy",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::girl",
+      "label": "Girl",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "PEOP",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::food",
+      "label": "Food",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::hungry",
+        "asl-book::thirsty",
+        "asl-book::breakfast",
+        "asl-book::lunch",
+        "asl-book::dinner",
+        "asl-book::apple",
+        "asl-book::banana",
+        "asl-book::pizza",
+        "asl-book::sandwich",
+        "asl-book::milk",
+        "asl-book::water",
+        "asl-book::cookie",
+        "asl-book::ice-cream",
+        "asl-book::delicious"
+      ],
+      "taxonomy_id": "FOOD",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::eat",
+      "label": "Eat",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::drink",
+      "label": "Drink",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::hungry",
+      "label": "Hungry",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::thirsty",
+      "label": "Thirsty",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::breakfast",
+      "label": "Breakfast",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::lunch",
+      "label": "Lunch",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::dinner",
+      "label": "Dinner",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::apple",
+      "label": "Apple",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::banana",
+      "label": "Banana",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::pizza",
+      "label": "Pizza",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::sandwich",
+      "label": "Sandwich",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::milk",
+      "label": "Milk",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::water",
+      "label": "Water",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::cookie",
+      "label": "Cookie",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::ice-cream",
+      "label": "Ice Cream",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::favorite",
+      "label": "Favorite",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::like-preference",
+      "label": "Like (Preference)",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::don-t-like",
+      "label": "Don't Like",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::delicious",
+      "label": "Delicious",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "FOOD",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::animal",
+      "label": "Animal",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::dog",
+        "asl-book::cat",
+        "asl-book::bird",
+        "asl-book::fish",
+        "asl-book::horse",
+        "asl-book::bear",
+        "asl-book::butterfly"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::dog",
+      "label": "Dog",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "ANIM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::cat",
+      "label": "Cat",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "ANIM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::bird",
+      "label": "Bird",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "ANIM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::fish",
+      "label": "Fish",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "ANIM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::horse",
+      "label": "Horse",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "ANIM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::bear",
+      "label": "Bear",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "ANIM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::butterfly",
+      "label": "Butterfly",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "ANIM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::tree",
+      "label": "Tree",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::nature"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::flower",
+      "label": "Flower",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::nature"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::sun",
+      "label": "Sun",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::nature"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::rain",
+      "label": "Rain",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::nature"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::color",
+      "label": "Color",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::red",
+        "asl-book::blue",
+        "asl-book::yellow",
+        "asl-book::green"
+      ],
+      "taxonomy_id": "DESC",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::nature",
+      "label": "Nature",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::environment"
+      ],
+      "taxonomy_id": "ANIM",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::environment",
+      "label": "Environment",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "ANIM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::red",
+      "label": "Red",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::blue",
+      "label": "Blue",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::yellow",
+      "label": "Yellow",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::green",
+      "label": "Green",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::big",
+      "label": "Big",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::small",
+      "label": "Small",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::hot",
+      "label": "Hot",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::cold",
+      "label": "Cold",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::fast",
+      "label": "Fast",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::slow",
+      "label": "Slow",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::new",
+      "label": "New",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::old",
+      "label": "Old",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::good",
+      "label": "Good",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::bad",
+      "label": "Bad",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::beautiful",
+      "label": "Beautiful",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "DESC",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::play",
+      "label": "Play",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::run",
+      "label": "Run",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::jump",
+      "label": "Jump",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::walk",
+      "label": "Walk",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::sit",
+      "label": "Sit",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::stand",
+      "label": "Stand",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::sleep",
+      "label": "Sleep",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::read",
+      "label": "Read",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::write",
+      "label": "Write",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::draw",
+      "label": "Draw",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::watch",
+      "label": "Watch",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::learn",
+      "label": "Learn",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::teach",
+        "asl-book::practice"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::teach",
+      "label": "Teach",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::practice",
+      "label": "Practice",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "VERB",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::perform",
+      "label": "Perform",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::storytelling",
+        "asl-book::self-expression"
+      ],
+      "taxonomy_id": "VERB",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::classifier",
+      "label": "Classifier",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::depicting-verb"
+      ],
+      "taxonomy_id": "GRAM",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::role-shift",
+      "label": "Role Shift",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::time-marker",
+      "label": "Time Marker",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::subject-verb-object",
+      "label": "Subject-Verb-Object",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::depicting-verb",
+      "label": "Depicting Verb",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::spatial-reference",
+      "label": "Spatial Reference",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::agreement-verb",
+      "label": "Agreement Verb",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::rhetorical-question",
+      "label": "Rhetorical Question",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::conditional-statement",
+      "label": "Conditional Statement",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::listing",
+      "label": "Listing",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::non-manual-signal",
+      "label": "Non-Manual Signal",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::eyebrow-raise",
+        "asl-book::eyebrow-furrow",
+        "asl-book::head-nod",
+        "asl-book::head-shake",
+        "asl-book::eye-gaze",
+        "asl-book::mouth-morpheme",
+        "asl-book::body-lean",
+        "asl-book::question-face",
+        "asl-book::statement-face"
+      ],
+      "taxonomy_id": "GRAM",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::eyebrow-raise",
+      "label": "Eyebrow Raise",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::eyebrow-furrow",
+      "label": "Eyebrow Furrow",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::head-nod",
+      "label": "Head Nod",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::head-shake",
+      "label": "Head Shake",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::eye-gaze",
+      "label": "Eye Gaze",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::mouth-morpheme",
+      "label": "Mouth Morpheme",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::body-lean",
+      "label": "Body Lean",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::question-face",
+      "label": "Question Face",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::statement-face",
+      "label": "Statement Face",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "GRAM",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::deaf-identity",
+      "label": "Deaf Identity",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::deaf-pride",
+        "asl-book::gallaudet-university",
+        "asl-book::deaf-school",
+        "asl-book::visual-alert-system",
+        "asl-book::captioning",
+        "asl-book::deaf-art"
+      ],
+      "taxonomy_id": "CULT",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::deaf-pride",
+      "label": "Deaf Pride",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::gallaudet-university",
+      "label": "Gallaudet University",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::sign-language-interpreter",
+      "label": "Sign Language Interpreter",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::deaf-school",
+      "label": "Deaf School",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::visual-alert-system",
+      "label": "Visual Alert System",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::captioning",
+      "label": "Captioning",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::asl-recognition",
+      "label": "ASL Recognition",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::deaf-art",
+      "label": "Deaf Art",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::regional-sign-variation",
+      "label": "Regional Sign Variation",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::eye-contact",
+      "label": "Eye Contact",
+      "subject_id": "asl-book",
+      "dependencies": [
+        "asl-book::getting-attention"
+      ],
+      "taxonomy_id": "CULT",
+      "level": "core"
+    },
+    {
+      "id": "asl-book::getting-attention",
+      "label": "Getting Attention",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::signing-clearly",
+      "label": "Signing Clearly",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::storytelling",
+      "label": "Storytelling",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    },
+    {
+      "id": "asl-book::self-expression",
+      "label": "Self-Expression",
+      "subject_id": "asl-book",
+      "dependencies": [],
+      "taxonomy_id": "CULT",
+      "level": "foundational"
+    }
+  ]
+}

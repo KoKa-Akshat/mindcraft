@@ -1,0 +1,4285 @@
+{
+  "subject_id": "computer-science",
+  "title": "AP Computer Science (Python Version)",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "PYBASIC": {
+      "classifier_name": "Python Basics",
+      "color": "PeachPuff"
+    },
+    "BOOL": {
+      "classifier_name": "Boolean Logic",
+      "color": "LightYellow"
+    },
+    "CTRL": {
+      "classifier_name": "Control Flow",
+      "color": "PaleGreen"
+    },
+    "STR": {
+      "classifier_name": "Strings",
+      "color": "PaleTurquoise"
+    },
+    "FUNC": {
+      "classifier_name": "Functions",
+      "color": "PowderBlue"
+    },
+    "REC": {
+      "classifier_name": "Recursion",
+      "color": "LightPink"
+    },
+    "DATA": {
+      "classifier_name": "Data Structures",
+      "color": "Thistle"
+    },
+    "OOP": {
+      "classifier_name": "Object-Oriented Programming",
+      "color": "LightSteelBlue"
+    },
+    "FILEIO": {
+      "classifier_name": "File I/O",
+      "color": "Honeydew"
+    },
+    "ERR": {
+      "classifier_name": "Error Handling",
+      "color": "MistyRose"
+    },
+    "TEST": {
+      "classifier_name": "Testing and Debugging",
+      "color": "Lavender"
+    },
+    "ALGO": {
+      "classifier_name": "Algorithms",
+      "color": "Aquamarine"
+    },
+    "SENG": {
+      "classifier_name": "Software Engineering",
+      "color": "Gainsboro"
+    },
+    "ADVPY": {
+      "classifier_name": "Advanced Python",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "computer-science::computer-science",
+      "label": "Computer Science",
+      "subject_id": "computer-science",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "computer-science::computational-thinking",
+      "label": "Computational Thinking",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computer-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::algorithms",
+      "label": "Algorithms",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::abstraction",
+      "label": "Abstraction",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::decomposition",
+      "label": "Decomposition",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::stepwise-refinement",
+      "label": "Stepwise Refinement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::decomposition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::problem-solving",
+      "label": "Problem Solving",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::binary-number-system",
+      "label": "Binary Number System",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computer-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::bits-and-bytes",
+      "label": "Bits and Bytes",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::binary-number-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::character-encoding",
+      "label": "Character Encoding",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::bits-and-bytes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::ascii-and-unicode",
+      "label": "ASCII and Unicode",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::character-encoding"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::computer-hardware",
+      "label": "Computer Hardware",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computer-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::cpu-and-memory",
+      "label": "CPU and Memory",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computer-hardware"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::input-and-output-devices",
+      "label": "Input and Output Devices",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computer-hardware"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::operating-systems",
+      "label": "Operating Systems",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::cpu-and-memory",
+        "computer-science::input-and-output-devices"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::programming-languages",
+      "label": "Programming Languages",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computer-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::compiled-vs-interpreted",
+      "label": "Compiled vs Interpreted",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::programming-languages"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::python-language",
+      "label": "Python Language",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::programming-languages",
+        "computer-science::compiled-vs-interpreted"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::python-interpreter",
+      "label": "Python Interpreter",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-language"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::python-repl",
+      "label": "Python REPL",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-interpreter"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::python-scripts",
+      "label": "Python Scripts",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-interpreter"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::comments-in-code",
+      "label": "Comments in Code",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-scripts"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::variables",
+      "label": "Variables",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-language"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::variable-assignment",
+      "label": "Variable Assignment",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variables"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::variable-naming-rules",
+      "label": "Variable Naming Rules",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-assignment"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::data-types",
+      "label": "Data Types",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-language"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::integer-type",
+      "label": "Integer Type",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::float-type",
+      "label": "Float Type",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::boolean-type",
+      "label": "Boolean Type",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-type",
+      "label": "String Type",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::type-function",
+      "label": "Type Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::type-conversion",
+      "label": "Type Conversion",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types",
+        "computer-science::integer-type",
+        "computer-science::float-type"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::implicit-type-conversion",
+      "label": "Implicit Type Conversion",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::type-conversion"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::explicit-type-casting",
+      "label": "Explicit Type Casting",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::type-conversion"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::arithmetic-operators",
+      "label": "Arithmetic Operators",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::integer-type",
+        "computer-science::float-type"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::integer-division",
+      "label": "Integer Division",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::arithmetic-operators"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::modulo-operator",
+      "label": "Modulo Operator",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::arithmetic-operators"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::operator-precedence",
+      "label": "Operator Precedence",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::arithmetic-operators"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-concatenation",
+      "label": "String Concatenation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-type"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-repetition",
+      "label": "String Repetition",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-type"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::f-string-formatting",
+      "label": "F-String Formatting",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-type",
+        "computer-science::variable-assignment"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::print-function",
+      "label": "Print Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-language"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::input-function",
+      "label": "Input Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::print-function",
+        "computer-science::string-type"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::multiple-assignment",
+      "label": "Multiple Assignment",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-assignment"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::constants-convention",
+      "label": "Constants Convention",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-naming-rules"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::augmented-assignment",
+      "label": "Augmented Assignment",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-assignment",
+        "computer-science::arithmetic-operators"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::expressions",
+      "label": "Expressions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::arithmetic-operators",
+        "computer-science::variable-assignment"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::statements",
+      "label": "Statements",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::expressions"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::code-readability",
+      "label": "Code Readability",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::comments-in-code",
+        "computer-science::variable-naming-rules"
+      ],
+      "taxonomy_id": "PYBASIC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::boolean-expressions",
+      "label": "Boolean Expressions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::boolean-type",
+        "computer-science::expressions"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::comparison-operators",
+      "label": "Comparison Operators",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::boolean-expressions"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::equal-and-not-equal",
+      "label": "Equal and Not Equal",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::comparison-operators"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::greater-and-less-than",
+      "label": "Greater and Less Than",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::comparison-operators"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::logical-operators",
+      "label": "Logical Operators",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::boolean-expressions"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::and-operator",
+      "label": "And Operator",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::logical-operators"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::or-operator",
+      "label": "Or Operator",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::logical-operators"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::not-operator",
+      "label": "Not Operator",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::logical-operators"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::short-circuit-evaluation",
+      "label": "Short-Circuit Evaluation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::and-operator",
+        "computer-science::or-operator"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::truthiness-and-falsiness",
+      "label": "Truthiness and Falsiness",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::boolean-type",
+        "computer-science::boolean-expressions"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::boolean-conversion",
+      "label": "Boolean Conversion",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::truthiness-and-falsiness",
+        "computer-science::explicit-type-casting"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::chained-comparisons",
+      "label": "Chained Comparisons",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::comparison-operators"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::order-of-operations",
+      "label": "Order of Operations",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::operator-precedence",
+        "computer-science::logical-operators"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::de-morgan-s-laws",
+      "label": "De Morgan's Laws",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::and-operator",
+        "computer-science::or-operator",
+        "computer-science::not-operator"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::truth-tables",
+      "label": "Truth Tables",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::logical-operators",
+        "computer-science::boolean-type"
+      ],
+      "taxonomy_id": "BOOL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::control-flow",
+      "label": "Control Flow",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::statements"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::sequential-execution",
+      "label": "Sequential Execution",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::control-flow"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::conditional-statements",
+      "label": "Conditional Statements",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::control-flow",
+        "computer-science::boolean-expressions"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::if-statement",
+      "label": "If Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::conditional-statements"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::if-else-statement",
+      "label": "If-Else Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::if-statement"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::elif-statement",
+      "label": "Elif Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::if-else-statement"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::nested-conditionals",
+      "label": "Nested Conditionals",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::elif-statement"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::ternary-expression",
+      "label": "Ternary Expression",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::if-else-statement"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::match-statement",
+      "label": "Match Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::conditional-statements"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::loops",
+      "label": "Loops",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::control-flow"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::for-loop",
+      "label": "For Loop",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loops"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::while-loop",
+      "label": "While Loop",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loops",
+        "computer-science::boolean-expressions"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::range-function",
+      "label": "Range Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::for-loop"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::loop-variable",
+      "label": "Loop Variable",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::for-loop"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::loop-body",
+      "label": "Loop Body",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loops",
+        "computer-science::statements"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::infinite-loops",
+      "label": "Infinite Loops",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::while-loop"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::break-statement",
+      "label": "Break Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loops"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::continue-statement",
+      "label": "Continue Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loops"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::nested-loops",
+      "label": "Nested Loops",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::for-loop",
+        "computer-science::while-loop"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::loop-patterns",
+      "label": "Loop Patterns",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loops",
+        "computer-science::algorithms"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::accumulator-pattern",
+      "label": "Accumulator Pattern",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loop-patterns",
+        "computer-science::augmented-assignment"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::counter-pattern",
+      "label": "Counter Pattern",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loop-patterns",
+        "computer-science::augmented-assignment"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::sentinel-value-pattern",
+      "label": "Sentinel Value Pattern",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::while-loop",
+        "computer-science::break-statement"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::flag-variable-pattern",
+      "label": "Flag Variable Pattern",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::loop-patterns",
+        "computer-science::boolean-type"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::loop-else-clause",
+      "label": "Loop Else Clause",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::for-loop",
+        "computer-science::while-loop",
+        "computer-science::break-statement"
+      ],
+      "taxonomy_id": "CTRL",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-basics",
+      "label": "String Basics",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-type"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-indexing",
+      "label": "String Indexing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::negative-indexing",
+      "label": "Negative Indexing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-indexing"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-slicing",
+      "label": "String Slicing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-indexing"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::slice-notation",
+      "label": "Slice Notation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-slicing"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-immutability",
+      "label": "String Immutability",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-length",
+      "label": "String Length",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-methods",
+      "label": "String Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::upper-and-lower-methods",
+      "label": "Upper and Lower Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-methods"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::strip-method",
+      "label": "Strip Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-methods"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::split-method",
+      "label": "Split Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-methods"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::join-method",
+      "label": "Join Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::split-method"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::find-and-replace-methods",
+      "label": "Find and Replace Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-methods"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::startswith-and-endswith",
+      "label": "Startswith and Endswith",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-methods"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-iteration",
+      "label": "String Iteration",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics",
+        "computer-science::for-loop"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-comparison",
+      "label": "String Comparison",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics",
+        "computer-science::comparison-operators"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::escape-characters",
+      "label": "Escape Characters",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::raw-strings",
+      "label": "Raw Strings",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::escape-characters"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::multiline-strings",
+      "label": "Multiline Strings",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-formatting",
+      "label": "String Formatting",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::format-method",
+      "label": "Format Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-formatting"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-validation-methods",
+      "label": "String Validation Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-methods"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::in-operator-for-strings",
+      "label": "In Operator for Strings",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-basics",
+        "computer-science::boolean-expressions"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::character-methods",
+      "label": "Character Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-methods"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::string-reversal",
+      "label": "String Reversal",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-slicing",
+        "computer-science::slice-notation"
+      ],
+      "taxonomy_id": "STR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::functions",
+      "label": "Functions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::abstraction",
+        "computer-science::stepwise-refinement"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::function-definition",
+      "label": "Function Definition",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::function-call",
+      "label": "Function Call",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::parameters",
+      "label": "Parameters",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::arguments",
+      "label": "Arguments",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::function-call",
+        "computer-science::parameters"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::return-statement",
+      "label": "Return Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::return-values",
+      "label": "Return Values",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::return-statement"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::none-type",
+      "label": "None Type",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types",
+        "computer-science::return-values"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::default-parameters",
+      "label": "Default Parameters",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::parameters"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::keyword-arguments",
+      "label": "Keyword Arguments",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::arguments"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::positional-arguments",
+      "label": "Positional Arguments",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::arguments"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::multiple-return-values",
+      "label": "Multiple Return Values",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::return-values",
+        "computer-science::tuples"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::variable-scope",
+      "label": "Variable Scope",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-assignment",
+        "computer-science::function-definition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::local-variables",
+      "label": "Local Variables",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-scope"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::global-variables",
+      "label": "Global Variables",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-scope"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::global-keyword",
+      "label": "Global Keyword",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::global-variables"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::docstrings",
+      "label": "Docstrings",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::function-definition",
+        "computer-science::multiline-strings"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::function-documentation",
+      "label": "Function Documentation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::docstrings"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::helper-functions",
+      "label": "Helper Functions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::functions",
+        "computer-science::decomposition"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::main-function-pattern",
+      "label": "Main Function Pattern",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::functions",
+        "computer-science::python-scripts"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::name-equals-main",
+      "label": "Name Equals Main",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::main-function-pattern",
+        "computer-science::python-modules"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::lambda-functions",
+      "label": "Lambda Functions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::functions",
+        "computer-science::expressions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::higher-order-functions",
+      "label": "Higher-Order Functions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::functions",
+        "computer-science::lambda-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::map-function",
+      "label": "Map Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::higher-order-functions",
+        "computer-science::for-loop"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::filter-function",
+      "label": "Filter Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::higher-order-functions",
+        "computer-science::boolean-expressions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::reduce-function",
+      "label": "Reduce Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::higher-order-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::function-composition",
+      "label": "Function Composition",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::higher-order-functions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::recursion",
+      "label": "Recursion",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::functions",
+        "computer-science::loops"
+      ],
+      "taxonomy_id": "REC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::base-case",
+      "label": "Base Case",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::recursion"
+      ],
+      "taxonomy_id": "REC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::recursive-case",
+      "label": "Recursive Case",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::recursion",
+        "computer-science::base-case"
+      ],
+      "taxonomy_id": "REC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::recursive-call-stack",
+      "label": "Recursive Call Stack",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::recursion",
+        "computer-science::cpu-and-memory"
+      ],
+      "taxonomy_id": "REC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::stack-overflow",
+      "label": "Stack Overflow",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::recursive-call-stack"
+      ],
+      "taxonomy_id": "REC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::recursion-vs-iteration",
+      "label": "Recursion vs Iteration",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::recursion",
+        "computer-science::for-loop"
+      ],
+      "taxonomy_id": "REC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::recursive-patterns",
+      "label": "Recursive Patterns",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::recursion",
+        "computer-science::loop-patterns"
+      ],
+      "taxonomy_id": "REC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::memoization",
+      "label": "Memoization",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::recursion",
+        "computer-science::dictionary-as-cache"
+      ],
+      "taxonomy_id": "REC",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::lists",
+      "label": "Lists",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-creation",
+      "label": "List Creation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-indexing",
+      "label": "List Indexing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::string-indexing"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-slicing",
+      "label": "List Slicing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-indexing",
+        "computer-science::string-slicing"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-mutability",
+      "label": "List Mutability",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::string-immutability"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-methods",
+      "label": "List Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::append-method",
+      "label": "Append Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::insert-method",
+      "label": "Insert Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::remove-method",
+      "label": "Remove Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::pop-method",
+      "label": "Pop Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::sort-method",
+      "label": "Sort Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::reverse-method",
+      "label": "Reverse Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-comprehension",
+      "label": "List Comprehension",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::for-loop",
+        "computer-science::expressions"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::nested-lists",
+      "label": "Nested Lists",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-of-lists",
+      "label": "List of Lists",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::nested-lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-traversal",
+      "label": "List Traversal",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::for-loop"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::for-loop-with-lists",
+      "label": "For Loop with Lists",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-traversal",
+        "computer-science::for-loop"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::enumerate-function",
+      "label": "Enumerate Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::for-loop-with-lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-unpacking",
+      "label": "List Unpacking",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::multiple-assignment"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::zip-function",
+      "label": "Zip Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::tuples"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-copying",
+      "label": "List Copying",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-mutability"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::shallow-copy",
+      "label": "Shallow Copy",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-copying"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::deep-copy",
+      "label": "Deep Copy",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-copying",
+        "computer-science::nested-lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-concatenation",
+      "label": "List Concatenation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::string-concatenation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-repetition",
+      "label": "List Repetition",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::string-repetition"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::in-operator-for-lists",
+      "label": "In Operator for Lists",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::in-operator-for-strings"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::index-method",
+      "label": "Index Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::count-method",
+      "label": "Count Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::min-max-sum-functions",
+      "label": "Min Max Sum Functions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::len-function-for-lists",
+      "label": "Len Function for Lists",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::string-length"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::sorted-function",
+      "label": "Sorted Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::sort-method"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-as-stack",
+      "label": "List as Stack",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::pop-method"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-as-queue",
+      "label": "List as Queue",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::pop-method",
+        "computer-science::insert-method"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-aliasing",
+      "label": "List Aliasing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-mutability",
+        "computer-science::variable-assignment"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::identity-vs-equality",
+      "label": "Identity vs Equality",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-aliasing",
+        "computer-science::equal-and-not-equal"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::tuples",
+      "label": "Tuples",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::tuple-creation",
+      "label": "Tuple Creation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::tuples"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::tuple-immutability",
+      "label": "Tuple Immutability",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::tuples",
+        "computer-science::string-immutability"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::tuple-packing",
+      "label": "Tuple Packing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::tuples"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::tuple-unpacking",
+      "label": "Tuple Unpacking",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::tuple-packing",
+        "computer-science::multiple-assignment"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::named-tuples",
+      "label": "Named Tuples",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::tuples",
+        "computer-science::collections-module"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::tuple-methods",
+      "label": "Tuple Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::tuples"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::tuples-as-keys",
+      "label": "Tuples as Keys",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::tuples",
+        "computer-science::dictionaries",
+        "computer-science::tuple-immutability"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::tuples-vs-lists",
+      "label": "Tuples vs Lists",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::tuples",
+        "computer-science::lists",
+        "computer-science::list-mutability",
+        "computer-science::tuple-immutability"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::sets",
+      "label": "Sets",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::set-creation",
+      "label": "Set Creation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::sets"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::set-operations",
+      "label": "Set Operations",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::sets"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::set-union",
+      "label": "Set Union",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::set-operations"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::set-intersection",
+      "label": "Set Intersection",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::set-operations"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::set-difference",
+      "label": "Set Difference",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::set-operations"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::set-symmetric-difference",
+      "label": "Set Symmetric Difference",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::set-operations"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::set-methods",
+      "label": "Set Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::sets"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::membership-testing",
+      "label": "Membership Testing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::sets",
+        "computer-science::in-operator-for-lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::frozenset",
+      "label": "Frozenset",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::sets",
+        "computer-science::tuple-immutability"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::removing-duplicates",
+      "label": "Removing Duplicates",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::sets",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dictionaries",
+      "label": "Dictionaries",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dictionary-creation",
+      "label": "Dictionary Creation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::key-value-pairs",
+      "label": "Key-Value Pairs",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dictionary-access",
+      "label": "Dictionary Access",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::key-value-pairs"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dictionary-methods",
+      "label": "Dictionary Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::get-method",
+      "label": "Get Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionary-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::keys-method",
+      "label": "Keys Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionary-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::values-method",
+      "label": "Values Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionary-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::items-method",
+      "label": "Items Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionary-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dictionary-iteration",
+      "label": "Dictionary Iteration",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::for-loop",
+        "computer-science::items-method"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dictionary-comprehension",
+      "label": "Dictionary Comprehension",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::list-comprehension"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::nested-dictionaries",
+      "label": "Nested Dictionaries",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::nested-lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::default-values",
+      "label": "Default Values",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::get-method",
+        "computer-science::default-parameters"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::update-method",
+      "label": "Update Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionary-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::pop-method-for-dicts",
+      "label": "Pop Method for Dicts",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionary-methods"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dictionary-merging",
+      "label": "Dictionary Merging",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::update-method"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::counting-with-dicts",
+      "label": "Counting with Dicts",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::counter-pattern"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::grouping-with-dicts",
+      "label": "Grouping with Dicts",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dictionary-as-cache",
+      "label": "Dictionary as Cache",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::functions"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::hashable-keys",
+      "label": "Hashable Keys",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::tuple-immutability"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dict-vs-list-lookup",
+      "label": "Dict vs List Lookup",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::lists",
+        "computer-science::time-complexity"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::json-and-dictionaries",
+      "label": "JSON and Dictionaries",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dictionaries",
+        "computer-science::json-files"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::ordereddict",
+      "label": "OrderedDict",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::collections-module"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::defaultdict",
+      "label": "DefaultDict",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::collections-module",
+        "computer-science::default-values"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::counter-class",
+      "label": "Counter Class",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::collections-module",
+        "computer-science::counting-with-dicts"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::object-oriented-programming",
+      "label": "Object-Oriented Programming",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::abstraction",
+        "computer-science::functions"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::classes",
+      "label": "Classes",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::object-oriented-programming"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::objects",
+      "label": "Objects",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::classes"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::class-definition",
+      "label": "Class Definition",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::classes"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::class-instantiation",
+      "label": "Class Instantiation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::class-definition"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::instance-attributes",
+      "label": "Instance Attributes",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::class-instantiation",
+        "computer-science::variable-assignment"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::class-attributes",
+      "label": "Class Attributes",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::class-definition",
+        "computer-science::variable-assignment"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::the-self-parameter",
+      "label": "The Self Parameter",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::class-definition"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::init-method",
+      "label": "Init Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::class-definition",
+        "computer-science::parameters"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::constructor",
+      "label": "Constructor",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::init-method"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::methods",
+      "label": "Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::class-definition",
+        "computer-science::functions"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::instance-methods",
+      "label": "Instance Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::methods",
+        "computer-science::the-self-parameter"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::str-method",
+      "label": "Str Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::methods",
+        "computer-science::dunder-methods"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::repr-method",
+      "label": "Repr Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::methods",
+        "computer-science::dunder-methods"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::encapsulation",
+      "label": "Encapsulation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::object-oriented-programming",
+        "computer-science::abstraction"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::private-attributes",
+      "label": "Private Attributes",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::instance-attributes",
+        "computer-science::encapsulation"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::getter-methods",
+      "label": "Getter Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::private-attributes"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::setter-methods",
+      "label": "Setter Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::private-attributes"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::property-decorator",
+      "label": "Property Decorator",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::getter-methods",
+        "computer-science::setter-methods",
+        "computer-science::decorators"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::class-methods",
+      "label": "Class Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::methods",
+        "computer-science::class-attributes"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::static-methods",
+      "label": "Static Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::methods"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::composition",
+      "label": "Composition",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::object-oriented-programming",
+        "computer-science::objects"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::has-a-relationship",
+      "label": "Has-A Relationship",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::composition"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::inheritance",
+      "label": "Inheritance",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::object-oriented-programming",
+        "computer-science::classes"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::is-a-relationship",
+      "label": "Is-A Relationship",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::inheritance"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::parent-class",
+      "label": "Parent Class",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::inheritance"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::child-class",
+      "label": "Child Class",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::inheritance",
+        "computer-science::parent-class"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::super-function",
+      "label": "Super Function",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::child-class"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::method-overriding",
+      "label": "Method Overriding",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::child-class",
+        "computer-science::methods"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::polymorphism",
+      "label": "Polymorphism",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::inheritance",
+        "computer-science::method-overriding"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::duck-typing",
+      "label": "Duck Typing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::polymorphism"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::abstract-classes",
+      "label": "Abstract Classes",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::inheritance",
+        "computer-science::polymorphism"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::multiple-inheritance",
+      "label": "Multiple Inheritance",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::inheritance"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::method-resolution-order",
+      "label": "Method Resolution Order",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::multiple-inheritance"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::operator-overloading",
+      "label": "Operator Overloading",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::methods",
+        "computer-science::dunder-methods"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::eq-and-lt-methods",
+      "label": "Eq and Lt Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::operator-overloading",
+        "computer-science::equal-and-not-equal"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::add-and-mul-methods",
+      "label": "Add and Mul Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::operator-overloading",
+        "computer-science::arithmetic-operators"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::iterable-protocol",
+      "label": "Iterable Protocol",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::dunder-methods",
+        "computer-science::for-loop"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::iterator-protocol",
+      "label": "Iterator Protocol",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::iterable-protocol"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dunder-methods",
+      "label": "Dunder Methods",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::methods"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::object-identity",
+      "label": "Object Identity",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::objects",
+        "computer-science::identity-vs-equality"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::object-comparison",
+      "label": "Object Comparison",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::objects",
+        "computer-science::eq-and-lt-methods"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::class-hierarchies",
+      "label": "Class Hierarchies",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::inheritance",
+        "computer-science::child-class"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::uml-class-diagrams",
+      "label": "UML Class Diagrams",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::classes",
+        "computer-science::inheritance",
+        "computer-science::composition"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::design-patterns-intro",
+      "label": "Design Patterns Intro",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::object-oriented-programming",
+        "computer-science::composition",
+        "computer-science::inheritance"
+      ],
+      "taxonomy_id": "OOP",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::file-input-output",
+      "label": "File Input Output",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-language",
+        "computer-science::input-and-output-devices"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::opening-files",
+      "label": "Opening Files",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::file-input-output"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::file-modes",
+      "label": "File Modes",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::opening-files"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::read-method",
+      "label": "Read Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::opening-files"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::readline-method",
+      "label": "Readline Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::read-method"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::readlines-method",
+      "label": "Readlines Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::read-method",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::write-method",
+      "label": "Write Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::opening-files"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::writelines-method",
+      "label": "Writelines Method",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::write-method",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::with-statement",
+      "label": "With Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::opening-files",
+        "computer-science::context-managers"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::context-managers",
+      "label": "Context Managers",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::file-input-output"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::file-paths",
+      "label": "File Paths",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::file-input-output",
+        "computer-science::string-type"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::csv-files",
+      "label": "CSV Files",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::file-input-output",
+        "computer-science::split-method",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::json-files",
+      "label": "JSON Files",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::file-input-output",
+        "computer-science::dictionaries"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::file-exceptions",
+      "label": "File Exceptions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::file-input-output",
+        "computer-science::errors-and-exceptions"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::text-vs-binary-files",
+      "label": "Text vs Binary Files",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::file-input-output",
+        "computer-science::bits-and-bytes"
+      ],
+      "taxonomy_id": "FILEIO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::errors-and-exceptions",
+      "label": "Errors and Exceptions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-language"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::syntax-errors",
+      "label": "Syntax Errors",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::errors-and-exceptions"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::runtime-errors",
+      "label": "Runtime Errors",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::errors-and-exceptions"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::logic-errors",
+      "label": "Logic Errors",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::errors-and-exceptions"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::exception-types",
+      "label": "Exception Types",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::errors-and-exceptions"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::typeerror",
+      "label": "TypeError",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::exception-types",
+        "computer-science::data-types"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::valueerror",
+      "label": "ValueError",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::exception-types",
+        "computer-science::type-conversion"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::indexerror",
+      "label": "IndexError",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::exception-types",
+        "computer-science::string-indexing"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::keyerror",
+      "label": "KeyError",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::exception-types",
+        "computer-science::dictionary-access"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::try-except-block",
+      "label": "Try-Except Block",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::errors-and-exceptions"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::multiple-except-blocks",
+      "label": "Multiple Except Blocks",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::try-except-block",
+        "computer-science::exception-types"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::finally-block",
+      "label": "Finally Block",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::try-except-block"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::raising-exceptions",
+      "label": "Raising Exceptions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::errors-and-exceptions"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::custom-exceptions",
+      "label": "Custom Exceptions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::raising-exceptions",
+        "computer-science::classes"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::assertions",
+      "label": "Assertions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::errors-and-exceptions",
+        "computer-science::boolean-expressions"
+      ],
+      "taxonomy_id": "ERR",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::testing",
+      "label": "Testing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::problem-solving",
+        "computer-science::functions"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::manual-testing",
+      "label": "Manual Testing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::testing"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::unit-testing",
+      "label": "Unit Testing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::testing"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::test-cases",
+      "label": "Test Cases",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::unit-testing"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::assert-statements",
+      "label": "Assert Statements",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::assertions",
+        "computer-science::unit-testing"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::unittest-module",
+      "label": "Unittest Module",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::unit-testing",
+        "computer-science::python-modules"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::test-functions",
+      "label": "Test Functions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::unit-testing",
+        "computer-science::functions"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::edge-cases",
+      "label": "Edge Cases",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::test-cases"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::boundary-testing",
+      "label": "Boundary Testing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::edge-cases"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::test-driven-development",
+      "label": "Test-Driven Development",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::unit-testing"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::debugging",
+      "label": "Debugging",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::errors-and-exceptions"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::print-debugging",
+      "label": "Print Debugging",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::debugging",
+        "computer-science::print-function"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::debugger-tools",
+      "label": "Debugger Tools",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::debugging"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::breakpoints",
+      "label": "Breakpoints",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::debugger-tools"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::step-through-code",
+      "label": "Step Through Code",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::debugger-tools"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::code-tracing",
+      "label": "Code Tracing",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::control-flow",
+        "computer-science::debugging"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::rubber-duck-debugging",
+      "label": "Rubber Duck Debugging",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::debugging"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::defensive-programming",
+      "label": "Defensive Programming",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::debugging",
+        "computer-science::try-except-block"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::input-validation",
+      "label": "Input Validation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::input-function",
+        "computer-science::try-except-block",
+        "computer-science::conditional-statements"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::code-review",
+      "label": "Code Review",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::testing",
+        "computer-science::code-readability"
+      ],
+      "taxonomy_id": "TEST",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::algorithm-design",
+      "label": "Algorithm Design",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithms",
+        "computer-science::problem-solving"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::pseudocode",
+      "label": "Pseudocode",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::flowcharts",
+      "label": "Flowcharts",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::linear-search",
+      "label": "Linear Search",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::list-traversal"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::binary-search",
+      "label": "Binary Search",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::linear-search",
+        "computer-science::sorted-function",
+        "computer-science::recursion"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::search-comparison",
+      "label": "Search Comparison",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::linear-search",
+        "computer-science::binary-search",
+        "computer-science::time-complexity"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::selection-sort",
+      "label": "Selection Sort",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::list-traversal",
+        "computer-science::comparison-operators"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::insertion-sort",
+      "label": "Insertion Sort",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::list-traversal",
+        "computer-science::comparison-operators"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::merge-sort",
+      "label": "Merge Sort",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::decomposition",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::merge-sort-recursion",
+      "label": "Merge Sort Recursion",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::merge-sort",
+        "computer-science::recursion"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::sorting-comparison",
+      "label": "Sorting Comparison",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::selection-sort",
+        "computer-science::insertion-sort",
+        "computer-science::merge-sort",
+        "computer-science::time-complexity"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::stable-vs-unstable-sort",
+      "label": "Stable vs Unstable Sort",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::selection-sort",
+        "computer-science::insertion-sort",
+        "computer-science::merge-sort"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::algorithm-correctness",
+      "label": "Algorithm Correctness",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::loop-invariants",
+      "label": "Loop Invariants",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-correctness",
+        "computer-science::loops"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::big-o-notation",
+      "label": "Big-O Notation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::time-complexity",
+      "label": "Time Complexity",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::big-o-notation"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::space-complexity",
+      "label": "Space Complexity",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::big-o-notation"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::constant-time-o-1",
+      "label": "Constant Time O(1)",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::linear-time-o-n",
+      "label": "Linear Time O(n)",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::quadratic-time-o-n-2",
+      "label": "Quadratic Time O(n^2)",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity",
+        "computer-science::nested-loops"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::logarithmic-time-o-log-n",
+      "label": "Logarithmic Time O(log n)",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity",
+        "computer-science::binary-search"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::linearithmic-time",
+      "label": "Linearithmic Time",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity",
+        "computer-science::merge-sort"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::best-average-worst-case",
+      "label": "Best Average Worst Case",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::empirical-analysis",
+      "label": "Empirical Analysis",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity",
+        "computer-science::testing"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::counting-operations",
+      "label": "Counting Operations",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::brute-force-approach",
+      "label": "Brute Force Approach",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::divide-and-conquer",
+      "label": "Divide and Conquer",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::decomposition",
+        "computer-science::recursion"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::greedy-algorithms",
+      "label": "Greedy Algorithms",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::algorithm-tradeoffs",
+      "label": "Algorithm Tradeoffs",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::time-complexity",
+        "computer-science::space-complexity"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::efficiency-vs-readability",
+      "label": "Efficiency vs Readability",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-tradeoffs",
+        "computer-science::code-readability"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::two-pointer-technique",
+      "label": "Two Pointer Technique",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::sliding-window-pattern",
+      "label": "Sliding Window Pattern",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::frequency-counter-pattern",
+      "label": "Frequency Counter Pattern",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::dictionaries"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::recursion-in-algorithms",
+      "label": "Recursion in Algorithms",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::recursion",
+        "computer-science::algorithm-design"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::algorithm-visualization",
+      "label": "Algorithm Visualization",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::algorithm-design",
+        "computer-science::flowcharts"
+      ],
+      "taxonomy_id": "ALGO",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::software-development",
+      "label": "Software Development",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::computer-science",
+        "computer-science::problem-solving"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::program-planning",
+      "label": "Program Planning",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::software-development",
+        "computer-science::decomposition"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::requirements-analysis",
+      "label": "Requirements Analysis",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::program-planning"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::modular-design",
+      "label": "Modular Design",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::abstraction",
+        "computer-science::functions",
+        "computer-science::decomposition"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::code-organization",
+      "label": "Code Organization",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::modular-design"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::import-statements",
+      "label": "Import Statements",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-modules"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::python-modules",
+      "label": "Python Modules",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-language",
+        "computer-science::code-organization"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::python-packages",
+      "label": "Python Packages",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-modules"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::pip-package-manager",
+      "label": "Pip Package Manager",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-packages"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::virtual-environments",
+      "label": "Virtual Environments",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::pip-package-manager"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::version-control-intro",
+      "label": "Version Control Intro",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::software-development"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::git-basics",
+      "label": "Git Basics",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::version-control-intro"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::code-style",
+      "label": "Code Style",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::code-readability"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::pep-8-guidelines",
+      "label": "PEP 8 Guidelines",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::code-style",
+        "computer-science::python-language"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::linting-tools",
+      "label": "Linting Tools",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::pep-8-guidelines"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::refactoring",
+      "label": "Refactoring",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::code-organization",
+        "computer-science::code-readability"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dry-principle",
+      "label": "DRY Principle",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::modular-design"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::kiss-principle",
+      "label": "KISS Principle",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::modular-design"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::code-comments",
+      "label": "Code Comments",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::comments-in-code",
+        "computer-science::code-readability"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::documentation",
+      "label": "Documentation",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::docstrings",
+        "computer-science::code-comments"
+      ],
+      "taxonomy_id": "SENG",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::generators",
+      "label": "Generators",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::iterator-protocol",
+        "computer-science::return-values"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::yield-statement",
+      "label": "Yield Statement",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::generators"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::generator-expressions",
+      "label": "Generator Expressions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::generators",
+        "computer-science::list-comprehension"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::decorators",
+      "label": "Decorators",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::higher-order-functions",
+        "computer-science::variable-scope"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::closures",
+      "label": "Closures",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-scope",
+        "computer-science::higher-order-functions"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::args-and-kwargs",
+      "label": "Args and Kwargs",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::arguments",
+        "computer-science::dictionaries"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::unpacking-operators",
+      "label": "Unpacking Operators",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::args-and-kwargs",
+        "computer-science::tuple-unpacking"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::walrus-operator",
+      "label": "Walrus Operator",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::variable-assignment",
+        "computer-science::while-loop"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::type-hints",
+      "label": "Type Hints",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::data-types",
+        "computer-science::parameters"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::type-annotations",
+      "label": "Type Annotations",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::type-hints"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::dataclasses",
+      "label": "Dataclasses",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::classes",
+        "computer-science::decorators"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::enum-type",
+      "label": "Enum Type",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::classes"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::regular-expressions",
+      "label": "Regular Expressions",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::string-type",
+        "computer-science::pattern-recognition"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::collections-module",
+      "label": "Collections Module",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-modules",
+        "computer-science::dictionaries",
+        "computer-science::lists"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::itertools-module",
+      "label": "Itertools Module",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-modules",
+        "computer-science::iterator-protocol"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::functools-module",
+      "label": "Functools Module",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::python-modules",
+        "computer-science::higher-order-functions"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::list-vs-generator-memory",
+      "label": "List vs Generator Memory",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::lists",
+        "computer-science::generators",
+        "computer-science::space-complexity"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::comprehension-patterns",
+      "label": "Comprehension Patterns",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::list-comprehension",
+        "computer-science::dictionary-comprehension"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::context-manager-protocol",
+      "label": "Context Manager Protocol",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::context-managers",
+        "computer-science::dunder-methods"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    },
+    {
+      "id": "computer-science::python-best-practices",
+      "label": "Python Best Practices",
+      "subject_id": "computer-science",
+      "dependencies": [
+        "computer-science::pep-8-guidelines",
+        "computer-science::code-readability",
+        "computer-science::dry-principle",
+        "computer-science::kiss-principle"
+      ],
+      "taxonomy_id": "ADVPY",
+      "level": "core"
+    }
+  ]
+}

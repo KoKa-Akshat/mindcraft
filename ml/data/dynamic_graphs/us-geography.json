@@ -1,0 +1,2218 @@
+{
+  "subject_id": "us-geography",
+  "title": "US Geography",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "MAPS": {
+      "classifier_name": "Map Skills",
+      "color": "PeachPuff"
+    },
+    "PHYS": {
+      "classifier_name": "Physical Geography",
+      "color": "LightYellow"
+    },
+    "WATER": {
+      "classifier_name": "Water Features",
+      "color": "PaleTurquoise"
+    },
+    "CLIM": {
+      "classifier_name": "Climate and Weather",
+      "color": "PowderBlue"
+    },
+    "REG": {
+      "classifier_name": "US Regions",
+      "color": "Lavender"
+    },
+    "STATE": {
+      "classifier_name": "US States",
+      "color": "PaleGreen"
+    },
+    "ATTR": {
+      "classifier_name": "State Attributes",
+      "color": "Thistle"
+    },
+    "HUMAN": {
+      "classifier_name": "Human Geography",
+      "color": "LightPink"
+    },
+    "ECON": {
+      "classifier_name": "Economy and Resources",
+      "color": "Honeydew"
+    },
+    "TRANS": {
+      "classifier_name": "Transportation",
+      "color": "MistyRose"
+    },
+    "LAND": {
+      "classifier_name": "Parks and Landmarks",
+      "color": "Aquamarine"
+    },
+    "CULT": {
+      "classifier_name": "Culture and Society",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "us-geography::geography-definition",
+      "label": "Geography Definition",
+      "subject_id": "us-geography",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "us-geography::map-reading-basics",
+      "label": "Map Reading Basics",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::cardinal-directions",
+      "label": "Cardinal Directions",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::map-reading-basics"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::compass-rose",
+      "label": "Compass Rose",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::cardinal-directions"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::map-scale",
+      "label": "Map Scale",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::map-reading-basics"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::map-legend",
+      "label": "Map Legend",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::map-reading-basics"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::political-maps",
+      "label": "Political Maps",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::map-reading-basics",
+        "us-geography::map-legend"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::physical-maps",
+      "label": "Physical Maps",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::map-reading-basics",
+        "us-geography::map-legend"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::thematic-maps",
+      "label": "Thematic Maps",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::political-maps",
+        "us-geography::physical-maps"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::topographic-maps",
+      "label": "Topographic Maps",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::physical-maps"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::latitude",
+      "label": "Latitude",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::map-reading-basics",
+        "us-geography::cardinal-directions"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::longitude",
+      "label": "Longitude",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::map-reading-basics",
+        "us-geography::cardinal-directions"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::equator",
+      "label": "Equator",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::latitude"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::prime-meridian",
+      "label": "Prime Meridian",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::longitude"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::coordinates",
+      "label": "Coordinates",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::latitude",
+        "us-geography::longitude"
+      ],
+      "taxonomy_id": "MAPS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::hemispheres",
+      "label": "Hemispheres",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::equator",
+        "us-geography::prime-meridian"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::continents",
+      "label": "Continents",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition",
+        "us-geography::hemispheres"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::north-america",
+      "label": "North America",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::continents"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::united-states-location",
+      "label": "United States Location",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::north-america",
+        "us-geography::coordinates"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::us-borders",
+      "label": "US Borders",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::united-states-location",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::us-size-comparison",
+      "label": "US Size Comparison",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::united-states-location",
+        "us-geography::map-scale"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::time-zones",
+      "label": "Time Zones",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::longitude",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::landforms",
+      "label": "Landforms",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition",
+        "us-geography::physical-maps"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::mountains",
+      "label": "Mountains",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::plains",
+      "label": "Plains",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::plateaus",
+      "label": "Plateaus",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::valleys",
+      "label": "Valleys",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms",
+        "us-geography::mountains"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::hills",
+      "label": "Hills",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::deserts",
+      "label": "Deserts",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms",
+        "us-geography::climate-definition"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::coastal-areas",
+      "label": "Coastal Areas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms",
+        "us-geography::coastlines"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::islands",
+      "label": "Islands",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms",
+        "us-geography::coastal-areas"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::peninsulas",
+      "label": "Peninsulas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landforms",
+        "us-geography::coastal-areas"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::rocky-mountains",
+      "label": "Rocky Mountains",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountains",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::appalachian-mountains",
+      "label": "Appalachian Mountains",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountains",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::sierra-nevada",
+      "label": "Sierra Nevada",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountains",
+        "us-geography::rocky-mountains"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::cascade-range",
+      "label": "Cascade Range",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountains",
+        "us-geography::rocky-mountains"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::great-plains",
+      "label": "Great Plains",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::plains",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::central-valley",
+      "label": "Central Valley",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::valleys",
+        "us-geography::california"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::colorado-plateau",
+      "label": "Colorado Plateau",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::plateaus",
+        "us-geography::rocky-mountains"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::columbia-plateau",
+      "label": "Columbia Plateau",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::plateaus",
+        "us-geography::cascade-range"
+      ],
+      "taxonomy_id": "PHYS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::rivers",
+      "label": "Rivers",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::physical-maps",
+        "us-geography::landforms"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::mississippi-river",
+      "label": "Mississippi River",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::rivers",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::missouri-river",
+      "label": "Missouri River",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::rivers",
+        "us-geography::mississippi-river"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::colorado-river",
+      "label": "Colorado River",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::rivers",
+        "us-geography::rocky-mountains"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::columbia-river",
+      "label": "Columbia River",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::rivers",
+        "us-geography::columbia-plateau"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::ohio-river",
+      "label": "Ohio River",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::rivers",
+        "us-geography::mississippi-river"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::rio-grande",
+      "label": "Rio Grande",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::rivers",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::hudson-river",
+      "label": "Hudson River",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::rivers",
+        "us-geography::new-york"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::lakes",
+      "label": "Lakes",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::physical-maps",
+        "us-geography::landforms"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::great-lakes",
+      "label": "Great Lakes",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::lakes",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::lake-superior",
+      "label": "Lake Superior",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::lake-michigan",
+      "label": "Lake Michigan",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::lake-huron",
+      "label": "Lake Huron",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::lake-erie",
+      "label": "Lake Erie",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::lake-ontario",
+      "label": "Lake Ontario",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::great-salt-lake",
+      "label": "Great Salt Lake",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::lakes",
+        "us-geography::utah"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::oceans",
+      "label": "Oceans",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition",
+        "us-geography::continents"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::atlantic-ocean",
+      "label": "Atlantic Ocean",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::oceans",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::pacific-ocean",
+      "label": "Pacific Ocean",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::oceans",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::gulf-of-mexico",
+      "label": "Gulf of Mexico",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::oceans",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::arctic-ocean",
+      "label": "Arctic Ocean",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::oceans"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::coastlines",
+      "label": "Coastlines",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::oceans"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::bays",
+      "label": "Bays",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::coastlines"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::chesapeake-bay",
+      "label": "Chesapeake Bay",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::bays",
+        "us-geography::maryland"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::san-francisco-bay",
+      "label": "San Francisco Bay",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::bays",
+        "us-geography::california"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::climate-definition",
+      "label": "Climate Definition",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::weather-vs-climate",
+      "label": "Weather vs Climate",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::climate-definition"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::climate-zones",
+      "label": "Climate Zones",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::climate-definition",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::tropical-climate",
+      "label": "Tropical Climate",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::arid-climate",
+      "label": "Arid Climate",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::mediterranean-climate",
+      "label": "Mediterranean Climate",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::humid-subtropical",
+      "label": "Humid Subtropical",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::humid-continental",
+      "label": "Humid Continental",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::subarctic-climate",
+      "label": "Subarctic Climate",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::temperature-patterns",
+      "label": "Temperature Patterns",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::weather-vs-climate",
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::precipitation",
+      "label": "Precipitation",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::weather-vs-climate"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::rainfall-patterns",
+      "label": "Rainfall Patterns",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::precipitation",
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::snowfall-regions",
+      "label": "Snowfall Regions",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::precipitation",
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::seasons",
+      "label": "Seasons",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::weather-vs-climate",
+        "us-geography::latitude"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::extreme-weather",
+      "label": "Extreme Weather",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::weather-vs-climate"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::hurricanes",
+      "label": "Hurricanes",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::extreme-weather",
+        "us-geography::gulf-of-mexico"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::tornadoes",
+      "label": "Tornadoes",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::extreme-weather",
+        "us-geography::midwest-region"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::blizzards",
+      "label": "Blizzards",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::extreme-weather",
+        "us-geography::snowfall-regions"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::droughts",
+      "label": "Droughts",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::extreme-weather",
+        "us-geography::arid-climate"
+      ],
+      "taxonomy_id": "CLIM",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::regions-definition",
+      "label": "Regions Definition",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::northeast-region",
+      "label": "Northeast Region",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::regions-definition"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::southeast-region",
+      "label": "Southeast Region",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::regions-definition"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::midwest-region",
+      "label": "Midwest Region",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::regions-definition"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::southwest-region",
+      "label": "Southwest Region",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::regions-definition"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::west-region",
+      "label": "West Region",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::regions-definition"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::new-england",
+      "label": "New England",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::northeast-region"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::mid-atlantic-states",
+      "label": "Mid-Atlantic States",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::northeast-region"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::southern-states",
+      "label": "Southern States",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::great-lakes-states",
+      "label": "Great Lakes States",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::great-lakes"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::mountain-states",
+      "label": "Mountain States",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::west-region",
+        "us-geography::rocky-mountains"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::pacific-states",
+      "label": "Pacific States",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::west-region",
+        "us-geography::pacific-ocean"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::alabama",
+      "label": "Alabama",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::alaska",
+      "label": "Alaska",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::west-region",
+        "us-geography::political-maps",
+        "us-geography::arctic-ocean"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::arizona",
+      "label": "Arizona",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::arkansas",
+      "label": "Arkansas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::california",
+      "label": "California",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::pacific-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::colorado",
+      "label": "Colorado",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountain-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::connecticut",
+      "label": "Connecticut",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::new-england",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::delaware",
+      "label": "Delaware",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mid-atlantic-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::florida",
+      "label": "Florida",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps",
+        "us-geography::tropical-climate"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::georgia",
+      "label": "Georgia",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::hawaii",
+      "label": "Hawaii",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::pacific-states",
+        "us-geography::political-maps",
+        "us-geography::tropical-climate"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::idaho",
+      "label": "Idaho",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountain-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::illinois",
+      "label": "Illinois",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::indiana",
+      "label": "Indiana",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::iowa",
+      "label": "Iowa",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::kansas",
+      "label": "Kansas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::kentucky",
+      "label": "Kentucky",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::louisiana",
+      "label": "Louisiana",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps",
+        "us-geography::gulf-of-mexico"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::maine",
+      "label": "Maine",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::new-england",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::maryland",
+      "label": "Maryland",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mid-atlantic-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::massachusetts",
+      "label": "Massachusetts",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::new-england",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::michigan",
+      "label": "Michigan",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::minnesota",
+      "label": "Minnesota",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::mississippi",
+      "label": "Mississippi",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::missouri",
+      "label": "Missouri",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::montana",
+      "label": "Montana",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountain-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::nebraska",
+      "label": "Nebraska",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::nevada",
+      "label": "Nevada",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountain-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::new-hampshire",
+      "label": "New Hampshire",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::new-england",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::new-jersey",
+      "label": "New Jersey",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mid-atlantic-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::new-mexico",
+      "label": "New Mexico",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::new-york",
+      "label": "New York",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mid-atlantic-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::north-carolina",
+      "label": "North Carolina",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::north-dakota",
+      "label": "North Dakota",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::ohio",
+      "label": "Ohio",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::oklahoma",
+      "label": "Oklahoma",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::oregon",
+      "label": "Oregon",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::pacific-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::pennsylvania",
+      "label": "Pennsylvania",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mid-atlantic-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::rhode-island",
+      "label": "Rhode Island",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::new-england",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::south-carolina",
+      "label": "South Carolina",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::south-dakota",
+      "label": "South Dakota",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::midwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::tennessee",
+      "label": "Tennessee",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southeast-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::texas",
+      "label": "Texas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::southwest-region",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::utah",
+      "label": "Utah",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountain-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::vermont",
+      "label": "Vermont",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::new-england",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::virginia",
+      "label": "Virginia",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mid-atlantic-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::washington",
+      "label": "Washington",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::pacific-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::west-virginia",
+      "label": "West Virginia",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mid-atlantic-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::wisconsin",
+      "label": "Wisconsin",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::great-lakes-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::wyoming",
+      "label": "Wyoming",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::mountain-states",
+        "us-geography::political-maps"
+      ],
+      "taxonomy_id": "STATE",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::state-capitals",
+      "label": "State Capitals",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::political-maps",
+        "us-geography::alabama"
+      ],
+      "taxonomy_id": "ATTR",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::washington-dc",
+      "label": "Washington DC",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::state-capitals",
+        "us-geography::us-borders"
+      ],
+      "taxonomy_id": "ATTR",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::state-borders",
+      "label": "State Borders",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::political-maps",
+        "us-geography::us-borders"
+      ],
+      "taxonomy_id": "ATTR",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::state-symbols",
+      "label": "State Symbols",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::state-capitals"
+      ],
+      "taxonomy_id": "ATTR",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::state-flags",
+      "label": "State Flags",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::state-symbols"
+      ],
+      "taxonomy_id": "ATTR",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::population",
+      "label": "Population",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::population-density",
+      "label": "Population Density",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::population",
+        "us-geography::map-scale"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::urban-areas",
+      "label": "Urban Areas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::population"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::rural-areas",
+      "label": "Rural Areas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::population"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::suburbs",
+      "label": "Suburbs",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::urban-areas",
+        "us-geography::rural-areas"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::metropolitan-areas",
+      "label": "Metropolitan Areas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::urban-areas"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::major-cities",
+      "label": "Major Cities",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::metropolitan-areas"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::new-york-city",
+      "label": "New York City",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::major-cities",
+        "us-geography::new-york"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::los-angeles",
+      "label": "Los Angeles",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::major-cities",
+        "us-geography::california"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::chicago",
+      "label": "Chicago",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::major-cities",
+        "us-geography::illinois"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::houston",
+      "label": "Houston",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::major-cities",
+        "us-geography::texas"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::phoenix",
+      "label": "Phoenix",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::major-cities",
+        "us-geography::arizona"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::natural-resources",
+      "label": "Natural Resources",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition",
+        "us-geography::physical-maps"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::agriculture",
+      "label": "Agriculture",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::natural-resources",
+        "us-geography::plains"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::farming-regions",
+      "label": "Farming Regions",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::agriculture",
+        "us-geography::climate-zones"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::corn-belt",
+      "label": "Corn Belt",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::farming-regions",
+        "us-geography::midwest-region"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::wheat-belt",
+      "label": "Wheat Belt",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::farming-regions",
+        "us-geography::great-plains"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::cotton-belt",
+      "label": "Cotton Belt",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::farming-regions",
+        "us-geography::southeast-region"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::dairy-farming",
+      "label": "Dairy Farming",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::farming-regions",
+        "us-geography::great-lakes-states"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::ranching",
+      "label": "Ranching",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::agriculture",
+        "us-geography::great-plains"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::mining",
+      "label": "Mining",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::natural-resources",
+        "us-geography::mountains"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::oil-and-gas",
+      "label": "Oil and Gas",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::natural-resources",
+        "us-geography::texas"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::forestry",
+      "label": "Forestry",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::natural-resources",
+        "us-geography::west-region"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::fishing-industry",
+      "label": "Fishing Industry",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::natural-resources",
+        "us-geography::coastlines"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::manufacturing",
+      "label": "Manufacturing",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::natural-resources",
+        "us-geography::major-cities"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::technology-hubs",
+      "label": "Technology Hubs",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::manufacturing",
+        "us-geography::urban-areas"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::silicon-valley",
+      "label": "Silicon Valley",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::technology-hubs",
+        "us-geography::california"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::transportation",
+      "label": "Transportation",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::geography-definition",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::interstate-highways",
+      "label": "Interstate Highways",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::transportation",
+        "us-geography::major-cities"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::railroads",
+      "label": "Railroads",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::transportation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::airports",
+      "label": "Airports",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::transportation",
+        "us-geography::major-cities"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::ports",
+      "label": "Ports",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::transportation",
+        "us-geography::coastlines"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::national-parks",
+      "label": "National Parks",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::physical-maps",
+        "us-geography::natural-resources"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::yellowstone",
+      "label": "Yellowstone",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::national-parks",
+        "us-geography::wyoming"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::grand-canyon",
+      "label": "Grand Canyon",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::national-parks",
+        "us-geography::arizona",
+        "us-geography::colorado-river"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::yosemite",
+      "label": "Yosemite",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::national-parks",
+        "us-geography::california"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::great-smoky-mountains",
+      "label": "Great Smoky Mountains",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::national-parks",
+        "us-geography::tennessee"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::landmarks",
+      "label": "Landmarks",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::united-states-location",
+        "us-geography::thematic-maps"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::statue-of-liberty",
+      "label": "Statue of Liberty",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landmarks",
+        "us-geography::new-york"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::mount-rushmore",
+      "label": "Mount Rushmore",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landmarks",
+        "us-geography::south-dakota"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::golden-gate-bridge",
+      "label": "Golden Gate Bridge",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::landmarks",
+        "us-geography::california"
+      ],
+      "taxonomy_id": "LAND",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::cultural-regions",
+      "label": "Cultural Regions",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::regions-definition",
+        "us-geography::population"
+      ],
+      "taxonomy_id": "CULT",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::native-american-lands",
+      "label": "Native American Lands",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::cultural-regions",
+        "us-geography::united-states-location"
+      ],
+      "taxonomy_id": "CULT",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::immigration-patterns",
+      "label": "Immigration Patterns",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::population",
+        "us-geography::major-cities"
+      ],
+      "taxonomy_id": "CULT",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::demographic-changes",
+      "label": "Demographic Changes",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::population",
+        "us-geography::immigration-patterns"
+      ],
+      "taxonomy_id": "CULT",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::economic-geography",
+      "label": "Economic Geography",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::natural-resources",
+        "us-geography::manufacturing"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::trade-and-commerce",
+      "label": "Trade and Commerce",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::economic-geography",
+        "us-geography::ports"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::environmental-issues",
+      "label": "Environmental Issues",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::natural-resources",
+        "us-geography::economic-geography"
+      ],
+      "taxonomy_id": "CULT",
+      "level": "core"
+    },
+    {
+      "id": "us-geography::conservation",
+      "label": "Conservation",
+      "subject_id": "us-geography",
+      "dependencies": [
+        "us-geography::environmental-issues",
+        "us-geography::national-parks"
+      ],
+      "taxonomy_id": "CULT",
+      "level": "core"
+    }
+  ]
+}

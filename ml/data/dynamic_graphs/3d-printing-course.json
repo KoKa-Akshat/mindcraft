@@ -1,0 +1,3154 @@
+{
+  "subject_id": "3d-printing-course",
+  "title": "Introduction to 3D Printing",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "HIST": {
+      "classifier_name": "History And Context",
+      "color": "DarkSlateBlue"
+    },
+    "STND": {
+      "classifier_name": "Standards And Terminology",
+      "color": "Teal"
+    },
+    "PROC": {
+      "classifier_name": "AM Process Families",
+      "color": "DarkGreen"
+    },
+    "EDP": {
+      "classifier_name": "Engineering Design Process And Capstone",
+      "color": "MediumPurple"
+    },
+    "CAD": {
+      "classifier_name": "CAD Software And Modeling",
+      "color": "DodgerBlue"
+    },
+    "FILE": {
+      "classifier_name": "Mesh And File Formats",
+      "color": "LightSkyBlue"
+    },
+    "SLIC": {
+      "classifier_name": "Slicing And Toolpaths",
+      "color": "Gold"
+    },
+    "HARD": {
+      "classifier_name": "Printer Hardware And Modern Tech",
+      "color": "Crimson"
+    },
+    "MAT": {
+      "classifier_name": "Materials Science",
+      "color": "DarkGoldenrod"
+    },
+    "RESN": {
+      "classifier_name": "Resin Printer Operation",
+      "color": "DarkOrchid"
+    },
+    "DFAM": {
+      "classifier_name": "Design For AM And Metrology",
+      "color": "LimeGreen"
+    },
+    "TROB": {
+      "classifier_name": "Troubleshooting And Post-Processing",
+      "color": "Tomato"
+    },
+    "SAFE": {
+      "classifier_name": "Safety Ethics And Sustainability",
+      "color": "DarkRed"
+    },
+    "WORK": {
+      "classifier_name": "Digital Workflows And Careers",
+      "color": "Orange"
+    },
+    "AIAM": {
+      "classifier_name": "AI In Additive Manufacturing",
+      "color": "Coral"
+    }
+  },
+  "concepts": [
+    {
+      "id": "3d-printing-course::algebra-basics",
+      "label": "Algebra Basics",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::geometry-basics",
+      "label": "Geometry Basics",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::units-and-measurement",
+      "label": "Units And Measurement",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::computer-file-management",
+      "label": "Computer File Management",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::mouse-and-3d-navigation",
+      "label": "Mouse And 3D Navigation",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::basic-physics-concepts",
+      "label": "Basic Physics Concepts",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::mass-and-density",
+      "label": "Mass And Density",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::units-and-measurement",
+        "3d-printing-course::basic-physics-concepts"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::force-and-pressure",
+      "label": "Force And Pressure",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::units-and-measurement",
+        "3d-printing-course::basic-physics-concepts"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::industrial-revolution",
+      "label": "Industrial Revolution",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "HIST",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::subtractive-manufacturing",
+      "label": "Subtractive Manufacturing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::industrial-revolution"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::additive-manufacturing",
+      "label": "Additive Manufacturing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::subtractive-manufacturing"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::stereolithography-invention",
+      "label": "Stereolithography Invention",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::fdm-patent-expiration",
+      "label": "FDM Patent Expiration",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::desktop-printer-revolution",
+      "label": "Desktop Printer Revolution",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-patent-expiration"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::reprap-project",
+      "label": "RepRap Project",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::desktop-printer-revolution"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::america-makes-institute",
+      "label": "America Makes Institute",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::am-innovation-institutes",
+      "label": "AM Innovation Institutes",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::america-makes-institute"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::maker-movement",
+      "label": "Maker Movement",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::desktop-printer-revolution",
+        "3d-printing-course::reprap-project"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::iso-standards-body",
+      "label": "ISO Standards Body",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "STND",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::astm-international",
+      "label": "ASTM International",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "STND",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::iso-astm-52900-standard",
+      "label": "ISO ASTM 52900 Standard",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing",
+        "3d-printing-course::iso-standards-body",
+        "3d-printing-course::astm-international"
+      ],
+      "taxonomy_id": "STND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::am-process-categories",
+      "label": "AM Process Categories",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::iso-astm-52900-standard"
+      ],
+      "taxonomy_id": "STND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::am-vocabulary-glossary",
+      "label": "AM Vocabulary Glossary",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::iso-astm-52900-standard"
+      ],
+      "taxonomy_id": "STND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::layer-by-layer-principle",
+      "label": "Layer-By-Layer Principle",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing"
+      ],
+      "taxonomy_id": "STND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::build-volume",
+      "label": "Build Volume",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::geometry-basics",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "STND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::build-plate",
+      "label": "Build Plate",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "STND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::z-axis-direction",
+      "label": "Z Axis Direction",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::geometry-basics",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "STND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::anisotropy",
+      "label": "Anisotropy",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "STND",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::material-extrusion",
+      "label": "Material Extrusion",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::am-process-categories",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::vat-photopolymerization",
+      "label": "Vat Photopolymerization",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::am-process-categories",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::powder-bed-fusion",
+      "label": "Powder Bed Fusion",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::am-process-categories",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::material-jetting",
+      "label": "Material Jetting",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::am-process-categories",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::binder-jetting",
+      "label": "Binder Jetting",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::am-process-categories",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::directed-energy-deposition",
+      "label": "Directed Energy Deposition",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::am-process-categories",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::sheet-lamination",
+      "label": "Sheet Lamination",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::am-process-categories",
+        "3d-printing-course::layer-by-layer-principle"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::fdm-fff-process",
+      "label": "FDM FFF Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::material-extrusion",
+        "3d-printing-course::thermoplastics"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::sla-process",
+      "label": "SLA Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::vat-photopolymerization",
+        "3d-printing-course::photopolymer-resins"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::msla-process",
+      "label": "MSLA Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::vat-photopolymerization",
+        "3d-printing-course::photopolymer-resins"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::dlp-process",
+      "label": "DLP Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::vat-photopolymerization",
+        "3d-printing-course::photopolymer-resins"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::sls-process",
+      "label": "SLS Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::powder-bed-fusion"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::mjf-process",
+      "label": "MJF Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::powder-bed-fusion"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::dmls-process",
+      "label": "DMLS Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::powder-bed-fusion"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ebm-process",
+      "label": "EBM Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::powder-bed-fusion"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::pltw-design-process",
+      "label": "PLTW Design Process",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "EDP",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::problem-definition",
+      "label": "Problem Definition",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::pltw-design-process"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::research-phase",
+      "label": "Research Phase",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::pltw-design-process",
+        "3d-printing-course::problem-definition"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ideation-and-sketching",
+      "label": "Ideation And Sketching",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::pltw-design-process",
+        "3d-printing-course::problem-definition"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::design-specifications",
+      "label": "Design Specifications",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::pltw-design-process",
+        "3d-printing-course::problem-definition"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::concept-selection",
+      "label": "Concept Selection",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ideation-and-sketching",
+        "3d-printing-course::design-specifications"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::prototyping",
+      "label": "Prototyping",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing",
+        "3d-printing-course::pltw-design-process"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::iteration-cycle",
+      "label": "Iteration Cycle",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::pltw-design-process",
+        "3d-printing-course::prototyping"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::testing-and-validation",
+      "label": "Testing And Validation",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::prototyping"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::engineering-communication",
+      "label": "Engineering Communication",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::pltw-design-process"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::engineering-notebook",
+      "label": "Engineering Notebook",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::engineering-communication"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::portfolio-development",
+      "label": "Portfolio Development",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::engineering-communication",
+        "3d-printing-course::engineering-notebook"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::cad-software-overview",
+      "label": "CAD Software Overview",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::computer-file-management",
+        "3d-printing-course::mouse-and-3d-navigation"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::2d-sketching",
+      "label": "2D Sketching",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::geometry-basics",
+        "3d-printing-course::cad-software-overview"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::sketch-constraints",
+      "label": "Sketch Constraints",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::2d-sketching"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::parametric-modeling",
+      "label": "Parametric Modeling",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::cad-software-overview",
+        "3d-printing-course::sketch-constraints"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::feature-based-modeling",
+      "label": "Feature-Based Modeling",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::parametric-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::extrude-feature",
+      "label": "Extrude Feature",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::2d-sketching",
+        "3d-printing-course::feature-based-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::revolve-feature",
+      "label": "Revolve Feature",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::2d-sketching",
+        "3d-printing-course::feature-based-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::sweep-and-loft",
+      "label": "Sweep And Loft",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::2d-sketching",
+        "3d-printing-course::feature-based-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::fillet-and-chamfer",
+      "label": "Fillet And Chamfer",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::feature-based-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::shell-feature",
+      "label": "Shell Feature",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::feature-based-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::pattern-features",
+      "label": "Pattern Features",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::feature-based-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::boolean-operations",
+      "label": "Boolean Operations",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::feature-based-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::reference-geometry",
+      "label": "Reference Geometry",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::cad-software-overview"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::assemblies",
+      "label": "Assemblies",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::feature-based-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::mate-constraints",
+      "label": "Mate Constraints",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::sketch-constraints",
+        "3d-printing-course::assemblies"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::onshape-workflow",
+      "label": "Onshape Workflow",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::parametric-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::fusion-360-workflow",
+      "label": "Fusion 360 Workflow",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::parametric-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::freecad-workflow",
+      "label": "FreeCAD Workflow",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::parametric-modeling"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::stl-file-format",
+      "label": "STL File Format",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::computer-file-management",
+        "3d-printing-course::cad-software-overview"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::3mf-file-format",
+      "label": "3MF File Format",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::computer-file-management",
+        "3d-printing-course::cad-software-overview"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::obj-file-format",
+      "label": "OBJ File Format",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::computer-file-management",
+        "3d-printing-course::cad-software-overview"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::mesh-geometry",
+      "label": "Mesh Geometry",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::geometry-basics"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::triangle-resolution",
+      "label": "Triangle Resolution",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::stl-file-format",
+        "3d-printing-course::mesh-geometry"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::mesh-repair",
+      "label": "Mesh Repair",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::mesh-geometry",
+        "3d-printing-course::manifold-geometry"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::manifold-geometry",
+      "label": "Manifold Geometry",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::mesh-geometry"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::non-manifold-errors",
+      "label": "Non Manifold Errors",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::manifold-geometry"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::stl-export-settings",
+      "label": "STL Export Settings",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::stl-file-format",
+        "3d-printing-course::triangle-resolution"
+      ],
+      "taxonomy_id": "FILE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::slicer-software",
+      "label": "Slicer Software",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::cad-software-overview",
+        "3d-printing-course::stl-file-format"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::g-code-basics",
+      "label": "G-code Basics",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::g-code-reading",
+      "label": "G-code Reading",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::g-code-basics"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::layer-height",
+      "label": "Layer Height",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::layer-by-layer-principle",
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::first-layer-settings",
+      "label": "First Layer Settings",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software",
+        "3d-printing-course::layer-height"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::wall-count",
+      "label": "Wall Count",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::infill-density",
+      "label": "Infill Density",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::infill-patterns",
+      "label": "Infill Patterns",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::infill-density"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::print-speed",
+      "label": "Print Speed",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::travel-moves",
+      "label": "Travel Moves",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software",
+        "3d-printing-course::g-code-basics"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::retraction-settings",
+      "label": "Retraction Settings",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::travel-moves"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::print-temperature",
+      "label": "Print Temperature",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software",
+        "3d-printing-course::thermoplastics"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bed-temperature",
+      "label": "Bed Temperature",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::cooling-fan-settings",
+      "label": "Cooling Fan Settings",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software",
+        "3d-printing-course::thermoplastics"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::adhesion-type",
+      "label": "Adhesion Type",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software",
+        "3d-printing-course::first-layer-settings"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::skirt-brim-raft",
+      "label": "Skirt Brim Raft",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::adhesion-type"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::support-structures",
+      "label": "Support Structures",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::tree-supports",
+      "label": "Tree Supports",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::support-structures"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::support-interface",
+      "label": "Support Interface",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::support-structures"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::slicer-profiles",
+      "label": "Slicer Profiles",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software",
+        "3d-printing-course::layer-height",
+        "3d-printing-course::infill-density",
+        "3d-printing-course::print-temperature"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::fdm-printer-anatomy",
+      "label": "FDM Printer Anatomy",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::nozzle",
+      "label": "Nozzle",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-printer-anatomy"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::hotend",
+      "label": "Hotend",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-printer-anatomy",
+        "3d-printing-course::nozzle"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::heat-break",
+      "label": "Heat Break",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::hotend"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bowden-vs-direct-drive",
+      "label": "Bowden Vs Direct Drive",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::extruder-mechanism"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::extruder-mechanism",
+      "label": "Extruder Mechanism",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-printer-anatomy"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::stepper-motors",
+      "label": "Stepper Motors",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-printer-anatomy"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::belts-and-pulleys",
+      "label": "Belts And Pulleys",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::stepper-motors"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::lead-screws",
+      "label": "Lead Screws",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::stepper-motors"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::linear-bearings",
+      "label": "Linear Bearings",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-printer-anatomy"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::motherboard-firmware",
+      "label": "Motherboard Firmware",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::g-code-basics",
+        "3d-printing-course::fdm-printer-anatomy"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::build-surface-types",
+      "label": "Build Surface Types",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::build-plate",
+        "3d-printing-course::fdm-printer-anatomy"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::auto-bed-leveling",
+      "label": "Auto Bed Leveling",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::manual-bed-leveling"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::manual-bed-leveling",
+      "label": "Manual Bed Leveling",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::build-plate",
+        "3d-printing-course::first-layer-settings",
+        "3d-printing-course::build-surface-types"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::z-offset-calibration",
+      "label": "Z Offset Calibration",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::first-layer-settings",
+        "3d-printing-course::manual-bed-leveling"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::filament-loading",
+      "label": "Filament Loading",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::hotend",
+        "3d-printing-course::extruder-mechanism"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::nozzle-change",
+      "label": "Nozzle Change",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::nozzle"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::routine-maintenance",
+      "label": "Routine Maintenance",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-printer-anatomy",
+        "3d-printing-course::filament-loading",
+        "3d-printing-course::nozzle-change"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::polymer-basics",
+      "label": "Polymer Basics",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::basic-physics-concepts"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::thermoplastics",
+      "label": "Thermoplastics",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::polymer-basics"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::glass-transition-temperature",
+      "label": "Glass Transition Temperature",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::tensile-strength",
+      "label": "Tensile Strength",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::force-and-pressure"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::elongation-at-break",
+      "label": "Elongation At Break",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::force-and-pressure"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::material-data-sheet",
+      "label": "Material Data Sheet",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::glass-transition-temperature",
+        "3d-printing-course::tensile-strength",
+        "3d-printing-course::elongation-at-break"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::pla-filament",
+      "label": "PLA Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::material-data-sheet"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::petg-filament",
+      "label": "PETG Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::material-data-sheet"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::abs-filament",
+      "label": "ABS Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::material-data-sheet"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::asa-filament",
+      "label": "ASA Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::material-data-sheet"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::tpu-filament",
+      "label": "TPU Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::material-data-sheet"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::nylon-filament",
+      "label": "Nylon Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::material-data-sheet"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::polycarbonate-filament",
+      "label": "Polycarbonate Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::material-data-sheet"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::composite-filaments",
+      "label": "Composite Filaments",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::material-data-sheet"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::filament-storage-and-drying",
+      "label": "Filament Storage And Drying",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::photopolymer-resins",
+      "label": "Photopolymer Resins",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::polymer-basics"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::standard-resin",
+      "label": "Standard Resin",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::material-data-sheet",
+        "3d-printing-course::photopolymer-resins"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::tough-and-flexible-resins",
+      "label": "Tough And Flexible Resins",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::material-data-sheet",
+        "3d-printing-course::photopolymer-resins"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::engineering-resins",
+      "label": "Engineering Resins",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::material-data-sheet",
+        "3d-printing-course::photopolymer-resins"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bio-based-filaments",
+      "label": "Bio-Based Filaments",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::recycled-filaments",
+      "label": "Recycled Filaments",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::resin-printer-anatomy",
+      "label": "Resin Printer Anatomy",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::sla-process",
+        "3d-printing-course::msla-process"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::lcd-and-light-source",
+      "label": "LCD And Light Source",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::resin-printer-anatomy"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::resin-vat-and-fep",
+      "label": "Resin Vat And FEP",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::resin-printer-anatomy"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::exposure-settings",
+      "label": "Exposure Settings",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::photopolymer-resins",
+        "3d-printing-course::resin-printer-anatomy"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::resin-supports",
+      "label": "Resin Supports",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::support-structures",
+        "3d-printing-course::resin-printer-anatomy"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::wash-and-cure-workflow",
+      "label": "Wash And Cure Workflow",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::photopolymer-resins",
+        "3d-printing-course::resin-printer-anatomy"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ipa-handling",
+      "label": "IPA Handling",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::wash-and-cure-workflow"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::resin-ppe",
+      "label": "Resin PPE",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::photopolymer-resins",
+        "3d-printing-course::workshop-safety"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::industrial-vs-hobby-systems",
+      "label": "Industrial Vs Hobby Systems",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::production-am-workflow",
+      "label": "Production AM Workflow",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::iteration-cycle",
+        "3d-printing-course::industrial-vs-hobby-systems"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::metal-am-overview",
+      "label": "Metal AM Overview",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::dmls-process",
+        "3d-printing-course::ebm-process",
+        "3d-printing-course::industrial-vs-hobby-systems"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::build-chamber-atmosphere",
+      "label": "Build Chamber Atmosphere",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::powder-bed-fusion",
+        "3d-printing-course::metal-am-overview"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::post-build-heat-treatment",
+      "label": "Post-Build Heat Treatment",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::metal-am-overview"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::dfam-principles",
+      "label": "DfAM Principles",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing",
+        "3d-printing-course::layer-by-layer-principle",
+        "3d-printing-course::anisotropy"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::overhangs",
+      "label": "Overhangs",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::z-axis-direction",
+        "3d-printing-course::dfam-principles"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bridging",
+      "label": "Bridging",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::dfam-principles"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::part-orientation-strategy",
+      "label": "Part Orientation Strategy",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::z-axis-direction",
+        "3d-printing-course::anisotropy",
+        "3d-printing-course::dfam-principles"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::support-minimization",
+      "label": "Support Minimization",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::overhangs",
+        "3d-printing-course::part-orientation-strategy"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::wall-thickness-rules",
+      "label": "Wall Thickness Rules",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::wall-count",
+        "3d-printing-course::dfam-principles"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::hole-and-slot-tolerances",
+      "label": "Hole And Slot Tolerances",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::dfam-principles",
+        "3d-printing-course::dimensional-accuracy"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::tolerance-allowances",
+      "label": "Tolerance Allowances",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::algebra-basics",
+        "3d-printing-course::dfam-principles",
+        "3d-printing-course::dimensional-accuracy"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::self-supporting-angles",
+      "label": "Self-Supporting Angles",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::overhangs"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::lattice-structures",
+      "label": "Lattice Structures",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::feature-based-modeling",
+        "3d-printing-course::dfam-principles"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::topology-optimization",
+      "label": "Topology Optimization",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::dfam-principles",
+        "3d-printing-course::lightweighting"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::generative-design",
+      "label": "Generative Design",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::topology-optimization",
+        "3d-printing-course::ai-assisted-cad"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::lightweighting",
+      "label": "Lightweighting",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::infill-density",
+        "3d-printing-course::dfam-principles"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::dimensional-accuracy",
+      "label": "Dimensional Accuracy",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::units-and-measurement"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::calipers",
+      "label": "Calipers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::dimensional-accuracy"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::micrometers",
+      "label": "Micrometers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::dimensional-accuracy"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::gd-t-basics",
+      "label": "GD&T Basics",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::tolerance-allowances",
+        "3d-printing-course::dimensional-accuracy"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::calibration-cube",
+      "label": "Calibration Cube",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::z-offset-calibration",
+        "3d-printing-course::dimensional-accuracy"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::quality-control-procedures",
+      "label": "Quality Control Procedures",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::dimensional-accuracy",
+        "3d-printing-course::calipers",
+        "3d-printing-course::micrometers",
+        "3d-printing-course::gd-t-basics"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::repeatability-and-reproducibility",
+      "label": "Repeatability And Reproducibility",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::quality-control-procedures"
+      ],
+      "taxonomy_id": "DFAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::troubleshooting-workflow",
+      "label": "Troubleshooting Workflow",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::warping",
+      "label": "Warping",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::bed-temperature",
+        "3d-printing-course::adhesion-type",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::first-layer-failures",
+      "label": "First-Layer Failures",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::first-layer-settings",
+        "3d-printing-course::z-offset-calibration",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::stringing",
+      "label": "Stringing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::retraction-settings",
+        "3d-printing-course::print-temperature",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::under-extrusion",
+      "label": "Under-Extrusion",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::print-temperature",
+        "3d-printing-course::extruder-mechanism",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::over-extrusion",
+      "label": "Over-Extrusion",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::print-temperature",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::layer-separation",
+      "label": "Layer Separation",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::anisotropy",
+        "3d-printing-course::print-temperature",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::elephants-foot",
+      "label": "Elephants Foot",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::first-layer-settings",
+        "3d-printing-course::bed-temperature",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ringing-and-ghosting",
+      "label": "Ringing And Ghosting",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::print-speed",
+        "3d-printing-course::belts-and-pulleys",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::clogged-nozzle",
+      "label": "Clogged Nozzle",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::nozzle",
+        "3d-printing-course::hotend",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::failed-adhesion",
+      "label": "Failed Adhesion",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::bed-temperature",
+        "3d-printing-course::adhesion-type",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::resin-print-failures",
+      "label": "Resin Print Failures",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::exposure-settings",
+        "3d-printing-course::resin-supports",
+        "3d-printing-course::troubleshooting-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::support-removal",
+      "label": "Support Removal",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::support-structures"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::sanding-and-finishing",
+      "label": "Sanding And Finishing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::support-removal"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::painting-and-priming",
+      "label": "Painting And Priming",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::sanding-and-finishing"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::annealing",
+      "label": "Annealing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::glass-transition-temperature"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::chemical-smoothing",
+      "label": "Chemical Smoothing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::abs-filament",
+        "3d-printing-course::sanding-and-finishing"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::uv-post-curing",
+      "label": "UV Post-Curing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::wash-and-cure-workflow"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::joining-printed-parts",
+      "label": "Joining Printed Parts",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::support-removal"
+      ],
+      "taxonomy_id": "TROB",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::workshop-safety",
+      "label": "Workshop Safety",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "SAFE",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::voc-and-ufp-exposure",
+      "label": "VOC And UFP Exposure",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::workshop-safety"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ventilation-requirements",
+      "label": "Ventilation Requirements",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::voc-and-ufp-exposure"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::fire-safety",
+      "label": "Fire Safety",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::hotend",
+        "3d-printing-course::workshop-safety"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::resin-disposal",
+      "label": "Resin Disposal",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::photopolymer-resins",
+        "3d-printing-course::workshop-safety"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::filament-recycling",
+      "label": "Filament Recycling",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::thermoplastics",
+        "3d-printing-course::sustainability-in-am"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::sustainability-in-am",
+      "label": "Sustainability In AM",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::intellectual-property",
+      "label": "Intellectual Property",
+      "subject_id": "3d-printing-course",
+      "dependencies": [],
+      "taxonomy_id": "SAFE",
+      "level": "foundational"
+    },
+    {
+      "id": "3d-printing-course::open-source-licenses",
+      "label": "Open-Source Licenses",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::intellectual-property"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::creative-commons-for-3d",
+      "label": "Creative Commons For 3D",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::stl-file-format",
+        "3d-printing-course::open-source-licenses"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ethical-use-of-am",
+      "label": "Ethical Use Of AM",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing",
+        "3d-printing-course::intellectual-property"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::restricted-designs",
+      "label": "Restricted Designs",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ethical-use-of-am"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::file-naming-conventions",
+      "label": "File Naming Conventions",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::computer-file-management"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::version-control-for-cad",
+      "label": "Version Control For CAD",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::computer-file-management",
+        "3d-printing-course::cad-software-overview",
+        "3d-printing-course::file-naming-conventions"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::print-farm-concepts",
+      "label": "Print Farm Concepts",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::print-queue-management",
+      "label": "Print Queue Management",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::print-farm-concepts"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ai-assisted-cad",
+      "label": "AI-Assisted CAD",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::cad-software-overview"
+      ],
+      "taxonomy_id": "CAD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::cloud-slicing",
+      "label": "Cloud Slicing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::manufacturing-career-clusters",
+      "label": "Manufacturing Career Clusters",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::sme-education-foundation",
+      "label": "SME Education Foundation",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::manufacturing-career-clusters"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::nc3-certifications",
+      "label": "NC3 Certifications",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::manufacturing-career-clusters"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::nims-certifications",
+      "label": "NIMS Certifications",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::manufacturing-career-clusters"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::community-college-pathways",
+      "label": "Community College Pathways",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::manufacturing-career-clusters"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::dual-credit-programs",
+      "label": "Dual Credit Programs",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::community-college-pathways"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::abet-outcomes-alignment",
+      "label": "ABET Outcomes Alignment",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::engineering-communication",
+        "3d-printing-course::community-college-pathways"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::apprenticeship-pathways",
+      "label": "Apprenticeship Pathways",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::manufacturing-career-clusters"
+      ],
+      "taxonomy_id": "WORK",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::capstone-project-planning",
+      "label": "Capstone Project Planning",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::pltw-design-process",
+        "3d-printing-course::problem-definition",
+        "3d-printing-course::design-specifications",
+        "3d-printing-course::iteration-cycle"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::functional-prototype-design",
+      "label": "Functional Prototype Design",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::feature-based-modeling",
+        "3d-printing-course::dfam-principles",
+        "3d-printing-course::capstone-project-planning"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::design-documentation",
+      "label": "Design Documentation",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::engineering-notebook",
+        "3d-printing-course::portfolio-development",
+        "3d-printing-course::capstone-project-planning"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::technical-presentation",
+      "label": "Technical Presentation",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::engineering-communication",
+        "3d-printing-course::design-documentation"
+      ],
+      "taxonomy_id": "EDP",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::multi-material-printing",
+      "label": "Multi-Material Printing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process",
+        "3d-printing-course::extruder-mechanism"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::multi-color-printing",
+      "label": "Multi-Color Printing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process",
+        "3d-printing-course::multi-material-printing"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ams-material-system",
+      "label": "AMS Material System",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::multi-material-printing",
+        "3d-printing-course::multi-color-printing"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::prusa-mmu-unit",
+      "label": "Prusa MMU Unit",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::multi-material-printing",
+        "3d-printing-course::multi-color-printing"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::idex-dual-extrusion",
+      "label": "IDEX Dual Extrusion",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::extruder-mechanism",
+        "3d-printing-course::multi-material-printing"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::toolchanger-printers",
+      "label": "Toolchanger Printers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::extruder-mechanism",
+        "3d-printing-course::multi-material-printing"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::filament-splicing",
+      "label": "Filament Splicing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::multi-material-printing"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::multi-material-waste",
+      "label": "Multi-Material Waste",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::multi-material-printing"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::corexy-motion-system",
+      "label": "CoreXY Motion System",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::stepper-motors",
+        "3d-printing-course::belts-and-pulleys"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bed-slinger-design",
+      "label": "Bed Slinger Design",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::stepper-motors",
+        "3d-printing-course::belts-and-pulleys"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::klipper-firmware",
+      "label": "Klipper Firmware",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::motherboard-firmware"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::input-shaping",
+      "label": "Input Shaping",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ringing-and-ghosting",
+        "3d-printing-course::klipper-firmware"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::pressure-advance",
+      "label": "Pressure Advance",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::retraction-settings",
+        "3d-printing-course::klipper-firmware"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::high-speed-printing",
+      "label": "High-Speed Printing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::print-speed",
+        "3d-printing-course::klipper-firmware",
+        "3d-printing-course::input-shaping",
+        "3d-printing-course::pressure-advance"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::linear-rails",
+      "label": "Linear Rails",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::linear-bearings"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::all-metal-hotend",
+      "label": "All-Metal Hotend",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::hotend"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::high-flow-hotend",
+      "label": "High-Flow Hotend",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::hotend",
+        "3d-printing-course::high-speed-printing"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::hardened-nozzle",
+      "label": "Hardened Nozzle",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::nozzle",
+        "3d-printing-course::carbon-fiber-filament"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::pei-flex-plate",
+      "label": "PEI Flex Plate",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::build-surface-types"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::spring-steel-sheet",
+      "label": "Spring Steel Sheet",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::build-surface-types",
+        "3d-printing-course::pei-flex-plate"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bltouch-sensor",
+      "label": "BLTouch Sensor",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::auto-bed-leveling"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::inductive-probe",
+      "label": "Inductive Probe",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::auto-bed-leveling"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::strain-gauge-leveling",
+      "label": "Strain Gauge Leveling",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::auto-bed-leveling"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::mono-lcd-resolution",
+      "label": "Mono LCD Resolution",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::lcd-and-light-source"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::large-format-resin",
+      "label": "Large-Format Resin",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::build-volume",
+        "3d-printing-course::resin-printer-anatomy"
+      ],
+      "taxonomy_id": "RESN",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::prusaslicer",
+      "label": "PrusaSlicer",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software",
+        "3d-printing-course::prusa-printers"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::orcaslicer",
+      "label": "OrcaSlicer",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bambu-studio",
+      "label": "Bambu Studio",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software",
+        "3d-printing-course::bambu-lab-printers"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::cura-slicer",
+      "label": "Cura Slicer",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-software"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::variable-layer-height",
+      "label": "Variable Layer Height",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::layer-height"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::adaptive-layer-height",
+      "label": "Adaptive Layer Height",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::variable-layer-height"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::wi-fi-connected-printer",
+      "label": "Wi-Fi Connected Printer",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::motherboard-firmware"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::print-camera-monitoring",
+      "label": "Print Camera Monitoring",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::wi-fi-connected-printer"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ai-failure-detection",
+      "label": "AI Failure Detection",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ai-assisted-cad",
+        "3d-printing-course::print-camera-monitoring"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::octoprint-server",
+      "label": "OctoPrint Server",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::motherboard-firmware",
+        "3d-printing-course::wi-fi-connected-printer"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::mainsail-web-interface",
+      "label": "Mainsail Web Interface",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::klipper-firmware",
+        "3d-printing-course::wi-fi-connected-printer"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::heated-chamber",
+      "label": "Heated Chamber",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::bed-temperature",
+        "3d-printing-course::thermoplastics"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::enclosed-printer",
+      "label": "Enclosed Printer",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::heated-chamber"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bambu-lab-printers",
+      "label": "Bambu Lab Printers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process",
+        "3d-printing-course::ams-material-system",
+        "3d-printing-course::corexy-motion-system",
+        "3d-printing-course::klipper-firmware"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::prusa-printers",
+      "label": "Prusa Printers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process",
+        "3d-printing-course::desktop-printer-revolution",
+        "3d-printing-course::prusa-mmu-unit"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::creality-printers",
+      "label": "Creality Printers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process",
+        "3d-printing-course::bed-slinger-design"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::elegoo-printers",
+      "label": "Elegoo Printers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::fdm-fff-process",
+        "3d-printing-course::resin-printer-anatomy"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::carbon-fiber-filament",
+      "label": "Carbon Fiber Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::composite-filaments"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::wood-fill-filament",
+      "label": "Wood Fill Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::composite-filaments"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::metal-fill-filament",
+      "label": "Metal Fill Filament",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::composite-filaments"
+      ],
+      "taxonomy_id": "MAT",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::vase-mode",
+      "label": "Vase Mode",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::wall-count"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::fuzzy-skin",
+      "label": "Fuzzy Skin",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::wall-count"
+      ],
+      "taxonomy_id": "SLIC",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ai-in-additive-manufacturing",
+      "label": "AI In Additive Manufacturing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::computer-vision-basics",
+      "label": "Computer Vision Basics",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::machine-learning-basics"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::machine-learning-basics",
+      "label": "Machine Learning Basics",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::algebra-basics"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::neural-networks-overview",
+      "label": "Neural Networks Overview",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::machine-learning-basics"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::first-layer-vision-check",
+      "label": "First-Layer Vision Check",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::first-layer-settings",
+        "3d-printing-course::print-camera-monitoring",
+        "3d-printing-course::computer-vision-basics"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::spaghetti-detection",
+      "label": "Spaghetti Detection",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ai-failure-detection",
+        "3d-printing-course::neural-networks-overview"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::obico-open-monitoring",
+      "label": "Obico Open Monitoring",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::octoprint-server",
+        "3d-printing-course::spaghetti-detection"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::bambu-lab-ai-inspection",
+      "label": "Bambu Lab AI Inspection",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ai-failure-detection",
+        "3d-printing-course::bambu-lab-printers",
+        "3d-printing-course::first-layer-vision-check"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::time-lapse-print-capture",
+      "label": "Time-Lapse Print Capture",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::print-camera-monitoring"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::defect-classification-models",
+      "label": "Defect Classification Models",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::quality-control-procedures",
+        "3d-printing-course::neural-networks-overview"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::automatic-print-pause",
+      "label": "Automatic Print Pause",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::motherboard-firmware",
+        "3d-printing-course::ai-failure-detection"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::predictive-maintenance-ml",
+      "label": "Predictive Maintenance ML",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::routine-maintenance",
+        "3d-printing-course::machine-learning-basics"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ai-slicer-optimization",
+      "label": "AI Slicer Optimization",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::slicer-profiles",
+        "3d-printing-course::machine-learning-basics"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::text-to-cad-generation",
+      "label": "Text-To-CAD Generation",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ai-assisted-cad",
+        "3d-printing-course::ai-in-additive-manufacturing"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ai-material-recommender",
+      "label": "AI Material Recommender",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::material-data-sheet",
+        "3d-printing-course::machine-learning-basics"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ai-troubleshooting-assistant",
+      "label": "AI Troubleshooting Assistant",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::troubleshooting-workflow",
+        "3d-printing-course::ai-in-additive-manufacturing"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::llm-tutoring-for-students",
+      "label": "LLM Tutoring For Students",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ai-in-additive-manufacturing"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::synthetic-training-data",
+      "label": "Synthetic Training Data",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::machine-learning-basics"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::edge-ai-on-printers",
+      "label": "Edge AI On Printers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::motherboard-firmware",
+        "3d-printing-course::ai-in-additive-manufacturing"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ai-ethics-in-manufacturing",
+      "label": "AI Ethics In Manufacturing",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::ai-in-additive-manufacturing"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::ai-hallucination-risks",
+      "label": "AI Hallucination Risks",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::llm-tutoring-for-students",
+        "3d-printing-course::ai-ethics-in-manufacturing"
+      ],
+      "taxonomy_id": "AIAM",
+      "level": "core"
+    },
+    {
+      "id": "3d-printing-course::snapmaker-printers",
+      "label": "Snapmaker Printers",
+      "subject_id": "3d-printing-course",
+      "dependencies": [
+        "3d-printing-course::additive-manufacturing",
+        "3d-printing-course::fdm-fff-process"
+      ],
+      "taxonomy_id": "HARD",
+      "level": "core"
+    }
+  ]
+}

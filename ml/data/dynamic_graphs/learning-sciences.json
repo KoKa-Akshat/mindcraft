@@ -1,0 +1,2487 @@
+{
+  "subject_id": "learning-sciences",
+  "title": "Learning Sciences for Intelligent Textbook Design",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundations",
+      "color": "SteelBlue"
+    },
+    "DOMAIN": {
+      "classifier_name": "Seven Domains Overview",
+      "color": "LightCoral"
+    },
+    "MOT": {
+      "classifier_name": "Motivation and Engagement",
+      "color": "LightYellow"
+    },
+    "COG": {
+      "classifier_name": "Cognitive Architecture",
+      "color": "LavenderBlush"
+    },
+    "RET": {
+      "classifier_name": "Knowledge Retention",
+      "color": "MistyRose"
+    },
+    "APP": {
+      "classifier_name": "Knowledge Application and Transfer",
+      "color": "Lavender"
+    },
+    "EXP": {
+      "classifier_name": "Expertise and Mastery",
+      "color": "Thistle"
+    },
+    "MEAS": {
+      "classifier_name": "Measurement and Feedback",
+      "color": "PaleGreen"
+    },
+    "COND": {
+      "classifier_name": "Learning Conditions and Environment",
+      "color": "PowderBlue"
+    },
+    "ITB": {
+      "classifier_name": "Intelligent Textbook Architecture",
+      "color": "PeachPuff"
+    },
+    "AIST": {
+      "classifier_name": "AI Skills and Tooling",
+      "color": "MintCream"
+    },
+    "SIM": {
+      "classifier_name": "MicroSims",
+      "color": "Plum"
+    },
+    "MASC": {
+      "classifier_name": "Pedagogical Mascots and Admonitions",
+      "color": "Honeydew"
+    },
+    "GN": {
+      "classifier_name": "Graphic Novels and Stories",
+      "color": "PaleTurquoise"
+    },
+    "CAP": {
+      "classifier_name": "Capstone and Deployment",
+      "color": "Gainsboro"
+    }
+  },
+  "concepts": [
+    {
+      "id": "learning-sciences::learning-sciences",
+      "label": "Learning Sciences",
+      "subject_id": "learning-sciences",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-sciences::instructional-design",
+      "label": "Instructional Design",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-sciences"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::cognitive-science",
+      "label": "Cognitive Science",
+      "subject_id": "learning-sciences",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-sciences::educational-psychology",
+      "label": "Educational Psychology",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-sciences",
+        "learning-sciences::cognitive-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::neuroscience-in-learning",
+      "label": "Neuroscience in Learning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::cognitive-science"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::evidence-based-pedagogy",
+      "label": "Evidence-Based Pedagogy",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-sciences",
+        "learning-sciences::educational-psychology"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::bloom-taxonomy-2001",
+      "label": "Bloom Taxonomy 2001",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::instructional-design"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::learning-objective",
+      "label": "Learning Objective",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::instructional-design",
+        "learning-sciences::bloom-taxonomy-2001"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-sciences",
+        "learning-sciences::instructional-design"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "learning-sciences",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-sciences::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::generative-ai"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::claude-code",
+      "label": "Claude Code",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::generative-ai",
+        "learning-sciences::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::agent-skill",
+      "label": "Agent Skill",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::claude-code"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mkdocs-material",
+      "label": "MkDocs Material",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::markdown-authoring"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::markdown-authoring",
+      "label": "Markdown Authoring",
+      "subject_id": "learning-sciences",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-sciences::seven-domains",
+      "label": "Seven Domains",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-sciences"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::motivation-domain",
+      "label": "Motivation Domain",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::seven-domains"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::understanding-domain",
+      "label": "Understanding Domain",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::seven-domains"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::retention-domain",
+      "label": "Retention Domain",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::seven-domains"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::application-domain",
+      "label": "Application Domain",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::seven-domains"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::expertise-domain",
+      "label": "Expertise Domain",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::seven-domains"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::measurement-domain",
+      "label": "Measurement Domain",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::seven-domains"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::learning-conditions-domain",
+      "label": "Learning Conditions Domain",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::seven-domains"
+      ],
+      "taxonomy_id": "DOMAIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::intrinsic-motivation",
+      "label": "Intrinsic Motivation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::motivation-domain"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::extrinsic-motivation",
+      "label": "Extrinsic Motivation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::motivation-domain"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::self-determination-theory",
+      "label": "Self-Determination Theory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intrinsic-motivation",
+        "learning-sciences::extrinsic-motivation"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::autonomy-need",
+      "label": "Autonomy Need",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::self-determination-theory"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::competence-need",
+      "label": "Competence Need",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::self-determination-theory"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::relatedness-need",
+      "label": "Relatedness Need",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::self-determination-theory"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::flow-state",
+      "label": "Flow State",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intrinsic-motivation",
+        "learning-sciences::self-efficacy"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::goal-orientation",
+      "label": "Goal Orientation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::motivation-domain"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::growth-mindset",
+      "label": "Growth Mindset",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::motivation-domain"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::fixed-mindset",
+      "label": "Fixed Mindset",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::growth-mindset"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::self-efficacy",
+      "label": "Self-Efficacy",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::growth-mindset"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::engagement",
+      "label": "Engagement",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::motivation-domain",
+        "learning-sciences::intrinsic-motivation"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::attention",
+      "label": "Attention",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::cognitive-science"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::attention-capture",
+      "label": "Attention Capture",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::attention"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::sustained-attention",
+      "label": "Sustained Attention",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::attention"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::curiosity",
+      "label": "Curiosity",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intrinsic-motivation"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::interest-development",
+      "label": "Interest Development",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::curiosity"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::arcs-model",
+      "label": "ARCS Model",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::engagement",
+        "learning-sciences::attention"
+      ],
+      "taxonomy_id": "MOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::sensory-memory",
+      "label": "Sensory Memory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::understanding-domain"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::iconic-memory",
+      "label": "Iconic Memory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::sensory-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::echoic-memory",
+      "label": "Echoic Memory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::sensory-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::working-memory",
+      "label": "Working Memory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::understanding-domain"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::miller-s-law",
+      "label": "Miller's Law",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::working-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::phonological-loop",
+      "label": "Phonological Loop",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::working-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::visuospatial-sketchpad",
+      "label": "Visuospatial Sketchpad",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::working-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::central-executive",
+      "label": "Central Executive",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::working-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::long-term-memory",
+      "label": "Long-Term Memory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::understanding-domain"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::semantic-memory",
+      "label": "Semantic Memory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::long-term-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::episodic-memory",
+      "label": "Episodic Memory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::long-term-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::procedural-memory",
+      "label": "Procedural Memory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::long-term-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::schema",
+      "label": "Schema",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::long-term-memory",
+        "learning-sciences::semantic-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::schema-construction",
+      "label": "Schema Construction",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::schema"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::chunking",
+      "label": "Chunking",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::working-memory",
+        "learning-sciences::miller-s-law"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::encoding",
+      "label": "Encoding",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::working-memory",
+        "learning-sciences::long-term-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::consolidation",
+      "label": "Consolidation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::long-term-memory",
+        "learning-sciences::encoding"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::elaboration",
+      "label": "Elaboration",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::encoding"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::dual-coding-theory",
+      "label": "Dual Coding Theory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::encoding"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::multimedia-learning-theory",
+      "label": "Multimedia Learning Theory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::dual-coding-theory",
+        "learning-sciences::working-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::cognitive-load",
+      "label": "Cognitive Load",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::working-memory"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::intrinsic-cognitive-load",
+      "label": "Intrinsic Cognitive Load",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::cognitive-load"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::extraneous-cognitive-load",
+      "label": "Extraneous Cognitive Load",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::cognitive-load"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::germane-cognitive-load",
+      "label": "Germane Cognitive Load",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::cognitive-load"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::cognitive-load-theory",
+      "label": "Cognitive Load Theory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::cognitive-load",
+        "learning-sciences::intrinsic-cognitive-load",
+        "learning-sciences::extraneous-cognitive-load",
+        "learning-sciences::germane-cognitive-load"
+      ],
+      "taxonomy_id": "COG",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::retrieval-practice",
+      "label": "Retrieval Practice",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::retention-domain",
+        "learning-sciences::long-term-memory"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::testing-effect",
+      "label": "Testing Effect",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::retrieval-practice"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::spaced-repetition",
+      "label": "Spaced Repetition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::retention-domain",
+        "learning-sciences::long-term-memory"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::massed-practice",
+      "label": "Massed Practice",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::spaced-repetition"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::distributed-practice",
+      "label": "Distributed Practice",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::spaced-repetition"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::interleaving",
+      "label": "Interleaving",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::distributed-practice"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::forgetting-curve",
+      "label": "Forgetting Curve",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::long-term-memory",
+        "learning-sciences::consolidation"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::retrieval-cue",
+      "label": "Retrieval Cue",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::retrieval-practice",
+        "learning-sciences::encoding"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::recall-vs-recognition",
+      "label": "Recall vs Recognition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::retrieval-practice"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::retrieval-strength",
+      "label": "Retrieval Strength",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::retrieval-practice",
+        "learning-sciences::spaced-repetition"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::storage-strength",
+      "label": "Storage Strength",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::consolidation",
+        "learning-sciences::retrieval-strength"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::desirable-difficulty",
+      "label": "Desirable Difficulty",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::retrieval-practice",
+        "learning-sciences::interleaving"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::leitner-system",
+      "label": "Leitner System",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::spaced-repetition"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::spaced-retrieval-scheduling",
+      "label": "Spaced Retrieval Scheduling",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::spaced-repetition",
+        "learning-sciences::leitner-system"
+      ],
+      "taxonomy_id": "RET",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::knowledge-transfer",
+      "label": "Knowledge Transfer",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::application-domain",
+        "learning-sciences::long-term-memory"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::near-transfer",
+      "label": "Near Transfer",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::knowledge-transfer"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::far-transfer",
+      "label": "Far Transfer",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::knowledge-transfer"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::novel-problem-solving",
+      "label": "Novel Problem Solving",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::far-transfer",
+        "learning-sciences::mental-model"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::unlearning",
+      "label": "Unlearning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::knowledge-transfer"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::misconception",
+      "label": "Misconception",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::understanding-domain"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::conceptual-change",
+      "label": "Conceptual Change",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::unlearning",
+        "learning-sciences::misconception"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mental-model",
+      "label": "Mental Model",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::schema",
+        "learning-sciences::understanding-domain"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::analogical-reasoning",
+      "label": "Analogical Reasoning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mental-model",
+        "learning-sciences::far-transfer"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::problem-based-learning",
+      "label": "Problem-Based Learning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::application-domain",
+        "learning-sciences::novel-problem-solving"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::case-based-learning",
+      "label": "Case-Based Learning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::application-domain",
+        "learning-sciences::mental-model"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::worked-example",
+      "label": "Worked Example",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::application-domain",
+        "learning-sciences::extraneous-cognitive-load"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::example-problem-pair",
+      "label": "Example-Problem Pair",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::worked-example",
+        "learning-sciences::retrieval-practice"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::scenario-based-assessment",
+      "label": "Scenario-Based Assessment",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::problem-based-learning",
+        "learning-sciences::far-transfer"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::expertise",
+      "label": "Expertise",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::expertise-domain"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::deliberate-practice",
+      "label": "Deliberate Practice",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::expertise",
+        "learning-sciences::retrieval-practice"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::expertise",
+        "learning-sciences::schema"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::automaticity",
+      "label": "Automaticity",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::expertise",
+        "learning-sciences::procedural-memory"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::novice-expert-difference",
+      "label": "Novice Expert Difference",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::expertise"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::expert-chunking",
+      "label": "Expert Chunking",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::chunking",
+        "learning-sciences::pattern-recognition"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::dreyfus-skill-model",
+      "label": "Dreyfus Skill Model",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::novice-expert-difference"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::tacit-knowledge",
+      "label": "Tacit Knowledge",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::expertise",
+        "learning-sciences::automaticity"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::explicit-knowledge",
+      "label": "Explicit Knowledge",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::expertise",
+        "learning-sciences::semantic-memory"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mastery-learning",
+      "label": "Mastery Learning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::expertise",
+        "learning-sciences::deliberate-practice"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::ten-thousand-hour-rule",
+      "label": "Ten Thousand Hour Rule",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::deliberate-practice"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::formative-assessment",
+      "label": "Formative Assessment",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::measurement-domain",
+        "learning-sciences::learning-objective"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::summative-assessment",
+      "label": "Summative Assessment",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::measurement-domain",
+        "learning-sciences::learning-objective"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::learning-analytics",
+      "label": "Learning Analytics",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::measurement-domain",
+        "learning-sciences::quality-metrics"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::measurement-domain"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::immediate-feedback",
+      "label": "Immediate Feedback",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::feedback-loop"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::delayed-feedback",
+      "label": "Delayed Feedback",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::feedback-loop"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::corrective-feedback",
+      "label": "Corrective Feedback",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::feedback-loop",
+        "learning-sciences::formative-assessment"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::assessment-rubric",
+      "label": "Assessment Rubric",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::summative-assessment",
+        "learning-sciences::learning-objective"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::item-response-theory",
+      "label": "Item Response Theory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::summative-assessment"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::diagnostic-assessment",
+      "label": "Diagnostic Assessment",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::formative-assessment",
+        "learning-sciences::misconception"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::metacognition",
+      "label": "Metacognition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::understanding-domain",
+        "learning-sciences::self-efficacy"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::self-regulated-learning",
+      "label": "Self-Regulated Learning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::metacognition"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::learning-dashboard",
+      "label": "Learning Dashboard",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-analytics"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::a-b-testing-in-learning",
+      "label": "A/B Testing in Learning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-analytics",
+        "learning-sciences::evidence-based-pedagogy"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::quality-metrics",
+      "label": "Quality Metrics",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::measurement-domain"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::learning-environment",
+      "label": "Learning Environment",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-conditions-domain"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::scaffolding",
+      "label": "Scaffolding",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::zone-of-proximal-development",
+        "learning-sciences::learning-environment"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::zone-of-proximal-development",
+      "label": "Zone of Proximal Development",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-conditions-domain",
+        "learning-sciences::social-learning-theory"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::social-learning-theory",
+      "label": "Social Learning Theory",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-conditions-domain"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::community-of-practice",
+      "label": "Community of Practice",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::social-learning-theory",
+        "learning-sciences::situated-cognition"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::constructivism",
+      "label": "Constructivism",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-conditions-domain",
+        "learning-sciences::schema"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::situated-cognition",
+      "label": "Situated Cognition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::constructivism",
+        "learning-sciences::learning-environment"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::universal-design-for-learning",
+      "label": "Universal Design for Learning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::accessibility",
+        "learning-sciences::learning-conditions-domain"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::accessibility",
+      "label": "Accessibility",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-conditions-domain"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::psychological-safety",
+      "label": "Psychological Safety",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-environment",
+        "learning-sciences::relatedness-need"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::culturally-responsive-teaching",
+      "label": "Culturally Responsive Teaching",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-environment"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::classroom-discourse",
+      "label": "Classroom Discourse",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-environment",
+        "learning-sciences::social-learning-theory"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::online-learning-environment",
+      "label": "Online Learning Environment",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-environment"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::blended-learning",
+      "label": "Blended Learning",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::online-learning-environment",
+        "learning-sciences::learning-environment"
+      ],
+      "taxonomy_id": "COND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::intelligent-textbook-design",
+      "label": "Intelligent Textbook Design",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook",
+        "learning-sciences::instructional-design"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::learning-graph",
+      "label": "Learning Graph",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::concept-dependency",
+      "label": "Concept Dependency",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-graph"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::dag-structure",
+      "label": "DAG Structure",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::concept-dependency"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::concept-node",
+      "label": "Concept Node",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::learning-graph"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::concept-edge",
+      "label": "Concept Edge",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::concept-dependency",
+        "learning-sciences::concept-node"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::glossary",
+      "label": "Glossary",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::faq-section",
+      "label": "FAQ Section",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::quiz-bank",
+      "label": "Quiz Bank",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design",
+        "learning-sciences::summative-assessment"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::chapter-outline",
+      "label": "Chapter Outline",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design",
+        "learning-sciences::learning-objective"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::chapter-content-authoring",
+      "label": "Chapter Content Authoring",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::chapter-outline",
+        "learning-sciences::markdown-authoring"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::reference-list",
+      "label": "Reference List",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::table-of-contents",
+      "label": "Table of Contents",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design",
+        "learning-sciences::chapter-outline"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::search-index",
+      "label": "Search Index",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design",
+        "learning-sciences::mkdocs-material"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::site-navigation",
+      "label": "Site Navigation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design",
+        "learning-sciences::mkdocs-material"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::print-friendly-output",
+      "label": "Print-Friendly Output",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-design",
+        "learning-sciences::accessibility"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::large-language-model"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::context-window",
+      "label": "Context Window",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::large-language-model"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::token-budgeting",
+      "label": "Token Budgeting",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::context-window"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::skill-md-format",
+      "label": "SKILL.md Format",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::agent-skill",
+        "learning-sciences::markdown-authoring"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::skill-invocation",
+      "label": "Skill Invocation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::agent-skill",
+        "learning-sciences::skill-md-format"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::course-description-analyzer",
+      "label": "Course Description Analyzer",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::bloom-taxonomy-2001",
+        "learning-sciences::learning-objective"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::learning-graph-generator",
+      "label": "Learning Graph Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::learning-graph"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::book-chapter-generator",
+      "label": "Book Chapter Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::chapter-outline",
+        "learning-sciences::learning-graph-generator"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::chapter-content-generator",
+      "label": "Chapter Content Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::chapter-content-authoring",
+        "learning-sciences::book-chapter-generator"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::glossary-generator",
+      "label": "Glossary Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::glossary"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::faq-generator",
+      "label": "FAQ Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::faq-section"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::quiz-generator",
+      "label": "Quiz Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::quiz-bank",
+        "learning-sciences::bloom-taxonomy-2001"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::microsim-generator",
+      "label": "MicroSim Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::microsim"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::story-generator",
+      "label": "Story Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::graphic-novel-chapter"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::reference-generator",
+      "label": "Reference Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::reference-list"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::book-metrics-generator",
+      "label": "Book Metrics Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::quality-metrics"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::diagram-reports-generator",
+      "label": "Diagram Reports Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::microsim"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::linkedin-announcement-generator",
+      "label": "LinkedIn Announcement Generator",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::book-metrics-generator"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::concept-classifier",
+      "label": "Concept Classifier",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::skill-invocation",
+        "learning-sciences::microsim",
+        "learning-sciences::bloom-taxonomy-2001"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::microsim",
+      "label": "MicroSim",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::microsim-design-principles",
+      "label": "MicroSim Design Principles",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim",
+        "learning-sciences::cognitive-load-theory"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::p5-js-library",
+      "label": "p5.js Library",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::chart-js-library",
+      "label": "Chart.js Library",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::plotly-library",
+      "label": "Plotly Library",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mermaid-diagram",
+      "label": "Mermaid Diagram",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim",
+        "learning-sciences::markdown-authoring"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::vis-network-library",
+      "label": "vis-network Library",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::leaflet-map-library",
+      "label": "Leaflet Map Library",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::venn-js-library",
+      "label": "Venn.js Library",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::interactive-infographic",
+      "label": "Interactive Infographic",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim",
+        "learning-sciences::dual-coding-theory"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::microsim-control-complexity",
+      "label": "MicroSim Control Complexity",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim-design-principles",
+        "learning-sciences::cognitive-load"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::iframe-embedding",
+      "label": "Iframe Embedding",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim",
+        "learning-sciences::mkdocs-material"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::screen-capture-automation",
+      "label": "Screen Capture Automation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::microsim",
+        "learning-sciences::iframe-embedding"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::diagram-overlay-pattern",
+      "label": "Diagram Overlay Pattern",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::interactive-infographic",
+        "learning-sciences::mermaid-diagram"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::pedagogical-mascot",
+      "label": "Pedagogical Mascot",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::motivation-domain",
+        "learning-sciences::engagement"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mascot-persona",
+      "label": "Mascot Persona",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::pedagogical-mascot"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mascot-visual-identity",
+      "label": "Mascot Visual Identity",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::pedagogical-mascot"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mascot-voice-guide",
+      "label": "Mascot Voice Guide",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-persona"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mascot-admonition",
+      "label": "Mascot Admonition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::pedagogical-mascot",
+        "learning-sciences::markdown-authoring"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::hint-admonition",
+      "label": "Hint Admonition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-admonition"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::warning-admonition",
+      "label": "Warning Admonition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-admonition"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::tip-admonition",
+      "label": "Tip Admonition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-admonition"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::encouragement-admonition",
+      "label": "Encouragement Admonition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-admonition",
+        "learning-sciences::self-efficacy"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::danger-admonition",
+      "label": "Danger Admonition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-admonition",
+        "learning-sciences::warning-admonition"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::understanding-check-admonition",
+      "label": "Understanding Check Admonition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-admonition",
+        "learning-sciences::retrieval-practice"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::admonition-css-styling",
+      "label": "Admonition CSS Styling",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-admonition",
+        "learning-sciences::mkdocs-material"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::narrative-voice-consistency",
+      "label": "Narrative Voice Consistency",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mascot-voice-guide"
+      ],
+      "taxonomy_id": "MASC",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::graphic-novel-chapter",
+      "label": "Graphic Novel Chapter",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::engagement",
+        "learning-sciences::intelligent-textbook"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::short-form-narrative",
+      "label": "Short-Form Narrative",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::graphic-novel-chapter"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::twelve-panel-story",
+      "label": "Twelve Panel Story",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::short-form-narrative"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::panel-composition",
+      "label": "Panel Composition",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::twelve-panel-story"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::image-prompt-engineering",
+      "label": "Image Prompt Engineering",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::prompt-engineering",
+        "learning-sciences::graphic-novel-chapter"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::image-generation",
+      "label": "Image Generation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::image-prompt-engineering",
+        "learning-sciences::generative-ai"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::historical-figure-selection",
+      "label": "Historical Figure Selection",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::graphic-novel-chapter",
+        "learning-sciences::curiosity"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::narrative-transportation",
+      "label": "Narrative Transportation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::engagement",
+        "learning-sciences::short-form-narrative"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::story-arc-structure",
+      "label": "Story Arc Structure",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::twelve-panel-story"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::character-design",
+      "label": "Character Design",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::panel-composition"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::speech-bubble-design",
+      "label": "Speech Bubble Design",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::panel-composition"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::caption-box-writing",
+      "label": "Caption Box Writing",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::panel-composition",
+        "learning-sciences::markdown-authoring"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::historical-accuracy-check",
+      "label": "Historical Accuracy Check",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::historical-figure-selection",
+        "learning-sciences::evidence-based-pedagogy"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::story-engagement-techniques",
+      "label": "Story Engagement Techniques",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::narrative-transportation",
+        "learning-sciences::story-arc-structure"
+      ],
+      "taxonomy_id": "GN",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::capstone-project",
+      "label": "Capstone Project",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::seven-domains",
+        "learning-sciences::intelligent-textbook-design",
+        "learning-sciences::chapter-content-authoring"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::github-pages-deployment",
+      "label": "GitHub Pages Deployment",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mkdocs-build-process",
+        "learning-sciences::mkdocs-material"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mkdocs-build-process",
+      "label": "MkDocs Build Process",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mkdocs-material",
+        "learning-sciences::markdown-authoring"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::portfolio-artifact",
+      "label": "Portfolio Artifact",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::capstone-project",
+        "learning-sciences::github-pages-deployment"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::peer-review-process",
+      "label": "Peer Review Process",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::capstone-project",
+        "learning-sciences::assessment-rubric"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::iterative-improvement",
+      "label": "Iterative Improvement",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::peer-review-process",
+        "learning-sciences::quality-metrics"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::accessibility-audit-basics",
+      "label": "Accessibility Audit Basics",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::accessibility",
+        "learning-sciences::universal-design-for-learning"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::publishing-workflow",
+      "label": "Publishing Workflow",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::mkdocs-build-process",
+        "learning-sciences::github-pages-deployment"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::chapter-rubric-evaluation",
+      "label": "Chapter Rubric Evaluation",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::assessment-rubric",
+        "learning-sciences::chapter-content-authoring"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::mastery-demonstration",
+      "label": "Mastery Demonstration",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::capstone-project",
+        "learning-sciences::mastery-learning",
+        "learning-sciences::portfolio-artifact"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::image-generation-costs",
+      "label": "Image Generation Costs",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::image-generation",
+        "learning-sciences::token-budgeting"
+      ],
+      "taxonomy_id": "AIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::intelligent-textbook-level",
+      "label": "Intelligent Textbook Level",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::privacy-inflection-point",
+      "label": "Privacy Inflection Point",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-level"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::ferpa",
+      "label": "FERPA",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::privacy-inflection-point"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::coppa",
+      "label": "COPPA",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::privacy-inflection-point"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::gdpr",
+      "label": "GDPR",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::privacy-inflection-point"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::ccpa-cpra",
+      "label": "CCPA CPRA",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::privacy-inflection-point"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::data-minimization",
+      "label": "Data Minimization",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::privacy-inflection-point"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::xapi",
+      "label": "xAPI",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::intelligent-textbook-level",
+        "learning-sciences::learning-analytics"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "learning-sciences::learning-record-store",
+      "label": "Learning Record Store",
+      "subject_id": "learning-sciences",
+      "dependencies": [
+        "learning-sciences::xapi",
+        "learning-sciences::privacy-inflection-point"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    }
+  ]
+}

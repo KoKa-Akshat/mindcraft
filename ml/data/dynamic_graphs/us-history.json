@@ -1,0 +1,4888 @@
+{
+  "subject_id": "us-history",
+  "title": "U.S. History",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "NEWWLD": {
+      "classifier_name": "New World and Early Contact",
+      "color": "DarkGoldenrod"
+    },
+    "COLAM": {
+      "classifier_name": "Colonial America",
+      "color": "Peru"
+    },
+    "REVOL": {
+      "classifier_name": "Revolution and Early Republic",
+      "color": "DarkGreen"
+    },
+    "EXPAN": {
+      "classifier_name": "Expansion and Reform",
+      "color": "LimeGreen"
+    },
+    "CIVWR": {
+      "classifier_name": "Civil War and Reconstruction",
+      "color": "Crimson"
+    },
+    "GILDD": {
+      "classifier_name": "Gilded Age and Immigration",
+      "color": "Gold"
+    },
+    "PROGR": {
+      "classifier_name": "Progressivism and WWI",
+      "color": "Teal"
+    },
+    "DEPRS": {
+      "classifier_name": "1920s and Great Depression",
+      "color": "DarkSlateBlue"
+    },
+    "WWII": {
+      "classifier_name": "WWII and Early Cold War",
+      "color": "Indigo"
+    },
+    "CIVRT": {
+      "classifier_name": "Civil Rights and Vietnam",
+      "color": "DarkOrchid"
+    },
+    "MODRA": {
+      "classifier_name": "Reagan Era to Modern Day",
+      "color": "HotPink"
+    },
+    "AIERA": {
+      "classifier_name": "Age of AI",
+      "color": "Orange"
+    },
+    "APTHEME": {
+      "classifier_name": "AP Thematic Lenses",
+      "color": "DodgerBlue"
+    },
+    "SKILLS": {
+      "classifier_name": "Historical Thinking Skills",
+      "color": "OliveDrab"
+    }
+  },
+  "concepts": [
+    {
+      "id": "us-history::pre-columbian-civilizations",
+      "label": "Pre-Columbian Civilizations",
+      "subject_id": "us-history",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "us-history::indigenous-north-american-cultures",
+      "label": "Indigenous North American Cultures",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::pre-columbian-civilizations"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::aztec-empire",
+      "label": "Aztec Empire",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::pre-columbian-civilizations"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::inca-empire",
+      "label": "Inca Empire",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::pre-columbian-civilizations"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::mississippian-culture",
+      "label": "Mississippian Culture",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::iroquois-confederacy",
+      "label": "Iroquois Confederacy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::european-exploration-motives",
+      "label": "European Exploration Motives",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::pre-columbian-civilizations"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::christopher-columbus",
+      "label": "Christopher Columbus",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::european-exploration-motives"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::spanish-conquistadors",
+      "label": "Spanish Conquistadors",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::christopher-columbus",
+        "us-history::aztec-empire",
+        "us-history::inca-empire"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::columbian-exchange",
+      "label": "Columbian Exchange",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::christopher-columbus",
+        "us-history::pre-columbian-civilizations",
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::disease-and-indigenous-depopulation",
+      "label": "Disease and Indigenous Depopulation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::columbian-exchange",
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::french-exploration",
+      "label": "French Exploration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::european-exploration-motives"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::dutch-exploration",
+      "label": "Dutch Exploration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::european-exploration-motives"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::english-exploration",
+      "label": "English Exploration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::european-exploration-motives"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::treaty-of-tordesillas",
+      "label": "Treaty of Tordesillas",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::christopher-columbus",
+        "us-history::european-exploration-motives"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::encomienda-system",
+      "label": "Encomienda System",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::spanish-conquistadors",
+        "us-history::disease-and-indigenous-depopulation"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::atlantic-slave-trade-origins",
+      "label": "Atlantic Slave Trade Origins",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::encomienda-system",
+        "us-history::european-exploration-motives"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::jamestown-settlement",
+      "label": "Jamestown Settlement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::english-exploration"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::john-smith",
+      "label": "John Smith",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::jamestown-settlement"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::powhatan-confederacy",
+      "label": "Powhatan Confederacy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::indigenous-north-american-cultures",
+        "us-history::jamestown-settlement"
+      ],
+      "taxonomy_id": "NEWWLD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::new-england-colonies",
+      "label": "New England Colonies",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::english-exploration",
+        "us-history::jamestown-settlement"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::middle-colonies",
+      "label": "Middle Colonies",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::english-exploration"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::southern-colonies",
+      "label": "Southern Colonies",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::jamestown-settlement"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::puritan-migration",
+      "label": "Puritan Migration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-england-colonies"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::massachusetts-bay-colony",
+      "label": "Massachusetts Bay Colony",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::puritan-migration"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::roger-williams-and-rhode-island",
+      "label": "Roger Williams and Rhode Island",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::massachusetts-bay-colony"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::anne-hutchinson",
+      "label": "Anne Hutchinson",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::massachusetts-bay-colony"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::headright-system",
+      "label": "Headright System",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::southern-colonies"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::indentured-servitude",
+      "label": "Indentured Servitude",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::headright-system"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::slavery-in-the-colonies",
+      "label": "Slavery in the Colonies",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::atlantic-slave-trade-origins",
+        "us-history::indentured-servitude",
+        "us-history::southern-colonies"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::triangular-trade",
+      "label": "Triangular Trade",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::slavery-in-the-colonies",
+        "us-history::atlantic-slave-trade-origins"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::mercantilism",
+      "label": "Mercantilism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::triangular-trade"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::navigation-acts",
+      "label": "Navigation Acts",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::mercantilism"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::bacon-s-rebellion",
+      "label": "Bacon's Rebellion",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::indentured-servitude",
+        "us-history::southern-colonies"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::salem-witch-trials",
+      "label": "Salem Witch Trials",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::massachusetts-bay-colony",
+        "us-history::puritan-migration"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::colonial-governance",
+      "label": "Colonial Governance",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-england-colonies",
+        "us-history::middle-colonies",
+        "us-history::southern-colonies"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::town-meetings",
+      "label": "Town Meetings",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-england-colonies",
+        "us-history::colonial-governance"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::house-of-burgesses",
+      "label": "House of Burgesses",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::southern-colonies",
+        "us-history::colonial-governance"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::great-awakening",
+      "label": "Great Awakening",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::massachusetts-bay-colony",
+        "us-history::middle-colonies"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::jonathan-edwards",
+      "label": "Jonathan Edwards",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::great-awakening"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::colonial-social-structure",
+      "label": "Colonial Social Structure",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::slavery-in-the-colonies",
+        "us-history::indentured-servitude",
+        "us-history::colonial-governance"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::plantation-economy",
+      "label": "Plantation Economy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::slavery-in-the-colonies",
+        "us-history::southern-colonies"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::middle-passage",
+      "label": "Middle Passage",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::atlantic-slave-trade-origins",
+        "us-history::slavery-in-the-colonies"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::colonial-education",
+      "label": "Colonial Education",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::massachusetts-bay-colony",
+        "us-history::colonial-governance"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::albany-plan-of-union",
+      "label": "Albany Plan of Union",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::colonial-governance",
+        "us-history::middle-colonies",
+        "us-history::new-england-colonies"
+      ],
+      "taxonomy_id": "COLAM",
+      "level": "core"
+    },
+    {
+      "id": "us-history::french-and-indian-war",
+      "label": "French and Indian War",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::french-exploration",
+        "us-history::new-england-colonies",
+        "us-history::albany-plan-of-union"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::proclamation-of-1763",
+      "label": "Proclamation of 1763",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::french-and-indian-war",
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::stamp-act",
+      "label": "Stamp Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::proclamation-of-1763",
+        "us-history::navigation-acts"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::townshend-acts",
+      "label": "Townshend Acts",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::stamp-act"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::boston-massacre",
+      "label": "Boston Massacre",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::townshend-acts"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::boston-tea-party",
+      "label": "Boston Tea Party",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::townshend-acts",
+        "us-history::navigation-acts"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::intolerable-acts",
+      "label": "Intolerable Acts",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::boston-tea-party"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::first-continental-congress",
+      "label": "First Continental Congress",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::intolerable-acts"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::lexington-and-concord",
+      "label": "Lexington and Concord",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::first-continental-congress"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::second-continental-congress",
+      "label": "Second Continental Congress",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lexington-and-concord"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::common-sense-paine",
+      "label": "Common Sense (Paine)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::second-continental-congress"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::declaration-of-independence",
+      "label": "Declaration of Independence",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::second-continental-congress",
+        "us-history::common-sense-paine"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::thomas-jefferson",
+      "label": "Thomas Jefferson",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::declaration-of-independence"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::revolutionary-war-major-battles",
+      "label": "Revolutionary War Major Battles",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lexington-and-concord",
+        "us-history::second-continental-congress"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::valley-forge",
+      "label": "Valley Forge",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::revolutionary-war-major-battles"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::marquis-de-lafayette",
+      "label": "Marquis de Lafayette",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::revolutionary-war-major-battles",
+        "us-history::valley-forge"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::treaty-of-paris-1783",
+      "label": "Treaty of Paris 1783",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::revolutionary-war-major-battles",
+        "us-history::declaration-of-independence"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::articles-of-confederation",
+      "label": "Articles of Confederation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::second-continental-congress",
+        "us-history::treaty-of-paris-1783"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::shays-rebellion",
+      "label": "Shays' Rebellion",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::articles-of-confederation"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::constitutional-convention",
+      "label": "Constitutional Convention",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::shays-rebellion",
+        "us-history::articles-of-confederation"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::great-compromise",
+      "label": "Great Compromise",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::three-fifths-compromise",
+      "label": "Three-Fifths Compromise",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention",
+        "us-history::slavery-in-the-colonies"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::federalism",
+      "label": "Federalism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention",
+        "us-history::great-compromise"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::anti-federalism",
+      "label": "Anti-Federalism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::federalist-papers",
+      "label": "Federalist Papers",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::bill-of-rights",
+      "label": "Bill of Rights",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::federalist-papers",
+        "us-history::anti-federalism"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::george-washington-as-president",
+      "label": "George Washington as President",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention",
+        "us-history::treaty-of-paris-1783"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::alexander-hamilton",
+      "label": "Alexander Hamilton",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::george-washington-as-president",
+        "us-history::federalist-papers"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::thomas-jefferson-as-secretary-of-state",
+      "label": "Thomas Jefferson as Secretary of State",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::george-washington-as-president",
+        "us-history::thomas-jefferson"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::national-bank-debate",
+      "label": "National Bank Debate",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::alexander-hamilton",
+        "us-history::thomas-jefferson-as-secretary-of-state"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::washington-s-farewell-address",
+      "label": "Washington's Farewell Address",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::george-washington-as-president"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::john-adams-presidency",
+      "label": "John Adams Presidency",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::washington-s-farewell-address",
+        "us-history::george-washington-as-president"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::xyz-affair",
+      "label": "XYZ Affair",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::john-adams-presidency"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::alien-and-sedition-acts",
+      "label": "Alien and Sedition Acts",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::xyz-affair",
+        "us-history::bill-of-rights"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::virginia-and-kentucky-resolutions",
+      "label": "Virginia and Kentucky Resolutions",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::alien-and-sedition-acts",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "REVOL",
+      "level": "core"
+    },
+    {
+      "id": "us-history::election-of-1800",
+      "label": "Election of 1800",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::alien-and-sedition-acts",
+        "us-history::john-adams-presidency"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::jeffersonian-democracy",
+      "label": "Jeffersonian Democracy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::election-of-1800",
+        "us-history::thomas-jefferson"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::louisiana-purchase",
+      "label": "Louisiana Purchase",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::jeffersonian-democracy",
+        "us-history::thomas-jefferson-as-secretary-of-state"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::lewis-and-clark-expedition",
+      "label": "Lewis and Clark Expedition",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::louisiana-purchase"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::marbury-v-madison",
+      "label": "Marbury v. Madison",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::election-of-1800"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::judicial-review",
+      "label": "Judicial Review",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::marbury-v-madison"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::war-of-1812",
+      "label": "War of 1812",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::jeffersonian-democracy"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::era-of-good-feelings",
+      "label": "Era of Good Feelings",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::war-of-1812"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::monroe-doctrine",
+      "label": "Monroe Doctrine",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::era-of-good-feelings"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::missouri-compromise",
+      "label": "Missouri Compromise",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::era-of-good-feelings",
+        "us-history::slavery-in-the-colonies"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::jacksonian-democracy",
+      "label": "Jacksonian Democracy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::era-of-good-feelings"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::andrew-jackson",
+      "label": "Andrew Jackson",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::jacksonian-democracy"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::spoils-system",
+      "label": "Spoils System",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::andrew-jackson",
+        "us-history::jacksonian-democracy"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::nullification-crisis",
+      "label": "Nullification Crisis",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::andrew-jackson",
+        "us-history::virginia-and-kentucky-resolutions",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::indian-removal-act",
+      "label": "Indian Removal Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::andrew-jackson",
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::trail-of-tears",
+      "label": "Trail of Tears",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::indian-removal-act",
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::second-bank-of-the-united-states",
+      "label": "Second Bank of the United States",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::andrew-jackson",
+        "us-history::national-bank-debate"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::manifest-destiny",
+      "label": "Manifest Destiny",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::era-of-good-feelings",
+        "us-history::lewis-and-clark-expedition"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::texas-revolution",
+      "label": "Texas Revolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::manifest-destiny"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::mexican-american-war",
+      "label": "Mexican-American War",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::texas-revolution",
+        "us-history::manifest-destiny"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::seneca-falls-convention",
+      "label": "Seneca Falls Convention",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::abolitionism"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::abolitionism",
+      "label": "Abolitionism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::slavery-in-the-colonies"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::frederick-douglass",
+      "label": "Frederick Douglass",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::slavery-in-the-colonies",
+        "us-history::abolitionism"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::william-lloyd-garrison",
+      "label": "William Lloyd Garrison",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::abolitionism"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::underground-railroad",
+      "label": "Underground Railroad",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::abolitionism",
+        "us-history::slavery-in-the-colonies"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::temperance-movement",
+      "label": "Temperance Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::great-awakening"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::women-s-rights-movement",
+      "label": "Women's Rights Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::seneca-falls-convention",
+        "us-history::abolitionism"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::transcendentalism",
+      "label": "Transcendentalism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::great-awakening",
+        "us-history::colonial-education"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::industrial-revolution-in-america",
+      "label": "Industrial Revolution in America",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::mercantilism",
+        "us-history::colonial-education"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::market-revolution",
+      "label": "Market Revolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::industrial-revolution-in-america"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::transportation-revolution",
+      "label": "Transportation Revolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::market-revolution"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::erie-canal",
+      "label": "Erie Canal",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::transportation-revolution"
+      ],
+      "taxonomy_id": "EXPAN",
+      "level": "core"
+    },
+    {
+      "id": "us-history::sectionalism",
+      "label": "Sectionalism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::missouri-compromise",
+        "us-history::slavery-in-the-colonies",
+        "us-history::industrial-revolution-in-america"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::compromise-of-1850",
+      "label": "Compromise of 1850",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::sectionalism",
+        "us-history::mexican-american-war"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fugitive-slave-act",
+      "label": "Fugitive Slave Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::compromise-of-1850",
+        "us-history::slavery-in-the-colonies"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::uncle-tom-s-cabin",
+      "label": "Uncle Tom's Cabin",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::fugitive-slave-act",
+        "us-history::abolitionism"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::kansas-nebraska-act",
+      "label": "Kansas-Nebraska Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::compromise-of-1850",
+        "us-history::sectionalism"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::bleeding-kansas",
+      "label": "Bleeding Kansas",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::kansas-nebraska-act"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::republican-party-formation",
+      "label": "Republican Party Formation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::bleeding-kansas",
+        "us-history::abolitionism"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::dred-scott-decision",
+      "label": "Dred Scott Decision",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::kansas-nebraska-act",
+        "us-history::judicial-review"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::lincoln-douglas-debates",
+      "label": "Lincoln-Douglas Debates",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::dred-scott-decision",
+        "us-history::republican-party-formation"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::john-brown-s-raid",
+      "label": "John Brown's Raid",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::abolitionism",
+        "us-history::bleeding-kansas"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::election-of-1860",
+      "label": "Election of 1860",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lincoln-douglas-debates",
+        "us-history::republican-party-formation"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::southern-secession",
+      "label": "Southern Secession",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::election-of-1860",
+        "us-history::sectionalism"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::confederate-states-of-america",
+      "label": "Confederate States of America",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::southern-secession"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::abraham-lincoln",
+      "label": "Abraham Lincoln",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::election-of-1860"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::civil-war-causes",
+      "label": "Civil War Causes",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::sectionalism",
+        "us-history::dred-scott-decision",
+        "us-history::election-of-1860"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fort-sumter",
+      "label": "Fort Sumter",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::confederate-states-of-america",
+        "us-history::southern-secession"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::anaconda-plan",
+      "label": "Anaconda Plan",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::fort-sumter"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::battle-of-antietam",
+      "label": "Battle of Antietam",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::anaconda-plan"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::emancipation-proclamation",
+      "label": "Emancipation Proclamation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::battle-of-antietam",
+        "us-history::abraham-lincoln"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::battle-of-gettysburg",
+      "label": "Battle of Gettysburg",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::battle-of-antietam"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::total-war-strategy",
+      "label": "Total War Strategy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::battle-of-gettysburg"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::thirteenth-amendment",
+      "label": "Thirteenth Amendment",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::emancipation-proclamation",
+        "us-history::battle-of-gettysburg"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fourteenth-amendment",
+      "label": "Fourteenth Amendment",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::thirteenth-amendment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fifteenth-amendment",
+      "label": "Fifteenth Amendment",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::fourteenth-amendment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::reconstruction-plans",
+      "label": "Reconstruction Plans",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::abraham-lincoln",
+        "us-history::emancipation-proclamation"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::radical-reconstruction",
+      "label": "Radical Reconstruction",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::reconstruction-plans"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::freedmen-s-bureau",
+      "label": "Freedmen's Bureau",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::radical-reconstruction"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::carpetbaggers-and-scalawags",
+      "label": "Carpetbaggers and Scalawags",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::radical-reconstruction"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::black-codes",
+      "label": "Black Codes",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::radical-reconstruction",
+        "us-history::slavery-in-the-colonies"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::ku-klux-klan-origins",
+      "label": "Ku Klux Klan Origins",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::black-codes",
+        "us-history::radical-reconstruction"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::compromise-of-1877",
+      "label": "Compromise of 1877",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::radical-reconstruction",
+        "us-history::black-codes"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::redeemer-south",
+      "label": "Redeemer South",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::compromise-of-1877",
+        "us-history::ku-klux-klan-origins"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::sharecropping-system",
+      "label": "Sharecropping System",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::compromise-of-1877",
+        "us-history::black-codes"
+      ],
+      "taxonomy_id": "CIVWR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::transcontinental-railroad",
+      "label": "Transcontinental Railroad",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::transportation-revolution",
+        "us-history::manifest-destiny"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::railroad-expansion",
+      "label": "Railroad Expansion",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::transcontinental-railroad"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::rise-of-big-business",
+      "label": "Rise of Big Business",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::railroad-expansion",
+        "us-history::industrial-revolution-in-america"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::robber-barons",
+      "label": "Robber Barons",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::rise-of-big-business"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::andrew-carnegie",
+      "label": "Andrew Carnegie",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::rise-of-big-business",
+        "us-history::robber-barons"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::john-d-rockefeller",
+      "label": "John D. Rockefeller",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::rise-of-big-business",
+        "us-history::robber-barons"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::j-p-morgan",
+      "label": "J.P. Morgan",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::rise-of-big-business",
+        "us-history::robber-barons"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::social-darwinism",
+      "label": "Social Darwinism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::rise-of-big-business",
+        "us-history::robber-barons"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::horizontal-integration",
+      "label": "Horizontal Integration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::rise-of-big-business"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::vertical-integration",
+      "label": "Vertical Integration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::rise-of-big-business"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::trusts-and-monopolies",
+      "label": "Trusts and Monopolies",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::horizontal-integration",
+        "us-history::vertical-integration"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::sherman-antitrust-act",
+      "label": "Sherman Antitrust Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::trusts-and-monopolies",
+        "us-history::judicial-review"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::labor-movement-origins",
+      "label": "Labor Movement Origins",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::industrial-revolution-in-america",
+        "us-history::indentured-servitude"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::knights-of-labor",
+      "label": "Knights of Labor",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::labor-movement-origins"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::american-federation-of-labor",
+      "label": "American Federation of Labor",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::knights-of-labor"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::samuel-gompers",
+      "label": "Samuel Gompers",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::american-federation-of-labor"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::homestead-strike",
+      "label": "Homestead Strike",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::andrew-carnegie",
+        "us-history::knights-of-labor"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::pullman-strike",
+      "label": "Pullman Strike",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::railroad-expansion",
+        "us-history::american-federation-of-labor"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::new-immigration-wave",
+      "label": "New Immigration Wave",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::industrial-revolution-in-america",
+        "us-history::transcontinental-railroad"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::ellis-island",
+      "label": "Ellis Island",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-immigration-wave"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::urbanization",
+      "label": "Urbanization",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-immigration-wave",
+        "us-history::transcontinental-railroad"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::tenement-housing",
+      "label": "Tenement Housing",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::urbanization"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::political-machines",
+      "label": "Political Machines",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::urbanization",
+        "us-history::spoils-system"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::tammany-hall",
+      "label": "Tammany Hall",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::political-machines"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::populist-movement",
+      "label": "Populist Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::railroad-expansion",
+        "us-history::labor-movement-origins"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::william-jennings-bryan",
+      "label": "William Jennings Bryan",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::populist-movement"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::farmers-alliance",
+      "label": "Farmers' Alliance",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::populist-movement"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::gold-standard-debate",
+      "label": "Gold Standard Debate",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::william-jennings-bryan",
+        "us-history::second-bank-of-the-united-states"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::gilded-age-politics",
+      "label": "Gilded Age Politics",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::robber-barons",
+        "us-history::political-machines"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::civil-service-reform",
+      "label": "Civil Service Reform",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::gilded-age-politics",
+        "us-history::spoils-system"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::pendleton-act",
+      "label": "Pendleton Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::civil-service-reform"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::native-american-wars",
+      "label": "Native American Wars",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::indigenous-north-american-cultures",
+        "us-history::manifest-destiny",
+        "us-history::railroad-expansion"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::battle-of-little-bighorn",
+      "label": "Battle of Little Bighorn",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::native-american-wars"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::dawes-act",
+      "label": "Dawes Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::native-american-wars",
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::ghost-dance-movement",
+      "label": "Ghost Dance Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::dawes-act",
+        "us-history::indigenous-north-american-cultures"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::closing-of-the-frontier",
+      "label": "Closing of the Frontier",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::manifest-destiny",
+        "us-history::dawes-act"
+      ],
+      "taxonomy_id": "GILDD",
+      "level": "core"
+    },
+    {
+      "id": "us-history::progressive-era",
+      "label": "Progressive Era",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::gilded-age-politics",
+        "us-history::populist-movement",
+        "us-history::social-darwinism"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::muckrakers",
+      "label": "Muckrakers",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::progressive-era",
+        "us-history::gilded-age-politics"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::upton-sinclair-and-the-jungle",
+      "label": "Upton Sinclair and The Jungle",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::muckrakers"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::ida-tarbell",
+      "label": "Ida Tarbell",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::muckrakers",
+        "us-history::john-d-rockefeller"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::jacob-riis",
+      "label": "Jacob Riis",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::muckrakers",
+        "us-history::tenement-housing"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::theodore-roosevelt",
+      "label": "Theodore Roosevelt",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::progressive-era",
+        "us-history::square-deal"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::square-deal",
+      "label": "Square Deal",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::progressive-era",
+        "us-history::labor-movement-origins"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::trust-busting",
+      "label": "Trust-Busting",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::square-deal",
+        "us-history::sherman-antitrust-act",
+        "us-history::theodore-roosevelt"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::pure-food-and-drug-act",
+      "label": "Pure Food and Drug Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::upton-sinclair-and-the-jungle",
+        "us-history::theodore-roosevelt"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::sixteenth-amendment-income-tax",
+      "label": "Sixteenth Amendment (Income Tax)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::progressive-era",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::seventeenth-amendment-direct-election",
+      "label": "Seventeenth Amendment (Direct Election)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::progressive-era",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::eighteenth-amendment-prohibition",
+      "label": "Eighteenth Amendment (Prohibition)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::progressive-era",
+        "us-history::temperance-movement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::nineteenth-amendment-women-s-suffrage",
+      "label": "Nineteenth Amendment (Women's Suffrage)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::women-s-rights-movement",
+        "us-history::progressive-era"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::susan-b-anthony",
+      "label": "Susan B. Anthony",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::women-s-rights-movement"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::women-s-suffrage-movement",
+      "label": "Women's Suffrage Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::women-s-rights-movement",
+        "us-history::susan-b-anthony"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::naacp-formation",
+      "label": "NAACP Formation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::ku-klux-klan-origins",
+        "us-history::progressive-era"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::booker-t-washington",
+      "label": "Booker T. Washington",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::freedmen-s-bureau",
+        "us-history::progressive-era"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::w-e-b-du-bois",
+      "label": "W.E.B. Du Bois",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::naacp-formation",
+        "us-history::booker-t-washington"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::spanish-american-war",
+      "label": "Spanish-American War",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::closing-of-the-frontier",
+        "us-history::gilded-age-politics"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::uss-maine-incident",
+      "label": "USS Maine Incident",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::spanish-american-war"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::treaty-of-paris-1898",
+      "label": "Treaty of Paris 1898",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::spanish-american-war"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::philippines-acquisition",
+      "label": "Philippines Acquisition",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::treaty-of-paris-1898"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::anti-imperialist-league",
+      "label": "Anti-Imperialist League",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::philippines-acquisition"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::panama-canal",
+      "label": "Panama Canal",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::spanish-american-war",
+        "us-history::theodore-roosevelt"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::roosevelt-corollary",
+      "label": "Roosevelt Corollary",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::monroe-doctrine",
+        "us-history::theodore-roosevelt"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::dollar-diplomacy",
+      "label": "Dollar Diplomacy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::roosevelt-corollary"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::woodrow-wilson",
+      "label": "Woodrow Wilson",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::progressive-era",
+        "us-history::theodore-roosevelt"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::world-war-i-causes",
+      "label": "World War I Causes",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::woodrow-wilson",
+        "us-history::roosevelt-corollary"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::zimmermann-telegram",
+      "label": "Zimmermann Telegram",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::world-war-i-causes"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::u-s-entry-into-wwi",
+      "label": "U.S. Entry into WWI",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::zimmermann-telegram",
+        "us-history::world-war-i-causes"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::selective-service-act",
+      "label": "Selective Service Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-entry-into-wwi"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::home-front-mobilization-wwi",
+      "label": "Home Front Mobilization (WWI)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-entry-into-wwi",
+        "us-history::selective-service-act"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::committee-on-public-information",
+      "label": "Committee on Public Information",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::home-front-mobilization-wwi"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::espionage-and-sedition-acts",
+      "label": "Espionage and Sedition Acts",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::committee-on-public-information",
+        "us-history::bill-of-rights"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fourteen-points",
+      "label": "Fourteen Points",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::woodrow-wilson",
+        "us-history::u-s-entry-into-wwi"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::treaty-of-versailles",
+      "label": "Treaty of Versailles",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::fourteen-points",
+        "us-history::u-s-entry-into-wwi"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::senate-rejection-of-league-of-nations",
+      "label": "Senate Rejection of League of Nations",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::treaty-of-versailles",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::red-scare-first",
+      "label": "Red Scare (First)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::espionage-and-sedition-acts",
+        "us-history::u-s-entry-into-wwi"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::palmer-raids",
+      "label": "Palmer Raids",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::red-scare-first"
+      ],
+      "taxonomy_id": "PROGR",
+      "level": "core"
+    },
+    {
+      "id": "us-history::consumer-culture-of-1920s",
+      "label": "Consumer Culture of 1920s",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::treaty-of-versailles",
+        "us-history::industrial-revolution-in-america"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::automobile-culture",
+      "label": "Automobile Culture",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::consumer-culture-of-1920s",
+        "us-history::transportation-revolution"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::mass-media-and-radio",
+      "label": "Mass Media and Radio",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::consumer-culture-of-1920s"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::harlem-renaissance",
+      "label": "Harlem Renaissance",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::w-e-b-du-bois",
+        "us-history::urbanization"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::langston-hughes",
+      "label": "Langston Hughes",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::harlem-renaissance"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::jazz-age",
+      "label": "Jazz Age",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::harlem-renaissance",
+        "us-history::consumer-culture-of-1920s"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::prohibition-era",
+      "label": "Prohibition Era",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::eighteenth-amendment-prohibition",
+        "us-history::consumer-culture-of-1920s"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::bootlegging-and-organized-crime",
+      "label": "Bootlegging and Organized Crime",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::prohibition-era"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::scopes-trial",
+      "label": "Scopes Trial",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::progressive-era",
+        "us-history::great-awakening"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::nativism-and-anti-immigration",
+      "label": "Nativism and Anti-Immigration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::red-scare-first",
+        "us-history::new-immigration-wave"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::emergency-quota-act",
+      "label": "Emergency Quota Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::nativism-and-anti-immigration",
+        "us-history::new-immigration-wave"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::national-origins-act",
+      "label": "National Origins Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::emergency-quota-act"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::ku-klux-klan-1920s-revival",
+      "label": "Ku Klux Klan 1920s Revival",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::ku-klux-klan-origins",
+        "us-history::nativism-and-anti-immigration"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::1929-stock-market-crash",
+      "label": "1929 Stock Market Crash",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::consumer-culture-of-1920s",
+        "us-history::gold-standard-debate"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::causes-of-the-great-depression",
+      "label": "Causes of the Great Depression",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::1929-stock-market-crash",
+        "us-history::consumer-culture-of-1920s"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::bank-failures",
+      "label": "Bank Failures",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::1929-stock-market-crash",
+        "us-history::causes-of-the-great-depression"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::herbert-hoover-s-response",
+      "label": "Herbert Hoover's Response",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::causes-of-the-great-depression",
+        "us-history::bank-failures"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::hoovervilles",
+      "label": "Hoovervilles",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::herbert-hoover-s-response"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::bonus-army",
+      "label": "Bonus Army",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::herbert-hoover-s-response",
+        "us-history::selective-service-act"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::franklin-d-roosevelt",
+      "label": "Franklin D. Roosevelt",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::herbert-hoover-s-response",
+        "us-history::bonus-army"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::new-deal-programs",
+      "label": "New Deal Programs",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::franklin-d-roosevelt",
+        "us-history::causes-of-the-great-depression"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::civilian-conservation-corps",
+      "label": "Civilian Conservation Corps",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-deal-programs"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::social-security-act",
+      "label": "Social Security Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-deal-programs"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::tennessee-valley-authority",
+      "label": "Tennessee Valley Authority",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-deal-programs"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::wagner-act",
+      "label": "Wagner Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-deal-programs",
+        "us-history::american-federation-of-labor"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::court-packing-plan",
+      "label": "Court-Packing Plan",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-deal-programs",
+        "us-history::judicial-review"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::dust-bowl",
+      "label": "Dust Bowl",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::causes-of-the-great-depression",
+        "us-history::labor-rights-evolution"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::okies-migration",
+      "label": "Okies Migration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::dust-bowl"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::rise-of-fascism-in-europe",
+      "label": "Rise of Fascism in Europe",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::causes-of-the-great-depression",
+        "us-history::treaty-of-versailles"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::hitler-and-nazi-germany",
+      "label": "Hitler and Nazi Germany",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::rise-of-fascism-in-europe"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::u-s-isolationism-pre-wwii",
+      "label": "U.S. Isolationism Pre-WWII",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::senate-rejection-of-league-of-nations",
+        "us-history::rise-of-fascism-in-europe"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::neutrality-acts",
+      "label": "Neutrality Acts",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-isolationism-pre-wwii"
+      ],
+      "taxonomy_id": "DEPRS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::german-blitzkrieg",
+      "label": "German Blitzkrieg",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::hitler-and-nazi-germany"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::lend-lease-act",
+      "label": "Lend-Lease Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::neutrality-acts",
+        "us-history::franklin-d-roosevelt"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::attack-on-pearl-harbor",
+      "label": "Attack on Pearl Harbor",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::neutrality-acts",
+        "us-history::philippines-acquisition"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::u-s-entry-into-wwii",
+      "label": "U.S. Entry into WWII",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::attack-on-pearl-harbor",
+        "us-history::lend-lease-act"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::home-front-war-production",
+      "label": "Home Front War Production",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-entry-into-wwii",
+        "us-history::new-deal-programs"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::women-in-the-workforce-wwii",
+      "label": "Women in the Workforce (WWII)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::home-front-war-production",
+        "us-history::women-s-suffrage-movement"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::rosie-the-riveter",
+      "label": "Rosie the Riveter",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::women-in-the-workforce-wwii"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::japanese-american-internment",
+      "label": "Japanese American Internment",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-entry-into-wwii",
+        "us-history::attack-on-pearl-harbor"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::korematsu-v-united-states",
+      "label": "Korematsu v. United States",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::japanese-american-internment",
+        "us-history::judicial-review"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::d-day-normandy-invasion",
+      "label": "D-Day (Normandy Invasion)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-entry-into-wwii",
+        "us-history::german-blitzkrieg"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::island-hopping-strategy",
+      "label": "Island Hopping Strategy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-entry-into-wwii"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::manhattan-project",
+      "label": "Manhattan Project",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-entry-into-wwii"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::atomic-bombs-on-japan",
+      "label": "Atomic Bombs on Japan",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::manhattan-project",
+        "us-history::island-hopping-strategy"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::holocaust-and-u-s-response",
+      "label": "Holocaust and U.S. Response",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::hitler-and-nazi-germany",
+        "us-history::u-s-entry-into-wwii"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::yalta-conference",
+      "label": "Yalta Conference",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::d-day-normandy-invasion",
+        "us-history::atomic-bombs-on-japan"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::united-nations-formation",
+      "label": "United Nations Formation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::yalta-conference",
+        "us-history::fourteen-points"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::origins-of-the-cold-war",
+      "label": "Origins of the Cold War",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::yalta-conference",
+        "us-history::atomic-bombs-on-japan",
+        "us-history::united-nations-formation"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::containment-policy",
+      "label": "Containment Policy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::origins-of-the-cold-war"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::truman-doctrine",
+      "label": "Truman Doctrine",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::containment-policy"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::marshall-plan",
+      "label": "Marshall Plan",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::truman-doctrine"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::berlin-blockade",
+      "label": "Berlin Blockade",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::truman-doctrine",
+        "us-history::marshall-plan"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::nato-formation",
+      "label": "NATO Formation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::berlin-blockade",
+        "us-history::united-nations-formation"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::korean-war",
+      "label": "Korean War",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::truman-doctrine",
+        "us-history::containment-policy"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::mccarthyism",
+      "label": "McCarthyism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::red-scare-first",
+        "us-history::korean-war",
+        "us-history::origins-of-the-cold-war"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::house-un-american-activities-committee",
+      "label": "House Un-American Activities Committee",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::mccarthyism"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::arms-race",
+      "label": "Arms Race",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::atomic-bombs-on-japan",
+        "us-history::origins-of-the-cold-war"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::space-race",
+      "label": "Space Race",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::arms-race",
+        "us-history::origins-of-the-cold-war"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::eisenhower-and-military-industrial-complex",
+      "label": "Eisenhower and Military-Industrial Complex",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::korean-war",
+        "us-history::space-race"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::interstate-highway-system",
+      "label": "Interstate Highway System",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::eisenhower-and-military-industrial-complex",
+        "us-history::automobile-culture"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::baby-boom",
+      "label": "Baby Boom",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-entry-into-wwii",
+        "us-history::home-front-war-production"
+      ],
+      "taxonomy_id": "WWII",
+      "level": "core"
+    },
+    {
+      "id": "us-history::brown-v-board-of-education",
+      "label": "Brown v. Board of Education",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::fourteenth-amendment",
+        "us-history::naacp-formation",
+        "us-history::mccarthyism"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::montgomery-bus-boycott",
+      "label": "Montgomery Bus Boycott",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::brown-v-board-of-education"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::rosa-parks",
+      "label": "Rosa Parks",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::montgomery-bus-boycott"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::martin-luther-king-jr",
+      "label": "Martin Luther King Jr.",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::montgomery-bus-boycott",
+        "us-history::southern-christian-leadership-conference"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::southern-christian-leadership-conference",
+      "label": "Southern Christian Leadership Conference",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::montgomery-bus-boycott"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::student-nonviolent-coordinating-committee",
+      "label": "Student Nonviolent Coordinating Committee",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::montgomery-bus-boycott"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::sit-in-movement",
+      "label": "Sit-In Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::student-nonviolent-coordinating-committee"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::freedom-riders",
+      "label": "Freedom Riders",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::sit-in-movement",
+        "us-history::brown-v-board-of-education"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::birmingham-campaign",
+      "label": "Birmingham Campaign",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::martin-luther-king-jr",
+        "us-history::freedom-riders"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::march-on-washington",
+      "label": "March on Washington",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::birmingham-campaign",
+        "us-history::martin-luther-king-jr"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::civil-rights-act-of-1964",
+      "label": "Civil Rights Act of 1964",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::march-on-washington"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::voting-rights-act-of-1965",
+      "label": "Voting Rights Act of 1965",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::civil-rights-act-of-1964",
+        "us-history::fifteenth-amendment"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::malcolm-x",
+      "label": "Malcolm X",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::harlem-renaissance",
+        "us-history::brown-v-board-of-education"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::black-power-movement",
+      "label": "Black Power Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::malcolm-x",
+        "us-history::civil-rights-act-of-1964"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fair-housing-act-of-1968",
+      "label": "Fair Housing Act of 1968",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::civil-rights-act-of-1964",
+        "us-history::black-power-movement"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::great-society-programs",
+      "label": "Great Society Programs",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lyndon-b-johnson",
+        "us-history::civil-rights-act-of-1964"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::medicare-and-medicaid",
+      "label": "Medicare and Medicaid",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::great-society-programs",
+        "us-history::social-security-act"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::lyndon-b-johnson",
+      "label": "Lyndon B. Johnson",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::civil-rights-act-of-1964"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::gulf-of-tonkin-resolution",
+      "label": "Gulf of Tonkin Resolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lyndon-b-johnson",
+        "us-history::executive-power-expansion"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::vietnam-war-escalation",
+      "label": "Vietnam War Escalation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::gulf-of-tonkin-resolution",
+        "us-history::truman-doctrine"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::tet-offensive",
+      "label": "Tet Offensive",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::vietnam-war-escalation"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::anti-war-movement",
+      "label": "Anti-War Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::tet-offensive"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::kent-state-shooting",
+      "label": "Kent State Shooting",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::anti-war-movement"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::pentagon-papers",
+      "label": "Pentagon Papers",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::vietnam-war-escalation",
+        "us-history::anti-war-movement"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::nixon-and-d-tente",
+      "label": "Nixon and Détente",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::arms-race",
+        "us-history::vietnam-war-escalation",
+        "us-history::kent-state-shooting"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::watergate-scandal",
+      "label": "Watergate Scandal",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::nixon-and-d-tente"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::twenty-fourth-amendment",
+      "label": "Twenty-Fourth Amendment",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::fifteenth-amendment",
+        "us-history::civil-rights-act-of-1964"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::immigration-and-nationality-act-1965",
+      "label": "Immigration and Nationality Act 1965",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::civil-rights-act-of-1964"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::counterculture-movement",
+      "label": "Counterculture Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::baby-boom",
+        "us-history::anti-war-movement"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::second-wave-feminism",
+      "label": "Second-Wave Feminism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::women-s-suffrage-movement",
+        "us-history::civil-rights-act-of-1964"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::roe-v-wade",
+      "label": "Roe v. Wade",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::second-wave-feminism",
+        "us-history::judicial-review"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::american-indian-movement",
+      "label": "American Indian Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::trail-of-tears",
+        "us-history::civil-rights-act-of-1964"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::c-sar-ch-vez-and-farmworkers",
+      "label": "César Chávez and Farmworkers",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::civil-rights-act-of-1964",
+        "us-history::american-federation-of-labor"
+      ],
+      "taxonomy_id": "CIVRT",
+      "level": "core"
+    },
+    {
+      "id": "us-history::ford-and-carter-administrations",
+      "label": "Ford and Carter Administrations",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::watergate-scandal"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::oil-crisis-and-stagflation",
+      "label": "Oil Crisis and Stagflation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::ford-and-carter-administrations",
+        "us-history::gold-standard-debate"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::iranian-hostage-crisis",
+      "label": "Iranian Hostage Crisis",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::ford-and-carter-administrations"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::reagan-revolution",
+      "label": "Reagan Revolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::iranian-hostage-crisis",
+        "us-history::oil-crisis-and-stagflation"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::supply-side-economics-reaganomics",
+      "label": "Supply-Side Economics (Reaganomics)",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::reagan-revolution"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::tax-reform-act-1986",
+      "label": "Tax Reform Act 1986",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::supply-side-economics-reaganomics"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::cold-war-end",
+      "label": "Cold War End",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::reagan-revolution",
+        "us-history::arms-race"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::gorbachev-and-glasnost",
+      "label": "Gorbachev and Glasnost",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::cold-war-end",
+        "us-history::origins-of-the-cold-war"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fall-of-berlin-wall",
+      "label": "Fall of Berlin Wall",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::gorbachev-and-glasnost"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::dissolution-of-soviet-union",
+      "label": "Dissolution of Soviet Union",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::fall-of-berlin-wall"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::gulf-war-1991",
+      "label": "Gulf War 1991",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::dissolution-of-soviet-union",
+        "us-history::eisenhower-and-military-industrial-complex"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::clinton-era-and-globalization",
+      "label": "Clinton Era and Globalization",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::dissolution-of-soviet-union"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::nafta",
+      "label": "NAFTA",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::clinton-era-and-globalization"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::welfare-reform-act-1996",
+      "label": "Welfare Reform Act 1996",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::clinton-era-and-globalization",
+        "us-history::social-security-act"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::9-11-attacks",
+      "label": "9/11 Attacks",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::gulf-war-1991",
+        "us-history::state-sponsored-cyber-warfare"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::war-on-terror",
+      "label": "War on Terror",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::9-11-attacks"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::usa-patriot-act",
+      "label": "USA PATRIOT Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::war-on-terror",
+        "us-history::fourth-amendment-rights"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::iraq-war-2003",
+      "label": "Iraq War 2003",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::war-on-terror",
+        "us-history::gulf-war-1991"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::hurricane-katrina-response",
+      "label": "Hurricane Katrina Response",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::iraq-war-2003",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::2008-financial-crisis",
+      "label": "2008 Financial Crisis",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::clinton-era-and-globalization",
+        "us-history::rise-of-big-business"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::obama-presidency",
+      "label": "Obama Presidency",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::2008-financial-crisis"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::affordable-care-act",
+      "label": "Affordable Care Act",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::obama-presidency",
+        "us-history::medicare-and-medicaid"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::digital-revolution",
+      "label": "Digital Revolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::space-race",
+        "us-history::consumer-culture-of-1920s"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::social-media-and-political-polarization",
+      "label": "Social Media and Political Polarization",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::digital-revolution"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::tea-party-movement",
+      "label": "Tea Party Movement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::obama-presidency",
+        "us-history::reagan-revolution"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::black-lives-matter",
+      "label": "Black Lives Matter",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::tea-party-movement",
+        "us-history::black-power-movement"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::trump-presidency",
+      "label": "Trump Presidency",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::social-media-and-political-polarization",
+        "us-history::political-polarization"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::covid-19-pandemic-response",
+      "label": "COVID-19 Pandemic Response",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::trump-presidency"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::political-polarization",
+      "label": "Political Polarization",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::social-media-and-political-polarization",
+        "us-history::watergate-scandal"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::immigration-debates",
+      "label": "Immigration Debates",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::immigration-and-nationality-act-1965",
+        "us-history::immigration-policy-history",
+        "us-history::political-polarization"
+      ],
+      "taxonomy_id": "MODRA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::history-of-artificial-intelligence",
+      "label": "History of Artificial Intelligence",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::digital-revolution"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::machine-learning-fundamentals",
+      "label": "Machine Learning Fundamentals",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::history-of-artificial-intelligence"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::deep-learning-revolution",
+      "label": "Deep Learning Revolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::machine-learning-fundamentals"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::semiconductor-industry",
+      "label": "Semiconductor Industry",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::industrial-revolution-in-america",
+        "us-history::digital-revolution"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::geopolitics-of-semiconductors",
+      "label": "Geopolitics of Semiconductors",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::semiconductor-industry",
+        "us-history::america-in-the-world"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::tsmc-and-taiwan",
+      "label": "TSMC and Taiwan",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::geopolitics-of-semiconductors",
+        "us-history::semiconductor-industry"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::nvidia-and-gpu-computing",
+      "label": "NVIDIA and GPU Computing",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::deep-learning-revolution",
+        "us-history::semiconductor-industry"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::asml-and-euv-lithography",
+      "label": "ASML and EUV Lithography",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::semiconductor-industry",
+        "us-history::tsmc-and-taiwan"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::u-s-china-chip-wars",
+      "label": "U.S.-China Chip Wars",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::tsmc-and-taiwan",
+        "us-history::nvidia-and-gpu-computing",
+        "us-history::asml-and-euv-lithography"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::u-s-export-controls-on-ai-chips",
+      "label": "U.S. Export Controls on AI Chips",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-china-chip-wars",
+        "us-history::ai-and-national-security"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::china-domestic-chip-development",
+      "label": "China Domestic Chip Development",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::u-s-export-controls-on-ai-chips",
+        "us-history::u-s-china-chip-wars"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::ai-and-national-security",
+      "label": "AI and National Security",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::history-of-artificial-intelligence",
+        "us-history::eisenhower-and-military-industrial-complex"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::large-language-models",
+      "label": "Large Language Models",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::deep-learning-revolution",
+        "us-history::machine-learning-fundamentals"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::disinformation-and-ai",
+      "label": "Disinformation and AI",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::large-language-models",
+        "us-history::lost-cause-narrative"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::election-interference-and-ai",
+      "label": "Election Interference and AI",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::disinformation-and-ai",
+        "us-history::social-media-and-political-polarization"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::state-sponsored-cyber-warfare",
+      "label": "State-Sponsored Cyber Warfare",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::ai-and-national-security",
+        "us-history::digital-revolution"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::stuxnet-cyberattack",
+      "label": "Stuxnet Cyberattack",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::state-sponsored-cyber-warfare"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::solarwinds-attack",
+      "label": "SolarWinds Attack",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::state-sponsored-cyber-warfare"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::volt-typhoon-operation",
+      "label": "Volt Typhoon Operation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::state-sponsored-cyber-warfare",
+        "us-history::u-s-china-chip-wars"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::military-industrial-complex-transformation",
+      "label": "Military-Industrial Complex Transformation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::eisenhower-and-military-industrial-complex",
+        "us-history::ai-and-national-security",
+        "us-history::history-of-artificial-intelligence"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::drone-warfare",
+      "label": "Drone Warfare",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::military-industrial-complex-transformation"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::russia-ukraine-war-as-ai-laboratory",
+      "label": "Russia-Ukraine War as AI Laboratory",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::drone-warfare",
+        "us-history::state-sponsored-cyber-warfare",
+        "us-history::fpv-drone-swarms"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fpv-drone-swarms",
+      "label": "FPV Drone Swarms",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::drone-warfare"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::electronic-warfare",
+      "label": "Electronic Warfare",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::state-sponsored-cyber-warfare",
+        "us-history::fpv-drone-swarms"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::starlink-as-military-utility",
+      "label": "Starlink as Military Utility",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::space-race",
+        "us-history::russia-ukraine-war-as-ai-laboratory"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::autonomous-weapons-systems",
+      "label": "Autonomous Weapons Systems",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::drone-warfare",
+        "us-history::history-of-artificial-intelligence"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::human-in-the-loop-requirements",
+      "label": "Human-in-the-Loop Requirements",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::autonomous-weapons-systems",
+        "us-history::ai-safety-definitions"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::ai-safety-definitions",
+      "label": "AI Safety Definitions",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::history-of-artificial-intelligence",
+        "us-history::ai-and-national-security"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::historical-technology-power-shifts",
+      "label": "Historical Technology Power Shifts",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::arms-race",
+        "us-history::semiconductor-industry",
+        "us-history::history-of-artificial-intelligence"
+      ],
+      "taxonomy_id": "AIERA",
+      "level": "core"
+    },
+    {
+      "id": "us-history::historical-causation",
+      "label": "Historical Causation",
+      "subject_id": "us-history",
+      "dependencies": [],
+      "taxonomy_id": "SKILLS",
+      "level": "foundational"
+    },
+    {
+      "id": "us-history::continuity-and-change-over-time",
+      "label": "Continuity and Change Over Time",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::historical-causation"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::historical-comparison",
+      "label": "Historical Comparison",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::historical-causation"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::historical-contextualization",
+      "label": "Historical Contextualization",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::historical-causation",
+        "us-history::historical-comparison"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::sourcing-primary-documents",
+      "label": "Sourcing Primary Documents",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::historical-causation"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::corroboration-of-evidence",
+      "label": "Corroboration of Evidence",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::sourcing-primary-documents",
+        "us-history::historical-comparison"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::close-reading-skills",
+      "label": "Close Reading Skills",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::sourcing-primary-documents"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::argumentation-in-history",
+      "label": "Argumentation in History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::corroboration-of-evidence",
+        "us-history::close-reading-skills"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::revisionist-vs-traditional-history",
+      "label": "Revisionist vs. Traditional History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::historical-comparison",
+        "us-history::argumentation-in-history"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::systems-thinking-fundamentals",
+      "label": "Systems Thinking Fundamentals",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::historical-causation"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::causal-loop-diagrams",
+      "label": "Causal Loop Diagrams",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::systems-thinking-fundamentals"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::feedback-loops-in-history",
+      "label": "Feedback Loops in History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::causal-loop-diagrams"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::reinforcing-feedback-loops",
+      "label": "Reinforcing Feedback Loops",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::feedback-loops-in-history"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::balancing-feedback-loops",
+      "label": "Balancing Feedback Loops",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::feedback-loops-in-history"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::unintended-consequences",
+      "label": "Unintended Consequences",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::systems-thinking-fundamentals",
+        "us-history::feedback-loops-in-history"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::supply-chain-fragility",
+      "label": "Supply Chain Fragility",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::unintended-consequences",
+        "us-history::geopolitics-of-semiconductors"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::arms-race-dynamics",
+      "label": "Arms Race Dynamics",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::reinforcing-feedback-loops",
+        "us-history::arms-race"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::second-order-effects",
+      "label": "Second-Order Effects",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::unintended-consequences"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::cognitive-bias-overview",
+      "label": "Cognitive Bias Overview",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::historical-causation"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::hindsight-bias",
+      "label": "Hindsight Bias",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::availability-heuristic",
+      "label": "Availability Heuristic",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::in-group-favoritism",
+      "label": "In-Group Favoritism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::cognitive-bias-overview"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::presentism-in-history",
+      "label": "Presentism in History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::hindsight-bias",
+        "us-history::historical-causation"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::bias-in-historical-sources",
+      "label": "Bias in Historical Sources",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::cognitive-bias-overview",
+        "us-history::sourcing-primary-documents"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::misinformation-detection",
+      "label": "Misinformation Detection",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::cognitive-bias-overview",
+        "us-history::lost-cause-narrative"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::lost-cause-narrative",
+      "label": "Lost Cause Narrative",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::redeemer-south",
+        "us-history::bias-in-historical-sources"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::propaganda-analysis",
+      "label": "Propaganda Analysis",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::committee-on-public-information",
+        "us-history::bias-in-historical-sources"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::lateral-reading",
+      "label": "Lateral Reading",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::misinformation-detection"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::source-triangulation",
+      "label": "Source Triangulation",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lateral-reading",
+        "us-history::corroboration-of-evidence"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fact-checking-strategies",
+      "label": "Fact-Checking Strategies",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lateral-reading",
+        "us-history::source-triangulation"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::historical-myths",
+      "label": "Historical Myths",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lost-cause-narrative",
+        "us-history::propaganda-analysis"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::american-and-national-identity",
+      "label": "American and National Identity",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::declaration-of-independence",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "APTHEME",
+      "level": "core"
+    },
+    {
+      "id": "us-history::work-exchange-and-technology",
+      "label": "Work Exchange and Technology",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::industrial-revolution-in-america",
+        "us-history::digital-revolution"
+      ],
+      "taxonomy_id": "APTHEME",
+      "level": "core"
+    },
+    {
+      "id": "us-history::geography-and-the-environment",
+      "label": "Geography and the Environment",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::louisiana-purchase",
+        "us-history::manifest-destiny"
+      ],
+      "taxonomy_id": "APTHEME",
+      "level": "core"
+    },
+    {
+      "id": "us-history::migration-and-settlement",
+      "label": "Migration and Settlement",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::columbian-exchange",
+        "us-history::new-immigration-wave"
+      ],
+      "taxonomy_id": "APTHEME",
+      "level": "core"
+    },
+    {
+      "id": "us-history::politics-and-power",
+      "label": "Politics and Power",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::federalism",
+        "us-history::bill-of-rights",
+        "us-history::colonial-governance"
+      ],
+      "taxonomy_id": "APTHEME",
+      "level": "core"
+    },
+    {
+      "id": "us-history::america-in-the-world",
+      "label": "America in the World",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::spanish-american-war",
+        "us-history::treaty-of-versailles",
+        "us-history::origins-of-the-cold-war"
+      ],
+      "taxonomy_id": "APTHEME",
+      "level": "core"
+    },
+    {
+      "id": "us-history::america-and-culture",
+      "label": "America and Culture",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::great-awakening",
+        "us-history::harlem-renaissance",
+        "us-history::counterculture-movement"
+      ],
+      "taxonomy_id": "APTHEME",
+      "level": "core"
+    },
+    {
+      "id": "us-history::federalism-vs-states-rights",
+      "label": "Federalism vs States Rights",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::federalism",
+        "us-history::virginia-and-kentucky-resolutions",
+        "us-history::nullification-crisis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::separation-of-powers",
+      "label": "Separation of Powers",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention",
+        "us-history::checks-and-balances"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::checks-and-balances",
+      "label": "Checks and Balances",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::first-amendment-freedoms",
+      "label": "First Amendment Freedoms",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::bill-of-rights",
+        "us-history::separation-of-powers"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::fourth-amendment-rights",
+      "label": "Fourth Amendment Rights",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::bill-of-rights",
+        "us-history::separation-of-powers"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::due-process",
+      "label": "Due Process",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::bill-of-rights",
+        "us-history::fourteenth-amendment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::equal-protection-clause",
+      "label": "Equal Protection Clause",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::fourteenth-amendment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::constitutional-amendments-overview",
+      "label": "Constitutional Amendments Overview",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::bill-of-rights"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::supreme-court-role",
+      "label": "Supreme Court Role",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention",
+        "us-history::judicial-review"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::judicial-precedent",
+      "label": "Judicial Precedent",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::supreme-court-role",
+        "us-history::judicial-review"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::habeas-corpus",
+      "label": "Habeas Corpus",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::bill-of-rights",
+        "us-history::due-process"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::executive-power-expansion",
+      "label": "Executive Power Expansion",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::george-washington-as-president",
+        "us-history::separation-of-powers"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::congressional-war-powers",
+      "label": "Congressional War Powers",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::separation-of-powers",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::filibuster-and-senate-rules",
+      "label": "Filibuster and Senate Rules",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::electoral-college",
+      "label": "Electoral College",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::constitutional-convention",
+        "us-history::federalism"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::political-party-evolution",
+      "label": "Political Party Evolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::national-bank-debate",
+        "us-history::republican-party-formation",
+        "us-history::reagan-revolution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::third-party-movements",
+      "label": "Third Party Movements",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::populist-movement",
+        "us-history::political-party-evolution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::lobbying-and-interest-groups",
+      "label": "Lobbying and Interest Groups",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::trusts-and-monopolies",
+        "us-history::progressive-era",
+        "us-history::political-party-evolution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::media-and-public-opinion",
+      "label": "Media and Public Opinion",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::mass-media-and-radio",
+        "us-history::social-media-and-political-polarization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::muckraking-journalism-legacy",
+      "label": "Muckraking Journalism Legacy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::muckrakers",
+        "us-history::media-and-public-opinion"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::investigative-journalism",
+      "label": "Investigative Journalism",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::muckraking-journalism-legacy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::freedom-of-the-press",
+      "label": "Freedom of the Press",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::first-amendment-freedoms",
+        "us-history::investigative-journalism"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::propaganda-techniques",
+      "label": "Propaganda Techniques",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::committee-on-public-information",
+        "us-history::propaganda-analysis"
+      ],
+      "taxonomy_id": "SKILLS",
+      "level": "core"
+    },
+    {
+      "id": "us-history::public-lands-policy",
+      "label": "Public Lands Policy",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::lewis-and-clark-expedition",
+        "us-history::manifest-destiny",
+        "us-history::progressive-era"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::environmental-conservation-history",
+      "label": "Environmental Conservation History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::public-lands-policy",
+        "us-history::progressive-era"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::national-parks-system",
+      "label": "National Parks System",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::environmental-conservation-history",
+        "us-history::theodore-roosevelt"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::climate-change-policy-history",
+      "label": "Climate Change Policy History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::environmental-conservation-history",
+        "us-history::2008-financial-crisis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::labor-rights-evolution",
+      "label": "Labor Rights Evolution",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::labor-movement-origins",
+        "us-history::wagner-act"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::minimum-wage-history",
+      "label": "Minimum Wage History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::labor-rights-evolution",
+        "us-history::social-security-act"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::social-safety-net-development",
+      "label": "Social Safety Net Development",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::social-security-act",
+        "us-history::medicare-and-medicaid",
+        "us-history::great-society-programs"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::income-inequality-history",
+      "label": "Income Inequality History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::robber-barons",
+        "us-history::2008-financial-crisis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::wealth-and-power-concentration",
+      "label": "Wealth and Power Concentration",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::trusts-and-monopolies",
+        "us-history::income-inequality-history"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::immigration-policy-history",
+      "label": "Immigration Policy History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::new-immigration-wave",
+        "us-history::emergency-quota-act",
+        "us-history::immigration-and-nationality-act-1965"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::nativism-and-xenophobia",
+      "label": "Nativism and Xenophobia",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::nativism-and-anti-immigration",
+        "us-history::in-group-favoritism"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::racial-categories-in-law",
+      "label": "Racial Categories in Law",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::slavery-in-the-colonies",
+        "us-history::fourteenth-amendment",
+        "us-history::equal-protection-clause"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::jim-crow-laws",
+      "label": "Jim Crow Laws",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::black-codes",
+        "us-history::redeemer-south",
+        "us-history::racial-categories-in-law"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "us-history::desegregation-history",
+      "label": "Desegregation History",
+      "subject_id": "us-history",
+      "dependencies": [
+        "us-history::brown-v-board-of-education",
+        "us-history::civil-rights-act-of-1964",
+        "us-history::jim-crow-laws"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    }
+  ]
+}

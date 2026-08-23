@@ -1,0 +1,2305 @@
+{
+  "subject_id": "functions",
+  "title": "IB Mathematics Functions",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LavenderBlush"
+    },
+    "LIN": {
+      "classifier_name": "Linear Functions",
+      "color": "LightYellow"
+    },
+    "GRAPH": {
+      "classifier_name": "Graphing and Visualization",
+      "color": "PaleTurquoise"
+    },
+    "QUAD": {
+      "classifier_name": "Quadratic Functions",
+      "color": "Plum"
+    },
+    "INVC": {
+      "classifier_name": "Inverse and Composite",
+      "color": "MintCream"
+    },
+    "RAT": {
+      "classifier_name": "Rational Functions",
+      "color": "Lavender"
+    },
+    "EXP": {
+      "classifier_name": "Exponential Functions",
+      "color": "MistyRose"
+    },
+    "LOG": {
+      "classifier_name": "Logarithmic Functions",
+      "color": "LightCoral"
+    },
+    "POLY": {
+      "classifier_name": "Polynomial Functions",
+      "color": "PeachPuff"
+    },
+    "CLASS": {
+      "classifier_name": "Function Classifications",
+      "color": "Thistle"
+    },
+    "TRANS": {
+      "classifier_name": "Transformations",
+      "color": "SteelBlue"
+    },
+    "ALG": {
+      "classifier_name": "Algebra Foundations",
+      "color": "Gainsboro"
+    },
+    "MODEL": {
+      "classifier_name": "Modeling and Applications",
+      "color": "Honeydew"
+    }
+  },
+  "concepts": [
+    {
+      "id": "functions::relation",
+      "label": "Relation",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::function",
+      "label": "Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::relation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::domain",
+      "label": "Domain",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::range",
+      "label": "Range",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::input-variable",
+      "label": "Input Variable",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::output-variable",
+      "label": "Output Variable",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::function-notation",
+      "label": "Function Notation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::input-variable",
+        "functions::output-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::dependent-variable",
+      "label": "Dependent Variable",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::output-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::independent-variable",
+      "label": "Independent Variable",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::input-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::mapping-diagram",
+      "label": "Mapping Diagram",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::domain",
+        "functions::range"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::vertical-line-test",
+      "label": "Vertical Line Test",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::ordered-pair",
+      "label": "Ordered Pair",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::coordinate-plane",
+      "label": "Coordinate Plane",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::ordered-pair",
+        "functions::x-axis",
+        "functions::y-axis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::x-axis",
+      "label": "X-Axis",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::y-axis",
+      "label": "Y-Axis",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::origin",
+      "label": "Origin",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::x-axis",
+        "functions::y-axis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::cartesian-coordinates",
+      "label": "Cartesian Coordinates",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::coordinate-plane",
+        "functions::origin"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::graph-of-a-function",
+      "label": "Graph of a Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::coordinate-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::table-of-values",
+      "label": "Table of Values",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::input-variable",
+        "functions::output-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::function-representations",
+      "label": "Function Representations",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::table-of-values",
+        "functions::function-notation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::interval-notation",
+      "label": "Interval Notation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::domain",
+        "functions::range"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::set-builder-notation",
+      "label": "Set Builder Notation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::domain",
+        "functions::range"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::real-number-line",
+      "label": "Real Number Line",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::number-systems"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::continuous-function",
+      "label": "Continuous Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::domain"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::discrete-function",
+      "label": "Discrete Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::domain"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::linear-function",
+      "label": "Linear Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::slope",
+        "functions::y-intercept"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::slope",
+      "label": "Slope",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::coordinate-plane"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::y-intercept",
+      "label": "Y-Intercept",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::y-axis",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::x-intercept",
+      "label": "X-Intercept",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::x-axis",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::gradient-intercept-form",
+      "label": "Gradient-Intercept Form",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::linear-function",
+        "functions::slope",
+        "functions::y-intercept"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::general-form-of-a-line",
+      "label": "General Form of a Line",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::linear-function"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::point-gradient-form",
+      "label": "Point-Gradient Form",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::linear-function",
+        "functions::slope",
+        "functions::cartesian-coordinates"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::gradient-calculation",
+      "label": "Gradient Calculation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::slope",
+        "functions::cartesian-coordinates",
+        "functions::ordered-pair"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::positive-gradient",
+      "label": "Positive Gradient",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::slope"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::negative-gradient",
+      "label": "Negative Gradient",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::slope"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::zero-gradient",
+      "label": "Zero Gradient",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::slope",
+        "functions::constant-function"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::undefined-gradient",
+      "label": "Undefined Gradient",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::slope"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::parallel-lines",
+      "label": "Parallel Lines",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::slope",
+        "functions::gradient-intercept-form"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::perpendicular-lines",
+      "label": "Perpendicular Lines",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::slope",
+        "functions::parallel-lines"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::linear-equation-solving",
+      "label": "Linear Equation Solving",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::linear-function",
+        "functions::equation",
+        "functions::algebraic-manipulation"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::simultaneous-equations",
+      "label": "Simultaneous Equations",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::linear-equation-solving",
+        "functions::substitution-method",
+        "functions::elimination-method"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::intersection-of-lines",
+      "label": "Intersection of Lines",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::simultaneous-equations",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::real-world-linear-models",
+      "label": "Real-World Linear Models",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::linear-function",
+        "functions::rate-of-change",
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::rate-of-change",
+      "label": "Rate of Change",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::slope"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::direct-proportion",
+      "label": "Direct Proportion",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::linear-function",
+        "functions::rate-of-change"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "functions::graphing-technology",
+      "label": "Graphing Technology",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::window-settings",
+      "label": "Window Settings",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::sketching-vs-drawing",
+      "label": "Sketching vs Drawing",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::key-graph-features",
+      "label": "Key Graph Features",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::turning-points",
+        "functions::roots-of-a-function",
+        "functions::function-intercepts"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::turning-points",
+      "label": "Turning Points",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::increasing-function",
+        "functions::decreasing-function"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::maximum-point",
+      "label": "Maximum Point",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::turning-points"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::minimum-point",
+      "label": "Minimum Point",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::turning-points"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::axis-of-symmetry",
+      "label": "Axis of Symmetry",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::parabola",
+        "functions::vertex-of-a-parabola"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::roots-of-a-function",
+      "label": "Roots of a Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::x-intercept"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::zeros-of-a-function",
+      "label": "Zeros of a Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::roots-of-a-function"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::function-intercepts",
+      "label": "Function Intercepts",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::y-intercept",
+        "functions::x-intercept"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::intersection-of-curves",
+      "label": "Intersection of Curves",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graphing-technology",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::increasing-function",
+      "label": "Increasing Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::decreasing-function",
+      "label": "Decreasing Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::constant-function",
+      "label": "Constant Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::identity-function",
+      "label": "Identity Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::function-notation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::quadratic-function",
+      "label": "Quadratic Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::coefficient",
+        "functions::variable"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::parabola",
+      "label": "Parabola",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-function",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::standard-form-quadratic",
+      "label": "Standard Form Quadratic",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-function",
+        "functions::coefficient",
+        "functions::y-intercept"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::factored-form-quadratic",
+      "label": "Factored Form Quadratic",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-function",
+        "functions::roots-of-a-function",
+        "functions::factoring-quadratics"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::vertex-form-quadratic",
+      "label": "Vertex Form Quadratic",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-function",
+        "functions::vertex-of-a-parabola",
+        "functions::completing-the-square"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::vertex-of-a-parabola",
+      "label": "Vertex of a Parabola",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::parabola",
+        "functions::maximum-point",
+        "functions::minimum-point"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::completing-the-square",
+      "label": "Completing the Square",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::standard-form-quadratic",
+        "functions::algebraic-manipulation",
+        "functions::perfect-square-trinomial"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::quadratic-formula",
+      "label": "Quadratic Formula",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::standard-form-quadratic",
+        "functions::discriminant"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::factoring-quadratics",
+      "label": "Factoring Quadratics",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-function",
+        "functions::common-factor",
+        "functions::difference-of-squares",
+        "functions::perfect-square-trinomial"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::discriminant",
+      "label": "Discriminant",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::standard-form-quadratic"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::two-real-roots",
+      "label": "Two Real Roots",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::discriminant",
+        "functions::nature-of-roots"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::equal-real-roots",
+      "label": "Equal Real Roots",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::discriminant",
+        "functions::nature-of-roots"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::no-real-roots",
+      "label": "No Real Roots",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::discriminant",
+        "functions::nature-of-roots"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::nature-of-roots",
+      "label": "Nature of Roots",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::discriminant"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::quadratic-inequalities",
+      "label": "Quadratic Inequalities",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-function",
+        "functions::inequality",
+        "functions::sign-diagram"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::sign-diagram",
+      "label": "Sign Diagram",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::roots-of-a-function",
+        "functions::inequality"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::solving-quadratic-equations",
+      "label": "Solving Quadratic Equations",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-formula",
+        "functions::factoring-quadratics",
+        "functions::completing-the-square"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::quadratic-applications",
+      "label": "Quadratic Applications",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::solving-quadratic-equations",
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::projectile-motion-model",
+      "label": "Projectile Motion Model",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-applications",
+        "functions::vertex-form-quadratic"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::revenue-optimization",
+      "label": "Revenue Optimization",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-applications",
+        "functions::maximum-point"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "functions::inverse-function",
+      "label": "Inverse Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::one-to-one-function"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::inverse-function-notation",
+      "label": "Inverse Function Notation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::inverse-function",
+        "functions::function-notation"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::finding-an-inverse",
+      "label": "Finding an Inverse",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::inverse-function",
+        "functions::algebraic-manipulation"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::reflection-over-y-equals-x",
+      "label": "Reflection Over Y Equals X",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::inverse-function",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::one-to-one-function",
+      "label": "One-to-One Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::horizontal-line-test"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::horizontal-line-test",
+      "label": "Horizontal Line Test",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::vertical-line-test"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::self-inverse-function",
+      "label": "Self-Inverse Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::inverse-function",
+        "functions::reciprocal-function"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::composite-function",
+      "label": "Composite Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::function-notation"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::function-composition-rule",
+      "label": "Function Composition Rule",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::composite-function"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::order-of-composition",
+      "label": "Order of Composition",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::composite-function",
+        "functions::function-composition-rule"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::domain-of-composite",
+      "label": "Domain of Composite",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::composite-function",
+        "functions::domain"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::decomposing-functions",
+      "label": "Decomposing Functions",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::composite-function",
+        "functions::function-composition-rule"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::reciprocal-function",
+      "label": "Reciprocal Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::hyperbola",
+      "label": "Hyperbola",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::reciprocal-function",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::vertical-asymptote",
+      "label": "Vertical Asymptote",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::domain"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::horizontal-asymptote",
+      "label": "Horizontal Asymptote",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::end-behavior"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::asymptotic-behavior",
+      "label": "Asymptotic Behavior",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::vertical-asymptote",
+        "functions::horizontal-asymptote"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::rational-function",
+      "label": "Rational Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::reciprocal-function",
+        "functions::polynomial-function"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::rational-form-ax-plus-b",
+      "label": "Rational Form Ax Plus B",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::rational-function",
+        "functions::vertical-asymptote",
+        "functions::horizontal-asymptote"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::oblique-asymptote",
+      "label": "Oblique Asymptote",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::rational-function",
+        "functions::polynomial-division"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::graphing-rational-functions",
+      "label": "Graphing Rational Functions",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::rational-function",
+        "functions::asymptotic-behavior",
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::holes-in-rational-graphs",
+      "label": "Holes in Rational Graphs",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::rational-function",
+        "functions::common-factor"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::domain-restrictions",
+      "label": "Domain Restrictions",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::domain"
+      ],
+      "taxonomy_id": "RAT",
+      "level": "core"
+    },
+    {
+      "id": "functions::exponential-function",
+      "label": "Exponential Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::base-of-an-exponential"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::base-of-an-exponential",
+      "label": "Base of an Exponential",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "EXP",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::exponential-growth",
+      "label": "Exponential Growth",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-function",
+        "functions::rate-of-change"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::exponential-decay",
+      "label": "Exponential Decay",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-function",
+        "functions::rate-of-change"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::natural-exponential",
+      "label": "Natural Exponential",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-function",
+        "functions::euler-s-number"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::euler-s-number",
+      "label": "Euler's Number",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::base-of-an-exponential"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::exponential-equations",
+      "label": "Exponential Equations",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-function",
+        "functions::algebraic-manipulation"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::compound-interest-model",
+      "label": "Compound Interest Model",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-growth",
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::population-growth-model",
+      "label": "Population Growth Model",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-growth",
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::half-life-model",
+      "label": "Half-Life Model",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-decay",
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::logarithmic-function",
+      "label": "Logarithmic Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-function",
+        "functions::log-exponential-inverse"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::common-logarithm",
+      "label": "Common Logarithm",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::logarithmic-function"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::natural-logarithm",
+      "label": "Natural Logarithm",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::logarithmic-function",
+        "functions::euler-s-number"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::logarithm-laws",
+      "label": "Logarithm Laws",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::logarithmic-function"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::change-of-base-rule",
+      "label": "Change of Base Rule",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::logarithm-laws",
+        "functions::common-logarithm",
+        "functions::natural-logarithm"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::solving-log-equations",
+      "label": "Solving Log Equations",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::logarithm-laws",
+        "functions::exponential-equations"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::log-exponential-inverse",
+      "label": "Log-Exponential Inverse",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-function",
+        "functions::inverse-function"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::logarithmic-scale",
+      "label": "Logarithmic Scale",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::logarithmic-function"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::graphing-exponentials",
+      "label": "Graphing Exponentials",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::exponential-function",
+        "functions::graph-of-a-function",
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "functions::graphing-logarithms",
+      "label": "Graphing Logarithms",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::logarithmic-function",
+        "functions::graph-of-a-function",
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "LOG",
+      "level": "core"
+    },
+    {
+      "id": "functions::polynomial-function",
+      "label": "Polynomial Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::quadratic-function",
+        "functions::degree-of-a-polynomial",
+        "functions::leading-coefficient"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::degree-of-a-polynomial",
+      "label": "Degree of a Polynomial",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::coefficient"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::leading-coefficient",
+      "label": "Leading Coefficient",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::coefficient",
+        "functions::degree-of-a-polynomial"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::cubic-function",
+      "label": "Cubic Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::quartic-function",
+      "label": "Quartic Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::end-behavior",
+      "label": "End Behavior",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function",
+        "functions::leading-coefficient"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::turning-points-count",
+      "label": "Turning Points Count",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function",
+        "functions::degree-of-a-polynomial",
+        "functions::turning-points"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::factor-theorem",
+      "label": "Factor Theorem",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function",
+        "functions::roots-of-a-function"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::remainder-theorem",
+      "label": "Remainder Theorem",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::factor-theorem",
+        "functions::polynomial-division"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::polynomial-division",
+      "label": "Polynomial Division",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function",
+        "functions::algebraic-manipulation"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::synthetic-division",
+      "label": "Synthetic Division",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-division"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::root-finding",
+      "label": "Root Finding",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::factor-theorem",
+        "functions::synthetic-division"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::sum-of-roots-formula",
+      "label": "Sum of Roots Formula",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function",
+        "functions::root-finding"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::product-of-roots-formula",
+      "label": "Product of Roots Formula",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function",
+        "functions::root-finding"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::multiplicity-of-roots",
+      "label": "Multiplicity of Roots",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::root-finding",
+        "functions::roots-of-a-function"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::graphing-polynomials",
+      "label": "Graphing Polynomials",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::polynomial-function",
+        "functions::end-behavior",
+        "functions::turning-points-count",
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "functions::even-function",
+      "label": "Even Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::graph-of-a-function",
+        "functions::symmetry-testing"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::odd-function",
+      "label": "Odd Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::graph-of-a-function",
+        "functions::symmetry-testing"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::symmetry-testing",
+      "label": "Symmetry Testing",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::function-notation"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::periodic-function",
+      "label": "Periodic Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::domain"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::modulus-function",
+      "label": "Modulus Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::graph-of-modulus",
+      "label": "Graph of Modulus",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::modulus-function",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::absolute-value-equations",
+      "label": "Absolute Value Equations",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::modulus-function",
+        "functions::equation"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::y-equals-mod-f-of-x",
+      "label": "Y Equals Mod F of X",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::modulus-function",
+        "functions::graph-of-a-function",
+        "functions::graph-of-modulus"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::y-equals-f-of-mod-x",
+      "label": "Y Equals F of Mod X",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::modulus-function",
+        "functions::graph-of-a-function",
+        "functions::graph-of-modulus"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::y-equals-f-of-x-squared",
+      "label": "Y Equals F of X Squared",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::function"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::domain-restriction-inverse",
+      "label": "Domain Restriction Inverse",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::inverse-function",
+        "functions::domain",
+        "functions::one-to-one-function"
+      ],
+      "taxonomy_id": "INVC",
+      "level": "core"
+    },
+    {
+      "id": "functions::translation",
+      "label": "Translation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::horizontal-translation",
+      "label": "Horizontal Translation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::translation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::vertical-translation",
+      "label": "Vertical Translation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::translation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::reflection-in-x-axis",
+      "label": "Reflection in X-Axis",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::y-axis"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::reflection-in-y-axis",
+      "label": "Reflection in Y-Axis",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::x-axis"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::vertical-stretch",
+      "label": "Vertical Stretch",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::scale-factor"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::horizontal-stretch",
+      "label": "Horizontal Stretch",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::scale-factor"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::scale-factor",
+      "label": "Scale Factor",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "TRANS",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::composite-transformation",
+      "label": "Composite Transformation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::translation",
+        "functions::reflection-in-x-axis",
+        "functions::reflection-in-y-axis",
+        "functions::vertical-stretch",
+        "functions::horizontal-stretch"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::transformation-notation",
+      "label": "Transformation Notation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function-notation",
+        "functions::translation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::effect-on-coordinates",
+      "label": "Effect on Coordinates",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::cartesian-coordinates",
+        "functions::translation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::transformation-of-points",
+      "label": "Transformation of Points",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::effect-on-coordinates",
+        "functions::cartesian-coordinates"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::graph-transformation-order",
+      "label": "Graph Transformation Order",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::composite-transformation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "functions::piecewise-function",
+      "label": "Piecewise Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::domain"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::step-function",
+      "label": "Step Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::piecewise-function"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::signum-function",
+      "label": "Signum Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::piecewise-function"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::greatest-integer-function",
+      "label": "Greatest Integer Function",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::piecewise-function"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::parameter",
+      "label": "Parameter",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::variable",
+        "functions::constant"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::coefficient",
+      "label": "Coefficient",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "ALG",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::variable",
+      "label": "Variable",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "ALG",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::constant",
+      "label": "Constant",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "ALG",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::expression",
+      "label": "Expression",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::coefficient",
+        "functions::variable",
+        "functions::constant"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::equation",
+      "label": "Equation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::expression"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::inequality",
+      "label": "Inequality",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::equation"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::solution-set",
+      "label": "Solution Set",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::equation",
+        "functions::inequality"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::number-systems",
+      "label": "Number Systems",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "ALG",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::integers",
+      "label": "Integers",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::number-systems",
+        "functions::real-number-line"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::rational-numbers",
+      "label": "Rational Numbers",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::integers"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::irrational-numbers",
+      "label": "Irrational Numbers",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::rational-numbers"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::real-numbers",
+      "label": "Real Numbers",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::rational-numbers",
+        "functions::irrational-numbers",
+        "functions::domain"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::substitution-method",
+      "label": "Substitution Method",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::equation",
+        "functions::variable"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::elimination-method",
+      "label": "Elimination Method",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::equation"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::graphical-solution-method",
+      "label": "Graphical Solution Method",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graph-of-a-function",
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::algebraic-manipulation",
+      "label": "Algebraic Manipulation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::expression",
+        "functions::expanding-brackets",
+        "functions::collecting-like-terms"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::expanding-brackets",
+      "label": "Expanding Brackets",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::expression"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::collecting-like-terms",
+      "label": "Collecting Like Terms",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::expression"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::common-factor",
+      "label": "Common Factor",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::expression"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::difference-of-squares",
+      "label": "Difference of Squares",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::common-factor"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::perfect-square-trinomial",
+      "label": "Perfect Square Trinomial",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::common-factor"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::sum-and-difference-cubes",
+      "label": "Sum and Difference Cubes",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::common-factor"
+      ],
+      "taxonomy_id": "ALG",
+      "level": "core"
+    },
+    {
+      "id": "functions::function-behavior-analysis",
+      "label": "Function Behavior Analysis",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::increasing-function",
+        "functions::decreasing-function",
+        "functions::concavity"
+      ],
+      "taxonomy_id": "CLASS",
+      "level": "core"
+    },
+    {
+      "id": "functions::concavity",
+      "label": "Concavity",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::turning-points",
+        "functions::graph-of-a-function"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::inflection-point",
+      "label": "Inflection Point",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::concavity"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::continuity",
+      "label": "Continuity",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::continuous-function",
+        "functions::domain"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::boundedness",
+      "label": "Boundedness",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::domain",
+        "functions::range"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "functions::function-modeling",
+      "label": "Function Modeling",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function",
+        "functions::function-representations"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "functions::regression-model",
+      "label": "Regression Model",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function-modeling",
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "functions::curve-fitting",
+      "label": "Curve Fitting",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::regression-model"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "functions::extrapolation",
+      "label": "Extrapolation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::curve-fitting",
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "functions::interpolation",
+      "label": "Interpolation",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::curve-fitting",
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "functions::mathematical-modeling-cycle",
+      "label": "Mathematical Modeling Cycle",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "functions::units-and-dimensions",
+      "label": "Units and Dimensions",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "functions::significant-figures",
+      "label": "Significant Figures",
+      "subject_id": "functions",
+      "dependencies": [],
+      "taxonomy_id": "MODEL",
+      "level": "foundational"
+    },
+    {
+      "id": "functions::exact-vs-approximate",
+      "label": "Exact vs Approximate",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::significant-figures",
+        "functions::function-modeling"
+      ],
+      "taxonomy_id": "MODEL",
+      "level": "core"
+    },
+    {
+      "id": "functions::gdc-usage",
+      "label": "GDC Usage",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::technology-in-mathematics",
+      "label": "Technology in Mathematics",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graphing-technology"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "functions::analytic-vs-graphic-method",
+      "label": "Analytic vs Graphic Method",
+      "subject_id": "functions",
+      "dependencies": [
+        "functions::graphing-technology",
+        "functions::algebraic-manipulation"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,3666 @@
+{
+  "subject_id": "atam",
+  "title": "Architecture Tradeoff Analysis Method (ATAM)",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "PROC": {
+      "classifier_name": "ATAM Process and Facilitation",
+      "color": "DarkSlateBlue"
+    },
+    "STKE": {
+      "classifier_name": "Stakeholder and Business Analysis",
+      "color": "DarkGoldenrod"
+    },
+    "QUAL": {
+      "classifier_name": "Quality Attributes",
+      "color": "Gold"
+    },
+    "SCEN": {
+      "classifier_name": "Scenarios and Utility Trees",
+      "color": "LimeGreen"
+    },
+    "TACT": {
+      "classifier_name": "Architectural Tactics and Patterns",
+      "color": "DarkGreen"
+    },
+    "RISK": {
+      "classifier_name": "Sensitivity, Tradeoffs, and Risk",
+      "color": "Crimson"
+    },
+    "DIST": {
+      "classifier_name": "Distributed Systems Architecture",
+      "color": "Teal"
+    },
+    "CLOU": {
+      "classifier_name": "Cloud-Native Architecture",
+      "color": "DodgerBlue"
+    },
+    "SECP": {
+      "classifier_name": "Security Architecture",
+      "color": "DarkRed"
+    },
+    "PERF": {
+      "classifier_name": "Performance and Observability",
+      "color": "LightSkyBlue"
+    },
+    "AIEM": {
+      "classifier_name": "AI and Emerging Systems",
+      "color": "Orange"
+    }
+  },
+  "concepts": [
+    {
+      "id": "atam::software-architecture-definition",
+      "label": "Software Architecture Definition",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::architectural-component",
+      "label": "Architectural Component",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-connector",
+      "label": "Architectural Connector",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-style",
+      "label": "Architectural Style",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::architecture-view",
+      "label": "Architecture View",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::architectural-style"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-viewpoint",
+      "label": "Architecture Viewpoint",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-view"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-documentation",
+      "label": "Architecture Documentation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::architecture-view",
+        "atam::architecture-viewpoint"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-decision",
+      "label": "Architectural Decision",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-evaluation",
+      "label": "Architecture Evaluation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-centric-development",
+      "label": "Architecture-Centric Development",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::cost-of-architectural-mistakes",
+      "label": "Cost of Architectural Mistakes",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-evaluation",
+        "atam::technical-debt"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-quality-goals",
+      "label": "Architecture Quality Goals",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-quality-definition",
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::technical-debt",
+      "label": "Technical Debt",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::architecture-conformance",
+      "label": "Architecture Conformance",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::reference-architecture",
+      "label": "Reference Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::software-quality-definition",
+      "label": "Software Quality Definition",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::quality-model",
+      "label": "Quality Model",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-quality-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-review-board",
+      "label": "Architecture Review Board",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-principles",
+      "label": "Architecture Principles",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-constraint",
+      "label": "Architectural Constraint",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-concern",
+      "label": "Architectural Concern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-driver",
+      "label": "Architectural Driver",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::business-goal",
+        "atam::business-driver"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-description-lang",
+      "label": "Architecture Description Lang",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::architecture-documentation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-vs-design-scope",
+      "label": "Architecture vs Design Scope",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::separation-of-concerns",
+      "label": "Separation of Concerns",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::modular-decomposition",
+      "label": "Modular Decomposition",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::abstraction-in-architecture",
+      "label": "Abstraction in Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::separation-of-concerns"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::system-context-diagram",
+      "label": "System Context Diagram",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-lifecycle",
+      "label": "Architecture Lifecycle",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-definition",
+      "label": "ATAM Definition",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-origins-at-cmu-sei",
+      "label": "ATAM Origins at CMU SEI",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-definition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-goals-and-principles",
+      "label": "ATAM Goals and Principles",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-definition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-phase-1",
+      "label": "ATAM Phase 1",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-goals-and-principles"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-phase-2",
+      "label": "ATAM Phase 2",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-goals-and-principles"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::evaluation-team-composition",
+      "label": "Evaluation Team Composition",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-definition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::evaluation-leader-role",
+      "label": "Evaluation Leader Role",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::evaluation-team-composition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-owner-role",
+      "label": "Architecture Owner Role",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::evaluation-team-composition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::note-taker-role",
+      "label": "Note-Taker Role",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::evaluation-team-composition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-role-in-atam",
+      "label": "Stakeholder Role in ATAM",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::evaluation-team-composition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-phase-1-activities",
+      "label": "ATAM Phase 1 Activities",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-phase-1"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-phase-2-activities",
+      "label": "ATAM Phase 2 Activities",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-phase-2"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-scripted-presentations",
+      "label": "ATAM Scripted Presentations",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-phase-1-activities",
+        "atam::atam-phase-2-activities"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-outputs-summary",
+      "label": "ATAM Outputs Summary",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-phase-1-activities",
+        "atam::atam-phase-2-activities"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::mini-atam",
+      "label": "Mini-ATAM",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-goals-and-principles"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-vs-saam-comparison",
+      "label": "ATAM vs SAAM Comparison",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-definition",
+        "atam::saam-method"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::saam-method",
+      "label": "SAAM Method",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::arid-method",
+      "label": "ARID Method",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::lightweight-architecture-eval",
+      "label": "Lightweight Architecture Eval",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-review-methods",
+      "label": "Architecture Review Methods",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-definition",
+        "atam::saam-method",
+        "atam::arid-method"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-preparation-phase",
+      "label": "ATAM Preparation Phase",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-phase-1",
+        "atam::evaluation-team-composition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-evaluation-report",
+      "label": "Architecture Evaluation Report",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-phase-1-activities",
+        "atam::atam-phase-2-activities",
+        "atam::atam-outputs-summary",
+        "atam::risk-register"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-consensus-building",
+      "label": "ATAM Consensus Building",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-preparation-phase",
+        "atam::stakeholder-role-in-atam",
+        "atam::stakeholder-communication"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-facilitation-techniques",
+      "label": "ATAM Facilitation Techniques",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::evaluation-leader-role",
+        "atam::atam-consensus-building"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::evaluation-planning-document",
+      "label": "Evaluation Planning Document",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-preparation-phase"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::atam-team-formation",
+      "label": "ATAM Team Formation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::evaluation-team-composition"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::post-evaluation-review",
+      "label": "Post-Evaluation Review",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-evaluation-report",
+        "atam::risk-communication"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-briefing-format",
+      "label": "Architecture Briefing Format",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::atam-scripted-presentations"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::scripted-architecture-briefing",
+      "label": "Scripted Architecture Briefing",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-briefing-format",
+        "atam::architecture-owner-role"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "atam::business-goal",
+      "label": "Business Goal",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "STKE",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::business-driver",
+      "label": "Business Driver",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::business-goal"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::mission-statement",
+      "label": "Mission Statement",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::business-goal"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::strategy-alignment",
+      "label": "Strategy Alignment",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::mission-statement",
+        "atam::business-goal"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-identification",
+      "label": "Stakeholder Identification",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::business-goal"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-analysis",
+      "label": "Stakeholder Analysis",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-identification"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-concerns",
+      "label": "Stakeholder Concerns",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-analysis"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-workshop",
+      "label": "Stakeholder Workshop",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-identification",
+        "atam::stakeholder-concerns"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-engagement",
+      "label": "Stakeholder Engagement",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-workshop"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::technical-stakeholder",
+      "label": "Technical Stakeholder",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-identification"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::business-stakeholder",
+      "label": "Business Stakeholder",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-identification"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::executive-sponsor-role",
+      "label": "Executive Sponsor Role",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::business-stakeholder"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::business-architecture-alignment",
+      "label": "Business-Architecture Alignment",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::business-goal",
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::organizational-context",
+      "label": "Organizational Context",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::business-goal"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::competing-stakeholder-priorities",
+      "label": "Competing Stakeholder Priorities",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-identification",
+        "atam::stakeholder-concerns"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-influence-analysis",
+      "label": "Stakeholder Influence Analysis",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-analysis"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-communication",
+      "label": "Stakeholder Communication",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-engagement"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::executive-briefing-techniques",
+      "label": "Executive Briefing Techniques",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-communication",
+        "atam::executive-sponsor-role"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::decision-making-authority",
+      "label": "Decision-Making Authority",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::strategy-alignment",
+        "atam::organizational-context"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-business-case",
+      "label": "Architecture Business Case",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::business-goal",
+        "atam::business-architecture-alignment"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::roi-of-architecture-evaluation",
+      "label": "ROI of Architecture Evaluation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-business-case"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::stakeholder-buy-in-strategies",
+      "label": "Stakeholder Buy-In Strategies",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stakeholder-engagement"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-vision-document",
+      "label": "Architecture Vision Document",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::strategy-alignment",
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-roadmap",
+      "label": "Architecture Roadmap",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-vision-document",
+        "atam::risk-mitigation-strategy"
+      ],
+      "taxonomy_id": "STKE",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-definition",
+      "label": "Quality Attribute Definition",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-quality-definition",
+        "atam::quality-model"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::performance-quality-attribute",
+      "label": "Performance Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::availability-quality-attribute",
+      "label": "Availability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-quality-attribute",
+      "label": "Security Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::modifiability-quality-attribute",
+      "label": "Modifiability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::interoperability-quality-attribute",
+      "label": "Interoperability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::scalability-quality-attribute",
+      "label": "Scalability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::reliability-quality-attribute",
+      "label": "Reliability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition",
+        "atam::availability-quality-attribute"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::usability-quality-attribute",
+      "label": "Usability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::testability-quality-attribute",
+      "label": "Testability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::deployability-quality-attribute",
+      "label": "Deployability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::portability-quality-attribute",
+      "label": "Portability Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::safety-quality-attribute",
+      "label": "Safety Quality Attribute",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::maintainability-quality-attr",
+      "label": "Maintainability Quality Attr",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition",
+        "atam::modifiability-quality-attribute"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::energy-efficiency-quality-attr",
+      "label": "Energy Efficiency Quality Attr",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-taxonomy",
+      "label": "Quality Attribute Taxonomy",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-conflict",
+      "label": "Quality Attribute Conflict",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-prioritization",
+      "label": "Quality Attribute Prioritization",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::functional-vs-quality-req",
+      "label": "Functional vs Quality Req",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-requirement",
+      "label": "Quality Attribute Requirement",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-tactic-catalog",
+      "label": "Quality Attribute Tactic Catalog",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition",
+        "atam::architectural-tactic"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-stimulus-response",
+      "label": "Architectural Stimulus Response",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition",
+        "atam::architectural-component",
+        "atam::architectural-connector"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-workshop",
+      "label": "Quality Attribute Workshop",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition",
+        "atam::stakeholder-workshop"
+      ],
+      "taxonomy_id": "QUAL",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-scenario",
+      "label": "Quality Attribute Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-definition",
+        "atam::quality-attribute-requirement"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-stimulus-source",
+      "label": "Scenario Stimulus Source",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-stimulus",
+      "label": "Scenario Stimulus",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-environment",
+      "label": "Scenario Environment",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-artifact",
+      "label": "Scenario Artifact",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-response",
+      "label": "Scenario Response",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-response-measure",
+      "label": "Scenario Response Measure",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::general-scenario",
+      "label": "General Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::scenario-stimulus-source",
+        "atam::scenario-stimulus",
+        "atam::scenario-environment",
+        "atam::scenario-artifact",
+        "atam::scenario-response",
+        "atam::scenario-response-measure"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::concrete-scenario",
+      "label": "Concrete Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::general-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-brainstorming",
+      "label": "Scenario Brainstorming",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-workshop",
+        "atam::concrete-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-prioritization",
+      "label": "Scenario Prioritization",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::scenario-brainstorming"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-coverage-assessment",
+      "label": "Scenario Coverage Assessment",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::scenario-prioritization"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-catalog",
+      "label": "Scenario Catalog",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::concrete-scenario"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::performance-scenario",
+      "label": "Performance Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::general-scenario",
+        "atam::performance-quality-attribute"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::availability-scenario",
+      "label": "Availability Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::general-scenario",
+        "atam::availability-quality-attribute"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-scenario",
+      "label": "Security Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::general-scenario",
+        "atam::security-quality-attribute"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::modifiability-scenario",
+      "label": "Modifiability Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::general-scenario",
+        "atam::modifiability-quality-attribute"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scalability-scenario",
+      "label": "Scalability Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::general-scenario",
+        "atam::scalability-quality-attribute"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::utility-tree",
+      "label": "Utility Tree",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::scenario-prioritization",
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::utility-tree-root",
+      "label": "Utility Tree Root",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::utility-tree"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::quality-attribute-branch",
+      "label": "Quality Attribute Branch",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::utility-tree",
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::sub-attribute-node",
+      "label": "Sub-Attribute Node",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-branch"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::leaf-level-scenario",
+      "label": "Leaf-Level Scenario",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::concrete-scenario",
+        "atam::sub-attribute-node"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::importance-rating",
+      "label": "Importance Rating",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::scenario-prioritization"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::difficulty-rating",
+      "label": "Difficulty Rating",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::scenario-prioritization"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::hh-scenario-priority",
+      "label": "HH Scenario Priority",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::importance-rating",
+        "atam::difficulty-rating"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::utility-tree-construction",
+      "label": "Utility Tree Construction",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::utility-tree",
+        "atam::scenario-brainstorming"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::utility-tree-workshop",
+      "label": "Utility Tree Workshop",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::utility-tree-construction",
+        "atam::stakeholder-workshop"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::scenario-importance-vs-effort",
+      "label": "Scenario Importance vs Effort",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::importance-rating",
+        "atam::difficulty-rating"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::priority-negotiation",
+      "label": "Priority Negotiation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::utility-tree-workshop",
+        "atam::competing-stakeholder-priorities"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::utility-tree-validation",
+      "label": "Utility Tree Validation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::utility-tree-construction"
+      ],
+      "taxonomy_id": "SCEN",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-pattern",
+      "label": "Architectural Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-tactic",
+      "label": "Architectural Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::layered-architecture-pattern",
+      "label": "Layered Architecture Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::client-server-architecture",
+      "label": "Client-Server Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::service-oriented-architecture",
+      "label": "Service-Oriented Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::client-server-architecture",
+        "atam::architectural-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::microservices-architecture",
+      "label": "Microservices Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-oriented-architecture"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::event-driven-architecture",
+      "label": "Event-Driven Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::pipe-and-filter-architecture",
+      "label": "Pipe-and-Filter Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::broker-architecture-pattern",
+      "label": "Broker Architecture Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::mvc-architecture-pattern",
+      "label": "MVC Architecture Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::cqrs-pattern",
+      "label": "CQRS Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::event-driven-architecture",
+        "atam::service-oriented-architecture"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::saga-transaction-pattern",
+      "label": "Saga Transaction Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::event-driven-architecture",
+        "atam::distributed-transaction"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::strangler-fig-pattern",
+      "label": "Strangler Fig Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::microservices-architecture"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::event-sourcing-pattern",
+      "label": "Event Sourcing Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::event-driven-architecture"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::domain-driven-design",
+      "label": "Domain-Driven Design",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern",
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::bounded-context",
+      "label": "Bounded Context",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::domain-driven-design"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::hexagonal-architecture",
+      "label": "Hexagonal Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::clean-architecture-pattern",
+      "label": "Clean Architecture Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern",
+        "atam::separation-of-concerns"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::rest-architecture-style",
+      "label": "REST Architecture Style",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-pattern"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::grpc-communication-pattern",
+      "label": "gRPC Communication Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::rest-architecture-style"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::graphql-architecture",
+      "label": "GraphQL Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::rest-architecture-style"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::websocket-architecture",
+      "label": "WebSocket Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::rest-architecture-style"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::performance-tactic",
+      "label": "Performance Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-tactic",
+        "atam::performance-quality-attribute"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::availability-tactic",
+      "label": "Availability Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-tactic",
+        "atam::availability-quality-attribute"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-tactic",
+      "label": "Security Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-tactic",
+        "atam::security-quality-attribute"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::modifiability-tactic",
+      "label": "Modifiability Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-tactic",
+        "atam::modifiability-quality-attribute"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::caching-tactic",
+      "label": "Caching Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::performance-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::load-balancing-tactic",
+      "label": "Load Balancing Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::performance-tactic",
+        "atam::availability-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::redundancy-tactic",
+      "label": "Redundancy Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::availability-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::replication-tactic",
+      "label": "Replication Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::redundancy-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::fault-tolerance-tactic",
+      "label": "Fault Tolerance Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::availability-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::circuit-breaker-pattern",
+      "label": "Circuit Breaker Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::fault-tolerance-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::retry-pattern",
+      "label": "Retry Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::fault-tolerance-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::bulkhead-pattern",
+      "label": "Bulkhead Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::fault-tolerance-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::tactic-interaction",
+      "label": "Tactic Interaction",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-decision-record",
+      "label": "Architecture Decision Record",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-decision"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::component-decomposition",
+      "label": "Component Decomposition",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::architectural-component",
+        "atam::modular-decomposition"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::interface-definition",
+      "label": "Interface Definition",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-component",
+        "atam::architectural-connector"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::module-coupling",
+      "label": "Module Coupling",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "TACT",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::module-cohesion",
+      "label": "Module Cohesion",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "TACT",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::information-hiding-principle",
+      "label": "Information Hiding Principle",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::separation-of-concerns",
+        "atam::module-cohesion"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::encapsulation-in-architecture",
+      "label": "Encapsulation in Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::information-hiding-principle",
+        "atam::module-coupling"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::dependency-injection-pattern",
+      "label": "Dependency Injection Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::modifiability-tactic",
+        "atam::encapsulation-in-architecture"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::plugin-architecture-pattern",
+      "label": "Plugin Architecture Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::modifiability-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::sensitivity-point",
+      "label": "Sensitivity Point",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "RISK",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::tradeoff-point",
+      "label": "Tradeoff Point",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::sensitivity-point"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-risk",
+      "label": "Architectural Risk",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "RISK",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::non-risk",
+      "label": "Non-Risk",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-risk"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-theme",
+      "label": "Risk Theme",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-risk"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-identification",
+      "label": "Risk Identification",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-risk"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-classification",
+      "label": "Risk Classification",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-identification"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-severity-assessment",
+      "label": "Risk Severity Assessment",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-classification"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-probability-assessment",
+      "label": "Risk Probability Assessment",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-classification"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-register",
+      "label": "Risk Register",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-severity-assessment",
+        "atam::risk-probability-assessment"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-communication",
+      "label": "Risk Communication",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-theme",
+        "atam::risk-register"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-driven-architecture",
+      "label": "Risk-Driven Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-risk",
+        "atam::sensitivity-point"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::architectural-debt",
+      "label": "Architectural Debt",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::technical-debt"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-mitigation-strategy",
+      "label": "Risk Mitigation Strategy",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-register"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-monitoring",
+      "label": "Risk Monitoring",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-mitigation-strategy"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::conflicting-quality-attributes",
+      "label": "Conflicting Quality Attributes",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::quality-attribute-conflict",
+        "atam::tradeoff-point"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::design-rationale",
+      "label": "Design Rationale",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-decision",
+        "atam::tradeoff-point"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-decision-impact",
+      "label": "Architecture Decision Impact",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-decision",
+        "atam::sensitivity-point"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::sensitivity-analysis",
+      "label": "Sensitivity Analysis",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::sensitivity-point",
+        "atam::tradeoff-point"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::risk-theme-documentation",
+      "label": "Risk Theme Documentation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-theme",
+        "atam::risk-communication"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::distributed-system-architecture",
+      "label": "Distributed System Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::service-decomposition",
+      "label": "Service Decomposition",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::microservices-architecture",
+        "atam::distributed-system-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::api-gateway-pattern",
+      "label": "API Gateway Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture",
+        "atam::rest-architecture-style"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::service-mesh-architecture",
+      "label": "Service Mesh Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture",
+        "atam::microservices-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::event-driven-messaging",
+      "label": "Event-Driven Messaging",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::event-driven-architecture",
+        "atam::distributed-system-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::message-queue-architecture",
+      "label": "Message Queue Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::event-driven-messaging"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::publish-subscribe-pattern",
+      "label": "Publish-Subscribe Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::event-driven-messaging",
+        "atam::message-queue-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::service-registry",
+      "label": "Service Registry",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture",
+        "atam::microservices-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::service-discovery",
+      "label": "Service Discovery",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-registry"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::distributed-transaction",
+      "label": "Distributed Transaction",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::cap-theorem",
+      "label": "CAP Theorem",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::eventual-consistency",
+      "label": "Eventual Consistency",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cap-theorem"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::two-phase-commit",
+      "label": "Two-Phase Commit",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-transaction"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::distributed-tracing",
+      "label": "Distributed Tracing",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::service-contract",
+      "label": "Service Contract",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::interface-definition",
+        "atam::distributed-system-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::api-versioning",
+      "label": "API Versioning",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-contract"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::backward-compatibility",
+      "label": "Backward Compatibility",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::api-versioning"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::integration-patterns",
+      "label": "Integration Patterns",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture",
+        "atam::event-driven-messaging"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::sidecar-pattern",
+      "label": "Sidecar Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-mesh-architecture"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::ambassador-pattern",
+      "label": "Ambassador Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::sidecar-pattern"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::database-per-service-pattern",
+      "label": "Database per Service Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-decomposition"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::shared-database-pattern",
+      "label": "Shared Database Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::database-per-service-pattern"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::synchronous-vs-async-comm",
+      "label": "Synchronous vs Async Comm",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::event-driven-messaging",
+        "atam::service-contract"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::grpc-vs-rest-comparison",
+      "label": "gRPC vs REST Comparison",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::grpc-communication-pattern",
+        "atam::rest-architecture-style"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::idempotency-in-services",
+      "label": "Idempotency in Services",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-transaction"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::cloud-native-architecture",
+      "label": "Cloud-Native Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::container-architecture",
+      "label": "Container Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-native-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::docker-containerization",
+      "label": "Docker Containerization",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::container-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::kubernetes-orchestration",
+      "label": "Kubernetes Orchestration",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::docker-containerization"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::serverless-architecture",
+      "label": "Serverless Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-native-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::function-as-a-service",
+      "label": "Function as a Service",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::serverless-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::infrastructure-as-code",
+      "label": "Infrastructure as Code",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-native-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::immutable-infrastructure",
+      "label": "Immutable Infrastructure",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::infrastructure-as-code"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::auto-scaling-architecture",
+      "label": "Auto-Scaling Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::kubernetes-orchestration",
+        "atam::scalability-quality-attribute"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::cloud-service-models",
+      "label": "Cloud Service Models",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-native-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::multi-cloud-architecture",
+      "label": "Multi-Cloud Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-service-models"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::hybrid-cloud-architecture",
+      "label": "Hybrid Cloud Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-service-models"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::cloud-resilience-patterns",
+      "label": "Cloud Resilience Patterns",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::fault-tolerance-tactic",
+        "atam::cloud-native-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::chaos-engineering",
+      "label": "Chaos Engineering",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-resilience-patterns"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::blue-green-deployment",
+      "label": "Blue-Green Deployment",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::kubernetes-orchestration"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::canary-release-strategy",
+      "label": "Canary Release Strategy",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::blue-green-deployment"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::zero-downtime-deployment",
+      "label": "Zero-Downtime Deployment",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::blue-green-deployment"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::cloud-cost-optimization",
+      "label": "Cloud Cost Optimization",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-service-models"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::cloud-vendor-lock-in",
+      "label": "Cloud Vendor Lock-in",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::multi-cloud-architecture"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::elasticity-in-cloud",
+      "label": "Elasticity in Cloud",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::auto-scaling-architecture",
+        "atam::scalability-quality-attribute"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::cloud-security-architecture",
+      "label": "Cloud Security Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-native-architecture",
+        "atam::security-quality-attribute"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::managed-cloud-services",
+      "label": "Managed Cloud Services",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-service-models"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::gitops-architecture",
+      "label": "GitOps Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::infrastructure-as-code"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::cost-vs-reliability-tradeoff",
+      "label": "Cost vs Reliability Tradeoff",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::cloud-cost-optimization",
+        "atam::availability-quality-attribute"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::cloud-observability",
+      "label": "Cloud Observability",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::kubernetes-orchestration",
+        "atam::observability"
+      ],
+      "taxonomy_id": "CLOU",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-architecture-definition",
+      "label": "Security Architecture Definition",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-quality-attribute"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::threat-modeling",
+      "label": "Threat Modeling",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::stride-threat-model",
+      "label": "STRIDE Threat Model",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::threat-modeling"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::attack-surface-reduction",
+      "label": "Attack Surface Reduction",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::threat-modeling"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::defense-in-depth",
+      "label": "Defense in Depth",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::zero-trust-architecture",
+      "label": "Zero Trust Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::defense-in-depth"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::authentication-architecture",
+      "label": "Authentication Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::authorization-architecture",
+      "label": "Authorization Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::authentication-architecture"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::encryption-at-rest",
+      "label": "Encryption at Rest",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::encryption-in-transit",
+      "label": "Encryption in Transit",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::oauth-2-0-architecture",
+      "label": "OAuth 2.0 Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::authorization-architecture"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::api-security-design",
+      "label": "API Security Design",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::authentication-architecture",
+        "atam::api-gateway-pattern"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::secret-management",
+      "label": "Secret Management",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::encryption-at-rest",
+        "atam::authorization-architecture"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-monitoring",
+      "label": "Security Monitoring",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::intrusion-detection-system",
+      "label": "Intrusion Detection System",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-monitoring"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::siem-architecture",
+      "label": "SIEM Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-monitoring",
+        "atam::intrusion-detection-system"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::least-privilege-principle",
+      "label": "Least Privilege Principle",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::authorization-architecture"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-compliance",
+      "label": "Security Compliance",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::secure-dev-lifecycle-sdlc",
+      "label": "Secure Dev Lifecycle (SDLC)",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::penetration-testing-in-arch",
+      "label": "Penetration Testing in Arch",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::attack-surface-reduction"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-scenario-development",
+      "label": "Security Scenario Development",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::threat-modeling",
+        "atam::security-scenario"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-tactic-catalog",
+      "label": "Security Tactic Catalog",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-tactic"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::identity-and-access-management",
+      "label": "Identity and Access Management",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::authentication-architecture",
+        "atam::authorization-architecture"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::security-incident-response",
+      "label": "Security Incident Response",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::siem-architecture"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::privacy-by-design",
+      "label": "Privacy by Design",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition"
+      ],
+      "taxonomy_id": "SECP",
+      "level": "core"
+    },
+    {
+      "id": "atam::latency",
+      "label": "Latency",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "PERF",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::throughput",
+      "label": "Throughput",
+      "subject_id": "atam",
+      "dependencies": [],
+      "taxonomy_id": "PERF",
+      "level": "foundational"
+    },
+    {
+      "id": "atam::response-time",
+      "label": "Response Time",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::latency"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::performance-bottleneck",
+      "label": "Performance Bottleneck",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::latency",
+        "atam::throughput"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::amdahl-s-law",
+      "label": "Amdahl's Law",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::throughput"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::performance-profiling",
+      "label": "Performance Profiling",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::performance-bottleneck"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::load-testing",
+      "label": "Load Testing",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::latency",
+        "atam::throughput"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::stress-testing",
+      "label": "Stress Testing",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::load-testing"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::capacity-planning",
+      "label": "Capacity Planning",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::load-testing",
+        "atam::stress-testing"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::vertical-scaling",
+      "label": "Vertical Scaling",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::performance-quality-attribute",
+        "atam::stress-testing"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::horizontal-scaling",
+      "label": "Horizontal Scaling",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::vertical-scaling"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::database-sharding",
+      "label": "Database Sharding",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::horizontal-scaling"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::connection-pooling",
+      "label": "Connection Pooling",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::caching-tactic"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::cdn-architecture",
+      "label": "CDN Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::horizontal-scaling"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::observability",
+      "label": "Observability",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::latency",
+        "atam::throughput"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::logging-architecture",
+      "label": "Logging Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::observability"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::metrics-collection",
+      "label": "Metrics Collection",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::observability"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::health-check-pattern",
+      "label": "Health Check Pattern",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::observability"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::service-level-objective-slo",
+      "label": "Service Level Objective (SLO)",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::observability",
+        "atam::quality-attribute-definition"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::service-level-indicator-sli",
+      "label": "Service Level Indicator (SLI)",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-level-objective-slo"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::error-budget",
+      "label": "Error Budget",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-level-objective-slo"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::site-reliability-engineering",
+      "label": "Site Reliability Engineering",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-level-objective-slo",
+        "atam::service-level-indicator-sli",
+        "atam::error-budget"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::mean-time-to-recovery",
+      "label": "Mean Time to Recovery",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::availability-quality-attribute",
+        "atam::health-check-pattern"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::mean-time-between-failures",
+      "label": "Mean Time Between Failures",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::availability-quality-attribute"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::availability-calculation",
+      "label": "Availability Calculation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::mean-time-to-recovery",
+        "atam::mean-time-between-failures"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::disaster-recovery",
+      "label": "Disaster Recovery",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::availability-calculation"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::recovery-time-objective-rto",
+      "label": "Recovery Time Objective (RTO)",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::disaster-recovery"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::recovery-point-objective-rpo",
+      "label": "Recovery Point Objective (RPO)",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::disaster-recovery"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::geographic-redundancy",
+      "label": "Geographic Redundancy",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::replication-tactic",
+        "atam::disaster-recovery"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::active-passive-failover",
+      "label": "Active-Passive Failover",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::redundancy-tactic",
+        "atam::disaster-recovery"
+      ],
+      "taxonomy_id": "PERF",
+      "level": "core"
+    },
+    {
+      "id": "atam::ai-system-architecture",
+      "label": "AI System Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::machine-learning-pipeline",
+      "label": "Machine Learning Pipeline",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::model-training-architecture",
+      "label": "Model Training Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::machine-learning-pipeline"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::model-serving-architecture",
+      "label": "Model Serving Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::machine-learning-pipeline"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::feature-store-architecture",
+      "label": "Feature Store Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::machine-learning-pipeline"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::ml-model-registry",
+      "label": "ML Model Registry",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::model-serving-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::ai-latency-considerations",
+      "label": "AI Latency Considerations",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::latency",
+        "atam::model-serving-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::non-deterministic-behavior",
+      "label": "Non-Deterministic Behavior",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::model-drift-detection",
+      "label": "Model Drift Detection",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::non-deterministic-behavior",
+        "atam::ml-model-registry"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::data-pipeline-architecture",
+      "label": "Data Pipeline Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::machine-learning-pipeline"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::batch-processing-architecture",
+      "label": "Batch Processing Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::data-pipeline-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::stream-processing-architecture",
+      "label": "Stream Processing Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::data-pipeline-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::llm-architecture",
+      "label": "LLM Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::llm-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::rag-architecture",
+      "label": "RAG Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::llm-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::graphrag-architecture",
+      "label": "GraphRAG Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::rag-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::vector-database-architecture",
+      "label": "Vector Database Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::rag-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::ai-observability",
+      "label": "AI Observability",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::observability",
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::ai-explainability",
+      "label": "AI Explainability",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::responsible-ai-architecture",
+      "label": "Responsible AI Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::ai-explainability",
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::data-mesh-architecture",
+      "label": "Data Mesh Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture",
+        "atam::data-pipeline-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::data-lakehouse-architecture",
+      "label": "Data Lakehouse Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::data-pipeline-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::lambda-architecture",
+      "label": "Lambda Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::batch-processing-architecture",
+        "atam::stream-processing-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::kappa-architecture",
+      "label": "Kappa Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::stream-processing-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::space-based-architecture",
+      "label": "Space-Based Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::distributed-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::ai-security-architecture",
+      "label": "AI Security Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::security-architecture-definition",
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::ai-model-versioning",
+      "label": "AI Model Versioning",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::ml-model-registry"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::a-b-testing-architecture",
+      "label": "A/B Testing Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::model-serving-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::online-learning-architecture",
+      "label": "Online Learning Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::model-serving-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::data-governance-architecture",
+      "label": "Data Governance Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::data-pipeline-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::multi-modal-ai-architecture",
+      "label": "Multi-Modal AI Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::llm-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::federated-learning",
+      "label": "Federated Learning",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::model-training-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::edge-ai-architecture",
+      "label": "Edge AI Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::model-serving-architecture",
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::ai-pipeline-monitoring",
+      "label": "AI Pipeline Monitoring",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::ai-observability",
+        "atam::ml-model-registry"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::autonomous-system-architecture",
+      "label": "Autonomous System Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::ai-system-architecture"
+      ],
+      "taxonomy_id": "AIEM",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-fitness-function",
+      "label": "Architecture Fitness Function",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::software-architecture-definition",
+        "atam::architecture-evaluation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::evolutionary-architecture",
+      "label": "Evolutionary Architecture",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-fitness-function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-standard",
+      "label": "Architecture Standard",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-principles"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::technology-radar",
+      "label": "Technology Radar",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architecture-standard"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-debt-management",
+      "label": "Architecture Debt Management",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::architectural-debt"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "atam::interoperability-tactic",
+      "label": "Interoperability Tactic",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::interoperability-quality-attribute",
+        "atam::architectural-tactic"
+      ],
+      "taxonomy_id": "TACT",
+      "level": "core"
+    },
+    {
+      "id": "atam::schema-registry",
+      "label": "Schema Registry",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-contract"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::message-transformation",
+      "label": "Message Transformation",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::integration-patterns"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::contract-first-design",
+      "label": "Contract-First Design",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::service-contract",
+        "atam::interface-definition"
+      ],
+      "taxonomy_id": "DIST",
+      "level": "core"
+    },
+    {
+      "id": "atam::architecture-improvement-plan",
+      "label": "Architecture Improvement Plan",
+      "subject_id": "atam",
+      "dependencies": [
+        "atam::risk-driven-architecture",
+        "atam::risk-register",
+        "atam::design-rationale"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    }
+  ]
+}

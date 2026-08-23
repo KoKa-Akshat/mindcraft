@@ -1,0 +1,2059 @@
+{
+  "subject_id": "fluid-power-systems",
+  "title": "fluid-power-systems",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {},
+  "concepts": [
+    {
+      "id": "fluid-power-systems::fluid-power-fundamentals",
+      "label": "Fluid Power Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::system-safety-principles",
+      "label": "System Safety Principles",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "9",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::tool-usage-fundamentals",
+      "label": "Tool Usage Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "3",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::units-of-measurement",
+      "label": "Units Of Measurement",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "2",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::basic-mechanical-concepts",
+      "label": "Basic Mechanical Concepts",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::materials-science-fundamentals",
+      "label": "Materials Science Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::fluid-types",
+      "label": "Fluid Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-power-fundamentals"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::states-of-matter",
+      "label": "States Of Matter",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::materials-science-fundamentals"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::properties-of-water",
+      "label": "Properties Of Water",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-types",
+        "fluid-power-systems::states-of-matter"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::properties-of-air",
+      "label": "Properties Of Air",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-types",
+        "fluid-power-systems::states-of-matter"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::properties-of-oil",
+      "label": "Properties Of Oil",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-types",
+        "fluid-power-systems::states-of-matter"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::flow-fundamentals",
+      "label": "Flow Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-types"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pressure-fundamentals",
+      "label": "Pressure Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-types"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::energy-transfer-principles",
+      "label": "Energy Transfer Principles",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::flow-fundamentals",
+        "fluid-power-systems::pressure-fundamentals"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::basic-thermodynamics",
+      "label": "Basic Thermodynamics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::energy-transfer-principles"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::heat-transfer-mechanisms",
+      "label": "Heat Transfer Mechanisms",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-thermodynamics"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fluid-system-components",
+      "label": "Fluid System Components",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-power-fundamentals"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::mechanical-component-types",
+      "label": "Mechanical Component Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-mechanical-concepts"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::electrical-component-types",
+      "label": "Electrical Component Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-electronics"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::control-component-types",
+      "label": "Control Component Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::electrical-component-types"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fluid-system-schematic-symbols",
+      "label": "Fluid System Schematic Symbols",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fluid-system-schematic-reading",
+      "label": "Fluid System Schematic Reading",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-schematic-symbols"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::ppe-requirements",
+      "label": "PPE Requirements",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-safety-principles"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::osha-standards-overview",
+      "label": "OSHA Standards Overview",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-safety-principles"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::system-documentation-practices",
+      "label": "System Documentation Practices",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "2",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::fluid-power-mathematics",
+      "label": "Fluid Power Mathematics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::units-of-measurement"
+      ],
+      "taxonomy_id": "1",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::force-calculations",
+      "label": "Force Calculations",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-power-mathematics"
+      ],
+      "taxonomy_id": "1",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::energy-calculations",
+      "label": "Energy Calculations",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-power-mathematics",
+        "fluid-power-systems::energy-transfer-principles"
+      ],
+      "taxonomy_id": "1",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::efficiency-calculations",
+      "label": "Efficiency Calculations",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::energy-calculations"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::data-collection-fundamentals",
+      "label": "Data Collection Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "5",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::basic-computer-skills",
+      "label": "Basic Computer Skills",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "2",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::sensor-types",
+      "label": "Sensor Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::electrical-component-types"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::sensor-installation",
+      "label": "Sensor Installation",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::sensor-types"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::basic-electronics",
+      "label": "Basic Electronics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "3",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::wiring-fundamentals",
+      "label": "Wiring Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-electronics"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::circuit-reading",
+      "label": "Circuit Reading",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::wiring-fundamentals"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::digital-vs-analog-signals",
+      "label": "Digital vs Analog Signals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-electronics"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pump-types",
+      "label": "Pump Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pump-functions",
+      "label": "Pump Functions",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pump-types"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pump-maintenance",
+      "label": "Pump Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pump-types",
+        "fluid-power-systems::pump-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fan-types",
+      "label": "Fan Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fan-functions",
+      "label": "Fan Functions",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fan-types"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fan-maintenance",
+      "label": "Fan Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fan-types",
+        "fluid-power-systems::fan-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::compressor-types",
+      "label": "Compressor Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::compressor-functions",
+      "label": "Compressor Functions",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::compressor-types"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::compressor-maintenance",
+      "label": "Compressor Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::compressor-types",
+        "fluid-power-systems::compressor-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::valve-types",
+      "label": "Valve Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::valve-functions",
+      "label": "Valve Functions",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::valve-types"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::valve-maintenance",
+      "label": "Valve Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::valve-types",
+        "fluid-power-systems::valve-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::filter-types",
+      "label": "Filter Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::filter-functions",
+      "label": "Filter Functions",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::filter-types"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::filter-maintenance",
+      "label": "Filter Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::filter-types",
+        "fluid-power-systems::filter-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::actuator-types",
+      "label": "Actuator Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::actuator-functions",
+      "label": "Actuator Functions",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::actuator-types"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::actuator-maintenance",
+      "label": "Actuator Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::actuator-types",
+        "fluid-power-systems::actuator-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::seal-types",
+      "label": "Seal Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::seal-functions",
+      "label": "Seal Functions",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::seal-types"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::seal-maintenance",
+      "label": "Seal Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::seal-types",
+        "fluid-power-systems::seal-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::line-types",
+      "label": "Line Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::line-functions",
+      "label": "Line Functions",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::line-types"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::line-maintenance",
+      "label": "Line Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::line-types",
+        "fluid-power-systems::line-functions"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fitting-types",
+      "label": "Fitting Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fitting-installation",
+      "label": "Fitting Installation",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fitting-types"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::tools-for-fittings",
+      "label": "Tools For Fittings",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fitting-types",
+        "fluid-power-systems::tool-usage-fundamentals"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::hvac-system-overview",
+      "label": "HVAC System Overview",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::airflow-principles",
+      "label": "Airflow Principles",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::properties-of-air",
+        "fluid-power-systems::flow-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::cooling-principles",
+      "label": "Cooling Principles",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::heat-transfer-mechanisms"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::heating-principles",
+      "label": "Heating Principles",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::heat-transfer-mechanisms"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::duct-systems",
+      "label": "Duct Systems",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::airflow-principles"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::coil-types",
+      "label": "Coil Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::cooling-principles",
+        "fluid-power-systems::heating-principles"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::filter-service",
+      "label": "Filter Service",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::filter-types",
+        "fluid-power-systems::filter-maintenance"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::hvac-controls",
+      "label": "HVAC Controls",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::hvac-system-overview",
+        "fluid-power-systems::control-component-types"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::hvac-efficiency-metrics",
+      "label": "HVAC Efficiency Metrics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::hvac-system-overview",
+        "fluid-power-systems::efficiency-calculations"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::vacuum-system-fundamentals",
+      "label": "Vacuum System Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::flow-fundamentals",
+        "fluid-power-systems::pressure-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::vacuum-pump-types",
+      "label": "Vacuum Pump Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pump-types",
+        "fluid-power-systems::vacuum-system-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::vacuum-system-applications",
+      "label": "Vacuum System Applications",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::vacuum-system-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::seal-testing",
+      "label": "Seal Testing",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::seal-types",
+        "fluid-power-systems::troubleshooting-methodologies"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::leak-detection",
+      "label": "Leak Detection",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::seal-testing"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::compressed-air-fundamentals",
+      "label": "Compressed Air Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::flow-fundamentals",
+        "fluid-power-systems::pressure-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::air-pressure-regulation",
+      "label": "Air Pressure Regulation",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::compressed-air-fundamentals",
+        "fluid-power-systems::valve-functions"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::air-line-installation",
+      "label": "Air Line Installation",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::line-types",
+        "fluid-power-systems::compressed-air-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::air-tool-requirements",
+      "label": "Air Tool Requirements",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::compressed-air-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::air-system-efficiency",
+      "label": "Air System Efficiency",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::compressed-air-fundamentals",
+        "fluid-power-systems::efficiency-calculations"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::compressed-air-quality-standards",
+      "label": "Compressed Air Quality Standards",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::compressed-air-fundamentals"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::cooling-water-fundamentals",
+      "label": "Cooling Water Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::heat-transfer-mechanisms"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::cooling-tower-operations",
+      "label": "Cooling Tower Operations",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::cooling-water-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::water-treatment-principles",
+      "label": "Water Treatment Principles",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::properties-of-water"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::corrosion-prevention",
+      "label": "Corrosion Prevention",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::materials-science-fundamentals",
+        "fluid-power-systems::water-treatment-principles"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::scale-prevention",
+      "label": "Scale Prevention",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::water-treatment-principles"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::water-quality-parameters",
+      "label": "Water Quality Parameters",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::properties-of-water"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::dust-collection-fundamentals",
+      "label": "Dust Collection Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::airflow-principles"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::filter-media-types",
+      "label": "Filter Media Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::filter-types"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::airflow-balancing",
+      "label": "Airflow Balancing",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::airflow-principles"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::combustible-dust-safety",
+      "label": "Combustible Dust Safety",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::dust-collection-fundamentals"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::nfpa-standards",
+      "label": "NFPA Standards",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-safety-principles"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::hydraulic-system-fundamentals",
+      "label": "Hydraulic System Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::properties-of-oil",
+        "fluid-power-systems::flow-fundamentals",
+        "fluid-power-systems::pressure-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::hydraulic-fluid-types",
+      "label": "Hydraulic Fluid Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::properties-of-oil"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::hydraulic-cylinder-service",
+      "label": "Hydraulic Cylinder Service",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::actuator-types",
+        "fluid-power-systems::actuator-maintenance",
+        "fluid-power-systems::hydraulic-system-fundamentals"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::hydraulic-pump-service",
+      "label": "Hydraulic Pump Service",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pump-types",
+        "fluid-power-systems::pump-maintenance",
+        "fluid-power-systems::hydraulic-system-fundamentals"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::hydraulic-control-valves",
+      "label": "Hydraulic Control Valves",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::valve-types",
+        "fluid-power-systems::valve-functions",
+        "fluid-power-systems::hydraulic-system-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pumping-system-fundamentals",
+      "label": "Pumping System Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pump-types",
+        "fluid-power-systems::pump-functions"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pump-performance-curves",
+      "label": "Pump Performance Curves",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pump-types",
+        "fluid-power-systems::pump-functions",
+        "fluid-power-systems::pumping-system-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pump-installation-procedures",
+      "label": "Pump Installation Procedures",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pump-types",
+        "fluid-power-systems::pumping-system-fundamentals"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::cavitation-prevention",
+      "label": "Cavitation Prevention",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pump-types",
+        "fluid-power-systems::pumping-system-fundamentals"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::water-hammer-prevention",
+      "label": "Water Hammer Prevention",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pumping-system-fundamentals"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fan-system-fundamentals",
+      "label": "Fan System Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fan-types",
+        "fluid-power-systems::fan-functions"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::belt-maintenance",
+      "label": "Belt Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "7",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::blade-inspection",
+      "label": "Blade Inspection",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fan-types"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::vibration-principles",
+      "label": "Vibration Principles",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-mechanical-concepts"
+      ],
+      "taxonomy_id": "1",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::noise-reduction-techniques",
+      "label": "Noise Reduction Techniques",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::vibration-principles"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::plc-basics",
+      "label": "PLC Basics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-component-types"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::control-panel-components",
+      "label": "Control Panel Components",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-component-types"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::control-programming-fundamentals",
+      "label": "Control Programming Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::plc-basics"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::input-output-devices",
+      "label": "Input/Output Devices",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-component-types"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::troubleshooting-methodologies",
+      "label": "Troubleshooting Methodologies",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "7",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::diagnostic-tool-usage",
+      "label": "Diagnostic Tool Usage",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::troubleshooting-methodologies"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::system-testing-procedures",
+      "label": "System Testing Procedures",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::troubleshooting-methodologies"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pm-schedules",
+      "label": "PM Schedules",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "7",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::work-order-management",
+      "label": "Work Order Management",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "10",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::parts-inventory-management",
+      "label": "Parts Inventory Management",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "10",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::energy-auditing",
+      "label": "Energy Auditing",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::efficiency-calculations"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::lifecycle-cost-analysis",
+      "label": "Lifecycle Cost Analysis",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::energy-auditing"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::ai-fundamentals",
+      "label": "AI Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "5",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::machine-learning-basics",
+      "label": "Machine Learning Basics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::ai-fundamentals"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::data-types",
+      "label": "Data Types",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::data-collection-fundamentals"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::data-collection-methods",
+      "label": "Data Collection Methods",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::data-collection-fundamentals"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::data-transmission-methods",
+      "label": "Data Transmission Methods",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::data-collection-fundamentals"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::data-storage-systems",
+      "label": "Data Storage Systems",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::data-collection-fundamentals"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::dashboard-interpretation",
+      "label": "Dashboard Interpretation",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-computer-skills"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::iot-fundamentals",
+      "label": "IoT Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::sensor-types",
+        "fluid-power-systems::digital-vs-analog-signals"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::iot-sensors",
+      "label": "IoT Sensors",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::sensor-types",
+        "fluid-power-systems::iot-fundamentals"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::wireless-communication-protocols",
+      "label": "Wireless Communication Protocols",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::iot-fundamentals"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::network-security-basics",
+      "label": "Network Security Basics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::iot-fundamentals"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::cloud-computing-fundamentals",
+      "label": "Cloud Computing Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::data-storage-systems"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::edge-computing-fundamentals",
+      "label": "Edge Computing Fundamentals",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::cloud-computing-fundamentals"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::control-system-architecture",
+      "label": "Control System Architecture",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-component-types"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::real-time-monitoring",
+      "label": "Real-Time Monitoring",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::sensor-types",
+        "fluid-power-systems::control-system-architecture"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::data-analysis-methods",
+      "label": "Data Analysis Methods",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::data-types",
+        "fluid-power-systems::data-collection-methods"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::predictive-analytics",
+      "label": "Predictive Analytics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::machine-learning-basics",
+        "fluid-power-systems::data-analysis-methods"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::fault-detection-algorithms",
+      "label": "Fault Detection Algorithms",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::machine-learning-basics",
+        "fluid-power-systems::predictive-analytics"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::scada-systems",
+      "label": "SCADA Systems",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-system-architecture"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::cmms-software",
+      "label": "CMMS Software",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-computer-skills",
+        "fluid-power-systems::work-order-management"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::mobile-app-integration",
+      "label": "Mobile App Integration",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::basic-computer-skills",
+        "fluid-power-systems::real-time-monitoring"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::building-management-systems-bms",
+      "label": "Building Management Systems (BMS)",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::hvac-controls",
+        "fluid-power-systems::control-system-architecture"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::energy-management-systems-ems",
+      "label": "Energy Management Systems (EMS)",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::energy-auditing",
+        "fluid-power-systems::control-system-architecture"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::digital-twin-concepts",
+      "label": "Digital Twin Concepts",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-system-architecture",
+        "fluid-power-systems::data-analysis-methods"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::vfd-technology",
+      "label": "VFD Technology",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::electrical-component-types"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::motor-control-methods",
+      "label": "Motor Control Methods",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::electrical-component-types",
+        "fluid-power-systems::vfd-technology"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::smart-valve-technology",
+      "label": "Smart Valve Technology",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::valve-types",
+        "fluid-power-systems::iot-fundamentals"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::smart-thermostat-integration",
+      "label": "Smart Thermostat Integration",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::hvac-controls",
+        "fluid-power-systems::iot-fundamentals"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::automated-sequencing",
+      "label": "Automated Sequencing",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-programming-fundamentals"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::system-optimization-methods",
+      "label": "System Optimization Methods",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::predictive-analytics",
+        "fluid-power-systems::fault-detection-algorithms"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::maintenance-planning-with-ai",
+      "label": "Maintenance Planning With AI",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pm-schedules",
+        "fluid-power-systems::ai-fundamentals"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::predictive-maintenance-implementation",
+      "label": "Predictive Maintenance Implementation",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::predictive-analytics",
+        "fluid-power-systems::maintenance-planning-with-ai"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::diagnostics-using-machine-learning",
+      "label": "Diagnostics Using Machine Learning",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::troubleshooting-methodologies",
+        "fluid-power-systems::machine-learning-basics"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::root-cause-analysis-using-data",
+      "label": "Root Cause Analysis Using Data",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::troubleshooting-methodologies",
+        "fluid-power-systems::data-analysis-methods"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::pattern-recognition-in-system-data",
+      "label": "Pattern Recognition In System Data",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::machine-learning-basics",
+        "fluid-power-systems::data-analysis-methods"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::anomaly-detection",
+      "label": "Anomaly Detection",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::machine-learning-basics",
+        "fluid-power-systems::pattern-recognition-in-system-data"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::energy-efficiency-metrics",
+      "label": "Energy Efficiency Metrics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::efficiency-calculations",
+        "fluid-power-systems::energy-management-systems-ems"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::labor-efficiency-metrics",
+      "label": "Labor Efficiency Metrics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-optimization-methods"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::sustainability-metrics",
+      "label": "Sustainability Metrics",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::energy-efficiency-metrics"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::carbon-footprint-calculation",
+      "label": "Carbon Footprint Calculation",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::sustainability-metrics"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::water-conservation-methods",
+      "label": "Water Conservation Methods",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::cooling-water-fundamentals",
+        "fluid-power-systems::sustainability-metrics"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::energy-recovery-techniques",
+      "label": "Energy Recovery Techniques",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::energy-efficiency-metrics"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::system-design-principles",
+      "label": "System Design Principles",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::fluid-power-fundamentals",
+        "fluid-power-systems::fluid-system-components"
+      ],
+      "taxonomy_id": "1",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::control-integration-planning",
+      "label": "Control Integration Planning",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-component-types",
+        "fluid-power-systems::control-system-architecture"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::sensor-network-design",
+      "label": "Sensor Network Design",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::sensor-types",
+        "fluid-power-systems::iot-sensors"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::data-architecture-planning",
+      "label": "Data Architecture Planning",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::data-types",
+        "fluid-power-systems::data-storage-systems"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::alert-system-configuration",
+      "label": "Alert System Configuration",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::real-time-monitoring",
+        "fluid-power-systems::fault-detection-algorithms"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::maintenance-protocol-development",
+      "label": "Maintenance Protocol Development",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pm-schedules",
+        "fluid-power-systems::maintenance-planning-with-ai"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::failure-mode-analysis",
+      "label": "Failure Mode Analysis",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::troubleshooting-methodologies",
+        "fluid-power-systems::fault-detection-algorithms"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::system-reliability-assessment",
+      "label": "System Reliability Assessment",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::troubleshooting-methodologies",
+        "fluid-power-systems::failure-mode-analysis"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::performance-benchmarking",
+      "label": "Performance Benchmarking",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::efficiency-calculations",
+        "fluid-power-systems::system-optimization-methods"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::green-certification-requirements",
+      "label": "Green Certification Requirements",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::sustainability-metrics"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::compliance-monitoring-methods",
+      "label": "Compliance Monitoring Methods",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::osha-standards-overview",
+        "fluid-power-systems::nfpa-standards"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::resource-optimization-techniques",
+      "label": "Resource Optimization Techniques",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-optimization-methods",
+        "fluid-power-systems::energy-efficiency-metrics",
+        "fluid-power-systems::water-conservation-methods"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::condition-based-maintenance",
+      "label": "Condition-Based Maintenance",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::real-time-monitoring",
+        "fluid-power-systems::predictive-maintenance-implementation"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::remote-system-management",
+      "label": "Remote System Management",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::real-time-monitoring",
+        "fluid-power-systems::mobile-app-integration"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::automated-reporting",
+      "label": "Automated Reporting",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::cmms-software",
+        "fluid-power-systems::visualization-tools"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::visualization-tools",
+      "label": "Visualization Tools",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::dashboard-interpretation"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::team-communication-platforms",
+      "label": "Team Communication Platforms",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "10",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::system-documentation-standards",
+      "label": "System Documentation Standards",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-documentation-practices"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::change-management-practices",
+      "label": "Change Management Practices",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "10",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::total-productive-maintenance-tpm",
+      "label": "Total Productive Maintenance (TPM)",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::pm-schedules",
+        "fluid-power-systems::maintenance-planning-with-ai"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::industry-4-0-integration",
+      "label": "Industry 4.0 Integration",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::ai-fundamentals",
+        "fluid-power-systems::iot-fundamentals"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::digital-transformation-roadmaps",
+      "label": "Digital Transformation Roadmaps",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::industry-4-0-integration"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::smart-factory-concepts",
+      "label": "Smart Factory Concepts",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::industry-4-0-integration"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::advanced-system-integration",
+      "label": "Advanced System Integration",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::control-integration-planning",
+        "fluid-power-systems::industry-4-0-integration"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::mixed-system-optimization",
+      "label": "Mixed System Optimization",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-optimization-methods",
+        "fluid-power-systems::advanced-system-integration"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::multi-parameter-optimization",
+      "label": "Multi-Parameter Optimization",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-optimization-methods",
+        "fluid-power-systems::mixed-system-optimization"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::scenario-planning-with-ai",
+      "label": "Scenario Planning With AI",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::ai-fundamentals",
+        "fluid-power-systems::system-optimization-methods"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::decision-support-systems",
+      "label": "Decision Support Systems",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::ai-fundamentals",
+        "fluid-power-systems::visualization-tools"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::virtual-commissioning-methods",
+      "label": "Virtual Commissioning Methods",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::digital-twin-concepts"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::simulation-based-training",
+      "label": "Simulation Based Training",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::digital-twin-concepts"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::ar-vr-maintenance-applications",
+      "label": "AR/VR Maintenance Applications",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::simulation-based-training"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::continuous-improvement-methodologies",
+      "label": "Continuous Improvement Methodologies",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [],
+      "taxonomy_id": "10",
+      "level": "foundational"
+    },
+    {
+      "id": "fluid-power-systems::innovation-management",
+      "label": "Innovation Management",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::continuous-improvement-methodologies"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::risk-assessment-protocols",
+      "label": "Risk Assessment Protocols",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-safety-principles"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::future-technology-trends",
+      "label": "Future Technology Trends",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::ai-fundamentals",
+        "fluid-power-systems::industry-4-0-integration"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "fluid-power-systems::complete-system-design-integration",
+      "label": "Complete System Design Integration",
+      "subject_id": "fluid-power-systems",
+      "dependencies": [
+        "fluid-power-systems::system-design-principles",
+        "fluid-power-systems::advanced-system-integration"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,4043 @@
+{
+  "subject_id": "cybersecurity",
+  "title": "Cybersecurity: Foundations, Practice, and Professional Responsibility",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LavenderBlush"
+    },
+    "CRYPTO": {
+      "classifier_name": "Cryptography and Data Security",
+      "color": "Honeydew"
+    },
+    "SOFT": {
+      "classifier_name": "Software Security",
+      "color": "Plum"
+    },
+    "COMP": {
+      "classifier_name": "Component Security",
+      "color": "MistyRose"
+    },
+    "NET": {
+      "classifier_name": "Network Security",
+      "color": "LightCoral"
+    },
+    "SYS": {
+      "classifier_name": "System Security",
+      "color": "LightYellow"
+    },
+    "HUMAN": {
+      "classifier_name": "Human Security",
+      "color": "Lavender"
+    },
+    "ORG": {
+      "classifier_name": "Organizational Security",
+      "color": "Thistle"
+    },
+    "SOC": {
+      "classifier_name": "Societal Security",
+      "color": "SteelBlue"
+    },
+    "OPS": {
+      "classifier_name": "Offensive and Defensive Operations",
+      "color": "PaleTurquoise"
+    },
+    "EMERG": {
+      "classifier_name": "Emerging Topics",
+      "color": "PeachPuff"
+    },
+    "CAP": {
+      "classifier_name": "Capstone and Professional Skills",
+      "color": "MintCream"
+    }
+  },
+  "concepts": [
+    {
+      "id": "cybersecurity::cybersecurity",
+      "label": "Cybersecurity",
+      "subject_id": "cybersecurity",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "cybersecurity::information-security",
+      "label": "Information Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::confidentiality",
+      "label": "Confidentiality",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::information-security"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::integrity",
+      "label": "Integrity",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::information-security"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::availability",
+      "label": "Availability",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::information-security"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cia-triad",
+      "label": "CIA Triad",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::confidentiality",
+        "cybersecurity::integrity",
+        "cybersecurity::availability"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::authentication",
+      "label": "Authentication",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cia-triad"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::authorization",
+      "label": "Authorization",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::accounting",
+      "label": "Accounting",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::non-repudiation",
+      "label": "Non-Repudiation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::aaa-framework",
+      "label": "AAA Framework",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authentication",
+        "cybersecurity::authorization",
+        "cybersecurity::accounting"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::adversarial-thinking",
+      "label": "Adversarial Thinking",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::threat-modeling",
+      "label": "Threat Modeling",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::adversarial-thinking",
+        "cybersecurity::systems-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::stride",
+      "label": "STRIDE",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-modeling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::pasta",
+      "label": "PASTA",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-modeling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::attack-trees",
+      "label": "Attack Trees",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-modeling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::risk",
+      "label": "Risk",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::likelihood",
+      "label": "Likelihood",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::impact",
+      "label": "Impact",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::risk-assessment",
+      "label": "Risk Assessment",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::likelihood",
+        "cybersecurity::impact"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::defense-in-depth",
+      "label": "Defense in Depth",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::least-privilege",
+      "label": "Least Privilege",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::separation-of-duties",
+      "label": "Separation of Duties",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::least-privilege"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::fail-secure-default",
+      "label": "Fail Secure Default",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::complete-mediation",
+      "label": "Complete Mediation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::least-privilege"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::open-design-principle",
+      "label": "Open Design Principle",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::economy-of-mechanism",
+      "label": "Economy of Mechanism",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::psychological-acceptability",
+      "label": "Psychological Acceptability",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-economics",
+      "label": "Security Economics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::threat",
+      "label": "Threat",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-modeling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::vulnerability",
+      "label": "Vulnerability",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-modeling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::exploit",
+      "label": "Exploit",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat",
+        "cybersecurity::vulnerability"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::threat-actor",
+      "label": "Threat Actor",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::attack-surface",
+      "label": "Attack Surface",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vulnerability"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::blast-radius",
+      "label": "Blast Radius",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::exploit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::trust-boundary",
+      "label": "Trust Boundary",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::defense-in-depth"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::asset",
+      "label": "Asset",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-requirement",
+      "label": "Security Requirement",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asset"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cve",
+      "label": "CVE",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vulnerability"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cvss",
+      "label": "CVSS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cve",
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ttp",
+      "label": "TTP",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat",
+        "cybersecurity::threat-actor"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::indicator-of-compromise",
+      "label": "Indicator of Compromise",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::exploit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::indicator-of-attack",
+      "label": "Indicator of Attack",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::exploit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::zero-day",
+      "label": "Zero Day",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::exploit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::kill-chain",
+      "label": "Kill Chain",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ttp"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cyber-kill-chain",
+      "label": "Cyber Kill Chain",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::kill-chain"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::diamond-model",
+      "label": "Diamond Model",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-modeling",
+        "cybersecurity::ttp"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-control",
+      "label": "Security Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::defense-in-depth"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::preventive-control",
+      "label": "Preventive Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-control"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::detective-control",
+      "label": "Detective Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-control"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::corrective-control",
+      "label": "Corrective Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-control"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::compensating-control",
+      "label": "Compensating Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-control"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::administrative-control",
+      "label": "Administrative Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-control"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::technical-control",
+      "label": "Technical Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-control"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::physical-control",
+      "label": "Physical Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-control"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cryptography",
+      "label": "Cryptography",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity",
+        "cybersecurity::confidentiality"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::plaintext",
+      "label": "Plaintext",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ciphertext",
+      "label": "Ciphertext",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::encryption",
+      "label": "Encryption",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::plaintext",
+        "cybersecurity::ciphertext"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::decryption",
+      "label": "Decryption",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::encryption"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cryptographic-key",
+      "label": "Cryptographic Key",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::encryption"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::symmetric-cryptography",
+      "label": "Symmetric Cryptography",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::encryption",
+        "cybersecurity::cryptographic-key"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::block-cipher",
+      "label": "Block Cipher",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::symmetric-cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::stream-cipher",
+      "label": "Stream Cipher",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::symmetric-cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::aes",
+      "label": "AES",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::block-cipher"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::des",
+      "label": "DES",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::block-cipher"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::3des",
+      "label": "3DES",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::des"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::block-cipher-modes",
+      "label": "Block Cipher Modes",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::block-cipher"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ecb-mode",
+      "label": "ECB Mode",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::block-cipher-modes"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cbc-mode",
+      "label": "CBC Mode",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::block-cipher-modes"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ctr-mode",
+      "label": "CTR Mode",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::block-cipher-modes"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::gcm-mode",
+      "label": "GCM Mode",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::block-cipher-modes"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::initialization-vector",
+      "label": "Initialization Vector",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cbc-mode"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::padding-scheme",
+      "label": "Padding Scheme",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::block-cipher"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::asymmetric-cryptography",
+      "label": "Asymmetric Cryptography",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::encryption",
+        "cybersecurity::cryptographic-key"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::public-key",
+      "label": "Public Key",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asymmetric-cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::private-key",
+      "label": "Private Key",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asymmetric-cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::rsa",
+      "label": "RSA",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::public-key",
+        "cybersecurity::private-key"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::elliptic-curve-cryptography",
+      "label": "Elliptic Curve Cryptography",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asymmetric-cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::diffie-hellman",
+      "label": "Diffie-Hellman",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asymmetric-cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::key-exchange",
+      "label": "Key Exchange",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::diffie-hellman"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hash-function",
+      "label": "Hash Function",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::integrity"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::sha-2",
+      "label": "SHA-2",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hash-function"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::sha-3",
+      "label": "SHA-3",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hash-function"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::md5",
+      "label": "MD5",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hash-function"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::collision-resistance",
+      "label": "Collision Resistance",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hash-function"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::preimage-resistance",
+      "label": "Preimage Resistance",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hash-function"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::message-authentication-code",
+      "label": "Message Authentication Code",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hash-function",
+        "cybersecurity::cryptographic-key"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hmac",
+      "label": "HMAC",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::message-authentication-code",
+        "cybersecurity::sha-2"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::digital-signature",
+      "label": "Digital Signature",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asymmetric-cryptography",
+        "cybersecurity::hash-function"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::certificate-authority",
+      "label": "Certificate Authority",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::digital-signature"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::pki",
+      "label": "PKI",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::certificate-authority"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::x-509-certificate",
+      "label": "X.509 Certificate",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::certificate-authority"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::certificate-chain",
+      "label": "Certificate Chain",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::x-509-certificate"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::certificate-revocation",
+      "label": "Certificate Revocation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::x-509-certificate"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ocsp",
+      "label": "OCSP",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::certificate-revocation"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::key-management",
+      "label": "Key Management",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cryptographic-key"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::key-rotation",
+      "label": "Key Rotation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::key-management"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::key-derivation-function",
+      "label": "Key Derivation Function",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cryptographic-key"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::password-hashing",
+      "label": "Password Hashing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hash-function"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::bcrypt",
+      "label": "Bcrypt",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::password-hashing"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::argon2",
+      "label": "Argon2",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::password-hashing"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::salting",
+      "label": "Salting",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::password-hashing"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::tls",
+      "label": "TLS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asymmetric-cryptography",
+        "cybersecurity::digital-signature",
+        "cybersecurity::pki"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::tls-handshake",
+      "label": "TLS Handshake",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::tls",
+        "cybersecurity::key-exchange"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::https",
+      "label": "HTTPS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::tls"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::perfect-forward-secrecy",
+      "label": "Perfect Forward Secrecy",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::key-exchange"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::data-at-rest",
+      "label": "Data at Rest",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::encryption"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::data-in-transit",
+      "label": "Data in Transit",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::encryption"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::data-in-use",
+      "label": "Data in Use",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::encryption"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::database-encryption",
+      "label": "Database Encryption",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::data-at-rest"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::data-loss-prevention",
+      "label": "Data Loss Prevention",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::data-at-rest",
+        "cybersecurity::data-in-transit"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::homomorphic-encryption",
+      "label": "Homomorphic Encryption",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asymmetric-cryptography",
+        "cybersecurity::data-in-use"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::secure-computation",
+      "label": "Secure Computation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::homomorphic-encryption"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::differential-privacy",
+      "label": "Differential Privacy",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::confidentiality"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::zero-knowledge-proof",
+      "label": "Zero-Knowledge Proof",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::asymmetric-cryptography"
+      ],
+      "taxonomy_id": "CRYPTO",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::secure-sdlc",
+      "label": "Secure SDLC",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::secure-design",
+      "label": "Secure Design",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::defense-in-depth",
+        "cybersecurity::secure-sdlc"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::secure-coding",
+      "label": "Secure Coding",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-sdlc"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::owasp-top-ten",
+      "label": "OWASP Top Ten",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vulnerability",
+        "cybersecurity::secure-coding"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cwe-top-25",
+      "label": "CWE Top 25",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vulnerability",
+        "cybersecurity::secure-coding"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::buffer-overflow",
+      "label": "Buffer Overflow",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::stack-overflow",
+      "label": "Stack Overflow",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::buffer-overflow"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::heap-overflow",
+      "label": "Heap Overflow",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::buffer-overflow"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::integer-overflow",
+      "label": "Integer Overflow",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::format-string-bug",
+      "label": "Format String Bug",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::injection-attack",
+      "label": "Injection Attack",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::sql-injection",
+      "label": "SQL Injection",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::injection-attack"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::command-injection",
+      "label": "Command Injection",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::injection-attack"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cross-site-scripting",
+      "label": "Cross-Site Scripting",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::injection-attack"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::stored-xss",
+      "label": "Stored XSS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cross-site-scripting"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::reflected-xss",
+      "label": "Reflected XSS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cross-site-scripting"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dom-based-xss",
+      "label": "DOM-Based XSS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cross-site-scripting"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::csrf",
+      "label": "CSRF",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ssrf",
+      "label": "SSRF",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::insecure-deserialization",
+      "label": "Insecure Deserialization",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::race-condition",
+      "label": "Race Condition",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::toctou",
+      "label": "TOCTOU",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::race-condition"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::broken-access-control",
+      "label": "Broken Access Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::broken-authentication",
+      "label": "Broken Authentication",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten",
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-misconfiguration",
+      "label": "Security Misconfiguration",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::sensitive-data-exposure",
+      "label": "Sensitive Data Exposure",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::owasp-top-ten",
+        "cybersecurity::confidentiality"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::input-validation",
+      "label": "Input Validation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-coding",
+        "cybersecurity::injection-attack"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::output-encoding",
+      "label": "Output Encoding",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-coding",
+        "cybersecurity::cross-site-scripting"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::parameterized-query",
+      "label": "Parameterized Query",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::input-validation",
+        "cybersecurity::sql-injection"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::static-analysis",
+      "label": "Static Analysis",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-coding"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dynamic-analysis",
+      "label": "Dynamic Analysis",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-coding"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::fuzzing",
+      "label": "Fuzzing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::dynamic-analysis"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::software-composition-analysis",
+      "label": "Software Composition Analysis",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-coding"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dependency-scanning",
+      "label": "Dependency Scanning",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::software-composition-analysis"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::software-supply-chain",
+      "label": "Software Supply Chain",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-sdlc"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::sbom",
+      "label": "SBOM",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::software-supply-chain"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::code-signing",
+      "label": "Code Signing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::digital-signature",
+        "cybersecurity::secure-coding"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::secure-code-review",
+      "label": "Secure Code Review",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-coding"
+      ],
+      "taxonomy_id": "SOFT",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hardware-security",
+      "label": "Hardware Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::trusted-platform-module",
+      "label": "Trusted Platform Module",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hardware-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hardware-security-module",
+      "label": "Hardware Security Module",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hardware-security",
+        "cybersecurity::key-management"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::secure-enclave",
+      "label": "Secure Enclave",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hardware-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::trusted-execution-env",
+      "label": "Trusted Execution Env",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-enclave"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::firmware-security",
+      "label": "Firmware Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hardware-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::secure-boot",
+      "label": "Secure Boot",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::firmware-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::measured-boot",
+      "label": "Measured Boot",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-boot",
+        "cybersecurity::trusted-platform-module"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::uefi-security",
+      "label": "UEFI Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::firmware-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::side-channel-attack",
+      "label": "Side-Channel Attack",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hardware-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::timing-attack",
+      "label": "Timing Attack",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::side-channel-attack"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::power-analysis-attack",
+      "label": "Power Analysis Attack",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::side-channel-attack"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cache-side-channel",
+      "label": "Cache Side-Channel",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::side-channel-attack"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::rowhammer",
+      "label": "Rowhammer",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hardware-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hardware-supply-chain",
+      "label": "Hardware Supply Chain",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hardware-security",
+        "cybersecurity::software-supply-chain"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::embedded-security",
+      "label": "Embedded Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hardware-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::iot-security",
+      "label": "IoT Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::embedded-security"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::device-attestation",
+      "label": "Device Attestation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::trusted-platform-module",
+        "cybersecurity::secure-boot"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hardware-root-of-trust",
+      "label": "Hardware Root of Trust",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::trusted-platform-module"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::network-security",
+      "label": "Network Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::osi-model",
+      "label": "OSI Model",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::tcp-ip-model",
+      "label": "TCP/IP Model",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::tcp",
+      "label": "TCP",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::tcp-ip-model"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::udp",
+      "label": "UDP",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::tcp-ip-model"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ip-protocol",
+      "label": "IP Protocol",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::tcp-ip-model"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::icmp",
+      "label": "ICMP",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ip-protocol"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::arp-spoofing",
+      "label": "ARP Spoofing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dhcp-snooping",
+      "label": "DHCP Snooping",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::man-in-the-middle",
+      "label": "Man-in-the-Middle",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::packet-sniffing",
+      "label": "Packet Sniffing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::firewall",
+      "label": "Firewall",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::stateful-firewall",
+      "label": "Stateful Firewall",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::firewall",
+        "cybersecurity::tcp"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::next-gen-firewall",
+      "label": "Next-Gen Firewall",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::stateful-firewall"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::web-application-firewall",
+      "label": "Web Application Firewall",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::firewall",
+        "cybersecurity::owasp-top-ten"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::intrusion-detection",
+      "label": "Intrusion Detection",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security",
+        "cybersecurity::detective-control"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::intrusion-prevention",
+      "label": "Intrusion Prevention",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::intrusion-detection",
+        "cybersecurity::preventive-control"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::signature-based-detection",
+      "label": "Signature-Based Detection",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::intrusion-detection"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::anomaly-based-detection",
+      "label": "Anomaly-Based Detection",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::intrusion-detection"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::network-segmentation",
+      "label": "Network Segmentation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security",
+        "cybersecurity::defense-in-depth"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::vlan",
+      "label": "VLAN",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-segmentation"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dmz",
+      "label": "DMZ",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-segmentation"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::vpn",
+      "label": "VPN",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security",
+        "cybersecurity::asymmetric-cryptography"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ipsec",
+      "label": "IPsec",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vpn"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::wireguard",
+      "label": "WireGuard",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vpn"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::wireless-security",
+      "label": "Wireless Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::wpa3",
+      "label": "WPA3",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::wireless-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::802-1x",
+      "label": "802.1X",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::wireless-security",
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::rogue-access-point",
+      "label": "Rogue Access Point",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::wireless-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dns-security",
+      "label": "DNS Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dnssec",
+      "label": "DNSSEC",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::dns-security",
+        "cybersecurity::digital-signature"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dns-tunneling",
+      "label": "DNS Tunneling",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::dns-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::bgp-security",
+      "label": "BGP Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::rpki",
+      "label": "RPKI",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::bgp-security",
+        "cybersecurity::pki"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ddos-attack",
+      "label": "DDoS Attack",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::availability",
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::volumetric-attack",
+      "label": "Volumetric Attack",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ddos-attack"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::application-layer-ddos",
+      "label": "Application-Layer DDoS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ddos-attack"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ddos-mitigation",
+      "label": "DDoS Mitigation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ddos-attack"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::zero-trust-architecture",
+      "label": "Zero Trust Architecture",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security",
+        "cybersecurity::defense-in-depth"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::micro-segmentation",
+      "label": "Micro-Segmentation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::zero-trust-architecture",
+        "cybersecurity::network-segmentation"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ssh",
+      "label": "SSH",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security",
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::port-scanning",
+      "label": "Port Scanning",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security",
+        "cybersecurity::attack-surface"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::network-access-control",
+      "label": "Network Access Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security",
+        "cybersecurity::authorization"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::proxy-server",
+      "label": "Proxy Server",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::reverse-proxy",
+      "label": "Reverse Proxy",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::proxy-server"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::packet-capture",
+      "label": "Packet Capture",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::packet-sniffing"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::netflow-analysis",
+      "label": "NetFlow Analysis",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::operating-system-security",
+      "label": "Operating System Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::kernel-security",
+      "label": "Kernel Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::operating-system-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::process-isolation",
+      "label": "Process Isolation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::operating-system-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::memory-protection",
+      "label": "Memory Protection",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::operating-system-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::aslr",
+      "label": "ASLR",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::memory-protection",
+        "cybersecurity::buffer-overflow"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::stack-canary",
+      "label": "Stack Canary",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::stack-overflow"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dep",
+      "label": "DEP",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::memory-protection"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::access-control",
+      "label": "Access Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authorization"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::dac",
+      "label": "DAC",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::access-control"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::mac",
+      "label": "MAC",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::access-control"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::rbac",
+      "label": "RBAC",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::access-control"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::abac",
+      "label": "ABAC",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::access-control"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::file-permissions",
+      "label": "File Permissions",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::dac"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::selinux",
+      "label": "SELinux",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::mac"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::apparmor",
+      "label": "AppArmor",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::mac"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::virtualization-security",
+      "label": "Virtualization Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::operating-system-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hypervisor-security",
+      "label": "Hypervisor Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::virtualization-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::container-security",
+      "label": "Container Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::virtualization-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::docker-security",
+      "label": "Docker Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::container-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::kubernetes-security",
+      "label": "Kubernetes Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::container-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cloud-security",
+      "label": "Cloud Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::shared-responsibility-model",
+      "label": "Shared Responsibility Model",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cloud-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::iaas-security",
+      "label": "IaaS Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::shared-responsibility-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::paas-security",
+      "label": "PaaS Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::shared-responsibility-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::saas-security",
+      "label": "SaaS Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::shared-responsibility-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cloud-iam",
+      "label": "Cloud IAM",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cloud-security",
+        "cybersecurity::authorization"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-monitoring",
+      "label": "Security Monitoring",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::detective-control"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::log-management",
+      "label": "Log Management",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-monitoring"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::siem",
+      "label": "SIEM",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::log-management"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::soar",
+      "label": "SOAR",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::siem"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-operations-center",
+      "label": "Security Operations Center",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-monitoring"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::edr",
+      "label": "EDR",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-monitoring"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::xdr",
+      "label": "XDR",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::edr"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::antivirus",
+      "label": "Antivirus",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-monitoring"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::host-based-ids",
+      "label": "Host-Based IDS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::intrusion-detection",
+        "cybersecurity::operating-system-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::patch-management",
+      "label": "Patch Management",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vulnerability"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::configuration-management",
+      "label": "Configuration Management",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::operating-system-security"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::system-hardening",
+      "label": "System Hardening",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::operating-system-security",
+        "cybersecurity::patch-management"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::baseline-configuration",
+      "label": "Baseline Configuration",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::configuration-management"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cis-benchmarks",
+      "label": "CIS Benchmarks",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::system-hardening"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::audit-logging",
+      "label": "Audit Logging",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::accounting",
+        "cybersecurity::log-management"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::identity-management",
+      "label": "Identity Management",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::access-management",
+      "label": "Access Management",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authorization"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::iam-system",
+      "label": "IAM System",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::identity-management",
+        "cybersecurity::access-management"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::single-sign-on",
+      "label": "Single Sign-On",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::iam-system"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::federated-identity",
+      "label": "Federated Identity",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::single-sign-on"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::password-authentication",
+      "label": "Password Authentication",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::password-policy",
+      "label": "Password Policy",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::password-authentication"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::multi-factor-authentication",
+      "label": "Multi-Factor Authentication",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::biometric-authentication",
+      "label": "Biometric Authentication",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authentication"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::fido2",
+      "label": "FIDO2",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::multi-factor-authentication"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::passkey",
+      "label": "Passkey",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::fido2"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::oauth-2-0",
+      "label": "OAuth 2.0",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::iam-system"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::oidc",
+      "label": "OIDC",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::oauth-2-0"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::saml",
+      "label": "SAML",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::federated-identity"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::social-engineering",
+      "label": "Social Engineering",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::adversarial-thinking"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::phishing",
+      "label": "Phishing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::social-engineering"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::spear-phishing",
+      "label": "Spear Phishing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::phishing"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::pretexting",
+      "label": "Pretexting",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::social-engineering"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::baiting",
+      "label": "Baiting",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::social-engineering"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::usable-security",
+      "label": "Usable Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::psychological-acceptability"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-awareness-training",
+      "label": "Security Awareness Training",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::social-engineering"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::insider-threat",
+      "label": "Insider Threat",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-actor"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::privilege-creep",
+      "label": "Privilege Creep",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::least-privilege"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::just-in-time-access",
+      "label": "Just-in-Time Access",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::least-privilege"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::privacy-engineering",
+      "label": "Privacy Engineering",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::confidentiality"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::privacy-by-design",
+      "label": "Privacy by Design",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::privacy-engineering",
+        "cybersecurity::secure-design"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::data-minimization",
+      "label": "Data Minimization",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::privacy-engineering"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::user-behavior-analytics",
+      "label": "User Behavior Analytics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-monitoring",
+        "cybersecurity::anomaly-based-detection"
+      ],
+      "taxonomy_id": "HUMAN",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::governance-risk-compliance",
+      "label": "Governance Risk Compliance",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-policy",
+      "label": "Security Policy",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::governance-risk-compliance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::acceptable-use-policy",
+      "label": "Acceptable Use Policy",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-policy"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-standard",
+      "label": "Security Standard",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-policy"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-procedure",
+      "label": "Security Procedure",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-policy"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::nist-csf",
+      "label": "NIST CSF",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::governance-risk-compliance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::iso-27001",
+      "label": "ISO 27001",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::governance-risk-compliance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::soc-2",
+      "label": "SOC 2",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::governance-risk-compliance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::pci-dss",
+      "label": "PCI-DSS",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::governance-risk-compliance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hipaa-compliance",
+      "label": "HIPAA Compliance",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::governance-risk-compliance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-program-mgmt",
+      "label": "Security Program Mgmt",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::governance-risk-compliance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ciso-role",
+      "label": "CISO Role",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-program-mgmt"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::business-continuity",
+      "label": "Business Continuity",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::availability"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::disaster-recovery",
+      "label": "Disaster Recovery",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::business-continuity"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::business-impact-analysis",
+      "label": "Business Impact Analysis",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::business-continuity"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::rto",
+      "label": "RTO",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::disaster-recovery"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::rpo",
+      "label": "RPO",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::disaster-recovery"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::vendor-risk-management",
+      "label": "Vendor Risk Management",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::third-party-risk",
+      "label": "Third-Party Risk",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vendor-risk-management"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::supply-chain-risk",
+      "label": "Supply Chain Risk",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vendor-risk-management",
+        "cybersecurity::software-supply-chain"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-metrics",
+      "label": "Security Metrics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::security-program-mgmt"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::risk-register",
+      "label": "Risk Register",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::risk-mitigation",
+      "label": "Risk Mitigation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::risk-transfer",
+      "label": "Risk Transfer",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::risk-acceptance",
+      "label": "Risk Acceptance",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::risk-avoidance",
+      "label": "Risk Avoidance",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::risk-assessment"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::security-audit",
+      "label": "Security Audit",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::iso-27001"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cyber-law",
+      "label": "Cyber Law",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cfaa",
+      "label": "CFAA",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ecpa",
+      "label": "ECPA",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::gdpr",
+      "label": "GDPR",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law",
+        "cybersecurity::confidentiality"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ccpa",
+      "label": "CCPA",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law",
+        "cybersecurity::confidentiality"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::hipaa-law",
+      "label": "HIPAA Law",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law",
+        "cybersecurity::confidentiality"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::glba",
+      "label": "GLBA",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ferpa",
+      "label": "FERPA",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::nis2-directive",
+      "label": "NIS2 Directive",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cybercrime",
+      "label": "Cybercrime",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::digital-forensics",
+      "label": "Digital Forensics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::chain-of-custody",
+      "label": "Chain of Custody",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::digital-forensics"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::forensic-imaging",
+      "label": "Forensic Imaging",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::digital-forensics"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::memory-forensics",
+      "label": "Memory Forensics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::digital-forensics"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::mobile-forensics",
+      "label": "Mobile Forensics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::digital-forensics"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::network-forensics",
+      "label": "Network Forensics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::digital-forensics",
+        "cybersecurity::packet-capture"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cyber-ethics",
+      "label": "Cyber Ethics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::responsible-disclosure",
+      "label": "Responsible Disclosure",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-ethics",
+        "cybersecurity::vulnerability"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::acm-code-of-ethics",
+      "label": "ACM Code of Ethics",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-ethics"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::cyber-policy",
+      "label": "Cyber Policy",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::critical-infrastructure",
+      "label": "Critical Infrastructure",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ics-security",
+      "label": "ICS Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::critical-infrastructure"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::scada-security",
+      "label": "SCADA Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ics-security"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::data-breach-notification",
+      "label": "Data Breach Notification",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cyber-law",
+        "cybersecurity::sensitive-data-exposure"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::penetration-testing",
+      "label": "Penetration Testing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vulnerability",
+        "cybersecurity::exploit"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::red-team",
+      "label": "Red Team",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::penetration-testing"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::blue-team",
+      "label": "Blue Team",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::intrusion-prevention"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::purple-team",
+      "label": "Purple Team",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::red-team",
+        "cybersecurity::blue-team"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::mitre-att-ck",
+      "label": "MITRE ATT&CK",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ttp"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::threat-intelligence",
+      "label": "Threat Intelligence",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat",
+        "cybersecurity::ttp"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::osint",
+      "label": "OSINT",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-intelligence"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::threat-hunting",
+      "label": "Threat Hunting",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::threat-intelligence",
+        "cybersecurity::siem"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::vulnerability-management",
+      "label": "Vulnerability Management",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::patch-management",
+        "cybersecurity::vulnerability"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::vulnerability-scanning",
+      "label": "Vulnerability Scanning",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::vulnerability-management",
+        "cybersecurity::port-scanning"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::incident-response",
+      "label": "Incident Response",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::picerl-lifecycle",
+      "label": "PICERL Lifecycle",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::incident-response"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::incident-preparation",
+      "label": "Incident Preparation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::picerl-lifecycle"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::incident-identification",
+      "label": "Incident Identification",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::picerl-lifecycle"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::incident-containment",
+      "label": "Incident Containment",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::picerl-lifecycle"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::incident-eradication",
+      "label": "Incident Eradication",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::picerl-lifecycle"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::incident-recovery",
+      "label": "Incident Recovery",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::picerl-lifecycle",
+        "cybersecurity::disaster-recovery"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::lessons-learned",
+      "label": "Lessons Learned",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::picerl-lifecycle"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::malware-analysis",
+      "label": "Malware Analysis",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::static-analysis",
+        "cybersecurity::dynamic-analysis"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::privilege-escalation",
+      "label": "Privilege Escalation",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::authorization"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::lateral-movement",
+      "label": "Lateral Movement",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::network-security"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::command-and-control",
+      "label": "Command and Control",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::lateral-movement"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::data-exfiltration",
+      "label": "Data Exfiltration",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::command-and-control",
+        "cybersecurity::confidentiality"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::persistence-mechanism",
+      "label": "Persistence Mechanism",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::command-and-control"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::bug-bounty-program",
+      "label": "Bug Bounty Program",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::responsible-disclosure"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::capture-the-flag",
+      "label": "Capture the Flag",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::incident-response-plan",
+      "label": "Incident Response Plan",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::incident-preparation"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::runbook",
+      "label": "Runbook",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::incident-response-plan"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::tabletop-exercise",
+      "label": "Tabletop Exercise",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::incident-preparation"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::detection-engineering",
+      "label": "Detection Engineering",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::siem",
+        "cybersecurity::mitre-att-ck"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ai-security",
+      "label": "AI Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::adversarial-ml",
+      "label": "Adversarial ML",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ai-security"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::model-theft",
+      "label": "Model Theft",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ai-security"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::prompt-injection",
+      "label": "Prompt Injection",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ai-security",
+        "cybersecurity::injection-attack"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::data-poisoning",
+      "label": "Data Poisoning",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ai-security"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::model-evasion",
+      "label": "Model Evasion",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::adversarial-ml"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::quantum-threat",
+      "label": "Quantum Threat",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::rsa",
+        "cybersecurity::elliptic-curve-cryptography"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::post-quantum-cryptography",
+      "label": "Post-Quantum Cryptography",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::quantum-threat"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::lattice-based-crypto",
+      "label": "Lattice-Based Crypto",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::post-quantum-cryptography"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::confidential-computing",
+      "label": "Confidential Computing",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::trusted-execution-env",
+        "cybersecurity::data-in-use"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::operational-technology",
+      "label": "Operational Technology",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::ot-security",
+      "label": "OT Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::operational-technology"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::smart-grid-security",
+      "label": "Smart Grid Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::ot-security",
+        "cybersecurity::critical-infrastructure"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::blockchain-security",
+      "label": "Blockchain Security",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::hash-function",
+        "cybersecurity::asymmetric-cryptography"
+      ],
+      "taxonomy_id": "EMERG",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::capstone-secure-system",
+      "label": "Capstone Secure System",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::secure-design",
+        "cybersecurity::incident-response",
+        "cybersecurity::software-composition-analysis"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::capstone-security-program",
+      "label": "Capstone Security Program",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::nist-csf",
+        "cybersecurity::security-program-mgmt",
+        "cybersecurity::business-continuity"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::capstone-applied-research",
+      "label": "Capstone Applied Research",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::post-quantum-cryptography",
+        "cybersecurity::ai-security",
+        "cybersecurity::smart-grid-security"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::technical-communication",
+      "label": "Technical Communication",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "cybersecurity::team-collaboration",
+      "label": "Team Collaboration",
+      "subject_id": "cybersecurity",
+      "dependencies": [
+        "cybersecurity::cybersecurity"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    }
+  ]
+}

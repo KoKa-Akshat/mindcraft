@@ -1,0 +1,2071 @@
+{
+  "subject_id": "reading-for-kindergarten",
+  "title": "Reading for Kindergarten",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "LETR": {
+      "classifier_name": "Letter Recognition",
+      "color": "PeachPuff"
+    },
+    "PHON": {
+      "classifier_name": "Phonemic Awareness",
+      "color": "LightYellow"
+    },
+    "CONS": {
+      "classifier_name": "Consonant Sounds",
+      "color": "PaleGreen"
+    },
+    "VOWL": {
+      "classifier_name": "Vowel Sounds",
+      "color": "PaleTurquoise"
+    },
+    "LINK": {
+      "classifier_name": "Letter-Sound Links",
+      "color": "PowderBlue"
+    },
+    "BLND": {
+      "classifier_name": "Blending Skills",
+      "color": "Lavender"
+    },
+    "SGHT": {
+      "classifier_name": "Sight Words",
+      "color": "LightPink"
+    },
+    "ASMT": {
+      "classifier_name": "Practice & Assessment",
+      "color": "Thistle"
+    },
+    "APPL": {
+      "classifier_name": "Application Skills",
+      "color": "Honeydew"
+    },
+    "CAPS": {
+      "classifier_name": "Capstone Skills",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "reading-for-kindergarten::spoken-language",
+      "label": "Spoken Language",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "reading-for-kindergarten::listening-skills",
+      "label": "Listening Skills",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::spoken-language"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sounds-in-environment",
+      "label": "Sounds in Environment",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::listening-skills"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::speech-sounds",
+      "label": "Speech Sounds",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::spoken-language",
+        "reading-for-kindergarten::sounds-in-environment"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::words",
+      "label": "Words",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::spoken-language",
+        "reading-for-kindergarten::speech-sounds"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::phoneme",
+      "label": "Phoneme",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::speech-sounds",
+        "reading-for-kindergarten::words"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::print-awareness",
+      "label": "Print Awareness",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::words"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::book-handling",
+      "label": "Book Handling",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::print-awareness"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::reading-direction",
+      "label": "Reading Direction",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::print-awareness",
+        "reading-for-kindergarten::book-handling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::one-to-one-correspondence",
+      "label": "One-to-One Correspondence",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::words",
+        "reading-for-kindergarten::reading-direction"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-boundaries",
+      "label": "Word Boundaries",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::words",
+        "reading-for-kindergarten::one-to-one-correspondence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sentence",
+      "label": "Sentence",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::words",
+        "reading-for-kindergarten::word-boundaries"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::alphabet",
+      "label": "Alphabet",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::print-awareness"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::letter",
+      "label": "Letter",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::alphabet"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::letter-name",
+      "label": "Letter Name",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-a",
+      "label": "Uppercase A",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-b",
+      "label": "Uppercase B",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-c",
+      "label": "Uppercase C",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-d",
+      "label": "Uppercase D",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-e",
+      "label": "Uppercase E",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-f",
+      "label": "Uppercase F",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-g",
+      "label": "Uppercase G",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-h",
+      "label": "Uppercase H",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-i",
+      "label": "Uppercase I",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-j",
+      "label": "Uppercase J",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-k",
+      "label": "Uppercase K",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-l",
+      "label": "Uppercase L",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-m",
+      "label": "Uppercase M",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-n",
+      "label": "Uppercase N",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-o",
+      "label": "Uppercase O",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-p",
+      "label": "Uppercase P",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-q",
+      "label": "Uppercase Q",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-r",
+      "label": "Uppercase R",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-s",
+      "label": "Uppercase S",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-t",
+      "label": "Uppercase T",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-u",
+      "label": "Uppercase U",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-v",
+      "label": "Uppercase V",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-w",
+      "label": "Uppercase W",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-x",
+      "label": "Uppercase X",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-y",
+      "label": "Uppercase Y",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::uppercase-z",
+      "label": "Uppercase Z",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-name"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-a",
+      "label": "Lowercase a",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-a"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-b",
+      "label": "Lowercase b",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-b"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-c",
+      "label": "Lowercase c",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-c"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-d",
+      "label": "Lowercase d",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-d"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-e",
+      "label": "Lowercase e",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-e"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-f",
+      "label": "Lowercase f",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-f"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-g",
+      "label": "Lowercase g",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-g"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-h",
+      "label": "Lowercase h",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-h"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-i",
+      "label": "Lowercase i",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-i"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-j",
+      "label": "Lowercase j",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-j"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-k",
+      "label": "Lowercase k",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-k"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-l",
+      "label": "Lowercase l",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-l"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-m",
+      "label": "Lowercase m",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-m"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-n",
+      "label": "Lowercase n",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-n"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-o",
+      "label": "Lowercase o",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-o"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-p",
+      "label": "Lowercase p",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-p"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-q",
+      "label": "Lowercase q",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-q"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-r",
+      "label": "Lowercase r",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-r"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-s",
+      "label": "Lowercase s",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-s"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-t",
+      "label": "Lowercase t",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-t"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-u",
+      "label": "Lowercase u",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-u"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-v",
+      "label": "Lowercase v",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-v"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-w",
+      "label": "Lowercase w",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-w"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-x",
+      "label": "Lowercase x",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-x"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-y",
+      "label": "Lowercase y",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-y"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::lowercase-z",
+      "label": "Lowercase z",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::uppercase-z"
+      ],
+      "taxonomy_id": "LETR",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::phonemic-awareness",
+      "label": "Phonemic Awareness",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::phoneme"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::initial-sound",
+      "label": "Initial Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::phonemic-awareness"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::final-sound",
+      "label": "Final Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::phonemic-awareness",
+        "reading-for-kindergarten::initial-sound"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::medial-sound",
+      "label": "Medial Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::phonemic-awareness",
+        "reading-for-kindergarten::final-sound"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-isolation",
+      "label": "Sound Isolation",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::initial-sound",
+        "reading-for-kindergarten::final-sound",
+        "reading-for-kindergarten::medial-sound"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-segmentation",
+      "label": "Sound Segmentation",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-isolation"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-counting",
+      "label": "Sound Counting",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-segmentation"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::rhyming-words",
+      "label": "Rhyming Words",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::words",
+        "reading-for-kindergarten::phonemic-awareness"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::rhyme-recognition",
+      "label": "Rhyme Recognition",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::rhyming-words"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::syllable",
+      "label": "Syllable",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::words",
+        "reading-for-kindergarten::sound-counting"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::syllable-clapping",
+      "label": "Syllable Clapping",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::syllable"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-families",
+      "label": "Word Families",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::rhyming-words",
+        "reading-for-kindergarten::rhyme-recognition"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::onset-and-rime",
+      "label": "Onset and Rime",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::word-families"
+      ],
+      "taxonomy_id": "PHON",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::consonant",
+      "label": "Consonant",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::consonant-sound",
+      "label": "Consonant Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::phoneme",
+        "reading-for-kindergarten::consonant"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-b",
+      "label": "Sound of B",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-b"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-c",
+      "label": "Sound of C",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-c"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-d",
+      "label": "Sound of D",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-d"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-f",
+      "label": "Sound of F",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-f"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-g",
+      "label": "Sound of G",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-g"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-h",
+      "label": "Sound of H",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-h"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-j",
+      "label": "Sound of J",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-j"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-k",
+      "label": "Sound of K",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-k"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-l",
+      "label": "Sound of L",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-l"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-m",
+      "label": "Sound of M",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-m"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-n",
+      "label": "Sound of N",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-n"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-p",
+      "label": "Sound of P",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-p"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-q",
+      "label": "Sound of Q",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-q"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-r",
+      "label": "Sound of R",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-r"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-s",
+      "label": "Sound of S",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-s"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-t",
+      "label": "Sound of T",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-t"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-v",
+      "label": "Sound of V",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-v"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-w",
+      "label": "Sound of W",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-w"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-x",
+      "label": "Sound of X",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-x"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-y",
+      "label": "Sound of Y",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-y"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-of-z",
+      "label": "Sound of Z",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::lowercase-z"
+      ],
+      "taxonomy_id": "CONS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::vowel",
+      "label": "Vowel",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::vowel-letter",
+      "label": "Vowel Letter",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::vowel"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::short-vowel-sound",
+      "label": "Short Vowel Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::phoneme",
+        "reading-for-kindergarten::vowel-letter"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::short-a-sound",
+      "label": "Short A Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::short-vowel-sound",
+        "reading-for-kindergarten::lowercase-a"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::short-e-sound",
+      "label": "Short E Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::short-vowel-sound",
+        "reading-for-kindergarten::lowercase-e"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::short-i-sound",
+      "label": "Short I Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::short-vowel-sound",
+        "reading-for-kindergarten::lowercase-i"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::short-o-sound",
+      "label": "Short O Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::short-vowel-sound",
+        "reading-for-kindergarten::lowercase-o"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::short-u-sound",
+      "label": "Short U Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::short-vowel-sound",
+        "reading-for-kindergarten::lowercase-u"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::long-vowel-sound",
+      "label": "Long Vowel Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::short-vowel-sound"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::long-a-sound",
+      "label": "Long A Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::long-vowel-sound",
+        "reading-for-kindergarten::lowercase-a"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::long-e-sound",
+      "label": "Long E Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::long-vowel-sound",
+        "reading-for-kindergarten::lowercase-e"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::long-i-sound",
+      "label": "Long I Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::long-vowel-sound",
+        "reading-for-kindergarten::lowercase-i"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::long-o-sound",
+      "label": "Long O Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::long-vowel-sound",
+        "reading-for-kindergarten::lowercase-o"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::long-u-sound",
+      "label": "Long U Sound",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::long-vowel-sound",
+        "reading-for-kindergarten::lowercase-u"
+      ],
+      "taxonomy_id": "VOWL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::letter-sound-link",
+      "label": "Letter-Sound Link",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::short-vowel-sound"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-symbol-match",
+      "label": "Sound-Symbol Match",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-sound-link"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::consonant-sound-match",
+      "label": "Consonant-Sound Match",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::consonant-sound",
+        "reading-for-kindergarten::sound-symbol-match"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::vowel-sound-match",
+      "label": "Vowel-Sound Match",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::short-vowel-sound",
+        "reading-for-kindergarten::sound-symbol-match"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::letter-formation",
+      "label": "Letter Formation",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::letter-tracing",
+      "label": "Letter Tracing",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-formation"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::letter-writing",
+      "label": "Letter Writing",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-tracing"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::kinesthetic-learning",
+      "label": "Kinesthetic Learning",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::letter-writing"
+      ],
+      "taxonomy_id": "LINK",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-blending",
+      "label": "Sound Blending",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-segmentation",
+        "reading-for-kindergarten::letter-sound-link"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::oral-blending",
+      "label": "Oral Blending",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-blending"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::continuous-blending",
+      "label": "Continuous Blending",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::oral-blending"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::vc-word-pattern",
+      "label": "VC Word Pattern",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::vowel-letter",
+        "reading-for-kindergarten::consonant-sound"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::cvc-word-pattern",
+      "label": "CVC Word Pattern",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::vc-word-pattern"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::blending-vc-words",
+      "label": "Blending VC Words",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::continuous-blending",
+        "reading-for-kindergarten::vc-word-pattern",
+        "reading-for-kindergarten::vowel-sound-match"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::blending-cvc-words",
+      "label": "Blending CVC Words",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::cvc-word-pattern",
+        "reading-for-kindergarten::blending-vc-words",
+        "reading-for-kindergarten::consonant-sound-match"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-building",
+      "label": "Word Building",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::blending-cvc-words"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-stretching",
+      "label": "Sound Stretching",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::oral-blending"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::connected-sounds",
+      "label": "Connected Sounds",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-stretching"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::smooth-blending",
+      "label": "Smooth Blending",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::connected-sounds"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-reading",
+      "label": "Word Reading",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::blending-cvc-words",
+        "reading-for-kindergarten::smooth-blending"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::decoding",
+      "label": "Decoding",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::word-reading"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sounding-out",
+      "label": "Sounding Out",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::decoding"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::reading-accuracy",
+      "label": "Reading Accuracy",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sounding-out"
+      ],
+      "taxonomy_id": "BLND",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word",
+      "label": "Sight Word",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::word-reading"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::high-frequency-word",
+      "label": "High-Frequency Word",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sight-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-the",
+      "label": "Sight Word: the",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-a",
+      "label": "Sight Word: a",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-is",
+      "label": "Sight Word: is",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-it",
+      "label": "Sight Word: it",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-in",
+      "label": "Sight Word: in",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-to",
+      "label": "Sight Word: to",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-and",
+      "label": "Sight Word: and",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-i",
+      "label": "Sight Word: I",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-can",
+      "label": "Sight Word: can",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-we",
+      "label": "Sight Word: we",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-see",
+      "label": "Sight Word: see",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-my",
+      "label": "Sight Word: my",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-like",
+      "label": "Sight Word: like",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-go",
+      "label": "Sight Word: go",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-he",
+      "label": "Sight Word: he",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-she",
+      "label": "Sight Word: she",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-you",
+      "label": "Sight Word: you",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sight-word-are",
+      "label": "Sight Word: are",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::high-frequency-word"
+      ],
+      "taxonomy_id": "SGHT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::repetition",
+      "label": "Repetition",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [],
+      "taxonomy_id": "ASMT",
+      "level": "foundational"
+    },
+    {
+      "id": "reading-for-kindergarten::practice",
+      "label": "Practice",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::repetition"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::mastery",
+      "label": "Mastery",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::practice"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::assessment",
+      "label": "Assessment",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::mastery"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::self-correction",
+      "label": "Self-Correction",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::reading-accuracy",
+        "reading-for-kindergarten::assessment"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::error-detection",
+      "label": "Error Detection",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::self-correction"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::fluency",
+      "label": "Fluency",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::reading-accuracy",
+        "reading-for-kindergarten::mastery"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::automaticity",
+      "label": "Automaticity",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::fluency"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-recognition-speed",
+      "label": "Word Recognition Speed",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::automaticity"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::accuracy-check",
+      "label": "Accuracy Check",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::assessment",
+        "reading-for-kindergarten::error-detection"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::progress-monitoring",
+      "label": "Progress Monitoring",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::accuracy-check"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::formative-assessment",
+      "label": "Formative Assessment",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::progress-monitoring"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::learning-games",
+      "label": "Learning Games",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::practice"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::multisensory-learning",
+      "label": "Multisensory Learning",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::kinesthetic-learning",
+        "reading-for-kindergarten::learning-games"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::gesture-based-learning",
+      "label": "Gesture-Based Learning",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::multisensory-learning"
+      ],
+      "taxonomy_id": "ASMT",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-creation",
+      "label": "Word Creation",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::word-building"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::nonsense-words",
+      "label": "Nonsense Words",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::word-creation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::real-vs-nonsense-words",
+      "label": "Real vs Nonsense Words",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::nonsense-words"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-discrimination",
+      "label": "Word Discrimination",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::real-vs-nonsense-words"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::sound-manipulation",
+      "label": "Sound Manipulation",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-segmentation",
+        "reading-for-kindergarten::word-creation"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::initial-sound-change",
+      "label": "Initial Sound Change",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-manipulation",
+        "reading-for-kindergarten::initial-sound"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::final-sound-change",
+      "label": "Final Sound Change",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-manipulation",
+        "reading-for-kindergarten::final-sound"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::vowel-substitution",
+      "label": "Vowel Substitution",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sound-manipulation",
+        "reading-for-kindergarten::vowel-sound-match"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-family-building",
+      "label": "Word Family Building",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::word-families",
+        "reading-for-kindergarten::word-building"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::word-family-building"
+      ],
+      "taxonomy_id": "APPL",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::independent-reading",
+      "label": "Independent Reading",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::reading-accuracy",
+        "reading-for-kindergarten::fluency"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::simple-text-reading",
+      "label": "Simple Text Reading",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::independent-reading"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::word-bank",
+      "label": "Word Bank",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::sight-word",
+        "reading-for-kindergarten::word-creation"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::personal-word-list",
+      "label": "Personal Word List",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::word-bank"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::reading-confidence",
+      "label": "Reading Confidence",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::independent-reading",
+        "reading-for-kindergarten::mastery"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::reading-motivation",
+      "label": "Reading Motivation",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::reading-confidence"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::story-awareness",
+      "label": "Story Awareness",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::simple-text-reading"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::reading-for-meaning",
+      "label": "Reading for Meaning",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::story-awareness"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::print-to-speech",
+      "label": "Print to Speech",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::decoding"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "reading-for-kindergarten::emergent-reader",
+      "label": "Emergent Reader",
+      "subject_id": "reading-for-kindergarten",
+      "dependencies": [
+        "reading-for-kindergarten::independent-reading",
+        "reading-for-kindergarten::reading-confidence",
+        "reading-for-kindergarten::reading-motivation"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    }
+  ]
+}

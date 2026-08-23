@@ -1,0 +1,3277 @@
+{
+  "subject_id": "linear-algebra",
+  "title": "Applied Linear Algebra for AI and Machine Learning",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "MistyRose"
+    },
+    "MATOP": {
+      "classifier_name": "Matrix Operations",
+      "color": "PeachPuff"
+    },
+    "LINSYS": {
+      "classifier_name": "Linear Systems",
+      "color": "LightYellow"
+    },
+    "TRANS": {
+      "classifier_name": "Transformations",
+      "color": "Honeydew"
+    },
+    "DETERM": {
+      "classifier_name": "Determinants",
+      "color": "PaleTurquoise"
+    },
+    "EIGEN": {
+      "classifier_name": "Eigentheory",
+      "color": "LightSteelBlue"
+    },
+    "DECOMP": {
+      "classifier_name": "Decompositions",
+      "color": "Lavender"
+    },
+    "INPROD": {
+      "classifier_name": "Inner Products",
+      "color": "LavenderBlush"
+    },
+    "MLBASE": {
+      "classifier_name": "ML Foundations",
+      "color": "Thistle"
+    },
+    "NEURAL": {
+      "classifier_name": "Neural Networks",
+      "color": "PaleGreen"
+    },
+    "GENAI": {
+      "classifier_name": "Generative AI",
+      "color": "Aquamarine"
+    },
+    "OPTIM": {
+      "classifier_name": "Optimization",
+      "color": "LightPink"
+    },
+    "IMGPROC": {
+      "classifier_name": "Image Processing",
+      "color": "PowderBlue"
+    },
+    "GEOM3D": {
+      "classifier_name": "3D Geometry",
+      "color": "Plum"
+    },
+    "AUTON": {
+      "classifier_name": "Autonomous Systems",
+      "color": "LightCoral"
+    }
+  },
+  "concepts": [
+    {
+      "id": "linear-algebra::scalar",
+      "label": "Scalar",
+      "subject_id": "linear-algebra",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "linear-algebra::vector",
+      "label": "Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::scalar"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::vector-notation",
+      "label": "Vector Notation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::2d-vector",
+      "label": "2D Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::vector-notation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::3d-vector",
+      "label": "3D Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::vector-notation",
+        "linear-algebra::2d-vector"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::n-dimensional-vector",
+      "label": "N-Dimensional Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::3d-vector"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::vector-addition",
+      "label": "Vector Addition",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::vector-notation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::scalar-multiplication",
+      "label": "Scalar Multiplication",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::scalar",
+        "linear-algebra::vector"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::vector-subtraction",
+      "label": "Vector Subtraction",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-addition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::dot-product",
+      "label": "Dot Product",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::scalar-multiplication"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cross-product",
+      "label": "Cross Product",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3d-vector",
+        "linear-algebra::dot-product"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::vector-magnitude",
+      "label": "Vector Magnitude",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::dot-product"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::unit-vector",
+      "label": "Unit Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-magnitude"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::vector-normalization",
+      "label": "Vector Normalization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-magnitude",
+        "linear-algebra::unit-vector"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::euclidean-distance",
+      "label": "Euclidean Distance",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-magnitude"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::l1-norm",
+      "label": "L1 Norm",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::vector-magnitude"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::l2-norm",
+      "label": "L2 Norm",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-magnitude",
+        "linear-algebra::euclidean-distance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::l-infinity-norm",
+      "label": "L-Infinity Norm",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::vector-magnitude"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::linear-combination",
+      "label": "Linear Combination",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-addition",
+        "linear-algebra::scalar-multiplication"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::span",
+      "label": "Span",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-combination"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::linear-independence",
+      "label": "Linear Independence",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-combination",
+        "linear-algebra::span"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::linear-dependence",
+      "label": "Linear Dependence",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-independence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::basis-vector",
+      "label": "Basis Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::span",
+        "linear-algebra::linear-independence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::standard-basis",
+      "label": "Standard Basis",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::basis-vector"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::coordinate-system",
+      "label": "Coordinate System",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::basis-vector",
+        "linear-algebra::standard-basis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::vector-space",
+      "label": "Vector Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-combination",
+        "linear-algebra::linear-independence",
+        "linear-algebra::basis-vector"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::dimension-of-space",
+      "label": "Dimension of Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::basis-vector",
+        "linear-algebra::vector-space"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix",
+      "label": "Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-notation",
+      "label": "Matrix Notation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-dimensions",
+      "label": "Matrix Dimensions",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-notation"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::row-vector",
+      "label": "Row Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::column-vector",
+      "label": "Column Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-entry",
+      "label": "Matrix Entry",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-notation"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-addition",
+      "label": "Matrix Addition",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-entry"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-scalar-multiply",
+      "label": "Matrix Scalar Multiply",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::scalar",
+        "linear-algebra::matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-vector-product",
+      "label": "Matrix-Vector Product",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::column-vector",
+        "linear-algebra::matrix-scalar-multiply"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-multiplication",
+      "label": "Matrix Multiplication",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-vector-product"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-transpose",
+      "label": "Matrix Transpose",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::row-vector",
+        "linear-algebra::column-vector"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::symmetric-matrix",
+      "label": "Symmetric Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-transpose"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::identity-matrix",
+      "label": "Identity Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-multiplication"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::diagonal-matrix",
+      "label": "Diagonal Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-entry"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::triangular-matrix",
+      "label": "Triangular Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::diagonal-matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::upper-triangular",
+      "label": "Upper Triangular",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::triangular-matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::lower-triangular",
+      "label": "Lower Triangular",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::triangular-matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::orthogonal-matrix",
+      "label": "Orthogonal Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-transpose",
+        "linear-algebra::identity-matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-inverse",
+      "label": "Matrix Inverse",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-multiplication",
+        "linear-algebra::identity-matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::invertible-matrix",
+      "label": "Invertible Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-inverse"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::sparse-matrix",
+      "label": "Sparse Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-entry"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::dense-matrix",
+      "label": "Dense Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::sparse-matrix"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::block-matrix",
+      "label": "Block Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-dimensions"
+      ],
+      "taxonomy_id": "MATOP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::linear-equation",
+      "label": "Linear Equation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::scalar",
+        "linear-algebra::vector"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::system-of-equations",
+      "label": "System of Equations",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-equation"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-equation-form",
+      "label": "Matrix Equation Form",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-vector-product",
+        "linear-algebra::system-of-equations"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::augmented-matrix",
+      "label": "Augmented Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::system-of-equations"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::gaussian-elimination",
+      "label": "Gaussian Elimination",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::system-of-equations",
+        "linear-algebra::augmented-matrix"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::row-operations",
+      "label": "Row Operations",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::augmented-matrix",
+        "linear-algebra::gaussian-elimination"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::row-swap",
+      "label": "Row Swap",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::row-operations"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::row-scaling",
+      "label": "Row Scaling",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::row-operations"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::row-addition",
+      "label": "Row Addition",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::row-operations"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::row-echelon-form",
+      "label": "Row Echelon Form",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gaussian-elimination",
+        "linear-algebra::row-operations"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::reduced-row-echelon-form",
+      "label": "Reduced Row Echelon Form",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::row-echelon-form"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::pivot-position",
+      "label": "Pivot Position",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::row-echelon-form"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::pivot-column",
+      "label": "Pivot Column",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::pivot-position"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::free-variable",
+      "label": "Free Variable",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::reduced-row-echelon-form",
+        "linear-algebra::pivot-column"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::basic-variable",
+      "label": "Basic Variable",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::reduced-row-echelon-form",
+        "linear-algebra::free-variable"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::solution-set",
+      "label": "Solution Set",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::system-of-equations",
+        "linear-algebra::reduced-row-echelon-form"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::unique-solution",
+      "label": "Unique Solution",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::solution-set"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::infinite-solutions",
+      "label": "Infinite Solutions",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::free-variable",
+        "linear-algebra::solution-set"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::no-solution",
+      "label": "No Solution",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::solution-set"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::homogeneous-system",
+      "label": "Homogeneous System",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::system-of-equations",
+        "linear-algebra::matrix-equation-form"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::trivial-solution",
+      "label": "Trivial Solution",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::homogeneous-system"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::numerical-stability",
+      "label": "Numerical Stability",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gaussian-elimination",
+        "linear-algebra::row-echelon-form"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::back-substitution",
+      "label": "Back Substitution",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::row-echelon-form",
+        "linear-algebra::upper-triangular"
+      ],
+      "taxonomy_id": "LINSYS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::function",
+      "label": "Function",
+      "subject_id": "linear-algebra",
+      "dependencies": [],
+      "taxonomy_id": "TRANS",
+      "level": "foundational"
+    },
+    {
+      "id": "linear-algebra::linear-transformation",
+      "label": "Linear Transformation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-space",
+        "linear-algebra::function"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::transformation-matrix",
+      "label": "Transformation Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-multiplication",
+        "linear-algebra::linear-transformation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::domain",
+      "label": "Domain",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::function"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::codomain",
+      "label": "Codomain",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::function",
+        "linear-algebra::domain"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::image",
+      "label": "Image",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-transformation",
+        "linear-algebra::codomain"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::rotation-matrix",
+      "label": "Rotation Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::transformation-matrix",
+        "linear-algebra::orthogonal-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::2d-rotation",
+      "label": "2D Rotation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::2d-vector",
+        "linear-algebra::rotation-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::3d-rotation",
+      "label": "3D Rotation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3d-vector",
+        "linear-algebra::rotation-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::scaling-matrix",
+      "label": "Scaling Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::transformation-matrix",
+        "linear-algebra::diagonal-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::uniform-scaling",
+      "label": "Uniform Scaling",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::scaling-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::non-uniform-scaling",
+      "label": "Non-Uniform Scaling",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::scaling-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::shear-matrix",
+      "label": "Shear Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::transformation-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::reflection-matrix",
+      "label": "Reflection Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::transformation-matrix",
+        "linear-algebra::orthogonal-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::projection",
+      "label": "Projection",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-transformation",
+        "linear-algebra::dot-product"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::orthogonal-projection",
+      "label": "Orthogonal Projection",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::projection",
+        "linear-algebra::orthogonal-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::composition-of-transforms",
+      "label": "Composition of Transforms",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-transformation",
+        "linear-algebra::matrix-multiplication"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::kernel",
+      "label": "Kernel",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-transformation"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::null-space",
+      "label": "Null Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::kernel",
+        "linear-algebra::homogeneous-system"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::range",
+      "label": "Range",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-transformation",
+        "linear-algebra::image"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::column-space",
+      "label": "Column Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::column-vector",
+        "linear-algebra::range"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::rank",
+      "label": "Rank",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::column-space"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::nullity",
+      "label": "Nullity",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::null-space"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::rank-nullity-theorem",
+      "label": "Rank-Nullity Theorem",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::rank",
+        "linear-algebra::nullity"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::invertible-transform",
+      "label": "Invertible Transform",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-transformation",
+        "linear-algebra::invertible-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::change-of-basis",
+      "label": "Change of Basis",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::basis-vector",
+        "linear-algebra::transformation-matrix"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::basis-transition-matrix",
+      "label": "Basis Transition Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::change-of-basis"
+      ],
+      "taxonomy_id": "TRANS",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::determinant",
+      "label": "Determinant",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-multiplication"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::2x2-determinant",
+      "label": "2x2 Determinant",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::determinant"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::3x3-determinant",
+      "label": "3x3 Determinant",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::determinant",
+        "linear-algebra::2x2-determinant"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cofactor-expansion",
+      "label": "Cofactor Expansion",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3x3-determinant"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::minor",
+      "label": "Minor",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3x3-determinant",
+        "linear-algebra::cofactor-expansion"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cofactor",
+      "label": "Cofactor",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::minor"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::determinant-properties",
+      "label": "Determinant Properties",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::determinant"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::multiplicative-property",
+      "label": "Multiplicative Property",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::determinant",
+        "linear-algebra::determinant-properties"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::transpose-determinant",
+      "label": "Transpose Determinant",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-transpose",
+        "linear-algebra::determinant-properties"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::singular-matrix",
+      "label": "Singular Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::invertible-matrix",
+        "linear-algebra::determinant"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::volume-scaling-factor",
+      "label": "Volume Scaling Factor",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::determinant",
+        "linear-algebra::3x3-determinant"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::signed-area",
+      "label": "Signed Area",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::2x2-determinant",
+        "linear-algebra::volume-scaling-factor"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cramers-rule",
+      "label": "Cramers Rule",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::determinant",
+        "linear-algebra::system-of-equations"
+      ],
+      "taxonomy_id": "DETERM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::eigenvalue",
+      "label": "Eigenvalue",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::transformation-matrix",
+        "linear-algebra::determinant"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::eigenvector",
+      "label": "Eigenvector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::eigenvalue"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::eigen-equation",
+      "label": "Eigen Equation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::eigenvalue",
+        "linear-algebra::eigenvector"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::characteristic-polynomial",
+      "label": "Characteristic Polynomial",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::eigenvalue",
+        "linear-algebra::eigen-equation"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::characteristic-equation",
+      "label": "Characteristic Equation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::characteristic-polynomial"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::eigenspace",
+      "label": "Eigenspace",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::eigenvector",
+        "linear-algebra::null-space"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::algebraic-multiplicity",
+      "label": "Algebraic Multiplicity",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::characteristic-polynomial",
+        "linear-algebra::characteristic-equation"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::geometric-multiplicity",
+      "label": "Geometric Multiplicity",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::eigenspace",
+        "linear-algebra::algebraic-multiplicity"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::diagonalization",
+      "label": "Diagonalization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::diagonal-matrix",
+        "linear-algebra::eigenvector",
+        "linear-algebra::eigenspace"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::diagonal-form",
+      "label": "Diagonal Form",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::diagonalization"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::similar-matrices",
+      "label": "Similar Matrices",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::change-of-basis",
+        "linear-algebra::diagonalization"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::complex-eigenvalue",
+      "label": "Complex Eigenvalue",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::eigenvalue"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::spectral-theorem",
+      "label": "Spectral Theorem",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::symmetric-matrix",
+        "linear-algebra::diagonalization"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::symmetric-eigenvalues",
+      "label": "Symmetric Eigenvalues",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::symmetric-matrix",
+        "linear-algebra::spectral-theorem"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::power-iteration",
+      "label": "Power Iteration",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::eigenvector",
+        "linear-algebra::matrix-multiplication"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::dominant-eigenvalue",
+      "label": "Dominant Eigenvalue",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::power-iteration"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::eigendecomposition",
+      "label": "Eigendecomposition",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::diagonalization",
+        "linear-algebra::diagonal-form"
+      ],
+      "taxonomy_id": "EIGEN",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-factorization",
+      "label": "Matrix Factorization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-multiplication",
+        "linear-algebra::matrix-inverse"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::lu-decomposition",
+      "label": "LU Decomposition",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::upper-triangular",
+        "linear-algebra::lower-triangular",
+        "linear-algebra::matrix-factorization"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::partial-pivoting",
+      "label": "Partial Pivoting",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::row-swap",
+        "linear-algebra::lu-decomposition"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::qr-decomposition",
+      "label": "QR Decomposition",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::orthogonal-matrix",
+        "linear-algebra::matrix-factorization"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::gram-schmidt-qr",
+      "label": "Gram-Schmidt QR",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::qr-decomposition",
+        "linear-algebra::gram-schmidt-process"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::householder-qr",
+      "label": "Householder QR",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::qr-decomposition",
+        "linear-algebra::reflection-matrix"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cholesky-decomposition",
+      "label": "Cholesky Decomposition",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::lower-triangular",
+        "linear-algebra::matrix-factorization",
+        "linear-algebra::positive-definite-matrix"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::positive-definite-matrix",
+      "label": "Positive Definite Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::symmetric-matrix",
+        "linear-algebra::eigenvalue"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::svd",
+      "label": "SVD",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-factorization",
+        "linear-algebra::qr-decomposition"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::singular-value",
+      "label": "Singular Value",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::svd"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::left-singular-vector",
+      "label": "Left Singular Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::svd",
+        "linear-algebra::singular-value"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::right-singular-vector",
+      "label": "Right Singular Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::svd",
+        "linear-algebra::singular-value"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::full-svd",
+      "label": "Full SVD",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::svd",
+        "linear-algebra::left-singular-vector",
+        "linear-algebra::right-singular-vector"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::compact-svd",
+      "label": "Compact SVD",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::full-svd"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::truncated-svd",
+      "label": "Truncated SVD",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::compact-svd"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::low-rank-approximation",
+      "label": "Low-Rank Approximation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::rank",
+        "linear-algebra::truncated-svd"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::matrix-rank",
+      "label": "Matrix Rank",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::rank"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::numerical-rank",
+      "label": "Numerical Rank",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-rank",
+        "linear-algebra::numerical-stability"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::condition-number",
+      "label": "Condition Number",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-inverse",
+        "linear-algebra::numerical-rank"
+      ],
+      "taxonomy_id": "DECOMP",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::abstract-vector-space",
+      "label": "Abstract Vector Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-space"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::subspace",
+      "label": "Subspace",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::abstract-vector-space"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::vector-space-axioms",
+      "label": "Vector Space Axioms",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::abstract-vector-space"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::inner-product",
+      "label": "Inner Product",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::dot-product",
+        "linear-algebra::abstract-vector-space"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::inner-product-space",
+      "label": "Inner Product Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::inner-product"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::norm-from-inner-product",
+      "label": "Norm from Inner Product",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::inner-product",
+        "linear-algebra::vector-magnitude"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cauchy-schwarz-inequality",
+      "label": "Cauchy-Schwarz Inequality",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::inner-product",
+        "linear-algebra::norm-from-inner-product"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::orthogonality",
+      "label": "Orthogonality",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::dot-product",
+        "linear-algebra::inner-product"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::orthogonal-vectors",
+      "label": "Orthogonal Vectors",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::orthogonality"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::orthonormal-set",
+      "label": "Orthonormal Set",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::unit-vector",
+        "linear-algebra::orthogonal-vectors"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::orthonormal-basis",
+      "label": "Orthonormal Basis",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::basis-vector",
+        "linear-algebra::orthonormal-set"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::gram-schmidt-process",
+      "label": "Gram-Schmidt Process",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::orthonormal-basis"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::projection-onto-subspace",
+      "label": "Projection onto Subspace",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::orthogonal-projection",
+        "linear-algebra::subspace"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::least-squares-problem",
+      "label": "Least Squares Problem",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::projection-onto-subspace"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::normal-equations",
+      "label": "Normal Equations",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-transpose",
+        "linear-algebra::least-squares-problem"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::row-space",
+      "label": "Row Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::row-vector",
+        "linear-algebra::column-space"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::left-null-space",
+      "label": "Left Null Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-transpose",
+        "linear-algebra::null-space"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::four-subspaces",
+      "label": "Four Subspaces",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::null-space",
+        "linear-algebra::column-space",
+        "linear-algebra::row-space",
+        "linear-algebra::left-null-space"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::pseudoinverse",
+      "label": "Pseudoinverse",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-inverse",
+        "linear-algebra::svd",
+        "linear-algebra::least-squares-problem"
+      ],
+      "taxonomy_id": "INPROD",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::feature-vector",
+      "label": "Feature Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::n-dimensional-vector",
+        "linear-algebra::data-matrix"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::feature-matrix",
+      "label": "Feature Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::feature-vector"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::data-matrix",
+      "label": "Data Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::covariance-matrix",
+      "label": "Covariance Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::symmetric-matrix",
+        "linear-algebra::data-matrix"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::correlation-matrix",
+      "label": "Correlation Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::covariance-matrix"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::standardization",
+      "label": "Standardization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::data-matrix",
+        "linear-algebra::correlation-matrix"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::pca",
+      "label": "PCA",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::diagonalization",
+        "linear-algebra::covariance-matrix"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::principal-component",
+      "label": "Principal Component",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::pca"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::variance-explained",
+      "label": "Variance Explained",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::pca",
+        "linear-algebra::principal-component"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::scree-plot",
+      "label": "Scree Plot",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::variance-explained"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::dimensionality-reduction",
+      "label": "Dimensionality Reduction",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::truncated-svd",
+        "linear-algebra::pca"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::linear-regression",
+      "label": "Linear Regression",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::least-squares-problem",
+        "linear-algebra::data-matrix"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::design-matrix",
+      "label": "Design Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::feature-matrix",
+        "linear-algebra::linear-regression"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::ridge-regression",
+      "label": "Ridge Regression",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-regression",
+        "linear-algebra::regularization"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::lasso-regression",
+      "label": "Lasso Regression",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-regression",
+        "linear-algebra::regularization"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::regularization",
+      "label": "Regularization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::linear-regression"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::gradient-vector",
+      "label": "Gradient Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::n-dimensional-vector"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::gradient-descent",
+      "label": "Gradient Descent",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-vector"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::batch-gradient-descent",
+      "label": "Batch Gradient Descent",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent",
+        "linear-algebra::matrix-multiplication"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::learning-rate",
+      "label": "Learning Rate",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent"
+      ],
+      "taxonomy_id": "MLBASE",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::perceptron",
+      "label": "Perceptron",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::dot-product",
+        "linear-algebra::neuron-model"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::neuron-model",
+      "label": "Neuron Model",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-vector",
+        "linear-algebra::activation-function"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::activation-function",
+      "label": "Activation Function",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::function"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::relu",
+      "label": "ReLU",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::activation-function"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::sigmoid",
+      "label": "Sigmoid",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::activation-function"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::tanh",
+      "label": "Tanh",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::activation-function"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::softmax",
+      "label": "Softmax",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::activation-function",
+        "linear-algebra::tanh"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::weight-matrix",
+      "label": "Weight Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::neuron-model"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::bias-vector",
+      "label": "Bias Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::neuron-model"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::forward-propagation",
+      "label": "Forward Propagation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-multiplication",
+        "linear-algebra::weight-matrix",
+        "linear-algebra::bias-vector"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::backpropagation",
+      "label": "Backpropagation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent",
+        "linear-algebra::forward-propagation"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::chain-rule-matrices",
+      "label": "Chain Rule Matrices",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-multiplication",
+        "linear-algebra::backpropagation"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::loss-function",
+      "label": "Loss Function",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::function",
+        "linear-algebra::forward-propagation"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cross-entropy-loss",
+      "label": "Cross-Entropy Loss",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::softmax",
+        "linear-algebra::loss-function"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::neural-network-layer",
+      "label": "Neural Network Layer",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::weight-matrix",
+        "linear-algebra::bias-vector",
+        "linear-algebra::forward-propagation"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::hidden-layer",
+      "label": "Hidden Layer",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::neural-network-layer"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::deep-network",
+      "label": "Deep Network",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::hidden-layer"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::convolutional-layer",
+      "label": "Convolutional Layer",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::neural-network-layer",
+        "linear-algebra::image-convolution"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::convolution-kernel",
+      "label": "Convolution Kernel",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::convolutional-layer"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::stride",
+      "label": "Stride",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::convolutional-layer",
+        "linear-algebra::convolution-kernel"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::padding",
+      "label": "Padding",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::convolutional-layer",
+        "linear-algebra::stride"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::pooling-layer",
+      "label": "Pooling Layer",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::convolutional-layer"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::batch-normalization",
+      "label": "Batch Normalization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::standardization",
+        "linear-algebra::neural-network-layer"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::layer-normalization",
+      "label": "Layer Normalization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::batch-normalization"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::tensor",
+      "label": "Tensor",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::n-dimensional-vector",
+        "linear-algebra::matrix"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::tensor-operations",
+      "label": "Tensor Operations",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-multiplication",
+        "linear-algebra::tensor"
+      ],
+      "taxonomy_id": "NEURAL",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::embedding",
+      "label": "Embedding",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::n-dimensional-vector"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::embedding-space",
+      "label": "Embedding Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-space",
+        "linear-algebra::embedding"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::word-embedding",
+      "label": "Word Embedding",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::embedding"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::semantic-similarity",
+      "label": "Semantic Similarity",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::dot-product",
+        "linear-algebra::embedding-space"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cosine-similarity",
+      "label": "Cosine Similarity",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::unit-vector",
+        "linear-algebra::semantic-similarity"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::attention-mechanism",
+      "label": "Attention Mechanism",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::dot-product",
+        "linear-algebra::weight-matrix"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::self-attention",
+      "label": "Self-Attention",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::attention-mechanism"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::cross-attention",
+      "label": "Cross-Attention",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::attention-mechanism",
+        "linear-algebra::self-attention"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::query-matrix",
+      "label": "Query Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::attention-mechanism",
+        "linear-algebra::weight-matrix"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::key-matrix",
+      "label": "Key Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::attention-mechanism",
+        "linear-algebra::weight-matrix"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::value-matrix",
+      "label": "Value Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::attention-mechanism",
+        "linear-algebra::weight-matrix"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::attention-score",
+      "label": "Attention Score",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::dot-product",
+        "linear-algebra::query-matrix",
+        "linear-algebra::key-matrix"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::attention-weights",
+      "label": "Attention Weights",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::softmax",
+        "linear-algebra::attention-score"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::multi-head-attention",
+      "label": "Multi-Head Attention",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::self-attention",
+        "linear-algebra::attention-weights"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::transformer-architecture",
+      "label": "Transformer Architecture",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::multi-head-attention",
+        "linear-algebra::position-encoding"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::position-encoding",
+      "label": "Position Encoding",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::embedding"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::lora",
+      "label": "LoRA",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::low-rank-approximation",
+        "linear-algebra::transformer-architecture"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::latent-space",
+      "label": "Latent Space",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector-space",
+        "linear-algebra::dimensionality-reduction"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::interpolation",
+      "label": "Interpolation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::latent-space"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::hessian-matrix",
+      "label": "Hessian Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::gradient-vector"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::convexity",
+      "label": "Convexity",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::hessian-matrix"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::convex-function",
+      "label": "Convex Function",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::convexity"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::newtons-method",
+      "label": "Newtons Method",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent",
+        "linear-algebra::hessian-matrix"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::quasi-newton-method",
+      "label": "Quasi-Newton Method",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::newtons-method"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::bfgs-algorithm",
+      "label": "BFGS Algorithm",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::quasi-newton-method"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::sgd",
+      "label": "SGD",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent",
+        "linear-algebra::batch-gradient-descent"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::mini-batch-sgd",
+      "label": "Mini-Batch SGD",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::sgd"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::momentum",
+      "label": "Momentum",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent",
+        "linear-algebra::sgd"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::adam-optimizer",
+      "label": "Adam Optimizer",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::momentum",
+        "linear-algebra::rmsprop"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::rmsprop",
+      "label": "RMSprop",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent",
+        "linear-algebra::sgd"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::lagrange-multiplier",
+      "label": "Lagrange Multiplier",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-vector"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::constrained-optimization",
+      "label": "Constrained Optimization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent",
+        "linear-algebra::lagrange-multiplier"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::kkt-conditions",
+      "label": "KKT Conditions",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::lagrange-multiplier",
+        "linear-algebra::constrained-optimization"
+      ],
+      "taxonomy_id": "OPTIM",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::image-matrix",
+      "label": "Image Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::grayscale-image",
+      "label": "Grayscale Image",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::image-matrix"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::rgb-image",
+      "label": "RGB Image",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::tensor",
+        "linear-algebra::grayscale-image"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::image-tensor",
+      "label": "Image Tensor",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::tensor",
+        "linear-algebra::rgb-image"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::image-convolution",
+      "label": "Image Convolution",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix-multiplication",
+        "linear-algebra::image-matrix"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::image-filter",
+      "label": "Image Filter",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::image-convolution"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::blur-filter",
+      "label": "Blur Filter",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::image-filter"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::sharpen-filter",
+      "label": "Sharpen Filter",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::image-filter"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::edge-detection",
+      "label": "Edge Detection",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::image-filter"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::sobel-operator",
+      "label": "Sobel Operator",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::image-convolution",
+        "linear-algebra::edge-detection"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::fourier-transform",
+      "label": "Fourier Transform",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::matrix-multiplication"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::frequency-domain",
+      "label": "Frequency Domain",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::fourier-transform"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::image-compression",
+      "label": "Image Compression",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::truncated-svd",
+        "linear-algebra::image-matrix"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::color-space-transform",
+      "label": "Color Space Transform",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::transformation-matrix",
+        "linear-algebra::rgb-image"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::feature-detection",
+      "label": "Feature Detection",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::edge-detection"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::homography",
+      "label": "Homography",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::transformation-matrix",
+        "linear-algebra::homogeneous-coordinates"
+      ],
+      "taxonomy_id": "IMGPROC",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::3d-coordinate-system",
+      "label": "3D Coordinate System",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3d-vector",
+        "linear-algebra::coordinate-system"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::euler-angles",
+      "label": "Euler Angles",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3d-rotation",
+        "linear-algebra::3d-coordinate-system"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::gimbal-lock",
+      "label": "Gimbal Lock",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::euler-angles"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::quaternion",
+      "label": "Quaternion",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3d-vector",
+        "linear-algebra::rotation-matrix"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::quaternion-rotation",
+      "label": "Quaternion Rotation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::quaternion"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::homogeneous-coordinates",
+      "label": "Homogeneous Coordinates",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::n-dimensional-vector",
+        "linear-algebra::3d-coordinate-system"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::rigid-body-transform",
+      "label": "Rigid Body Transform",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::rotation-matrix",
+        "linear-algebra::homogeneous-coordinates"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::se3-transform",
+      "label": "SE3 Transform",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::rigid-body-transform"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::camera-matrix",
+      "label": "Camera Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::matrix",
+        "linear-algebra::projection-matrix"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::intrinsic-parameters",
+      "label": "Intrinsic Parameters",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::camera-matrix"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::extrinsic-parameters",
+      "label": "Extrinsic Parameters",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::rigid-body-transform",
+        "linear-algebra::camera-matrix"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::projection-matrix",
+      "label": "Projection Matrix",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::projection",
+        "linear-algebra::homogeneous-coordinates"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::perspective-projection",
+      "label": "Perspective Projection",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::projection-matrix"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::stereo-vision",
+      "label": "Stereo Vision",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::camera-matrix",
+        "linear-algebra::perspective-projection"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::triangulation",
+      "label": "Triangulation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3d-vector",
+        "linear-algebra::stereo-vision"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::epipolar-geometry",
+      "label": "Epipolar Geometry",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::stereo-vision",
+        "linear-algebra::triangulation"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::point-cloud",
+      "label": "Point Cloud",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::3d-vector",
+        "linear-algebra::3d-coordinate-system"
+      ],
+      "taxonomy_id": "GEOM3D",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::lidar-point-cloud",
+      "label": "LIDAR Point Cloud",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::point-cloud"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::camera-calibration",
+      "label": "Camera Calibration",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::camera-matrix",
+        "linear-algebra::intrinsic-parameters",
+        "linear-algebra::extrinsic-parameters"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::sensor-fusion",
+      "label": "Sensor Fusion",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::kalman-filter"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::kalman-filter",
+      "label": "Kalman Filter",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::state-vector",
+        "linear-algebra::measurement-vector"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::state-vector",
+      "label": "State Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::measurement-vector",
+      "label": "Measurement Vector",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::vector",
+        "linear-algebra::state-vector"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::prediction-step",
+      "label": "Prediction Step",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::kalman-filter"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::update-step",
+      "label": "Update Step",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::kalman-filter",
+        "linear-algebra::prediction-step"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::kalman-gain",
+      "label": "Kalman Gain",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::update-step"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::extended-kalman-filter",
+      "label": "Extended Kalman Filter",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::kalman-filter",
+        "linear-algebra::newtons-method"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::state-estimation",
+      "label": "State Estimation",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::kalman-filter"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::slam",
+      "label": "SLAM",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::state-estimation",
+        "linear-algebra::localization",
+        "linear-algebra::mapping"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::localization",
+      "label": "Localization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::state-estimation"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::mapping",
+      "label": "Mapping",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::point-cloud",
+        "linear-algebra::localization"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::object-detection",
+      "label": "Object Detection",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::convolutional-layer"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::object-tracking",
+      "label": "Object Tracking",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::kalman-filter",
+        "linear-algebra::object-detection"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::bounding-box",
+      "label": "Bounding Box",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::image-matrix",
+        "linear-algebra::object-detection"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::path-planning",
+      "label": "Path Planning",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::slam"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::motion-planning",
+      "label": "Motion Planning",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::path-planning"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    },
+    {
+      "id": "linear-algebra::trajectory-optimization",
+      "label": "Trajectory Optimization",
+      "subject_id": "linear-algebra",
+      "dependencies": [
+        "linear-algebra::gradient-descent",
+        "linear-algebra::motion-planning"
+      ],
+      "taxonomy_id": "AUTON",
+      "level": "core"
+    }
+  ]
+}

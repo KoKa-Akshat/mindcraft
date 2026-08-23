@@ -1,0 +1,5307 @@
+{
+  "subject_id": "public-health",
+  "title": "Introduction to Public Health",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Public Health Foundations",
+      "color": "SteelBlue"
+    },
+    "EPID": {
+      "classifier_name": "Epidemiology",
+      "color": "DarkSlateBlue"
+    },
+    "BSTAT": {
+      "classifier_name": "Biostatistics",
+      "color": "DarkGreen"
+    },
+    "ENVH": {
+      "classifier_name": "Environmental Health",
+      "color": "OliveDrab"
+    },
+    "SOCBEH": {
+      "classifier_name": "Social and Behavioral Health",
+      "color": "Teal"
+    },
+    "POLMGT": {
+      "classifier_name": "Health Policy and Management",
+      "color": "DodgerBlue"
+    },
+    "GLOB": {
+      "classifier_name": "Global Health",
+      "color": "MediumPurple"
+    },
+    "EQUITY": {
+      "classifier_name": "Health Equity and SDOH",
+      "color": "Crimson"
+    },
+    "ETHICS": {
+      "classifier_name": "Public Health Ethics",
+      "color": "DarkRed"
+    },
+    "COMM": {
+      "classifier_name": "Public Health Communication",
+      "color": "DarkGoldenrod"
+    },
+    "PREV": {
+      "classifier_name": "Prevention Science",
+      "color": "DarkOrchid"
+    },
+    "SYS": {
+      "classifier_name": "Systems Thinking",
+      "color": "Orange"
+    },
+    "DATSCI": {
+      "classifier_name": "Data Science",
+      "color": "LimeGreen"
+    },
+    "SIM": {
+      "classifier_name": "Simulation Design",
+      "color": "HotPink"
+    },
+    "COVID": {
+      "classifier_name": "COVID-19 Case Studies",
+      "color": "Tomato"
+    },
+    "FRAUD": {
+      "classifier_name": "Health Fraud and Misinformation",
+      "color": "SaddleBrown"
+    }
+  },
+  "concepts": [
+    {
+      "id": "public-health::public-health-definition",
+      "label": "Public Health Definition",
+      "subject_id": "public-health",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "public-health::population-health",
+      "label": "Population Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-vs-disease",
+      "label": "Health vs. Disease",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::determinants-of-health",
+      "label": "Determinants of Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::public-health-history",
+      "label": "Public Health History",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::germ-theory-of-disease",
+      "label": "Germ Theory of Disease",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-vs-disease",
+        "public-health::public-health-history"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::epidemiological-triad",
+      "label": "Epidemiological Triad",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::germ-theory-of-disease"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::natural-history-of-disease",
+      "label": "Natural History of Disease",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-vs-disease",
+        "public-health::epidemiological-triad"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::public-health-functions",
+      "label": "Public Health Functions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::essential-public-health-services",
+      "label": "Essential Public Health Services",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-functions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::public-health-infrastructure",
+      "label": "Public Health Infrastructure",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-functions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-indicators",
+      "label": "Health Indicators",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::population-health",
+        "public-health::determinants-of-health"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::burden-of-disease",
+      "label": "Burden of Disease",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-indicators"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::primary-prevention",
+      "label": "Primary Prevention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::natural-history-of-disease"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::secondary-prevention",
+      "label": "Secondary Prevention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::natural-history-of-disease",
+        "public-health::primary-prevention"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::tertiary-prevention",
+      "label": "Tertiary Prevention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::natural-history-of-disease",
+        "public-health::secondary-prevention"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::primordial-prevention",
+      "label": "Primordial Prevention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::natural-history-of-disease"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::public-health-workforce",
+      "label": "Public Health Workforce",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-functions",
+        "public-health::public-health-infrastructure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::ceph-accreditation-standards",
+      "label": "CEPH Accreditation Standards",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::public-health-functions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::one-health-framework",
+      "label": "One Health Framework",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "public-health::incidence-rate",
+      "label": "Incidence Rate",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::population-health",
+        "public-health::health-indicators"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::prevalence-proportion",
+      "label": "Prevalence Proportion",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cumulative-incidence",
+      "label": "Cumulative Incidence",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mortality-rate",
+      "label": "Mortality Rate",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::case-fatality-ratio",
+      "label": "Case Fatality Ratio",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::mortality-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::infection-fatality-ratio",
+      "label": "Infection Fatality Ratio",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::case-fatality-ratio"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::morbidity-rate",
+      "label": "Morbidity Rate",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate",
+        "public-health::prevalence-proportion"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::attack-rate",
+      "label": "Attack Rate",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::secondary-attack-rate",
+      "label": "Secondary Attack Rate",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::attack-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::age-standardized-rates",
+      "label": "Age-Standardized Rates",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::mortality-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::relative-risk",
+      "label": "Relative Risk",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate",
+        "public-health::prevalence-proportion"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::odds-ratio",
+      "label": "Odds Ratio",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::relative-risk"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::hazard-ratio",
+      "label": "Hazard Ratio",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::relative-risk"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::attributable-risk",
+      "label": "Attributable Risk",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::relative-risk"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::population-attrib-fraction",
+      "label": "Population Attrib Fraction",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::attributable-risk"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::number-needed-to-treat",
+      "label": "Number Needed to Treat",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::relative-risk"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cross-sectional-study-design",
+      "label": "Cross-Sectional Study Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate",
+        "public-health::prevalence-proportion"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::case-control-study-design",
+      "label": "Case-Control Study Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::odds-ratio",
+        "public-health::cross-sectional-study-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cohort-study-design",
+      "label": "Cohort Study Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::relative-risk",
+        "public-health::cross-sectional-study-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::randomized-controlled-trial",
+      "label": "Randomized Controlled Trial",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cohort-study-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::ecological-study-design",
+      "label": "Ecological Study Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate",
+        "public-health::cross-sectional-study-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::natural-experiment-design",
+      "label": "Natural Experiment Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cross-sectional-study-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::bradford-hill-criteria",
+      "label": "Bradford Hill Criteria",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::relative-risk",
+        "public-health::cohort-study-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::directed-acyclic-graph",
+      "label": "Directed Acyclic Graph",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bradford-hill-criteria"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::counterfactual-model",
+      "label": "Counterfactual Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bradford-hill-criteria"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::confounding-variable",
+      "label": "Confounding Variable",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::relative-risk",
+        "public-health::bradford-hill-criteria"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::selection-bias",
+      "label": "Selection Bias",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::case-control-study-design",
+        "public-health::confounding-variable"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::information-bias",
+      "label": "Information Bias",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::confounding-variable"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::effect-modification",
+      "label": "Effect Modification",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::relative-risk",
+        "public-health::confounding-variable"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::surveillance-system-design",
+      "label": "Surveillance System Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::passive-surveillance",
+      "label": "Passive Surveillance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::active-surveillance",
+      "label": "Active Surveillance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sentinel-surveillance",
+      "label": "Sentinel Surveillance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::syndromic-surveillance",
+      "label": "Syndromic Surveillance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::sentinel-surveillance"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::reportable-conditions",
+      "label": "Reportable Conditions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::passive-surveillance"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::outbreak-investigation",
+      "label": "Outbreak Investigation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::attack-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::case-definition",
+      "label": "Case Definition",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::outbreak-investigation"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::epidemic-curve",
+      "label": "Epidemic Curve",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::incidence-rate",
+        "public-health::outbreak-investigation"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::index-case-identification",
+      "label": "Index Case Identification",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::case-definition"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::source-hypothesis-testing",
+      "label": "Source Hypothesis Testing",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::outbreak-investigation",
+        "public-health::case-control-study-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::r0-basic-reproduction-number",
+      "label": "R0 Basic Reproduction Number",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::attack-rate"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::effective-reproduction-rt",
+      "label": "Effective Reproduction Rt",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::r0-basic-reproduction-number"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::serial-interval",
+      "label": "Serial Interval",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::r0-basic-reproduction-number"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::generation-time",
+      "label": "Generation Time",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::serial-interval"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::herd-immunity-threshold",
+      "label": "Herd Immunity Threshold",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::r0-basic-reproduction-number"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::screening-sensitivity",
+      "label": "Screening Sensitivity",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::prevalence-proportion",
+        "public-health::cross-sectional-study-design"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::screening-specificity",
+      "label": "Screening Specificity",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::screening-sensitivity"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::positive-predictive-value",
+      "label": "Positive Predictive Value",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::screening-sensitivity",
+        "public-health::screening-specificity"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::negative-predictive-value",
+      "label": "Negative Predictive Value",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::screening-sensitivity",
+        "public-health::screening-specificity"
+      ],
+      "taxonomy_id": "EPID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::descriptive-statistics",
+      "label": "Descriptive Statistics",
+      "subject_id": "public-health",
+      "dependencies": [],
+      "taxonomy_id": "BSTAT",
+      "level": "foundational"
+    },
+    {
+      "id": "public-health::measures-of-central-tendency",
+      "label": "Measures of Central Tendency",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::measures-of-dispersion",
+      "label": "Measures of Dispersion",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::normal-distribution",
+      "label": "Normal Distribution",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::measures-of-dispersion"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::binomial-distribution",
+      "label": "Binomial Distribution",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::probability-fundamentals"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::poisson-distribution",
+      "label": "Poisson Distribution",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::probability-fundamentals",
+        "public-health::binomial-distribution"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::negative-binomial-distribution",
+      "label": "Negative Binomial Distribution",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::poisson-distribution"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::probability-fundamentals",
+      "label": "Probability Fundamentals",
+      "subject_id": "public-health",
+      "dependencies": [],
+      "taxonomy_id": "BSTAT",
+      "level": "foundational"
+    },
+    {
+      "id": "public-health::conditional-probability",
+      "label": "Conditional Probability",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::probability-fundamentals"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::bayes-theorem",
+      "label": "Bayes' Theorem",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::conditional-probability"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sampling-methods",
+      "label": "Sampling Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sample-size-estimation",
+      "label": "Sample Size Estimation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sampling-methods"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::statistical-power",
+      "label": "Statistical Power",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sample-size-estimation",
+        "public-health::null-hypothesis-testing"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::null-hypothesis-testing",
+      "label": "Null Hypothesis Testing",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics",
+        "public-health::probability-fundamentals"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::type-i-error-alpha",
+      "label": "Type I Error Alpha",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::null-hypothesis-testing"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::type-ii-error-beta",
+      "label": "Type II Error Beta",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::null-hypothesis-testing"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::p-value-interpretation",
+      "label": "P-Value Interpretation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::null-hypothesis-testing",
+        "public-health::type-i-error-alpha"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::confidence-interval",
+      "label": "Confidence Interval",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::normal-distribution",
+        "public-health::p-value-interpretation"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::chi-square-test",
+      "label": "Chi-Square Test",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::null-hypothesis-testing",
+        "public-health::binomial-distribution"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::fisher-s-exact-test",
+      "label": "Fisher's Exact Test",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::chi-square-test"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::student-t-test",
+      "label": "Student T-Test",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::null-hypothesis-testing",
+        "public-health::normal-distribution"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mann-whitney-u-test",
+      "label": "Mann-Whitney U Test",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::student-t-test"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::analysis-of-variance-anova",
+      "label": "Analysis of Variance ANOVA",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::student-t-test"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::kruskal-wallis-test",
+      "label": "Kruskal-Wallis Test",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::analysis-of-variance-anova"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::linear-regression",
+      "label": "Linear Regression",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::confidence-interval",
+        "public-health::normal-distribution"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::logistic-regression",
+      "label": "Logistic Regression",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::linear-regression",
+        "public-health::probability-fundamentals"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::poisson-regression-for-rates",
+      "label": "Poisson Regression for Rates",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::logistic-regression",
+        "public-health::poisson-distribution"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cox-proportional-hazards",
+      "label": "Cox Proportional Hazards",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::linear-regression",
+        "public-health::hazard-ratio"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::kaplan-meier-survival-curve",
+      "label": "Kaplan-Meier Survival Curve",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cox-proportional-hazards"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::meta-analysis-methods",
+      "label": "Meta-Analysis Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::randomized-controlled-trial",
+        "public-health::confidence-interval"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::forest-plot-interpretation",
+      "label": "Forest Plot Interpretation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::meta-analysis-methods",
+        "public-health::confidence-interval"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::heterogeneity-in-meta-analysis",
+      "label": "Heterogeneity in Meta-Analysis",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::meta-analysis-methods"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::multiple-comparisons-problem",
+      "label": "Multiple Comparisons Problem",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::p-value-interpretation"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::standardization-methods",
+      "label": "Standardization Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::age-standardized-rates",
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::missing-data-mechanisms",
+      "label": "Missing Data Mechanisms",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics",
+        "public-health::sampling-methods"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::multiple-imputation-methods",
+      "label": "Multiple Imputation Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::missing-data-mechanisms"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::interrupted-time-series-analysis",
+      "label": "Interrupted Time-Series Analysis",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::linear-regression"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::excess-mortality-estimation",
+      "label": "Excess Mortality Estimation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::mortality-rate",
+        "public-health::interrupted-time-series-analysis"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sensitivity-analysis-stats",
+      "label": "Sensitivity Analysis Stats",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::confidence-interval"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::systematic-review-protocol",
+      "label": "Systematic Review Protocol",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::meta-analysis-methods",
+        "public-health::evidence-based-practice"
+      ],
+      "taxonomy_id": "BSTAT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::environmental-risk-assessment",
+      "label": "Environmental Risk Assessment",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::determinants-of-health",
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::hazard-identification",
+      "label": "Hazard Identification",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::environmental-risk-assessment"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::dose-response-assessment",
+      "label": "Dose-Response Assessment",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::hazard-identification"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::exposure-assessment",
+      "label": "Exposure Assessment",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::hazard-identification"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::risk-characterization",
+      "label": "Risk Characterization",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dose-response-assessment",
+        "public-health::exposure-assessment"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::air-quality-index",
+      "label": "Air Quality Index",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::environmental-risk-assessment"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::criteria-air-pollutants",
+      "label": "Criteria Air Pollutants",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::air-quality-index"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::particulate-matter-pm2-5",
+      "label": "Particulate Matter PM2.5",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::criteria-air-pollutants"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::ozone-health-effects",
+      "label": "Ozone Health Effects",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::criteria-air-pollutants"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::indoor-air-quality",
+      "label": "Indoor Air Quality",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::criteria-air-pollutants"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::water-safety-standards",
+      "label": "Water Safety Standards",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::environmental-risk-assessment"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::drinking-water-treatment",
+      "label": "Drinking Water Treatment",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::water-safety-standards"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::waterborne-disease-pathogens",
+      "label": "Waterborne Disease Pathogens",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::water-safety-standards",
+        "public-health::germ-theory-of-disease"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::safe-drinking-water-act",
+      "label": "Safe Drinking Water Act",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::water-safety-standards",
+        "public-health::drinking-water-treatment"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::toxicology-dose-response",
+      "label": "Toxicology Dose-Response",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dose-response-assessment"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::bioaccumulation",
+      "label": "Bioaccumulation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::toxicology-dose-response"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::endocrine-disruption",
+      "label": "Endocrine Disruption",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::toxicology-dose-response"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::built-environment-health",
+      "label": "Built Environment Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::determinants-of-health",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::urban-heat-island-effect",
+      "label": "Urban Heat Island Effect",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::built-environment-health"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::food-desert-definition",
+      "label": "Food Desert Definition",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::built-environment-health",
+        "public-health::determinants-of-health"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::climate-change-health-impacts",
+      "label": "Climate Change Health Impacts",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::environmental-risk-assessment",
+        "public-health::determinants-of-health"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vector-borne-disease-expansion",
+      "label": "Vector-Borne Disease Expansion",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::climate-change-health-impacts"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::wildfire-and-air-quality",
+      "label": "Wildfire and Air Quality",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::climate-change-health-impacts",
+        "public-health::air-quality-index"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::environmental-justice",
+      "label": "Environmental Justice",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::environmental-risk-assessment",
+        "public-health::determinants-of-health"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cumulative-exposure-burden",
+      "label": "Cumulative Exposure Burden",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::environmental-justice",
+        "public-health::exposure-assessment"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::ejscreen-tool",
+      "label": "EJScreen Tool",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::environmental-justice"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::legacy-contamination",
+      "label": "Legacy Contamination",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::environmental-risk-assessment",
+        "public-health::environmental-justice"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::green-space-health-benefits",
+      "label": "Green Space Health Benefits",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::built-environment-health"
+      ],
+      "taxonomy_id": "ENVH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-belief-model",
+      "label": "Health Belief Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::determinants-of-health",
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::perceived-susceptibility",
+      "label": "Perceived Susceptibility",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::perceived-severity",
+      "label": "Perceived Severity",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::perceived-benefits-and-barriers",
+      "label": "Perceived Benefits and Barriers",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::self-efficacy-construct",
+      "label": "Self-Efficacy Construct",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::transtheoretical-model",
+      "label": "Transtheoretical Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::stages-of-change",
+      "label": "Stages of Change",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::transtheoretical-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::social-cognitive-theory",
+      "label": "Social Cognitive Theory",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::reciprocal-determinism",
+      "label": "Reciprocal Determinism",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-cognitive-theory"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::theory-of-planned-behavior",
+      "label": "Theory of Planned Behavior",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::social-norms-in-health",
+      "label": "Social Norms in Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::theory-of-planned-behavior"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::social-ecological-model",
+      "label": "Social-Ecological Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model",
+        "public-health::determinants-of-health"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::multilevel-interventions",
+      "label": "Multilevel Interventions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-ecological-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::social-capital",
+      "label": "Social Capital",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-ecological-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::bonding-vs-bridging-capital",
+      "label": "Bonding vs Bridging Capital",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-capital"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::behavioral-economics-health",
+      "label": "Behavioral Economics Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::nudge-theory",
+      "label": "Nudge Theory",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::behavioral-economics-health"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::default-effects",
+      "label": "Default Effects",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::nudge-theory"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::loss-aversion-in-health",
+      "label": "Loss Aversion in Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::behavioral-economics-health"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-literacy-definition",
+      "label": "Health Literacy Definition",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::determinants-of-health"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::functional-health-literacy",
+      "label": "Functional Health Literacy",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-literacy-definition"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::communicative-health-literacy",
+      "label": "Communicative Health Literacy",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-literacy-definition"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::critical-health-literacy",
+      "label": "Critical Health Literacy",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-literacy-definition"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::low-literacy-communication",
+      "label": "Low-Literacy Communication",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::functional-health-literacy"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cultural-humility",
+      "label": "Cultural Humility",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::determinants-of-health",
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::clas-standards",
+      "label": "CLAS Standards",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cultural-humility"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::community-health-workers",
+      "label": "Community Health Workers",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cultural-humility",
+        "public-health::multilevel-interventions"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::promotoras-model",
+      "label": "Promotoras Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::community-health-workers"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::structural-racism-mechanisms",
+      "label": "Structural Racism Mechanisms",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::determinants-of-health",
+        "public-health::social-ecological-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::weathering-hypothesis",
+      "label": "Weathering Hypothesis",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::structural-racism-mechanisms"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::behavioral-intervention-design",
+      "label": "Behavioral Intervention Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-ecological-model",
+        "public-health::multilevel-interventions"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::fidelity-vs-adaptation",
+      "label": "Fidelity vs Adaptation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::behavioral-intervention-design"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::motivational-interviewing",
+      "label": "Motivational Interviewing",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::transtheoretical-model",
+        "public-health::behavioral-intervention-design"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::pandemic-fatigue",
+      "label": "Pandemic Fatigue",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model",
+        "public-health::social-ecological-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vaccine-hesitancy-dynamics",
+      "label": "Vaccine Hesitancy Dynamics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-belief-model",
+        "public-health::social-ecological-model"
+      ],
+      "taxonomy_id": "SOCBEH",
+      "level": "core"
+    },
+    {
+      "id": "public-health::us-health-system-structure",
+      "label": "US Health System Structure",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::public-health-functions"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::federal-health-agencies",
+      "label": "Federal Health Agencies",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::state-health-departments",
+      "label": "State Health Departments",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::local-health-departments",
+      "label": "Local Health Departments",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::safety-net-providers",
+      "label": "Safety Net Providers",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::federally-qualified-centers",
+      "label": "Federally Qualified Centers",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::safety-net-providers"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::kingdon-s-streams-model",
+      "label": "Kingdon's Streams Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::policy-development-cycle",
+      "label": "Policy Development Cycle",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::kingdon-s-streams-model"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-policy-agenda-setting",
+      "label": "Health Policy Agenda Setting",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::kingdon-s-streams-model",
+        "public-health::policy-development-cycle"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::employer-sponsored-insurance",
+      "label": "Employer-Sponsored Insurance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::medicaid-program",
+      "label": "Medicaid Program",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::medicare-program",
+      "label": "Medicare Program",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::aca-coverage-provisions",
+      "label": "ACA Coverage Provisions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::employer-sponsored-insurance",
+        "public-health::medicaid-program",
+        "public-health::medicare-program"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::uninsurance-and-underinsurance",
+      "label": "Uninsurance and Underinsurance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::employer-sponsored-insurance"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::public-health-law",
+      "label": "Public Health Law",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure",
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::police-powers-in-public-health",
+      "label": "Police Powers in Public Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-law"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::quarantine-authority",
+      "label": "Quarantine Authority",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::police-powers-in-public-health"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mandatory-reporting-laws",
+      "label": "Mandatory Reporting Laws",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-law",
+        "public-health::reportable-conditions"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::emergency-use-authorization",
+      "label": "Emergency Use Authorization",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-law"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::phab-accreditation",
+      "label": "PHAB Accreditation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure",
+        "public-health::ceph-accreditation-standards"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::logic-model-development",
+      "label": "Logic Model Development",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::policy-development-cycle"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::precede-proceed-model",
+      "label": "PRECEDE-PROCEED Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::logic-model-development",
+        "public-health::social-ecological-model"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mapp-framework",
+      "label": "MAPP Framework",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::logic-model-development",
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cost-effectiveness-analysis",
+      "label": "Cost-Effectiveness Analysis",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::policy-development-cycle"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cost-effectiveness-analysis"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::qaly-concept",
+      "label": "QALY Concept",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cost-effectiveness-analysis"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::return-on-investment-prevention",
+      "label": "Return on Investment Prevention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cost-benefit-analysis",
+        "public-health::primary-prevention"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::pdsa-quality-cycle",
+      "label": "PDSA Quality Cycle",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::policy-development-cycle"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::lean-in-public-health",
+      "label": "Lean in Public Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::pdsa-quality-cycle"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::performance-management",
+      "label": "Performance Management",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::pdsa-quality-cycle",
+        "public-health::logic-model-development"
+      ],
+      "taxonomy_id": "POLMGT",
+      "level": "core"
+    },
+    {
+      "id": "public-health::global-burden-of-disease",
+      "label": "Global Burden of Disease",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::burden-of-disease",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::dalys-concept",
+      "label": "DALYs Concept",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::global-burden-of-disease"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::years-of-life-lost",
+      "label": "Years of Life Lost",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dalys-concept"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::years-lived-with-disability",
+      "label": "Years Lived with Disability",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dalys-concept"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::epidemiological-transition",
+      "label": "Epidemiological Transition",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::burden-of-disease",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::demographic-transition",
+      "label": "Demographic Transition",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::epidemiological-transition"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::double-burden-of-disease",
+      "label": "Double Burden of Disease",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::epidemiological-transition"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::universal-health-coverage",
+      "label": "Universal Health Coverage",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::us-health-system-structure",
+        "public-health::global-burden-of-disease"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::financial-protection-index",
+      "label": "Financial Protection Index",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::universal-health-coverage"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::service-coverage-index",
+      "label": "Service Coverage Index",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::universal-health-coverage"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::abuja-declaration",
+      "label": "Abuja Declaration",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::universal-health-coverage"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::catastrophic-health-expenditure",
+      "label": "Catastrophic Health Expenditure",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::universal-health-coverage"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sdg-3-health-targets",
+      "label": "SDG 3 Health Targets",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::global-burden-of-disease",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::international-health-regulations",
+      "label": "International Health Regulations",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::sdg-3-health-targets"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::pheic-declaration",
+      "label": "PHEIC Declaration",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::international-health-regulations"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::global-health-security-index",
+      "label": "Global Health Security Index",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::international-health-regulations"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::neglected-tropical-diseases",
+      "label": "Neglected Tropical Diseases",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::global-burden-of-disease",
+        "public-health::burden-of-disease"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::preventive-chemotherapy",
+      "label": "Preventive Chemotherapy",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::neglected-tropical-diseases"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::global-health-governance",
+      "label": "Global Health Governance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::international-health-regulations",
+        "public-health::sdg-3-health-targets"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::who-structure-and-mandate",
+      "label": "WHO Structure and Mandate",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::global-health-governance"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::world-bank-health-financing",
+      "label": "World Bank Health Financing",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::universal-health-coverage",
+        "public-health::global-health-governance"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::gavi-vaccine-alliance",
+      "label": "GAVI Vaccine Alliance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::global-health-governance",
+        "public-health::herd-immunity-threshold"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::global-fund-hiv-tb-malaria",
+      "label": "Global Fund HIV TB Malaria",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::global-health-governance"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::pepfar-program",
+      "label": "PEPFAR Program",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::global-health-governance"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sphere-humanitarian-standards",
+      "label": "Sphere Humanitarian Standards",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::international-health-regulations",
+        "public-health::global-health-governance"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-equity-definition",
+      "label": "Health Equity Definition",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-disparities-definition",
+      "label": "Health Disparities Definition",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-equity-definition"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::social-determinants-of-health",
+      "label": "Social Determinants of Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::determinants-of-health",
+        "public-health::health-equity-definition"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::dahlgren-whitehead-model",
+      "label": "Dahlgren-Whitehead Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::who-csdh-commission-findings",
+      "label": "WHO CSDH Commission Findings",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::income-gradient-health",
+      "label": "Income Gradient Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::education-as-health-determinant",
+      "label": "Education as Health Determinant",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::housing-quality-and-health",
+      "label": "Housing Quality and Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::food-security-and-health",
+      "label": "Food Security and Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::employment-and-health",
+      "label": "Employment and Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::transportation-access-health",
+      "label": "Transportation Access Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health",
+        "public-health::built-environment-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::neighborhood-effects-health",
+      "label": "Neighborhood Effects Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::housing-quality-and-health",
+        "public-health::food-security-and-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::racial-health-disparities",
+      "label": "Racial Health Disparities",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-disparities-definition",
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::maternal-mortality-disparities",
+      "label": "Maternal Mortality Disparities",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::racial-health-disparities",
+        "public-health::mortality-rate"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::infant-mortality-disparities",
+      "label": "Infant Mortality Disparities",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::racial-health-disparities",
+        "public-health::mortality-rate"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::life-expectancy-gaps",
+      "label": "Life Expectancy Gaps",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::racial-health-disparities",
+        "public-health::mortality-rate"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::historical-trauma",
+      "label": "Historical Trauma",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::racial-health-disparities"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::intergenerational-poverty",
+      "label": "Intergenerational Poverty",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::historical-trauma",
+        "public-health::income-gradient-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::intersectionality-framework",
+      "label": "Intersectionality Framework",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-equity-definition",
+        "public-health::health-disparities-definition"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::place-based-interventions",
+      "label": "Place-Based Interventions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::neighborhood-effects-health",
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::moving-to-opportunity-study",
+      "label": "Moving to Opportunity Study",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::place-based-interventions"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::community-development-finance",
+      "label": "Community Development Finance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::place-based-interventions"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::upstream-policy-levers",
+      "label": "Upstream Policy Levers",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::policy-development-cycle",
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::healthy-people-2030-goals",
+      "label": "Healthy People 2030 Goals",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-equity-definition",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::root-cause-analysis-ph",
+      "label": "Root Cause Analysis PH",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-in-all-policies",
+      "label": "Health in All Policies",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::policy-development-cycle",
+        "public-health::upstream-policy-levers"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::structural-competency",
+      "label": "Structural Competency",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cultural-humility",
+        "public-health::structural-racism-mechanisms"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::redlining-health-effects",
+      "label": "Redlining Health Effects",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::neighborhood-effects-health",
+        "public-health::racial-health-disparities"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::criminal-justice-health-impact",
+      "label": "Criminal Justice Health Impact",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::racial-health-disparities"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::long-covid-equity-burden",
+      "label": "Long COVID Equity Burden",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-disparities-definition",
+        "public-health::racial-health-disparities"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "public-health::bioethics-principles",
+      "label": "Bioethics Principles",
+      "subject_id": "public-health",
+      "dependencies": [],
+      "taxonomy_id": "ETHICS",
+      "level": "foundational"
+    },
+    {
+      "id": "public-health::autonomy-in-public-health",
+      "label": "Autonomy in Public Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bioethics-principles"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::beneficence-and-maleficence",
+      "label": "Beneficence and Maleficence",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bioethics-principles"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::justice-in-public-health",
+      "label": "Justice in Public Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bioethics-principles"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::stewardship-model-ethics",
+      "label": "Stewardship Model Ethics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bioethics-principles"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::nuffield-ladder-of-intervention",
+      "label": "Nuffield Ladder of Intervention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stewardship-model-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::utilitarian-ethics-in-ph",
+      "label": "Utilitarian Ethics in PH",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bioethics-principles"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::egalitarian-health-ethics",
+      "label": "Egalitarian Health Ethics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::utilitarian-ethics-in-ph"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::communitarian-health-ethics",
+      "label": "Communitarian Health Ethics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::utilitarian-ethics-in-ph"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::research-ethics-belmont-report",
+      "label": "Research Ethics Belmont Report",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bioethics-principles"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::informed-consent",
+      "label": "Informed Consent",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::research-ethics-belmont-report",
+        "public-health::autonomy-in-public-health"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vulnerable-populations-research",
+      "label": "Vulnerable Populations Research",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::research-ethics-belmont-report",
+        "public-health::informed-consent"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mandatory-vaccination-ethics",
+      "label": "Mandatory Vaccination Ethics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::autonomy-in-public-health",
+        "public-health::stewardship-model-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::fluoridation-ethics-debate",
+      "label": "Fluoridation Ethics Debate",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::mandatory-vaccination-ethics"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::data-ethics-in-public-health",
+      "label": "Data Ethics in Public Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bioethics-principles"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::algorithmic-bias-ethics",
+      "label": "Algorithmic Bias Ethics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::data-ethics-in-public-health"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::distributive-justice",
+      "label": "Distributive Justice",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::justice-in-public-health"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::procedural-justice",
+      "label": "Procedural Justice",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::justice-in-public-health"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::restorative-justice-health",
+      "label": "Restorative Justice Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::justice-in-public-health",
+        "public-health::historical-trauma"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::global-health-ethics",
+      "label": "Global Health Ethics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::bioethics-principles",
+        "public-health::global-health-governance"
+      ],
+      "taxonomy_id": "ETHICS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::plain-language-principles",
+      "label": "Plain Language Principles",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-literacy-definition"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::teach-back-method",
+      "label": "Teach-Back Method",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::plain-language-principles"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::risk-communication-principles",
+      "label": "Risk Communication Principles",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::health-literacy-definition"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mental-models-approach",
+      "label": "Mental Models Approach",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::numeracy-and-health-decisions",
+      "label": "Numeracy and Health Decisions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles",
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::uncertainty-communication",
+      "label": "Uncertainty Communication",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles",
+        "public-health::p-value-interpretation"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cerc-framework",
+      "label": "CERC Framework",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cerc-six-principles",
+      "label": "CERC Six Principles",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cerc-framework"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cerc-five-stages",
+      "label": "CERC Five Stages",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cerc-framework"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::audience-segmentation",
+      "label": "Audience Segmentation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::message-tailoring",
+      "label": "Message Tailoring",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::audience-segmentation"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::social-media-in-public-health",
+      "label": "Social Media in Public Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::infoveillance-methods",
+      "label": "Infoveillance Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-media-in-public-health",
+        "public-health::surveillance-system-design"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::twitter-epidemiology",
+      "label": "Twitter Epidemiology",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::infoveillance-methods"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-misinformation",
+      "label": "Health Misinformation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::prebunking-strategy",
+      "label": "Prebunking Strategy",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-misinformation"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::inoculation-theory",
+      "label": "Inoculation Theory",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::prebunking-strategy"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sift-fact-checking-method",
+      "label": "SIFT Fact-Checking Method",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-misinformation"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cultural-tailoring",
+      "label": "Cultural Tailoring",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::audience-segmentation",
+        "public-health::cultural-humility"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::back-translation-method",
+      "label": "Back-Translation Method",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cultural-tailoring"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::campaign-evaluation-methods",
+      "label": "Campaign Evaluation Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles",
+        "public-health::audience-segmentation"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::eppm-framework",
+      "label": "EPPM Framework",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::risk-communication-principles",
+        "public-health::health-belief-model"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::influencer-partnerships",
+      "label": "Influencer Partnerships",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-media-in-public-health"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::infodemic-management",
+      "label": "Infodemic Management",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-misinformation",
+        "public-health::cerc-framework"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::crisis-communication-failure",
+      "label": "Crisis Communication Failure",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cerc-framework",
+        "public-health::health-misinformation"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::iom-prevention-spectrum",
+      "label": "IOM Prevention Spectrum",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::primary-prevention",
+        "public-health::secondary-prevention"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::universal-prevention",
+      "label": "Universal Prevention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::iom-prevention-spectrum"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::selective-prevention",
+      "label": "Selective Prevention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::iom-prevention-spectrum"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::indicated-prevention",
+      "label": "Indicated Prevention",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::iom-prevention-spectrum"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::evidence-based-practice",
+      "label": "Evidence-Based Practice",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::hierarchy-of-evidence",
+      "label": "Hierarchy of Evidence",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::evidence-based-practice",
+        "public-health::randomized-controlled-trial"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::community-guide-evidence-base",
+      "label": "Community Guide Evidence Base",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::hierarchy-of-evidence"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::uspstf-evidence-grading",
+      "label": "USPSTF Evidence Grading",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::hierarchy-of-evidence"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::grade-framework",
+      "label": "GRADE Framework",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::hierarchy-of-evidence"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::herd-immunity-calculation",
+      "label": "Herd Immunity Calculation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::herd-immunity-threshold"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::immunization-schedule",
+      "label": "Immunization Schedule",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::herd-immunity-calculation"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vaccine-breakthrough-infection",
+      "label": "Vaccine Breakthrough Infection",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::immunization-schedule"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cold-chain-requirements",
+      "label": "Cold Chain Requirements",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::immunization-schedule"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vaccine-hesitancy-measurement",
+      "label": "Vaccine Hesitancy Measurement",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::vaccine-hesitancy-dynamics"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::tobacco-cessation-interventions",
+      "label": "Tobacco Cessation Interventions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::primary-prevention",
+        "public-health::behavioral-intervention-design"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::physical-inactivity-interventions",
+      "label": "Physical Inactivity Interventions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::behavioral-intervention-design",
+        "public-health::primary-prevention"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::dietary-intervention-evidence",
+      "label": "Dietary Intervention Evidence",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::grade-framework",
+        "public-health::primary-prevention"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::alcohol-use-interventions",
+      "label": "Alcohol Use Interventions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::behavioral-intervention-design"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::obesity-prevention-strategies",
+      "label": "Obesity Prevention Strategies",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::primary-prevention",
+        "public-health::dietary-intervention-evidence"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::haddon-matrix",
+      "label": "Haddon Matrix",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-definition",
+        "public-health::primary-prevention"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::injury-prevention-frameworks",
+      "label": "Injury Prevention Frameworks",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::haddon-matrix"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::violence-prevention-ph",
+      "label": "Violence Prevention PH",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::injury-prevention-frameworks"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::harm-reduction-philosophy",
+      "label": "Harm Reduction Philosophy",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::primary-prevention",
+        "public-health::indicated-prevention"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::naloxone-distribution",
+      "label": "Naloxone Distribution",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::harm-reduction-philosophy"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::syringe-service-programs",
+      "label": "Syringe Service Programs",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::harm-reduction-philosophy"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::implementation-science-epis",
+      "label": "Implementation Science EPIS",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::behavioral-intervention-design",
+        "public-health::evidence-based-practice"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::de-implementation",
+      "label": "De-Implementation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::evidence-based-practice",
+        "public-health::implementation-science-epis"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::scale-up-strategies",
+      "label": "Scale-Up Strategies",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::implementation-science-epis"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::brief-motivational-interviewing",
+      "label": "Brief Motivational Interviewing",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::motivational-interviewing",
+        "public-health::indicated-prevention"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::screening-program-design",
+      "label": "Screening Program Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::screening-sensitivity",
+        "public-health::screening-specificity",
+        "public-health::uspstf-evidence-grading"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "public-health::systems-thinking-concepts",
+      "label": "Systems Thinking Concepts",
+      "subject_id": "public-health",
+      "dependencies": [],
+      "taxonomy_id": "SYS",
+      "level": "foundational"
+    },
+    {
+      "id": "public-health::system-stocks",
+      "label": "System Stocks",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::system-flows",
+      "label": "System Flows",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::system-stocks"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::feedback-loops",
+      "label": "Feedback Loops",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::system-stocks",
+        "public-health::system-flows"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::reinforcing-feedback-loop",
+      "label": "Reinforcing Feedback Loop",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::balancing-feedback-loop",
+      "label": "Balancing Feedback Loop",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::time-delays-in-systems",
+      "label": "Time Delays in Systems",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::nonlinearity-in-systems",
+      "label": "Nonlinearity in Systems",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::emergence-in-systems",
+      "label": "Emergence in Systems",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts",
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::path-dependence",
+      "label": "Path Dependence",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts",
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::causal-loop-diagram",
+      "label": "Causal Loop Diagram",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts",
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cld-variable-identification",
+      "label": "CLD Variable Identification",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::causal-loop-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cld-link-polarity",
+      "label": "CLD Link Polarity",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cld-variable-identification"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cld-loop-polarity",
+      "label": "CLD Loop Polarity",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cld-link-polarity",
+        "public-health::reinforcing-feedback-loop",
+        "public-health::balancing-feedback-loop"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cld-loop-naming",
+      "label": "CLD Loop Naming",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cld-loop-polarity"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::system-archetypes",
+      "label": "System Archetypes",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::causal-loop-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::limits-to-growth-archetype",
+      "label": "Limits to Growth Archetype",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::system-archetypes",
+        "public-health::balancing-feedback-loop"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::shifting-the-burden-archetype",
+      "label": "Shifting the Burden Archetype",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::system-archetypes",
+        "public-health::reinforcing-feedback-loop"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::tragedy-of-commons-archetype",
+      "label": "Tragedy of Commons Archetype",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::system-archetypes"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::fixes-that-fail-archetype",
+      "label": "Fixes that Fail Archetype",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::system-archetypes",
+        "public-health::limits-to-growth-archetype"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::escalation-archetype",
+      "label": "Escalation Archetype",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::reinforcing-feedback-loop",
+        "public-health::system-archetypes"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::eroding-goals-archetype",
+      "label": "Eroding Goals Archetype",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::balancing-feedback-loop",
+        "public-health::system-archetypes"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::success-to-successful-arch",
+      "label": "Success to Successful Arch",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::reinforcing-feedback-loop",
+        "public-health::system-archetypes"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::addiction-archetype",
+      "label": "Addiction Archetype",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::shifting-the-burden-archetype",
+        "public-health::system-archetypes"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::stock-and-flow-diagram",
+      "label": "Stock-and-Flow Diagram",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::system-stocks",
+        "public-health::system-flows",
+        "public-health::causal-loop-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::level-equations",
+      "label": "Level Equations",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::rate-equations",
+      "label": "Rate Equations",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram",
+        "public-health::level-equations"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::auxiliary-variables",
+      "label": "Auxiliary Variables",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::rate-equations"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::initial-conditions-setting",
+      "label": "Initial Conditions Setting",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::insightmaker-tool",
+      "label": "InsightMaker Tool",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vensim-ple-tool",
+      "label": "Vensim PLE Tool",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::stella-architect-tool",
+      "label": "Stella Architect Tool",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::anylogic-multi-method",
+      "label": "AnyLogic Multi-Method",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::netlogo-agent-based-tool",
+      "label": "NetLogo Agent-Based Tool",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sir-compartmental-model",
+      "label": "SIR Compartmental Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::system-stocks",
+        "public-health::system-flows",
+        "public-health::r0-basic-reproduction-number"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::seir-compartmental-model",
+      "label": "SEIR Compartmental Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sir-compartmental-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::seird-model-extension",
+      "label": "SEIRD Model Extension",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::seir-compartmental-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::seirv-vaccination-model",
+      "label": "SEIRV Vaccination Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::seir-compartmental-model",
+        "public-health::herd-immunity-threshold"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::transmission-rate-beta",
+      "label": "Transmission Rate Beta",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sir-compartmental-model",
+        "public-health::r0-basic-reproduction-number"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::recovery-rate-gamma",
+      "label": "Recovery Rate Gamma",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sir-compartmental-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::r0-in-sir-model",
+      "label": "R0 in SIR Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::transmission-rate-beta",
+        "public-health::recovery-rate-gamma"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sir-model-equations",
+      "label": "SIR Model Equations",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sir-compartmental-model",
+        "public-health::level-equations",
+        "public-health::rate-equations"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::epidemic-overshoot",
+      "label": "Epidemic Overshoot",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sir-compartmental-model",
+        "public-health::reinforcing-feedback-loop"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::agent-based-model",
+      "label": "Agent-Based Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts",
+        "public-health::emergence-in-systems"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::agent-rules-design",
+      "label": "Agent Rules Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::agent-based-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::spatial-grid-models",
+      "label": "Spatial Grid Models",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::agent-based-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::network-topology-abm",
+      "label": "Network Topology ABM",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::agent-based-model"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::super-spreader-dynamics",
+      "label": "Super-Spreader Dynamics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::agent-based-model",
+        "public-health::network-analysis-ph"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::group-model-building",
+      "label": "Group Model Building",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::causal-loop-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mental-model-elicitation",
+      "label": "Mental Model Elicitation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::group-model-building"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::stakeholder-cld-workshop",
+      "label": "Stakeholder CLD Workshop",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::group-model-building",
+        "public-health::mental-model-elicitation"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::model-face-validity",
+      "label": "Model Face Validity",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram",
+        "public-health::causal-loop-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::parameter-sensitivity",
+      "label": "Parameter Sensitivity",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::model-face-validity",
+        "public-health::rate-equations"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::historical-reproduction-test",
+      "label": "Historical Reproduction Test",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::model-face-validity"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::policy-lever-identification",
+      "label": "Policy Lever Identification",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::causal-loop-diagram"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::meadows-leverage-points",
+      "label": "Meadows Leverage Points",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::policy-lever-identification"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::unintended-consequences",
+      "label": "Unintended Consequences",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::meadows-leverage-points",
+        "public-health::systems-thinking-concepts"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::policy-resistance",
+      "label": "Policy Resistance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::unintended-consequences",
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::wicked-problems-ph",
+      "label": "Wicked Problems PH",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts",
+        "public-health::feedback-loops"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::network-analysis-ph",
+      "label": "Network Analysis PH",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::network-nodes-and-edges",
+      "label": "Network Nodes and Edges",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::network-analysis-ph"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::betweenness-centrality",
+      "label": "Betweenness Centrality",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::network-nodes-and-edges"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::degree-distribution",
+      "label": "Degree Distribution",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::network-nodes-and-edges"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::clustering-coefficient",
+      "label": "Clustering Coefficient",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::network-nodes-and-edges"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::network-interventions",
+      "label": "Network Interventions",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::network-analysis-ph",
+        "public-health::network-nodes-and-edges"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "public-health::r-statistical-computing",
+      "label": "R Statistical Computing",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::tidyverse-r-suite",
+      "label": "tidyverse R Suite",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::r-statistical-computing"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::ggplot2-visualization",
+      "label": "ggplot2 Visualization",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::tidyverse-r-suite"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::dplyr-data-manipulation",
+      "label": "dplyr Data Manipulation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::tidyverse-r-suite"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::python-for-public-health",
+      "label": "Python for Public Health",
+      "subject_id": "public-health",
+      "dependencies": [],
+      "taxonomy_id": "DATSCI",
+      "level": "foundational"
+    },
+    {
+      "id": "public-health::pandas-data-analysis",
+      "label": "pandas Data Analysis",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::python-for-public-health"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::numpy-scientific-computing",
+      "label": "NumPy Scientific Computing",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::python-for-public-health"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::scikit-learn-machine-learning",
+      "label": "scikit-learn Machine Learning",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::python-for-public-health"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::reproducible-research",
+      "label": "Reproducible Research",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::r-statistical-computing",
+        "public-health::python-for-public-health"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::r-markdown-documents",
+      "label": "R Markdown Documents",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::reproducible-research",
+        "public-health::r-statistical-computing"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::jupyter-notebooks",
+      "label": "Jupyter Notebooks",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::reproducible-research",
+        "public-health::python-for-public-health"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::git-version-control",
+      "label": "Git Version Control",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::reproducible-research"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::github-for-public-health",
+      "label": "GitHub for Public Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::git-version-control"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cdc-wonder-database",
+      "label": "CDC WONDER Database",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::brfss-survey-data",
+      "label": "BRFSS Survey Data",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sampling-methods",
+        "public-health::surveillance-system-design"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::nhanes-survey-data",
+      "label": "NHANES Survey Data",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sampling-methods"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::seer-cancer-registry",
+      "label": "SEER Cancer Registry",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::hcup-hospital-data",
+      "label": "HCUP Hospital Data",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vital-statistics-data",
+      "label": "Vital Statistics Data",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::mortality-rate"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::american-community-survey",
+      "label": "American Community Survey",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics",
+        "public-health::sampling-methods"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::data-cleaning-methods",
+      "label": "Data Cleaning Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics",
+        "public-health::missing-data-mechanisms"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::missing-data-handling",
+      "label": "Missing Data Handling",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::missing-data-mechanisms",
+        "public-health::data-cleaning-methods"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::record-linkage-methods",
+      "label": "Record Linkage Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::data-cleaning-methods"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::gis-spatial-analysis",
+      "label": "GIS Spatial Analysis",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::descriptive-statistics",
+        "public-health::population-health"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::choropleth-map-design",
+      "label": "Choropleth Map Design",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::gis-spatial-analysis"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::kernel-density-estimation",
+      "label": "Kernel Density Estimation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::gis-spatial-analysis"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::spatial-autocorrelation",
+      "label": "Spatial Autocorrelation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::gis-spatial-analysis"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::moran-s-i-statistic",
+      "label": "Moran's I Statistic",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::spatial-autocorrelation"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::satscan-cluster-detection",
+      "label": "SaTScan Cluster Detection",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::spatial-autocorrelation",
+        "public-health::moran-s-i-statistic"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::qgis-for-public-health",
+      "label": "QGIS for Public Health",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::gis-spatial-analysis"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::r-leaflet-mapping",
+      "label": "R Leaflet Mapping",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::gis-spatial-analysis",
+        "public-health::r-statistical-computing"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::r-shiny-dashboards",
+      "label": "R Shiny Dashboards",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::r-leaflet-mapping",
+        "public-health::r-statistical-computing"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::time-series-analysis-ph",
+      "label": "Time-Series Analysis PH",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::linear-regression",
+        "public-health::descriptive-statistics"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::machine-learning-basics",
+      "label": "Machine Learning Basics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::linear-regression",
+        "public-health::python-for-public-health"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::supervised-learning",
+      "label": "Supervised Learning",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::machine-learning-basics"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::random-forest-model",
+      "label": "Random Forest Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::supervised-learning"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::gradient-boosting-model",
+      "label": "Gradient Boosting Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::supervised-learning"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cross-validation-methods",
+      "label": "Cross-Validation Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::machine-learning-basics",
+        "public-health::statistical-power"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::auc-roc-performance",
+      "label": "AUC ROC Performance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cross-validation-methods",
+        "public-health::supervised-learning"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::unsupervised-learning",
+      "label": "Unsupervised Learning",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::machine-learning-basics"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::k-means-clustering",
+      "label": "K-Means Clustering",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::unsupervised-learning"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::nlp-for-surveillance",
+      "label": "NLP for Surveillance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::machine-learning-basics",
+        "public-health::social-media-in-public-health"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sentiment-analysis-ph",
+      "label": "Sentiment Analysis PH",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::nlp-for-surveillance"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::wastewater-epidemiology",
+      "label": "Wastewater Epidemiology",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::gis-spatial-analysis"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::social-media-data-mining",
+      "label": "Social Media Data Mining",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-media-in-public-health",
+        "public-health::machine-learning-basics"
+      ],
+      "taxonomy_id": "DATSCI",
+      "level": "core"
+    },
+    {
+      "id": "public-health::microsim-design-principles",
+      "label": "MicroSim Design Principles",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::systems-thinking-concepts",
+        "public-health::public-health-definition"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::p5-js-for-health-sims",
+      "label": "p5.js for Health Sims",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::chart-js-visualization",
+      "label": "Chart.js Visualization",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::plotly-interactive-charts",
+      "label": "Plotly Interactive Charts",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vis-network-library",
+      "label": "vis-network Library",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::microsim-design-principles",
+        "public-health::network-analysis-ph"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::interactive-seir-simulator",
+      "label": "Interactive SEIR Simulator",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sir-compartmental-model",
+        "public-health::microsim-design-principles",
+        "public-health::p5-js-for-health-sims"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sir-parameter-sliders",
+      "label": "SIR Parameter Sliders",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sir-compartmental-model",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::epidemic-curve-animation",
+      "label": "Epidemic Curve Animation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::epidemic-curve",
+        "public-health::microsim-design-principles",
+        "public-health::p5-js-for-health-sims"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::cld-interactive-simulation",
+      "label": "CLD Interactive Simulation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::causal-loop-diagram",
+        "public-health::microsim-design-principles",
+        "public-health::vis-network-library"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-equity-simulation",
+      "label": "Health Equity Simulation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-determinants-of-health",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::icu-surge-capacity-model",
+      "label": "ICU Surge Capacity Model",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram",
+        "public-health::insightmaker-tool",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::behavioral-intervention-sim",
+      "label": "Behavioral Intervention Sim",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::behavioral-intervention-design",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::network-spread-simulation",
+      "label": "Network Spread Simulation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::network-analysis-ph",
+        "public-health::microsim-design-principles",
+        "public-health::vis-network-library"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::herd-immunity-visualization",
+      "label": "Herd Immunity Visualization",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::herd-immunity-calculation",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::dose-response-explorer",
+      "label": "Dose-Response Explorer",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dose-response-assessment",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::policy-lever-simulation",
+      "label": "Policy Lever Simulation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::policy-lever-identification",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::demographic-pyramid-sim",
+      "label": "Demographic Pyramid Sim",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::demographic-transition",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vaccination-coverage-sim",
+      "label": "Vaccination Coverage Sim",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::immunization-schedule",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::contact-tracing-sim",
+      "label": "Contact Tracing Sim",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::outbreak-investigation",
+        "public-health::microsim-design-principles",
+        "public-health::vis-network-library"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-disparities-viz",
+      "label": "Health Disparities Viz",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-disparities-definition",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::supply-chain-surge-sim",
+      "label": "Supply Chain Surge Sim",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::environmental-exposure-sim",
+      "label": "Environmental Exposure Sim",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::exposure-assessment",
+        "public-health::microsim-design-principles"
+      ],
+      "taxonomy_id": "SIM",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-origins-detection",
+      "label": "COVID-19 Origins Detection",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::germ-theory-of-disease"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-genomic-surveillance",
+      "label": "COVID-19 Genomic Surveillance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::covid-19-origins-detection",
+        "public-health::surveillance-system-design"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-variant-emergence",
+      "label": "COVID-19 Variant Emergence",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::covid-19-genomic-surveillance",
+        "public-health::effective-reproduction-rt"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-r0-estimation",
+      "label": "COVID-19 R0 Estimation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::r0-basic-reproduction-number",
+        "public-health::effective-reproduction-rt"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-ifr-vs-cfr",
+      "label": "COVID-19 IFR vs CFR",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::case-fatality-ratio",
+        "public-health::infection-fatality-ratio"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-excess-mortality",
+      "label": "COVID-19 Excess Mortality",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::excess-mortality-estimation",
+        "public-health::mortality-rate"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-data-infrastructure",
+      "label": "COVID-19 Data Infrastructure",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::surveillance-system-design",
+        "public-health::us-health-system-structure"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-npi-evidence",
+      "label": "COVID-19 NPI Evidence",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::hierarchy-of-evidence",
+        "public-health::randomized-controlled-trial"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-mask-compliance",
+      "label": "COVID-19 Mask Compliance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::covid-19-npi-evidence",
+        "public-health::social-norms-in-health"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-vaccine-development",
+      "label": "COVID-19 Vaccine Development",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::randomized-controlled-trial",
+        "public-health::emergency-use-authorization"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-vaccine-distribution",
+      "label": "COVID-19 Vaccine Distribution",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::covid-19-vaccine-development",
+        "public-health::immunization-schedule"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-equity-failures",
+      "label": "COVID-19 Equity Failures",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-disparities-definition",
+        "public-health::covid-19-vaccine-distribution"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-communication-failure",
+      "label": "COVID-19 Communication Failure",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::cerc-framework",
+        "public-health::health-misinformation"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-misinformation",
+      "label": "COVID-19 Misinformation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::health-misinformation",
+        "public-health::social-media-in-public-health"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::long-covid-burden",
+      "label": "Long COVID Burden",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::prevalence-proportion",
+        "public-health::global-burden-of-disease"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-healthcare-surge",
+      "label": "COVID-19 Healthcare Surge",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::stock-and-flow-diagram",
+        "public-health::sir-compartmental-model"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-systems-analysis",
+      "label": "COVID-19 Systems Analysis",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::causal-loop-diagram",
+        "public-health::sir-compartmental-model",
+        "public-health::covid-19-healthcare-surge"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-wastewater-surveillance",
+      "label": "COVID Wastewater Surveillance",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::wastewater-epidemiology",
+        "public-health::covid-19-origins-detection"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-19-modeling-failures",
+      "label": "COVID-19 Modeling Failures",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sir-compartmental-model",
+        "public-health::covid-19-r0-estimation",
+        "public-health::model-face-validity"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::pandemic-preparedness-lessons",
+      "label": "Pandemic Preparedness Lessons",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::international-health-regulations",
+        "public-health::covid-19-data-infrastructure",
+        "public-health::covid-19-systems-analysis"
+      ],
+      "taxonomy_id": "COVID",
+      "level": "core"
+    },
+    {
+      "id": "public-health::dshea-1994-regulation",
+      "label": "DSHEA 1994 Regulation",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::public-health-law"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::supplement-industry-scale",
+      "label": "Supplement Industry Scale",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dshea-1994-regulation"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::fda-vs-ftc-jurisdiction",
+      "label": "FDA vs FTC Jurisdiction",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dshea-1994-regulation",
+        "public-health::public-health-law"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::miracle-cure-fraud-claims",
+      "label": "Miracle Cure Fraud Claims",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::supplement-industry-scale"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mlm-health-products",
+      "label": "MLM Health Products",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::supplement-industry-scale"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::digital-health-fraud-marketing",
+      "label": "Digital Health Fraud Marketing",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::social-media-in-public-health",
+        "public-health::mlm-health-products"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::supplement-science-evidence",
+      "label": "Supplement Science Evidence",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::evidence-based-practice",
+        "public-health::hierarchy-of-evidence"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::vulnerable-population-targeting",
+      "label": "Vulnerable Population Targeting",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::mlm-health-products",
+        "public-health::supplement-industry-scale"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::covid-supplement-fraud",
+      "label": "COVID Supplement Fraud",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::miracle-cure-fraud-claims",
+        "public-health::covid-19-misinformation"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::consumer-protection-tools",
+      "label": "Consumer Protection Tools",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::fda-vs-ftc-jurisdiction",
+        "public-health::dshea-1994-regulation"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::quackwatch-methods",
+      "label": "QuackWatch Methods",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::consumer-protection-tools"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::nsf-usp-certification",
+      "label": "NSF USP Certification",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::consumer-protection-tools"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::sift-for-health-claims",
+      "label": "SIFT for Health Claims",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::sift-fact-checking-method",
+        "public-health::miracle-cure-fraud-claims"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::health-fraud-policy-reform",
+      "label": "Health Fraud Policy Reform",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dshea-1994-regulation",
+        "public-health::fda-vs-ftc-jurisdiction"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::mlm-network-dynamics",
+      "label": "MLM Network Dynamics",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::causal-loop-diagram",
+        "public-health::mlm-health-products"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    },
+    {
+      "id": "public-health::dshea-reform-proposals",
+      "label": "DSHEA Reform Proposals",
+      "subject_id": "public-health",
+      "dependencies": [
+        "public-health::dshea-1994-regulation",
+        "public-health::health-fraud-policy-reform"
+      ],
+      "taxonomy_id": "FRAUD",
+      "level": "core"
+    }
+  ]
+}

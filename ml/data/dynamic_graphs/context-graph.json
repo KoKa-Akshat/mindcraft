@@ -1,0 +1,5253 @@
+{
+  "subject_id": "context-graph",
+  "title": "Context Graph: How Organizations Use LLMs Cost Effectively",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "GRAPH": {
+      "classifier_name": "Graph Fundamentals",
+      "color": "SteelBlue"
+    },
+    "EKG": {
+      "classifier_name": "Enterprise Knowledge Graphs",
+      "color": "DarkSlateBlue"
+    },
+    "DATA": {
+      "classifier_name": "Data and Semantic Layers",
+      "color": "Gold"
+    },
+    "META": {
+      "classifier_name": "Metadata Standards",
+      "color": "DarkGoldenrod"
+    },
+    "PROV": {
+      "classifier_name": "Process Mining and Provenance",
+      "color": "Teal"
+    },
+    "CNTX": {
+      "classifier_name": "Context Problem and Context Graphs",
+      "color": "DarkGreen"
+    },
+    "DTRC": {
+      "classifier_name": "Decision Traces and Graph Modeling",
+      "color": "Indigo"
+    },
+    "LLMI": {
+      "classifier_name": "LLM Foundations and Integration",
+      "color": "Orange"
+    },
+    "BUILD": {
+      "classifier_name": "Building and Deploying Systems",
+      "color": "DodgerBlue"
+    },
+    "USE": {
+      "classifier_name": "Enterprise Use Cases",
+      "color": "LimeGreen"
+    },
+    "COMP": {
+      "classifier_name": "Compliance, Market, and Adoption",
+      "color": "Crimson"
+    },
+    "INFRA": {
+      "classifier_name": "Data Infrastructure and Security",
+      "color": "DimGray"
+    }
+  },
+  "concepts": [
+    {
+      "id": "context-graph::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database",
+        "context-graph::graph-schema"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::labeled-property-graph",
+      "label": "Labeled Property Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database",
+        "context-graph::node-label",
+        "context-graph::edge-type",
+        "context-graph::graph-property"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-database",
+      "label": "Graph Database",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::node",
+        "context-graph::edge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::node",
+      "label": "Node",
+      "subject_id": "context-graph",
+      "dependencies": [],
+      "taxonomy_id": "GRAPH",
+      "level": "foundational"
+    },
+    {
+      "id": "context-graph::edge",
+      "label": "Edge",
+      "subject_id": "context-graph",
+      "dependencies": [],
+      "taxonomy_id": "GRAPH",
+      "level": "foundational"
+    },
+    {
+      "id": "context-graph::node-label",
+      "label": "Node Label",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::node"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::edge-type",
+      "label": "Edge Type",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::edge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-property",
+      "label": "Graph Property",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::node",
+        "context-graph::edge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-schema",
+      "label": "Graph Schema",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::node-label",
+        "context-graph::edge-type",
+        "context-graph::graph-property"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cypher-query-language",
+      "label": "Cypher Query Language",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::labeled-property-graph",
+        "context-graph::graph-schema"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::opencypher-standard",
+      "label": "openCypher Standard",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::cypher-query-language"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::gql-standard",
+      "label": "GQL Standard",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::cypher-query-language"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-pattern-matching",
+      "label": "Graph Pattern Matching",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-schema",
+        "context-graph::cypher-query-language"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-traversal",
+      "label": "Graph Traversal",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::node",
+        "context-graph::edge",
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::path-query",
+      "label": "Path Query",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-traversal",
+        "context-graph::graph-pattern-matching"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-index",
+      "label": "Graph Index",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database",
+        "context-graph::graph-property"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-algorithm",
+      "label": "Graph Algorithm",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-traversal",
+        "context-graph::graph-index"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::rdf-lacks-scalability",
+      "label": "RDF Lacks Scalability",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::knowledge-graph",
+        "context-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::open-world-assumption",
+      "label": "Open World Assumption",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::closed-world-assumption",
+      "label": "Closed World Assumption",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-vs-relational-model",
+      "label": "Graph vs Relational Model",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-vs-vector-store",
+      "label": "Graph vs Vector Store",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-serialization-format",
+      "label": "Graph Serialization Format",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graphml",
+      "label": "GraphML",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-serialization-format"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graphson",
+      "label": "GraphSON",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-serialization-format"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::enterprise-knowledge-graph",
+      "label": "Enterprise Knowledge Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::knowledge-graph",
+        "context-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::entity",
+      "label": "Entity",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::node"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::entity-resolution",
+      "label": "Entity Resolution",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::entity",
+        "context-graph::named-entity-recognition"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::master-data-management",
+      "label": "Master Data Management",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::entity-resolution"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::canonical-entity-model",
+      "label": "Canonical Entity Model",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::master-data-management"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::hub-and-spoke-graph-architecture",
+      "label": "Hub-and-Spoke Graph Architecture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::federated-graph-architecture",
+      "label": "Federated Graph Architecture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-schema-governance",
+      "label": "Graph Schema Governance",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-schema",
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::schema-drift",
+      "label": "Schema Drift",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-schema-governance"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::stale-edge-detection",
+      "label": "Stale Edge Detection",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::edge",
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::missing-provenance",
+      "label": "Missing Provenance",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::hr-data-graph",
+      "label": "HR Data Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::finance-data-graph",
+      "label": "Finance Data Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::crm-graph-integration",
+      "label": "CRM Graph Integration",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::erp-graph-integration",
+      "label": "ERP Graph Integration",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::product-catalog-graph",
+      "label": "Product Catalog Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::operational-log-graph",
+      "label": "Operational Log Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cross-system-entity-linking",
+      "label": "Cross-System Entity Linking",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::entity-resolution",
+        "context-graph::enterprise-knowledge-graph",
+        "context-graph::information-extraction",
+        "context-graph::relation-extraction"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-etl-pipeline",
+      "label": "Graph ETL Pipeline",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-ingestion-pattern",
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-ingestion-pattern",
+      "label": "Graph Ingestion Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::property-graph-scale",
+      "label": "Property Graph Scale",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::billion-edge-graph",
+      "label": "Billion-Edge Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::property-graph-scale"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-sharding",
+      "label": "Graph Sharding",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::billion-edge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-replication",
+      "label": "Graph Replication",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-deduplication",
+      "label": "Graph Deduplication",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::entity-resolution"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::knowledge-graph-quality",
+      "label": "Knowledge Graph Quality",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph",
+        "context-graph::community-detection",
+        "context-graph::graph-clustering"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::ontology",
+      "label": "Ontology",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::taxonomy-vs-ontology",
+      "label": "Taxonomy vs Ontology",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ontology"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-data-catalog",
+      "label": "Graph Data Catalog",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::skos",
+      "label": "SKOS",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ontology",
+        "context-graph::knowledge-graph"
+      ],
+      "taxonomy_id": "EKG",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-lake",
+      "label": "Data Lake",
+      "subject_id": "context-graph",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "context-graph::data-lakehouse",
+      "label": "Data Lakehouse",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-lake"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::semantic-layer",
+      "label": "Semantic Layer",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-lake"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::business-metric",
+      "label": "Business Metric",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::dimension",
+      "label": "Dimension",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::logical-data-model",
+      "label": "Logical Data Model",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::virtual-view",
+      "label": "Virtual View",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::logical-data-model"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::metric-store",
+      "label": "Metric Store",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::business-metric",
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::sql-based-semantic-layer",
+      "label": "SQL-Based Semantic Layer",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer",
+        "context-graph::metric-store"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::olap-semantic-layer-tool",
+      "label": "OLAP Semantic Layer Tool",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cube-semantic-layer",
+      "label": "Cube (Semantic Layer)",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer",
+        "context-graph::dimension"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::business-glossary",
+      "label": "Business Glossary",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::query-federation",
+      "label": "Query Federation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer",
+        "context-graph::data-lake"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-virtualization",
+      "label": "Data Virtualization",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::virtual-view",
+        "context-graph::query-federation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::naming-convention-standard",
+      "label": "Naming Convention Standard",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::business-glossary"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::join-path-discovery",
+      "label": "Join Path Discovery",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::logical-data-model"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::undocumented-join",
+      "label": "Undocumented Join",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::join-path-discovery"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::source-system-mapping",
+      "label": "Source System Mapping",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer",
+        "context-graph::data-lake"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::semantic-search",
+      "label": "Semantic Search",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::vocabulary-alignment",
+      "label": "Vocabulary Alignment",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::business-glossary",
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::column-naming-standard",
+      "label": "Column Naming Standard",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::naming-convention-standard"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::semantic-consistency",
+      "label": "Semantic Consistency",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::semantic-layer",
+        "context-graph::vocabulary-alignment"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::table-discovery",
+      "label": "Table Discovery",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-lake",
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::schema-registry",
+      "label": "Schema Registry",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-schema",
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-dictionary",
+      "label": "Data Dictionary",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::business-glossary",
+        "context-graph::semantic-layer"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::metadata",
+      "label": "Metadata",
+      "subject_id": "context-graph",
+      "dependencies": [],
+      "taxonomy_id": "DATA",
+      "level": "foundational"
+    },
+    {
+      "id": "context-graph::technical-metadata",
+      "label": "Technical Metadata",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::business-metadata",
+      "label": "Business Metadata",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::operational-metadata",
+      "label": "Operational Metadata",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::active-metadata-management",
+      "label": "Active Metadata Management",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::passive-metadata-cataloging",
+      "label": "Passive Metadata Cataloging",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-quality",
+      "label": "Data Quality",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-completeness",
+      "label": "Data Completeness",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-quality"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-accuracy",
+      "label": "Data Accuracy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-quality"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-consistency",
+      "label": "Data Consistency",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-quality"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-timeliness",
+      "label": "Data Timeliness",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-quality"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-stewardship",
+      "label": "Data Stewardship",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata",
+        "context-graph::data-governance-framework"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-ownership",
+      "label": "Data Ownership",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-governance-framework"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-classification",
+      "label": "Data Classification",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::access-control",
+      "label": "Access Control",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-classification"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-governance-framework",
+      "label": "Data Governance Framework",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::metadata-catalog-platform",
+      "label": "Metadata Catalog Platform",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::active-metadata-management",
+        "context-graph::technical-metadata",
+        "context-graph::business-metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::automated-metadata-discovery",
+      "label": "Automated Metadata Discovery",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-catalog-platform"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::metadata-tagging",
+      "label": "Metadata Tagging",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::policy-enforcement",
+      "label": "Policy Enforcement",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-governance-framework",
+        "context-graph::access-control",
+        "context-graph::data-anonymization",
+        "context-graph::differential-privacy"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::governance-role",
+      "label": "Governance Role",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-governance-framework"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-quality-rule",
+      "label": "Data Quality Rule",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-quality"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::metadata-registry",
+      "label": "Metadata Registry",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::iso-11179-standard",
+      "label": "ISO 11179 Standard",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-registry"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-element",
+      "label": "Data Element",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::iso-11179-standard"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-element-concept",
+      "label": "Data Element Concept",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-element"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::conceptual-domain",
+      "label": "Conceptual Domain",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-element-concept"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::value-domain",
+      "label": "Value Domain",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::conceptual-domain"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::object-class",
+      "label": "Object Class",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::iso-11179-standard"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::property-iso-11179",
+      "label": "Property (ISO 11179)",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::object-class"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::permissible-value",
+      "label": "Permissible Value",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::value-domain"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-definition",
+      "label": "Data Definition",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-element"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::authoritative-source",
+      "label": "Authoritative Source",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-registry"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::registry-entry",
+      "label": "Registry Entry",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::iso-11179-standard"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::administered-item",
+      "label": "Administered Item",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::registry-entry"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::registration-authority",
+      "label": "Registration Authority",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-registry"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::iso-11179-naming-convention",
+      "label": "ISO 11179 Naming Convention",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::iso-11179-standard"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-element-versioning",
+      "label": "Data Element Versioning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-element"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::concept-harmonization",
+      "label": "Concept Harmonization",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-element-concept",
+        "context-graph::vocabulary-alignment",
+        "context-graph::schema-matching",
+        "context-graph::ontology-mapping"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::registry-search-api",
+      "label": "Registry Search API",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-registry"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-binding",
+      "label": "Context Binding",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::registry-entry",
+        "context-graph::data-element"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::registry-vs-catalog",
+      "label": "Registry vs Catalog",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-registry",
+        "context-graph::metadata-catalog-platform"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-standardization",
+      "label": "Data Standardization",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::iso-11179-standard"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::reference-data-management",
+      "label": "Reference Data Management",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-governance-framework"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::code-list",
+      "label": "Code List",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::value-domain"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::unit-of-measure-registry",
+      "label": "Unit of Measure Registry",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-registry"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cross-enterprise-data-dictionary",
+      "label": "Cross-Enterprise Data Dictionary",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-dictionary",
+        "context-graph::metadata-registry"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::metadata-thesaurus",
+      "label": "Metadata Thesaurus",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-registry",
+        "context-graph::business-glossary"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::umls",
+      "label": "UMLS",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata-thesaurus"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::niem",
+      "label": "NIEM",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::iso-11179-standard",
+        "context-graph::data-standardization"
+      ],
+      "taxonomy_id": "META",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::process-mining",
+      "label": "Process Mining",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-log",
+        "context-graph::ieee-xes-standard"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::event-log",
+      "label": "Event Log",
+      "subject_id": "context-graph",
+      "dependencies": [],
+      "taxonomy_id": "PROV",
+      "level": "foundational"
+    },
+    {
+      "id": "context-graph::ieee-xes-standard",
+      "label": "IEEE XES Standard",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-log"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::process-discovery",
+      "label": "Process Discovery",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::process-mining",
+        "context-graph::event-log"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::conformance-checking",
+      "label": "Conformance Checking",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::process-discovery"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::process-enhancement",
+      "label": "Process Enhancement",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::process-mining",
+        "context-graph::conformance-checking"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::structured-logging",
+      "label": "Structured Logging",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-log"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::log-schema",
+      "label": "Log Schema",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::structured-logging"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::event-stream",
+      "label": "Event Stream",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-log"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-ingestible-log",
+      "label": "Graph-Ingestible Log",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::structured-logging",
+        "context-graph::log-schema"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::upstream-lineage",
+      "label": "Upstream Lineage",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-provenance"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::downstream-lineage",
+      "label": "Downstream Lineage",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-provenance"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::column-level-lineage",
+      "label": "Column-Level Lineage",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::upstream-lineage",
+        "context-graph::downstream-lineage"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-provenance",
+      "label": "Data Provenance",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-log"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::custody-chain",
+      "label": "Custody Chain",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-provenance"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::transformation-history",
+      "label": "Transformation History",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-provenance"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::openlineage-standard",
+      "label": "OpenLineage Standard",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::upstream-lineage",
+        "context-graph::downstream-lineage"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::lineage-vs-provenance",
+      "label": "Lineage vs Provenance",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::upstream-lineage",
+        "context-graph::data-provenance"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::event-sourcing",
+      "label": "Event Sourcing",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-log",
+        "context-graph::event-stream"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cqrs-pattern",
+      "label": "CQRS Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-sourcing"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::append-only-log",
+      "label": "Append-Only Log",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-log",
+        "context-graph::event-sourcing"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::change-data-capture",
+      "label": "Change Data Capture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-stream",
+        "context-graph::structured-logging"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::temporal-versioning",
+      "label": "Temporal Versioning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-provenance"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::lineage-graph",
+      "label": "Lineage Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::upstream-lineage",
+        "context-graph::downstream-lineage",
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::provenance-record",
+      "label": "Provenance Record",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-provenance"
+      ],
+      "taxonomy_id": "PROV",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-problem",
+      "label": "Context Problem",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph",
+        "context-graph::semantic-layer",
+        "context-graph::metadata-registry"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::llm-context-window",
+      "label": "LLM Context Window",
+      "subject_id": "context-graph",
+      "dependencies": [],
+      "taxonomy_id": "CNTX",
+      "level": "foundational"
+    },
+    {
+      "id": "context-graph::retrieval-augmented-generation",
+      "label": "Retrieval-Augmented Generation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::rag-limitations",
+      "label": "RAG Limitations",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::retrieval-augmented-generation"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::static-vs-dynamic-knowledge",
+      "label": "Static vs Dynamic Knowledge",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::hallucination",
+      "label": "Hallucination",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::organizational-knowledge-gap",
+      "label": "Organizational Knowledge Gap",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-problem",
+        "context-graph::enterprise-knowledge-graph",
+        "context-graph::tacit-knowledge"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-context",
+      "label": "Decision Context",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::organizational-knowledge-gap"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::tacit-knowledge",
+      "label": "Tacit Knowledge",
+      "subject_id": "context-graph",
+      "dependencies": [],
+      "taxonomy_id": "CNTX",
+      "level": "foundational"
+    },
+    {
+      "id": "context-graph::implicit-organizational-knowledge",
+      "label": "Implicit Organizational Knowledge",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::tacit-knowledge"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-freshness",
+      "label": "Context Freshness",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window",
+        "context-graph::static-vs-dynamic-knowledge"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-relevance",
+      "label": "Context Relevance",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-window-management",
+      "label": "Context Window Management",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::long-term-memory-for-ai",
+      "label": "Long-Term Memory for AI",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window",
+        "context-graph::context-problem"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::short-term-vs-long-term-memory",
+      "label": "Short-Term vs Long-Term Memory",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::long-term-memory-for-ai"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::grounding",
+      "label": "Grounding",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::retrieval-augmented-generation",
+        "context-graph::context-problem"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::knowledge-staleness",
+      "label": "Knowledge Staleness",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-freshness",
+        "context-graph::static-vs-dynamic-knowledge"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::missing-context-failure-mode",
+      "label": "Missing Context Failure Mode",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-problem",
+        "context-graph::rag-limitations"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-completeness",
+      "label": "Context Completeness",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-problem"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-poisoning",
+      "label": "Context Poisoning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window",
+        "context-graph::context-problem"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-definition",
+      "label": "Context Graph Definition",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::knowledge-graph",
+        "context-graph::labeled-property-graph",
+        "context-graph::context-problem"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-trace",
+      "label": "Decision Trace",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::living-record",
+      "label": "Living Record",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::entity-time-linkage",
+      "label": "Entity-Time Linkage",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::entity",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-vs-knowledge-graph",
+      "label": "Context Graph vs Knowledge Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::knowledge-graph"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-vs-vector-store",
+      "label": "Context Graph vs Vector Store",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-vs-database",
+      "label": "Context Graph vs Database",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-as-memory-layer",
+      "label": "Context Graph as Memory Layer",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::long-term-memory-for-ai"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::complementary-knowledge-layers",
+      "label": "Complementary Knowledge Layers",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-schema",
+      "label": "Context Graph Schema",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::graph-schema"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-node",
+      "label": "Decision Node",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::approval-edge",
+      "label": "Approval Edge",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::precedent-link",
+      "label": "Precedent Link",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-lifecycle",
+      "label": "Context Graph Lifecycle",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-update-pattern",
+      "label": "Context Graph Update Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-query-pattern",
+      "label": "Context Graph Query Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::cypher-query-language",
+        "context-graph::opencypher-standard",
+        "context-graph::gql-standard"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-api",
+      "label": "Context Graph API",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-read-path",
+      "label": "Context Graph Read Path",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-api"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-write-path",
+      "label": "Context Graph Write Path",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-api"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-access-control",
+      "label": "Context Graph Access Control",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::access-control",
+        "context-graph::context-graph-api"
+      ],
+      "taxonomy_id": "CNTX",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-trace-anatomy",
+      "label": "Decision Trace Anatomy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::exception-logic",
+      "label": "Exception Logic",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::historical-precedent",
+      "label": "Historical Precedent",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cross-system-synthesis",
+      "label": "Cross-System Synthesis",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy",
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::out-of-band-approval",
+      "label": "Out-of-Band Approval",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::approval-chain",
+      "label": "Approval Chain",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::out-of-band-approval",
+        "context-graph::approval-edge"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-justification",
+      "label": "Decision Justification",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-actor",
+      "label": "Decision Actor",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-timestamp",
+      "label": "Decision Timestamp",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-outcome",
+      "label": "Decision Outcome",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::linked-precedent",
+      "label": "Linked Precedent",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::historical-precedent",
+        "context-graph::precedent-link"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::exception-pattern",
+      "label": "Exception Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::exception-logic"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::policy-version-reference",
+      "label": "Policy Version Reference",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-context-capture",
+      "label": "Decision Context Capture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy",
+        "context-graph::context-graph-write-path"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::real-time-trace-recording",
+      "label": "Real-Time Trace Recording",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-context-capture"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::trace-completeness",
+      "label": "Trace Completeness",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::trace-replay",
+      "label": "Trace Replay",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace",
+        "context-graph::append-only-log"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::trace-indexing",
+      "label": "Trace Indexing",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace",
+        "context-graph::graph-index"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::counterfactual-trace",
+      "label": "Counterfactual Trace",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::judgment-call",
+      "label": "Judgment Call",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::exception-logic",
+        "context-graph::historical-precedent"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-trace-node-schema",
+      "label": "Decision Trace Node Schema",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace",
+        "context-graph::context-graph-schema",
+        "context-graph::node-label"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-trace-edge-types",
+      "label": "Decision Trace Edge Types",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-node-schema",
+        "context-graph::edge-type"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::trace-to-entity-relationship",
+      "label": "Trace-to-Entity Relationship",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-edge-types",
+        "context-graph::entity"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::actor-node-pattern",
+      "label": "Actor Node Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-edge-types",
+        "context-graph::decision-actor"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::policy-version-edge",
+      "label": "Policy Version Edge",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-edge-types",
+        "context-graph::policy-version-reference"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::precedent-chain-pattern",
+      "label": "Precedent Chain Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-edge-types",
+        "context-graph::linked-precedent",
+        "context-graph::graph-traversal"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::legacy-system-bias",
+      "label": "Legacy System Bias",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-problem"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::current-state-bias",
+      "label": "Current State Bias",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::legacy-system-bias"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::read-path-limitation",
+      "label": "Read-Path Limitation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::legacy-system-bias"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::write-path-advantage",
+      "label": "Write-Path Advantage",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-write-path",
+        "context-graph::read-path-limitation"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-warehouse-gap",
+      "label": "Data Warehouse Gap",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::legacy-system-bias",
+        "context-graph::context-problem"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::ai-agent-execution-path",
+      "label": "AI Agent Execution Path",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::system-of-record-gap",
+      "label": "System of Record Gap",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::legacy-system-bias"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::incumbent-architecture-constraint",
+      "label": "Incumbent Architecture Constraint",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::legacy-system-bias",
+        "context-graph::data-warehouse-gap"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::structural-advantage",
+      "label": "Structural Advantage",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::incumbent-architecture-constraint"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::purpose-built-system",
+      "label": "Purpose-Built System",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::structural-advantage"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::integration-tax",
+      "label": "Integration Tax",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::incumbent-architecture-constraint"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-silo",
+      "label": "Data Silo",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::legacy-system-bias"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::post-hoc-context-capture",
+      "label": "Post-Hoc Context Capture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-problem",
+        "context-graph::legacy-system-bias"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::real-time-context-capture",
+      "label": "Real-Time Context Capture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-write-path",
+        "context-graph::real-time-trace-recording"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::competitive-moat",
+      "label": "Competitive Moat",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::structural-advantage"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-node-types",
+      "label": "Context Graph Node Types",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::node-label"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-edge-types",
+      "label": "Context Graph Edge Types",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::edge-type"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::temporal-edge",
+      "label": "Temporal Edge",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::edge",
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::time-stamped-property",
+      "label": "Time-Stamped Property",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-property",
+        "context-graph::temporal-edge"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::bitemporal-modeling",
+      "label": "Bitemporal Modeling",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::temporal-edge"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::slowly-changing-dimension",
+      "label": "Slowly Changing Dimension",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::dimension",
+        "context-graph::temporal-edge"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::entity-linking-in-context-graph",
+      "label": "Entity Linking in Context Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::cross-system-entity-linking",
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cross-graph-reference",
+      "label": "Cross-Graph Reference",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-index-design",
+      "label": "Context Graph Index Design",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-index",
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-constraint",
+      "label": "Context Graph Constraint",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-schema",
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-migration",
+      "label": "Context Graph Migration",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-versioning",
+      "label": "Context Graph Versioning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::temporal-versioning",
+        "context-graph::valid-time",
+        "context-graph::transaction-time"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-snapshot",
+      "label": "Context Graph Snapshot",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-versioning"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::subgraph-extraction",
+      "label": "Subgraph Extraction",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema",
+        "context-graph::graph-pattern-matching"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-merge",
+      "label": "Context Graph Merge",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::property-normalization",
+      "label": "Property Normalization",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-property",
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-cardinality",
+      "label": "Context Graph Cardinality",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-relationship-design",
+      "label": "Context Graph Relationship Design",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-edge-types"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::event-driven-graph-update",
+      "label": "Event-Driven Graph Update",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-stream",
+        "context-graph::context-graph-write-path"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-test-pattern",
+      "label": "Context Graph Test Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::bitemporal-query",
+      "label": "Bitemporal Query",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::bitemporal-modeling",
+        "context-graph::cypher-query-language"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::valid-time",
+      "label": "Valid Time",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::bitemporal-modeling"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::transaction-time",
+      "label": "Transaction Time",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::bitemporal-modeling"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-constraint-enforcement",
+      "label": "Graph Constraint Enforcement",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-constraint"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-schema-evolution",
+      "label": "Graph Schema Evolution",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-migration",
+        "context-graph::schema-drift"
+      ],
+      "taxonomy_id": "DTRC",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::llm-integration-pattern",
+      "label": "LLM Integration Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::llm-context-window"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-retrieval",
+      "label": "Context Retrieval",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-integration-pattern",
+        "context-graph::context-graph-query-pattern"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::relevance-ranking",
+      "label": "Relevance Ranking",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-retrieval",
+        "context-graph::semantic-similarity"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::semantic-similarity",
+      "label": "Semantic Similarity",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::vector-embedding",
+      "label": "Vector Embedding",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::hybrid-retrieval",
+      "label": "Hybrid Retrieval",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-retrieval",
+        "context-graph::vector-embedding",
+        "context-graph::sparse-retrieval",
+        "context-graph::bm25"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-window-budget",
+      "label": "Context Window Budget",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-compression",
+      "label": "Context Compression",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-window-budget"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-pruning",
+      "label": "Context Pruning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-window-budget",
+        "context-graph::relevance-ranking"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::grounding-strategy",
+      "label": "Grounding Strategy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::grounding",
+        "context-graph::context-retrieval"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::prompt-engineering-with-context",
+      "label": "Prompt Engineering with Context",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window",
+        "context-graph::context-retrieval"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::few-shot-context-injection",
+      "label": "Few-Shot Context Injection",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt-engineering-with-context"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::chain-of-thought-with-context",
+      "label": "Chain-of-Thought with Context",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt-engineering-with-context"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-reranking",
+      "label": "Context Reranking",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::relevance-ranking",
+        "context-graph::context-retrieval"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::multi-hop-retrieval",
+      "label": "Multi-Hop Retrieval",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-retrieval",
+        "context-graph::graph-traversal",
+        "context-graph::transitive-closure",
+        "context-graph::shortest-path-algorithm"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-freshness-check",
+      "label": "Context Freshness Check",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-freshness",
+        "context-graph::context-retrieval"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-conflict-resolution",
+      "label": "Context Conflict Resolution",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-retrieval"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::llm-output-validation",
+      "label": "LLM Output Validation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-integration-pattern"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::hallucination-mitigation",
+      "label": "Hallucination Mitigation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::hallucination",
+        "context-graph::grounding-strategy"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-aware-generation",
+      "label": "Context-Aware Generation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-integration-pattern",
+        "context-graph::context-retrieval"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::structured-output-with-context",
+      "label": "Structured Output with Context",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-aware-generation"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::function-calling-pattern",
+      "label": "Function Calling Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-integration-pattern"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-tool-definition",
+      "label": "Context Graph Tool Definition",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::function-calling-pattern",
+        "context-graph::context-graph-api"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::streaming-context-retrieval",
+      "label": "Streaming Context Retrieval",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-retrieval"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-prompt-template",
+      "label": "Context Graph Prompt Template",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt-engineering-with-context",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-storage-layer",
+      "label": "Context Graph Storage Layer",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::property-graph-database-selection",
+      "label": "Property Graph Database Selection",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-storage-layer",
+        "context-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::vector-index-layer",
+      "label": "Vector Index Layer",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-storage-layer",
+        "context-graph::vector-embedding"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::hybrid-storage-architecture",
+      "label": "Hybrid Storage Architecture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::property-graph-database-selection",
+        "context-graph::vector-index-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::ingestion-pipeline-design",
+      "label": "Ingestion Pipeline Design",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-storage-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::real-time-ingestion",
+      "label": "Real-Time Ingestion",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ingestion-pipeline-design",
+        "context-graph::event-stream"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::batch-ingestion",
+      "label": "Batch Ingestion",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ingestion-pipeline-design"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::backfill-strategy",
+      "label": "Backfill Strategy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::batch-ingestion",
+        "context-graph::context-graph-storage-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::schema-evolution",
+      "label": "Schema Evolution",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-schema-evolution",
+        "context-graph::context-graph-storage-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-sdk",
+      "label": "Context Graph SDK",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-api",
+        "context-graph::graph-serialization-format"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-rest-api",
+      "label": "Context Graph REST API",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-api"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-graphql-api",
+      "label": "Context Graph GraphQL API",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-api"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::event-driven-ingestion",
+      "label": "Event-Driven Ingestion",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ingestion-pipeline-design",
+        "context-graph::event-stream",
+        "context-graph::cqrs-pattern"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::event-streaming-integration",
+      "label": "Event Streaming Integration",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-stream",
+        "context-graph::ingestion-pipeline-design"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::message-queue-pattern",
+      "label": "Message Queue Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-stream"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-caching",
+      "label": "Context Graph Caching",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-storage-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-replication",
+      "label": "Context Graph Replication",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-storage-layer",
+        "context-graph::graph-replication"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-monitoring",
+      "label": "Context Graph Monitoring",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-storage-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-alerting",
+      "label": "Context Graph Alerting",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-monitoring"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-performance-tuning",
+      "label": "Context Graph Performance Tuning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-monitoring",
+        "context-graph::context-graph-storage-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-sla",
+      "label": "Context Graph SLA",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-monitoring"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-deployment-pattern",
+      "label": "Context Graph Deployment Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-storage-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-testing-strategy",
+      "label": "Context Graph Testing Strategy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-schema"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-observability",
+      "label": "Context Graph Observability",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-monitoring",
+        "context-graph::data-observability"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-cost-model",
+      "label": "Context Graph Cost Model",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-storage-layer"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::ai-agent-loop",
+      "label": "AI Agent Loop",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-integration-pattern",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-planning",
+      "label": "Agent Planning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-memory-architecture",
+      "label": "Agent Memory Architecture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop",
+        "context-graph::long-term-memory-for-ai"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::tool-use",
+      "label": "Tool Use",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop",
+        "context-graph::function-calling-pattern"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-orchestration",
+      "label": "Agent Orchestration",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::multi-agent-system",
+      "label": "Multi-Agent System",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-orchestration"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-write-back",
+      "label": "Agent Write-Back",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop",
+        "context-graph::context-graph-write-path"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-read-pattern",
+      "label": "Agent Read Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop",
+        "context-graph::context-graph-read-path"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graduated-autonomy",
+      "label": "Graduated Autonomy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop",
+        "context-graph::human-in-the-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::human-in-the-loop",
+      "label": "Human-in-the-Loop",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-feedback-loop",
+      "label": "Agent Feedback Loop",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop",
+        "context-graph::agent-write-back"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-trace",
+      "label": "Agent Trace",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-decision-log",
+      "label": "Agent Decision Log",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-trace",
+        "context-graph::context-graph-write-path"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-error-recovery",
+      "label": "Agent Error Recovery",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-retry-pattern",
+      "label": "Agent Retry Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-error-recovery"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-rate-limiting",
+      "label": "Agent Rate Limiting",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-authentication",
+      "label": "Agent Authentication",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::access-control",
+        "context-graph::ai-agent-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-authorization",
+      "label": "Agent Authorization",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-authentication"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-sandboxing",
+      "label": "Agent Sandboxing",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-authorization"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::react-pattern",
+      "label": "ReAct Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop",
+        "context-graph::agent-planning"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::plan-and-execute-pattern",
+      "label": "Plan-and-Execute Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-planning"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::reflection-pattern",
+      "label": "Reflection Pattern",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-feedback-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-evaluation",
+      "label": "Agent Evaluation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ai-agent-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-benchmarking",
+      "label": "Agent Benchmarking",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-evaluation"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::agent-context-budget",
+      "label": "Agent Context Budget",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-window-budget",
+        "context-graph::ai-agent-loop"
+      ],
+      "taxonomy_id": "BUILD",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::finance-automation-use-case",
+      "label": "Finance Automation Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::revenue-reporting-exception",
+      "label": "Revenue Reporting Exception",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::finance-automation-use-case",
+        "context-graph::exception-logic"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::arr-definition-conflict",
+      "label": "ARR Definition Conflict",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::revenue-reporting-exception"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::sales-engagement-use-case",
+      "label": "Sales Engagement Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::sales-playbook-precedent",
+      "label": "Sales Playbook Precedent",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::sales-engagement-use-case",
+        "context-graph::historical-precedent"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::engineering-incident-use-case",
+      "label": "Engineering Incident Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::production-decision-record",
+      "label": "Production Decision Record",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::engineering-incident-use-case",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::legal-compliance-use-case",
+      "label": "Legal Compliance Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::regulatory-audit-automation",
+      "label": "Regulatory Audit Automation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::legal-compliance-use-case",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::customer-success-use-case",
+      "label": "Customer Success Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::account-history-graph",
+      "label": "Account History Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::customer-success-use-case",
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::escalation-logic",
+      "label": "Escalation Logic",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::customer-success-use-case",
+        "context-graph::exception-logic"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::hr-workflow-automation",
+      "label": "HR Workflow Automation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::procurement-use-case",
+      "label": "Procurement Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::supply-chain-use-case",
+      "label": "Supply Chain Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::marketing-attribution-use-case",
+      "label": "Marketing Attribution Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::risk-management-use-case",
+      "label": "Risk Management Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::it-operations-use-case",
+      "label": "IT Operations Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::healthcare-workflow-use-case",
+      "label": "Healthcare Workflow Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::financial-services-compliance",
+      "label": "Financial Services Compliance",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::retail-personalization-use-case",
+      "label": "Retail Personalization Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::manufacturing-quality-use-case",
+      "label": "Manufacturing Quality Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::insurance-claims-use-case",
+      "label": "Insurance Claims Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::government-process-automation",
+      "label": "Government Process Automation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cross-department-use-case",
+      "label": "Cross-Department Use Case",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "USE",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::regulatory-compliance",
+      "label": "Regulatory Compliance",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-governance-framework"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::automated-decision-regulation",
+      "label": "Automated Decision Regulation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::regulatory-compliance",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::gdpr-explainability-requirement",
+      "label": "GDPR Explainability Requirement",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::automated-decision-regulation"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::right-to-explanation",
+      "label": "Right to Explanation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::gdpr-explainability-requirement"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::audit-log",
+      "label": "Audit Log",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace",
+        "context-graph::append-only-log"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::audit-trail-design",
+      "label": "Audit Trail Design",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::audit-log"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::explainability-by-design",
+      "label": "Explainability by Design",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::post-hoc-explainability",
+      "label": "Post-Hoc Explainability",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::model-card",
+      "label": "Model Card",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::explainability-by-design"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-record-format",
+      "label": "Decision Record Format",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace-anatomy",
+        "context-graph::audit-log"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-retention-policy",
+      "label": "Data Retention Policy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-governance-framework"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-purge-policy",
+      "label": "Data Purge Policy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-retention-policy"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::compliance-reporting",
+      "label": "Compliance Reporting",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::regulatory-compliance",
+        "context-graph::audit-log",
+        "context-graph::conformance-checking"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::algorithmic-accountability",
+      "label": "Algorithmic Accountability",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::automated-decision-regulation",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::bias-detection",
+      "label": "Bias Detection",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::algorithmic-accountability"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::fairness-audit",
+      "label": "Fairness Audit",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::algorithmic-accountability"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::explainability-test",
+      "label": "Explainability Test",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::explainability-by-design"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::compliance-gap-analysis",
+      "label": "Compliance Gap Analysis",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::regulatory-compliance",
+        "context-graph::ai-red-teaming"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::governance-report",
+      "label": "Governance Report",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::compliance-reporting",
+        "context-graph::data-governance-framework"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::eu-ai-act",
+      "label": "EU AI Act",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::automated-decision-regulation"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::full-system-replacement-strategy",
+      "label": "Full System Replacement Strategy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::structural-advantage"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::module-replacement-strategy",
+      "label": "Module Replacement Strategy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::structural-advantage"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::new-system-creation-strategy",
+      "label": "New System Creation Strategy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::structural-advantage"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::beachhead-workflow",
+      "label": "Beachhead Workflow",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::glue-function",
+      "label": "Glue Function",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::exception-heavy-workflow",
+      "label": "Exception-Heavy Workflow",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::exception-logic",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::high-headcount-signal",
+      "label": "High-Headcount Signal",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-startup",
+      "label": "Context Graph Startup",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::competitive-moat"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::enterprise-ai-market",
+      "label": "Enterprise AI Market",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::trillion-dollar-opportunity",
+      "label": "Trillion-Dollar Opportunity",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-ai-market",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::sales-workflow-ai-system",
+      "label": "Sales Workflow AI System",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::full-system-replacement-strategy",
+        "context-graph::sales-engagement-use-case"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::finance-workflow-ai-system",
+      "label": "Finance Workflow AI System",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::full-system-replacement-strategy",
+        "context-graph::finance-automation-use-case"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::engineering-workflow-ai-system",
+      "label": "Engineering Workflow AI System",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::new-system-creation-strategy",
+        "context-graph::engineering-incident-use-case"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::go-to-market-strategy",
+      "label": "Go-To-Market Strategy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-startup",
+        "context-graph::beachhead-workflow"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::startup-competitive-analysis",
+      "label": "Startup Competitive Analysis",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-startup",
+        "context-graph::competitive-moat"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::first-workflow-selection",
+      "label": "First Workflow Selection",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::beachhead-workflow"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::change-management",
+      "label": "Change Management",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::stakeholder-alignment",
+      "label": "Stakeholder Alignment",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::change-management"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::decision-quality-metric",
+      "label": "Decision Quality Metric",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace",
+        "context-graph::agent-evaluation"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::adoption-roadmap",
+      "label": "Adoption Roadmap",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::first-workflow-selection",
+        "context-graph::change-management",
+        "context-graph::process-enhancement"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::pilot-program-design",
+      "label": "Pilot Program Design",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::first-workflow-selection"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::success-criteria-definition",
+      "label": "Success Criteria Definition",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::pilot-program-design",
+        "context-graph::decision-quality-metric"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::roi-measurement",
+      "label": "ROI Measurement",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-quality-metric",
+        "context-graph::success-criteria-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::user-trust-building",
+      "label": "User Trust Building",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graduated-autonomy",
+        "context-graph::human-in-the-loop"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::human-review-workflow",
+      "label": "Human Review Workflow",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::human-in-the-loop",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::escalation-policy",
+      "label": "Escalation Policy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::human-review-workflow",
+        "context-graph::exception-logic"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::model-improvement-feedback",
+      "label": "Model Improvement Feedback",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::agent-feedback-loop",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::training-data-from-traces",
+      "label": "Training Data from Traces",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::decision-trace",
+        "context-graph::model-improvement-feedback"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::organizational-memory",
+      "label": "Organizational Memory",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition",
+        "context-graph::long-term-memory-for-ai"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::knowledge-transfer",
+      "label": "Knowledge Transfer",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::organizational-memory"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::cross-functional-ai-team",
+      "label": "Cross-Functional AI Team",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::center-of-excellence",
+      "label": "Center of Excellence",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::cross-functional-ai-team"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::executive-sponsorship",
+      "label": "Executive Sponsorship",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::change-management"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::adoption-barrier",
+      "label": "Adoption Barrier",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::first-workflow-selection",
+        "context-graph::change-management"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::adoption-accelerator",
+      "label": "Adoption Accelerator",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::first-workflow-selection",
+        "context-graph::user-trust-building",
+        "context-graph::graduated-autonomy"
+      ],
+      "taxonomy_id": "COMP",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-neural-network",
+      "label": "Graph Neural Network",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::knowledge-graph",
+        "context-graph::labeled-property-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::knowledge-graph-embedding",
+      "label": "Knowledge Graph Embedding",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::knowledge-graph",
+        "context-graph::graph-neural-network"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::entity-disambiguation",
+      "label": "Entity Disambiguation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::entity-resolution"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::named-entity-recognition",
+      "label": "Named Entity Recognition",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::entity"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::information-extraction",
+      "label": "Information Extraction",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata",
+        "context-graph::entity"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::relation-extraction",
+      "label": "Relation Extraction",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::information-extraction"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::semantic-triple",
+      "label": "Semantic Triple",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ontology"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::inference-engine",
+      "label": "Inference Engine",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ontology"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::rule-based-reasoning",
+      "label": "Rule-Based Reasoning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::inference-engine"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::transitive-closure",
+      "label": "Transitive Closure",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-traversal"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::shortest-path-algorithm",
+      "label": "Shortest Path Algorithm",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-algorithm",
+        "context-graph::graph-traversal"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::community-detection",
+      "label": "Community Detection",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-algorithm"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::centrality-measure",
+      "label": "Centrality Measure",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-algorithm"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::pagerank",
+      "label": "PageRank",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::centrality-measure"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-clustering",
+      "label": "Graph Clustering",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-algorithm"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::subgraph-matching",
+      "label": "Subgraph Matching",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-pattern-matching",
+        "context-graph::graph-algorithm"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::schema-matching",
+      "label": "Schema Matching",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-schema"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::ontology-mapping",
+      "label": "Ontology Mapping",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ontology",
+        "context-graph::schema-matching"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::dublin-core-metadata",
+      "label": "Dublin Core Metadata",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::json-ld",
+      "label": "JSON-LD",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ontology",
+        "context-graph::dublin-core-metadata"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-mesh",
+      "label": "Data Mesh",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-lake",
+        "context-graph::data-governance-framework"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-product",
+      "label": "Data Product",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-mesh"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-contract",
+      "label": "Data Contract",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-product",
+        "context-graph::metadata"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-sla",
+      "label": "Data SLA",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-sla",
+        "context-graph::data-contract",
+        "context-graph::data-product"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-observability",
+      "label": "Data Observability",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-graph-monitoring",
+        "context-graph::data-quality"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::sql-transformation-tool",
+      "label": "SQL Transformation Tool",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::sql-based-semantic-layer",
+        "context-graph::data-lake"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::workflow-orchestration-tool",
+      "label": "Workflow Orchestration Tool",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::ingestion-pipeline-design"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::event-streaming-platform",
+      "label": "Event Streaming Platform",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::event-stream"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-batch-processing",
+      "label": "Graph Batch Processing",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::batch-ingestion",
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::streaming-graph-update",
+      "label": "Streaming Graph Update",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::real-time-ingestion",
+        "context-graph::graph-database",
+        "context-graph::change-data-feed"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::multi-model-database",
+      "label": "Multi-Model Database",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::document-store-integration",
+      "label": "Document Store Integration",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::time-series-integration",
+      "label": "Time-Series Integration",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database",
+        "context-graph::temporal-edge"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::feature-engineering-from-graph",
+      "label": "Feature Engineering from Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::knowledge-graph-as-feature-store",
+      "label": "Knowledge Graph as Feature Store",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph",
+        "context-graph::feature-engineering-from-graph",
+        "context-graph::knowledge-graph-embedding"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-based-recommendation",
+      "label": "Graph-Based Recommendation",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph",
+        "context-graph::centrality-measure",
+        "context-graph::pagerank"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::personalization-graph",
+      "label": "Personalization Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-based-recommendation",
+        "context-graph::session-graph",
+        "context-graph::user-journey-graph"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::session-graph",
+      "label": "Session Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::user-journey-graph",
+      "label": "User Journey Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::session-graph"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::change-data-feed",
+      "label": "Change Data Feed",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::change-data-capture"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "context-graph",
+      "dependencies": [],
+      "taxonomy_id": "LLMI",
+      "level": "foundational"
+    },
+    {
+      "id": "context-graph::transformer-architecture",
+      "label": "Transformer Architecture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::token",
+      "label": "Token",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::tokenization",
+      "label": "Tokenization",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::token"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::prompt",
+      "label": "Prompt",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::system-prompt",
+      "label": "System Prompt",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-window-limit",
+      "label": "Context Window Limit",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::temperature-parameter",
+      "label": "Temperature Parameter",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::top-p-sampling",
+      "label": "Top-P Sampling",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::fine-tuning",
+      "label": "Fine-Tuning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::reinforcement-learning-from-human-feedback",
+      "label": "Reinforcement Learning from Human Feedback",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::fine-tuning"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::instruction-tuning",
+      "label": "Instruction Tuning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::fine-tuning"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::in-context-learning",
+      "label": "In-Context Learning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-context-window",
+        "context-graph::prompt"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::zero-shot-prompting",
+      "label": "Zero-Shot Prompting",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt",
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::few-shot-prompting",
+      "label": "Few-Shot Prompting",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt",
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::prompt-injection-risk",
+      "label": "Prompt Injection Risk",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-injection-attack",
+      "label": "Context Injection Attack",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt-injection-risk",
+        "context-graph::context-graph-definition"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::llm-evaluation-metric",
+      "label": "LLM Evaluation Metric",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::large-language-model"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::bleu-score",
+      "label": "BLEU Score",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-evaluation-metric"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::faithfulness-score",
+      "label": "Faithfulness Score",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::llm-evaluation-metric",
+        "context-graph::grounding"
+      ],
+      "taxonomy_id": "LLMI",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::graph-security-model",
+      "label": "Graph Security Model",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-database",
+        "context-graph::access-control"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::row-level-security-in-graph",
+      "label": "Row-Level Security in Graph",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-security-model"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::attribute-based-access-control",
+      "label": "Attribute-Based Access Control",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::access-control"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::zero-trust-graph-architecture",
+      "label": "Zero-Trust Graph Architecture",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::graph-security-model",
+        "context-graph::attribute-based-access-control"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-masking",
+      "label": "Data Masking",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-classification"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::data-anonymization",
+      "label": "Data Anonymization",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-masking"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::differential-privacy",
+      "label": "Differential Privacy",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::data-anonymization"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::federated-learning",
+      "label": "Federated Learning",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::large-language-model",
+        "context-graph::fine-tuning"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::model-audit-trail",
+      "label": "Model Audit Trail",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::audit-log",
+        "context-graph::decision-trace"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::ai-red-teaming",
+      "label": "AI Red Teaming",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::prompt-injection-risk"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::vector-database",
+      "label": "Vector Database",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::vector-embedding"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::hnsw-index",
+      "label": "HNSW Index",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::vector-database"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::product-quantization",
+      "label": "Product Quantization",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::vector-database"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::approximate-nearest-neighbor",
+      "label": "Approximate Nearest Neighbor",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::vector-database"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::embedding-model",
+      "label": "Embedding Model",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::vector-embedding"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::sentence-transformer",
+      "label": "Sentence Transformer",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::embedding-model"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::dense-retrieval",
+      "label": "Dense Retrieval",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-retrieval",
+        "context-graph::embedding-model",
+        "context-graph::sentence-transformer"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::sparse-retrieval",
+      "label": "Sparse Retrieval",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::context-retrieval"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::bm25",
+      "label": "BM25",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::sparse-retrieval"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    },
+    {
+      "id": "context-graph::context-graph-roi-model",
+      "label": "Context Graph ROI Model",
+      "subject_id": "context-graph",
+      "dependencies": [
+        "context-graph::roi-measurement",
+        "context-graph::context-graph-cost-model"
+      ],
+      "taxonomy_id": "INFRA",
+      "level": "core"
+    }
+  ]
+}

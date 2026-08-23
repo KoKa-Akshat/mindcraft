@@ -1,0 +1,3693 @@
+{
+  "subject_id": "infographics",
+  "title": "Interactive Infographics for Intelligent Textbooks",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "Plum"
+    },
+    "TAXON": {
+      "classifier_name": "Infographic Taxonomy",
+      "color": "Gainsboro"
+    },
+    "SLIDE": {
+      "classifier_name": "Slide Art Diagrams",
+      "color": "PeachPuff"
+    },
+    "FRAME": {
+      "classifier_name": "Visual Frameworks",
+      "color": "Honeydew"
+    },
+    "CAUSE": {
+      "classifier_name": "Causal Loop Diagrams",
+      "color": "MintCream"
+    },
+    "OVRLY": {
+      "classifier_name": "Overlayment Patterns",
+      "color": "PowderBlue"
+    },
+    "JSLIB": {
+      "classifier_name": "JavaScript Libraries",
+      "color": "MistyRose"
+    },
+    "WEBFD": {
+      "classifier_name": "Web Fundamentals",
+      "color": "PaleTurquoise"
+    },
+    "MSIM": {
+      "classifier_name": "MicroSim Standards",
+      "color": "LavenderBlush"
+    },
+    "GENAI": {
+      "classifier_name": "Generative AI",
+      "color": "LightYellow"
+    },
+    "TRACK": {
+      "classifier_name": "Tracking and Analytics",
+      "color": "Lavender"
+    },
+    "LEARN": {
+      "classifier_name": "Learning Science",
+      "color": "Thistle"
+    },
+    "DEPLY": {
+      "classifier_name": "Deployment and Tools",
+      "color": "LightCoral"
+    },
+    "ADVIZ": {
+      "classifier_name": "Advanced Visualization",
+      "color": "SteelBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "infographics::infographic",
+      "label": "Infographic",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::interactive-infographic",
+      "label": "Interactive Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::static-infographic",
+      "label": "Static Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::animated-infographic",
+      "label": "Animated Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interactive-infographic"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::microsim",
+      "label": "MicroSim",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interactive-infographic",
+        "infographics::intelligent-textbook"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::microsim-architecture",
+      "label": "MicroSim Architecture",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::iframe-element",
+      "label": "Iframe Element",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::width-responsive-design",
+      "label": "Width-Responsive Design",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::iframe-element",
+        "infographics::css-styling"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::central-content-area",
+      "label": "Central Content Area",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::width-responsive-design",
+        "infographics::intelligent-textbook"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::drawing-canvas",
+      "label": "Drawing Canvas",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::canvas-element"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::infobox",
+      "label": "Infobox",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interactive-infographic",
+        "infographics::region"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::infobox-positioning",
+      "label": "Infobox Positioning",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infobox",
+        "infographics::pixel-coordinates"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::region",
+      "label": "Region",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::named-region",
+      "label": "Named Region",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::region",
+        "infographics::region-label"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::region-label",
+      "label": "Region Label",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::region"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::hover-event",
+      "label": "Hover Event",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::event-handler",
+        "infographics::pointer-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::click-event",
+      "label": "Click Event",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::event-handler",
+        "infographics::pointer-device"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::selection-event",
+      "label": "Selection Event",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hover-event",
+        "infographics::click-event"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::event-handler",
+      "label": "Event Handler",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "infographics::infographic-taxonomy",
+      "label": "Infographic Taxonomy",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic",
+        "infographics::data-visualization"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::educational-infographic",
+      "label": "Educational Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::analytical-infographic",
+      "label": "Analytical Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::persuasive-infographic",
+      "label": "Persuasive Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::promotional-infographic",
+      "label": "Promotional Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::linear-format",
+      "label": "Linear Format",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::hierarchical-format",
+      "label": "Hierarchical Format",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::comparative-format",
+      "label": "Comparative Format",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::circular-format",
+      "label": "Circular Format",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::radial-format",
+      "label": "Radial Format",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::circular-format"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::minimalist-infographic",
+      "label": "Minimalist Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::visual-complexity"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::detailed-infographic",
+      "label": "Detailed Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::visual-complexity"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::visual-complexity",
+      "label": "Visual Complexity",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::audience-targeting",
+      "label": "Audience Targeting",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::content-domain",
+      "label": "Content Domain",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "TAXON",
+      "level": "core"
+    },
+    {
+      "id": "infographics::list-diagram",
+      "label": "List Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::smartart-categories"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::block-list",
+      "label": "Block List",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::list-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::bullet-list",
+      "label": "Bullet List",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::list-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::picture-list",
+      "label": "Picture List",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::list-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::grid-list",
+      "label": "Grid List",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::list-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::process-diagram",
+      "label": "Process Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::smartart-categories",
+        "infographics::linear-format"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::process-arrows",
+      "label": "Process Arrows",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::process-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::chevron-process",
+      "label": "Chevron Process",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::process-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::timeline-diagram",
+      "label": "Timeline Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::process-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::gear-process",
+      "label": "Gear Process",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::process-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::step-up-process",
+      "label": "Step Up Process",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::process-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::cycle-diagram",
+      "label": "Cycle Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::smartart-categories",
+        "infographics::circular-format"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::basic-cycle",
+      "label": "Basic Cycle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cycle-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::radial-cycle",
+      "label": "Radial Cycle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cycle-diagram",
+        "infographics::radial-format"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::gear-cycle",
+      "label": "Gear Cycle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cycle-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::nested-cycle",
+      "label": "Nested Cycle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cycle-diagram",
+        "infographics::basic-cycle"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::continuous-cycle",
+      "label": "Continuous Cycle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cycle-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::hierarchy-diagram",
+      "label": "Hierarchy Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::smartart-categories",
+        "infographics::hierarchical-format"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::organization-chart",
+      "label": "Organization Chart",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hierarchy-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::table-hierarchy",
+      "label": "Table Hierarchy",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hierarchy-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::labeled-hierarchy",
+      "label": "Labeled Hierarchy",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hierarchy-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::relationship-diagram",
+      "label": "Relationship Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::smartart-categories"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::venn-diagram",
+      "label": "Venn Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::relationship-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::target-diagram",
+      "label": "Target Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::relationship-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::radial-diagram",
+      "label": "Radial Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::relationship-diagram",
+        "infographics::radial-format"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::matrix-diagram",
+      "label": "Matrix Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::relationship-diagram",
+        "infographics::comparative-format"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::pyramid-diagram",
+      "label": "Pyramid Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::smartart-categories",
+        "infographics::hierarchical-format"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::funnel-diagram",
+      "label": "Funnel Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::pyramid-diagram"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::picture-diagram",
+      "label": "Picture Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::smartart-categories"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::smartart-categories",
+      "label": "SmartArt Categories",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic-taxonomy"
+      ],
+      "taxonomy_id": "SLIDE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::dan-roam-framework",
+      "label": "Dan Roam Framework",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::visual-problem-solving"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::portrait-drawing",
+      "label": "Portrait Drawing",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dan-roam-framework",
+        "infographics::six-w-s-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::chart-drawing",
+      "label": "Chart Drawing",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dan-roam-framework",
+        "infographics::six-w-s-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::map-drawing",
+      "label": "Map Drawing",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dan-roam-framework",
+        "infographics::six-w-s-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::timeline-drawing",
+      "label": "Timeline Drawing",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dan-roam-framework",
+        "infographics::six-w-s-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::flowchart-drawing",
+      "label": "Flowchart Drawing",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dan-roam-framework",
+        "infographics::six-w-s-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::multi-variable-plot",
+      "label": "Multi-Variable Plot",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dan-roam-framework",
+        "infographics::six-w-s-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::six-w-s-framework",
+      "label": "Six W's Framework",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dan-roam-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::sqvid-framework",
+      "label": "SQVID Framework",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dan-roam-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::simple-vs-elaborate",
+      "label": "Simple vs Elaborate",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::sqvid-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::qualitative-vs-quantitative",
+      "label": "Qualitative vs Quantitative",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::sqvid-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::vision-vs-execution",
+      "label": "Vision vs Execution",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::sqvid-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::individual-vs-comparison",
+      "label": "Individual vs Comparison",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::sqvid-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::delta-vs-status-quo",
+      "label": "Delta vs Status Quo",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::sqvid-framework"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::visual-problem-solving",
+      "label": "Visual Problem Solving",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic",
+        "infographics::data-visualization"
+      ],
+      "taxonomy_id": "FRAME",
+      "level": "core"
+    },
+    {
+      "id": "infographics::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::causal-loop-diagram",
+      "label": "Causal Loop Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::systems-thinking",
+        "infographics::circular-causality"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::circular-causality",
+      "label": "Circular Causality",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::systems-thinking"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::variable",
+      "label": "Variable",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::causal-loop-diagram"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::causal-link",
+      "label": "Causal Link",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::variable"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::polarity-indicator",
+      "label": "Polarity Indicator",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::causal-link"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::positive-polarity",
+      "label": "Positive Polarity",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::polarity-indicator"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::negative-polarity",
+      "label": "Negative Polarity",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::polarity-indicator"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::reinforcing-loop",
+      "label": "Reinforcing Loop",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::feedback-loop",
+        "infographics::positive-polarity"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::balancing-loop",
+      "label": "Balancing Loop",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::feedback-loop",
+        "infographics::negative-polarity"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::loop-identifier",
+      "label": "Loop Identifier",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::reinforcing-loop",
+        "infographics::balancing-loop"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::circular-causality",
+        "infographics::causal-link"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::vicious-cycle",
+      "label": "Vicious Cycle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::reinforcing-loop"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::virtuous-cycle",
+      "label": "Virtuous Cycle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::reinforcing-loop"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::leverage-point",
+      "label": "Leverage Point",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::reinforcing-loop",
+        "infographics::balancing-loop"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::unintended-consequence",
+      "label": "Unintended Consequence",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::leverage-point"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::cld-best-practices",
+      "label": "CLD Best Practices",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::causal-loop-diagram",
+        "infographics::loop-identifier",
+        "infographics::leverage-point"
+      ],
+      "taxonomy_id": "CAUSE",
+      "level": "core"
+    },
+    {
+      "id": "infographics::overlayment-pattern",
+      "label": "Overlayment Pattern",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interactive-infographic",
+        "infographics::overlay-json-file"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::overlay-json-file",
+      "label": "Overlay JSON File",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::json-format"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::overlay-diagram-driver",
+      "label": "Overlay Diagram Driver",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::overlay-json-file",
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::type-1-rectangular",
+      "label": "Type 1 Rectangular",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::overlayment-pattern",
+        "infographics::rectangular-region"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::non-overlapping-regions",
+      "label": "Non-Overlapping Regions",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::type-1-rectangular"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::rectangular-region",
+      "label": "Rectangular Region",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::region",
+        "infographics::pixel-coordinates"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::region-extent-highlight",
+      "label": "Region Extent Highlight",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::type-1-rectangular",
+        "infographics::hover-highlight"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::type-2-complex-polygon",
+      "label": "Type 2 Complex Polygon",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::overlayment-pattern",
+        "infographics::polygon-region"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::polygon-region",
+      "label": "Polygon Region",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::region",
+        "infographics::pixel-coordinates"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::multi-edge-overlay",
+      "label": "Multi-Edge Overlay",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::type-2-complex-polygon"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::polygon-edge-point",
+      "label": "Polygon Edge Point",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::polygon-region"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::type-3-callout-to-edge",
+      "label": "Type 3 Callout to Edge",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::overlayment-pattern",
+        "infographics::callout-point"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::callout-point",
+      "label": "Callout Point",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::region",
+        "infographics::pixel-coordinates"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::edge-aligned-label",
+      "label": "Edge-Aligned Label",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::type-3-callout-to-edge"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::numbered-indicator",
+      "label": "Numbered Indicator",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::type-3-callout-to-edge"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::show-numbers-toggle",
+      "label": "Show Numbers Toggle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::numbered-indicator"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::type-4-floating-label",
+      "label": "Type 4 Floating Label",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::overlayment-pattern",
+        "infographics::floating-label"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::floating-label",
+      "label": "Floating Label",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::callout-point"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::draggable-positioning",
+      "label": "Draggable Positioning",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::type-4-floating-label",
+        "infographics::mouse-event"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::edit-mode",
+      "label": "Edit Mode",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::overlayment-pattern",
+        "infographics::draggable-positioning"
+      ],
+      "taxonomy_id": "OVRLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::p5-js-library",
+      "label": "p5.js Library",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::cdn-script-loading"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::p5-js-setup-function",
+      "label": "p5.js Setup Function",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::p5-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::p5-js-draw-function",
+      "label": "p5.js Draw Function",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::p5-js-library",
+        "infographics::animation-loop"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::createcanvas",
+      "label": "createCanvas",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::p5-js-setup-function",
+        "infographics::canvas-element"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::p5-js-event-handling",
+      "label": "p5.js Event Handling",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::p5-js-library",
+        "infographics::event-handler"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::d3-js-library",
+      "label": "D3.js Library",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::cdn-script-loading"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::data-driven-documents",
+      "label": "Data-Driven Documents",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::d3-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::d3-selection",
+      "label": "D3 Selection",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::d3-js-library",
+        "infographics::dom-manipulation"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::d3-data-binding",
+      "label": "D3 Data Binding",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::d3-selection"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::chart-js-library",
+      "label": "Chart.js Library",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::cdn-script-loading"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::chart-type-selection",
+      "label": "Chart Type Selection",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::chart-js-library",
+        "infographics::library-selection"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::bar-chart",
+      "label": "Bar Chart",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::chart-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::line-chart",
+      "label": "Line Chart",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::chart-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::pie-chart",
+      "label": "Pie Chart",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::chart-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::vis-network-library",
+      "label": "vis-network Library",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::cdn-script-loading"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::network-graph",
+      "label": "Network Graph",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::vis-network-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::node",
+      "label": "Node",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::network-graph"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::edge",
+      "label": "Edge",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::network-graph",
+        "infographics::node"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::leaflet-library",
+      "label": "Leaflet Library",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::cdn-script-loading"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::geographic-infographic",
+      "label": "Geographic Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::leaflet-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::map-tile-layer",
+      "label": "Map Tile Layer",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::geographic-infographic"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::library-selection",
+      "label": "Library Selection",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::p5-js-library",
+        "infographics::d3-js-library",
+        "infographics::chart-js-library",
+        "infographics::vis-network-library",
+        "infographics::leaflet-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::javascript-fundamentals",
+      "label": "JavaScript Fundamentals",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "WEBFD",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::html-structure",
+      "label": "HTML Structure",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "WEBFD",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::css-styling",
+      "label": "CSS Styling",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::json-format",
+      "label": "JSON Format",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::json-schema",
+      "label": "JSON Schema",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::json-format"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::csv-format",
+      "label": "CSV Format",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::json-format"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::canvas-element",
+      "label": "Canvas Element",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::svg-element",
+      "label": "SVG Element",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::dom-manipulation",
+      "label": "DOM Manipulation",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::html-structure",
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::microsim-directory",
+      "label": "MicroSim Directory",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-architecture"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::main-html-file",
+      "label": "main.html File",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-directory",
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::index-md-file",
+      "label": "index.md File",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-directory",
+        "infographics::markdown-format"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::dublin-core-metadata",
+      "label": "Dublin Core Metadata",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "MSIM",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::metadata-json-file",
+      "label": "metadata.json File",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-directory",
+        "infographics::dublin-core-metadata",
+        "infographics::json-format"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::yaml-frontmatter",
+      "label": "YAML Frontmatter",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::index-md-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::title-metadata",
+      "label": "Title Metadata",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::yaml-frontmatter"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::description-metadata",
+      "label": "Description Metadata",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::yaml-frontmatter"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::quality-score",
+      "label": "Quality Score",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-quality-rubric"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::social-preview-image",
+      "label": "Social Preview Image",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::open-graph-tags",
+        "infographics::image-compression"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::open-graph-tags",
+      "label": "Open Graph Tags",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::yaml-frontmatter"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::display-iframe",
+      "label": "Display Iframe",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::iframe-element",
+        "infographics::main-html-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::copy-paste-iframe",
+      "label": "Copy-Paste Iframe",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::display-iframe",
+        "infographics::embed-code"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::fullscreen-link-button",
+      "label": "Fullscreen Link Button",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::display-iframe"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::p5-js-editor-link",
+      "label": "p5.js Editor Link",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::p5-js-library",
+        "infographics::index-md-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::microsim-quality-rubric",
+      "label": "MicroSim Quality Rubric",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-directory",
+        "infographics::standardization-checklist"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::standardization-checklist",
+      "label": "Standardization Checklist",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-directory",
+        "infographics::main-html-file",
+        "infographics::index-md-file",
+        "infographics::metadata-json-file"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::aliceblue-drawing-region",
+      "label": "Aliceblue Drawing Region",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::drawing-canvas",
+        "infographics::css-styling"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::white-control-region",
+      "label": "White Control Region",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::css-styling"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::silver-border",
+      "label": "Silver Border",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::css-styling"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::postmessage-api",
+      "label": "postMessage API",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::cross-origin-messaging"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::iframe-height-reporting",
+      "label": "Iframe Height Reporting",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::postmessage-api",
+        "infographics::iframe-element"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::text-to-image-llm",
+      "label": "Text-to-Image LLM",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::prompt-engineering"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::base-image-generation",
+      "label": "Base Image Generation",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::text-to-image-llm"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::ai-overlay-generation",
+      "label": "AI Overlay Generation",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::base-image-generation",
+        "infographics::overlay-json-file",
+        "infographics::prompt-engineering"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::ai-code-generation",
+      "label": "AI Code Generation",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::prompt-engineering",
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::ai-assisted-workflow",
+      "label": "AI-Assisted Workflow",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::base-image-generation",
+        "infographics::ai-overlay-generation",
+        "infographics::ai-code-generation"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "GENAI",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::ai-quality-review",
+      "label": "AI Quality Review",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::ai-assisted-workflow"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::editorial-control",
+      "label": "Editorial Control",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::ai-quality-review"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::concept-to-microsim",
+      "label": "Concept to MicroSim",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::ai-assisted-workflow",
+        "infographics::microsim",
+        "infographics::learning-objective"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::no-code-tool",
+      "label": "No-Code Tool",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interactive-infographic"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::low-code-tool",
+      "label": "Low-Code Tool",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::no-code-tool",
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "infographics::xapi-protocol",
+      "label": "xAPI Protocol",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::experience-api"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::experience-api",
+      "label": "Experience API",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::event-logging"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::event-logging",
+      "label": "Event Logging",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hover-event",
+        "infographics::click-event",
+        "infographics::selection-event"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::interaction-tracking",
+      "label": "Interaction Tracking",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::event-logging",
+        "infographics::xapi-protocol"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::student-engagement-data",
+      "label": "Student Engagement Data",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interaction-tracking"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::learning-analytics",
+      "label": "Learning Analytics",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::student-engagement-data",
+        "infographics::engagement-metrics"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::lesson-plan-section",
+      "label": "Lesson Plan Section",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::index-md-file",
+        "infographics::learning-objective"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::references-section",
+      "label": "References Section",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::index-md-file"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::mkdocs-material-theme",
+      "label": "MkDocs Material Theme",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::mkdocs-build-process"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::github-pages-deployment",
+      "label": "GitHub Pages Deployment",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::github-repository",
+        "infographics::mkdocs-material-theme"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::gh-deploy-command",
+      "label": "gh-deploy Command",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::github-pages-deployment"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::quality-assurance",
+      "label": "Quality Assurance",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-quality-rubric",
+        "infographics::reusable-overlay-schema"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::shared-library",
+      "label": "Shared Library",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::overlay-diagram-driver",
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::template-microsim",
+      "label": "Template MicroSim",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::microsim-directory",
+        "infographics::main-html-file",
+        "infographics::shared-library"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::infographic-portfolio",
+      "label": "Infographic Portfolio",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::quality-assurance",
+        "infographics::microsim"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::width-responsive-testing",
+      "label": "Width-Responsive Testing",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::width-responsive-design",
+        "infographics::local-development-server"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::color-consistency",
+      "label": "Color Consistency",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::color-palette",
+        "infographics::css-styling"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::font-size-scaling",
+      "label": "Font Size Scaling",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::width-responsive-design",
+        "infographics::css-styling"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::reusable-overlay-schema",
+      "label": "Reusable Overlay Schema",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::overlay-json-file",
+        "infographics::json-schema"
+      ],
+      "taxonomy_id": "MSIM",
+      "level": "core"
+    },
+    {
+      "id": "infographics::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::infographic"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::information-design",
+      "label": "Information Design",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::data-visualization",
+        "infographics::visual-hierarchy"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::visual-encoding",
+      "label": "Visual Encoding",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::data-visualization"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::color-palette",
+      "label": "Color Palette",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::css-styling",
+        "infographics::visual-encoding"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::tooltip",
+      "label": "Tooltip",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hover-event",
+        "infographics::infobox"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::hover-highlight",
+      "label": "Hover Highlight",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hover-event",
+        "infographics::color-palette"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::click-feedback",
+      "label": "Click Feedback",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::click-event"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::visual-hierarchy",
+      "label": "Visual Hierarchy",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::visual-encoding"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::gestalt-principles",
+      "label": "Gestalt Principles",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::information-design"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::proximity-principle",
+      "label": "Proximity Principle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::gestalt-principles"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::contrast-principle",
+      "label": "Contrast Principle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::gestalt-principles"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::alignment-principle",
+      "label": "Alignment Principle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::gestalt-principles"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::repetition-principle",
+      "label": "Repetition Principle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::gestalt-principles"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::cognitive-load-theory",
+      "label": "Cognitive Load Theory",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "LEARN",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::dual-coding-theory",
+      "label": "Dual Coding Theory",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cognitive-load-theory"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::multimedia-learning",
+      "label": "Multimedia Learning",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::dual-coding-theory"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::mayer-s-principles",
+      "label": "Mayer's Principles",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::multimedia-learning"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::signaling-principle",
+      "label": "Signaling Principle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::mayer-s-principles"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::segmenting-principle",
+      "label": "Segmenting Principle",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::mayer-s-principles"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::spatial-contiguity",
+      "label": "Spatial Contiguity",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::mayer-s-principles"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::learning-objective",
+      "label": "Learning Objective",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "LEARN",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::bloom-s-taxonomy",
+      "label": "Bloom's Taxonomy",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::learning-objective"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::remember-level",
+      "label": "Remember Level",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::understand-level",
+      "label": "Understand Level",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bloom-s-taxonomy",
+        "infographics::remember-level"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::apply-level",
+      "label": "Apply Level",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bloom-s-taxonomy",
+        "infographics::understand-level"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::analyze-level",
+      "label": "Analyze Level",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bloom-s-taxonomy",
+        "infographics::apply-level"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::evaluate-level",
+      "label": "Evaluate Level",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bloom-s-taxonomy",
+        "infographics::analyze-level"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::create-level",
+      "label": "Create Level",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bloom-s-taxonomy",
+        "infographics::evaluate-level"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::formative-assessment",
+      "label": "Formative Assessment",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bloom-s-taxonomy"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::scaffolding",
+      "label": "Scaffolding",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cognitive-load-theory",
+        "infographics::learning-objective"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::concept-dependency"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::learning-path",
+      "label": "Learning Path",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::knowledge-graph",
+        "infographics::prerequisite-knowledge"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::concept-dependency",
+      "label": "Concept Dependency",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::learning-objective"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::prerequisite-knowledge",
+      "label": "Prerequisite Knowledge",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::concept-dependency"
+      ],
+      "taxonomy_id": "LEARN",
+      "level": "core"
+    },
+    {
+      "id": "infographics::coordinate-system",
+      "label": "Coordinate System",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "WEBFD",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::pixel-coordinates",
+      "label": "Pixel Coordinates",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::coordinate-system"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::relative-coordinates",
+      "label": "Relative Coordinates",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::coordinate-system",
+        "infographics::width-responsive-design"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::bounding-box",
+      "label": "Bounding Box",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::pixel-coordinates",
+        "infographics::rectangular-region"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::hit-detection",
+      "label": "Hit Detection",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bounding-box"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::point-in-polygon-test",
+      "label": "Point-in-Polygon Test",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::pixel-coordinates",
+        "infographics::polygon-region"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::convex-polygon",
+      "label": "Convex Polygon",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::polygon-region"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::concave-polygon",
+      "label": "Concave Polygon",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::polygon-region",
+        "infographics::convex-polygon"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::bezier-curve",
+      "label": "Bezier Curve",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::coordinate-system"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::aspect-ratio",
+      "label": "Aspect Ratio",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::width-responsive-design"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::viewport",
+      "label": "Viewport",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::width-responsive-design",
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::breakpoint",
+      "label": "Breakpoint",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::viewport",
+        "infographics::responsive-breakpoints"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::media-query",
+      "label": "Media Query",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::css-styling",
+        "infographics::breakpoint"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::touch-event",
+      "label": "Touch Event",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::event-handler",
+        "infographics::pointer-device"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::mouse-event",
+      "label": "Mouse Event",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::event-handler",
+        "infographics::pointer-device"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::pointer-device",
+      "label": "Pointer Device",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "WEBFD",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::animation-loop",
+      "label": "Animation Loop",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::frame-rate"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::frame-rate",
+      "label": "Frame Rate",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::state-management",
+      "label": "State Management",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::global-variable"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::global-variable",
+      "label": "Global Variable",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::callback-function",
+      "label": "Callback Function",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::arrow-function",
+      "label": "Arrow Function",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::callback-function"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::template-literal",
+      "label": "Template Literal",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::destructuring",
+      "label": "Destructuring",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::spread-operator",
+      "label": "Spread Operator",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::destructuring"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::array-methods",
+      "label": "Array Methods",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::object-literal",
+      "label": "Object Literal",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::cdn-script-loading",
+      "label": "CDN Script Loading",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::module-import",
+      "label": "Module Import",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::version-pinning",
+      "label": "Version Pinning",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cdn-script-loading"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::cross-origin-resource",
+      "label": "Cross-Origin Resource",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::sandbox-attribute",
+        "infographics::same-origin-policy"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::content-security-policy",
+      "label": "Content Security Policy",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::cross-origin-resource"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::image-compression",
+      "label": "Image Compression",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::png-format",
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::png-format",
+      "label": "PNG Format",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "ADVIZ",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::webp-format",
+      "label": "WebP Format",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::png-format"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::alt-text",
+      "label": "Alt Text",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::semantic-html",
+      "label": "Semantic HTML",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::aria-attribute",
+      "label": "ARIA Attribute",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::semantic-html"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::keyboard-navigation",
+      "label": "Keyboard Navigation",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::aria-attribute"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::tab-order",
+      "label": "Tab Order",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::keyboard-navigation"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::screen-reader-support",
+      "label": "Screen Reader Support",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::aria-attribute",
+        "infographics::alt-text"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::high-contrast-mode",
+      "label": "High Contrast Mode",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::color-palette",
+        "infographics::css-styling"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::markdown-format",
+      "label": "Markdown Format",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "DEPLY",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::mkdocs-build-process",
+      "label": "MkDocs Build Process",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::markdown-format",
+        "infographics::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::mkdocs-yml-configuration",
+      "label": "mkdocs.yml Configuration",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::markdown-format"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::navigation-structure",
+      "label": "Navigation Structure",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::mkdocs-yml-configuration"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::site-search",
+      "label": "Site Search",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::mkdocs-material-theme"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::social-cards-plugin",
+      "label": "Social Cards Plugin",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::mkdocs-material-theme",
+        "infographics::social-preview-image"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::custom-css-override",
+      "label": "Custom CSS Override",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::css-styling",
+        "infographics::mkdocs-material-theme"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::admonition-block",
+      "label": "Admonition Block",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::markdown-format"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::code-block",
+      "label": "Code Block",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::markdown-format"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::mermaid-diagram",
+      "label": "Mermaid Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::markdown-format",
+        "infographics::mkdocs-material-theme"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::git-version-control",
+      "label": "Git Version Control",
+      "subject_id": "infographics",
+      "dependencies": [],
+      "taxonomy_id": "DEPLY",
+      "level": "foundational"
+    },
+    {
+      "id": "infographics::github-repository",
+      "label": "GitHub Repository",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::git-version-control"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::pull-request",
+      "label": "Pull Request",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::github-repository"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::github-actions",
+      "label": "GitHub Actions",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::github-repository"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::continuous-deployment",
+      "label": "Continuous Deployment",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::github-actions",
+        "infographics::github-pages-deployment"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::branch-strategy",
+      "label": "Branch Strategy",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::git-version-control"
+      ],
+      "taxonomy_id": "DEPLY",
+      "level": "core"
+    },
+    {
+      "id": "infographics::embed-code",
+      "label": "Embed Code",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::iframe-element",
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::sandbox-attribute",
+      "label": "Sandbox Attribute",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::iframe-element"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::same-origin-policy",
+      "label": "Same-Origin Policy",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::iframe-element",
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::cross-origin-messaging",
+      "label": "Cross-Origin Messaging",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::same-origin-policy"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::local-development-server",
+      "label": "Local Development Server",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::mkdocs-build-process"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::browser-developer-tools",
+      "label": "Browser Developer Tools",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::console-logging",
+      "label": "Console Logging",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::browser-developer-tools"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::network-tab-debugging",
+      "label": "Network Tab Debugging",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::browser-developer-tools"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::performance-profiling",
+      "label": "Performance Profiling",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::browser-developer-tools"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::responsive-breakpoints",
+      "label": "Responsive Breakpoints",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::width-responsive-design",
+        "infographics::css-styling"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::mobile-first-design",
+      "label": "Mobile-First Design",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::responsive-breakpoints"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::desktop-layout",
+      "label": "Desktop Layout",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::responsive-breakpoints"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::tablet-layout",
+      "label": "Tablet Layout",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::responsive-breakpoints"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::instructor-dashboard",
+      "label": "Instructor Dashboard",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::learning-analytics"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::click-heatmap",
+      "label": "Click Heatmap",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interaction-tracking",
+        "infographics::click-event"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::engagement-metrics",
+      "label": "Engagement Metrics",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::student-engagement-data"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::session-duration",
+      "label": "Session Duration",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::engagement-metrics"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::completion-rate",
+      "label": "Completion Rate",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::engagement-metrics"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::a-b-testing",
+      "label": "A/B Testing",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::engagement-metrics",
+        "infographics::iterative-design"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::user-feedback-loop",
+      "label": "User Feedback Loop",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::iterative-design"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::iterative-design",
+      "label": "Iterative Design",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::design-pattern"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::usability-testing",
+      "label": "Usability Testing",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::iterative-design",
+        "infographics::width-responsive-testing"
+      ],
+      "taxonomy_id": "TRACK",
+      "level": "core"
+    },
+    {
+      "id": "infographics::design-pattern",
+      "label": "Design Pattern",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::observer-pattern",
+      "label": "Observer Pattern",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::design-pattern",
+        "infographics::event-handler"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::factory-pattern",
+      "label": "Factory Pattern",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::design-pattern"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::configuration-object",
+      "label": "Configuration Object",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::object-literal",
+        "infographics::design-pattern"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::default-parameters",
+      "label": "Default Parameters",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::error-handling",
+      "label": "Error Handling",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::graceful-degradation",
+      "label": "Graceful Degradation",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::error-handling",
+        "infographics::progressive-enhancement"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::progressive-enhancement",
+      "label": "Progressive Enhancement",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::javascript-fundamentals",
+        "infographics::html-structure"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::feature-detection",
+      "label": "Feature Detection",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::progressive-enhancement"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::polyfill",
+      "label": "Polyfill",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::feature-detection"
+      ],
+      "taxonomy_id": "WEBFD",
+      "level": "core"
+    },
+    {
+      "id": "infographics::stacked-bar-chart",
+      "label": "Stacked Bar Chart",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::bar-chart"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::scatter-plot",
+      "label": "Scatter Plot",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::chart-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::histogram",
+      "label": "Histogram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::chart-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::area-chart",
+      "label": "Area Chart",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::line-chart"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::donut-chart",
+      "label": "Donut Chart",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::pie-chart"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::treemap-diagram",
+      "label": "Treemap Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::d3-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::sankey-diagram",
+      "label": "Sankey Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::d3-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::chord-diagram",
+      "label": "Chord Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::d3-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::word-cloud",
+      "label": "Word Cloud",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::d3-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::gauge-chart",
+      "label": "Gauge Chart",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::chart-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::sparkline",
+      "label": "Sparkline",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::chart-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::dashboard-layout",
+      "label": "Dashboard Layout",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::data-visualization",
+        "infographics::chart-js-library"
+      ],
+      "taxonomy_id": "JSLIB",
+      "level": "core"
+    },
+    {
+      "id": "infographics::before-after-diagram",
+      "label": "Before-After Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::comparative-format"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::side-by-side-comparison",
+      "label": "Side-by-Side Comparison",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::comparative-format"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::decision-tree-diagram",
+      "label": "Decision Tree Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hierarchical-format",
+        "infographics::flowchart-drawing"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::mind-map",
+      "label": "Mind Map",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::hierarchical-format"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::journey-map",
+      "label": "Journey Map",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::linear-format",
+        "infographics::map-drawing"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::roadmap-diagram",
+      "label": "Roadmap Diagram",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::linear-format",
+        "infographics::timeline-diagram"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::annotated-screenshot",
+      "label": "Annotated Screenshot",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interactive-infographic",
+        "infographics::callout-point"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::layered-infographic",
+      "label": "Layered Infographic",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::detailed-infographic",
+        "infographics::interactive-infographic"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::scrollytelling",
+      "label": "Scrollytelling",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::animated-infographic",
+        "infographics::interactive-infographic"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::step-reveal",
+      "label": "Step Reveal",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::scrollytelling"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::zoom-and-pan",
+      "label": "Zoom and Pan",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::interactive-infographic",
+        "infographics::mouse-event"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::drill-down",
+      "label": "Drill Down",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::click-event",
+        "infographics::interactive-infographic"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::breadcrumb-navigation",
+      "label": "Breadcrumb Navigation",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::drill-down"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    },
+    {
+      "id": "infographics::legend-design",
+      "label": "Legend Design",
+      "subject_id": "infographics",
+      "dependencies": [
+        "infographics::color-palette",
+        "infographics::visual-encoding"
+      ],
+      "taxonomy_id": "ADVIZ",
+      "level": "core"
+    }
+  ]
+}

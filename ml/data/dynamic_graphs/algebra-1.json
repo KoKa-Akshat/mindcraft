@@ -1,0 +1,2132 @@
+{
+  "subject_id": "algebra-1",
+  "title": "Algebra I",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "red"
+    },
+    "PROP": {
+      "classifier_name": "PROP",
+      "color": "orange"
+    },
+    "NUMS": {
+      "classifier_name": "NUMS",
+      "color": "gold"
+    },
+    "EXP": {
+      "classifier_name": "EXP",
+      "color": "green"
+    },
+    "POLY": {
+      "classifier_name": "POLY",
+      "color": "cyan"
+    },
+    "FACT": {
+      "classifier_name": "FACT",
+      "color": "blue"
+    },
+    "LIN": {
+      "classifier_name": "LIN",
+      "color": "indigo"
+    },
+    "FUNC": {
+      "classifier_name": "FUNC",
+      "color": "violet"
+    },
+    "GRAPH": {
+      "classifier_name": "GRAPH",
+      "color": "purple"
+    },
+    "SYS": {
+      "classifier_name": "SYS",
+      "color": "brown"
+    },
+    "QUAD": {
+      "classifier_name": "QUAD",
+      "color": "teal"
+    },
+    "DATA": {
+      "classifier_name": "DATA",
+      "color": "olive"
+    }
+  },
+  "concepts": [
+    {
+      "id": "algebra-1::number",
+      "label": "Number",
+      "subject_id": "algebra-1",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "algebra-1::variable",
+      "label": "Variable",
+      "subject_id": "algebra-1",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "algebra-1::constant",
+      "label": "Constant",
+      "subject_id": "algebra-1",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "algebra-1::coefficient",
+      "label": "Coefficient",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::term",
+      "label": "Term",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::variable",
+        "algebra-1::constant",
+        "algebra-1::coefficient"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::expression",
+      "label": "Expression",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::term"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::equation",
+      "label": "Equation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::expression"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::inequality",
+      "label": "Inequality",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::expression"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::order-of-operations",
+      "label": "Order of Operations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::commutative-property",
+      "label": "Commutative Property",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::associative-property",
+      "label": "Associative Property",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::distributive-property",
+      "label": "Distributive Property",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number",
+        "algebra-1::term"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::identity-property",
+      "label": "Identity Property",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::inverse-property",
+      "label": "Inverse Property",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "PROP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::integers",
+      "label": "Integers",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "NUMS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::rational-numbers",
+      "label": "Rational Numbers",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::integers"
+      ],
+      "taxonomy_id": "NUMS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::real-numbers",
+      "label": "Real Numbers",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::rational-numbers"
+      ],
+      "taxonomy_id": "NUMS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::absolute-value",
+      "label": "Absolute Value",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "NUMS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::number-line",
+      "label": "Number Line",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number",
+        "algebra-1::integers"
+      ],
+      "taxonomy_id": "NUMS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::coordinate-system",
+      "label": "Coordinate System",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number-line"
+      ],
+      "taxonomy_id": "NUMS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::exponent",
+      "label": "Exponent",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::base",
+      "label": "Base",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponent"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::power",
+      "label": "Power",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponent",
+        "algebra-1::base"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::integer-exponents",
+      "label": "Integer Exponents",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponent",
+        "algebra-1::integers"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::rational-exponents",
+      "label": "Rational Exponents",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::integer-exponents",
+        "algebra-1::rational-numbers"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::negative-exponents",
+      "label": "Negative Exponents",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::integer-exponents"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::zero-exponent",
+      "label": "Zero Exponent",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponent"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::product-rule-for-exponents",
+      "label": "Product Rule for Exponents",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::power"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::quotient-rule-for-exponents",
+      "label": "Quotient Rule for Exponents",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::power"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::power-rule-for-exponents",
+      "label": "Power Rule for Exponents",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::power"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::scientific-notation",
+      "label": "Scientific Notation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::integer-exponents",
+        "algebra-1::product-rule-for-exponents"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::square-root",
+      "label": "Square Root",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::power"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::cube-root",
+      "label": "Cube Root",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::power"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::radical-expression",
+      "label": "Radical Expression",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::square-root",
+        "algebra-1::cube-root"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::simplifying-radicals",
+      "label": "Simplifying Radicals",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::radical-expression"
+      ],
+      "taxonomy_id": "EXP",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::evaluating-expressions",
+      "label": "Evaluating Expressions",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::expression",
+        "algebra-1::order-of-operations"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::substitution",
+      "label": "Substitution",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::variable",
+        "algebra-1::evaluating-expressions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::like-terms",
+      "label": "Like Terms",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::term"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::combining-like-terms",
+      "label": "Combining Like Terms",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::like-terms"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::simplifying-expressions",
+      "label": "Simplifying Expressions",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::evaluating-expressions",
+        "algebra-1::combining-like-terms"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::expanding-expressions",
+      "label": "Expanding Expressions",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::distributive-property",
+        "algebra-1::expression"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::monomial",
+      "label": "Monomial",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::term",
+        "algebra-1::exponent"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::binomial",
+      "label": "Binomial",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::monomial"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::trinomial",
+      "label": "Trinomial",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::binomial"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::polynomial",
+      "label": "Polynomial",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::trinomial"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::degree-of-polynomial",
+      "label": "Degree of Polynomial",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::polynomial",
+        "algebra-1::exponent"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::leading-coefficient",
+      "label": "Leading Coefficient",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::polynomial",
+        "algebra-1::coefficient"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::standard-form-of-polynomial",
+      "label": "Standard Form of Polynomial",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::polynomial",
+        "algebra-1::degree-of-polynomial"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::adding-polynomials",
+      "label": "Adding Polynomials",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::polynomial",
+        "algebra-1::combining-like-terms"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::subtracting-polynomials",
+      "label": "Subtracting Polynomials",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::polynomial",
+        "algebra-1::combining-like-terms"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::multiplying-polynomials",
+      "label": "Multiplying Polynomials",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::polynomial",
+        "algebra-1::distributive-property"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::foil-method",
+      "label": "FOIL Method",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::binomial",
+        "algebra-1::multiplying-polynomials"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::special-products",
+      "label": "Special Products",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::multiplying-polynomials"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::difference-of-squares",
+      "label": "Difference of Squares",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::special-products"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::perfect-square-trinomial",
+      "label": "Perfect Square Trinomial",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::special-products"
+      ],
+      "taxonomy_id": "POLY",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::factoring",
+      "label": "Factoring",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::polynomial"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::greatest-common-factor",
+      "label": "Greatest Common Factor",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::polynomial"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::factoring-by-gcf",
+      "label": "Factoring by GCF",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring",
+        "algebra-1::greatest-common-factor"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::factoring-trinomials",
+      "label": "Factoring Trinomials",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring",
+        "algebra-1::trinomial"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::factoring-difference-of-squares",
+      "label": "Factoring Difference of Squares",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring",
+        "algebra-1::difference-of-squares"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::factoring-perfect-squares",
+      "label": "Factoring Perfect Squares",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring",
+        "algebra-1::perfect-square-trinomial"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::factoring-by-grouping",
+      "label": "Factoring by Grouping",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring",
+        "algebra-1::polynomial"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::prime-factorization",
+      "label": "Prime Factorization",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::prime-polynomial",
+      "label": "Prime Polynomial",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::zero-product-property",
+      "label": "Zero Product Property",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring",
+        "algebra-1::equation"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solving-by-factoring",
+      "label": "Solving by Factoring",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::zero-product-property",
+        "algebra-1::equation"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::factoring-completely",
+      "label": "Factoring Completely",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring-by-gcf",
+        "algebra-1::factoring-trinomials",
+        "algebra-1::factoring-difference-of-squares"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::sum-of-cubes",
+      "label": "Sum of Cubes",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::difference-of-cubes",
+      "label": "Difference of Cubes",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::factoring-quadratic-form",
+      "label": "Factoring Quadratic Form",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::factoring-trinomials"
+      ],
+      "taxonomy_id": "FACT",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solving-equations",
+      "label": "Solving Equations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::equation"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::one-step-equations",
+      "label": "One-Step Equations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::solving-equations",
+        "algebra-1::inverse-property"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::two-step-equations",
+      "label": "Two-Step Equations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::one-step-equations"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::multi-step-equations",
+      "label": "Multi-Step Equations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::two-step-equations",
+        "algebra-1::distributive-property"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::variables-on-both-sides",
+      "label": "Variables on Both Sides",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::multi-step-equations"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::equations-with-fractions",
+      "label": "Equations with Fractions",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::multi-step-equations",
+        "algebra-1::rational-numbers"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::equations-with-decimals",
+      "label": "Equations with Decimals",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::multi-step-equations",
+        "algebra-1::rational-numbers"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::literal-equations",
+      "label": "Literal Equations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::solving-equations",
+        "algebra-1::variable"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solving-for-a-variable",
+      "label": "Solving for a Variable",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::literal-equations"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::formula-manipulation",
+      "label": "Formula Manipulation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::solving-for-a-variable"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::linear-equation-in-one-variable",
+      "label": "Linear Equation in One Variable",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::solving-equations",
+        "algebra-1::variable"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solution-set",
+      "label": "Solution Set",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::solving-equations"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::identity-equation",
+      "label": "Identity Equation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-equation-in-one-variable"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::contradiction",
+      "label": "Contradiction",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-equation-in-one-variable"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::conditional-equation",
+      "label": "Conditional Equation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-equation-in-one-variable"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::checking-solutions",
+      "label": "Checking Solutions",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::solving-equations",
+        "algebra-1::substitution"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::applications-of-linear-equations",
+      "label": "Applications of Linear Equations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-equation-in-one-variable"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::consecutive-integers",
+      "label": "Consecutive Integers",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::applications-of-linear-equations",
+        "algebra-1::integers"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::perimeter-problems",
+      "label": "Perimeter Problems",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::applications-of-linear-equations"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::distance-rate-time-problems",
+      "label": "Distance Rate Time Problems",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::applications-of-linear-equations"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::inequality-91",
+      "label": "Inequality",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::inequality"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::linear-inequality",
+      "label": "Linear Inequality",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::inequality-91",
+        "algebra-1::linear-equation-in-one-variable"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::inequality-symbols",
+      "label": "Inequality Symbols",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::inequality-91"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::graphing-inequalities",
+      "label": "Graphing Inequalities",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-inequality",
+        "algebra-1::number-line"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solving-linear-inequalities",
+      "label": "Solving Linear Inequalities",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-inequality",
+        "algebra-1::solving-equations"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::compound-inequalities",
+      "label": "Compound Inequalities",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::solving-linear-inequalities"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::and-inequalities",
+      "label": "And Inequalities",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::compound-inequalities"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::or-inequalities",
+      "label": "Or Inequalities",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::compound-inequalities"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::absolute-value-equations",
+      "label": "Absolute Value Equations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::solving-equations",
+        "algebra-1::absolute-value"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::absolute-value-inequalities",
+      "label": "Absolute Value Inequalities",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::absolute-value-equations",
+        "algebra-1::inequality-91"
+      ],
+      "taxonomy_id": "LIN",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::relation",
+      "label": "Relation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::variable"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::function",
+      "label": "Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::relation"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::domain",
+      "label": "Domain",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::range",
+      "label": "Range",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::input",
+      "label": "Input",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::output",
+      "label": "Output",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::function-notation",
+      "label": "Function Notation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::evaluating-functions",
+      "label": "Evaluating Functions",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function-notation",
+        "algebra-1::evaluating-expressions"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::independent-variable",
+      "label": "Independent Variable",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function",
+        "algebra-1::variable"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::dependent-variable",
+      "label": "Dependent Variable",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function",
+        "algebra-1::variable"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::vertical-line-test",
+      "label": "Vertical Line Test",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::discrete-function",
+      "label": "Discrete Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::continuous-function",
+      "label": "Continuous Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::piecewise-function",
+      "label": "Piecewise Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::step-function",
+      "label": "Step Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::piecewise-function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::absolute-value-function",
+      "label": "Absolute Value Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function",
+        "algebra-1::absolute-value"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::parent-function",
+      "label": "Parent Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::function-transformation",
+      "label": "Function Transformation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::parent-function"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::translation",
+      "label": "Translation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function-transformation"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::reflection",
+      "label": "Reflection",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function-transformation"
+      ],
+      "taxonomy_id": "FUNC",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::coordinate-plane",
+      "label": "Coordinate Plane",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::coordinate-system"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::ordered-pair",
+      "label": "Ordered Pair",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::coordinate-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::x-coordinate",
+      "label": "X-Coordinate",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::ordered-pair"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::y-coordinate",
+      "label": "Y-Coordinate",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::ordered-pair"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::origin",
+      "label": "Origin",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::coordinate-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::quadrants",
+      "label": "Quadrants",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::coordinate-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::plotting-points",
+      "label": "Plotting Points",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::ordered-pair",
+        "algebra-1::coordinate-plane"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::linear-function",
+      "label": "Linear Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function",
+        "algebra-1::linear-equation-in-one-variable"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::graph-of-a-line",
+      "label": "Graph of a Line",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-function",
+        "algebra-1::plotting-points"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::x-intercept",
+      "label": "X-Intercept",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::graph-of-a-line"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::y-intercept",
+      "label": "Y-Intercept",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::graph-of-a-line"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::slope",
+      "label": "Slope",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::graph-of-a-line"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::rise",
+      "label": "Rise",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::run",
+      "label": "Run",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::rate-of-change",
+      "label": "Rate of Change",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::slope-formula",
+      "label": "Slope Formula",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::slope",
+        "algebra-1::ordered-pair"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::positive-slope",
+      "label": "Positive Slope",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::negative-slope",
+      "label": "Negative Slope",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::zero-slope",
+      "label": "Zero Slope",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::undefined-slope",
+      "label": "Undefined Slope",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::slope-intercept-form",
+      "label": "Slope-Intercept Form",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-function",
+        "algebra-1::slope",
+        "algebra-1::y-intercept"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::point-slope-form",
+      "label": "Point-Slope Form",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-function",
+        "algebra-1::slope",
+        "algebra-1::ordered-pair"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::standard-form",
+      "label": "Standard Form",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-function"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::horizontal-line",
+      "label": "Horizontal Line",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::graph-of-a-line",
+        "algebra-1::zero-slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::vertical-line",
+      "label": "Vertical Line",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::graph-of-a-line",
+        "algebra-1::undefined-slope"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::system-of-equations",
+      "label": "System of Equations",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::equation"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solution-of-a-system",
+      "label": "Solution of a System",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-equations"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::consistent-system",
+      "label": "Consistent System",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-equations"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::inconsistent-system",
+      "label": "Inconsistent System",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-equations"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::independent-system",
+      "label": "Independent System",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::consistent-system"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::dependent-system",
+      "label": "Dependent System",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::consistent-system"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::graphing-method",
+      "label": "Graphing Method",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-equations",
+        "algebra-1::graph-of-a-line"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::substitution-method",
+      "label": "Substitution Method",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-equations",
+        "algebra-1::substitution"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::elimination-method",
+      "label": "Elimination Method",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-equations",
+        "algebra-1::combining-like-terms"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::linear-combination",
+      "label": "Linear Combination",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::elimination-method"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::system-of-inequalities",
+      "label": "System of Inequalities",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-equations",
+        "algebra-1::inequality-91"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::graphing-systems",
+      "label": "Graphing Systems",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-inequalities",
+        "algebra-1::graphing-method"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solution-region",
+      "label": "Solution Region",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::graphing-systems"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::boundary-line",
+      "label": "Boundary Line",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::graphing-systems"
+      ],
+      "taxonomy_id": "SYS",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::applications-of-systems",
+      "label": "Applications of Systems",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::system-of-equations",
+        "algebra-1::applications-of-linear-equations"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::quadratic-function",
+      "label": "Quadratic Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function",
+        "algebra-1::polynomial"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::parabola",
+      "label": "Parabola",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-function",
+        "algebra-1::graph-of-a-line"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::vertex",
+      "label": "Vertex",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::parabola"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::axis-of-symmetry",
+      "label": "Axis of Symmetry",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::parabola"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::maximum-value",
+      "label": "Maximum Value",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::vertex"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::minimum-value",
+      "label": "Minimum Value",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::vertex"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::standard-form-of-quadratic",
+      "label": "Standard Form of Quadratic",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-function",
+        "algebra-1::standard-form-of-polynomial"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::vertex-form",
+      "label": "Vertex Form",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-function",
+        "algebra-1::vertex"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::graphing-quadratics",
+      "label": "Graphing Quadratics",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::parabola",
+        "algebra-1::plotting-points"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::quadratic-equation",
+      "label": "Quadratic Equation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::equation",
+        "algebra-1::polynomial"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solving-quadratics-by-graphing",
+      "label": "Solving Quadratics by Graphing",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-equation",
+        "algebra-1::graphing-quadratics"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::solving-by-square-roots",
+      "label": "Solving by Square Roots",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-equation",
+        "algebra-1::square-root"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::completing-the-square",
+      "label": "Completing the Square",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-equation",
+        "algebra-1::perfect-square-trinomial"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::quadratic-formula",
+      "label": "Quadratic Formula",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-equation",
+        "algebra-1::completing-the-square"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::discriminant",
+      "label": "Discriminant",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-formula"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::nature-of-roots",
+      "label": "Nature of Roots",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::discriminant"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::complex-numbers",
+      "label": "Complex Numbers",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::nature-of-roots"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::imaginary-unit",
+      "label": "Imaginary Unit",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::complex-numbers"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::applications-of-quadratics",
+      "label": "Applications of Quadratics",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::quadratic-equation",
+        "algebra-1::applications-of-linear-equations"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::projectile-motion",
+      "label": "Projectile Motion",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::applications-of-quadratics"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::exponential-function",
+      "label": "Exponential Function",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::function",
+        "algebra-1::exponent"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::exponential-growth",
+      "label": "Exponential Growth",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponential-function"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::exponential-decay",
+      "label": "Exponential Decay",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponential-function"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::growth-factor",
+      "label": "Growth Factor",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponential-growth"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::decay-factor",
+      "label": "Decay Factor",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponential-decay"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::initial-value",
+      "label": "Initial Value",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponential-function"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::compound-interest",
+      "label": "Compound Interest",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponential-growth"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::exponential-models",
+      "label": "Exponential Models",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponential-function"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::comparing-linear-and-exponential",
+      "label": "Comparing Linear and Exponential",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::linear-function",
+        "algebra-1::exponential-function"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::graphing-exponentials",
+      "label": "Graphing Exponentials",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::exponential-function",
+        "algebra-1::plotting-points"
+      ],
+      "taxonomy_id": "QUAD",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::data-set",
+      "label": "Data Set",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::scatterplot",
+      "label": "Scatterplot",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::coordinate-plane",
+        "algebra-1::data-set"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::correlation",
+      "label": "Correlation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::scatterplot"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::positive-correlation",
+      "label": "Positive Correlation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::correlation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::negative-correlation",
+      "label": "Negative Correlation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::correlation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::no-correlation",
+      "label": "No Correlation",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::correlation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::line-of-best-fit",
+      "label": "Line of Best Fit",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::scatterplot",
+        "algebra-1::graph-of-a-line"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::linear-regression",
+      "label": "Linear Regression",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::line-of-best-fit"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::arithmetic-sequence",
+      "label": "Arithmetic Sequence",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::number"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "algebra-1::geometric-sequence",
+      "label": "Geometric Sequence",
+      "subject_id": "algebra-1",
+      "dependencies": [
+        "algebra-1::arithmetic-sequence",
+        "algebra-1::exponent"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    }
+  ]
+}

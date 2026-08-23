@@ -1,0 +1,2807 @@
+{
+  "subject_id": "stem-robots",
+  "title": "Computational Thinking with STEM Robots",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "ENV": {
+      "classifier_name": "Development Environment",
+      "color": "DarkSlateBlue"
+    },
+    "PROG": {
+      "classifier_name": "Python Programming",
+      "color": "DarkGreen"
+    },
+    "HW": {
+      "classifier_name": "Hardware Platform",
+      "color": "Teal"
+    },
+    "ELEC": {
+      "classifier_name": "Electronics Fundamentals",
+      "color": "DarkGoldenrod"
+    },
+    "MOTOR": {
+      "classifier_name": "Motors and Actuators",
+      "color": "Crimson"
+    },
+    "SENSOR": {
+      "classifier_name": "Sensors and Input",
+      "color": "DodgerBlue"
+    },
+    "DISPLAY": {
+      "classifier_name": "Display and Output",
+      "color": "MediumPurple"
+    },
+    "ROBOT": {
+      "classifier_name": "Robot Behaviors",
+      "color": "OliveDrab"
+    },
+    "NET": {
+      "classifier_name": "Networking and Wireless",
+      "color": "DarkOrchid"
+    },
+    "BLE": {
+      "classifier_name": "Bluetooth and Swarm",
+      "color": "Tomato"
+    },
+    "COMM": {
+      "classifier_name": "Communication Protocols",
+      "color": "Gold"
+    },
+    "ENG": {
+      "classifier_name": "Engineering Design",
+      "color": "DimGray"
+    }
+  },
+  "concepts": [
+    {
+      "id": "stem-robots::computational-thinking",
+      "label": "Computational Thinking",
+      "subject_id": "stem-robots",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "stem-robots::abstraction",
+      "label": "Abstraction",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::algorithm-design",
+      "label": "Algorithm Design",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::decomposition",
+      "label": "Decomposition",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::problem-solving-strategy",
+      "label": "Problem Solving Strategy",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking",
+        "stem-robots::abstraction",
+        "stem-robots::algorithm-design",
+        "stem-robots::decomposition",
+        "stem-robots::pattern-recognition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::debugging-fundamentals",
+      "label": "Debugging Fundamentals",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::problem-solving-strategy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::testing-and-iteration",
+      "label": "Testing and Iteration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::debugging-fundamentals"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::physical-computing",
+      "label": "Physical Computing",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::experiential-learning",
+      "label": "Experiential Learning",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking",
+        "stem-robots::physical-computing"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::thonny-ide",
+      "label": "Thonny IDE",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::micropython-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::thonny-installation",
+      "label": "Thonny Installation",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::thonny-ide"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::repl-interactive-shell",
+      "label": "REPL Interactive Shell",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::thonny-ide",
+        "stem-robots::thonny-installation"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::thonny-file-upload",
+      "label": "Thonny File Upload",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::thonny-installation",
+        "stem-robots::repl-interactive-shell"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::syntax-highlighting",
+      "label": "Syntax Highlighting",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::thonny-ide"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::uf2-firmware-file",
+      "label": "UF2 Firmware File",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::bootsel-button",
+      "label": "BOOTSEL Button",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::uf2-firmware-file",
+        "stem-robots::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::usb-cable-connection",
+      "label": "USB Cable Connection",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::microcontroller-overview"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::micropython-overview",
+      "label": "MicroPython Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking",
+        "stem-robots::physical-computing",
+        "stem-robots::microcontroller-overview"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::python-syntax-basics",
+      "label": "Python Syntax Basics",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::micropython-overview"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::variables-and-assignment",
+      "label": "Variables and Assignment",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::python-syntax-basics"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::integer-data-type",
+      "label": "Integer Data Type",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::float-data-type",
+      "label": "Float Data Type",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::string-data-type",
+      "label": "String Data Type",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::boolean-data-type",
+      "label": "Boolean Data Type",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::arithmetic-operators",
+      "label": "Arithmetic Operators",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment",
+        "stem-robots::integer-data-type"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::comparison-operators",
+      "label": "Comparison Operators",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment",
+        "stem-robots::integer-data-type"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::logical-operators",
+      "label": "Logical Operators",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::boolean-data-type",
+        "stem-robots::comparison-operators"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::if-statement",
+      "label": "If Statement",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::boolean-data-type",
+        "stem-robots::comparison-operators",
+        "stem-robots::logical-operators"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::elif-and-else-clauses",
+      "label": "Elif and Else Clauses",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::if-statement"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::for-loop",
+      "label": "For Loop",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment",
+        "stem-robots::integer-data-type"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::while-loop",
+      "label": "While Loop",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment",
+        "stem-robots::comparison-operators"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::nested-loops",
+      "label": "Nested Loops",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::for-loop",
+        "stem-robots::while-loop"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::function-definition",
+      "label": "Function Definition",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment",
+        "stem-robots::if-statement",
+        "stem-robots::for-loop",
+        "stem-robots::while-loop"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::function-parameters",
+      "label": "Function Parameters",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::return-values",
+      "label": "Return Values",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition",
+        "stem-robots::function-parameters"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::scope-and-local-variables",
+      "label": "Scope and Local Variables",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::global-variables",
+      "label": "Global Variables",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::exception-handling",
+      "label": "Exception Handling",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::try-except-finally",
+      "label": "Try Except Finally",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::exception-handling"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::keyboardinterrupt-handling",
+      "label": "KeyboardInterrupt Handling",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::try-except-finally"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::importing-modules",
+      "label": "Importing Modules",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::python-syntax-basics"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::built-in-libraries",
+      "label": "Built-in Libraries",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::lists",
+      "label": "Lists",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::variables-and-assignment"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::list-indexing",
+      "label": "List Indexing",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::lists"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::list-iteration",
+      "label": "List Iteration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::lists",
+        "stem-robots::for-loop"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::tuples",
+      "label": "Tuples",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::lists"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::dictionaries",
+      "label": "Dictionaries",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::lists"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::string-manipulation",
+      "label": "String Manipulation",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::string-data-type"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::formatted-strings",
+      "label": "Formatted Strings",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::string-data-type",
+        "stem-robots::variables-and-assignment"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::comments-and-code-style",
+      "label": "Comments and Code Style",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::python-syntax-basics"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::modular-programming",
+      "label": "Modular Programming",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition",
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::reusable-functions",
+      "label": "Reusable Functions",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition",
+        "stem-robots::function-parameters",
+        "stem-robots::return-values"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::import-config-pattern",
+      "label": "Import Config Pattern",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::modular-programming",
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "PROG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::microcontroller-overview",
+      "label": "Microcontroller Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::physical-computing"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::raspberry-pi-pico",
+      "label": "Raspberry Pi Pico",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::microcontroller-overview"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::rp2040-chip",
+      "label": "RP2040 Chip",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::raspberry-pi-pico-w",
+      "label": "Raspberry Pi Pico W",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::cytron-maker-pi-rp2040",
+      "label": "Cytron Maker Pi RP2040",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::raspberry-pi-pico",
+        "stem-robots::rp2040-chip"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::gpio-pin-basics",
+      "label": "GPIO Pin Basics",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::cytron-maker-pi-rp2040"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::gpio-pin-numbering",
+      "label": "GPIO Pin Numbering",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::digital-input-pin",
+      "label": "Digital Input Pin",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::gpio-pin-numbering"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::digital-output-pin",
+      "label": "Digital Output Pin",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::gpio-pin-numbering"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::flash-memory",
+      "label": "Flash Memory",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::pinout-diagram",
+      "label": "Pinout Diagram",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::gpio-pin-numbering"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::grove-connectors",
+      "label": "Grove Connectors",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::cytron-maker-pi-rp2040"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::dupont-connectors",
+      "label": "Dupont Connectors",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::breadboard-layout"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::castellated-edge-pcb",
+      "label": "Castellated Edge PCB",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "HW",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::voltage-and-current",
+      "label": "Voltage and Current",
+      "subject_id": "stem-robots",
+      "dependencies": [],
+      "taxonomy_id": "ELEC",
+      "level": "foundational"
+    },
+    {
+      "id": "stem-robots::basic-circuits",
+      "label": "Basic Circuits",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::voltage-and-current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::resistors",
+      "label": "Resistors",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::voltage-and-current",
+        "stem-robots::basic-circuits"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::transistors",
+      "label": "Transistors",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::voltage-and-current",
+        "stem-robots::basic-circuits",
+        "stem-robots::resistors"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::breadboard-layout",
+      "label": "Breadboard Layout",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::basic-circuits"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::smart-car-chassis",
+      "label": "Smart Car Chassis",
+      "subject_id": "stem-robots",
+      "dependencies": [],
+      "taxonomy_id": "ELEC",
+      "level": "foundational"
+    },
+    {
+      "id": "stem-robots::aa-batteries",
+      "label": "AA Batteries",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::voltage-and-current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::battery-pack",
+      "label": "Battery Pack",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::aa-batteries"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::power-management",
+      "label": "Power Management",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::voltage-and-current",
+        "stem-robots::battery-pack"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::lipo-battery",
+      "label": "LiPo Battery",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::aa-batteries"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::analog-vs-digital-signals",
+      "label": "Analog vs Digital Signals",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::voltage-and-current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::adc-analog-digital-converter",
+      "label": "ADC Analog Digital Converter",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::analog-vs-digital-signals",
+        "stem-robots::digital-input-pin"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::dc-motor-overview",
+      "label": "DC Motor Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::voltage-and-current",
+        "stem-robots::basic-circuits"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::motor-terminals",
+      "label": "Motor Terminals",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::dc-motor-overview"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::motor-direction-control",
+      "label": "Motor Direction Control",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::dc-motor-overview",
+        "stem-robots::motor-terminals"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::motor-forward-motion",
+      "label": "Motor Forward Motion",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::motor-direction-control"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::motor-reverse-motion",
+      "label": "Motor Reverse Motion",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::motor-direction-control"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::motor-stop",
+      "label": "Motor Stop",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::motor-forward-motion",
+        "stem-robots::motor-reverse-motion"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::h-bridge-circuit",
+      "label": "H-Bridge Circuit",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::motor-direction-control",
+        "stem-robots::transistors"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::h-bridge-switch-states",
+      "label": "H-Bridge Switch States",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::h-bridge-circuit"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::dpdt-switch",
+      "label": "DPDT Switch",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::h-bridge-circuit"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::motor-driver-ic",
+      "label": "Motor Driver IC",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::h-bridge-circuit",
+        "stem-robots::cytron-maker-pi-rp2040"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::pulse-width-modulation",
+      "label": "Pulse Width Modulation",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::analog-vs-digital-signals"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::pwm-duty-cycle",
+      "label": "PWM Duty Cycle",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pulse-width-modulation"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::pwm-frequency",
+      "label": "PWM Frequency",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pulse-width-modulation",
+        "stem-robots::pwm-duty-cycle"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::16-bit-duty-cycle-values",
+      "label": "16-Bit Duty Cycle Values",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pwm-duty-cycle"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::motor-speed-control",
+      "label": "Motor Speed Control",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pulse-width-modulation",
+        "stem-robots::motor-direction-control"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::pwm-motor-control-code",
+      "label": "PWM Motor Control Code",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::motor-speed-control",
+        "stem-robots::function-definition",
+        "stem-robots::motor-driver-ic"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::left-motor-control",
+      "label": "Left Motor Control",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pwm-motor-control-code"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::right-motor-control",
+      "label": "Right Motor Control",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pwm-motor-control-code"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::differential-drive",
+      "label": "Differential Drive",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::left-motor-control",
+        "stem-robots::right-motor-control"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::servo-motor",
+      "label": "Servo Motor",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::dc-motor-overview",
+        "stem-robots::pulse-width-modulation"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::servo-angle-range",
+      "label": "Servo Angle Range",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::servo-motor"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::servo-pwm-calibration",
+      "label": "Servo PWM Calibration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::servo-motor",
+        "stem-robots::pwm-frequency",
+        "stem-robots::pwm-duty-cycle"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::servo-sweep-code",
+      "label": "Servo Sweep Code",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::servo-pwm-calibration",
+        "stem-robots::for-loop",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::linear-range-mapping",
+      "label": "Linear Range Mapping",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::servo-pwm-calibration",
+        "stem-robots::arithmetic-operators",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::piezo-buzzer",
+      "label": "Piezo Buzzer",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::pulse-width-modulation"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::tone-frequency-control",
+      "label": "Tone Frequency Control",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::piezo-buzzer",
+        "stem-robots::pwm-frequency"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::sound-feedback",
+      "label": "Sound Feedback",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tone-frequency-control"
+      ],
+      "taxonomy_id": "MOTOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::sensor-types-overview",
+      "label": "Sensor Types Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::physical-computing",
+        "stem-robots::digital-input-pin"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::time-of-flight-sensor",
+      "label": "Time-of-Flight Sensor",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::sensor-types-overview"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::vl53l0x-sensor",
+      "label": "VL53L0X Sensor",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::time-of-flight-sensor"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::tof-sensor-i2c-setup",
+      "label": "ToF Sensor I2C Setup",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::vl53l0x-sensor",
+        "stem-robots::i2c-bus"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::tof-distance-reading",
+      "label": "ToF Distance Reading",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tof-sensor-i2c-setup",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::zero-distance-calibration",
+      "label": "Zero Distance Calibration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tof-distance-reading"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::scale-factor-calibration",
+      "label": "Scale Factor Calibration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tof-distance-reading",
+        "stem-robots::zero-distance-calibration"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::max-distance-limit",
+      "label": "Max Distance Limit",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tof-distance-reading"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ultrasonic-sensor",
+      "label": "Ultrasonic Sensor",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::sensor-types-overview"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ultrasonic-trigger-echo",
+      "label": "Ultrasonic Trigger Echo",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ultrasonic-sensor",
+        "stem-robots::digital-output-pin",
+        "stem-robots::digital-input-pin"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::infrared-sensor",
+      "label": "Infrared Sensor",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::sensor-types-overview",
+        "stem-robots::digital-input-pin"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ir-digital-output",
+      "label": "IR Digital Output",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::infrared-sensor",
+        "stem-robots::digital-input-pin"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ir-sensor-calibration",
+      "label": "IR Sensor Calibration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ir-digital-output",
+        "stem-robots::potentiometer-input"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::bump-switch",
+      "label": "Bump Switch",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::sensor-types-overview",
+        "stem-robots::digital-input-pin"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::microswitch-wiring",
+      "label": "Microswitch Wiring",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bump-switch",
+        "stem-robots::grove-connectors"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::potentiometer-input",
+      "label": "Potentiometer Input",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::adc-analog-digital-converter",
+        "stem-robots::digital-input-pin"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::sensor-calibration-process",
+      "label": "Sensor Calibration Process",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::sensor-types-overview",
+        "stem-robots::zero-distance-calibration",
+        "stem-robots::scale-factor-calibration"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::sensor-data-filtering",
+      "label": "Sensor Data Filtering",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tof-distance-reading",
+        "stem-robots::function-definition",
+        "stem-robots::lists"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::sensor-fusion",
+      "label": "Sensor Fusion",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tof-distance-reading",
+        "stem-robots::ultrasonic-trigger-echo",
+        "stem-robots::ir-digital-output",
+        "stem-robots::sensor-data-filtering"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::neopixel-leds",
+      "label": "NeoPixel LEDs",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::pulse-width-modulation"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ws2816-led-strip",
+      "label": "WS2816 LED Strip",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::neopixel-leds"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::rgb-color-values",
+      "label": "RGB Color Values",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::neopixel-leds",
+        "stem-robots::integer-data-type",
+        "stem-robots::lists"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::neopixel-library",
+      "label": "NeoPixel Library",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::importing-modules",
+        "stem-robots::neopixel-leds",
+        "stem-robots::ws2816-led-strip",
+        "stem-robots::rgb-color-values"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::led-animation",
+      "label": "LED Animation",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::neopixel-library",
+        "stem-robots::for-loop",
+        "stem-robots::while-loop"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::led-status-indicators",
+      "label": "LED Status Indicators",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::neopixel-library"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::oled-display-overview",
+      "label": "OLED Display Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::physical-computing",
+        "stem-robots::microcontroller-overview"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ssd1306-driver-chip",
+      "label": "SSD1306 Driver Chip",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::oled-display-overview"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::i2c-display-mode",
+      "label": "I2C Display Mode",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ssd1306-driver-chip",
+        "stem-robots::i2c-bus"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::spi-display-mode",
+      "label": "SPI Display Mode",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ssd1306-driver-chip",
+        "stem-robots::spi-bus"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::display-resolution",
+      "label": "Display Resolution",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::oled-display-overview",
+        "stem-robots::integer-data-type"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::framebuffer",
+      "label": "Framebuffer",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::oled-display-overview",
+        "stem-robots::display-resolution"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::blit-operation",
+      "label": "Blit Operation",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::framebuffer"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::display-text-output",
+      "label": "Display Text Output",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ssd1306-driver-chip",
+        "stem-robots::framebuffer",
+        "stem-robots::micropython-overview"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::drawing-lines",
+      "label": "Drawing Lines",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::framebuffer",
+        "stem-robots::display-text-output"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::drawing-circles",
+      "label": "Drawing Circles",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::framebuffer",
+        "stem-robots::display-text-output"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::drawing-rectangles",
+      "label": "Drawing Rectangles",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::framebuffer",
+        "stem-robots::display-text-output"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::bar-chart-on-display",
+      "label": "Bar Chart on Display",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::drawing-rectangles",
+        "stem-robots::lists",
+        "stem-robots::tof-distance-reading"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::live-sensor-on-display",
+      "label": "Live Sensor on Display",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::display-text-output",
+        "stem-robots::tof-distance-reading",
+        "stem-robots::bar-chart-on-display"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::animated-faces-on-oled",
+      "label": "Animated Faces on OLED",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::display-text-output",
+        "stem-robots::drawing-lines",
+        "stem-robots::drawing-circles",
+        "stem-robots::drawing-rectangles"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::distance-meter-display",
+      "label": "Distance Meter Display",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bar-chart-on-display",
+        "stem-robots::live-sensor-on-display"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::servo-meter-display",
+      "label": "Servo Meter Display",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::distance-meter-display",
+        "stem-robots::servo-pwm-calibration"
+      ],
+      "taxonomy_id": "DISPLAY",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::open-loop-motor-control",
+      "label": "Open-Loop Motor Control",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pwm-motor-control-code",
+        "stem-robots::motor-forward-motion",
+        "stem-robots::motor-reverse-motion",
+        "stem-robots::motor-stop"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::closed-loop-feedback",
+      "label": "Closed-Loop Feedback",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::open-loop-motor-control",
+        "stem-robots::tof-distance-reading"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::closed-loop-feedback"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::collision-avoidance",
+      "label": "Collision Avoidance",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tof-distance-reading",
+        "stem-robots::open-loop-motor-control",
+        "stem-robots::closed-loop-feedback"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::obstacle-detection",
+      "label": "Obstacle Detection",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::tof-distance-reading",
+        "stem-robots::collision-avoidance"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::distance-threshold",
+      "label": "Distance Threshold",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::obstacle-detection",
+        "stem-robots::integer-data-type"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::random-turn-direction",
+      "label": "Random Turn Direction",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::distance-threshold",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::collision-avoidance-code",
+      "label": "Collision Avoidance Code",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::collision-avoidance",
+        "stem-robots::random-turn-direction",
+        "stem-robots::pwm-motor-control-code",
+        "stem-robots::try-except-finally",
+        "stem-robots::keyboardinterrupt-handling"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::line-following",
+      "label": "Line Following",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ir-digital-output",
+        "stem-robots::pwm-motor-control-code"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::dual-ir-sensor-reading",
+      "label": "Dual IR Sensor Reading",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::line-following",
+        "stem-robots::ir-digital-output",
+        "stem-robots::list-iteration"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::motor-differential-adjust",
+      "label": "Motor Differential Adjust",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::dual-ir-sensor-reading",
+        "stem-robots::differential-drive"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::line-following-code",
+      "label": "Line Following Code",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::line-following",
+        "stem-robots::dual-ir-sensor-reading",
+        "stem-robots::motor-differential-adjust",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::robot-dance-sequence",
+      "label": "Robot Dance Sequence",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pwm-motor-control-code",
+        "stem-robots::sound-feedback",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::timed-motor-patterns",
+      "label": "Timed Motor Patterns",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::robot-dance-sequence",
+        "stem-robots::timers-and-delays"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::config-file-pattern",
+      "label": "Config File Pattern",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::import-config-pattern",
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::cytron-maker-pi-rp2040"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::pin-assignment-constants",
+      "label": "Pin Assignment Constants",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::config-file-pattern",
+        "stem-robots::gpio-pin-basics"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::secrets-file-pattern",
+      "label": "Secrets File Pattern",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::import-config-pattern",
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::gitignore-file",
+      "label": "Gitignore File",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::secrets-file-pattern",
+        "stem-robots::version-control-git"
+      ],
+      "taxonomy_id": "ROBOT",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::wifi-overview",
+      "label": "WiFi Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::physical-computing",
+        "stem-robots::microcontroller-overview"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::raspberry-pi-pico-w-wifi",
+      "label": "Raspberry Pi Pico W WiFi",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::raspberry-pi-pico-w",
+        "stem-robots::wifi-overview"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::wlan-object",
+      "label": "WLAN Object",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::raspberry-pi-pico-w-wifi",
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::access-point-connection",
+      "label": "Access Point Connection",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::wlan-object",
+        "stem-robots::secrets-file-pattern"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::wifi-isconnected-check",
+      "label": "WiFi isConnected Check",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::access-point-connection",
+        "stem-robots::while-loop"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ip-address-retrieval",
+      "label": "IP Address Retrieval",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::wifi-isconnected-check"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ping-test-slow-mode",
+      "label": "Ping Test Slow Mode",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ip-address-retrieval",
+        "stem-robots::raspberry-pi-pico-w-wifi"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ping-test-fast-mode",
+      "label": "Ping Test Fast Mode",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ping-test-slow-mode",
+        "stem-robots::raspberry-pi-pico-w-wifi"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::web-server-concept",
+      "label": "Web Server Concept",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::wifi-overview",
+        "stem-robots::microcontroller-overview"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::socket-programming",
+      "label": "Socket Programming",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::web-server-concept",
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::http-protocol",
+      "label": "HTTP Protocol",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::wifi-overview",
+        "stem-robots::string-data-type"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::http-get-request",
+      "label": "HTTP GET Request",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::http-protocol",
+        "stem-robots::socket-programming"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::http-post-request",
+      "label": "HTTP POST Request",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::http-protocol",
+        "stem-robots::socket-programming"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::html-page-generation",
+      "label": "HTML Page Generation",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::http-get-request",
+        "stem-robots::formatted-strings",
+        "stem-robots::string-data-type"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::javascript-fetch-api",
+      "label": "JavaScript Fetch API",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::http-post-request",
+        "stem-robots::html-page-generation"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::port-80-http-default",
+      "label": "Port 80 HTTP Default",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::socket-programming",
+        "stem-robots::http-protocol"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::iot-internet-of-things",
+      "label": "IoT Internet of Things",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::wifi-overview",
+        "stem-robots::physical-computing"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::secrets-file-for-wifi",
+      "label": "Secrets File for WiFi",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::secrets-file-pattern",
+        "stem-robots::access-point-connection"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::bluetooth-overview",
+      "label": "Bluetooth Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::physical-computing",
+        "stem-robots::microcontroller-overview"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::bluetooth-low-energy-ble",
+      "label": "Bluetooth Low Energy BLE",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-overview"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-vs-classic-bluetooth",
+      "label": "BLE vs Classic Bluetooth",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-low-energy-ble"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-vs-wifi-comparison",
+      "label": "BLE vs WiFi Comparison",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-low-energy-ble",
+        "stem-robots::wifi-overview"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-advertising",
+      "label": "BLE Advertising",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-low-energy-ble"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-scanning",
+      "label": "BLE Scanning",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-low-energy-ble"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::gatt-protocol",
+      "label": "GATT Protocol",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-low-energy-ble"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::gatt-service-definition",
+      "label": "GATT Service Definition",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gatt-protocol"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::gatt-characteristic",
+      "label": "GATT Characteristic",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gatt-protocol",
+        "stem-robots::gatt-service-definition"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-central-role",
+      "label": "BLE Central Role",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gatt-protocol",
+        "stem-robots::gatt-service-definition",
+        "stem-robots::gatt-characteristic"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-peripheral-role",
+      "label": "BLE Peripheral Role",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gatt-protocol",
+        "stem-robots::gatt-service-definition",
+        "stem-robots::gatt-characteristic"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-connection-pairing",
+      "label": "BLE Connection Pairing",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ble-central-role",
+        "stem-robots::ble-peripheral-role"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-message-sending",
+      "label": "BLE Message Sending",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ble-connection-pairing",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::bluetooth-module",
+      "label": "bluetooth Module",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-low-energy-ble",
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-range-and-power",
+      "label": "BLE Range and Power",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-low-energy-ble"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-reliability",
+      "label": "BLE Reliability",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::ble-connection-pairing",
+        "stem-robots::ble-message-sending"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::swarm-robotics",
+      "label": "Swarm Robotics",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::bluetooth-overview",
+        "stem-robots::physical-computing",
+        "stem-robots::computational-thinking"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::emergent-behavior",
+      "label": "Emergent Behavior",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::swarm-robotics"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::leader-follower-pattern",
+      "label": "Leader-Follower Pattern",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::swarm-robotics",
+        "stem-robots::ble-connection-pairing"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-leader-robot-code",
+      "label": "BLE Leader Robot Code",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::leader-follower-pattern",
+        "stem-robots::ble-central-role",
+        "stem-robots::function-definition",
+        "stem-robots::pwm-motor-control-code"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::ble-follower-robot-code",
+      "label": "BLE Follower Robot Code",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::leader-follower-pattern",
+        "stem-robots::ble-peripheral-role",
+        "stem-robots::function-definition",
+        "stem-robots::pwm-motor-control-code"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::collective-obstacle-avoid",
+      "label": "Collective Obstacle Avoid",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::swarm-robotics",
+        "stem-robots::collision-avoidance",
+        "stem-robots::ble-connection-pairing"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::swarm-algorithm-design",
+      "label": "Swarm Algorithm Design",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::swarm-robotics",
+        "stem-robots::leader-follower-pattern",
+        "stem-robots::algorithm-design"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::distributed-systems",
+      "label": "Distributed Systems",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::swarm-robotics",
+        "stem-robots::wifi-overview"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::convoy-following",
+      "label": "Convoy Following",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::leader-follower-pattern",
+        "stem-robots::ble-leader-robot-code",
+        "stem-robots::ble-follower-robot-code"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::synchronized-swarm-dance",
+      "label": "Synchronized Swarm Dance",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::swarm-robotics",
+        "stem-robots::ble-leader-robot-code",
+        "stem-robots::ble-follower-robot-code",
+        "stem-robots::robot-dance-sequence"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::i2c-bus",
+      "label": "I2C Bus",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::voltage-and-current"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::i2c-sda-scl-pins",
+      "label": "I2C SDA SCL Pins",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::i2c-bus",
+        "stem-robots::gpio-pin-numbering"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::i2c-frequency-config",
+      "label": "I2C Frequency Config",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::i2c-bus",
+        "stem-robots::i2c-sda-scl-pins"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::spi-bus",
+      "label": "SPI Bus",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::voltage-and-current"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::gpio-interrupt-setup",
+      "label": "GPIO Interrupt Setup",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::irq-falling-edge",
+      "label": "IRQ Falling Edge",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-interrupt-setup",
+        "stem-robots::digital-input-pin"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::button-debouncing",
+      "label": "Button Debouncing",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::irq-falling-edge",
+        "stem-robots::timers-and-delays"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::timers-and-delays",
+      "label": "Timers and Delays",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::importing-modules",
+        "stem-robots::while-loop"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::serial-communication",
+      "label": "Serial Communication",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gpio-pin-basics",
+        "stem-robots::micropython-overview"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::i2c-scanner-tool",
+      "label": "I2C Scanner Tool",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::i2c-bus",
+        "stem-robots::repl-interactive-shell"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::spi-vs-i2c-comparison",
+      "label": "SPI vs I2C Comparison",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::i2c-bus",
+        "stem-robots::spi-bus"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::engineering-design-process",
+      "label": "Engineering Design Process",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::computational-thinking",
+        "stem-robots::physical-computing"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::build-test-improve-cycle",
+      "label": "Build-Test-Improve Cycle",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::engineering-design-process",
+        "stem-robots::testing-and-iteration"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::prototyping-methods",
+      "label": "Prototyping Methods",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::build-test-improve-cycle"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::mechanical-design-basics",
+      "label": "Mechanical Design Basics",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::smart-car-chassis",
+        "stem-robots::voltage-and-current"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::no-soldering-assembly",
+      "label": "No-Soldering Assembly",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::cytron-maker-pi-rp2040",
+        "stem-robots::grove-connectors",
+        "stem-robots::dupont-connectors",
+        "stem-robots::smart-car-chassis"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::hardware-troubleshooting",
+      "label": "Hardware Troubleshooting",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::debugging-fundamentals",
+        "stem-robots::cytron-maker-pi-rp2040",
+        "stem-robots::gpio-pin-basics"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::software-troubleshooting",
+      "label": "Software Troubleshooting",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::debugging-fundamentals",
+        "stem-robots::function-definition",
+        "stem-robots::micropython-overview"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::safety-practices",
+      "label": "Safety Practices",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::voltage-and-current",
+        "stem-robots::aa-batteries"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::code-documentation",
+      "label": "Code Documentation",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition",
+        "stem-robots::comments-and-code-style"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::project-planning",
+      "label": "Project Planning",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::engineering-design-process"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::team-collaboration",
+      "label": "Team Collaboration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::project-planning"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::version-control-git",
+      "label": "Version Control Git",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::code-documentation",
+        "stem-robots::comments-and-code-style"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::git-commit-workflow",
+      "label": "Git Commit Workflow",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::version-control-git"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::state-machine-pattern",
+      "label": "State Machine Pattern",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition",
+        "stem-robots::if-statement",
+        "stem-robots::elif-and-else-clauses",
+        "stem-robots::tuples"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::multithreading-basics",
+      "label": "Multithreading Basics",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::while-loop",
+        "stem-robots::function-definition",
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::asynchronous-programming",
+      "label": "Asynchronous Programming",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::multithreading-basics",
+        "stem-robots::importing-modules"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::pid-control-overview",
+      "label": "PID Control Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::closed-loop-feedback",
+        "stem-robots::feedback-loop",
+        "stem-robots::arithmetic-operators"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::encoder-motor-feedback",
+      "label": "Encoder Motor Feedback",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::pwm-motor-control-code",
+        "stem-robots::adc-analog-digital-converter",
+        "stem-robots::pid-control-overview"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::data-logging",
+      "label": "Data Logging",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::function-definition",
+        "stem-robots::importing-modules",
+        "stem-robots::multithreading-basics"
+      ],
+      "taxonomy_id": "ENG",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::9-dof-imu-overview",
+      "label": "9-DOF IMU Overview",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::sensor-types-overview",
+        "stem-robots::i2c-bus"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::l3gd20-gyroscope",
+      "label": "L3GD20 Gyroscope",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::9-dof-imu-overview",
+        "stem-robots::i2c-bus"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::lsm303d-accelerometer-magnetometer",
+      "label": "LSM303D Accelerometer Magnetometer",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::9-dof-imu-overview",
+        "stem-robots::i2c-bus"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::gyroscope-calibration",
+      "label": "Gyroscope Calibration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::l3gd20-gyroscope",
+        "stem-robots::sensor-calibration-process"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::magnetometer-hard-iron-calibration",
+      "label": "Magnetometer Hard Iron Calibration",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::lsm303d-accelerometer-magnetometer",
+        "stem-robots::sensor-calibration-process"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::complementary-filter-sensor-fusion",
+      "label": "Complementary Filter Sensor Fusion",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::gyroscope-calibration",
+        "stem-robots::magnetometer-hard-iron-calibration",
+        "stem-robots::sensor-fusion"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::heading-estimation",
+      "label": "Heading Estimation",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::complementary-filter-sensor-fusion"
+      ],
+      "taxonomy_id": "SENSOR",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::wifi-access-point-host-mode",
+      "label": "WiFi Access Point Host Mode",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::wifi-overview",
+        "stem-robots::raspberry-pi-pico-w-wifi"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::udp-broadcast-networking",
+      "label": "UDP Broadcast Networking",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::socket-programming",
+        "stem-robots::wifi-access-point-host-mode"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::heading-synchronization-swarm-pattern",
+      "label": "Heading Synchronization Swarm Pattern",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::swarm-robotics",
+        "stem-robots::heading-estimation",
+        "stem-robots::udp-broadcast-networking"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::udp-master-broadcast-code",
+      "label": "UDP Master Broadcast Code",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::heading-synchronization-swarm-pattern",
+        "stem-robots::wifi-access-point-host-mode",
+        "stem-robots::function-definition"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    },
+    {
+      "id": "stem-robots::udp-follower-steering-code",
+      "label": "UDP Follower Steering Code",
+      "subject_id": "stem-robots",
+      "dependencies": [
+        "stem-robots::heading-synchronization-swarm-pattern",
+        "stem-robots::pid-control-overview",
+        "stem-robots::pwm-motor-control-code"
+      ],
+      "taxonomy_id": "BLE",
+      "level": "core"
+    }
+  ]
+}

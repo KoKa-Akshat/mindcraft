@@ -1,0 +1,4622 @@
+{
+  "subject_id": "ai-persona-testing",
+  "title": "AI Persona Testing for Marketing Professionals",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "AIFND": {
+      "classifier_name": "AI And Research Foundations",
+      "color": "SteelBlue"
+    },
+    "RSRCH": {
+      "classifier_name": "Research Design And AI Limits",
+      "color": "DarkSlateBlue"
+    },
+    "ETHIC": {
+      "classifier_name": "Ethics Privacy And Governance",
+      "color": "DarkGreen"
+    },
+    "PERDS": {
+      "classifier_name": "Persona Design",
+      "color": "LimeGreen"
+    },
+    "PERQ": {
+      "classifier_name": "Persona Segmentation And Quality",
+      "color": "Gold"
+    },
+    "PRMPT": {
+      "classifier_name": "Prompt Design And Outputs",
+      "color": "DarkGoldenrod"
+    },
+    "PTEST": {
+      "classifier_name": "Prompt Testing And Dialogue",
+      "color": "Khaki"
+    },
+    "AGENT": {
+      "classifier_name": "Agent Design And Roles",
+      "color": "Teal"
+    },
+    "MULTI": {
+      "classifier_name": "Multi-Agent Orchestration",
+      "color": "DodgerBlue"
+    },
+    "BRAND": {
+      "classifier_name": "Brand And Asset Evaluation",
+      "color": "LightSkyBlue"
+    },
+    "RUBRC": {
+      "classifier_name": "Rubrics Scores And Evidence",
+      "color": "Crimson"
+    },
+    "ANLYS": {
+      "classifier_name": "Analysis And Recommendations",
+      "color": "MediumPurple"
+    },
+    "GRAPH": {
+      "classifier_name": "Graph-Based Knowledge Models",
+      "color": "DeepPink"
+    },
+    "WORKF": {
+      "classifier_name": "Automation Reporting And Capstone",
+      "color": "DimGray"
+    }
+  },
+  "concepts": [
+    {
+      "id": "ai-persona-testing::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [],
+      "taxonomy_id": "AIFND",
+      "level": "foundational"
+    },
+    {
+      "id": "ai-persona-testing::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::large-language-models",
+      "label": "Large Language Models",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::generative-ai"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::language-model-tokens",
+      "label": "Language Model Tokens",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::model-context-window",
+      "label": "Model Context Window",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::language-model-tokens"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::model-instructions",
+      "label": "Model Instructions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::model-responses",
+      "label": "Model Responses",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::model-instructions"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::probabilistic-output",
+      "label": "Probabilistic Output",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::model-responses"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::synthetic-users",
+      "label": "Synthetic Users",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::model-responses"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::synthetic-personas",
+      "label": "Synthetic Personas",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ai-persona-testing",
+      "label": "AI Persona Testing",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users",
+        "ai-persona-testing::synthetic-personas"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::synthetic-user-research",
+      "label": "Synthetic User Research",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-personas",
+        "ai-persona-testing::ai-persona-testing"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-simulation",
+      "label": "Customer Simulation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users",
+        "ai-persona-testing::ai-persona-testing"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-based-simulation",
+      "label": "Agent-Based Simulation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::customer-simulation"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ai-focus-groups",
+      "label": "AI Focus Groups",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-persona-testing",
+        "ai-persona-testing::agent-based-simulation"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-stress-testing",
+      "label": "Brand Stress Testing",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-persona-testing",
+        "ai-persona-testing::customer-simulation"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-research",
+      "label": "Customer Research",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [],
+      "taxonomy_id": "AIFND",
+      "level": "foundational"
+    },
+    {
+      "id": "ai-persona-testing::market-research",
+      "label": "Market Research",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::qualitative-research",
+      "label": "Qualitative Research",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::quantitative-research",
+      "label": "Quantitative Research",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::qualitative-research"
+      ],
+      "taxonomy_id": "AIFND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::traditional-focus-groups",
+      "label": "Traditional Focus Groups",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::market-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-interviews",
+      "label": "Customer Interviews",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::quantitative-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-surveys",
+      "label": "Customer Surveys",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::qualitative-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-sample-size",
+      "label": "Research Sample Size",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::market-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-turnaround-time",
+      "label": "Research Turnaround Time",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::traditional-focus-groups"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-cost",
+      "label": "Research Cost",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::quantitative-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::iterative-research",
+      "label": "Iterative Research",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::research-sample-size"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::exploratory-research",
+      "label": "Exploratory Research",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::qualitative-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluative-research",
+      "label": "Evaluative Research",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::traditional-focus-groups"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-questions",
+      "label": "Research Questions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::traditional-focus-groups"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-objectives",
+      "label": "Research Objectives",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::qualitative-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-scope",
+      "label": "Research Scope",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::quantitative-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-assumptions",
+      "label": "Research Assumptions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::traditional-focus-groups"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-constraints",
+      "label": "Research Constraints",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::research-sample-size"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-validity",
+      "label": "Research Validity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::research-sample-size",
+        "ai-persona-testing::research-questions"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-reliability",
+      "label": "Research Reliability",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::market-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::repeatable-evaluation",
+      "label": "Repeatable Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::qualitative-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::reproducible-results",
+      "label": "Reproducible Results",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::quantitative-research"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::directional-insight",
+      "label": "Directional Insight",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::traditional-focus-groups"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-evidence",
+      "label": "Customer Evidence",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::market-research",
+        "ai-persona-testing::research-sample-size",
+        "ai-persona-testing::research-questions"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ai-capabilities",
+      "label": "AI Capabilities",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::large-language-models"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ai-limitations",
+      "label": "AI Limitations",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::simulation-fidelity",
+      "label": "Simulation Fidelity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-simulation",
+        "ai-persona-testing::ai-limitations"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-realism",
+      "label": "Persona Realism",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::probabilistic-output",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::response-variability",
+      "label": "Response Variability",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::ai-persona-testing",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::model-hallucination",
+      "label": "Model Hallucination",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::reproducible-results",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::hallucination-detection",
+      "label": "Hallucination Detection",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-validity",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::model-bias",
+      "label": "Model Bias",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::ai-limitations"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::automation-bias",
+      "label": "Automation Bias",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-persona-testing",
+        "ai-persona-testing::research-reliability",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::confirmation-bias",
+      "label": "Confirmation Bias",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::ai-persona-testing",
+        "ai-persona-testing::evaluative-research",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::selection-bias",
+      "label": "Selection Bias",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-interviews",
+        "ai-persona-testing::research-constraints",
+        "ai-persona-testing::research-validity",
+        "ai-persona-testing::ai-capabilities",
+        "ai-persona-testing::model-hallucination"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::cultural-bias",
+      "label": "Cultural Bias",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::iterative-research",
+        "ai-persona-testing::directional-insight",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::stereotype-risk",
+      "label": "Stereotype Risk",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-scope",
+        "ai-persona-testing::ai-capabilities",
+        "ai-persona-testing::simulation-fidelity",
+        "ai-persona-testing::persona-realism"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::false-confidence",
+      "label": "False Confidence",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::research-turnaround-time",
+        "ai-persona-testing::repeatable-evaluation",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::feedback-credibility",
+      "label": "Feedback Credibility",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-validity",
+        "ai-persona-testing::ai-limitations"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::human-judgment",
+      "label": "Human Judgment",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::customer-surveys",
+        "ai-persona-testing::hallucination-detection",
+        "ai-persona-testing::feedback-credibility"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::human-oversight",
+      "label": "Human Oversight",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::exploratory-research",
+        "ai-persona-testing::customer-evidence",
+        "ai-persona-testing::ai-capabilities",
+        "ai-persona-testing::model-bias"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::responsible-ai",
+      "label": "Responsible AI",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::research-assumptions",
+        "ai-persona-testing::ai-limitations",
+        "ai-persona-testing::response-variability",
+        "ai-persona-testing::human-judgment"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ethical-ai-use",
+      "label": "Ethical AI Use",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-cost",
+        "ai-persona-testing::reproducible-results",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-transparency",
+      "label": "Research Transparency",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::research-objectives",
+        "ai-persona-testing::research-validity",
+        "ai-persona-testing::ai-capabilities"
+      ],
+      "taxonomy_id": "RSRCH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::informed-consent",
+      "label": "Informed Consent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::responsible-ai",
+        "ai-persona-testing::research-transparency"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-privacy",
+      "label": "Customer Privacy",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::informed-consent"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::personal-data",
+      "label": "Personal Data",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-validity",
+        "ai-persona-testing::informed-consent"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::sensitive-attributes",
+      "label": "Sensitive Attributes",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::customer-privacy"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::data-minimization",
+      "label": "Data Minimization",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::responsible-ai",
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::customer-privacy"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-disclosure",
+      "label": "Persona Disclosure",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-bias",
+        "ai-persona-testing::informed-consent"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::synthetic-data",
+      "label": "Synthetic Data",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::data-minimization"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::real-customer-validation",
+      "label": "Real Customer Validation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::simulation-fidelity",
+        "ai-persona-testing::human-judgment"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evidence-triangulation",
+      "label": "Evidence Triangulation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::real-customer-validation"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::claim-verification",
+      "label": "Claim Verification",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::responsible-ai",
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::real-customer-validation"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::uncertainty-disclosure",
+      "label": "Uncertainty Disclosure",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::feedback-credibility",
+        "ai-persona-testing::informed-consent"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::confidence-calibration",
+      "label": "Confidence Calibration",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::personal-data"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ethical-guardrails",
+      "label": "Ethical Guardrails",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-validity",
+        "ai-persona-testing::informed-consent"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::fairness-review",
+      "label": "Fairness Review",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-transparency",
+        "ai-persona-testing::informed-consent"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::harm-assessment",
+      "label": "Harm Assessment",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::persona-disclosure",
+        "ai-persona-testing::claim-verification",
+        "ai-persona-testing::ethical-guardrails"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::misuse-prevention",
+      "label": "Misuse Prevention",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::real-customer-validation"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::research-governance",
+      "label": "Research Governance",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::responsible-ai",
+        "ai-persona-testing::sensitive-attributes",
+        "ai-persona-testing::ethical-guardrails",
+        "ai-persona-testing::fairness-review"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::audit-trail",
+      "label": "Audit Trail",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::confidence-calibration"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::decision-accountability",
+      "label": "Decision Accountability",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-bias",
+        "ai-persona-testing::informed-consent"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ethical-escalation",
+      "label": "Ethical Escalation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::informed-consent",
+        "ai-persona-testing::data-minimization",
+        "ai-persona-testing::synthetic-data"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-persona",
+      "label": "Customer Persona",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-personas",
+        "ai-persona-testing::customer-research"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-purpose",
+      "label": "Persona Purpose",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-template",
+      "label": "Persona Template",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-purpose"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-profile",
+      "label": "Persona Profile",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-identity",
+      "label": "Persona Identity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-background",
+      "label": "Persona Background",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-narrative",
+      "label": "Persona Narrative",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-personas",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-context",
+      "label": "Persona Context",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-demographics",
+      "label": "Persona Demographics",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-template"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-psychographics",
+      "label": "Persona Psychographics",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-template"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-behaviors",
+      "label": "Persona Behaviors",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-template"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-preferences",
+      "label": "Persona Preferences",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-context"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-attitudes",
+      "label": "Persona Attitudes",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-questions",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-values",
+      "label": "Persona Values",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-psychographics"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-beliefs",
+      "label": "Persona Beliefs",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-context"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-goals",
+      "label": "Persona Goals",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-template"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-motivations",
+      "label": "Persona Motivations",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-goals"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-needs",
+      "label": "Persona Needs",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-goals"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-pain-points",
+      "label": "Persona Pain Points",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-purpose"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-frustrations",
+      "label": "Persona Frustrations",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-values",
+        "ai-persona-testing::persona-needs"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::emotional-drivers",
+      "label": "Emotional Drivers",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-questions",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::functional-needs",
+      "label": "Functional Needs",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-psychographics"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::social-needs",
+      "label": "Social Needs",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-personas",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::buying-behaviors",
+      "label": "Buying Behaviors",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-behaviors"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::purchase-triggers",
+      "label": "Purchase Triggers",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::real-customer-validation",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::purchase-barriers",
+      "label": "Purchase Barriers",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-behaviors"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::decision-criteria",
+      "label": "Decision Criteria",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::persona-needs",
+        "ai-persona-testing::buying-behaviors"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::information-needs",
+      "label": "Information Needs",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::media-habits",
+      "label": "Media Habits",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-profile",
+        "ai-persona-testing::persona-background",
+        "ai-persona-testing::information-needs"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::channel-preferences",
+      "label": "Channel Preferences",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-background",
+        "ai-persona-testing::persona-motivations",
+        "ai-persona-testing::emotional-drivers"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::technology-comfort",
+      "label": "Technology Comfort",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-questions",
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::purchase-barriers"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::price-sensitivity",
+      "label": "Price Sensitivity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-narrative",
+        "ai-persona-testing::persona-psychographics",
+        "ai-persona-testing::persona-pain-points"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::risk-tolerance",
+      "label": "Risk Tolerance",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-preferences",
+        "ai-persona-testing::decision-criteria"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-loyalty",
+      "label": "Brand Loyalty",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-template",
+        "ai-persona-testing::persona-identity"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::trust-disposition",
+      "label": "Trust Disposition",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-context",
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::functional-needs"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-quote",
+      "label": "Persona Quote",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-beliefs"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-scenario",
+      "label": "Persona Scenario",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-context",
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::persona-frustrations"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-evidence-base",
+      "label": "Persona Evidence Base",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::real-customer-validation",
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-attitudes",
+        "ai-persona-testing::purchase-triggers"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-specificity",
+      "label": "Persona Specificity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-goals"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-completeness",
+      "label": "Persona Completeness",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-users",
+        "ai-persona-testing::research-questions",
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::social-needs"
+      ],
+      "taxonomy_id": "PERDS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-segmentation",
+      "label": "Customer Segmentation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::behavioral-segmentation",
+      "label": "Behavioral Segmentation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-demographics",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::demographic-segmentation",
+      "label": "Demographic Segmentation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::buying-behaviors",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::psychographic-segmentation",
+      "label": "Psychographic Segmentation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-behaviors",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::needs-based-segmentation",
+      "label": "Needs-Based Segmentation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::decision-criteria",
+        "ai-persona-testing::persona-scenario",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::value-based-segmentation",
+      "label": "Value-Based Segmentation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-archetypes",
+      "label": "Customer Archetypes",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::primary-persona",
+      "label": "Primary Persona",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-segmentation",
+        "ai-persona-testing::customer-archetypes"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::secondary-persona",
+      "label": "Secondary Persona",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::negative-persona",
+      "label": "Negative Persona",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::persona-psychographics",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::edge-case-persona",
+      "label": "Edge-Case Persona",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-motivations",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::adversarial-persona",
+      "label": "Adversarial Persona",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::international-persona",
+      "label": "International Persona",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-needs",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::accessibility-persona",
+      "label": "Accessibility Persona",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-demographics",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::skeptical-customer",
+      "label": "Skeptical Customer",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::buying-behaviors",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::loyal-customer",
+      "label": "Loyal Customer",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-psychographics",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::new-customer",
+      "label": "New Customer",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::decision-criteria",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::lapsed-customer",
+      "label": "Lapsed Customer",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-behaviors",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::budget-customer",
+      "label": "Budget Customer",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-scenario",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::premium-customer",
+      "label": "Premium Customer",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-values",
+        "ai-persona-testing::buying-behaviors",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::jobs-to-be-done",
+      "label": "Jobs-to-Be-Done",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::persona-needs",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-job",
+      "label": "Customer Job",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::functional-job",
+      "label": "Functional Job",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-scenario",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::emotional-job",
+      "label": "Emotional Job",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-psychographics",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::social-job",
+      "label": "Social Job",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-needs",
+        "ai-persona-testing::decision-criteria",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::desired-outcome",
+      "label": "Desired Outcome",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-demographics",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-progress",
+      "label": "Customer Progress",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-values",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::switching-forces",
+      "label": "Switching Forces",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-segmentation",
+        "ai-persona-testing::customer-archetypes"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::push-forces",
+      "label": "Push Forces",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-psychographics",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::pull-forces",
+      "label": "Pull Forces",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-values",
+        "ai-persona-testing::decision-criteria",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::habit-forces",
+      "label": "Habit Forces",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::anxiety-forces",
+      "label": "Anxiety Forces",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-needs",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-circumstance",
+      "label": "Customer Circumstance",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-segmentation",
+        "ai-persona-testing::desired-outcome"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::use-context",
+      "label": "Use Context",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-motivations",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-journey",
+      "label": "Customer Journey",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-scenario"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::journey-stage",
+      "label": "Journey Stage",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-segmentation",
+        "ai-persona-testing::customer-archetypes"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-touchpoint",
+      "label": "Customer Touchpoint",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::moment-of-truth",
+      "label": "Moment of Truth",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-needs",
+        "ai-persona-testing::customer-segmentation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::journey-friction",
+      "label": "Journey Friction",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-segmentation",
+        "ai-persona-testing::desired-outcome"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::journey-opportunity",
+      "label": "Journey Opportunity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-behaviors",
+        "ai-persona-testing::customer-segmentation",
+        "ai-persona-testing::customer-journey"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-consistency",
+      "label": "Persona Consistency",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-personas",
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::persona-behaviors"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::behavioral-consistency",
+      "label": "Behavioral Consistency",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-scenario",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::character-fidelity",
+      "label": "Character Fidelity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-archetypes",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-drift",
+      "label": "Persona Drift",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-scenario",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::drift-detection",
+      "label": "Drift Detection",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-personas",
+        "ai-persona-testing::persona-behaviors",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-validation",
+      "label": "Persona Validation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-evidence-base",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-quality",
+      "label": "Persona Quality",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-specificity",
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::persona-validation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-differentiation",
+      "label": "Persona Differentiation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-specificity",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-overlap",
+      "label": "Persona Overlap",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-segmentation",
+        "ai-persona-testing::adversarial-persona",
+        "ai-persona-testing::emotional-job",
+        "ai-persona-testing::journey-stage",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-coverage",
+      "label": "Persona Coverage",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthetic-personas",
+        "ai-persona-testing::needs-based-segmentation",
+        "ai-persona-testing::new-customer",
+        "ai-persona-testing::push-forces",
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::persona-validation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-diversity",
+      "label": "Persona Diversity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::negative-persona",
+        "ai-persona-testing::customer-job",
+        "ai-persona-testing::use-context",
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::persona-quality"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-balance",
+      "label": "Persona Balance",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-scenario",
+        "ai-persona-testing::demographic-segmentation",
+        "ai-persona-testing::skeptical-customer",
+        "ai-persona-testing::customer-progress",
+        "ai-persona-testing::journey-friction",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-refinement",
+      "label": "Persona Refinement",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::primary-persona",
+        "ai-persona-testing::premium-customer",
+        "ai-persona-testing::anxiety-forces",
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::persona-validation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-versioning",
+      "label": "Persona Versioning",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::international-persona",
+        "ai-persona-testing::social-job",
+        "ai-persona-testing::customer-touchpoint",
+        "ai-persona-testing::persona-quality",
+        "ai-persona-testing::persona-refinement"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-library",
+      "label": "Persona Library",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::value-based-segmentation",
+        "ai-persona-testing::lapsed-customer",
+        "ai-persona-testing::pull-forces",
+        "ai-persona-testing::behavioral-consistency",
+        "ai-persona-testing::persona-validation",
+        "ai-persona-testing::persona-versioning"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-reuse",
+      "label": "Persona Reuse",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::edge-case-persona",
+        "ai-persona-testing::functional-job",
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::persona-refinement"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-documentation",
+      "label": "Persona Documentation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-scenario",
+        "ai-persona-testing::psychographic-segmentation",
+        "ai-persona-testing::loyal-customer",
+        "ai-persona-testing::switching-forces",
+        "ai-persona-testing::journey-opportunity",
+        "ai-persona-testing::persona-consistency"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-test-case",
+      "label": "Persona Test Case",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::secondary-persona",
+        "ai-persona-testing::jobs-to-be-done",
+        "ai-persona-testing::customer-circumstance",
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::persona-validation"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-acceptance-test",
+      "label": "Persona Acceptance Test",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::behavioral-segmentation",
+        "ai-persona-testing::accessibility-persona",
+        "ai-persona-testing::moment-of-truth",
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::persona-library"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-benchmark",
+      "label": "Persona Benchmark",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-specificity",
+        "ai-persona-testing::customer-segmentation",
+        "ai-persona-testing::budget-customer",
+        "ai-persona-testing::habit-forces",
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::character-fidelity"
+      ],
+      "taxonomy_id": "PERQ",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::model-instructions"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-objective",
+      "label": "Prompt Objective",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-structure",
+      "label": "Prompt Structure",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-objective"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::system-prompt",
+      "label": "System Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-instructions",
+        "ai-persona-testing::prompt-structure"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::user-prompt",
+      "label": "User Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-structure",
+        "ai-persona-testing::system-prompt"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-prompt",
+      "label": "Persona Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-template",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::moderator-prompt",
+      "label": "Moderator Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-context-window",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::reviewer-prompt",
+      "label": "Reviewer Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::skeptic-prompt",
+      "label": "Skeptic Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-responses",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-prompt",
+      "label": "Evaluation Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-structure"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-context",
+      "label": "Prompt Context",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-context-window",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::context-management",
+      "label": "Context Management",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::context-prioritization",
+      "label": "Context Prioritization",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-context"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::context-compression",
+      "label": "Context Compression",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-template",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::role-definition",
+      "label": "Role Definition",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-structure",
+        "ai-persona-testing::system-prompt"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::task-definition",
+      "label": "Task Definition",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::audience-definition",
+      "label": "Audience Definition",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::task-definition"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::constraint-definition",
+      "label": "Constraint Definition",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-template",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-instructions",
+      "label": "Evaluation Instructions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-structure",
+        "ai-persona-testing::task-definition",
+        "ai-persona-testing::constraint-definition"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::output-instructions",
+      "label": "Output Instructions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-structure",
+        "ai-persona-testing::evaluation-instructions"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-specificity",
+      "label": "Prompt Specificity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-responses",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-clarity",
+      "label": "Prompt Clarity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-grounding",
+      "label": "Prompt Grounding",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-context-window",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-examples",
+      "label": "Prompt Examples",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::few-shot-examples",
+      "label": "Few-Shot Examples",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::task-definition"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-variables",
+      "label": "Prompt Variables",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-context"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::reusable-prompts",
+      "label": "Reusable Prompts",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-structure",
+        "ai-persona-testing::prompt-variables"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-templates",
+      "label": "Prompt Templates",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-structure",
+        "ai-persona-testing::reusable-prompts"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-chaining",
+      "label": "Prompt Chaining",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::role-definition"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-versioning",
+      "label": "Prompt Versioning",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::reusable-prompts",
+        "ai-persona-testing::prompt-templates"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::structured-output",
+      "label": "Structured Output",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-responses",
+        "ai-persona-testing::output-instructions"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::output-schema",
+      "label": "Output Schema",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::structured-output"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::response-format",
+      "label": "Response Format",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-scenario",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::rating-scale-output",
+      "label": "Rating Scale Output",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-clarity"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evidence-field",
+      "label": "Evidence Field",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-clarity",
+        "ai-persona-testing::structured-output"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::confidence-field",
+      "label": "Confidence Field",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::probabilistic-output",
+        "ai-persona-testing::prompt-engineering"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::recommendation-field",
+      "label": "Recommendation Field",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::system-prompt"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::rationale-field",
+      "label": "Rationale Field",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-specificity"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::citation-field",
+      "label": "Citation Field",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-versioning"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::missing-data-handling",
+      "label": "Missing Data Handling",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-responses",
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::evaluation-instructions"
+      ],
+      "taxonomy_id": "PRMPT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-testing",
+      "label": "Prompt Testing",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-engineering",
+        "ai-persona-testing::prompt-clarity",
+        "ai-persona-testing::prompt-grounding"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-test-case",
+      "label": "Prompt Test Case",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-grounding",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-benchmark",
+      "label": "Prompt Benchmark",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-grounding",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-comparison",
+      "label": "Prompt Comparison",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::reusable-prompts",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-iteration",
+      "label": "Prompt Iteration",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-testing",
+        "ai-persona-testing::prompt-test-case",
+        "ai-persona-testing::prompt-comparison"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::prompt-failure-mode",
+      "label": "Prompt Failure Mode",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::probabilistic-output",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ambiguous-instructions",
+      "label": "Ambiguous Instructions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-specificity",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::conflicting-instructions",
+      "label": "Conflicting Instructions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-responses",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::instruction-hierarchy",
+      "label": "Instruction Hierarchy",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::response-consistency",
+      "label": "Response Consistency",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::hallucination-reduction",
+      "label": "Hallucination Reduction",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::structured-output",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::character-maintenance",
+      "label": "Character Maintenance",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-testing",
+        "ai-persona-testing::ambiguous-instructions"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::neutral-question-design",
+      "label": "Neutral Question Design",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-consistency",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::leading-questions",
+      "label": "Leading Questions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-versioning",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::open-ended-questions",
+      "label": "Open-Ended Questions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-testing",
+        "ai-persona-testing::prompt-benchmark",
+        "ai-persona-testing::prompt-failure-mode"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::probing-questions",
+      "label": "Probing Questions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::feedback-credibility",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::adversarial-questions",
+      "label": "Adversarial Questions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-templates",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::follow-up-questions",
+      "label": "Follow-Up Questions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-testing",
+        "ai-persona-testing::prompt-iteration"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::reflection-prompt",
+      "label": "Reflection Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::probabilistic-output",
+        "ai-persona-testing::prompt-testing"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::synthesis-prompt",
+      "label": "Synthesis Prompt",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::structured-output",
+        "ai-persona-testing::response-consistency",
+        "ai-persona-testing::reflection-prompt"
+      ],
+      "taxonomy_id": "PTEST",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::ai-agent",
+      "label": "AI Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::model-instructions"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-role",
+      "label": "Agent Role",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::role-definition",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-goal",
+      "label": "Agent Goal",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::task-definition",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-instructions",
+      "label": "Agent Instructions",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::system-prompt",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-context",
+      "label": "Agent Context",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::task-definition",
+        "ai-persona-testing::structured-output",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-memory",
+      "label": "Agent Memory",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::agent-goal"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-tools",
+      "label": "Agent Tools",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::large-language-models",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-output",
+      "label": "Agent Output",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::model-instructions",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-autonomy",
+      "label": "Agent Autonomy",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::agent-memory"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-boundaries",
+      "label": "Agent Boundaries",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::constraint-definition",
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::agent-autonomy"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-agent",
+      "label": "Persona Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::moderator-agent",
+      "label": "Moderator Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::moderator-prompt",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::expert-reviewer-agent",
+      "label": "Expert Reviewer Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::reviewer-prompt",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::skeptic-agent",
+      "label": "Skeptic Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::skeptic-prompt",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-strategist-agent",
+      "label": "Brand Strategist Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::system-prompt",
+        "ai-persona-testing::constraint-definition",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::competitive-analyst-agent",
+      "label": "Competitive Analyst Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::agent-goal"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::copywriting-expert-agent",
+      "label": "Copywriting Expert Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::agent-boundaries"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::visual-design-critic",
+      "label": "Visual Design Critic",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::role-definition",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::behavioral-expert-agent",
+      "label": "Behavioral Expert Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::agent-instructions"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::consumer-research-agent",
+      "label": "Consumer Research Agent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::artificial-intelligence",
+        "ai-persona-testing::model-responses",
+        "ai-persona-testing::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::multi-agent-system",
+      "label": "Multi-Agent System",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::persona-agent"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-orchestration",
+      "label": "Agent Orchestration",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-workflow",
+      "label": "Agent Workflow",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::agent-orchestration"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-handoff",
+      "label": "Agent Handoff",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-coordination",
+      "label": "Agent Coordination",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-agent",
+        "ai-persona-testing::expert-reviewer-agent",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-independence",
+      "label": "Agent Independence",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::agent-autonomy",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::shared-context",
+      "label": "Shared Context",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::agent-independence"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::isolated-context",
+      "label": "Isolated Context",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::agent-context",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::parallel-evaluation",
+      "label": "Parallel Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::agent-independence",
+        "ai-persona-testing::isolated-context"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::sequential-evaluation",
+      "label": "Sequential Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::expert-reviewer-agent",
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::agent-workflow"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::independent-review",
+      "label": "Independent Review",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::agent-independence"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::round-table-discussion",
+      "label": "Round-Table Discussion",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-agent",
+        "ai-persona-testing::independent-review"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::moderated-discussion",
+      "label": "Moderated Discussion",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::moderator-agent",
+        "ai-persona-testing::round-table-discussion"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::agent-debate",
+      "label": "Agent Debate",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::round-table-discussion"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::debate-protocol",
+      "label": "Debate Protocol",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::ai-agent",
+        "ai-persona-testing::agent-instructions",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::turn-taking",
+      "label": "Turn Taking",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-agent",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::discussion-agenda",
+      "label": "Discussion Agenda",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::round-table-discussion"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::consensus-generation",
+      "label": "Consensus Generation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::moderated-discussion",
+        "ai-persona-testing::agent-debate",
+        "ai-persona-testing::discussion-agenda"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::minority-opinion",
+      "label": "Minority Opinion",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::expert-reviewer-agent",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::disagreement-analysis",
+      "label": "Disagreement Analysis",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::moderator-agent",
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::shared-context"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::moderator-neutrality",
+      "label": "Moderator Neutrality",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::agent-debate"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::reviewer-independence",
+      "label": "Reviewer Independence",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::agent-goal",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::groupthink-risk",
+      "label": "Groupthink Risk",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::moderator-agent",
+        "ai-persona-testing::multi-agent-system"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::opinion-contamination",
+      "label": "Opinion Contamination",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::agent-independence"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-cross-talk",
+      "label": "Persona Cross-Talk",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::agent-autonomy",
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::moderated-discussion"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::response-aggregation",
+      "label": "Response Aggregation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::parallel-evaluation",
+        "ai-persona-testing::sequential-evaluation",
+        "ai-persona-testing::independent-review"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::finding-synthesis",
+      "label": "Finding Synthesis",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::consensus-generation",
+        "ai-persona-testing::disagreement-analysis",
+        "ai-persona-testing::response-aggregation"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::conflict-resolution",
+      "label": "Conflict Resolution",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::agent-coordination"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::expert-critique",
+      "label": "Expert Critique",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::round-table-discussion"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::devil-s-advocate",
+      "label": "Devil's Advocate",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::skeptic-agent",
+        "ai-persona-testing::agent-debate"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::marketing-asset",
+      "label": "Marketing Asset",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::customer-persona"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-identity",
+      "label": "Brand Identity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-positioning",
+      "label": "Brand Positioning",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::brand-identity"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-promise",
+      "label": "Brand Promise",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::brand-identity",
+        "ai-persona-testing::brand-positioning"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-personality",
+      "label": "Brand Personality",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::independent-review",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-voice",
+      "label": "Brand Voice",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::brand-identity",
+        "ai-persona-testing::brand-personality"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-tone",
+      "label": "Brand Tone",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::buying-behaviors",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::value-proposition",
+      "label": "Value Proposition",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::brand-positioning",
+        "ai-persona-testing::brand-promise"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::product-messaging",
+      "label": "Product Messaging",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::brand-voice",
+        "ai-persona-testing::value-proposition"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::message-hierarchy",
+      "label": "Message Hierarchy",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::messaging-consistency",
+      "label": "Messaging Consistency",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::brand-voice",
+        "ai-persona-testing::product-messaging",
+        "ai-persona-testing::message-hierarchy"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::visual-identity",
+      "label": "Visual Identity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::logo-evaluation",
+      "label": "Logo Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::visual-identity"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::color-evaluation",
+      "label": "Color Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::brand-identity"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::typography-evaluation",
+      "label": "Typography Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::product-messaging"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::image-evaluation",
+      "label": "Image Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-goals",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::website-evaluation",
+      "label": "Website Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::messaging-consistency",
+        "ai-persona-testing::visual-identity"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::landing-page-evaluation",
+      "label": "Landing Page Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::brand-tone"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::product-page-evaluation",
+      "label": "Product Page Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-questions",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::advertisement-evaluation",
+      "label": "Advertisement Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::multi-agent-system",
+        "ai-persona-testing::parallel-evaluation",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::video-evaluation",
+      "label": "Video Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::brand-personality"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::campaign-evaluation",
+      "label": "Campaign Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::messaging-consistency"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::social-content-evaluation",
+      "label": "Social Content Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::decision-criteria",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::email-evaluation",
+      "label": "Email Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::brand-positioning"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::tagline-evaluation",
+      "label": "Tagline Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::value-proposition",
+        "ai-persona-testing::message-hierarchy"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::headline-evaluation",
+      "label": "Headline Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-needs",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::call-to-action-evaluation",
+      "label": "Call-to-Action Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::finding-synthesis",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::customer-journey-review",
+      "label": "Customer Journey Review",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-journey",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::competitive-comparison",
+      "label": "Competitive Comparison",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::brand-positioning",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::brand-differentiation",
+      "label": "Brand Differentiation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::brand-positioning",
+        "ai-persona-testing::value-proposition",
+        "ai-persona-testing::competitive-comparison"
+      ],
+      "taxonomy_id": "BRAND",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-framework",
+      "label": "Evaluation Framework",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-questions",
+        "ai-persona-testing::marketing-asset"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-criterion",
+      "label": "Evaluation Criterion",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-rubric",
+      "label": "Evaluation Rubric",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::evaluation-criterion"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::rubric-dimension",
+      "label": "Rubric Dimension",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-instructions",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::rubric-completeness",
+      "label": "Rubric Completeness",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::value-proposition",
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::evaluation-rubric"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::rubric-fairness",
+      "label": "Rubric Fairness",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::scoring-system",
+      "label": "Scoring System",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-rubric",
+        "ai-persona-testing::rubric-dimension"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::rating-scale",
+      "label": "Rating Scale",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::rubric-dimension"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::scale-anchors",
+      "label": "Scale Anchors",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::rating-scale"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::scoring-guidance",
+      "label": "Scoring Guidance",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::structured-output",
+        "ai-persona-testing::evidence-field",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::weighted-criteria",
+      "label": "Weighted Criteria",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::feedback-credibility",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::score-normalization",
+      "label": "Score Normalization",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::reproducible-results",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::confidence-rating",
+      "label": "Confidence Rating",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::confidence-field",
+        "ai-persona-testing::scoring-system"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evidence-collection",
+      "label": "Evidence Collection",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evidence-triangulation",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::supporting-evidence",
+      "label": "Supporting Evidence",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::claim-verification",
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::confidence-rating"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evidence-quality",
+      "label": "Evidence Quality",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evidence-collection",
+        "ai-persona-testing::supporting-evidence"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::factual-critique",
+      "label": "Factual Critique",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::rating-scale"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::emotional-reaction",
+      "label": "Emotional Reaction",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::supporting-evidence"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::trust-score",
+      "label": "Trust Score",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-rubric",
+        "ai-persona-testing::scoring-system",
+        "ai-persona-testing::evidence-collection"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::clarity-score",
+      "label": "Clarity Score",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::recommendation-field",
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::evidence-quality"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::emotional-resonance",
+      "label": "Emotional Resonance",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::rubric-dimension"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::memorability-score",
+      "label": "Memorability Score",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::weighted-criteria"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::purchase-intent",
+      "label": "Purchase Intent",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::buying-behaviors",
+        "ai-persona-testing::evaluation-rubric",
+        "ai-persona-testing::scoring-system"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::credibility-score",
+      "label": "Credibility Score",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::structured-output",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::relevance-score",
+      "label": "Relevance Score",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::value-proposition",
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::scoring-system"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::differentiation-score",
+      "label": "Differentiation Score",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::scoring-system"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persuasiveness-score",
+      "label": "Persuasiveness Score",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::evidence-collection"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::accessibility-score",
+      "label": "Accessibility Score",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evidence-triangulation",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-baseline",
+      "label": "Evaluation Baseline",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::confidence-field",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::comparative-benchmark",
+      "label": "Comparative Benchmark",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::scoring-system",
+        "ai-persona-testing::evaluation-baseline"
+      ],
+      "taxonomy_id": "RUBRC",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::pattern-detection",
+      "label": "Pattern Detection",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::response-aggregation",
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::evidence-collection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::cross-persona-comparison",
+      "label": "Cross-Persona Comparison",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::response-aggregation",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::response-coding",
+      "label": "Response Coding",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::confidence-rating",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::theme-identification",
+      "label": "Theme Identification",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::pattern-detection",
+        "ai-persona-testing::response-coding"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::sentiment-pattern",
+      "label": "Sentiment Pattern",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::feedback-credibility",
+        "ai-persona-testing::pattern-detection",
+        "ai-persona-testing::response-coding"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::contradiction-detection",
+      "label": "Contradiction Detection",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::messaging-consistency",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::messaging-gap",
+      "label": "Messaging Gap",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::pattern-detection",
+        "ai-persona-testing::contradiction-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::credibility-gap",
+      "label": "Credibility Gap",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::finding-synthesis",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::trust-signal",
+      "label": "Trust Signal",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evidence-triangulation",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::confusion-point",
+      "label": "Confusion Point",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-validity",
+        "ai-persona-testing::evidence-collection",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::risk-assessment",
+      "label": "Risk Assessment",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::pattern-detection",
+        "ai-persona-testing::contradiction-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::risk-severity",
+      "label": "Risk Severity",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::confidence-rating",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::risk-likelihood",
+      "label": "Risk Likelihood",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::pattern-detection",
+        "ai-persona-testing::risk-severity"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::recommendation",
+      "label": "Recommendation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::finding-synthesis",
+        "ai-persona-testing::evidence-collection",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::recommendation-priority",
+      "label": "Recommendation Priority",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::risk-assessment",
+        "ai-persona-testing::recommendation"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::business-impact",
+      "label": "Business Impact",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::implementation-effort",
+      "label": "Implementation Effort",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::confidence-rating",
+        "ai-persona-testing::pattern-detection"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evidence-based-decision",
+      "label": "Evidence-Based Decision",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evidence-collection",
+        "ai-persona-testing::evidence-quality",
+        "ai-persona-testing::recommendation"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::improvement-hypothesis",
+      "label": "Improvement Hypothesis",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::pattern-detection",
+        "ai-persona-testing::risk-severity"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::iterative-improvement",
+      "label": "Iterative Improvement",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::prompt-iteration",
+        "ai-persona-testing::evidence-based-decision",
+        "ai-persona-testing::improvement-hypothesis"
+      ],
+      "taxonomy_id": "ANLYS",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-research",
+        "ai-persona-testing::customer-persona",
+        "ai-persona-testing::evidence-collection"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::graph-node",
+      "label": "Graph Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::graph-edge",
+      "label": "Graph Edge",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::knowledge-graph",
+        "ai-persona-testing::graph-node"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::graph-relationship",
+      "label": "Graph Relationship",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::graph-node",
+        "ai-persona-testing::graph-edge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::graph-based-evaluation",
+      "label": "Graph-Based Evaluation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::evidence-collection",
+        "ai-persona-testing::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-node",
+      "label": "Persona Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::knowledge-graph",
+        "ai-persona-testing::graph-edge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::asset-node",
+      "label": "Asset Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::recommendation",
+        "ai-persona-testing::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::goal-node",
+      "label": "Goal Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-journey",
+        "ai-persona-testing::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::pain-point-node",
+      "label": "Pain Point Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::knowledge-graph",
+        "ai-persona-testing::graph-node"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::reaction-node",
+      "label": "Reaction Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-needs",
+        "ai-persona-testing::knowledge-graph",
+        "ai-persona-testing::graph-edge"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::criterion-node",
+      "label": "Criterion Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::customer-journey",
+        "ai-persona-testing::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::recommendation-node",
+      "label": "Recommendation Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::marketing-asset",
+        "ai-persona-testing::knowledge-graph"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evidence-node",
+      "label": "Evidence Node",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::knowledge-graph",
+        "ai-persona-testing::persona-node"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::relationship-type",
+      "label": "Relationship Type",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::graph-edge",
+        "ai-persona-testing::graph-relationship"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::organizational-memory",
+      "label": "Organizational Memory",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::knowledge-graph",
+        "ai-persona-testing::graph-relationship"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-history",
+      "label": "Evaluation History",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-versioning",
+        "ai-persona-testing::knowledge-graph",
+        "ai-persona-testing::organizational-memory"
+      ],
+      "taxonomy_id": "GRAPH",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::no-code-workflow",
+      "label": "No-Code Workflow",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::agent-workflow",
+        "ai-persona-testing::evaluation-framework"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::workflow-automation",
+      "label": "Workflow Automation",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::agent-workflow",
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::no-code-workflow"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-pipeline",
+      "label": "Evaluation Pipeline",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::agent-workflow",
+        "ai-persona-testing::evaluation-framework",
+        "ai-persona-testing::workflow-automation"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::automated-summarization",
+      "label": "Automated Summarization",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::synthesis-prompt",
+        "ai-persona-testing::finding-synthesis",
+        "ai-persona-testing::evaluation-pipeline"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::automated-comparison",
+      "label": "Automated Comparison",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::response-aggregation",
+        "ai-persona-testing::cross-persona-comparison",
+        "ai-persona-testing::evaluation-pipeline"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::automated-reporting",
+      "label": "Automated Reporting",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::finding-synthesis",
+        "ai-persona-testing::recommendation",
+        "ai-persona-testing::evaluation-pipeline"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::executive-summary",
+      "label": "Executive Summary",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::finding-synthesis",
+        "ai-persona-testing::recommendation",
+        "ai-persona-testing::automated-reporting"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::persona-comparison-report",
+      "label": "Persona Comparison Report",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::response-aggregation",
+        "ai-persona-testing::cross-persona-comparison",
+        "ai-persona-testing::automated-reporting"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::evaluation-heat-map",
+      "label": "Evaluation Heat Map",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::scoring-system",
+        "ai-persona-testing::cross-persona-comparison",
+        "ai-persona-testing::automated-reporting"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::recommendation-list",
+      "label": "Recommendation List",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::recommendation",
+        "ai-persona-testing::recommendation-priority",
+        "ai-persona-testing::automated-reporting"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::improvement-plan",
+      "label": "Improvement Plan",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::recommendation-priority",
+        "ai-persona-testing::implementation-effort",
+        "ai-persona-testing::iterative-improvement"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::executive-dashboard",
+      "label": "Executive Dashboard",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::executive-summary",
+        "ai-persona-testing::persona-comparison-report",
+        "ai-persona-testing::evaluation-heat-map",
+        "ai-persona-testing::recommendation-list"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::capstone-system",
+      "label": "Capstone System",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::persona-library",
+        "ai-persona-testing::prompt-versioning",
+        "ai-persona-testing::agent-workflow",
+        "ai-persona-testing::evaluation-rubric",
+        "ai-persona-testing::graph-based-evaluation",
+        "ai-persona-testing::evaluation-pipeline",
+        "ai-persona-testing::executive-dashboard"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    },
+    {
+      "id": "ai-persona-testing::scalable-research-process",
+      "label": "Scalable Research Process",
+      "subject_id": "ai-persona-testing",
+      "dependencies": [
+        "ai-persona-testing::research-governance",
+        "ai-persona-testing::persona-reuse",
+        "ai-persona-testing::workflow-automation",
+        "ai-persona-testing::capstone-system"
+      ],
+      "taxonomy_id": "WORKF",
+      "level": "core"
+    }
+  ]
+}

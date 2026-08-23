@@ -1,0 +1,3459 @@
+{
+  "subject_id": "prompt-class",
+  "title": "Prompt Engineering: From Fundamentals to Agentic AI",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "PFUND": {
+      "classifier_name": "Prompt Fundamentals",
+      "color": "PeachPuff"
+    },
+    "PTYPE": {
+      "classifier_name": "Prompt Types",
+      "color": "MistyRose"
+    },
+    "PTECH": {
+      "classifier_name": "Prompt Techniques",
+      "color": "LightYellow"
+    },
+    "PARAM": {
+      "classifier_name": "Model Parameters",
+      "color": "Thistle"
+    },
+    "OUTFMT": {
+      "classifier_name": "Output Format Control",
+      "color": "PaleTurquoise"
+    },
+    "CTXMEM": {
+      "classifier_name": "Context and Memory",
+      "color": "PaleGreen"
+    },
+    "RAG": {
+      "classifier_name": "Retrieval-Augmented Generation",
+      "color": "PowderBlue"
+    },
+    "MULTI": {
+      "classifier_name": "Multimodal Prompting",
+      "color": "Aquamarine"
+    },
+    "AGENT": {
+      "classifier_name": "Agentic AI",
+      "color": "LightSteelBlue"
+    },
+    "SECUR": {
+      "classifier_name": "Prompt Security",
+      "color": "LightPink"
+    },
+    "ETHIC": {
+      "classifier_name": "Ethics and Responsible AI",
+      "color": "Honeydew"
+    },
+    "BIZAP": {
+      "classifier_name": "Business Applications",
+      "color": "LavenderBlush"
+    },
+    "EDUAP": {
+      "classifier_name": "Educational Applications",
+      "color": "Lavender"
+    },
+    "EVAL": {
+      "classifier_name": "Evaluation and Optimization",
+      "color": "Gainsboro"
+    },
+    "USAGE": {
+      "classifier_name": "Usage Limits and Token Economics",
+      "color": "MintCream"
+    },
+    "CAP": {
+      "classifier_name": "Capstone Projects",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "prompt-class::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "prompt-class",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "prompt-class::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::artificial-intelligence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::natural-language-processing",
+      "label": "Natural Language Processing",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::artificial-intelligence",
+        "prompt-class::machine-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::natural-language-processing",
+        "prompt-class::neural-network-basics",
+        "prompt-class::transformer-architecture"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::neural-network-basics",
+      "label": "Neural Network Basics",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::machine-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::transformer-architecture",
+      "label": "Transformer Architecture",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::neural-network-basics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::token",
+      "label": "Token",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::tokenization",
+      "label": "Tokenization",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::context-window",
+      "label": "Context Window",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token",
+        "prompt-class::tokenization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::training-data",
+      "label": "Training Data",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::machine-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::model-parameters",
+      "label": "Model Parameters",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::neural-network-basics",
+        "prompt-class::training-data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::inference",
+      "label": "Inference",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::model-parameters"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::inference"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::foundation-model",
+      "label": "Foundation Model",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::training-data",
+        "prompt-class::model-parameters"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::pre-training",
+      "label": "Pre-Training",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::training-data",
+        "prompt-class::model-parameters"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::fine-tuning",
+      "label": "Fine-Tuning",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::foundation-model",
+        "prompt-class::pre-training"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::transfer-learning",
+      "label": "Transfer Learning",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::machine-learning",
+        "prompt-class::fine-tuning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::api",
+      "label": "API",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::inference"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::chatbot-interface",
+      "label": "Chatbot Interface",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::api"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::human-ai-interaction",
+      "label": "Human-AI Interaction",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::chatbot-interface"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt",
+      "label": "Prompt",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::token"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::input-output-paradigm",
+      "label": "Input-Output Paradigm",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::inference"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-structure",
+      "label": "Prompt Structure",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::instruction-clarity",
+        "prompt-class::specificity"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::instruction-clarity",
+      "label": "Instruction Clarity",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::specificity",
+      "label": "Specificity",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::instruction-clarity"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::ambiguity-avoidance",
+      "label": "Ambiguity Avoidance",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::instruction-clarity",
+        "prompt-class::specificity"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::task-decomposition",
+      "label": "Task Decomposition",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::prompt-structure"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-length",
+      "label": "Prompt Length",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::context-window",
+        "prompt-class::prompt-structure"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-iteration",
+      "label": "Prompt Iteration",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::prompt-testing",
+        "prompt-class::response-evaluation"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-testing",
+      "label": "Prompt Testing",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::response-evaluation"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::response-quality",
+      "label": "Response Quality",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::input-output-paradigm",
+        "prompt-class::response-evaluation",
+        "prompt-class::relevance",
+        "prompt-class::accuracy"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::response-evaluation",
+      "label": "Response Evaluation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::input-output-paradigm"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::relevance",
+      "label": "Relevance",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::input-output-paradigm",
+        "prompt-class::specificity"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::accuracy",
+      "label": "Accuracy",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::input-output-paradigm",
+        "prompt-class::relevance"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::completeness",
+      "label": "Completeness",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::response-quality",
+        "prompt-class::accuracy"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::conciseness",
+      "label": "Conciseness",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::prompt-length"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::tone-control",
+      "label": "Tone Control",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::role-assignment"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::audience-adaptation",
+      "label": "Audience Adaptation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::tone-control"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::natural-language-command",
+      "label": "Natural Language Command",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::instruction-clarity"
+      ],
+      "taxonomy_id": "PFUND",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::directive-prompts",
+      "label": "Directive Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::natural-language-command"
+      ],
+      "taxonomy_id": "PTYPE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::interrogative-prompts",
+      "label": "Interrogative Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::natural-language-command"
+      ],
+      "taxonomy_id": "PTYPE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::open-ended-prompts",
+      "label": "Open-Ended Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::interrogative-prompts"
+      ],
+      "taxonomy_id": "PTYPE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::closed-ended-prompts",
+      "label": "Closed-Ended Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::interrogative-prompts"
+      ],
+      "taxonomy_id": "PTYPE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::conversational-prompts",
+      "label": "Conversational Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::open-ended-prompts",
+        "prompt-class::closed-ended-prompts"
+      ],
+      "taxonomy_id": "PTYPE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::zero-shot-prompting",
+      "label": "Zero-Shot Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::prompt-structure"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::one-shot-prompting",
+      "label": "One-Shot Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::zero-shot-prompting",
+        "prompt-class::example-selection"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::few-shot-prompting",
+      "label": "Few-Shot Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::one-shot-prompting",
+        "prompt-class::example-selection"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::example-selection",
+      "label": "Example Selection",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::zero-shot-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::chain-of-thought-prompting",
+      "label": "Chain-of-Thought Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::zero-shot-prompting",
+        "prompt-class::step-by-step-reasoning"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::step-by-step-reasoning",
+      "label": "Step-by-Step Reasoning",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::task-decomposition",
+        "prompt-class::zero-shot-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::self-consistency",
+      "label": "Self-Consistency",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::chain-of-thought-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::tree-of-thoughts",
+      "label": "Tree of Thoughts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::chain-of-thought-prompting",
+        "prompt-class::self-consistency"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-chaining",
+      "label": "Prompt Chaining",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::task-decomposition",
+        "prompt-class::chain-of-thought-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-templates",
+      "label": "Prompt Templates",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::reusable-prompts",
+      "label": "Reusable Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::prompt-templates"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::role-assignment",
+      "label": "Role Assignment",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::persona-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::persona-prompting",
+      "label": "Persona Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::system-prompt",
+      "label": "System Prompt",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::role-assignment",
+        "prompt-class::constraint-setting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::user-prompt",
+      "label": "User Prompt",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::prompt-structure"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::assistant-response",
+      "label": "Assistant Response",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::input-output-paradigm",
+        "prompt-class::user-prompt"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::instruction-following",
+      "label": "Instruction Following",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::instruction-clarity",
+        "prompt-class::system-prompt"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::constraint-setting",
+      "label": "Constraint Setting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::specificity"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::negative-prompting",
+      "label": "Negative Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::constraint-setting",
+        "prompt-class::ambiguity-avoidance"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::delimiter-usage",
+      "label": "Delimiter Usage",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::constraint-setting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::contextual-priming",
+      "label": "Contextual Priming",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::system-prompt"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::socratic-prompting",
+      "label": "Socratic Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::interrogative-prompts",
+        "prompt-class::chain-of-thought-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::analogical-prompting",
+      "label": "Analogical Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::zero-shot-prompting",
+        "prompt-class::persona-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::reflective-prompting",
+      "label": "Reflective Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::chain-of-thought-prompting",
+        "prompt-class::socratic-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::meta-prompting",
+      "label": "Meta-Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-engineering",
+        "prompt-class::prompt-chaining",
+        "prompt-class::reflective-prompting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-compression",
+      "label": "Prompt Compression",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-length",
+        "prompt-class::conciseness",
+        "prompt-class::token-counting"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-expansion",
+      "label": "Prompt Expansion",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-length",
+        "prompt-class::prompt-compression"
+      ],
+      "taxonomy_id": "PTECH",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::temperature-setting",
+      "label": "Temperature Setting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::inference"
+      ],
+      "taxonomy_id": "PARAM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::top-p-sampling",
+      "label": "Top-P Sampling",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::inference",
+        "prompt-class::temperature-setting"
+      ],
+      "taxonomy_id": "PARAM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::frequency-penalty",
+      "label": "Frequency Penalty",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::temperature-setting"
+      ],
+      "taxonomy_id": "PARAM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::presence-penalty",
+      "label": "Presence Penalty",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::temperature-setting",
+        "prompt-class::frequency-penalty"
+      ],
+      "taxonomy_id": "PARAM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::max-tokens-setting",
+      "label": "Max Tokens Setting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token",
+        "prompt-class::context-window",
+        "prompt-class::temperature-setting"
+      ],
+      "taxonomy_id": "PARAM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::stop-sequences",
+      "label": "Stop Sequences",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::max-tokens-setting"
+      ],
+      "taxonomy_id": "PARAM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::seed-parameter",
+      "label": "Seed Parameter",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::temperature-setting",
+        "prompt-class::reproducibility"
+      ],
+      "taxonomy_id": "PARAM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::reproducibility",
+      "label": "Reproducibility",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-testing",
+        "prompt-class::temperature-setting"
+      ],
+      "taxonomy_id": "PARAM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::output-format-specification",
+      "label": "Output Format Specification",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-structure",
+        "prompt-class::constraint-setting"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::markdown-generation",
+      "label": "Markdown Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::json-output",
+      "label": "JSON Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::csv-output",
+      "label": "CSV Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::table-generation",
+      "label": "Table Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::markdown-generation"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::list-generation",
+      "label": "List Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::markdown-generation"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::code-generation",
+      "label": "Code Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::structured-data-output",
+      "label": "Structured Data Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::json-output"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::schema-guided-output",
+      "label": "Schema-Guided Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::structured-data-output"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::xml-output",
+      "label": "XML Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::structured-data-output"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::yaml-output",
+      "label": "YAML Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::structured-data-output"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::html-generation",
+      "label": "HTML Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::markdown-generation"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::bullet-points",
+      "label": "Bullet Points",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::list-generation"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::numbered-lists",
+      "label": "Numbered Lists",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::list-generation",
+        "prompt-class::bullet-points"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::hierarchical-output",
+      "label": "Hierarchical Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::list-generation",
+        "prompt-class::numbered-lists"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::summary-generation",
+      "label": "Summary Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::conciseness",
+        "prompt-class::information-extraction"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::report-generation",
+      "label": "Report Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::table-generation",
+        "prompt-class::summary-generation"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::narrative-output",
+      "label": "Narrative Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::tone-control"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::technical-writing",
+      "label": "Technical Writing",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::report-generation",
+        "prompt-class::narrative-output"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::plain-language-output",
+      "label": "Plain Language Output",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::conciseness",
+        "prompt-class::audience-adaptation"
+      ],
+      "taxonomy_id": "OUTFMT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::context-management",
+      "label": "Context Management",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::context-window",
+        "prompt-class::context-window-limits"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::context-window-limits",
+      "label": "Context Window Limits",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::context-window",
+        "prompt-class::token-counting"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::token-counting",
+      "label": "Token Counting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token",
+        "prompt-class::tokenization"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::conversation-history",
+      "label": "Conversation History",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::context-window",
+        "prompt-class::context-management"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::memory-in-ai-systems",
+      "label": "Memory in AI Systems",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::conversation-history"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::stateless-interaction",
+      "label": "Stateless Interaction",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::conversation-history",
+        "prompt-class::memory-in-ai-systems"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::session-persistence",
+      "label": "Session Persistence",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::conversation-history",
+        "prompt-class::memory-in-ai-systems"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::long-form-context",
+      "label": "Long-Form Context",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::context-window",
+        "prompt-class::context-management",
+        "prompt-class::context-window-limits"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::document-summarization",
+      "label": "Document Summarization",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::summary-generation",
+        "prompt-class::long-form-context"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::information-extraction",
+      "label": "Information Extraction",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::prompt-structure",
+        "prompt-class::long-form-context"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::key-point-identification",
+      "label": "Key Point Identification",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::relevance-filtering",
+      "label": "Relevance Filtering",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::relevance",
+        "prompt-class::information-extraction"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::context-injection",
+      "label": "Context Injection",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::system-prompt",
+        "prompt-class::context-management"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::background-information",
+      "label": "Background Information",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::context-injection"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::domain-knowledge-priming",
+      "label": "Domain Knowledge Priming",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::contextual-priming",
+        "prompt-class::context-injection"
+      ],
+      "taxonomy_id": "CTXMEM",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::retrieval-augmented-gen",
+      "label": "Retrieval-Augmented Gen",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::knowledge-base",
+        "prompt-class::embedding"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::knowledge-base",
+      "label": "Knowledge Base",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::vector-database",
+      "label": "Vector Database",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::knowledge-base",
+        "prompt-class::embedding"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::embedding",
+      "label": "Embedding",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::natural-language-processing",
+        "prompt-class::token"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::semantic-search",
+      "label": "Semantic Search",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::vector-database",
+        "prompt-class::embedding"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::document-chunking",
+      "label": "Document Chunking",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::long-form-context",
+        "prompt-class::vector-database"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::source-citation",
+      "label": "Source Citation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::retrieval-augmented-gen",
+        "prompt-class::factual-accuracy"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::grounding",
+      "label": "Grounding",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::retrieval-augmented-gen",
+        "prompt-class::factual-accuracy"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::hallucination",
+      "label": "Hallucination",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::accuracy"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::factual-accuracy",
+      "label": "Factual Accuracy",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::accuracy",
+        "prompt-class::hallucination"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::knowledge-cutoff",
+      "label": "Knowledge Cutoff",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::training-data",
+        "prompt-class::factual-accuracy"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::real-time-information",
+      "label": "Real-Time Information",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::retrieval-augmented-gen",
+        "prompt-class::knowledge-cutoff"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::external-data-integration",
+      "label": "External Data Integration",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::retrieval-augmented-gen",
+        "prompt-class::vector-database"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::search-enhanced-prompting",
+      "label": "Search-Enhanced Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::retrieval-augmented-gen",
+        "prompt-class::semantic-search"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::evidence-based-responses",
+      "label": "Evidence-Based Responses",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::retrieval-augmented-gen",
+        "prompt-class::source-citation",
+        "prompt-class::factual-accuracy"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::multimodal-ai",
+      "label": "Multimodal AI",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::generative-ai"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::image-prompting",
+      "label": "Image Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::image-description",
+      "label": "Image Description",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::image-prompting"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::visual-question-answering",
+      "label": "Visual Question Answering",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::image-description"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::document-analysis",
+      "label": "Document Analysis",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::information-extraction"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::pdf-processing",
+      "label": "PDF Processing",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::document-analysis"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::code-interpretation",
+      "label": "Code Interpretation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::code-generation",
+        "prompt-class::multimodal-ai"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::chart-reading",
+      "label": "Chart Reading",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::visual-question-answering"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::diagram-understanding",
+      "label": "Diagram Understanding",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::visual-question-answering"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::screenshot-analysis",
+      "label": "Screenshot Analysis",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::image-description"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::audio-transcription",
+      "label": "Audio Transcription",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::video-understanding",
+      "label": "Video Understanding",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::audio-transcription"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::image-generation-prompts",
+      "label": "Image Generation Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::image-prompting"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::alt-text-generation",
+      "label": "Alt Text Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::image-description",
+        "prompt-class::image-generation-prompts"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::data-visualization-prompt",
+      "label": "Data Visualization Prompt",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::chart-reading",
+        "prompt-class::table-generation"
+      ],
+      "taxonomy_id": "MULTI",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::ai-agent",
+      "label": "AI Agent",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::task-decomposition"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::agent-architecture",
+      "label": "Agent Architecture",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::tool-use",
+        "prompt-class::planning"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::tool-use",
+      "label": "Tool Use",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::api",
+        "prompt-class::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::function-calling",
+      "label": "Function Calling",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::api",
+        "prompt-class::tool-use"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::planning",
+      "label": "Planning",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::task-decomposition",
+        "prompt-class::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::goal-decomposition",
+      "label": "Goal Decomposition",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::task-decomposition",
+        "prompt-class::planning"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::action-selection",
+      "label": "Action Selection",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::planning",
+        "prompt-class::goal-decomposition"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::execution-monitoring",
+      "label": "Execution Monitoring",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::action-selection"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::feedback-loop",
+      "label": "Feedback Loop",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-iteration",
+        "prompt-class::execution-monitoring"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::self-correction",
+      "label": "Self-Correction",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::chain-of-thought-prompting",
+        "prompt-class::feedback-loop"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::autonomous-workflow",
+      "label": "Autonomous Workflow",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::action-selection",
+        "prompt-class::self-correction"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::multi-step-reasoning",
+      "label": "Multi-Step Reasoning",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::chain-of-thought-prompting",
+        "prompt-class::prompt-chaining",
+        "prompt-class::planning"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::agent-orchestration",
+      "label": "Agent Orchestration",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::autonomous-workflow"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::skill",
+      "label": "Skill",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::tool-use"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::skill-library",
+      "label": "Skill Library",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::skill"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::agent-memory",
+      "label": "Agent Memory",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::memory-in-ai-systems",
+        "prompt-class::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::agent-context",
+      "label": "Agent Context",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::context-management",
+        "prompt-class::ai-agent",
+        "prompt-class::agent-memory"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::human-in-the-loop",
+      "label": "Human-in-the-Loop",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::approval-workflow",
+      "label": "Approval Workflow",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::human-in-the-loop"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::sandboxed-execution",
+      "label": "Sandboxed Execution",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::agent-safety"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::agent-evaluation",
+      "label": "Agent Evaluation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::prompt-evaluation"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::reliability",
+      "label": "Reliability",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::agent-evaluation"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::error-recovery",
+      "label": "Error Recovery",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::self-correction",
+        "prompt-class::reliability"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::retry-logic",
+      "label": "Retry Logic",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::error-recovery"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::task-automation",
+      "label": "Task Automation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::autonomous-workflow"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::workflow-design",
+      "label": "Workflow Design",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::autonomous-workflow"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::pipeline-construction",
+      "label": "Pipeline Construction",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-chaining",
+        "prompt-class::workflow-design"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::agent-collaboration",
+      "label": "Agent Collaboration",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::multi-agent-systems",
+      "label": "Multi-Agent Systems",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::agent-orchestration",
+        "prompt-class::agent-collaboration"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::agent-safety",
+      "label": "Agent Safety",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-agent",
+        "prompt-class::guardrails",
+        "prompt-class::responsible-disclosure"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-injection",
+      "label": "Prompt Injection",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::system-prompt"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::direct-injection",
+      "label": "Direct Injection",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::indirect-injection",
+      "label": "Indirect Injection",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::jailbreaking",
+      "label": "Jailbreaking",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection",
+        "prompt-class::adversarial-prompts"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::adversarial-prompts",
+      "label": "Adversarial Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt",
+        "prompt-class::prompt-injection"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::input-validation",
+      "label": "Input Validation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection",
+        "prompt-class::guardrails"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::output-filtering",
+      "label": "Output Filtering",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection",
+        "prompt-class::content-moderation"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::content-moderation",
+      "label": "Content Moderation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection",
+        "prompt-class::safety-guidelines"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::safety-guidelines",
+      "label": "Safety Guidelines",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::guardrails",
+      "label": "Guardrails",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::system-prompt",
+        "prompt-class::safety-guidelines"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::red-teaming",
+      "label": "Red Teaming",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection",
+        "prompt-class::adversarial-prompts"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-leaking",
+      "label": "Prompt Leaking",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::system-prompt",
+        "prompt-class::prompt-injection"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::data-exfiltration-risk",
+      "label": "Data Exfiltration Risk",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection",
+        "prompt-class::prompt-leaking"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::defense-strategies",
+      "label": "Defense Strategies",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection",
+        "prompt-class::input-validation",
+        "prompt-class::guardrails"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::responsible-disclosure",
+      "label": "Responsible Disclosure",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::red-teaming",
+        "prompt-class::defense-strategies"
+      ],
+      "taxonomy_id": "SECUR",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::ai-ethics",
+      "label": "AI Ethics",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::artificial-intelligence"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::bias-in-ai",
+      "label": "Bias in AI",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::training-data",
+        "prompt-class::ai-ethics"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::fairness",
+      "label": "Fairness",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-ethics",
+        "prompt-class::bias-in-ai"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::transparency",
+      "label": "Transparency",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-ethics"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::explainability",
+      "label": "Explainability",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::transparency"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::accountability",
+      "label": "Accountability",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-ethics",
+        "prompt-class::transparency"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::privacy-considerations",
+      "label": "Privacy Considerations",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-ethics"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::consent-and-data-use",
+      "label": "Consent and Data Use",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::privacy-considerations"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::intellectual-property",
+      "label": "Intellectual Property",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-ethics"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::copyright-considerations",
+      "label": "Copyright Considerations",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::intellectual-property"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::attribution",
+      "label": "Attribution",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::source-citation",
+        "prompt-class::copyright-considerations"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::misinformation-risk",
+      "label": "Misinformation Risk",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::hallucination",
+        "prompt-class::ai-ethics"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::deepfake-awareness",
+      "label": "Deepfake Awareness",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::multimodal-ai",
+        "prompt-class::misinformation-risk"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::environmental-impact",
+      "label": "Environmental Impact",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-ethics",
+        "prompt-class::cost-optimization"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::inclusive-language",
+      "label": "Inclusive Language",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::audience-adaptation",
+        "prompt-class::ai-ethics"
+      ],
+      "taxonomy_id": "ETHIC",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::business-use-cases",
+      "label": "Business Use Cases",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-engineering"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::customer-service-chatbot",
+      "label": "Customer Service Chatbot",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::chatbot-interface",
+        "prompt-class::few-shot-prompting",
+        "prompt-class::system-prompt"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::content-marketing",
+      "label": "Content Marketing",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::email-drafting",
+      "label": "Email Drafting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::tone-control",
+        "prompt-class::narrative-output"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::meeting-summarization",
+      "label": "Meeting Summarization",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::summary-generation",
+        "prompt-class::document-summarization"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::report-automation",
+      "label": "Report Automation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::report-generation",
+        "prompt-class::task-automation"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::data-analysis-prompting",
+      "label": "Data Analysis Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::csv-output",
+        "prompt-class::information-extraction",
+        "prompt-class::data-visualization-prompt"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::market-research",
+      "label": "Market Research",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::data-analysis-prompting"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::competitive-analysis",
+      "label": "Competitive Analysis",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::market-research"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::product-description",
+      "label": "Product Description",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::content-marketing"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::social-media-content",
+      "label": "Social Media Content",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::narrative-output",
+        "prompt-class::content-marketing"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::seo-optimization",
+      "label": "SEO Optimization",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::content-marketing",
+        "prompt-class::social-media-content"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::proposal-writing",
+      "label": "Proposal Writing",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::report-generation",
+        "prompt-class::technical-writing"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::contract-review",
+      "label": "Contract Review",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::document-analysis"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::training-material-design",
+      "label": "Training Material Design",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::lesson-plan-design"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::knowledge-management",
+      "label": "Knowledge Management",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::knowledge-base",
+        "prompt-class::personalized-tutor-app"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::process-documentation",
+      "label": "Process Documentation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::report-generation",
+        "prompt-class::technical-writing"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::decision-support",
+      "label": "Decision Support",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::data-analysis-prompting"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::brainstorming-facilitation",
+      "label": "Brainstorming Facilitation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::open-ended-prompts",
+        "prompt-class::socratic-prompting"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::project-planning",
+      "label": "Project Planning",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::planning",
+        "prompt-class::goal-decomposition"
+      ],
+      "taxonomy_id": "BIZAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::ai-assisted-learning",
+      "label": "AI-Assisted Learning",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::personalized-tutoring",
+      "label": "Personalized Tutoring",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::few-shot-prompting",
+        "prompt-class::persona-prompting",
+        "prompt-class::ai-assisted-learning"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::quiz-generation",
+      "label": "Quiz Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::closed-ended-prompts",
+        "prompt-class::output-format-specification",
+        "prompt-class::ai-assisted-learning"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::rubric-creation",
+      "label": "Rubric Creation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::quiz-generation",
+        "prompt-class::bloom-taxonomy-alignment"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::lesson-plan-design",
+      "label": "Lesson Plan Design",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-assisted-learning",
+        "prompt-class::bloom-taxonomy-alignment",
+        "prompt-class::learning-objective-design"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::differentiated-instruction",
+      "label": "Differentiated Instruction",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::personalized-tutoring",
+        "prompt-class::lesson-plan-design"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::formative-assessment",
+      "label": "Formative Assessment",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::quiz-generation",
+        "prompt-class::feedback-generation"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::feedback-generation",
+      "label": "Feedback Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::response-quality",
+        "prompt-class::ai-assisted-learning"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::study-guide-creation",
+      "label": "Study Guide Creation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::list-generation",
+        "prompt-class::summary-generation",
+        "prompt-class::ai-assisted-learning"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::concept-explanation",
+      "label": "Concept Explanation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::analogical-prompting",
+        "prompt-class::summary-generation",
+        "prompt-class::ai-assisted-learning"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::analogy-generation",
+      "label": "Analogy Generation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::analogical-prompting",
+        "prompt-class::concept-explanation"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::bloom-taxonomy-alignment",
+      "label": "Bloom Taxonomy Alignment",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-assisted-learning"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::learning-objective-design",
+      "label": "Learning Objective Design",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::bloom-taxonomy-alignment"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::curriculum-development",
+      "label": "Curriculum Development",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::lesson-plan-design",
+        "prompt-class::learning-objective-design"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::accessibility-in-education",
+      "label": "Accessibility in Education",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::inclusive-language",
+        "prompt-class::ai-assisted-learning"
+      ],
+      "taxonomy_id": "EDUAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-evaluation",
+      "label": "Prompt Evaluation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-testing",
+        "prompt-class::response-quality"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::a-b-testing-prompts",
+      "label": "A/B Testing Prompts",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-testing",
+        "prompt-class::prompt-evaluation"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::evaluation-metrics",
+      "label": "Evaluation Metrics",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::response-quality",
+        "prompt-class::prompt-evaluation"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::human-evaluation",
+      "label": "Human Evaluation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-evaluation",
+        "prompt-class::evaluation-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::automated-evaluation",
+      "label": "Automated Evaluation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-evaluation",
+        "prompt-class::evaluation-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::benchmark-testing",
+      "label": "Benchmark Testing",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-evaluation",
+        "prompt-class::automated-evaluation"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::quality-rubric-design",
+      "label": "Quality Rubric Design",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-evaluation",
+        "prompt-class::evaluation-metrics"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::cost-optimization",
+      "label": "Cost Optimization",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token-efficiency",
+        "prompt-class::token-budget"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::latency-optimization",
+      "label": "Latency Optimization",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::cost-optimization",
+        "prompt-class::token-efficiency"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::token-efficiency",
+      "label": "Token Efficiency",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token",
+        "prompt-class::prompt-length",
+        "prompt-class::token-counting"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::batch-processing",
+      "label": "Batch Processing",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::task-automation",
+        "prompt-class::token-efficiency"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::model-selection",
+      "label": "Model Selection",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::large-language-model",
+        "prompt-class::foundation-model"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::model-comparison",
+      "label": "Model Comparison",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-evaluation",
+        "prompt-class::model-selection"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::performance-monitoring",
+      "label": "Performance Monitoring",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-evaluation",
+        "prompt-class::automated-evaluation"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::api-pricing-models",
+      "label": "API Pricing Models",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::api",
+        "prompt-class::token-budget",
+        "prompt-class::prompt-cost-calculation"
+      ],
+      "taxonomy_id": "EVAL",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::rate-limiting",
+      "label": "Rate Limiting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::api",
+        "prompt-class::usage-quota"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::usage-quota",
+      "label": "Usage Quota",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::api"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::five-hour-token-window",
+      "label": "Five-Hour Token Window",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::rate-limiting",
+        "prompt-class::usage-quota",
+        "prompt-class::token-budget"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::token-budget",
+      "label": "Token Budget",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token-counting",
+        "prompt-class::usage-quota"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::token-cost-estimation",
+      "label": "Token Cost Estimation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token-counting",
+        "prompt-class::token-budget"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::token-usage-monitoring",
+      "label": "Token Usage Monitoring",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token-cost-estimation"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::input-token-count",
+      "label": "Input Token Count",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token",
+        "prompt-class::token-counting",
+        "prompt-class::token-cost-estimation"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::output-token-count",
+      "label": "Output Token Count",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token",
+        "prompt-class::token-counting",
+        "prompt-class::token-cost-estimation"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-cost-calculation",
+      "label": "Prompt Cost Calculation",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::token-cost-estimation",
+        "prompt-class::input-token-count",
+        "prompt-class::output-token-count"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::usage-dashboard",
+      "label": "Usage Dashboard",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-cost-calculation"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::throttling",
+      "label": "Throttling",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::rate-limiting",
+        "prompt-class::five-hour-token-window"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::cooldown-period",
+      "label": "Cooldown Period",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::rate-limiting",
+        "prompt-class::throttling"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::plan-tiers-and-limits",
+      "label": "Plan Tiers and Limits",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::usage-quota",
+        "prompt-class::api-pricing-models"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::overage-handling",
+      "label": "Overage Handling",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::five-hour-token-window",
+        "prompt-class::plan-tiers-and-limits"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::cost-effective-prompting",
+      "label": "Cost-Effective Prompting",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::conciseness",
+        "prompt-class::prompt-compression",
+        "prompt-class::cost-optimization",
+        "prompt-class::prompt-cost-calculation"
+      ],
+      "taxonomy_id": "USAGE",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::capstone-project-design",
+      "label": "Capstone Project Design",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-engineering",
+        "prompt-class::task-decomposition"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::customer-support-bot",
+      "label": "Customer Support Bot",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::customer-service-chatbot",
+        "prompt-class::prompt-chaining",
+        "prompt-class::system-prompt",
+        "prompt-class::tool-use"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::faq-generator-system",
+      "label": "FAQ Generator System",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::knowledge-base",
+        "prompt-class::quiz-generation"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::content-pipeline",
+      "label": "Content Pipeline",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-chaining",
+        "prompt-class::pipeline-construction",
+        "prompt-class::content-marketing"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::research-assistant",
+      "label": "Research Assistant",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::retrieval-augmented-gen",
+        "prompt-class::semantic-search",
+        "prompt-class::search-enhanced-prompting"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::code-review-assistant",
+      "label": "Code Review Assistant",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::code-generation",
+        "prompt-class::code-interpretation",
+        "prompt-class::tool-use"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::technical-doc-generator",
+      "label": "Technical Doc Generator",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::report-generation",
+        "prompt-class::technical-writing",
+        "prompt-class::pipeline-construction"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::meeting-notes-system",
+      "label": "Meeting Notes System",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::document-summarization",
+        "prompt-class::audio-transcription",
+        "prompt-class::meeting-summarization"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::email-triage-system",
+      "label": "Email Triage System",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::relevance-filtering",
+        "prompt-class::email-drafting"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::data-dashboard-narrator",
+      "label": "Data Dashboard Narrator",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::data-visualization-prompt",
+        "prompt-class::data-analysis-prompting",
+        "prompt-class::report-generation"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::personalized-tutor-app",
+      "label": "Personalized Tutor App",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::personalized-tutoring",
+        "prompt-class::differentiated-instruction",
+        "prompt-class::agent-memory"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::quiz-and-test-generator",
+      "label": "Quiz and Test Generator",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::quiz-generation",
+        "prompt-class::rubric-creation",
+        "prompt-class::formative-assessment"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::writing-coach-system",
+      "label": "Writing Coach System",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::narrative-output",
+        "prompt-class::self-correction",
+        "prompt-class::feedback-generation"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::resume-analyzer",
+      "label": "Resume Analyzer",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::document-analysis",
+        "prompt-class::output-format-specification"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::job-description-writer",
+      "label": "Job Description Writer",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::output-format-specification",
+        "prompt-class::information-extraction",
+        "prompt-class::product-description"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::interview-prep-coach",
+      "label": "Interview Prep Coach",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::few-shot-prompting",
+        "prompt-class::socratic-prompting",
+        "prompt-class::personalized-tutoring"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::social-media-manager",
+      "label": "Social Media Manager",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::autonomous-workflow",
+        "prompt-class::social-media-content",
+        "prompt-class::seo-optimization"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::brand-voice-system",
+      "label": "Brand Voice System",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::tone-control",
+        "prompt-class::persona-prompting",
+        "prompt-class::system-prompt",
+        "prompt-class::social-media-content"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::legal-document-analyzer",
+      "label": "Legal Document Analyzer",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::document-analysis",
+        "prompt-class::contract-review"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::compliance-checker",
+      "label": "Compliance Checker",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::guardrails",
+        "prompt-class::defense-strategies"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::product-review-analyzer",
+      "label": "Product Review Analyzer",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::information-extraction",
+        "prompt-class::bias-in-ai",
+        "prompt-class::data-analysis-prompting"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::sentiment-analysis-system",
+      "label": "Sentiment Analysis System",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::natural-language-processing",
+        "prompt-class::information-extraction",
+        "prompt-class::data-analysis-prompting"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::translation-assistant",
+      "label": "Translation Assistant",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::natural-language-processing",
+        "prompt-class::multimodal-ai",
+        "prompt-class::few-shot-prompting"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::accessibility-auditor",
+      "label": "Accessibility Auditor",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::inclusive-language",
+        "prompt-class::accessibility-in-education",
+        "prompt-class::document-analysis"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::onboarding-guide-system",
+      "label": "Onboarding Guide System",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-templates",
+        "prompt-class::training-material-design",
+        "prompt-class::lesson-plan-design"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::knowledge-base-builder",
+      "label": "Knowledge Base Builder",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::knowledge-base",
+        "prompt-class::vector-database",
+        "prompt-class::document-chunking",
+        "prompt-class::external-data-integration"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::prompt-library-manager",
+      "label": "Prompt Library Manager",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-templates",
+        "prompt-class::reusable-prompts",
+        "prompt-class::skill-library"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::ai-workflow-automator",
+      "label": "AI Workflow Automator",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::autonomous-workflow",
+        "prompt-class::task-automation",
+        "prompt-class::pipeline-construction"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::multi-agent-task-runner",
+      "label": "Multi-Agent Task Runner",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::agent-orchestration",
+        "prompt-class::multi-agent-systems",
+        "prompt-class::pipeline-construction"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::rag-pipeline-builder",
+      "label": "RAG Pipeline Builder",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::retrieval-augmented-gen",
+        "prompt-class::vector-database",
+        "prompt-class::document-chunking",
+        "prompt-class::pipeline-construction"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::evaluation-framework",
+      "label": "Evaluation Framework",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-evaluation",
+        "prompt-class::evaluation-metrics",
+        "prompt-class::quality-rubric-design"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::red-team-test-suite",
+      "label": "Red Team Test Suite",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::prompt-injection",
+        "prompt-class::red-teaming",
+        "prompt-class::defense-strategies"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::ai-ethics-audit-tool",
+      "label": "AI Ethics Audit Tool",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-ethics",
+        "prompt-class::bias-in-ai",
+        "prompt-class::fairness",
+        "prompt-class::accountability"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::course-content-generator",
+      "label": "Course Content Generator",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-assisted-learning",
+        "prompt-class::lesson-plan-design",
+        "prompt-class::curriculum-development"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "prompt-class::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "prompt-class",
+      "dependencies": [
+        "prompt-class::ai-assisted-learning",
+        "prompt-class::curriculum-development",
+        "prompt-class::research-assistant",
+        "prompt-class::course-content-generator"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    }
+  ]
+}

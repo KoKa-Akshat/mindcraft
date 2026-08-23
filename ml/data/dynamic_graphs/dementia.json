@@ -1,0 +1,2099 @@
+{
+  "subject_id": "dementia",
+  "title": "Understanding Dementia: A Comprehensive Guidebook for Patients, Caregivers, and Families",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LightCoral"
+    },
+    "NEURO": {
+      "classifier_name": "Neuroscience",
+      "color": "PeachPuff"
+    },
+    "DTYPE": {
+      "classifier_name": "Dementia Types",
+      "color": "LightYellow"
+    },
+    "SYMPT": {
+      "classifier_name": "Symptoms & Stages",
+      "color": "Honeydew"
+    },
+    "DIAG": {
+      "classifier_name": "Diagnosis & Assessment",
+      "color": "PaleTurquoise"
+    },
+    "TREAT": {
+      "classifier_name": "Treatment & Therapies",
+      "color": "Lavender"
+    },
+    "PREV": {
+      "classifier_name": "Risk Factors & Prevention",
+      "color": "PaleGreen"
+    },
+    "CARE": {
+      "classifier_name": "Daily Living & Caregiving",
+      "color": "LightPink"
+    },
+    "COMM": {
+      "classifier_name": "Communication",
+      "color": "Thistle"
+    },
+    "SAFE": {
+      "classifier_name": "Safety & Home Modifications",
+      "color": "PowderBlue"
+    },
+    "LEGAL": {
+      "classifier_name": "Legal & Financial Planning",
+      "color": "Plum"
+    },
+    "SUPP": {
+      "classifier_name": "Support & Resources",
+      "color": "Aquamarine"
+    }
+  },
+  "concepts": [
+    {
+      "id": "dementia::dementia",
+      "label": "Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::neurodegeneration"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cognitive-health",
+      "label": "Cognitive Health",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::normal-aging",
+      "label": "Normal Aging",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::age-related-risk"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::brain",
+      "label": "Brain",
+      "subject_id": "dementia",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "dementia::neurons",
+      "label": "Neurons",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::neurotransmitters",
+      "label": "Neurotransmitters",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurons"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cerebral-cortex",
+      "label": "Cerebral Cortex",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::hippocampus",
+      "label": "Hippocampus",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::memory",
+      "label": "Memory",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cognition",
+      "label": "Cognition",
+      "subject_id": "dementia",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "dementia::neuroplasticity",
+      "label": "Neuroplasticity",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurons",
+        "dementia::neurotransmitters"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::frontal-lobe",
+      "label": "Frontal Lobe",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cerebral-cortex"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::temporal-lobe",
+      "label": "Temporal Lobe",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cerebral-cortex"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::parietal-lobe",
+      "label": "Parietal Lobe",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cerebral-cortex"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::occipital-lobe",
+      "label": "Occipital Lobe",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cerebral-cortex"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::gray-matter",
+      "label": "Gray Matter",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cerebral-cortex"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::white-matter",
+      "label": "White Matter",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cerebral-cortex"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::neurodegeneration",
+      "label": "Neurodegeneration",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurons"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cognitive-reserve",
+      "label": "Cognitive Reserve",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neuroplasticity",
+        "dementia::cognitive-health"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::brain-health",
+      "label": "Brain Health",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognitive-health",
+        "dementia::brain"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::executive-function",
+      "label": "Executive Function",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::frontal-lobe"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::attention",
+      "label": "Attention",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::learning",
+      "label": "Learning",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::memory",
+        "dementia::cognition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::perception",
+      "label": "Perception",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::language",
+      "label": "Language",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::temporal-lobe"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::problem-solving",
+      "label": "Problem Solving",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::executive-function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::decision-making",
+      "label": "Decision Making",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::executive-function"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::information-processing",
+      "label": "Information Processing",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::attention"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "dementia::synapses",
+      "label": "Synapses",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurons",
+        "dementia::neurotransmitters"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::neural-networks",
+      "label": "Neural Networks",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::synapses"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::alzheimer-s-disease",
+      "label": "Alzheimer's Disease",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia",
+        "dementia::amyloid-plaques",
+        "dementia::neurofibrillary-tangles"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::vascular-dementia",
+      "label": "Vascular Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia",
+        "dementia::cerebrovascular-disease"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::lewy-body-dementia",
+      "label": "Lewy Body Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia",
+        "dementia::alpha-synuclein"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::frontotemporal-dementia",
+      "label": "Frontotemporal Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia",
+        "dementia::frontal-lobe"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mixed-dementia",
+      "label": "Mixed Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::alzheimer-s-disease",
+        "dementia::vascular-dementia"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::amyloid-plaques",
+      "label": "Amyloid Plaques",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::beta-amyloid"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::neurofibrillary-tangles",
+      "label": "Neurofibrillary Tangles",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::tau-protein"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::tau-protein",
+      "label": "Tau Protein",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurons"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::beta-amyloid",
+      "label": "Beta-Amyloid",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurons"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::alpha-synuclein",
+      "label": "Alpha-Synuclein",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurons"
+      ],
+      "taxonomy_id": "NEURO",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cerebrovascular-disease",
+      "label": "Cerebrovascular Disease",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mini-strokes",
+      "label": "Mini-Strokes",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cerebrovascular-disease"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::pick-s-disease",
+      "label": "Pick's Disease",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::frontotemporal-dementia"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::corticobasal-degeneration",
+      "label": "Corticobasal Degeneration",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurodegeneration"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::progressive-supranuclear-palsy",
+      "label": "Progressive Supranuclear Palsy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurodegeneration"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::wernicke-korsakoff-syndrome",
+      "label": "Wernicke-Korsakoff Syndrome",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::creutzfeldt-jakob-disease",
+      "label": "Creutzfeldt-Jakob Disease",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::huntington-s-disease",
+      "label": "Huntington's Disease",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::parkinson-s-disease-dementia",
+      "label": "Parkinson's Disease Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::normal-pressure-hydrocephalus",
+      "label": "Normal Pressure Hydrocephalus",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain"
+      ],
+      "taxonomy_id": "DTYPE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::memory-loss",
+      "label": "Memory Loss",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::memory",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::confusion",
+      "label": "Confusion",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::disorientation",
+      "label": "Disorientation",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia",
+        "dementia::attention"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::language-difficulties",
+      "label": "Language Difficulties",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::language",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::judgment-impairment",
+      "label": "Judgment Impairment",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::decision-making",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::visual-spatial-problems",
+      "label": "Visual-Spatial Problems",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::perception",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::apraxia",
+      "label": "Apraxia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::agnosia",
+      "label": "Agnosia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::perception",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::aphasia",
+      "label": "Aphasia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::language",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::personality-changes",
+      "label": "Personality Changes",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::behavioral-changes",
+      "label": "Behavioral Changes",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mood-changes",
+      "label": "Mood Changes",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::early-stage-dementia",
+      "label": "Early-Stage Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::moderate-stage-dementia",
+      "label": "Moderate-Stage Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::early-stage-dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::late-stage-dementia",
+      "label": "Late-Stage Dementia",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::moderate-stage-dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mild-cognitive-impairment",
+      "label": "Mild Cognitive Impairment",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::memory-loss"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::sundowning",
+      "label": "Sundowning",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia",
+        "dementia::catastrophic-reactions"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::wandering",
+      "label": "Wandering",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia",
+        "dementia::disorientation"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::agitation",
+      "label": "Agitation",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::behavioral-changes"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::aggression",
+      "label": "Aggression",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::behavioral-changes"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::hallucinations",
+      "label": "Hallucinations",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::perception",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::delusions",
+      "label": "Delusions",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::repetitive-behaviors",
+      "label": "Repetitive Behaviors",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::behavioral-changes"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::sleep-disturbances",
+      "label": "Sleep Disturbances",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::catastrophic-reactions",
+      "label": "Catastrophic Reactions",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::behavioral-changes"
+      ],
+      "taxonomy_id": "SYMPT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cognitive-assessment",
+      "label": "Cognitive Assessment",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mini-mental-state-exam",
+      "label": "Mini-Mental State Exam",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognitive-assessment"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::montreal-cognitive-assessment",
+      "label": "Montreal Cognitive Assessment",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognitive-assessment"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::clock-drawing-test",
+      "label": "Clock Drawing Test",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognitive-assessment"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::brain-imaging",
+      "label": "Brain Imaging",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mri-scan",
+      "label": "MRI Scan",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain-imaging"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::ct-scan",
+      "label": "CT Scan",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain-imaging"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::pet-scan",
+      "label": "PET Scan",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain-imaging"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::spect-scan",
+      "label": "SPECT Scan",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain-imaging"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::blood-tests",
+      "label": "Blood Tests",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::neurological-examination",
+      "label": "Neurological Examination",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::medical-history",
+      "label": "Medical History",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::differential-diagnosis",
+      "label": "Differential Diagnosis",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::medical-history",
+        "dementia::cognitive-assessment"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::delirium",
+      "label": "Delirium",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::confusion"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::depression",
+      "label": "Depression",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::mood-changes"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::dementia-screening",
+      "label": "Dementia Screening",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognitive-assessment"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::biomarkers",
+      "label": "Biomarkers",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::blood-tests"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cerebrospinal-fluid-analysis",
+      "label": "Cerebrospinal Fluid Analysis",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::blood-tests"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::genetic-testing",
+      "label": "Genetic Testing",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::blood-tests"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::functional-assessment",
+      "label": "Functional Assessment",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "DIAG",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cholinesterase-inhibitors",
+      "label": "Cholinesterase Inhibitors",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurotransmitters",
+        "dementia::alzheimer-s-disease"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::memantine",
+      "label": "Memantine",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::neurotransmitters",
+        "dementia::alzheimer-s-disease"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::donepezil",
+      "label": "Donepezil",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cholinesterase-inhibitors"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::rivastigmine",
+      "label": "Rivastigmine",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cholinesterase-inhibitors"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::galantamine",
+      "label": "Galantamine",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cholinesterase-inhibitors"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::symptom-management",
+      "label": "Symptom Management",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia",
+        "dementia::memory-loss"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cognitive-stimulation-therapy",
+      "label": "Cognitive Stimulation Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::occupational-therapy",
+      "label": "Occupational Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::physical-therapy",
+      "label": "Physical Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::speech-therapy",
+      "label": "Speech Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::language",
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::music-therapy",
+      "label": "Music Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::art-therapy",
+      "label": "Art Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::reminiscence-therapy",
+      "label": "Reminiscence Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::memory",
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::validation-therapy",
+      "label": "Validation Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management",
+        "dementia::validation-techniques"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::reality-orientation",
+      "label": "Reality Orientation",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::sensory-stimulation",
+      "label": "Sensory Stimulation",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::perception",
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::pet-therapy",
+      "label": "Pet Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::aromatherapy",
+      "label": "Aromatherapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::massage-therapy",
+      "label": "Massage Therapy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::symptom-management"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::clinical-trials",
+      "label": "Clinical Trials",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "TREAT",
+      "level": "core"
+    },
+    {
+      "id": "dementia::age-related-risk",
+      "label": "Age-Related Risk",
+      "subject_id": "dementia",
+      "dependencies": [],
+      "taxonomy_id": "PREV",
+      "level": "foundational"
+    },
+    {
+      "id": "dementia::genetic-factors",
+      "label": "Genetic Factors",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::apoe-gene",
+      "label": "APOE Gene",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::genetic-factors"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::family-history",
+      "label": "Family History",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::genetic-factors"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::cardiovascular-health",
+      "label": "Cardiovascular Health",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::hypertension",
+      "label": "Hypertension",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cardiovascular-health"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::diabetes",
+      "label": "Diabetes",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cardiovascular-health"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::obesity",
+      "label": "Obesity",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cardiovascular-health"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::high-cholesterol",
+      "label": "High Cholesterol",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cardiovascular-health"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::physical-exercise",
+      "label": "Physical Exercise",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cardiovascular-health"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mental-stimulation",
+      "label": "Mental Stimulation",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognition",
+        "dementia::cognitive-reserve"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::social-engagement",
+      "label": "Social Engagement",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cognitive-health"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mediterranean-diet",
+      "label": "Mediterranean Diet",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::meal-planning"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::brain-healthy-lifestyle",
+      "label": "Brain-Healthy Lifestyle",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::brain-health",
+        "dementia::physical-exercise",
+        "dementia::mental-stimulation",
+        "dementia::social-engagement"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::smoking-cessation",
+      "label": "Smoking Cessation",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cardiovascular-health"
+      ],
+      "taxonomy_id": "PREV",
+      "level": "core"
+    },
+    {
+      "id": "dementia::activities-of-daily-living",
+      "label": "Activities of Daily Living",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::personal-hygiene",
+      "label": "Personal Hygiene",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::bathing-assistance",
+      "label": "Bathing Assistance",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::personal-hygiene"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::dressing-assistance",
+      "label": "Dressing Assistance",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::feeding-strategies",
+      "label": "Feeding Strategies",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::toileting-support",
+      "label": "Toileting Support",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::mobility-assistance",
+      "label": "Mobility Assistance",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::transfer-techniques",
+      "label": "Transfer Techniques",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::mobility-assistance"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::sleep-hygiene",
+      "label": "Sleep Hygiene",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::sleep-disturbances"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::daily-routines",
+      "label": "Daily Routines",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::meal-planning",
+      "label": "Meal Planning",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::nutrition-management",
+      "label": "Nutrition Management",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::meal-planning"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::hydration-management",
+      "label": "Hydration Management",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::dental-care",
+      "label": "Dental Care",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::personal-hygiene"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::grooming",
+      "label": "Grooming",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::personal-hygiene"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::incontinence-management",
+      "label": "Incontinence Management",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::toileting-support"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::skin-care",
+      "label": "Skin Care",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::personal-hygiene"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::positioning",
+      "label": "Positioning",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::mobility-assistance"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::comfort-measures",
+      "label": "Comfort Measures",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::dignity-preservation",
+      "label": "Dignity Preservation",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "CARE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::verbal-communication",
+      "label": "Verbal Communication",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::language"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::non-verbal-communication",
+      "label": "Non-Verbal Communication",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::body-language"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::active-listening",
+      "label": "Active Listening",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::verbal-communication"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::simple-language",
+      "label": "Simple Language",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::verbal-communication"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::visual-cues",
+      "label": "Visual Cues",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::non-verbal-communication"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::patience",
+      "label": "Patience",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::verbal-communication"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::validation-techniques",
+      "label": "Validation Techniques",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::active-listening"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::redirection",
+      "label": "Redirection",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::validation-techniques"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::communication-boards",
+      "label": "Communication Boards",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::verbal-communication",
+        "dementia::visual-cues"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "dementia::body-language",
+      "label": "Body Language",
+      "subject_id": "dementia",
+      "dependencies": [],
+      "taxonomy_id": "COMM",
+      "level": "foundational"
+    },
+    {
+      "id": "dementia::fall-prevention",
+      "label": "Fall Prevention",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::mobility-assistance"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::home-safety-assessment",
+      "label": "Home Safety Assessment",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::grab-bars",
+      "label": "Grab Bars",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::fall-prevention"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::non-slip-flooring",
+      "label": "Non-Slip Flooring",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::fall-prevention"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::adequate-lighting",
+      "label": "Adequate Lighting",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::home-safety-assessment"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::door-locks",
+      "label": "Door Locks",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::wandering",
+        "dementia::home-safety-assessment"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::stove-safety",
+      "label": "Stove Safety",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::home-safety-assessment"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::medication-management",
+      "label": "Medication Management",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::cholinesterase-inhibitors"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::emergency-preparedness",
+      "label": "Emergency Preparedness",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::home-safety-assessment"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::medical-alert-systems",
+      "label": "Medical Alert Systems",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::emergency-preparedness"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "dementia::power-of-attorney",
+      "label": "Power of Attorney",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::healthcare-proxy",
+      "label": "Healthcare Proxy",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::power-of-attorney"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::living-will",
+      "label": "Living Will",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::advance-directives",
+      "label": "Advance Directives",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::living-will",
+        "dementia::healthcare-proxy"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::guardianship",
+      "label": "Guardianship",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::power-of-attorney"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::conservatorship",
+      "label": "Conservatorship",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::power-of-attorney"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::estate-planning",
+      "label": "Estate Planning",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::power-of-attorney"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::medicaid-planning",
+      "label": "Medicaid Planning",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::medicare-coverage"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::medicare-coverage",
+      "label": "Medicare Coverage",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::long-term-care-insurance",
+      "label": "Long-Term Care Insurance",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::home-care-services"
+      ],
+      "taxonomy_id": "LEGAL",
+      "level": "core"
+    },
+    {
+      "id": "dementia::primary-care-physician",
+      "label": "Primary Care Physician",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::neurologist",
+      "label": "Neurologist",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::primary-care-physician"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::geriatrician",
+      "label": "Geriatrician",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::primary-care-physician"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::care-coordination",
+      "label": "Care Coordination",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::primary-care-physician",
+        "dementia::neurologist",
+        "dementia::geriatrician"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::healthcare-team",
+      "label": "Healthcare Team",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::care-coordination"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::grief",
+      "label": "Grief",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::anticipatory-grief",
+      "label": "Anticipatory Grief",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::grief"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::caregiver-burden",
+      "label": "Caregiver Burden",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::stress-management",
+      "label": "Stress Management",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::caregiver-burden"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::support-groups",
+      "label": "Support Groups",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::caregiver-burden",
+        "dementia::stress-management"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::home-care-services",
+      "label": "Home Care Services",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::adult-day-care",
+      "label": "Adult Day Care",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living",
+        "dementia::home-care-services"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::assisted-living",
+      "label": "Assisted Living",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::activities-of-daily-living"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::memory-care-units",
+      "label": "Memory Care Units",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::assisted-living",
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::nursing-homes",
+      "label": "Nursing Homes",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::assisted-living"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::alzheimer-s-association",
+      "label": "Alzheimer's Association",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::dementia"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::area-agency-on-aging",
+      "label": "Area Agency on Aging",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::home-care-services"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::gps-tracking-devices",
+      "label": "GPS Tracking Devices",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::wandering"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::medication-reminders",
+      "label": "Medication Reminders",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::medication-management"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    },
+    {
+      "id": "dementia::telehealth",
+      "label": "Telehealth",
+      "subject_id": "dementia",
+      "dependencies": [
+        "dementia::primary-care-physician"
+      ],
+      "taxonomy_id": "SUPP",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,2615 @@
+{
+  "subject_id": "food-science",
+  "title": "Food Science for 9th Grade",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundational Science Skills",
+      "color": "SteelBlue"
+    },
+    "CHEM": {
+      "classifier_name": "Food Chemistry",
+      "color": "DarkSlateBlue"
+    },
+    "COOK": {
+      "classifier_name": "Cooking Science and Heat Transfer",
+      "color": "Crimson"
+    },
+    "BAKE": {
+      "classifier_name": "Baking Science",
+      "color": "DarkGoldenrod"
+    },
+    "MICR": {
+      "classifier_name": "Food Microbiology",
+      "color": "DarkGreen"
+    },
+    "SAFE": {
+      "classifier_name": "Food Safety and Sanitation",
+      "color": "DarkRed"
+    },
+    "NUTR": {
+      "classifier_name": "Nutrition Science",
+      "color": "Teal"
+    },
+    "PRES": {
+      "classifier_name": "Food Preservation",
+      "color": "MediumPurple"
+    },
+    "SENS": {
+      "classifier_name": "Sensory Science",
+      "color": "HotPink"
+    },
+    "PROC": {
+      "classifier_name": "Food Technology and Processing",
+      "color": "Orange"
+    },
+    "AGRI": {
+      "classifier_name": "Agricultural Systems and Sustainability",
+      "color": "OliveDrab"
+    },
+    "LOCL": {
+      "classifier_name": "Local Food Systems and Farm-to-Table",
+      "color": "LimeGreen"
+    },
+    "GLOB": {
+      "classifier_name": "Global Food Cultures",
+      "color": "Peru"
+    },
+    "INNO": {
+      "classifier_name": "Food Engineering and Innovation",
+      "color": "DodgerBlue"
+    }
+  },
+  "concepts": [
+    {
+      "id": "food-science::scientific-method",
+      "label": "Scientific Method",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::lab-measurement-units",
+      "label": "Lab Measurement Units",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::laboratory-safety",
+      "label": "Laboratory Safety",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::data-recording-and-analysis",
+      "label": "Data Recording and Analysis",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::scientific-method",
+        "food-science::lab-measurement-units"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::controlled-experiment-design",
+      "label": "Controlled Experiment Design",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::scientific-method",
+        "food-science::laboratory-safety"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::variables-in-experiments",
+      "label": "Variables in Experiments",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::scientific-method",
+        "food-science::controlled-experiment-design"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::hypothesis-formation",
+      "label": "Hypothesis Formation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::scientific-method"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::graph-and-data-interpretation",
+      "label": "Graph and Data Interpretation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lab-measurement-units",
+        "food-science::data-recording-and-analysis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::metric-system-in-science",
+      "label": "Metric System in Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::scientific-method",
+        "food-science::lab-measurement-units"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::scientific-communication",
+      "label": "Scientific Communication",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::scientific-method",
+        "food-science::data-recording-and-analysis"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "food-science::atoms-and-molecules-in-food",
+      "label": "Atoms and Molecules in Food",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "CHEM",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::chemical-bonds-in-food",
+      "label": "Chemical Bonds in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::water-molecule-structure",
+      "label": "Water Molecule Structure",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "CHEM",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::hydrogen-bonding-in-food",
+      "label": "Hydrogen Bonding in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::chemical-bonds-in-food",
+        "food-science::water-molecule-structure"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::water-as-universal-solvent",
+      "label": "Water as Universal Solvent",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-molecule-structure",
+        "food-science::hydrogen-bonding-in-food"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::water-activity-aw",
+      "label": "Water Activity (aw)",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-as-universal-solvent",
+        "food-science::ph-scale"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::ph-scale",
+      "label": "pH Scale",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "CHEM",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::acids-in-food",
+      "label": "Acids in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::ph-scale"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::bases-in-food",
+      "label": "Bases in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::ph-scale"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::buffers-in-food-chemistry",
+      "label": "Buffers in Food Chemistry",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::acids-in-food",
+        "food-science::bases-in-food"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::carbohydrates-overview",
+      "label": "Carbohydrates Overview",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "CHEM",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::monosaccharides",
+      "label": "Monosaccharides",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::carbohydrates-overview"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::disaccharides",
+      "label": "Disaccharides",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::polysaccharides",
+      "label": "Polysaccharides",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::disaccharides"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::proteins-in-food-chemistry",
+      "label": "Proteins in Food Chemistry",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "CHEM",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::amino-acids",
+      "label": "Amino Acids",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::peptide-bonds",
+      "label": "Peptide Bonds",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::amino-acids"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::lipids-overview",
+      "label": "Lipids Overview",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "CHEM",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::fatty-acids",
+      "label": "Fatty Acids",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lipids-overview"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::saturated-vs-unsaturated-fats",
+      "label": "Saturated vs Unsaturated Fats",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::fatty-acids"
+      ],
+      "taxonomy_id": "CHEM",
+      "level": "core"
+    },
+    {
+      "id": "food-science::heat-transfer-fundamentals",
+      "label": "Heat Transfer Fundamentals",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "COOK",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::conduction-in-cooking",
+      "label": "Conduction in Cooking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::convection-in-cooking",
+      "label": "Convection in Cooking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::radiation-in-cooking",
+      "label": "Radiation in Cooking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::protein-denaturation-by-heat",
+      "label": "Protein Denaturation by Heat",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::starch-gelatinization",
+      "label": "Starch Gelatinization",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::polysaccharides",
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::maillard-reaction",
+      "label": "Maillard Reaction",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::proteins-in-food-chemistry",
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::caramelization",
+      "label": "Caramelization",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::boiling-point-and-altitude",
+      "label": "Boiling Point and Altitude",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::specific-heat-capacity-of-food",
+      "label": "Specific Heat Capacity of Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::thermal-conductivity-of-foods",
+      "label": "Thermal Conductivity of Foods",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::internal-cooking-temperature",
+      "label": "Internal Cooking Temperature",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals",
+        "food-science::protein-denaturation-by-heat"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::enzymatic-browning",
+      "label": "Enzymatic Browning",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::heat-transfer-fundamentals",
+        "food-science::oxidation-in-food"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::oxidation-in-food",
+      "label": "Oxidation in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::lipids-overview"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::smoke-point-of-cooking-fats",
+      "label": "Smoke Point of Cooking Fats",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::fatty-acids",
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::pressure-cooking-science",
+      "label": "Pressure Cooking Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals",
+        "food-science::boiling-point-and-altitude"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::microwave-heating-mechanism",
+      "label": "Microwave Heating Mechanism",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::emulsification-in-cooking",
+      "label": "Emulsification in Cooking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-as-universal-solvent",
+        "food-science::lipids-overview"
+      ],
+      "taxonomy_id": "COOK",
+      "level": "core"
+    },
+    {
+      "id": "food-science::wheat-flour-protein-content",
+      "label": "Wheat Flour Protein Content",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::gluten-structure",
+      "label": "Gluten Structure",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::amino-acids",
+        "food-science::wheat-flour-protein-content"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::gluten-formation",
+      "label": "Gluten Formation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::wheat-flour-protein-content",
+        "food-science::gluten-structure"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::kneading-and-gluten-development",
+      "label": "Kneading and Gluten Development",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals",
+        "food-science::gluten-formation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::yeast-biology-in-baking",
+      "label": "Yeast Biology in Baking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure",
+        "food-science::yeast-cell-structure"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::yeast-fermentation-in-baking",
+      "label": "Yeast Fermentation in Baking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::yeast-biology-in-baking"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::co2-production-in-dough-rising",
+      "label": "CO2 Production in Dough Rising",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::yeast-fermentation-in-baking",
+        "food-science::fermentation-overview"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::baking-soda-chemistry",
+      "label": "Baking Soda Chemistry",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::acids-in-food",
+        "food-science::bases-in-food"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::baking-powder-chemistry",
+      "label": "Baking Powder Chemistry",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::buffers-in-food-chemistry",
+        "food-science::baking-soda-chemistry"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::chemical-leavening-reactions",
+      "label": "Chemical Leavening Reactions",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::baking-soda-chemistry",
+        "food-science::baking-powder-chemistry"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::physical-leavening-by-steam",
+      "label": "Physical Leavening by Steam",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals",
+        "food-science::boiling-point-and-altitude"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::egg-function-in-baking",
+      "label": "Egg Function in Baking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::protein-denaturation-by-heat",
+        "food-science::gluten-formation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::fat-function-in-baking",
+      "label": "Fat Function in Baking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lipids-overview",
+        "food-science::gluten-formation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sugar-function-in-baking",
+      "label": "Sugar Function in Baking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::gluten-formation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::salt-function-in-baking",
+      "label": "Salt Function in Baking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::gluten-formation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::oven-spring",
+      "label": "Oven Spring",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::starch-gelatinization",
+        "food-science::co2-production-in-dough-rising"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::crust-formation",
+      "label": "Crust Formation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::maillard-reaction",
+        "food-science::heat-transfer-fundamentals"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::foam-formation-in-baking",
+      "label": "Foam Formation in Baking",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::protein-denaturation-by-heat"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::wild-yeast-capture",
+      "label": "Wild Yeast Capture",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-as-universal-solvent",
+        "food-science::fermentation-overview"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sourdough-starter-ecosystem",
+      "label": "Sourdough Starter Ecosystem",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::wild-yeast-capture",
+        "food-science::bacteria-cell-structure",
+        "food-science::yeast-cell-structure",
+        "food-science::lactic-acid-fermentation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sourdough-lactic-acid-bacteria",
+      "label": "Sourdough Lactic Acid Bacteria",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::sourdough-starter-ecosystem",
+        "food-science::lactic-acid-fermentation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sourdough-feeding-ratio",
+      "label": "Sourdough Feeding Ratio",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::sourdough-starter-ecosystem"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sourdough-starter-float-test",
+      "label": "Sourdough Starter Float Test",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-activity-aw",
+        "food-science::sourdough-starter-ecosystem",
+        "food-science::sourdough-feeding-ratio"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sourdough-temperature-effects",
+      "label": "Sourdough Temperature Effects",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::heat-transfer-fundamentals",
+        "food-science::sourdough-starter-ecosystem"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::lactic-acid-production",
+      "label": "Lactic Acid Production",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::sourdough-lactic-acid-bacteria",
+        "food-science::lactic-acid-fermentation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::acetic-acid-production",
+      "label": "Acetic Acid Production",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::sourdough-lactic-acid-bacteria",
+        "food-science::acetic-acid-fermentation"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::bulk-fermentation",
+      "label": "Bulk Fermentation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::yeast-fermentation-in-baking",
+        "food-science::wild-yeast-capture",
+        "food-science::sourdough-starter-ecosystem"
+      ],
+      "taxonomy_id": "BAKE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::bacteria-cell-structure",
+      "label": "Bacteria Cell Structure",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "MICR",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::bacterial-growth-curve",
+      "label": "Bacterial Growth Curve",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::lag-phase-of-growth",
+      "label": "Lag Phase of Growth",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacterial-growth-curve"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::log-phase-of-growth",
+      "label": "Log Phase of Growth",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacterial-growth-curve",
+        "food-science::lag-phase-of-growth"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::stationary-phase-of-growth",
+      "label": "Stationary Phase of Growth",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::log-phase-of-growth"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::death-phase-of-growth",
+      "label": "Death Phase of Growth",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::stationary-phase-of-growth"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::yeast-cell-structure",
+      "label": "Yeast Cell Structure",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "MICR",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::mold-in-food",
+      "label": "Mold in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::viruses-in-food",
+      "label": "Viruses in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::fermentation-overview",
+      "label": "Fermentation Overview",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "MICR",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::lactic-acid-fermentation",
+      "label": "Lactic Acid Fermentation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::bacteria-cell-structure",
+        "food-science::fermentation-overview"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::alcoholic-fermentation",
+      "label": "Alcoholic Fermentation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::yeast-cell-structure",
+        "food-science::fermentation-overview"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::acetic-acid-fermentation",
+      "label": "Acetic Acid Fermentation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::bacteria-cell-structure",
+        "food-science::fermentation-overview"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::beneficial-microorganisms",
+      "label": "Beneficial Microorganisms",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure",
+        "food-science::fermentation-overview"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::microbial-food-spoilage",
+      "label": "Microbial Food Spoilage",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-activity-aw",
+        "food-science::bacteria-cell-structure"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::biofilm-formation",
+      "label": "Biofilm Formation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::microbial-ecology-of-food",
+      "label": "Microbial Ecology of Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure",
+        "food-science::beneficial-microorganisms"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::kombucha-science",
+      "label": "Kombucha Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::alcoholic-fermentation",
+        "food-science::acetic-acid-fermentation",
+        "food-science::beneficial-microorganisms"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::yogurt-production-science",
+      "label": "Yogurt Production Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lactic-acid-fermentation",
+        "food-science::beneficial-microorganisms"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::cheese-making-microbiology",
+      "label": "Cheese Making Microbiology",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::lactic-acid-fermentation",
+        "food-science::beneficial-microorganisms"
+      ],
+      "taxonomy_id": "MICR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::temperature-danger-zone",
+      "label": "Temperature Danger Zone",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "SAFE",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::foodborne-illness-overview",
+      "label": "Foodborne Illness Overview",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "SAFE",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::foodborne-illness-types",
+      "label": "Foodborne Illness Types",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::salmonella-in-food",
+      "label": "Salmonella in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure",
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::e-coli-o157-h7-in-food",
+      "label": "E. Coli O157:H7 in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure",
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::listeria-in-food",
+      "label": "Listeria in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure",
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::campylobacter-in-food",
+      "label": "Campylobacter in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure",
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::norovirus-in-food",
+      "label": "Norovirus in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::viruses-in-food",
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::cross-contamination-prevention",
+      "label": "Cross-Contamination Prevention",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::microbial-food-spoilage",
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::haccp-principles",
+      "label": "HACCP Principles",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::temperature-danger-zone",
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::critical-control-points",
+      "label": "Critical Control Points",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::haccp-principles"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::handwashing-science",
+      "label": "Handwashing Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::safe-food-storage",
+      "label": "Safe Food Storage",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-activity-aw",
+        "food-science::temperature-danger-zone"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::fda-food-safety-regulation",
+      "label": "FDA Food Safety Regulation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::usda-meat-inspection",
+      "label": "USDA Meat Inspection",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::foodborne-illness-overview"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-recall-process",
+      "label": "Food Recall Process",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::haccp-principles",
+        "food-science::fda-food-safety-regulation"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::personal-hygiene-in-food-prep",
+      "label": "Personal Hygiene in Food Prep",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::foodborne-illness-overview",
+        "food-science::handwashing-science"
+      ],
+      "taxonomy_id": "SAFE",
+      "level": "core"
+    },
+    {
+      "id": "food-science::macronutrients-overview",
+      "label": "Macronutrients Overview",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "NUTR",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::carbohydrates-as-energy",
+      "label": "Carbohydrates as Energy",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::carbohydrates-overview",
+        "food-science::macronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::proteins-in-human-nutrition",
+      "label": "Proteins in Human Nutrition",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::macronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::dietary-fats-and-health",
+      "label": "Dietary Fats and Health",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lipids-overview",
+        "food-science::macronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::micronutrients-overview",
+      "label": "Micronutrients Overview",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "NUTR",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::fat-soluble-vitamins",
+      "label": "Fat-Soluble Vitamins",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lipids-overview",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::water-soluble-vitamins",
+      "label": "Water-Soluble Vitamins",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-as-universal-solvent",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::essential-minerals",
+      "label": "Essential Minerals",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::dietary-fiber-and-gut-health",
+      "label": "Dietary Fiber and Gut Health",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::polysaccharides",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::digestion-process",
+      "label": "Digestion Process",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::nutrient-absorption",
+      "label": "Nutrient Absorption",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::digestion-process"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::energy-balance-and-metabolism",
+      "label": "Energy Balance and Metabolism",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::carbohydrates-as-energy"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::caloric-density-of-foods",
+      "label": "Caloric Density of Foods",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::carbohydrates-as-energy",
+        "food-science::dietary-fats-and-health"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::usda-myplate-guidelines",
+      "label": "USDA MyPlate Guidelines",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::dietary-reference-intakes",
+      "label": "Dietary Reference Intakes",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::nutrition-facts-label",
+      "label": "Nutrition Facts Label",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::added-sugars-in-diet",
+      "label": "Added Sugars in Diet",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::carbohydrates-as-energy"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::nutritional-myths-analysis",
+      "label": "Nutritional Myths Analysis",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::antioxidants-in-food",
+      "label": "Antioxidants in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lipids-overview",
+        "food-science::micronutrients-overview"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::phytonutrients",
+      "label": "Phytonutrients",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::micronutrients-overview",
+        "food-science::antioxidants-in-food"
+      ],
+      "taxonomy_id": "NUTR",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-preservation-principles",
+      "label": "Food Preservation Principles",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "PRES",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::canning-science",
+      "label": "Canning Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-activity-aw",
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::high-acid-vs-low-acid-canning",
+      "label": "High-Acid vs Low-Acid Canning",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::acids-in-food",
+        "food-science::canning-science"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::botulism-risk-in-canning",
+      "label": "Botulism Risk in Canning",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::salmonella-in-food",
+        "food-science::canning-science"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::pickling-and-brining",
+      "label": "Pickling and Brining",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::acids-in-food",
+        "food-science::water-activity-aw",
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::fermentation-as-preservation",
+      "label": "Fermentation as Preservation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::fermentation-overview",
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::freezing-and-ice-crystals",
+      "label": "Freezing and Ice Crystals",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-activity-aw",
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::freeze-drying-process",
+      "label": "Freeze-Drying Process",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::freezing-and-ice-crystals"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::dehydration-and-drying",
+      "label": "Dehydration and Drying",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-activity-aw",
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::salt-curing-science",
+      "label": "Salt Curing Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-activity-aw",
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::smoking-food-science",
+      "label": "Smoking Food Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::modified-atmosphere-packaging",
+      "label": "Modified Atmosphere Packaging",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::microbial-food-spoilage",
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::vacuum-sealing-technology",
+      "label": "Vacuum Sealing Technology",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-preservation-principles",
+        "food-science::modified-atmosphere-packaging"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-irradiation",
+      "label": "Food Irradiation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::antimicrobial-packaging",
+      "label": "Antimicrobial Packaging",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::modified-atmosphere-packaging",
+        "food-science::food-irradiation"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::hurdle-technology",
+      "label": "Hurdle Technology",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::water-activity-aw",
+        "food-science::temperature-danger-zone",
+        "food-science::food-preservation-principles"
+      ],
+      "taxonomy_id": "PRES",
+      "level": "core"
+    },
+    {
+      "id": "food-science::five-basic-tastes",
+      "label": "Five Basic Tastes",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "SENS",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::sweetness-and-sugar-receptors",
+      "label": "Sweetness and Sugar Receptors",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::monosaccharides",
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sourness-and-acid-detection",
+      "label": "Sourness and Acid Detection",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::ph-scale",
+        "food-science::acids-in-food",
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::saltiness-perception",
+      "label": "Saltiness Perception",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::bitterness-and-taste-aversion",
+      "label": "Bitterness and Taste Aversion",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::umami-and-savory-taste",
+      "label": "Umami and Savory Taste",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::olfactory-system-and-flavor",
+      "label": "Olfactory System and Flavor",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::flavor-vs-taste-distinction",
+      "label": "Flavor vs Taste Distinction",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes",
+        "food-science::olfactory-system-and-flavor"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-texture-and-mouthfeel",
+      "label": "Food Texture and Mouthfeel",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::color-and-food-perception",
+      "label": "Color and Food Perception",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sensory-panel-design",
+      "label": "Sensory Panel Design",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::controlled-experiment-design",
+        "food-science::five-basic-tastes"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::triangle-test-method",
+      "label": "Triangle Test Method",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::controlled-experiment-design",
+        "food-science::sensory-panel-design"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::hedonic-scale-scoring",
+      "label": "Hedonic Scale Scoring",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::sensory-panel-design"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::detection-threshold-testing",
+      "label": "Detection Threshold Testing",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes",
+        "food-science::sensory-panel-design"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::sensory-bias-and-expectation",
+      "label": "Sensory Bias and Expectation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes",
+        "food-science::olfactory-system-and-flavor"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::cross-modal-sensory-interaction",
+      "label": "Cross-Modal Sensory Interaction",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::five-basic-tastes",
+        "food-science::olfactory-system-and-flavor",
+        "food-science::food-texture-and-mouthfeel"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "food-science::industrial-food-production",
+      "label": "Industrial Food Production",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::pasteurization-science",
+      "label": "Pasteurization Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::bacteria-cell-structure",
+        "food-science::temperature-danger-zone",
+        "food-science::industrial-food-production"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::ultra-high-temperature-uht",
+      "label": "Ultra-High Temperature (UHT)",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::pasteurization-science"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::homogenization-process",
+      "label": "Homogenization Process",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lipids-overview",
+        "food-science::industrial-food-production"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-fortification",
+      "label": "Food Fortification",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::micronutrients-overview",
+        "food-science::industrial-food-production"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-additives-overview",
+      "label": "Food Additives Overview",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::preservatives-in-food",
+      "label": "Preservatives in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-preservation-principles",
+        "food-science::food-additives-overview"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::emulsifiers-in-food-products",
+      "label": "Emulsifiers in Food Products",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::emulsification-in-cooking",
+        "food-science::food-additives-overview"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-colorants",
+      "label": "Food Colorants",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-additives-overview"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::artificial-vs-natural-flavors",
+      "label": "Artificial vs Natural Flavors",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-additives-overview"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-packaging-materials",
+      "label": "Food Packaging Materials",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::industrial-food-production"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::active-packaging-technology",
+      "label": "Active Packaging Technology",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-additives-overview",
+        "food-science::food-packaging-materials"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::gras-designation",
+      "label": "GRAS Designation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-additives-overview"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-traceability-systems",
+      "label": "Food Traceability Systems",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::haccp-principles",
+        "food-science::industrial-food-production"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-bar-coding-systems",
+      "label": "Food Bar Coding Systems",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-traceability-systems"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::nanotechnology-in-food",
+      "label": "Nanotechnology in Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::industrial-food-production"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "food-science::farm-to-table-concept",
+      "label": "Farm-to-Table Concept",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "AGRI",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::food-system-components",
+      "label": "Food System Components",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "AGRI",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::soil-health-and-nutrients",
+      "label": "Soil Health and Nutrients",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::crop-rotation-principles",
+      "label": "Crop Rotation Principles",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::soil-health-and-nutrients"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::composting-process",
+      "label": "Composting Process",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::soil-health-and-nutrients"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::organic-vs-conventional-farming",
+      "label": "Organic vs Conventional Farming",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::soil-health-and-nutrients"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::integrated-pest-management",
+      "label": "Integrated Pest Management",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::soil-health-and-nutrients"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::pollinator-health-and-food",
+      "label": "Pollinator Health and Food",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::integrated-pest-management"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-waste-causes-and-effects",
+      "label": "Food Waste Causes and Effects",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::carbon-footprint-of-agriculture",
+      "label": "Carbon Footprint of Agriculture",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::water-use-in-food-production",
+      "label": "Water Use in Food Production",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::greenhouse-gas-in-farming",
+      "label": "Greenhouse Gas in Farming",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::carbon-footprint-of-agriculture",
+        "food-science::water-use-in-food-production"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::seed-saving-and-biodiversity",
+      "label": "Seed Saving and Biodiversity",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::animal-welfare-and-food-quality",
+      "label": "Animal Welfare and Food Quality",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::biofortification-of-crops",
+      "label": "Biofortification of Crops",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::micronutrients-overview",
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "AGRI",
+      "level": "core"
+    },
+    {
+      "id": "food-science::post-harvest-plant-physiology",
+      "label": "Post-Harvest Plant Physiology",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "LOCL",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::plant-cellular-respiration",
+      "label": "Plant Cellular Respiration",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::carbohydrates-overview",
+        "food-science::post-harvest-plant-physiology"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::ethylene-gas-in-ripening",
+      "label": "Ethylene Gas in Ripening",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::post-harvest-plant-physiology"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::controlled-atmosphere-storage",
+      "label": "Controlled Atmosphere Storage",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::microbial-food-spoilage",
+        "food-science::post-harvest-plant-physiology"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::nutrient-loss-during-transit",
+      "label": "Nutrient Loss During Transit",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::micronutrients-overview",
+        "food-science::post-harvest-plant-physiology",
+        "food-science::plant-cellular-respiration"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-supply-chain-stages",
+      "label": "Food Supply Chain Stages",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::industrial-distribution-barriers",
+      "label": "Industrial Distribution Barriers",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::industrial-food-production",
+        "food-science::food-supply-chain-stages"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::minimum-order-volume-barrier",
+      "label": "Minimum Order Volume Barrier",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::industrial-distribution-barriers"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-desert-definition",
+      "label": "Food Desert Definition",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::food-supply-chain-stages"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-shed-mapping",
+      "label": "Food Shed Mapping",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-desert-definition"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-hub-aggregation-model",
+      "label": "Food Hub Aggregation Model",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-supply-chain-stages",
+        "food-science::food-shed-mapping"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::community-supported-agriculture",
+      "label": "Community Supported Agriculture",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-shed-mapping"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::farmers-market-economics",
+      "label": "Farmers Market Economics",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-shed-mapping"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::urban-farming-methods",
+      "label": "Urban Farming Methods",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::farm-to-table-concept"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::vertical-and-rooftop-farming",
+      "label": "Vertical and Rooftop Farming",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::urban-farming-methods"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::school-garden-programs",
+      "label": "School Garden Programs",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-system-components"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::gleaning-network-operations",
+      "label": "Gleaning Network Operations",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-waste-causes-and-effects"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::nova-classification-system",
+      "label": "NOVA Classification System",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "LOCL",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::upf-health-consequences",
+      "label": "UPF Health Consequences",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::micronutrients-overview",
+        "food-science::nova-classification-system"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::local-sourcing-in-schools",
+      "label": "Local Sourcing in Schools",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-hub-aggregation-model",
+        "food-science::community-supported-agriculture"
+      ],
+      "taxonomy_id": "LOCL",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-culture-and-climate",
+      "label": "Food Culture and Climate",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "GLOB",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::staple-crops-by-region",
+      "label": "Staple Crops by Region",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::food-culture-and-climate"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::traditional-fermented-foods",
+      "label": "Traditional Fermented Foods",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::lactic-acid-fermentation",
+        "food-science::food-culture-and-climate"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::spice-trade-and-food-history",
+      "label": "Spice Trade and Food History",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-culture-and-climate"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::mediterranean-diet-patterns",
+      "label": "Mediterranean Diet Patterns",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::micronutrients-overview",
+        "food-science::food-culture-and-climate"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::indigenous-food-systems",
+      "label": "Indigenous Food Systems",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::food-culture-and-climate"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-taboos-and-religion",
+      "label": "Food Taboos and Religion",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-culture-and-climate"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-globalization-effects",
+      "label": "Food Globalization Effects",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::farm-to-table-concept",
+        "food-science::food-culture-and-climate"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::climate-change-and-food-supply",
+      "label": "Climate Change and Food Supply",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::carbon-footprint-of-agriculture",
+        "food-science::food-culture-and-climate"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::heirloom-crop-varieties",
+      "label": "Heirloom Crop Varieties",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::seed-saving-and-biodiversity"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-engineering-principles",
+      "label": "Food Engineering Principles",
+      "subject_id": "food-science",
+      "dependencies": [],
+      "taxonomy_id": "INNO",
+      "level": "foundational"
+    },
+    {
+      "id": "food-science::lab-grown-meat-science",
+      "label": "Lab-Grown Meat Science",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::bacteria-cell-structure",
+        "food-science::food-engineering-principles"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::plant-based-meat-substitutes",
+      "label": "Plant-Based Meat Substitutes",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::proteins-in-food-chemistry",
+        "food-science::macronutrients-overview",
+        "food-science::food-engineering-principles"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::extrusion-processing",
+      "label": "Extrusion Processing",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::industrial-food-production",
+        "food-science::food-engineering-principles"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::precision-fermentation",
+      "label": "Precision Fermentation",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::fermentation-overview",
+        "food-science::food-engineering-principles"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::3d-food-printing",
+      "label": "3D Food Printing",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::industrial-food-production",
+        "food-science::food-engineering-principles"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::hydroponic-growing-systems",
+      "label": "Hydroponic Growing Systems",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-system-components",
+        "food-science::soil-health-and-nutrients",
+        "food-science::food-engineering-principles"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::aquaponics-systems",
+      "label": "Aquaponics Systems",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::fermentation-overview",
+        "food-science::hydroponic-growing-systems"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::functional-food-design",
+      "label": "Functional Food Design",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::macronutrients-overview",
+        "food-science::micronutrients-overview",
+        "food-science::food-engineering-principles"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::food-science-career-paths",
+      "label": "Food Science Career Paths",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::food-engineering-principles"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::hydroponic-nutrient-solutions",
+      "label": "Hydroponic Nutrient Solutions",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::atoms-and-molecules-in-food",
+        "food-science::ph-scale",
+        "food-science::hydroponic-growing-systems"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::hydroponic-system-types",
+      "label": "Hydroponic System Types",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::hydroponic-growing-systems"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::low-cost-hydroponic-build",
+      "label": "Low-Cost Hydroponic Build",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::hydroponic-growing-systems",
+        "food-science::hydroponic-system-types"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::growing-media-for-hydroponics",
+      "label": "Growing Media for Hydroponics",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::hydroponic-growing-systems",
+        "food-science::hydroponic-system-types"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::hydroponic-plant-monitoring",
+      "label": "Hydroponic Plant Monitoring",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::data-recording-and-analysis",
+        "food-science::ph-scale",
+        "food-science::low-cost-hydroponic-build"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    },
+    {
+      "id": "food-science::led-grow-lights-for-hydroponics",
+      "label": "LED Grow Lights for Hydroponics",
+      "subject_id": "food-science",
+      "dependencies": [
+        "food-science::hydroponic-growing-systems",
+        "food-science::low-cost-hydroponic-build"
+      ],
+      "taxonomy_id": "INNO",
+      "level": "core"
+    }
+  ]
+}

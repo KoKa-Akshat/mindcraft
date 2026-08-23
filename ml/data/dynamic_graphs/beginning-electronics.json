@@ -1,0 +1,5516 @@
+{
+  "subject_id": "beginning-electronics",
+  "title": "Beginning Electronics: Breadboards, Circuits, and Real-World Projects",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundational Concepts",
+      "color": "SteelBlue"
+    },
+    "PASV": {
+      "classifier_name": "Passive Components",
+      "color": "DarkGreen"
+    },
+    "ACTV": {
+      "classifier_name": "Active Components & ICs",
+      "color": "DarkGoldenrod"
+    },
+    "INPT": {
+      "classifier_name": "Input Components",
+      "color": "DodgerBlue"
+    },
+    "OUTP": {
+      "classifier_name": "Output Components",
+      "color": "Crimson"
+    },
+    "BRDG": {
+      "classifier_name": "Breadboarding & Assembly",
+      "color": "MediumPurple"
+    },
+    "MEAS": {
+      "classifier_name": "Measurement & Testing",
+      "color": "Teal"
+    },
+    "PWR": {
+      "classifier_name": "Power Systems",
+      "color": "Orange"
+    },
+    "DLOG": {
+      "classifier_name": "Digital Logic & Boolean",
+      "color": "DarkOrchid"
+    },
+    "CAPS": {
+      "classifier_name": "Advanced Circuits & Capstone Projects",
+      "color": "DeepPink"
+    }
+  },
+  "concepts": [
+    {
+      "id": "beginning-electronics::electric-current",
+      "label": "Electric Current",
+      "subject_id": "beginning-electronics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "beginning-electronics::voltage",
+      "label": "Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "beginning-electronics::resistance",
+      "label": "Resistance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "beginning-electronics::ohm-s-law",
+      "label": "Ohm's Law",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::electric-current",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power",
+      "label": "Power",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::direct-current",
+      "label": "Direct Current",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit",
+      "label": "Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "beginning-electronics::open-circuit",
+      "label": "Open Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::closed-circuit",
+      "label": "Closed Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::short-circuit",
+      "label": "Short Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::closed-circuit",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::series-circuit",
+      "label": "Series Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::parallel-circuit",
+      "label": "Parallel Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ground",
+      "label": "Ground",
+      "subject_id": "beginning-electronics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "beginning-electronics::polarity",
+      "label": "Polarity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-diagram",
+      "label": "Circuit Diagram",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::schematic-symbol",
+      "label": "Schematic Symbol",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-diagram"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::component-lead",
+      "label": "Component Lead",
+      "subject_id": "beginning-electronics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "beginning-electronics::positive-terminal",
+      "label": "Positive Terminal",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::polarity",
+        "beginning-electronics::component-lead"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::negative-terminal",
+      "label": "Negative Terminal",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::polarity",
+        "beginning-electronics::component-lead"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-drop",
+      "label": "Voltage Drop",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::resistance",
+        "beginning-electronics::ohm-s-law"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-flow",
+      "label": "Current Flow",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::electron-flow",
+      "label": "Electron Flow",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::current-flow"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::conventional-current",
+      "label": "Conventional Current",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::electron-flow"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::electric-charge",
+      "label": "Electric Charge",
+      "subject_id": "beginning-electronics",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "beginning-electronics::potential-difference",
+      "label": "Potential Difference",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::electric-charge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::electrical-safety",
+      "label": "Electrical Safety",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::voltage",
+        "beginning-electronics::short-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-rating",
+      "label": "Power Rating",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::heat-dissipation",
+      "label": "Heat Dissipation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power",
+        "beginning-electronics::resistance",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-limiting",
+      "label": "Current Limiting",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::resistance",
+        "beginning-electronics::ohm-s-law"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-division",
+      "label": "Voltage Division",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::series-circuit",
+        "beginning-electronics::ohm-s-law"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::kirchhoff-s-current-law",
+      "label": "Kirchhoff's Current Law",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::current-flow",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::kirchhoff-s-voltage-law",
+      "label": "Kirchhoff's Voltage Law",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::voltage-drop",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ac-vs-dc",
+      "label": "AC vs DC",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::direct-current",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::battery-polarity",
+      "label": "Battery Polarity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::polarity",
+        "beginning-electronics::positive-terminal",
+        "beginning-electronics::negative-terminal"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-supply-voltage",
+      "label": "Power Supply Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::power"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::common-ground",
+      "label": "Common Ground",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ground",
+        "beginning-electronics::circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::forward-voltage",
+      "label": "Forward Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::voltage-drop",
+        "beginning-electronics::polarity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::conductivity",
+      "label": "Conductivity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ohm",
+      "label": "Ohm",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::volt",
+      "label": "Volt",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ampere",
+      "label": "Ampere",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::watt",
+      "label": "Watt",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::milliampere",
+      "label": "Milliampere",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ampere"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::microampere",
+      "label": "Microampere",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ampere"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::kilohm",
+      "label": "Kilohm",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ohm"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::megohm",
+      "label": "Megohm",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ohm"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::coulomb",
+      "label": "Coulomb",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-charge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::milliwatt",
+      "label": "Milliwatt",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::watt"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::overcurrent",
+      "label": "Overcurrent",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::current-limiting"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::fuse-protection",
+      "label": "Fuse Protection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::overcurrent",
+        "beginning-electronics::short-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::reverse-polarity-damage",
+      "label": "Reverse Polarity Damage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::polarity",
+        "beginning-electronics::battery-polarity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::static-discharge",
+      "label": "Static Discharge",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-charge",
+        "beginning-electronics::electrical-safety"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::battery-safety",
+      "label": "Battery Safety",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electrical-safety",
+        "beginning-electronics::battery-polarity",
+        "beginning-electronics::reverse-polarity-damage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::short-circuit-risk",
+      "label": "Short Circuit Risk",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::short-circuit",
+        "beginning-electronics::electrical-safety",
+        "beginning-electronics::overcurrent"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::node-voltage",
+      "label": "Node Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::loop-current",
+      "label": "Loop Current",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::series-circuit",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::series-resistance",
+      "label": "Series Resistance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance",
+        "beginning-electronics::series-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::parallel-resistance",
+      "label": "Parallel Resistance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance",
+        "beginning-electronics::parallel-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::equivalent-resistance",
+      "label": "Equivalent Resistance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::series-resistance",
+        "beginning-electronics::parallel-resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-reference",
+      "label": "Voltage Reference",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::ground",
+        "beginning-electronics::common-ground"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::series-parallel-circuit",
+      "label": "Series-Parallel Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::series-circuit",
+        "beginning-electronics::parallel-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-divider",
+      "label": "Current Divider",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::parallel-resistance",
+        "beginning-electronics::electric-current",
+        "beginning-electronics::parallel-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-topology",
+      "label": "Circuit Topology",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::series-circuit",
+        "beginning-electronics::parallel-circuit"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-branch",
+      "label": "Circuit Branch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::parallel-circuit",
+        "beginning-electronics::node-voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::electrical-energy",
+      "label": "Electrical Energy",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power",
+        "beginning-electronics::voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::joule",
+      "label": "Joule",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electrical-energy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::watt-hour",
+      "label": "Watt-Hour",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::watt",
+        "beginning-electronics::electrical-energy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::water-pipe-analogy",
+      "label": "Water Pipe Analogy",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::electric-current",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::electric-field",
+      "label": "Electric Field",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-charge",
+        "beginning-electronics::potential-difference"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::insulator",
+      "label": "Insulator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::conductivity",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::conductor",
+      "label": "Conductor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::conductivity",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::semiconductor-material",
+      "label": "Semiconductor Material",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::conductor",
+        "beginning-electronics::insulator",
+        "beginning-electronics::conductivity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::static-electricity",
+      "label": "Static Electricity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-charge",
+        "beginning-electronics::electric-field"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::electromotive-force",
+      "label": "Electromotive Force",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::potential-difference"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::internal-resistance",
+      "label": "Internal Resistance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance",
+        "beginning-electronics::electromotive-force"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::terminal-voltage",
+      "label": "Terminal Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electromotive-force",
+        "beginning-electronics::internal-resistance",
+        "beginning-electronics::voltage-drop"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::nominal-voltage",
+      "label": "Nominal Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::terminal-voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::battery-capacity",
+      "label": "Battery Capacity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-charge",
+        "beginning-electronics::electrical-energy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::battery-cell",
+      "label": "Battery Cell",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electromotive-force",
+        "beginning-electronics::positive-terminal",
+        "beginning-electronics::negative-terminal"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::resistivity",
+      "label": "Resistivity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance",
+        "beginning-electronics::conductivity",
+        "beginning-electronics::conductor"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-rating",
+      "label": "Voltage Rating",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::power-rating"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-rating",
+      "label": "Current Rating",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::power-rating"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::charge-carrier",
+      "label": "Charge Carrier",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-charge",
+        "beginning-electronics::conductor",
+        "beginning-electronics::semiconductor-material"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-load",
+      "label": "Circuit Load",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::electric-current",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-source",
+      "label": "Voltage Source",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::electromotive-force",
+        "beginning-electronics::battery-cell"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::load-current",
+      "label": "Load Current",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-load",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-consumption",
+      "label": "Power Consumption",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power",
+        "beginning-electronics::circuit-load",
+        "beginning-electronics::load-current"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::energy-conversion",
+      "label": "Energy Conversion",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electrical-energy",
+        "beginning-electronics::power-consumption"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::conductance",
+      "label": "Conductance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance",
+        "beginning-electronics::conductivity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-path",
+      "label": "Current Path",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::electric-current",
+        "beginning-electronics::conductor"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-element",
+      "label": "Circuit Element",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::component-lead"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-continuity",
+      "label": "Circuit Continuity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::closed-circuit",
+        "beginning-electronics::current-path"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-threshold",
+      "label": "Voltage Threshold",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::forward-voltage"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-fault",
+      "label": "Circuit Fault",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::open-circuit",
+        "beginning-electronics::short-circuit",
+        "beginning-electronics::circuit-continuity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-efficiency",
+      "label": "Circuit Efficiency",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power-consumption",
+        "beginning-electronics::energy-conversion",
+        "beginning-electronics::heat-dissipation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::resistor",
+      "label": "Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance",
+        "beginning-electronics::ohm-s-law"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::resistor-color-code",
+      "label": "Resistor Color Code",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::resistor-tolerance",
+      "label": "Resistor Tolerance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::fixed-resistor",
+      "label": "Fixed Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::variable-resistor",
+      "label": "Variable Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::potentiometer",
+      "label": "Potentiometer",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::variable-resistor",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::trimmer-resistor",
+      "label": "Trimmer Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::variable-resistor",
+        "beginning-electronics::potentiometer"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::photoresistor",
+      "label": "Photoresistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::variable-resistor",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::light-dependent-resistor",
+      "label": "Light Dependent Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photoresistor",
+        "beginning-electronics::variable-resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::thermistor",
+      "label": "Thermistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::variable-resistor",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::pull-up-resistor",
+      "label": "Pull-Up Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::node-voltage"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::pull-down-resistor",
+      "label": "Pull-Down Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::ground"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-limiting-resistor",
+      "label": "Current Limiting Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::current-limiting"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-divider-circuit",
+      "label": "Voltage Divider Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::voltage-division",
+        "beginning-electronics::series-circuit"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capacitor",
+      "label": "Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::electric-charge"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::electrolytic-capacitor",
+      "label": "Electrolytic Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::polarity"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ceramic-capacitor",
+      "label": "Ceramic Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capacitor-polarity",
+      "label": "Capacitor Polarity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::polarity"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capacitance",
+      "label": "Capacitance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::electric-charge"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::rc-time-constant",
+      "label": "RC Time Constant",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::capacitor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::rc-circuit",
+      "label": "RC Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::capacitor",
+        "beginning-electronics::rc-time-constant"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::charging-capacitor",
+      "label": "Charging Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::rc-circuit"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::discharging-capacitor",
+      "label": "Discharging Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::rc-circuit"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::inductor",
+      "label": "Inductor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::circuit"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::diode",
+      "label": "Diode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::semiconductor-material",
+        "beginning-electronics::polarity"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-polarity",
+      "label": "LED Polarity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::polarity"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-forward-voltage",
+      "label": "LED Forward Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::forward-voltage"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-current-rating",
+      "label": "LED Current Rating",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::current-rating"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::anode",
+      "label": "Anode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::positive-terminal"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::cathode",
+      "label": "Cathode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::negative-terminal"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::220-ohm-resistor",
+      "label": "220 Ohm Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::330-ohm-resistor",
+      "label": "330 Ohm Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::1k-resistor",
+      "label": "1K Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::10k-resistor",
+      "label": "10K Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::resistor-symbol",
+      "label": "Resistor Symbol",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::schematic-symbol"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::brown-band-value",
+      "label": "Brown Band Value",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::red-band-value",
+      "label": "Red Band Value",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::resistor-multiplier-band",
+      "label": "Resistor Multiplier Band",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::gold-tolerance-band",
+      "label": "Gold Tolerance Band",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor-color-code",
+        "beginning-electronics::resistor-tolerance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::quarter-watt-resistor",
+      "label": "Quarter Watt Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::power-rating"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::carbon-film-resistor",
+      "label": "Carbon Film Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::fixed-resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::metal-film-resistor",
+      "label": "Metal Film Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistor",
+        "beginning-electronics::fixed-resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::rheostat",
+      "label": "Rheostat",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::variable-resistor",
+        "beginning-electronics::potentiometer"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ntc-thermistor",
+      "label": "NTC Thermistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::thermistor",
+        "beginning-electronics::variable-resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::axial-lead-package",
+      "label": "Axial Lead Package",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-lead",
+        "beginning-electronics::resistor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::radial-lead-package",
+      "label": "Radial Lead Package",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-lead",
+        "beginning-electronics::capacitor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capacitor-symbol",
+      "label": "Capacitor Symbol",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::schematic-symbol"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capacitor-value-code",
+      "label": "Capacitor Value Code",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::capacitance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::microfarad",
+      "label": "Microfarad",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::picofarad",
+      "label": "Picofarad",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::nanofarad",
+      "label": "Nanofarad",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capacitor-voltage-rating",
+      "label": "Capacitor Voltage Rating",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::voltage-rating"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capacitor-tolerance",
+      "label": "Capacitor Tolerance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitance",
+        "beginning-electronics::resistor-tolerance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::tantalum-capacitor",
+      "label": "Tantalum Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::electrolytic-capacitor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::non-polarized-capacitor",
+      "label": "Non-Polarized Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::polarity"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capacitor-dielectric",
+      "label": "Capacitor Dielectric",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::capacitance"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::bypass-capacitor",
+      "label": "Bypass Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capacitor",
+        "beginning-electronics::power-supply-voltage"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::diode-symbol",
+      "label": "Diode Symbol",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::schematic-symbol"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::diode-band-marking",
+      "label": "Diode Band Marking",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::cathode"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::rectifier-diode",
+      "label": "Rectifier Diode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::ac-vs-dc"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::zener-diode",
+      "label": "Zener Diode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::voltage-rating"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::flyback-diode",
+      "label": "Flyback Diode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::inductor"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::diode-forward-bias",
+      "label": "Diode Forward Bias",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::forward-voltage"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::diode-reverse-bias",
+      "label": "Diode Reverse Bias",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::diode-forward-bias"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::diode-current-rating",
+      "label": "Diode Current Rating",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::current-rating"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::red-led",
+      "label": "Red LED",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::led-forward-voltage"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::green-led",
+      "label": "Green LED",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::led-forward-voltage"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::blue-led",
+      "label": "Blue LED",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::led-forward-voltage"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-viewing-angle",
+      "label": "LED Viewing Angle",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::led-polarity",
+        "beginning-electronics::led-current-rating"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-lens-shape",
+      "label": "LED Lens Shape",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::led-polarity",
+        "beginning-electronics::led-viewing-angle"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-lifespan",
+      "label": "LED Lifespan",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::led-polarity",
+        "beginning-electronics::heat-dissipation"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::potentiometer-wiper",
+      "label": "Potentiometer Wiper",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::potentiometer"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::linear-taper",
+      "label": "Linear Taper",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::potentiometer",
+        "beginning-electronics::potentiometer-wiper"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::logarithmic-taper",
+      "label": "Logarithmic Taper",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::potentiometer",
+        "beginning-electronics::linear-taper"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::trim-pot-adjustment-screw",
+      "label": "Trim Pot Adjustment Screw",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::trimmer-resistor",
+        "beginning-electronics::potentiometer-wiper"
+      ],
+      "taxonomy_id": "PASV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor",
+      "label": "Transistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::semiconductor-material",
+        "beginning-electronics::conductivity"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::npn-transistor",
+      "label": "NPN Transistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::pnp-transistor",
+      "label": "PNP Transistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-base",
+      "label": "Transistor Base",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-collector",
+      "label": "Transistor Collector",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-emitter",
+      "label": "Transistor Emitter",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-switching",
+      "label": "Transistor Switching",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor",
+        "beginning-electronics::transistor-base",
+        "beginning-electronics::transistor-collector",
+        "beginning-electronics::transistor-emitter"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-amplification",
+      "label": "Transistor Amplification",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor",
+        "beginning-electronics::semiconductor-material"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-saturation",
+      "label": "Transistor Saturation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-cutoff",
+      "label": "Transistor Cutoff",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::2n2222-transistor",
+      "label": "2N2222 Transistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::npn-transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::bc547-transistor",
+      "label": "BC547 Transistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::npn-transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::integrated-circuit",
+      "label": "Integrated Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::conductivity",
+        "beginning-electronics::semiconductor-material"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-timer-ic",
+      "label": "555 Timer IC",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::integrated-circuit"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-astable-mode",
+      "label": "555 Astable Mode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::rc-time-constant",
+        "beginning-electronics::capacitor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-monostable-mode",
+      "label": "555 Monostable Mode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::rc-time-constant",
+        "beginning-electronics::capacitor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-pin-configuration",
+      "label": "555 Pin Configuration",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::shift-register",
+      "label": "Shift Register",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::integrated-circuit"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::74hc595-shift-register",
+      "label": "74HC595 Shift Register",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::shift-register"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::serial-data-input",
+      "label": "Serial Data Input",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::parallel-data-output",
+      "label": "Parallel Data Output",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::clock-signal",
+      "label": "Clock Signal",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::circuit"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::latch-signal",
+      "label": "Latch Signal",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::clock-signal"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ic-pin-numbering",
+      "label": "IC Pin Numbering",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::integrated-circuit"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ic-notch-orientation",
+      "label": "IC Notch Orientation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::integrated-circuit",
+        "beginning-electronics::ic-pin-numbering"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::base-resistor",
+      "label": "Base Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor-base",
+        "beginning-electronics::current-limiting-resistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-pinout",
+      "label": "Transistor Pinout",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor",
+        "beginning-electronics::ic-pin-numbering"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-schematic-symbol",
+      "label": "Transistor Schematic Symbol",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::schematic-symbol",
+        "beginning-electronics::transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::to-92-package",
+      "label": "TO-92 Package",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::2n2222-transistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-turn-on-voltage",
+      "label": "Transistor Turn-On Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor",
+        "beginning-electronics::ohm-s-law"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-gain-rating",
+      "label": "Transistor Gain Rating",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor",
+        "beginning-electronics::power"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-heat-limit",
+      "label": "Transistor Heat Limit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor",
+        "beginning-electronics::heat-dissipation"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::darlington-pair",
+      "label": "Darlington Pair",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::npn-transistor",
+        "beginning-electronics::base-resistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-motor-driver",
+      "label": "Transistor Motor Driver",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::npn-transistor",
+        "beginning-electronics::base-resistor",
+        "beginning-electronics::current-limiting"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-trigger-pin",
+      "label": "555 Trigger Pin",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::555-pin-configuration"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-threshold-pin",
+      "label": "555 Threshold Pin",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::555-pin-configuration"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-discharge-pin",
+      "label": "555 Discharge Pin",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::555-pin-configuration"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-reset-pin",
+      "label": "555 Reset Pin",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::555-pin-configuration"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-control-voltage-pin",
+      "label": "555 Control Voltage Pin",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::555-pin-configuration"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-output-pin",
+      "label": "555 Output Pin",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::555-pin-configuration"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-duty-cycle",
+      "label": "555 Duty Cycle",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-astable-mode",
+        "beginning-electronics::rc-time-constant"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-frequency-setting",
+      "label": "555 Frequency Setting",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-astable-mode",
+        "beginning-electronics::rc-time-constant"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-led-blinker",
+      "label": "555 LED Blinker",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-output-pin",
+        "beginning-electronics::red-led",
+        "beginning-electronics::base-resistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-buzzer-driver",
+      "label": "555 Buzzer Driver",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-output-pin",
+        "beginning-electronics::base-resistor"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::shift-register-bit-order",
+      "label": "Shift Register Bit Order",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::clock-signal"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::manual-clock-pulse",
+      "label": "Manual Clock Pulse",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::clock-signal",
+        "beginning-electronics::shift-register-bit-order"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::shift-register-output-enable",
+      "label": "Shift Register Output Enable",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::latch-signal"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::shift-register-reset-pin",
+      "label": "Shift Register Reset Pin",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::latch-signal"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::daisy-chained-shift-registers",
+      "label": "Daisy-Chained Shift Registers",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::shift-register-output-enable"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::binary-counting-display",
+      "label": "Binary Counting Display",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::parallel-data-output"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::74hc595-led-bar-graph",
+      "label": "74HC595 LED Bar Graph",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::red-led"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::555-driven-shift-register",
+      "label": "555-Driven Shift Register",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::clock-signal"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::pin-1-dot-marker",
+      "label": "Pin 1 Dot Marker",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ic-pin-numbering"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::dip-package",
+      "label": "DIP Package",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::integrated-circuit",
+        "beginning-electronics::ic-pin-numbering"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ic-pin-count",
+      "label": "IC Pin Count",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::integrated-circuit",
+        "beginning-electronics::ic-pin-numbering"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::standard-ic-pin-spacing",
+      "label": "Standard IC Pin Spacing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dip-package",
+        "beginning-electronics::ic-pin-count"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ic-socket",
+      "label": "IC Socket",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dip-package"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::datasheet-pinout-diagram",
+      "label": "Datasheet Pinout Diagram",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ic-pin-numbering",
+        "beginning-electronics::pin-1-dot-marker"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ic-insertion-technique",
+      "label": "IC Insertion Technique",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dip-package",
+        "beginning-electronics::standard-ic-pin-spacing"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-ic-straddle",
+      "label": "Breadboard IC Straddle",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ic-socket",
+        "beginning-electronics::dip-package"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ic-removal-technique",
+      "label": "IC Removal Technique",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ic-socket",
+        "beginning-electronics::ic-insertion-technique"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::bent-ic-pin-repair",
+      "label": "Bent IC Pin Repair",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor-pinout",
+        "beginning-electronics::to-92-package"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::static-discharge-risk",
+      "label": "Static Discharge Risk",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::static-discharge",
+        "beginning-electronics::ic-insertion-technique"
+      ],
+      "taxonomy_id": "ACTV",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::push-button",
+      "label": "Push Button",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::tactile-button",
+      "label": "Tactile Button",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::4-pin-push-button",
+      "label": "4-Pin Push Button",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::tactile-button"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::momentary-switch",
+      "label": "Momentary Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::latching-switch",
+      "label": "Latching Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::momentary-switch"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::toggle-switch",
+      "label": "Toggle Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::latching-switch"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::slide-switch",
+      "label": "Slide Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::latching-switch"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::rocker-switch",
+      "label": "Rocker Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::latching-switch"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::dip-switch",
+      "label": "DIP Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::toggle-switch",
+        "beginning-electronics::slide-switch"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::spst-switch",
+      "label": "SPST Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::toggle-switch",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::spdt-switch",
+      "label": "SPDT Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::spst-switch"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::normally-open",
+      "label": "Normally Open",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::open-circuit"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::normally-closed",
+      "label": "Normally Closed",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::contact-bounce",
+      "label": "Contact Bounce",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::current-flow"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::button-debouncing",
+      "label": "Button Debouncing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::contact-bounce",
+        "beginning-electronics::push-button"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::debounce-capacitor",
+      "label": "Debounce Capacitor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::button-debouncing",
+        "beginning-electronics::capacitor"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::series-switch-wiring",
+      "label": "Series Switch Wiring",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::series-circuit"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::switch-and-logic",
+      "label": "Switch AND Logic",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::series-switch-wiring"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::parallel-switch-wiring",
+      "label": "Parallel Switch Wiring",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::parallel-circuit"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::switch-or-logic",
+      "label": "Switch OR Logic",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::parallel-switch-wiring"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::multiple-button-combinations",
+      "label": "Multiple Button Combinations",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::switch-and-logic",
+        "beginning-electronics::switch-or-logic"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::combination-lock-circuit",
+      "label": "Combination Lock Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multiple-button-combinations",
+        "beginning-electronics::series-switch-wiring"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::light-sensor",
+      "label": "Light Sensor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photoresistor",
+        "beginning-electronics::light-dependent-resistor"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::photoresistor-resistance-range",
+      "label": "Photoresistor Resistance Range",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photoresistor",
+        "beginning-electronics::light-sensor"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::photoresistor-response-time",
+      "label": "Photoresistor Response Time",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photoresistor",
+        "beginning-electronics::photoresistor-resistance-range"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::photoresistor-voltage-divider",
+      "label": "Photoresistor Voltage Divider",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photoresistor",
+        "beginning-electronics::voltage-divider-circuit"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::photocell-circuit",
+      "label": "Photocell Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photoresistor-voltage-divider"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ambient-light-level",
+      "label": "Ambient Light Level",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-sensor",
+        "beginning-electronics::photoresistor"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::dark-vs-light-reading",
+      "label": "Dark Vs Light Reading",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::ambient-light-level",
+        "beginning-electronics::photoresistor-resistance-range"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::dark-detector",
+      "label": "Dark Detector",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photocell-circuit",
+        "beginning-electronics::dark-vs-light-reading"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::sensor-threshold",
+      "label": "Sensor Threshold",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dark-detector",
+        "beginning-electronics::photoresistor-voltage-divider"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::analog-input",
+      "label": "Analog Input",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photoresistor-voltage-divider",
+        "beginning-electronics::potentiometer"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::potentiometer-input",
+      "label": "Potentiometer Input",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::potentiometer",
+        "beginning-electronics::analog-input"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::digital-input",
+      "label": "Digital Input",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::analog-input"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::digital-vs-analog-signal",
+      "label": "Digital Vs Analog Signal",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::digital-input",
+        "beginning-electronics::analog-input"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::trigger-input",
+      "label": "Trigger Input",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::digital-input",
+        "beginning-electronics::push-button"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::manual-input-device",
+      "label": "Manual Input Device",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::potentiometer"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::environmental-sensing",
+      "label": "Environmental Sensing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::photoresistor",
+        "beginning-electronics::light-sensor"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::input-circuit-protection",
+      "label": "Input Circuit Protection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electrical-safety",
+        "beginning-electronics::current-limiting"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::button-press-duration",
+      "label": "Button Press Duration",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::momentary-switch"
+      ],
+      "taxonomy_id": "INPT",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::light-emitting-diode",
+      "label": "Light Emitting Diode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode",
+        "beginning-electronics::led-polarity",
+        "beginning-electronics::led-forward-voltage"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::rgb-led",
+      "label": "RGB LED",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::red-led",
+        "beginning-electronics::green-led",
+        "beginning-electronics::blue-led"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::common-cathode-rgb",
+      "label": "Common Cathode RGB",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rgb-led",
+        "beginning-electronics::cathode"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::common-anode-rgb",
+      "label": "Common Anode RGB",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rgb-led",
+        "beginning-electronics::anode"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::color-mixing-with-leds",
+      "label": "Color Mixing With LEDs",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rgb-led",
+        "beginning-electronics::common-cathode-rgb",
+        "beginning-electronics::common-anode-rgb"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-brightness-control",
+      "label": "LED Brightness Control",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::analog-input",
+        "beginning-electronics::current-limiting-resistor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-series-resistor",
+      "label": "LED Series Resistor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::current-limiting-resistor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-resistor-calculator",
+      "label": "LED Resistor Calculator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::led-series-resistor",
+        "beginning-electronics::led-forward-voltage",
+        "beginning-electronics::led-current-rating"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::driving-multiple-leds",
+      "label": "Driving Multiple LEDs",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::led-series-resistor",
+        "beginning-electronics::current-limiting-resistor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::parallel-led-wiring",
+      "label": "Parallel LED Wiring",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::parallel-circuit"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-strip",
+      "label": "LED Strip",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rgb-led",
+        "beginning-electronics::parallel-led-wiring"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-matrix",
+      "label": "LED Matrix",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::driving-multiple-leds",
+        "beginning-electronics::parallel-led-wiring",
+        "beginning-electronics::74hc595-shift-register"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-chaser-effect",
+      "label": "LED Chaser Effect",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::74hc595-shift-register",
+        "beginning-electronics::driving-multiple-leds"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::blinking-output-pattern",
+      "label": "Blinking Output Pattern",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-astable-mode",
+        "beginning-electronics::light-emitting-diode"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::dc-motor",
+      "label": "DC Motor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power",
+        "beginning-electronics::power-rating"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::small-hobby-motor",
+      "label": "Small Hobby Motor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dc-motor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::motor-direction",
+      "label": "Motor Direction",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dc-motor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::motor-control-circuit",
+      "label": "Motor Control Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dc-motor",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::motor-load",
+      "label": "Motor Load",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dc-motor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::motor-stall-current",
+      "label": "Motor Stall Current",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dc-motor",
+        "beginning-electronics::motor-load",
+        "beginning-electronics::current-limiting"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::motor-back-emf",
+      "label": "Motor Back-EMF",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dc-motor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::series-led-wiring",
+      "label": "Series LED Wiring",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::series-circuit"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::motor-noise-suppression",
+      "label": "Motor Noise Suppression",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::motor-back-emf",
+        "beginning-electronics::dc-motor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::motor-speed-control",
+      "label": "Motor Speed Control",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::motor-control-circuit",
+        "beginning-electronics::transistor-motor-driver"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::pwm-control",
+      "label": "PWM Control",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::motor-speed-control",
+        "beginning-electronics::555-duty-cycle"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::duty-cycle",
+      "label": "Duty Cycle",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::pwm-control",
+        "beginning-electronics::555-duty-cycle"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::relay-basics",
+      "label": "Relay Basics",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::motor-control-circuit",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::visual-output",
+      "label": "Visual Output",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::power"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::indicator-light",
+      "label": "Indicator Light",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::visual-output",
+        "beginning-electronics::light-emitting-diode"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::audio-output",
+      "label": "Audio Output",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power",
+        "beginning-electronics::current-limiting"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::piezo-buzzer",
+      "label": "Piezo Buzzer",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::audio-output"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::active-buzzer",
+      "label": "Active Buzzer",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::piezo-buzzer"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::passive-buzzer",
+      "label": "Passive Buzzer",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::piezo-buzzer",
+        "beginning-electronics::555-astable-mode"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::buzzer-tone",
+      "label": "Buzzer Tone",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::passive-buzzer",
+        "beginning-electronics::555-astable-mode"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::buzzer-polarity",
+      "label": "Buzzer Polarity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::piezo-buzzer",
+        "beginning-electronics::active-buzzer"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::actuator",
+      "label": "Actuator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dc-motor",
+        "beginning-electronics::relay-basics"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::load-resistance",
+      "label": "Load Resistance",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::motor-load",
+        "beginning-electronics::resistor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::output-device-protection",
+      "label": "Output Device Protection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::motor-back-emf",
+        "beginning-electronics::motor-noise-suppression",
+        "beginning-electronics::led-series-resistor"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::multi-output-circuit",
+      "label": "Multi-Output Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::driving-multiple-leds",
+        "beginning-electronics::motor-control-circuit",
+        "beginning-electronics::relay-basics"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::output-response-time",
+      "label": "Output Response Time",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::pwm-control",
+        "beginning-electronics::buzzer-tone",
+        "beginning-electronics::motor-control-circuit"
+      ],
+      "taxonomy_id": "OUTP",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::solderless-breadboard",
+      "label": "Solderless Breadboard",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::component-lead"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::full-size-breadboard",
+      "label": "Full-Size Breadboard",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::half-size-breadboard",
+      "label": "Half-Size Breadboard",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-power-rails",
+      "label": "Breadboard Power Rails",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-tie-points",
+      "label": "Breadboard Tie Points",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-rows",
+      "label": "Breadboard Rows",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-tie-points"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-columns",
+      "label": "Breadboard Columns",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-tie-points"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-gutter",
+      "label": "Breadboard Gutter",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-rows",
+        "beginning-electronics::breadboard-columns"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-numbering",
+      "label": "Breadboard Numbering",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-rows",
+        "beginning-electronics::breadboard-columns"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-hole-spacing",
+      "label": "Breadboard Hole Spacing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard",
+        "beginning-electronics::component-lead"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-adhesive-backing",
+      "label": "Breadboard Adhesive Backing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::binding-post",
+      "label": "Binding Post",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard",
+        "beginning-electronics::breadboard-power-rails"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-internal-connections",
+      "label": "Breadboard Internal Connections",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-rows",
+        "beginning-electronics::breadboard-columns"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::component-placement",
+      "label": "Component Placement",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-internal-connections",
+        "beginning-electronics::component-lead"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::component-lead-forming",
+      "label": "Component Lead Forming",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-lead",
+        "beginning-electronics::component-placement"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::wire-routing",
+      "label": "Wire Routing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-internal-connections",
+        "beginning-electronics::component-placement"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::jumper-wire",
+      "label": "Jumper Wire",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::male-to-male-jumper",
+      "label": "Male-to-Male Jumper",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::jumper-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::male-to-female-jumper",
+      "label": "Male-to-Female Jumper",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::jumper-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::pre-formed-jumper-wire",
+      "label": "Pre-Formed Jumper Wire",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::jumper-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::solid-core-wire",
+      "label": "Solid Core Wire",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::jumper-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::wire-gauge",
+      "label": "Wire Gauge",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solid-core-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::wire-stripping",
+      "label": "Wire Stripping",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solid-core-wire",
+        "beginning-electronics::wire-gauge"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::color-coded-wiring",
+      "label": "Color-Coded Wiring",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::jumper-wire",
+        "beginning-electronics::solid-core-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::wire-length-planning",
+      "label": "Wire Length Planning",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::wire-gauge",
+        "beginning-electronics::wire-routing"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::wire-crossing-reduction",
+      "label": "Wire Crossing Reduction",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::wire-routing",
+        "beginning-electronics::wire-length-planning"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-layout",
+      "label": "Circuit Layout",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-placement",
+        "beginning-electronics::wire-routing"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::component-orientation",
+      "label": "Component Orientation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-placement",
+        "beginning-electronics::schematic-symbol"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-rail-connection",
+      "label": "Power Rail Connection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-power-rails",
+        "beginning-electronics::jumper-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::ground-rail-connection",
+      "label": "Ground Rail Connection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-power-rails",
+        "beginning-electronics::ground",
+        "beginning-electronics::jumper-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-bridge-wire",
+      "label": "Breadboard Bridge Wire",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-gutter",
+        "beginning-electronics::jumper-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::neat-wiring-practice",
+      "label": "Neat Wiring Practice",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::wire-crossing-reduction",
+        "beginning-electronics::color-coded-wiring"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-limitations",
+      "label": "Breadboard Limitations",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard",
+        "beginning-electronics::breadboard-internal-connections"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::prototyping",
+      "label": "Prototyping",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard",
+        "beginning-electronics::circuit-layout"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::wiring-diagram-interpretation",
+      "label": "Wiring Diagram Interpretation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-diagram",
+        "beginning-electronics::schematic-symbol"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::schematic-to-breadboard-mapping",
+      "label": "Schematic-to-Breadboard Mapping",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::wiring-diagram-interpretation",
+        "beginning-electronics::circuit-layout"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-assembly-order",
+      "label": "Circuit Assembly Order",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::wiring-diagram-interpretation",
+        "beginning-electronics::component-placement"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::incremental-circuit-building",
+      "label": "Incremental Circuit Building",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-assembly-order"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-on-verification",
+      "label": "Power-On Verification",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-assembly-order",
+        "beginning-electronics::electrical-safety"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-testing",
+      "label": "Circuit Testing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power-on-verification"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-troubleshooting",
+      "label": "Breadboard Troubleshooting",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-testing"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::loose-connection",
+      "label": "Loose Connection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-troubleshooting"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::bent-component-lead",
+      "label": "Bent Component Lead",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-lead-forming",
+        "beginning-electronics::breadboard-troubleshooting"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::wrong-row-placement",
+      "label": "Wrong Row Placement",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-rows",
+        "beginning-electronics::breadboard-troubleshooting"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::breadboard-contact-wear",
+      "label": "Breadboard Contact Wear",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard",
+        "beginning-electronics::breadboard-troubleshooting"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::error-symptom-diagnosis",
+      "label": "Error Symptom Diagnosis",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::breadboard-troubleshooting",
+        "beginning-electronics::loose-connection"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::faulty-component-isolation",
+      "label": "Faulty Component Isolation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::error-symptom-diagnosis"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::component-swap-testing",
+      "label": "Component Swap Testing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::faulty-component-isolation"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::single-change-debugging",
+      "label": "Single-Change Debugging",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-swap-testing",
+        "beginning-electronics::incremental-circuit-building"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::perfboard",
+      "label": "Perfboard",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solderless-breadboard",
+        "beginning-electronics::circuit-layout"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::perfboard-layout-planning",
+      "label": "Perfboard Layout Planning",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::perfboard",
+        "beginning-electronics::circuit-layout"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::point-to-point-wiring",
+      "label": "Point-to-Point Wiring",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::perfboard",
+        "beginning-electronics::jumper-wire"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::solder-joint",
+      "label": "Solder Joint",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::perfboard"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::cold-solder-joint",
+      "label": "Cold Solder Joint",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solder-joint"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::low-temperature-solder",
+      "label": "Low-Temperature Solder",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solder-joint"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::solder-iron-safety",
+      "label": "Solder Iron Safety",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electrical-safety",
+        "beginning-electronics::solder-joint"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::heat-shrink-tubing",
+      "label": "Heat Shrink Tubing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solid-core-wire",
+        "beginning-electronics::solder-joint"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::wire-strain-relief",
+      "label": "Wire Strain Relief",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::heat-shrink-tubing",
+        "beginning-electronics::wire-gauge"
+      ],
+      "taxonomy_id": "BRDG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::multimeter",
+      "label": "Multimeter",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::electric-current",
+        "beginning-electronics::voltage",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::digital-multimeter",
+      "label": "Digital Multimeter",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::analog-multimeter",
+      "label": "Analog Multimeter",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::multimeter-display",
+      "label": "Multimeter Display",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::digital-multimeter"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::multimeter-dial-settings",
+      "label": "Multimeter Dial Settings",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::auto-ranging-multimeter",
+      "label": "Auto-Ranging Multimeter",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::digital-multimeter",
+        "beginning-electronics::multimeter-dial-settings"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::multimeter-probes",
+      "label": "Multimeter Probes",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::multimeter-safety",
+      "label": "Multimeter Safety",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter",
+        "beginning-electronics::electrical-safety"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-measurement",
+      "label": "Voltage Measurement",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter",
+        "beginning-electronics::voltage"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::measuring-in-circuit-voltage",
+      "label": "Measuring In-Circuit Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-measurement",
+        "beginning-electronics::solderless-breadboard"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::measuring-battery-voltage",
+      "label": "Measuring Battery Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-measurement"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-measurement",
+      "label": "Current Measurement",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter",
+        "beginning-electronics::electric-current"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::reading-milliamps",
+      "label": "Reading Milliamps",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::current-measurement"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::resistance-measurement",
+      "label": "Resistance Measurement",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter",
+        "beginning-electronics::resistance"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::verifying-resistor-color-code",
+      "label": "Verifying Resistor Color Code",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance-measurement",
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::continuity-testing",
+      "label": "Continuity Testing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter",
+        "beginning-electronics::closed-circuit"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::continuity-beep-tone",
+      "label": "Continuity Beep Tone",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::continuity-testing"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::testing-a-switch",
+      "label": "Testing A Switch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::continuity-testing"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-range-selection",
+      "label": "Voltage Range Selection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-measurement",
+        "beginning-electronics::multimeter-dial-settings"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-range-selection",
+      "label": "Current Range Selection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::current-measurement",
+        "beginning-electronics::multimeter-dial-settings"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::diode-testing-mode",
+      "label": "Diode Testing Mode",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::multimeter",
+        "beginning-electronics::diode"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::measuring-led-forward-voltage",
+      "label": "Measuring LED Forward Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::diode-testing-mode",
+        "beginning-electronics::led-forward-voltage"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::overload-indicator",
+      "label": "Overload Indicator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-range-selection",
+        "beginning-electronics::current-range-selection"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::open-circuit-reading",
+      "label": "Open Circuit Reading",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::continuity-testing",
+        "beginning-electronics::open-circuit"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::short-circuit-reading",
+      "label": "Short Circuit Reading",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::continuity-testing",
+        "beginning-electronics::short-circuit"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::component-testing",
+      "label": "Component Testing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::resistance-measurement",
+        "beginning-electronics::diode-testing-mode"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::out-of-circuit-testing",
+      "label": "Out-Of-Circuit Testing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-testing"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-supply-testing",
+      "label": "Power Supply Testing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-measurement",
+        "beginning-electronics::measuring-battery-voltage"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-debugging",
+      "label": "Circuit Debugging",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-testing",
+        "beginning-electronics::continuity-testing"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::troubleshooting-strategy",
+      "label": "Troubleshooting Strategy",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-debugging"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::half-split-troubleshooting",
+      "label": "Half-Split Troubleshooting",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::troubleshooting-strategy",
+        "beginning-electronics::circuit-debugging"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::comparing-to-known-good-circuit",
+      "label": "Comparing To Known-Good Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::troubleshooting-strategy"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::checking-power-first",
+      "label": "Checking Power First",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::troubleshooting-strategy",
+        "beginning-electronics::power-supply-testing"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::isolating-one-variable",
+      "label": "Isolating One Variable",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::troubleshooting-strategy"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::signal-tracing",
+      "label": "Signal Tracing",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::troubleshooting-strategy",
+        "beginning-electronics::voltage-measurement"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::documenting-test-results",
+      "label": "Documenting Test Results",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-debugging"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::component-datasheet",
+      "label": "Component Datasheet",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-testing",
+        "beginning-electronics::diode"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::reading-a-component-label",
+      "label": "Reading A Component Label",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::component-datasheet",
+        "beginning-electronics::resistor-color-code"
+      ],
+      "taxonomy_id": "MEAS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::usb-power-supply",
+      "label": "USB Power Supply",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power-supply-voltage",
+        "beginning-electronics::direct-current"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::5-volt-power",
+      "label": "5 Volt Power",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::usb-power-supply",
+        "beginning-electronics::power-supply-voltage"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::battery-power",
+      "label": "Battery Power",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::battery-cell",
+        "beginning-electronics::battery-polarity"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::9-volt-battery",
+      "label": "9 Volt Battery",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::battery-power",
+        "beginning-electronics::battery-cell"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::aa-battery",
+      "label": "AA Battery",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::battery-power",
+        "beginning-electronics::battery-cell"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::battery-holder",
+      "label": "Battery Holder",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::9-volt-battery",
+        "beginning-electronics::aa-battery"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::battery-pack-wiring",
+      "label": "Battery Pack Wiring",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::battery-holder",
+        "beginning-electronics::battery-polarity"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::rechargeable-battery",
+      "label": "Rechargeable Battery",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::battery-power",
+        "beginning-electronics::battery-capacity"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::lipo-battery",
+      "label": "LiPo Battery",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rechargeable-battery",
+        "beginning-electronics::battery-capacity"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::tp4056-charger-module",
+      "label": "TP4056 Charger Module",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::lipo-battery",
+        "beginning-electronics::integrated-circuit"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-supply-selection",
+      "label": "Power Supply Selection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::usb-power-supply",
+        "beginning-electronics::battery-power"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::voltage-regulator",
+      "label": "Voltage Regulator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::integrated-circuit"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::7805-voltage-regulator",
+      "label": "7805 Voltage Regulator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::5-volt-power"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::regulator-dropout-voltage",
+      "label": "Regulator Dropout Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::voltage"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::regulator-bypass-capacitors",
+      "label": "Regulator Bypass Capacitors",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::capacitor"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::heat-sink",
+      "label": "Heat Sink",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::power-consumption"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::buck-converter",
+      "label": "Buck Converter",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::direct-current"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::step-down-conversion",
+      "label": "Step-Down Conversion",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::buck-converter",
+        "beginning-electronics::voltage"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::buck-converter-inductor",
+      "label": "Buck Converter Inductor",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::buck-converter",
+        "beginning-electronics::step-down-conversion"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::adjustable-output-trimmer",
+      "label": "Adjustable Output Trimmer",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::buck-converter",
+        "beginning-electronics::voltage-regulator"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::buck-converter-efficiency",
+      "label": "Buck Converter Efficiency",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::buck-converter",
+        "beginning-electronics::power-consumption"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::boost-converter",
+      "label": "Boost Converter",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::buck-converter"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::linear-regulator",
+      "label": "Linear Regulator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::regulator-dropout-voltage"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::switching-regulator",
+      "label": "Switching Regulator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::buck-converter",
+        "beginning-electronics::boost-converter"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-efficiency",
+      "label": "Power Efficiency",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::buck-converter-efficiency",
+        "beginning-electronics::power-consumption"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::input-voltage",
+      "label": "Input Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::voltage"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::output-voltage",
+      "label": "Output Voltage",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage-regulator",
+        "beginning-electronics::input-voltage"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::current-capacity",
+      "label": "Current Capacity",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::battery-capacity",
+        "beginning-electronics::power"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::xr2206-function-generator",
+      "label": "XR2206 Function Generator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::integrated-circuit",
+        "beginning-electronics::voltage-regulator"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::sine-wave-output",
+      "label": "Sine Wave Output",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::xr2206-function-generator",
+        "beginning-electronics::ac-vs-dc"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::square-wave-output",
+      "label": "Square Wave Output",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::xr2206-function-generator",
+        "beginning-electronics::sine-wave-output"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::triangle-wave-output",
+      "label": "Triangle Wave Output",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::xr2206-function-generator",
+        "beginning-electronics::square-wave-output"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::frequency-adjustment",
+      "label": "Frequency Adjustment",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::xr2206-function-generator",
+        "beginning-electronics::sine-wave-output"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::amplitude-adjustment",
+      "label": "Amplitude Adjustment",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::xr2206-function-generator",
+        "beginning-electronics::frequency-adjustment"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::solar-cell",
+      "label": "Solar Cell",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::voltage",
+        "beginning-electronics::direct-current"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::photovoltaic-effect",
+      "label": "Photovoltaic Effect",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solar-cell",
+        "beginning-electronics::electrical-energy"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::solar-panel-wiring",
+      "label": "Solar Panel Wiring",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::solar-cell",
+        "beginning-electronics::battery-pack-wiring"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::charging-circuit",
+      "label": "Charging Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::tp4056-charger-module",
+        "beginning-electronics::solar-panel-wiring"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::battery-overcharge-protection",
+      "label": "Battery Overcharge Protection",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rechargeable-battery",
+        "beginning-electronics::lipo-battery"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::power-budget",
+      "label": "Power Budget",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::power-consumption",
+        "beginning-electronics::current-capacity"
+      ],
+      "taxonomy_id": "PWR",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::binary-state",
+      "label": "Binary State",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit",
+        "beginning-electronics::push-button"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::digital-signal",
+      "label": "Digital Signal",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::binary-state",
+        "beginning-electronics::circuit"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::boolean-logic",
+      "label": "Boolean Logic",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::binary-state",
+        "beginning-electronics::digital-signal"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::logical-and-operation",
+      "label": "Logical AND Operation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::boolean-logic",
+        "beginning-electronics::switch-and-logic"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::logical-or-operation",
+      "label": "Logical OR Operation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::boolean-logic",
+        "beginning-electronics::switch-or-logic"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::logical-not-operation",
+      "label": "Logical NOT Operation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::boolean-logic",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::truth-table",
+      "label": "Truth Table",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::boolean-logic"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::reading-a-truth-table",
+      "label": "Reading a Truth Table",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::truth-table"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::building-a-truth-table",
+      "label": "Building a Truth Table",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::truth-table",
+        "beginning-electronics::reading-a-truth-table"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::logic-input-combination",
+      "label": "Logic Input Combination",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::logical-and-operation",
+        "beginning-electronics::logical-or-operation",
+        "beginning-electronics::building-a-truth-table"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::logic-gate-symbol",
+      "label": "Logic Gate Symbol",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::logical-and-operation",
+        "beginning-electronics::logical-or-operation",
+        "beginning-electronics::logical-not-operation"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::and-gate",
+      "label": "AND Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::truth-table",
+        "beginning-electronics::logical-and-operation",
+        "beginning-electronics::logic-gate-symbol"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-and-gate",
+      "label": "Transistor AND Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::and-gate",
+        "beginning-electronics::transistor-switching",
+        "beginning-electronics::npn-transistor"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::or-gate",
+      "label": "OR Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::truth-table",
+        "beginning-electronics::logical-or-operation",
+        "beginning-electronics::logic-gate-symbol"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-or-gate",
+      "label": "Transistor OR Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::or-gate",
+        "beginning-electronics::transistor-switching",
+        "beginning-electronics::npn-transistor"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::not-gate",
+      "label": "NOT Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::truth-table",
+        "beginning-electronics::logical-not-operation",
+        "beginning-electronics::logic-gate-symbol"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::transistor-not-gate",
+      "label": "Transistor NOT Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::not-gate",
+        "beginning-electronics::transistor-switching",
+        "beginning-electronics::npn-transistor"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::two-transistor-gate-circuit",
+      "label": "Two-Transistor Gate Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::transistor-and-gate",
+        "beginning-electronics::transistor-or-gate",
+        "beginning-electronics::transistor-not-gate"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::gate-output-led-indicator",
+      "label": "Gate Output LED Indicator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::and-gate",
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::led-series-resistor"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::nand-gate",
+      "label": "NAND Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::and-gate",
+        "beginning-electronics::not-gate"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::nor-gate",
+      "label": "NOR Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::or-gate",
+        "beginning-electronics::not-gate"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::xor-gate",
+      "label": "XOR Gate",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::and-gate",
+        "beginning-electronics::or-gate",
+        "beginning-electronics::not-gate"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::logic-level-high",
+      "label": "Logic Level High",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::digital-signal",
+        "beginning-electronics::binary-state"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::logic-level-low",
+      "label": "Logic Level Low",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::digital-signal",
+        "beginning-electronics::logic-level-high"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::combinational-logic",
+      "label": "Combinational Logic",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::and-gate",
+        "beginning-electronics::or-gate",
+        "beginning-electronics::not-gate"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::rs-latch",
+      "label": "RS Latch",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::nor-gate",
+        "beginning-electronics::nand-gate",
+        "beginning-electronics::truth-table"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::set-input",
+      "label": "Set Input",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rs-latch"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::reset-input",
+      "label": "Reset Input",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rs-latch",
+        "beginning-electronics::set-input"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::latch-state",
+      "label": "Latch State",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rs-latch",
+        "beginning-electronics::set-input",
+        "beginning-electronics::reset-input"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::sequential-logic",
+      "label": "Sequential Logic",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rs-latch",
+        "beginning-electronics::latch-state",
+        "beginning-electronics::combinational-logic"
+      ],
+      "taxonomy_id": "DLOG",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::flip-flop-circuit",
+      "label": "Flip Flop Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::rs-latch",
+        "beginning-electronics::nand-gate",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::memory-cell",
+      "label": "Memory Cell",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::flip-flop-circuit",
+        "beginning-electronics::rs-latch",
+        "beginning-electronics::latch-state"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::bistable-circuit",
+      "label": "Bistable Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::flip-flop-circuit",
+        "beginning-electronics::memory-cell",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::timing-circuit",
+      "label": "Timing Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-timer-ic",
+        "beginning-electronics::555-astable-mode",
+        "beginning-electronics::rc-time-constant"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::oscillator-circuit",
+      "label": "Oscillator Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::timing-circuit",
+        "beginning-electronics::555-astable-mode",
+        "beginning-electronics::bistable-circuit"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-flasher",
+      "label": "LED Flasher",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::555-led-blinker",
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::oscillator-circuit"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::signal-generator",
+      "label": "Signal Generator",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::xr2206-function-generator",
+        "beginning-electronics::oscillator-circuit",
+        "beginning-electronics::square-wave-output"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::multi-stage-circuit",
+      "label": "Multi-Stage Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::timing-circuit",
+        "beginning-electronics::flip-flop-circuit",
+        "beginning-electronics::prototyping"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::combining-sensor-and-output",
+      "label": "Combining Sensor and Output",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::light-sensor",
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::dc-motor",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::night-light-circuit",
+      "label": "Night Light Circuit",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::dark-detector",
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::transistor-switching"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::solar-night-light-project",
+      "label": "Solar Night Light Project",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::night-light-circuit",
+        "beginning-electronics::solar-cell",
+        "beginning-electronics::battery-power"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::busy-board-project",
+      "label": "Busy Board Project",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::push-button",
+        "beginning-electronics::light-emitting-diode",
+        "beginning-electronics::dc-motor",
+        "beginning-electronics::solderless-breadboard"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::led-noodle-costume",
+      "label": "LED Noodle Costume",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::led-strip",
+        "beginning-electronics::9-volt-battery",
+        "beginning-electronics::prototyping"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::capstone-project-planning",
+      "label": "Capstone Project Planning",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::prototyping",
+        "beginning-electronics::troubleshooting-strategy"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::project-proposal",
+      "label": "Project Proposal",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capstone-project-planning"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::project-requirements-list",
+      "label": "Project Requirements List",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capstone-project-planning",
+        "beginning-electronics::project-proposal"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::circuit-block-diagram",
+      "label": "Circuit Block Diagram",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::capstone-project-planning",
+        "beginning-electronics::project-requirements-list"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::original-circuit-design",
+      "label": "Original Circuit Design",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::circuit-block-diagram",
+        "beginning-electronics::capstone-project-planning",
+        "beginning-electronics::multi-stage-circuit"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::prototype-iteration",
+      "label": "Prototype Iteration",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::original-circuit-design",
+        "beginning-electronics::troubleshooting-strategy",
+        "beginning-electronics::prototyping"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::project-demonstration",
+      "label": "Project Demonstration",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::prototype-iteration",
+        "beginning-electronics::project-requirements-list"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    },
+    {
+      "id": "beginning-electronics::project-documentation",
+      "label": "Project Documentation",
+      "subject_id": "beginning-electronics",
+      "dependencies": [
+        "beginning-electronics::project-demonstration",
+        "beginning-electronics::original-circuit-design",
+        "beginning-electronics::project-requirements-list"
+      ],
+      "taxonomy_id": "CAPS",
+      "level": "core"
+    }
+  ]
+}

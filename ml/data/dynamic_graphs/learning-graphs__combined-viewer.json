@@ -1,0 +1,298 @@
+{
+  "subject_id": "learning-graphs__combined-viewer",
+  "title": "Graph Theory Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "Foundation": {
+      "classifier_name": "Foundation",
+      "color": "red"
+    },
+    "Types": {
+      "classifier_name": "Types",
+      "color": "orange"
+    },
+    "Representations": {
+      "classifier_name": "Representations",
+      "color": "gold"
+    },
+    "Algorithms": {
+      "classifier_name": "Algorithms",
+      "color": "green"
+    },
+    "Paths": {
+      "classifier_name": "Paths",
+      "color": "blue"
+    },
+    "Flow": {
+      "classifier_name": "Flow",
+      "color": "indigo"
+    },
+    "Advanced": {
+      "classifier_name": "Advanced",
+      "color": "violet"
+    },
+    "Metrics": {
+      "classifier_name": "Metrics",
+      "color": "gray"
+    },
+    "Spectral": {
+      "classifier_name": "Spectral",
+      "color": "brown"
+    },
+    "ML": {
+      "classifier_name": "ML",
+      "color": "teal"
+    }
+  },
+  "concepts": [
+    {
+      "id": "learning-graphs__combined-viewer::graph",
+      "label": "Graph",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [],
+      "taxonomy_id": "Foundation",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::vertex",
+      "label": "Vertex",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Foundation",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::edge",
+      "label": "Edge",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Foundation",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::directed-graph",
+      "label": "Directed Graph",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Types",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::undirected-graph",
+      "label": "Undirected Graph",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Types",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::weighted-graph",
+      "label": "Weighted Graph",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Types",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::adjacency-matrix",
+      "label": "Adjacency Matrix",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Representations",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::adjacency-list",
+      "label": "Adjacency List",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Representations",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::dfs",
+      "label": "DFS",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Algorithms",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::bfs",
+      "label": "BFS",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Algorithms",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::dijkstra",
+      "label": "Dijkstra",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::weighted-graph"
+      ],
+      "taxonomy_id": "Paths",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::bellman-ford",
+      "label": "Bellman-Ford",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::weighted-graph"
+      ],
+      "taxonomy_id": "Paths",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::mst",
+      "label": "MST",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::weighted-graph"
+      ],
+      "taxonomy_id": "Paths",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::max-flow",
+      "label": "Max Flow",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::weighted-graph"
+      ],
+      "taxonomy_id": "Flow",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::min-cut",
+      "label": "Min Cut",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::max-flow"
+      ],
+      "taxonomy_id": "Flow",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::matching",
+      "label": "Matching",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::weighted-graph"
+      ],
+      "taxonomy_id": "Flow",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::tarjan-scc",
+      "label": "Tarjan SCC",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::dfs"
+      ],
+      "taxonomy_id": "Advanced",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::topological-sort",
+      "label": "Topological Sort",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::directed-graph"
+      ],
+      "taxonomy_id": "Advanced",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::degree-centrality",
+      "label": "Degree Centrality",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Metrics",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::betweenness",
+      "label": "Betweenness",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Metrics",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::pagerank",
+      "label": "PageRank",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "Metrics",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::laplacian",
+      "label": "Laplacian",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::adjacency-matrix"
+      ],
+      "taxonomy_id": "Spectral",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::spectral-clustering",
+      "label": "Spectral Clustering",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::laplacian"
+      ],
+      "taxonomy_id": "Spectral",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::gnn",
+      "label": "GNN",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::graph"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    },
+    {
+      "id": "learning-graphs__combined-viewer::graph-embeddings",
+      "label": "Graph Embeddings",
+      "subject_id": "learning-graphs__combined-viewer",
+      "dependencies": [
+        "learning-graphs__combined-viewer::gnn"
+      ],
+      "taxonomy_id": "ML",
+      "level": "core"
+    }
+  ]
+}

@@ -1,0 +1,5026 @@
+{
+  "subject_id": "token-efficiency",
+  "title": "Token Optimization",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "ANTH": {
+      "classifier_name": "Anthropic Claude",
+      "color": "MistyRose"
+    },
+    "HARN": {
+      "classifier_name": "Harness Tools",
+      "color": "PeachPuff"
+    },
+    "ROUT": {
+      "classifier_name": "Routing and Output Control",
+      "color": "LightYellow"
+    },
+    "AB": {
+      "classifier_name": "A/B Testing and Experimentation",
+      "color": "Honeydew"
+    },
+    "RAG": {
+      "classifier_name": "Retrieval and Context Management",
+      "color": "PaleTurquoise"
+    },
+    "BUDG": {
+      "classifier_name": "Agent Budgets and Batch APIs",
+      "color": "SteelBlue"
+    },
+    "GOOG": {
+      "classifier_name": "Google Gemini",
+      "color": "Lavender"
+    },
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "LavenderBlush"
+    },
+    "OBS": {
+      "classifier_name": "Logging and Observability",
+      "color": "Thistle"
+    },
+    "OPT": {
+      "classifier_name": "Prompt and Cache Optimization",
+      "color": "MintCream"
+    },
+    "OAI": {
+      "classifier_name": "OpenAI Ecosystem",
+      "color": "LightCoral"
+    },
+    "CAP": {
+      "classifier_name": "Capstone and Practice",
+      "color": "Plum"
+    },
+    "SKIL": {
+      "classifier_name": "Skills System",
+      "color": "Gainsboro"
+    },
+    "ECON": {
+      "classifier_name": "Pricing and Economics",
+      "color": "PowderBlue"
+    },
+    "PRIV": {
+      "classifier_name": "Privacy and Compliance",
+      "color": "PaleGreen"
+    }
+  },
+  "concepts": [
+    {
+      "id": "token-efficiency::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "token-efficiency",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "token-efficiency::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::generative-ai"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::foundation-model",
+      "label": "Foundation Model",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::transformer-architecture",
+      "label": "Transformer Architecture",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::autoregressive-generation",
+      "label": "Autoregressive Generation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::transformer-architecture"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token",
+      "label": "Token",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::input-token",
+      "label": "Input Token",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::output-token",
+      "label": "Output Token",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token",
+        "token-efficiency::autoregressive-generation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cached-token",
+      "label": "Cached Token",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::input-token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::reasoning-token",
+      "label": "Reasoning Token",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-token",
+        "token-efficiency::autoregressive-generation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-count",
+      "label": "Token Count",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token",
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tokenizer",
+      "label": "Tokenizer",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::byte-pair-encoding",
+      "label": "Byte Pair Encoding",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::sentencepiece",
+      "label": "SentencePiece",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::vocabulary-size",
+      "label": "Vocabulary Size",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-window",
+      "label": "Context Window",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token",
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-length",
+      "label": "Context Length",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-window"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt",
+      "label": "Prompt",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::input-token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::system-prompt",
+      "label": "System Prompt",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::user-message",
+      "label": "User Message",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt",
+        "token-efficiency::conversation-turn"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::assistant-message",
+      "label": "Assistant Message",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::conversation-turn"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::conversation-turn",
+      "label": "Conversation Turn",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::multi-turn-dialogue",
+      "label": "Multi-Turn Dialogue",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::conversation-turn"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::streaming-response",
+      "label": "Streaming Response",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::stop-sequence",
+      "label": "Stop Sequence",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::max-tokens-parameter",
+      "label": "Max Tokens Parameter",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::temperature",
+      "label": "Temperature",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::autoregressive-generation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::top-p-sampling",
+      "label": "Top P Sampling",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::autoregressive-generation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::logprobs",
+      "label": "Logprobs",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::model-family",
+      "label": "Model Family",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::subword-tokenization",
+      "label": "Subword Tokenization",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::bpe-merge-rules",
+      "label": "BPE Merge Rules",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::byte-pair-encoding"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tiktoken-library",
+      "label": "Tiktoken Library",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer",
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-tokenizer",
+      "label": "Claude Tokenizer",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer",
+        "token-efficiency::anthropic-api"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-tokenizer",
+      "label": "Gemini Tokenizer",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-to-char-ratio",
+      "label": "Token-To-Char Ratio",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::whitespace-handling",
+      "label": "Whitespace Handling",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::unicode-normalization",
+      "label": "Unicode Normalization",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::special-tokens",
+      "label": "Special Tokens",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token",
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::end-of-sequence-token",
+      "label": "End-Of-Sequence Token",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::special-tokens"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::beginning-of-sequence-token",
+      "label": "Beginning-Of-Sequence Token",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::special-tokens"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::padding-token",
+      "label": "Padding Token",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::special-tokens"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-boundary",
+      "label": "Token Boundary",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer",
+        "token-efficiency::subword-tokenization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pre-tokenization",
+      "label": "Pre-Tokenization",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cross-vendor-tokenizer-drift",
+      "label": "Cross-Vendor Tokenizer Drift",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tiktoken-library",
+        "token-efficiency::claude-tokenizer",
+        "token-efficiency::gemini-tokenizer",
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-counting-api",
+      "label": "Token Counting API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-count",
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::local-token-estimation",
+      "label": "Local Token Estimation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-count",
+        "token-efficiency::tokenizer"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-count-caching",
+      "label": "Token Count Caching",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::local-token-estimation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::code-tokenization",
+      "label": "Code Tokenization",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer",
+        "token-efficiency::subword-tokenization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::multilingual-tokenization",
+      "label": "Multilingual Tokenization",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tokenizer",
+        "token-efficiency::unicode-normalization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-million-token-price",
+      "label": "Per-Million-Token Price",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::input-token-price",
+      "label": "Input Token Price",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::per-million-token-price",
+        "token-efficiency::input-token"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::output-token-price",
+      "label": "Output Token Price",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::per-million-token-price",
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cached-input-price",
+      "label": "Cached Input Price",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::per-million-token-price",
+        "token-efficiency::cached-token"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::output-premium",
+      "label": "Output Premium",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::input-token-price",
+        "token-efficiency::output-token-price"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::unit-economics",
+      "label": "Unit Economics",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::per-million-token-price"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-per-request",
+      "label": "Cost Per Request",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::unit-economics",
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-per-feature",
+      "label": "Cost Per Feature",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cost-per-request"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-per-user",
+      "label": "Cost Per User",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cost-per-request"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-per-outcome",
+      "label": "Cost Per Outcome",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cost-per-request"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-attribution",
+      "label": "Cost Attribution",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cost-per-feature",
+        "token-efficiency::cost-per-user",
+        "token-efficiency::cost-per-outcome"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-budget",
+      "label": "Token Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token",
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::monthly-token-spend",
+      "label": "Monthly Token Spend",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::forecasting-token-cost",
+      "label": "Forecasting Token Cost",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::monthly-token-spend"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-quality-tradeoff",
+      "label": "Cost-Quality Tradeoff",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-latency-tradeoff",
+      "label": "Cost-Latency Tradeoff",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pareto-frontier",
+      "label": "Pareto Frontier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cost-quality-tradeoff",
+        "token-efficiency::cost-latency-tradeoff"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pricing-tier",
+      "label": "Pricing Tier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::per-million-token-price"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::volume-discount",
+      "label": "Volume Discount",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pricing-tier"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::batch-discount",
+      "label": "Batch Discount",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pricing-tier",
+        "token-efficiency::batch-api"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::enterprise-pricing",
+      "label": "Enterprise Pricing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pricing-tier"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::free-tier-limit",
+      "label": "Free Tier Limit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pricing-tier"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::rate-limit",
+      "label": "Rate Limit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::quota-management",
+      "label": "Quota Management",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::rate-limit"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::burn-rate",
+      "label": "Burn Rate",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::monthly-token-spend",
+        "token-efficiency::quota-management"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anthropic-api",
+      "label": "Anthropic API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-messages-api",
+      "label": "Claude Messages API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-model-family",
+      "label": "Claude Model Family",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-family",
+        "token-efficiency::anthropic-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-opus",
+      "label": "Claude Opus",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-model-family"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-sonnet",
+      "label": "Claude Sonnet",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-model-family"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-haiku",
+      "label": "Claude Haiku",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-model-family"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anthropic-sdk",
+      "label": "Anthropic SDK",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::api-key-management",
+      "label": "API Key Management",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anthropic-prompt-caching",
+      "label": "Anthropic Prompt Caching",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cached-token",
+        "token-efficiency::claude-messages-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-control-parameter",
+      "label": "Cache Control Parameter",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-prompt-caching"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-breakpoint",
+      "label": "Cache Breakpoint",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-prompt-caching"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-ttl",
+      "label": "Cache TTL",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-prompt-caching"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-read-tokens",
+      "label": "Cache Read Tokens",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-prompt-caching",
+        "token-efficiency::cached-token"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-write-tokens",
+      "label": "Cache Write Tokens",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-prompt-caching",
+        "token-efficiency::cached-token"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::extended-thinking",
+      "label": "Extended Thinking",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-messages-api",
+        "token-efficiency::reasoning-token"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::thinking-token-budget",
+      "label": "Thinking Token Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::extended-thinking",
+        "token-efficiency::token-budget"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-tool-use",
+      "label": "Claude Tool Use",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-messages-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tool-definition-schema",
+      "label": "Tool Definition Schema",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-tool-use"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tool-result-block",
+      "label": "Tool Result Block",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-tool-use",
+        "token-efficiency::message-content-block"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::message-content-block",
+      "label": "Message Content Block",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-messages-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anthropic-system-prompt",
+      "label": "Anthropic System Prompt",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::system-prompt",
+        "token-efficiency::claude-messages-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::stop-reason",
+      "label": "Stop Reason",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::stop-sequence",
+        "token-efficiency::claude-messages-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anthropic-streaming",
+      "label": "Anthropic Streaming",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::streaming-response",
+        "token-efficiency::claude-messages-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anthropic-batch-api",
+      "label": "Anthropic Batch API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-api",
+        "token-efficiency::claude-messages-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-vision-input",
+      "label": "Claude Vision Input",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-messages-api"
+      ],
+      "taxonomy_id": "ANTH",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-api",
+      "label": "OpenAI API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::chat-completions-api",
+      "label": "Chat Completions API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-responses-api",
+      "label": "OpenAI Responses API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-model-family",
+      "label": "OpenAI Model Family",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-family",
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gpt-model-series",
+      "label": "GPT Model Series",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-model-family"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-o-series",
+      "label": "OpenAI O Series",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-model-family",
+        "token-efficiency::reasoning-model"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::reasoning-model",
+      "label": "Reasoning Model",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::reasoning-token"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-sdk",
+      "label": "OpenAI SDK",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::function-calling",
+      "label": "Function Calling",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::chat-completions-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tool-choice-parameter",
+      "label": "Tool Choice Parameter",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::function-calling"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::json-mode",
+      "label": "JSON Mode",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::chat-completions-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::structured-outputs",
+      "label": "Structured Outputs",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::json-mode"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::response-format",
+      "label": "Response Format",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::json-mode"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-streaming",
+      "label": "OpenAI Streaming",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::streaming-response",
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-batch-api",
+      "label": "OpenAI Batch API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-api",
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-embeddings",
+      "label": "OpenAI Embeddings",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-api",
+        "token-efficiency::embedding"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-fine-tuning",
+      "label": "OpenAI Fine Tuning",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-vision",
+      "label": "OpenAI Vision",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::logit-bias",
+      "label": "Logit Bias",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::chat-completions-api",
+        "token-efficiency::top-p-sampling"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::seed-parameter",
+      "label": "Seed Parameter",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::chat-completions-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-usage-object",
+      "label": "Token Usage Object",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-count",
+        "token-efficiency::chat-completions-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-tokens-field",
+      "label": "Prompt Tokens Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-usage-object",
+        "token-efficiency::input-token"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::completion-tokens-field",
+      "label": "Completion Tokens Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-usage-object",
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::total-tokens-field",
+      "label": "Total Tokens Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-usage-object"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-rate-limits",
+      "label": "OpenAI Rate Limits",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::rate-limit",
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "OAI",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::google-gemini-api",
+      "label": "Google Gemini API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-model-family",
+      "label": "Gemini Model Family",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-family",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-pro",
+      "label": "Gemini Pro",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::gemini-model-family"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-flash",
+      "label": "Gemini Flash",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::gemini-model-family"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-ultra",
+      "label": "Gemini Ultra",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::gemini-model-family"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-sdk",
+      "label": "Gemini SDK",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::long-context-window",
+      "label": "Long Context Window",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-window",
+        "token-efficiency::context-length"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::one-million-context",
+      "label": "One Million Context",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::long-context-window",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-function-calling",
+      "label": "Gemini Function Calling",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::function-calling",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-tool-config",
+      "label": "Gemini Tool Config",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::gemini-function-calling"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-streaming",
+      "label": "Gemini Streaming",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::streaming-response",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-batch-mode",
+      "label": "Gemini Batch Mode",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-api",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-caching",
+      "label": "Gemini Caching",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-gemini-api",
+        "token-efficiency::cached-token"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::vertex-ai",
+      "label": "Vertex AI",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::google-ai-studio",
+      "label": "Google AI Studio",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-safety-settings",
+      "label": "Gemini Safety Settings",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-multimodal-input",
+      "label": "Gemini Multimodal Input",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-code-execution",
+      "label": "Gemini Code Execution",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-grounding",
+      "label": "Gemini Grounding",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gemini-token-counting",
+      "label": "Gemini Token Counting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-count",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "GOOG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::ai-coding-harness",
+      "label": "AI Coding Harness",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::agentic-loop",
+      "label": "Agentic Loop",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tool-use-loop",
+      "label": "Tool Use Loop",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agentic-loop",
+        "token-efficiency::claude-tool-use",
+        "token-efficiency::function-calling"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-code",
+      "label": "Claude Code",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness",
+        "token-efficiency::anthropic-api"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-code-session",
+      "label": "Claude Code Session",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-code"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::claude-code-hooks",
+      "label": "Claude Code Hooks",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-code"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::openai-codex-cli",
+      "label": "OpenAI Codex CLI",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness",
+        "token-efficiency::openai-api"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::codex-session",
+      "label": "Codex Session",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::openai-codex-cli"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::google-antigravity",
+      "label": "Google Antigravity",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::antigravity-workspace",
+      "label": "Antigravity Workspace",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::google-antigravity"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::harness-system-prompt",
+      "label": "Harness System Prompt",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::system-prompt",
+        "token-efficiency::ai-coding-harness"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::harness-token-overhead",
+      "label": "Harness Token Overhead",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::harness-system-prompt",
+        "token-efficiency::session-token-accumulation"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::session-token-accumulation",
+      "label": "Session Token Accumulation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::conversation-turn",
+        "token-efficiency::ai-coding-harness"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-session-token-cost",
+      "label": "Per-Session Token Cost",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::session-token-accumulation",
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::conversation-compaction",
+      "label": "Conversation Compaction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::multi-turn-dialogue"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::auto-compaction",
+      "label": "Auto Compaction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::conversation-compaction"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::manual-compaction",
+      "label": "Manual Compaction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::conversation-compaction"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tool-call-iteration",
+      "label": "Tool Call Iteration",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::tool-use-loop"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::multi-step-reasoning",
+      "label": "Multi-Step Reasoning",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agentic-loop"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::subagent-pattern",
+      "label": "Subagent Pattern",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agentic-loop"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::agent-memory",
+      "label": "Agent Memory",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::persistent-memory-file",
+      "label": "Persistent Memory File",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-memory"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::working-directory-context",
+      "label": "Working Directory Context",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::file-read-tool",
+      "label": "File Read Tool",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-tool-use",
+        "token-efficiency::function-calling"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::file-edit-tool",
+      "label": "File Edit Tool",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::claude-tool-use",
+        "token-efficiency::function-calling"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill",
+      "label": "Skill",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-description",
+      "label": "Skill Description",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-body",
+      "label": "Skill Body",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-trigger",
+      "label": "Skill Trigger",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-description"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-invocation",
+      "label": "Skill Invocation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-trigger"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-frontmatter",
+      "label": "Skill Frontmatter",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-bundle",
+      "label": "Skill Bundle",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-body"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::bundled-script",
+      "label": "Bundled Script",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-bundle"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-asset-file",
+      "label": "Skill Asset File",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-bundle"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::lazy-skill-loading",
+      "label": "Lazy Skill Loading",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-body",
+        "token-efficiency::skill-invocation"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::eager-skill-listing",
+      "label": "Eager Skill Listing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-description"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::task-decomposition",
+      "label": "Task Decomposition",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness",
+        "token-efficiency::multi-step-reasoning"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::task-skill-binding",
+      "label": "Task-Skill Binding",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::task-decomposition",
+        "token-efficiency::skill-invocation"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-selection",
+      "label": "Skill Selection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::task-skill-binding",
+        "token-efficiency::skill-trigger"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-misfire",
+      "label": "Skill Misfire",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-selection"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::false-positive-trigger",
+      "label": "False Positive Trigger",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-misfire"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::false-negative-trigger",
+      "label": "False Negative Trigger",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-misfire"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::trigger-precision",
+      "label": "Trigger Precision",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-description",
+        "token-efficiency::skill-misfire"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-library",
+      "label": "Skill Library",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anthropic-skill-format",
+      "label": "Anthropic Skill Format",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill",
+        "token-efficiency::anthropic-api"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::script-delegation",
+      "label": "Script Delegation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::bundled-script"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::shell-script-skill",
+      "label": "Shell Script Skill",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::bundled-script",
+        "token-efficiency::script-delegation"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::python-script-skill",
+      "label": "Python Script Skill",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::bundled-script",
+        "token-efficiency::script-delegation"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-refactoring",
+      "label": "Skill Refactoring",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill",
+        "token-efficiency::script-delegation"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-reduction-ratio",
+      "label": "Token Reduction Ratio",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-count",
+        "token-efficiency::unit-economics",
+        "token-efficiency::skill-refactoring"
+      ],
+      "taxonomy_id": "SKIL",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::structured-logging",
+      "label": "Structured Logging",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-api"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::log-schema-design",
+      "label": "Log Schema Design",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::log-line",
+      "label": "Log Line",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::json-log-format",
+      "label": "JSON Log Format",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-line"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::log-field",
+      "label": "Log Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::json-log-format"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::required-log-field",
+      "label": "Required Log Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::optional-log-field",
+      "label": "Optional Log Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::model-field",
+      "label": "Model Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::required-log-field",
+        "token-efficiency::model-family"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-hash",
+      "label": "Prompt Hash",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::required-log-field",
+        "token-efficiency::prompt"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::input-token-field",
+      "label": "Input Token Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::required-log-field",
+        "token-efficiency::input-token"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::output-token-field",
+      "label": "Output Token Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::required-log-field",
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cached-token-field",
+      "label": "Cached Token Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::required-log-field",
+        "token-efficiency::cached-token"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::latency-field",
+      "label": "Latency Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::required-log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-field",
+      "label": "Cost Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::required-log-field",
+        "token-efficiency::cost-per-request"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::feature-tag",
+      "label": "Feature Tag",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::optional-log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::user-identifier",
+      "label": "User Identifier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::optional-log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::outcome-field",
+      "label": "Outcome Field",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::optional-log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::trace-identifier",
+      "label": "Trace Identifier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::optional-log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::span-identifier",
+      "label": "Span Identifier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::optional-log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::request-identifier",
+      "label": "Request Identifier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::optional-log-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::session-identifier",
+      "label": "Session Identifier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::optional-log-field",
+        "token-efficiency::session-token-accumulation"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pii-redaction",
+      "label": "PII Redaction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-schema-design",
+        "token-efficiency::pii-detection"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-truncation-in-logs",
+      "label": "Prompt Truncation In Logs",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pii-redaction",
+        "token-efficiency::prompt"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::log-sampling",
+      "label": "Log Sampling",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::log-retention-policy",
+      "label": "Log Retention Policy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::observability",
+      "label": "Observability",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::opentelemetry",
+      "label": "OpenTelemetry",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::observability"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::otel-llm-conventions",
+      "label": "OTel LLM Conventions",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::opentelemetry",
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::metric",
+      "label": "Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::observability"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::counter-metric",
+      "label": "Counter Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::metric"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::histogram-metric",
+      "label": "Histogram Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::metric"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::dashboard",
+      "label": "Dashboard",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::observability"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-dashboard",
+      "label": "Cost Dashboard",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::dashboard",
+        "token-efficiency::cost-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::hit-rate-dashboard",
+      "label": "Hit Rate Dashboard",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::dashboard"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::latency-dashboard",
+      "label": "Latency Dashboard",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::dashboard",
+        "token-efficiency::latency-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-volume-chart",
+      "label": "Token Volume Chart",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::dashboard",
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::time-series-aggregation",
+      "label": "Time Series Aggregation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::metric",
+        "token-efficiency::histogram-metric"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anomaly-detection",
+      "label": "Anomaly Detection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::time-series-aggregation"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::alerting-rule",
+      "label": "Alerting Rule",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anomaly-detection"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-spike-alert",
+      "label": "Token Spike Alert",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::alerting-rule",
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-threshold-alert",
+      "label": "Cost Threshold Alert",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::alerting-rule",
+        "token-efficiency::cost-per-request"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cardinality-concern",
+      "label": "Cardinality Concern",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::metric",
+        "token-efficiency::user-identifier",
+        "token-efficiency::feature-tag"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::aggregation-period",
+      "label": "Aggregation Period",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::time-series-aggregation"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::drill-down-analysis",
+      "label": "Drill-Down Analysis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::dashboard"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cross-service-tracing",
+      "label": "Cross-Service Tracing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::opentelemetry"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::log-file-analysis",
+      "label": "Log File Analysis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::log-aggregation",
+      "label": "Log Aggregation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-file-analysis"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::top-n-cost-drivers",
+      "label": "Top-N Cost Drivers",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-aggregation",
+        "token-efficiency::cost-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pareto-analysis",
+      "label": "Pareto Analysis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::top-n-cost-drivers"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::outlier-detection",
+      "label": "Outlier Detection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-aggregation"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::runaway-prompt",
+      "label": "Runaway Prompt",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::outlier-detection",
+        "token-efficiency::prompt"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pathological-agent-loop",
+      "label": "Pathological Agent Loop",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::outlier-detection",
+        "token-efficiency::agentic-loop"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-hotspot",
+      "label": "Cost Hotspot",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::top-n-cost-drivers"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-feature-cost-roll-up",
+      "label": "Per-Feature Cost Roll-Up",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-aggregation",
+        "token-efficiency::cost-per-feature",
+        "token-efficiency::feature-tag"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-user-cost-roll-up",
+      "label": "Per-User Cost Roll-Up",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-aggregation",
+        "token-efficiency::cost-per-user",
+        "token-efficiency::user-identifier"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-model-cost-roll-up",
+      "label": "Per-Model Cost Roll-Up",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-aggregation",
+        "token-efficiency::model-field"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-template-grouping",
+      "label": "Prompt Template Grouping",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-aggregation",
+        "token-efficiency::prompt-hash"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cohort-analysis",
+      "label": "Cohort Analysis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::per-user-cost-roll-up"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::funnel-analysis",
+      "label": "Funnel Analysis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-aggregation"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::histogram-of-token-counts",
+      "label": "Histogram Of Token Counts",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::histogram-metric",
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::p50-token-usage",
+      "label": "P50 Token Usage",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::histogram-of-token-counts"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::p95-token-usage",
+      "label": "P95 Token Usage",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::histogram-of-token-counts"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::p99-token-usage",
+      "label": "P99 Token Usage",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::histogram-of-token-counts"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::long-tail-cost",
+      "label": "Long-Tail Cost",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pareto-analysis",
+        "token-efficiency::p95-token-usage",
+        "token-efficiency::p99-token-usage"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::analysis-notebook",
+      "label": "Analysis Notebook",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::log-file-analysis"
+      ],
+      "taxonomy_id": "OBS",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::a-b-testing",
+      "label": "A/B Testing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::hypothesis",
+      "label": "Hypothesis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::null-hypothesis",
+      "label": "Null Hypothesis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::hypothesis"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::control-group",
+      "label": "Control Group",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::treatment-group",
+      "label": "Treatment Group",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::traffic-split",
+      "label": "Traffic Split",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::control-group",
+        "token-efficiency::treatment-group"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::random-assignment",
+      "label": "Random Assignment",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::traffic-split"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::stratified-assignment",
+      "label": "Stratified Assignment",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::traffic-split"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::primary-metric",
+      "label": "Primary Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing",
+        "token-efficiency::metric"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::guardrail-metric",
+      "label": "Guardrail Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::primary-metric"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::quality-metric",
+      "label": "Quality Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::primary-metric"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-metric",
+      "label": "Cost Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::primary-metric",
+        "token-efficiency::cost-per-request"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::latency-metric",
+      "label": "Latency Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::primary-metric",
+        "token-efficiency::latency-field"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::satisfaction-metric",
+      "label": "Satisfaction Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::primary-metric"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::sample-size-calculation",
+      "label": "Sample Size Calculation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::statistical-power",
+      "label": "Statistical Power",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::sample-size-calculation"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::statistical-significance",
+      "label": "Statistical Significance",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::p-value",
+      "label": "P-Value",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::statistical-significance"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::confidence-interval",
+      "label": "Confidence Interval",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::statistical-significance"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::effect-size",
+      "label": "Effect Size",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::statistical-significance"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::stopping-rule",
+      "label": "Stopping Rule",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::sequential-testing",
+      "label": "Sequential Testing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing",
+        "token-efficiency::stopping-rule"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::multi-armed-bandit",
+      "label": "Multi-Armed Bandit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cuped-adjustment",
+      "label": "CUPED Adjustment",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::novelty-effect",
+      "label": "Novelty Effect",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "AB",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::system-prompt-hygiene",
+      "label": "System Prompt Hygiene",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::system-prompt",
+        "token-efficiency::prompt-engineering"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::instruction-compression",
+      "label": "Instruction Compression",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering",
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::few-shot-example",
+      "label": "Few-Shot Example",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::few-shot-pruning",
+      "label": "Few-Shot Pruning",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::few-shot-example",
+        "token-efficiency::instruction-compression"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::zero-shot-prompting",
+      "label": "Zero-Shot Prompting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::chain-of-thought",
+      "label": "Chain Of Thought",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::dead-context",
+      "label": "Dead Context",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-window",
+        "token-efficiency::prompt-engineering"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::redundant-instruction",
+      "label": "Redundant Instruction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::verbose-boilerplate",
+      "label": "Verbose Boilerplate",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-template",
+      "label": "Prompt Template",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::template-versioning",
+      "label": "Template Versioning",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-template"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-variable",
+      "label": "Prompt Variable",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-template"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::variable-interpolation",
+      "label": "Variable Interpolation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-variable"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-compression-tool",
+      "label": "Prompt Compression Tool",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::instruction-compression"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::selective-compression",
+      "label": "Selective Compression",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-compression-tool"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-length-budget",
+      "label": "Prompt Length Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering",
+        "token-efficiency::token-budget"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::output-length-budget",
+      "label": "Output Length Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::max-tokens-parameter",
+        "token-efficiency::token-budget"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::concise-output-instruction",
+      "label": "Concise Output Instruction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-length-budget"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-aware-rewriting",
+      "label": "Token-Aware Rewriting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-engineering",
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::whitespace-stripping",
+      "label": "Whitespace Stripping",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-aware-rewriting",
+        "token-efficiency::whitespace-handling"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::comment-removal",
+      "label": "Comment Removal",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-aware-rewriting"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::schema-minimization",
+      "label": "Schema Minimization",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-aware-rewriting",
+        "token-efficiency::tool-definition-schema"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::symbol-substitution",
+      "label": "Symbol Substitution",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::token-aware-rewriting"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::reusable-prompt-block",
+      "label": "Reusable Prompt Block",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-template"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::prompt-caching",
+      "label": "Prompt Caching",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cached-token"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-key",
+      "label": "Cache Key",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-hit",
+      "label": "Cache Hit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-miss",
+      "label": "Cache Miss",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-hit-rate",
+      "label": "Cache Hit Rate",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-hit",
+        "token-efficiency::cache-miss"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-warming",
+      "label": "Cache Warming",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-invalidation",
+      "label": "Cache Invalidation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-invariant",
+      "label": "Cache Invariant",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-key"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::stable-prefix",
+      "label": "Stable Prefix",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-invariant",
+        "token-efficiency::cache-key"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::volatile-suffix",
+      "label": "Volatile Suffix",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-invariant",
+        "token-efficiency::cache-key"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-boundary",
+      "label": "Cache Boundary",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-key"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cross-vendor-caching",
+      "label": "Cross-Vendor Caching",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-prompt-caching",
+        "token-efficiency::gemini-caching",
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-cost-savings",
+      "label": "Cache Cost Savings",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching",
+        "token-efficiency::cached-input-price"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-monitoring",
+      "label": "Cache Monitoring",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-hit-rate",
+        "token-efficiency::observability"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-hit-rate-metric",
+      "label": "Cache Hit Rate Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-hit-rate",
+        "token-efficiency::metric"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-eviction",
+      "label": "Cache Eviction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-ttl",
+        "token-efficiency::cache-invalidation"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::implicit-caching",
+      "label": "Implicit Caching",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::explicit-caching",
+      "label": "Explicit Caching",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching",
+        "token-efficiency::cache-control-parameter"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-aware-routing",
+      "label": "Cache Aware Routing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cache-stampede",
+      "label": "Cache Stampede",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt-caching"
+      ],
+      "taxonomy_id": "OPT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::retrieval-augmented-generation",
+      "label": "Retrieval Augmented Generation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-window",
+        "token-efficiency::prompt"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::embedding",
+      "label": "Embedding",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::large-language-model"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::vector-database",
+      "label": "Vector Database",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::embedding"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::chunking",
+      "label": "Chunking",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::prompt",
+        "token-efficiency::retrieval-augmented-generation"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::chunk-size",
+      "label": "Chunk Size",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::chunking"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::chunk-overlap",
+      "label": "Chunk Overlap",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::chunking"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::top-k-retrieval",
+      "label": "Top-K Retrieval",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::vector-database",
+        "token-efficiency::retrieval-augmented-generation"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::reranker",
+      "label": "Reranker",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::top-k-retrieval"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cross-encoder-reranker",
+      "label": "Cross-Encoder Reranker",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::reranker"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::retrieval-score",
+      "label": "Retrieval Score",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::top-k-retrieval"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-injection",
+      "label": "Context Injection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieval-augmented-generation",
+        "token-efficiency::context-window"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::retrieved-context-bloat",
+      "label": "Retrieved Context Bloat",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-injection",
+        "token-efficiency::dead-context"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-pruning",
+      "label": "Context Pruning",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieved-context-bloat"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::hybrid-retrieval",
+      "label": "Hybrid Retrieval",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::bm25-retrieval",
+        "token-efficiency::dense-retrieval"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::bm25-retrieval",
+      "label": "BM25 Retrieval",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieval-augmented-generation"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::dense-retrieval",
+      "label": "Dense Retrieval",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieval-augmented-generation",
+        "token-efficiency::embedding"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::query-rewriting",
+      "label": "Query Rewriting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieval-augmented-generation"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::hyde",
+      "label": "HyDE",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::query-rewriting"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::document-compression",
+      "label": "Document Compression",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-pruning",
+        "token-efficiency::instruction-compression"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::summarization-based-rag",
+      "label": "Summarization-Based RAG",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::document-compression",
+        "token-efficiency::conversation-summarization"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::citation-of-sources",
+      "label": "Citation Of Sources",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieval-augmented-generation"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::rag-cost-analysis",
+      "label": "RAG Cost Analysis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieval-augmented-generation",
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-quality-metric",
+      "label": "Context Quality Metric",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-injection",
+        "token-efficiency::quality-metric"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::retrieval-precision",
+      "label": "Retrieval Precision",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieval-score"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::retrieval-recall",
+      "label": "Retrieval Recall",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retrieval-score"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-window-budget",
+      "label": "Context Window Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-window",
+        "token-efficiency::token-budget"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::sliding-window",
+      "label": "Sliding Window",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-window-budget"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::conversation-summarization",
+      "label": "Conversation Summarization",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::multi-turn-dialogue"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::compaction-strategy",
+      "label": "Compaction Strategy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::conversation-summarization",
+        "token-efficiency::conversation-compaction"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::hierarchical-summary",
+      "label": "Hierarchical Summary",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::conversation-summarization"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::memory-file",
+      "label": "Memory File",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::persistent-memory-file"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::long-term-memory",
+      "label": "Long-Term Memory",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::memory-file",
+        "token-efficiency::agent-memory"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::short-term-memory",
+      "label": "Short-Term Memory",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-window",
+        "token-efficiency::agent-memory"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-truncation",
+      "label": "Context Truncation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-window"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pre-send-token-counting",
+      "label": "Pre-Send Token Counting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::local-token-estimation",
+        "token-efficiency::token-count"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-quality-decay",
+      "label": "Context Quality Decay",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-length",
+        "token-efficiency::quality-metric"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::lost-in-the-middle",
+      "label": "Lost-In-The-Middle",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-quality-decay",
+        "token-efficiency::long-context-window"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-reordering",
+      "label": "Context Reordering",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::lost-in-the-middle"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::selective-context-inclusion",
+      "label": "Selective Context Inclusion",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::context-pruning"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::context-eviction-policy",
+      "label": "Context Eviction Policy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cache-eviction",
+        "token-efficiency::context-truncation"
+      ],
+      "taxonomy_id": "RAG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::model-routing",
+      "label": "Model Routing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-family",
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cheap-first-cascade",
+      "label": "Cheap-First Cascade",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::escalation-trigger",
+      "label": "Escalation Trigger",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cheap-first-cascade"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::confidence-threshold",
+      "label": "Confidence Threshold",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::escalation-trigger"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::quality-gate",
+      "label": "Quality Gate",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::escalation-trigger",
+        "token-efficiency::quality-metric"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::fallback-model",
+      "label": "Fallback Model",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cross-vendor-routing",
+      "label": "Cross-Vendor Routing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-routing",
+        "token-efficiency::anthropic-api",
+        "token-efficiency::openai-api",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::task-classifier",
+      "label": "Task Classifier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::difficulty-estimation",
+      "label": "Difficulty Estimation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::task-classifier"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::routing-policy",
+      "label": "Routing Policy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::routing-cost-savings",
+      "label": "Routing Cost Savings",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-routing",
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::routing-quality-risk",
+      "label": "Routing Quality Risk",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-routing",
+        "token-efficiency::quality-metric"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-task-model-selection",
+      "label": "Per-Task Model Selection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::model-routing",
+        "token-efficiency::difficulty-estimation"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::vendor-lock-in-risk",
+      "label": "Vendor Lock-In Risk",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::anthropic-api",
+        "token-efficiency::openai-api",
+        "token-efficiency::google-gemini-api"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::vendor-neutral-abstraction",
+      "label": "Vendor-Neutral Abstraction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::vendor-lock-in-risk",
+        "token-efficiency::cross-vendor-routing"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::max-tokens-setting",
+      "label": "Max Tokens Setting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::max-tokens-parameter"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::stop-sequence-setting",
+      "label": "Stop Sequence Setting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::stop-sequence"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::length-penalty",
+      "label": "Length Penalty",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::max-tokens-parameter",
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::json-schema-output",
+      "label": "JSON Schema Output",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-outputs",
+        "token-efficiency::json-mode"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::concise-mode",
+      "label": "Concise Mode",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::concise-output-instruction"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::verbosity-parameter",
+      "label": "Verbosity Parameter",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::concise-output-instruction"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::reasoning-budget",
+      "label": "Reasoning Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::thinking-token-budget"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::thinking-token-limit",
+      "label": "Thinking Token Limit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::reasoning-budget"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::truncation-detection",
+      "label": "Truncation Detection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::max-tokens-setting",
+        "token-efficiency::context-truncation"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::streaming-cancellation",
+      "label": "Streaming Cancellation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::streaming-response",
+        "token-efficiency::early-stopping"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::early-stopping",
+      "label": "Early Stopping",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::output-postprocessing",
+      "label": "Output Postprocessing",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-token"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::output-validation",
+      "label": "Output Validation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-postprocessing",
+        "token-efficiency::structured-outputs"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::schema-enforcement",
+      "label": "Schema Enforcement",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::output-validation",
+        "token-efficiency::structured-outputs"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::reasoning-effort-setting",
+      "label": "Reasoning Effort Setting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::reasoning-model",
+        "token-efficiency::reasoning-budget"
+      ],
+      "taxonomy_id": "ROUT",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::agent-budget-policy",
+      "label": "Agent Budget Policy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness",
+        "token-efficiency::token-budget"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-session-token-budget",
+      "label": "Per-Session Token Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy",
+        "token-efficiency::session-token-accumulation"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-session-tool-call-budget",
+      "label": "Per-Session Tool Call Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy",
+        "token-efficiency::tool-call-iteration"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::loop-iteration-limit",
+      "label": "Loop Iteration Limit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agentic-loop",
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::wall-clock-limit",
+      "label": "Wall Clock Limit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-cap",
+      "label": "Cost Cap",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy",
+        "token-efficiency::cost-per-request"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::graceful-degradation",
+      "label": "Graceful Degradation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::budget-exhaustion-handling",
+      "label": "Budget Exhaustion Handling",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::graceful-degradation",
+        "token-efficiency::cost-cap"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::runaway-detection",
+      "label": "Runaway Detection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pathological-agent-loop",
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::circuit-breaker-pattern",
+      "label": "Circuit Breaker Pattern",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::budget-exhaustion-handling"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tool-call-throttling",
+      "label": "Tool Call Throttling",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::per-session-tool-call-budget",
+        "token-efficiency::rate-limit"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::subtask-budget-allocation",
+      "label": "Subtask Budget Allocation",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy",
+        "token-efficiency::subagent-pattern"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::budget-audit-log",
+      "label": "Budget Audit Log",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging",
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::budget-reporting",
+      "label": "Budget Reporting",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::budget-audit-log"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-engineer-budget",
+      "label": "Per-Engineer Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-repository-budget",
+      "label": "Per-Repository Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::per-pr-budget",
+      "label": "Per-PR Budget",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::budget-notification",
+      "label": "Budget Notification",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::alerting-rule",
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::manager-weekly-report",
+      "label": "Manager Weekly Report",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::budget-reporting"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::budget-versus-outcome",
+      "label": "Budget Versus Outcome",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::budget-reporting",
+        "token-efficiency::outcome-field"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::batch-api",
+      "label": "Batch API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::asynchronous-api",
+      "label": "Asynchronous API",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::batch-job-submission",
+      "label": "Batch Job Submission",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-api"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::batch-job-status",
+      "label": "Batch Job Status",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-api"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::batch-window",
+      "label": "Batch Window",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-api"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::batch-discount-rate",
+      "label": "Batch Discount Rate",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-discount",
+        "token-efficiency::batch-api"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::batch-versus-synchronous",
+      "label": "Batch Versus Synchronous",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-api",
+        "token-efficiency::asynchronous-api"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::throughput-optimization",
+      "label": "Throughput Optimization",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-api"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::latency-tolerance",
+      "label": "Latency Tolerance",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-versus-synchronous",
+        "token-efficiency::latency-metric"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::job-queue",
+      "label": "Job Queue",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-job-submission"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::result-polling",
+      "label": "Result Polling",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-job-submission",
+        "token-efficiency::batch-job-status"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::webhook-notification",
+      "label": "Webhook Notification",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::asynchronous-api"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::idempotency-key",
+      "label": "Idempotency Key",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::batch-job-submission"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::retry-policy",
+      "label": "Retry Policy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::asynchronous-api"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::backoff-strategy",
+      "label": "Backoff Strategy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::retry-policy",
+        "token-efficiency::rate-limit"
+      ],
+      "taxonomy_id": "BUDG",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::data-privacy",
+      "label": "Data Privacy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pii-detection",
+      "label": "PII Detection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::data-privacy"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::sensitive-field-redaction",
+      "label": "Sensitive Field Redaction",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pii-detection",
+        "token-efficiency::pii-redaction"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::compliance-risk",
+      "label": "Compliance Risk",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::data-privacy"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::gdpr",
+      "label": "GDPR",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::compliance-risk"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::hipaa",
+      "label": "HIPAA",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::compliance-risk"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::soc2-audit",
+      "label": "SOC2 Audit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::compliance-risk"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::data-residency",
+      "label": "Data Residency",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::data-privacy"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::vendor-data-retention",
+      "label": "Vendor Data Retention",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::data-residency"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::opt-out-of-training",
+      "label": "Opt-Out Of Training",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::data-privacy"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::logging-privacy-risk",
+      "label": "Logging Privacy Risk",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging",
+        "token-efficiency::data-privacy"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::hashing-sensitive-strings",
+      "label": "Hashing Sensitive Strings",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::sensitive-field-redaction",
+        "token-efficiency::prompt-hash"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::tokenized-identifier",
+      "label": "Tokenized Identifier",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::hashing-sensitive-strings"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::audit-trail",
+      "label": "Audit Trail",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging",
+        "token-efficiency::soc2-audit"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::anonymization-strategy",
+      "label": "Anonymization Strategy",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pii-detection",
+        "token-efficiency::hashing-sensitive-strings"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::baseline-cost-measurement",
+      "label": "Baseline Cost Measurement",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::structured-logging",
+        "token-efficiency::unit-economics"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::optimization-hypothesis",
+      "label": "Optimization Hypothesis",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::hypothesis",
+        "token-efficiency::baseline-cost-measurement"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::quality-regression-detection",
+      "label": "Quality Regression Detection",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::quality-metric",
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::before-after-report",
+      "label": "Before-After Report",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::baseline-cost-measurement",
+        "token-efficiency::token-reduction-ratio"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::optimization-backlog",
+      "label": "Optimization Backlog",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::top-n-cost-drivers",
+        "token-efficiency::optimization-hypothesis"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-reduction-target",
+      "label": "Cost Reduction Target",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::baseline-cost-measurement"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::pilot-rollout",
+      "label": "Pilot Rollout",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::a-b-testing"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::canary-deployment",
+      "label": "Canary Deployment",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::pilot-rollout"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-dashboard-project",
+      "label": "Token Dashboard Project",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::cost-dashboard",
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::vendor-neutral-logging-project",
+      "label": "Vendor-Neutral Logging Project",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::vendor-neutral-abstraction",
+        "token-efficiency::structured-logging"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::skill-refactor-project",
+      "label": "Skill Refactor Project",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::skill-refactoring",
+        "token-efficiency::token-reduction-ratio"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::budget-policy-document",
+      "label": "Budget Policy Document",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::agent-budget-policy"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::engineering-manager-review",
+      "label": "Engineering Manager Review",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::manager-weekly-report",
+        "token-efficiency::budget-policy-document"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::cost-reduction-postmortem",
+      "label": "Cost Reduction Postmortem",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::before-after-report"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::reproducible-benchmark",
+      "label": "Reproducible Benchmark",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::baseline-cost-measurement"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::eval-suite",
+      "label": "Eval Suite",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::quality-metric"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::golden-test-set",
+      "label": "Golden Test Set",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::eval-suite"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::regression-test-loop",
+      "label": "Regression Test Loop",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::eval-suite",
+        "token-efficiency::quality-regression-detection"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::continuous-cost-monitoring",
+      "label": "Continuous Cost Monitoring",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::observability",
+        "token-efficiency::baseline-cost-measurement"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::token-efficiency-roadmap",
+      "label": "Token Efficiency Roadmap",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::optimization-backlog",
+        "token-efficiency::budget-policy-document"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::5-hour-limit",
+      "label": "5-Hour Limit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::quota-management",
+        "token-efficiency::claude-code"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::weekly-limit",
+      "label": "Weekly Limit",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::quota-management",
+        "token-efficiency::claude-code"
+      ],
+      "taxonomy_id": "ECON",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::serial-execution",
+      "label": "Serial Execution",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::ai-coding-harness"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::parallel-execution",
+      "label": "Parallel Execution",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::subagent-pattern"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    },
+    {
+      "id": "token-efficiency::parallel-token-penalty",
+      "label": "Parallel Token Penalty",
+      "subject_id": "token-efficiency",
+      "dependencies": [
+        "token-efficiency::parallel-execution",
+        "token-efficiency::serial-execution",
+        "token-efficiency::harness-token-overhead"
+      ],
+      "taxonomy_id": "HARN",
+      "level": "core"
+    }
+  ]
+}

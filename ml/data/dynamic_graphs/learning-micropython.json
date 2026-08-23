@@ -1,0 +1,5394 @@
+{
+  "subject_id": "learning-micropython",
+  "title": "Learning MicroPython and Physical Computing",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Python Foundations",
+      "color": "SteelBlue"
+    },
+    "UENV": {
+      "classifier_name": "MicroPython Environment",
+      "color": "DarkSlateBlue"
+    },
+    "MCU": {
+      "classifier_name": "Microcontrollers and Hardware",
+      "color": "DarkGreen"
+    },
+    "ELEC": {
+      "classifier_name": "Electronics Fundamentals",
+      "color": "LimeGreen"
+    },
+    "IO": {
+      "classifier_name": "Input/Output Programming",
+      "color": "Gold"
+    },
+    "COMM": {
+      "classifier_name": "Communication Protocols",
+      "color": "DarkGoldenrod"
+    },
+    "STEMP": {
+      "classifier_name": "Temperature and Humidity Sensors",
+      "color": "Teal"
+    },
+    "SDIST": {
+      "classifier_name": "Distance and Proximity Sensors",
+      "color": "DodgerBlue"
+    },
+    "SMOT": {
+      "classifier_name": "Motion and Orientation Sensors",
+      "color": "LightSkyBlue"
+    },
+    "SENS": {
+      "classifier_name": "Other Sensors",
+      "color": "Khaki"
+    },
+    "ACT": {
+      "classifier_name": "Motors Servos and Steppers",
+      "color": "Crimson"
+    },
+    "ROB": {
+      "classifier_name": "Robots and Robotics",
+      "color": "DarkRed"
+    },
+    "NEO": {
+      "classifier_name": "NeoPixels and LED Strips",
+      "color": "MediumPurple"
+    },
+    "DISP": {
+      "classifier_name": "Non-Graphical Displays",
+      "color": "Indigo"
+    },
+    "OLED": {
+      "classifier_name": "OLED Displays",
+      "color": "DarkOrchid"
+    },
+    "TFT": {
+      "classifier_name": "Color and TFT Displays",
+      "color": "HotPink"
+    },
+    "EPAP": {
+      "classifier_name": "E-Paper Displays",
+      "color": "OliveDrab"
+    },
+    "SND": {
+      "classifier_name": "Sound and Audio",
+      "color": "Orange"
+    },
+    "WIFI": {
+      "classifier_name": "Wireless and IoT",
+      "color": "Coral"
+    },
+    "ADV": {
+      "classifier_name": "Advanced MicroPython",
+      "color": "Peru"
+    },
+    "FS": {
+      "classifier_name": "File System and OS",
+      "color": "SaddleBrown"
+    },
+    "DBG": {
+      "classifier_name": "Debugging and Tooling",
+      "color": "Tomato"
+    },
+    "HADV": {
+      "classifier_name": "Advanced Hardware Topics",
+      "color": "DeepPink"
+    },
+    "APP": {
+      "classifier_name": "Applied Learning",
+      "color": "DimGray"
+    }
+  },
+  "concepts": [
+    {
+      "id": "learning-micropython::computer-program",
+      "label": "Computer Program",
+      "subject_id": "learning-micropython",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-micropython::source-code",
+      "label": "Source Code",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::variable",
+      "label": "Variable",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program",
+        "learning-micropython::source-code"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::data-type",
+      "label": "Data Type",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::integer",
+      "label": "Integer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::data-type"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::float",
+      "label": "Float",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::data-type"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::string",
+      "label": "String",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::data-type"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::boolean",
+      "label": "Boolean",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::data-type"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::list",
+      "label": "List",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::data-type"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dictionary",
+      "label": "Dictionary",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::data-type"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::tuple",
+      "label": "Tuple",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::data-type"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::conditional-statement",
+      "label": "Conditional Statement",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable",
+        "learning-micropython::boolean"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::if-else-statement",
+      "label": "If-Else Statement",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::conditional-statement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::for-loop",
+      "label": "For Loop",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable",
+        "learning-micropython::list"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::while-loop",
+      "label": "While Loop",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable",
+        "learning-micropython::boolean"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::function-definition",
+      "label": "Function Definition",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable",
+        "learning-micropython::conditional-statement",
+        "learning-micropython::for-loop"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::function-call",
+      "label": "Function Call",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::function-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::return-value",
+      "label": "Return Value",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::function-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::module-import",
+      "label": "Module Import",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program",
+        "learning-micropython::source-code"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::python-syntax",
+      "label": "Python Syntax",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::indentation-in-python",
+      "label": "Indentation in Python",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::python-syntax"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::comment-in-code",
+      "label": "Comment in Code",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::source-code"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::print-statement",
+      "label": "Print Statement",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program",
+        "learning-micropython::string"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::input-validation",
+      "label": "Input Validation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable",
+        "learning-micropython::string"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::error-and-exception",
+      "label": "Error and Exception",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program",
+        "learning-micropython::source-code"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::try-except-block",
+      "label": "Try-Except Block",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::error-and-exception"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::arithmetic-operators",
+      "label": "Arithmetic Operators",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable",
+        "learning-micropython::integer",
+        "learning-micropython::float"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::comparison-operators",
+      "label": "Comparison Operators",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable",
+        "learning-micropython::integer",
+        "learning-micropython::float",
+        "learning-micropython::boolean"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::logical-operators",
+      "label": "Logical Operators",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::boolean",
+        "learning-micropython::conditional-statement"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::assignment-operators",
+      "label": "Assignment Operators",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::micropython",
+      "label": "MicroPython",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program",
+        "learning-micropython::module-import"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::micropython-repl",
+      "label": "MicroPython REPL",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::micropython-firmware",
+      "label": "MicroPython Firmware",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::flashing-firmware",
+      "label": "Flashing Firmware",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-firmware"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::thonny-ide",
+      "label": "Thonny IDE",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::flashing-firmware"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::vs-code-ide",
+      "label": "VS Code IDE",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::flashing-firmware"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::thonny-file-manager",
+      "label": "Thonny File Manager",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::thonny-ide"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::mpremote-tool",
+      "label": "mpremote Tool",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::flashing-firmware"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rshell-tool",
+      "label": "rshell Tool",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::flashing-firmware"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::file-transfer-to-pico",
+      "label": "File Transfer to Pico",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::flashing-firmware",
+        "learning-micropython::thonny-file-manager",
+        "learning-micropython::mpremote-tool"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::micropython-interpreter",
+      "label": "MicroPython Interpreter",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-firmware"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::interactive-mode",
+      "label": "Interactive Mode",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-repl",
+        "learning-micropython::micropython-interpreter"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::script-mode",
+      "label": "Script Mode",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::thonny-ide",
+        "learning-micropython::micropython-interpreter"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::boot-py-file",
+      "label": "Boot.py File",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::script-mode",
+        "learning-micropython::file-transfer-to-pico"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::main-py-file",
+      "label": "Main.py File",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::script-mode",
+        "learning-micropython::file-transfer-to-pico"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::micropython-modules",
+      "label": "MicroPython Modules",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::module-import",
+        "learning-micropython::micropython"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::micropython-standard-library",
+      "label": "MicroPython Standard Library",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::uos-module",
+      "label": "uos Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-standard-library"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::utime-module",
+      "label": "utime Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-standard-library"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::sys-module",
+      "label": "sys Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-standard-library"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::microcontroller",
+      "label": "Microcontroller",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::raspberry-pi-pico",
+      "label": "Raspberry Pi Pico",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microcontroller"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::raspberry-pi-pico-w",
+      "label": "Raspberry Pi Pico W",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rp2040-chip",
+      "label": "RP2040 Chip",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::esp32-microcontroller",
+      "label": "ESP32 Microcontroller",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microcontroller"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::esp8266-microcontroller",
+      "label": "ESP8266 Microcontroller",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microcontroller"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::cytron-maker-pi-rp2040",
+      "label": "Cytron Maker Pi RP2040",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::maker-pi-pico",
+      "label": "Maker Pi Pico",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::maker-nano-rp2040",
+      "label": "Maker Nano RP2040",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::raspberry-pi-500-keyboard",
+      "label": "Raspberry Pi 500 Keyboard",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microcontroller"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::micro-bit",
+      "label": "Micro:bit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microcontroller"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::gpio-pin",
+      "label": "GPIO Pin",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microcontroller",
+        "learning-micropython::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::gpio-numbering",
+      "label": "GPIO Numbering",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pin-modes-input-output",
+      "label": "Pin Modes (Input/Output)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::gpio-numbering"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pull-up-resistor",
+      "label": "Pull-Up Resistor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pin-modes-input-output",
+        "learning-micropython::current-limiting-resistor"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pull-down-resistor",
+      "label": "Pull-Down Resistor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pin-modes-input-output",
+        "learning-micropython::current-limiting-resistor"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::usb-connection",
+      "label": "USB Connection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico",
+        "learning-micropython::flashing-firmware"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::usb-power",
+      "label": "USB Power",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::usb-connection"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::3-3v-logic-level",
+      "label": "3.3V Logic Level",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico",
+        "learning-micropython::voltage"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::5v-logic-level",
+      "label": "5V Logic Level",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microcontroller",
+        "learning-micropython::voltage"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ground-gnd",
+      "label": "Ground (GND)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::series-circuit"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::vsys-pin",
+      "label": "VSYS Pin",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico",
+        "learning-micropython::3-3v-logic-level"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::vbus-pin",
+      "label": "VBUS Pin",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico",
+        "learning-micropython::5v-logic-level"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pico-w-wireless-module",
+      "label": "Pico W Wireless Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico-w"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rp2040-dual-core",
+      "label": "RP2040 Dual Core",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rp2040-chip"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rp2040-pio-programmable-i-o",
+      "label": "RP2040 PIO (Programmable I/O)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rp2040-chip"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::flash-memory-on-pico",
+      "label": "Flash Memory on Pico",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ram-on-pico",
+      "label": "RAM on Pico",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico"
+      ],
+      "taxonomy_id": "MCU",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::voltage",
+      "label": "Voltage",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::current",
+      "label": "Current",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::resistance",
+      "label": "Resistance",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ohm-s-law",
+      "label": "Ohm's Law",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current",
+        "learning-micropython::resistance"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::power-watts",
+      "label": "Power (Watts)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::series-circuit",
+      "label": "Series Circuit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current",
+        "learning-micropython::resistance"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::parallel-circuit",
+      "label": "Parallel Circuit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current",
+        "learning-micropython::resistance"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::short-circuit",
+      "label": "Short Circuit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::current",
+        "learning-micropython::series-circuit"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::current-limiting-resistor",
+      "label": "Current-Limiting Resistor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::current",
+        "learning-micropython::resistance",
+        "learning-micropython::ohm-s-law",
+        "learning-micropython::led-light-emitting-diode"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::resistor-color-code",
+      "label": "Resistor Color Code",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::resistance"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::capacitor",
+      "label": "Capacitor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::led-light-emitting-diode",
+      "label": "LED (Light Emitting Diode)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::led-forward-voltage",
+      "label": "LED Forward Voltage",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::led-light-emitting-diode",
+        "learning-micropython::voltage"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::led-current-rating",
+      "label": "LED Current Rating",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::led-light-emitting-diode",
+        "learning-micropython::current",
+        "learning-micropython::ohm-s-law"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::transistor",
+      "label": "Transistor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::current",
+        "learning-micropython::voltage"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::npn-transistor",
+      "label": "NPN Transistor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::transistor"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::mosfet",
+      "label": "MOSFET",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::transistor"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::diode",
+      "label": "Diode",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::breadboard",
+      "label": "Breadboard",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::series-circuit"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::breadboard-rails",
+      "label": "Breadboard Rails",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::breadboard"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::breadboard-rows",
+      "label": "Breadboard Rows",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::breadboard"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::jumper-wire",
+      "label": "Jumper Wire",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::breadboard"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::multimeter",
+      "label": "Multimeter",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current",
+        "learning-micropython::resistance"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::continuity-test",
+      "label": "Continuity Test",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::multimeter"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::wiring-diagram",
+      "label": "Wiring Diagram",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::series-circuit"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::schematic-symbol",
+      "label": "Schematic Symbol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::led-light-emitting-diode",
+        "learning-micropython::transistor",
+        "learning-micropython::diode"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::power-supply",
+      "label": "Power Supply",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "ELEC",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::digital-output",
+      "label": "Digital Output",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::pin-modes-input-output",
+        "learning-micropython::pin-out-mode"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::digital-input",
+      "label": "Digital Input",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::pin-modes-input-output",
+        "learning-micropython::pin-out-mode"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::high-and-low-states",
+      "label": "HIGH and LOW States",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::3-3v-logic-level",
+        "learning-micropython::5v-logic-level",
+        "learning-micropython::ground-gnd"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-pin-class",
+      "label": "machine.Pin Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules",
+        "learning-micropython::gpio-pin"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pin-out-mode",
+      "label": "Pin.OUT Mode",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-pin-class",
+        "learning-micropython::pin-modes-input-output"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pin-in-mode",
+      "label": "Pin.IN Mode",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-pin-class",
+        "learning-micropython::pin-modes-input-output"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pin-value-method",
+      "label": "Pin.value() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-pin-class",
+        "learning-micropython::pin-out-mode",
+        "learning-micropython::pin-in-mode"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::led-blink-program",
+      "label": "LED Blink Program",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-output",
+        "learning-micropython::pin-value-method",
+        "learning-micropython::led-light-emitting-diode",
+        "learning-micropython::current-limiting-resistor",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::button-input",
+      "label": "Button Input",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-input",
+        "learning-micropython::pull-up-resistor",
+        "learning-micropython::pull-down-resistor"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::button-debouncing",
+      "label": "Button Debouncing",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::button-input"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::software-debouncing",
+      "label": "Software Debouncing",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::button-debouncing",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::hardware-debouncing",
+      "label": "Hardware Debouncing",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::button-debouncing",
+        "learning-micropython::capacitor"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::active-high-vs-active-low",
+      "label": "Active High vs Active Low",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::high-and-low-states",
+        "learning-micropython::pin-modes-input-output",
+        "learning-micropython::pull-up-resistor"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::internal-led",
+      "label": "Internal LED",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico",
+        "learning-micropython::digital-output"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::external-led-circuit",
+      "label": "External LED Circuit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::led-light-emitting-diode",
+        "learning-micropython::current-limiting-resistor",
+        "learning-micropython::breadboard",
+        "learning-micropython::digital-output"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::analog-signal",
+      "label": "Analog Signal",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::digital-signal",
+      "label": "Digital Signal",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::high-and-low-states"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::analog-to-digital-converter-adc",
+      "label": "Analog-to-Digital Converter (ADC)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::analog-signal",
+        "learning-micropython::digital-signal"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::adc-resolution-bits",
+      "label": "ADC Resolution (bits)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::analog-to-digital-converter-adc"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-adc-class",
+      "label": "machine.ADC Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules",
+        "learning-micropython::gpio-pin",
+        "learning-micropython::analog-to-digital-converter-adc"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::adc-read-u16-method",
+      "label": "ADC.read_u16() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-adc-class"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::adc-voltage-reference",
+      "label": "ADC Voltage Reference",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::3-3v-logic-level",
+        "learning-micropython::analog-to-digital-converter-adc"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::potentiometer",
+      "label": "Potentiometer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::resistance",
+        "learning-micropython::breadboard"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::potentiometer-as-voltage-divider",
+      "label": "Potentiometer as Voltage Divider",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::potentiometer",
+        "learning-micropython::voltage-divider-circuit"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::voltage-divider-circuit",
+      "label": "Voltage Divider Circuit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::voltage",
+        "learning-micropython::resistance",
+        "learning-micropython::series-circuit"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::reading-analog-values",
+      "label": "Reading Analog Values",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-adc-class",
+        "learning-micropython::adc-read-u16-method"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::scaling-adc-values",
+      "label": "Scaling ADC Values",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::reading-analog-values",
+        "learning-micropython::arithmetic-operators"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::light-sensor-photoresistor",
+      "label": "Light Sensor (Photoresistor)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::analog-signal",
+        "learning-micropython::breadboard"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ldr-light-dependent-resistor",
+      "label": "LDR (Light-Dependent Resistor)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::light-sensor-photoresistor",
+        "learning-micropython::resistance"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pulse-width-modulation-pwm",
+      "label": "Pulse-Width Modulation (PWM)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-output",
+        "learning-micropython::digital-signal"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pwm-frequency",
+      "label": "PWM Frequency",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pulse-width-modulation-pwm"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pwm-duty-cycle",
+      "label": "PWM Duty Cycle",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pulse-width-modulation-pwm"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-pwm-class",
+      "label": "machine.PWM Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules",
+        "learning-micropython::gpio-pin",
+        "learning-micropython::pulse-width-modulation-pwm"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pwm-duty-u16-method",
+      "label": "PWM.duty_u16() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-pwm-class"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::led-fade-with-pwm",
+      "label": "LED Fade with PWM",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::led-light-emitting-diode",
+        "learning-micropython::machine-pwm-class",
+        "learning-micropython::pwm-duty-u16-method"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::brightness-control",
+      "label": "Brightness Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::led-fade-with-pwm",
+        "learning-micropython::pwm-duty-cycle"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pwm-for-servo-control",
+      "label": "PWM for Servo Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pulse-width-modulation-pwm",
+        "learning-micropython::pwm-duty-cycle",
+        "learning-micropython::servo-motor"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pwm-for-motor-speed",
+      "label": "PWM for Motor Speed",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pulse-width-modulation-pwm",
+        "learning-micropython::pwm-duty-cycle",
+        "learning-micropython::dc-motor"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::soft-pwm",
+      "label": "Soft PWM",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pulse-width-modulation-pwm",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "IO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-protocol",
+      "label": "I2C Protocol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::pin-modes-input-output"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-bus-sda-and-scl",
+      "label": "I2C Bus SDA and SCL",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-address",
+      "label": "I2C Address",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-scanner",
+      "label": "I2C Scanner",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::i2c-address",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-i2c-class",
+      "label": "machine.I2C Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules",
+        "learning-micropython::i2c-protocol"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-scan-method",
+      "label": "I2C.scan() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class",
+        "learning-micropython::i2c-address"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-writeto-method",
+      "label": "I2C.writeto() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-readfrom-method",
+      "label": "I2C.readfrom() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::spi-protocol",
+      "label": "SPI Protocol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::pin-modes-input-output"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::spi-bus-pins-mosi-miso-sck-cs",
+      "label": "SPI Bus Pins (MOSI MISO SCK CS)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-spi-class",
+      "label": "machine.SPI Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules",
+        "learning-micropython::spi-protocol"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::spi-write-method",
+      "label": "SPI.write() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-spi-class"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::spi-read-method",
+      "label": "SPI.read() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-spi-class"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::uart-protocol",
+      "label": "UART Protocol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::pin-modes-input-output"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-uart-class",
+      "label": "machine.UART Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules",
+        "learning-micropython::uart-protocol"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::1-wire-protocol",
+      "label": "1-Wire Protocol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2s-protocol",
+      "label": "I2S Protocol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::pin-modes-input-output"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2s-for-audio",
+      "label": "I2S for Audio",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2s-protocol",
+        "learning-micropython::passive-buzzer"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-i2s-class",
+      "label": "machine.I2S Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules",
+        "learning-micropython::i2s-protocol"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::bus-frequency-setting",
+      "label": "Bus Frequency Setting",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::spi-protocol"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dht11-sensor",
+      "label": "DHT11 Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-input",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dht22-sensor",
+      "label": "DHT22 Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-input",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dht-module-in-micropython",
+      "label": "dht Module in MicroPython",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::dht11-sensor"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dht-measure-method",
+      "label": "DHT.measure() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dht-module-in-micropython"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dht-temperature-method",
+      "label": "DHT.temperature() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dht-measure-method"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dht-humidity-method",
+      "label": "DHT.humidity() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dht-measure-method"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::bme280-sensor",
+      "label": "BME280 Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::bme280-temperature-reading",
+      "label": "BME280 Temperature Reading",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::bme280-sensor"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::bme280-humidity-reading",
+      "label": "BME280 Humidity Reading",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::bme280-sensor"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::bme280-pressure-reading",
+      "label": "BME280 Pressure Reading",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::bme280-sensor"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::bme280-i2c-driver",
+      "label": "BME280 I2C Driver",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class",
+        "learning-micropython::bme280-sensor"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ds18b20-temperature-sensor",
+      "label": "DS18B20 Temperature Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::1-wire-protocol"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ds18b20-1-wire-interface",
+      "label": "DS18B20 1-Wire Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::1-wire-protocol",
+        "learning-micropython::ds18b20-temperature-sensor"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ds18b20-multiple-sensors",
+      "label": "DS18B20 Multiple Sensors",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ds18b20-1-wire-interface"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::onewire-module",
+      "label": "onewire Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::1-wire-protocol"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ds18x20-module",
+      "label": "ds18x20 Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::onewire-module",
+        "learning-micropython::ds18b20-temperature-sensor"
+      ],
+      "taxonomy_id": "STEMP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::hc-sr04-ultrasonic-sensor",
+      "label": "HC-SR04 Ultrasonic Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-output",
+        "learning-micropython::digital-input",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::hc-sr04-trigger-pin",
+      "label": "HC-SR04 Trigger Pin",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::hc-sr04-ultrasonic-sensor",
+        "learning-micropython::digital-output"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::hc-sr04-echo-pin",
+      "label": "HC-SR04 Echo Pin",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::hc-sr04-ultrasonic-sensor",
+        "learning-micropython::digital-input"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::speed-of-sound-calculation",
+      "label": "Speed of Sound Calculation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::hc-sr04-ultrasonic-sensor"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ultrasonic-ranging-formula",
+      "label": "Ultrasonic Ranging Formula",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::speed-of-sound-calculation",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::vl53l0x-time-of-flight-sensor",
+      "label": "VL53L0X Time-of-Flight Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::vl53l0x-i2c-driver",
+      "label": "VL53L0X I2C Driver",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class",
+        "learning-micropython::vl53l0x-time-of-flight-sensor"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::vl53l0x-range-property",
+      "label": "VL53L0X.range Property",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::vl53l0x-i2c-driver"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::time-of-flight-measurement",
+      "label": "Time-of-Flight Measurement",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::vl53l0x-time-of-flight-sensor",
+        "learning-micropython::vl53l0x-range-property"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ir-distance-sensor",
+      "label": "IR Distance Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-output",
+        "learning-micropython::digital-input"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ir-emitter-and-detector",
+      "label": "IR Emitter and Detector",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ir-distance-sensor"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::collision-avoidance-logic",
+      "label": "Collision Avoidance Logic",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::hc-sr04-ultrasonic-sensor",
+        "learning-micropython::vl53l0x-time-of-flight-sensor",
+        "learning-micropython::robot-chassis"
+      ],
+      "taxonomy_id": "SDIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::photoresistor-ldr",
+      "label": "Photoresistor (LDR)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::analog-signal",
+        "learning-micropython::breadboard",
+        "learning-micropython::ldr-light-dependent-resistor"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::apds9960-gesture-sensor",
+      "label": "APDS9960 Gesture Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::apds9960-color-detection",
+      "label": "APDS9960 Color Detection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::apds9960-gesture-sensor"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::apds9960-proximity-detection",
+      "label": "APDS9960 Proximity Detection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::apds9960-gesture-sensor"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::apds9960-i2c-driver",
+      "label": "APDS9960 I2C Driver",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class",
+        "learning-micropython::apds9960-gesture-sensor"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::color-sensing-principles",
+      "label": "Color Sensing Principles",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::apds9960-color-detection"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ambient-light-sensing",
+      "label": "Ambient Light Sensing",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::photoresistor-ldr",
+        "learning-micropython::apds9960-gesture-sensor"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::accelerometer",
+      "label": "Accelerometer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::adxl345-accelerometer",
+      "label": "ADXL345 Accelerometer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::accelerometer",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::mpu6050-accelerometer-gyroscope",
+      "label": "MPU6050 Accelerometer/Gyroscope",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::accelerometer",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::accelerometer-x-y-z-axes",
+      "label": "Accelerometer X/Y/Z Axes",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::accelerometer"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::tilt-detection",
+      "label": "Tilt Detection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::accelerometer",
+        "learning-micropython::accelerometer-x-y-z-axes"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::hmc5883l-compass-sensor",
+      "label": "HMC5883L Compass Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::qmc5883l-compass-sensor",
+      "label": "QMC5883L Compass Sensor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::compass-heading-calculation",
+      "label": "Compass Heading Calculation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::hmc5883l-compass-sensor",
+        "learning-micropython::qmc5883l-compass-sensor"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::magnetic-field-sensing",
+      "label": "Magnetic Field Sensing",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::hmc5883l-compass-sensor",
+        "learning-micropython::qmc5883l-compass-sensor"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::gyroscope",
+      "label": "Gyroscope",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::accelerometer"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::imu-inertial-measurement-unit",
+      "label": "IMU (Inertial Measurement Unit)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::accelerometer",
+        "learning-micropython::gyroscope"
+      ],
+      "taxonomy_id": "SMOT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rotary-encoder",
+      "label": "Rotary Encoder",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-input",
+        "learning-micropython::interrupt-handler"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rotary-encoder-clk-and-dt-pins",
+      "label": "Rotary Encoder CLK and DT Pins",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rotary-encoder",
+        "learning-micropython::gpio-pin"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::encoder-interrupt-handler",
+      "label": "Encoder Interrupt Handler",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rotary-encoder",
+        "learning-micropython::interrupt-handler"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::quadrature-encoding",
+      "label": "Quadrature Encoding",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rotary-encoder",
+        "learning-micropython::encoder-interrupt-handler"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rotary-module",
+      "label": "rotary Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::rotary-encoder"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::touch-sensor-ttp223",
+      "label": "Touch Sensor TTP223",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-input",
+        "learning-micropython::pin-modes-input-output"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::capacitive-touch-sensing",
+      "label": "Capacitive Touch Sensing",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::touch-sensor-ttp223"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::touch-value-method",
+      "label": "Touch.value() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::touch-sensor-ttp223",
+        "learning-micropython::pin-value-method"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::microphone-inmp441",
+      "label": "Microphone INMP441",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2s-protocol",
+        "learning-micropython::machine-i2s-class"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::inmp441-i2s-interface",
+      "label": "INMP441 I2S Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microphone-inmp441",
+        "learning-micropython::i2s-protocol"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::sound-level-detection",
+      "label": "Sound Level Detection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microphone-inmp441",
+        "learning-micropython::reading-analog-values"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::microphone-sensitivity",
+      "label": "Microphone Sensitivity",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microphone-inmp441"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::audio-sampling-rate",
+      "label": "Audio Sampling Rate",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microphone-inmp441",
+        "learning-micropython::i2s-protocol"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::fast-fourier-transform-fft",
+      "label": "Fast Fourier Transform (FFT)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::audio-sampling-rate"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::spectrum-analyzer-concept",
+      "label": "Spectrum Analyzer Concept",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::fast-fourier-transform-fft"
+      ],
+      "taxonomy_id": "SENS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dc-motor",
+      "label": "DC Motor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::transistor",
+        "learning-micropython::npn-transistor"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::motor-direction-control",
+      "label": "Motor Direction Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dc-motor",
+        "learning-micropython::h-bridge-circuit"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::motor-speed-control",
+      "label": "Motor Speed Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dc-motor",
+        "learning-micropython::pwm-for-motor-speed"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::h-bridge-circuit",
+      "label": "H-Bridge Circuit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dc-motor",
+        "learning-micropython::transistor"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::l293d-motor-driver-ic",
+      "label": "L293D Motor Driver IC",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::h-bridge-circuit"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::drv8833-motor-driver-ic",
+      "label": "DRV8833 Motor Driver IC",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::h-bridge-circuit"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::l298n-motor-driver-ic",
+      "label": "L298N Motor Driver IC",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::h-bridge-circuit"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::transistor-motor-control",
+      "label": "Transistor Motor Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::transistor",
+        "learning-micropython::npn-transistor",
+        "learning-micropython::dc-motor"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::motor-stall-current",
+      "label": "Motor Stall Current",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dc-motor",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::motor-free-run-current",
+      "label": "Motor Free-Run Current",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dc-motor",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::back-emf-protection",
+      "label": "Back-EMF Protection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dc-motor",
+        "learning-micropython::diode"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::flyback-diode",
+      "label": "Flyback Diode",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::diode",
+        "learning-micropython::dc-motor"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::servo-motor",
+      "label": "Servo Motor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pulse-width-modulation-pwm"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::servo-signal-50hz-pwm",
+      "label": "Servo Signal (50Hz PWM)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::servo-motor",
+        "learning-micropython::pwm-frequency"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::servo-angle-control",
+      "label": "Servo Angle Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::servo-motor",
+        "learning-micropython::pwm-duty-u16-method",
+        "learning-micropython::servo-signal-50hz-pwm"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::servo-min-max-pulse-width",
+      "label": "Servo Min/Max Pulse Width",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::servo-signal-50hz-pwm",
+        "learning-micropython::servo-angle-control"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-pwm-for-servo",
+      "label": "machine.PWM for Servo",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-pwm-class",
+        "learning-micropython::servo-signal-50hz-pwm"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::continuous-rotation-servo",
+      "label": "Continuous Rotation Servo",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::servo-motor",
+        "learning-micropython::servo-angle-control"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::stepper-motor",
+      "label": "Stepper Motor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dc-motor"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::stepper-motor-phases",
+      "label": "Stepper Motor Phases",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::stepper-motor"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::half-step-vs-full-step",
+      "label": "Half-Step vs Full-Step",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::stepper-motor-phases"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::stepper-driver-uln2003",
+      "label": "Stepper Driver (ULN2003)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::stepper-motor",
+        "learning-micropython::stepper-motor-phases"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::stepper-steps-per-revolution",
+      "label": "Stepper Steps Per Revolution",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::stepper-motor",
+        "learning-micropython::stepper-motor-phases"
+      ],
+      "taxonomy_id": "ACT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::robot-chassis",
+      "label": "Robot Chassis",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dc-motor",
+        "learning-micropython::servo-motor"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::differential-drive",
+      "label": "Differential Drive",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::robot-chassis",
+        "learning-micropython::motor-direction-control"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::forward-backward-motion",
+      "label": "Forward/Backward Motion",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::differential-drive",
+        "learning-micropython::motor-direction-control"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::left-right-turn-control",
+      "label": "Left/Right Turn Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::differential-drive",
+        "learning-micropython::motor-direction-control"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::line-follower-robot",
+      "label": "Line Follower Robot",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::differential-drive",
+        "learning-micropython::ir-distance-sensor",
+        "learning-micropython::line-sensor-ir"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::line-sensor-ir",
+      "label": "Line Sensor (IR)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ir-distance-sensor",
+        "learning-micropython::ir-emitter-and-detector"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::collision-avoidance-robot",
+      "label": "Collision Avoidance Robot",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::differential-drive",
+        "learning-micropython::collision-avoidance-logic"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::obstacle-detection",
+      "label": "Obstacle Detection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::hc-sr04-ultrasonic-sensor",
+        "learning-micropython::vl53l0x-time-of-flight-sensor",
+        "learning-micropython::collision-avoidance-logic"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::robot-calibration",
+      "label": "Robot Calibration",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::differential-drive",
+        "learning-micropython::motor-speed-control"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::motor-deadband",
+      "label": "Motor Deadband",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::motor-speed-control",
+        "learning-micropython::differential-drive"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::robot-speed-tuning",
+      "label": "Robot Speed Tuning",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::motor-speed-control",
+        "learning-micropython::differential-drive"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ping-servo-scanner",
+      "label": "Ping-Servo Scanner",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::servo-motor",
+        "learning-micropython::hc-sr04-ultrasonic-sensor"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::microswitch-bumper-bot",
+      "label": "MicroSwitch Bumper Bot",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::robot-chassis",
+        "learning-micropython::digital-input"
+      ],
+      "taxonomy_id": "ROB",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::neopixel-led",
+      "label": "NeoPixel LED",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-output",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ws2812b-protocol",
+      "label": "WS2812B Protocol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-led"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::neopixel-strip",
+      "label": "NeoPixel Strip",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-led",
+        "learning-micropython::ws2812b-protocol"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::neopixel-matrix",
+      "label": "NeoPixel Matrix",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-strip"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::neopixel-module",
+      "label": "neopixel Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::neopixel-led"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::neopixel-fill-method",
+      "label": "NeoPixel.fill() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-module"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::neopixel-show-method",
+      "label": "NeoPixel.show() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-module"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rgb-color-model",
+      "label": "RGB Color Model",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-led"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::hsv-color-model",
+      "label": "HSV Color Model",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rgb-color-model"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::color-wheel-animation",
+      "label": "Color Wheel Animation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rgb-color-model",
+        "learning-micropython::hsv-color-model",
+        "learning-micropython::for-loop"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rainbow-pattern",
+      "label": "Rainbow Pattern",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::color-wheel-animation",
+        "learning-micropython::neopixel-strip"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::brightness-scaling",
+      "label": "Brightness Scaling",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-fill-method",
+        "learning-micropython::neopixel-show-method",
+        "learning-micropython::rgb-color-model"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::led-strip-wiring",
+      "label": "LED Strip Wiring",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-strip",
+        "learning-micropython::breadboard",
+        "learning-micropython::ground-gnd"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::neopixel-power-requirements",
+      "label": "NeoPixel Power Requirements",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-strip",
+        "learning-micropython::current",
+        "learning-micropython::power-watts"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::level-shifter-for-neopixel",
+      "label": "Level Shifter for NeoPixel",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-strip",
+        "learning-micropython::3-3v-logic-level",
+        "learning-micropython::5v-logic-level"
+      ],
+      "taxonomy_id": "NEO",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::led-as-output-indicator",
+      "label": "LED as Output Indicator",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::led-light-emitting-diode",
+        "learning-micropython::current-limiting-resistor",
+        "learning-micropython::digital-output"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::7-segment-display",
+      "label": "7-Segment Display",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-output"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::7-segment-digit-encoding",
+      "label": "7-Segment Digit Encoding",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::7-segment-display"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::10-bar-led-array",
+      "label": "10-Bar LED Array",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-output",
+        "learning-micropython::led-as-output-indicator"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::led-level-meter",
+      "label": "LED Level Meter",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::10-bar-led-array",
+        "learning-micropython::reading-analog-values"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::8x8-led-matrix",
+      "label": "8x8 LED Matrix",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::max7219-led-driver",
+        "learning-micropython::max7219-spi-interface"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::max7219-led-driver",
+      "label": "MAX7219 LED Driver",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::machine-spi-class"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::max7219-spi-interface",
+      "label": "MAX7219 SPI Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::spi-bus-pins-mosi-miso-sck-cs",
+        "learning-micropython::max7219-led-driver"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::max7219-intensity-control",
+      "label": "MAX7219 Intensity Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::max7219-led-driver",
+        "learning-micropython::pwm-duty-cycle"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::character-lcd-display",
+      "label": "Character LCD Display",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::lcd-16x2",
+      "label": "LCD 16x2",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::character-lcd-display"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::lcd-pcf8574-i2c-backpack",
+      "label": "LCD PCF8574 I2C Backpack",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class",
+        "learning-micropython::character-lcd-display"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::lcd-api-module",
+      "label": "lcd_api Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::character-lcd-display"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::lcd-cursor-control",
+      "label": "LCD Cursor Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::lcd-api-module",
+        "learning-micropython::lcd-16x2"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::4-digit-7-segment-display",
+      "label": "4-Digit 7-Segment Display",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::7-segment-display"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::tm1637-display-driver",
+      "label": "TM1637 Display Driver",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::4-digit-7-segment-display"
+      ],
+      "taxonomy_id": "DISP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-display",
+      "label": "OLED Display",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-ssd1306-controller",
+      "label": "OLED SSD1306 Controller",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-display"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ssd1306-i2c-interface",
+      "label": "SSD1306 I2C Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class",
+        "learning-micropython::oled-ssd1306-controller"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ssd1306-spi-interface",
+      "label": "SSD1306 SPI Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::oled-ssd1306-controller"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ssd1306-128x64-resolution",
+      "label": "SSD1306 128x64 Resolution",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-ssd1306-controller"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ssd1306-128x32-resolution",
+      "label": "SSD1306 128x32 Resolution",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-ssd1306-controller"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ssd1306-module",
+      "label": "ssd1306 Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::oled-ssd1306-controller"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ssd1306-i2c-class",
+      "label": "SSD1306_I2C Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-i2c-interface"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ssd1306-spi-class",
+      "label": "SSD1306_SPI Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-spi-interface"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-sh1106-controller",
+      "label": "OLED SH1106 Controller",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-display"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::sh1106-i2c-interface",
+      "label": "SH1106 I2C Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-i2c-class",
+        "learning-micropython::oled-sh1106-controller"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::sh1106-module",
+      "label": "sh1106 Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::oled-sh1106-controller"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-ssd1352-controller",
+      "label": "OLED SSD1352 Controller",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-display",
+        "learning-micropython::spi-protocol"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-framebuffer",
+      "label": "OLED Framebuffer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-display",
+        "learning-micropython::framebuf-module"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-text-method",
+      "label": "oled.text() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-i2c-class"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-fill-method",
+      "label": "oled.fill() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-i2c-class"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-show-method",
+      "label": "oled.show() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-i2c-class"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-pixel-method",
+      "label": "oled.pixel() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-i2c-class"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-line-method",
+      "label": "oled.line() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-i2c-class"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-rect-method",
+      "label": "oled.rect() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-i2c-class"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-fill-rect-method",
+      "label": "oled.fill_rect() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ssd1306-module",
+        "learning-micropython::ssd1306-i2c-class"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-bounce-animation",
+      "label": "OLED Bounce Animation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-text-method",
+        "learning-micropython::oled-fill-method",
+        "learning-micropython::oled-show-method",
+        "learning-micropython::oled-pixel-method",
+        "learning-micropython::for-loop"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-pong-game",
+      "label": "OLED Pong Game",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-text-method",
+        "learning-micropython::oled-fill-method",
+        "learning-micropython::oled-show-method",
+        "learning-micropython::oled-pixel-method",
+        "learning-micropython::button-input"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::oled-real-time-sensor-display",
+      "label": "OLED Real-Time Sensor Display",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-text-method",
+        "learning-micropython::oled-show-method",
+        "learning-micropython::bme280-sensor",
+        "learning-micropython::hc-sr04-ultrasonic-sensor"
+      ],
+      "taxonomy_id": "OLED",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::tft-display",
+      "label": "TFT Display",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::framebuf-rgb565-format"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ili9341-tft-driver",
+      "label": "ILI9341 TFT Driver",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::tft-display"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ili9341-spi-interface",
+      "label": "ILI9341 SPI Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::spi-bus-pins-mosi-miso-sck-cs",
+        "learning-micropython::ili9341-tft-driver"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ili9341-color-depth-16-bit",
+      "label": "ILI9341 Color Depth (16-bit)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ili9341-tft-driver",
+        "learning-micropython::framebuf-rgb565-format"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::st7789v-color-lcd-driver",
+      "label": "ST7789V Color LCD Driver",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::tft-display"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::st7789v-spi-interface",
+      "label": "ST7789V SPI Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::spi-bus-pins-mosi-miso-sck-cs",
+        "learning-micropython::st7789v-color-lcd-driver"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::st7789v-resolution",
+      "label": "ST7789V Resolution",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::st7789v-color-lcd-driver"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::graphic-lcd-cu1609c",
+      "label": "Graphic LCD (CU1609C)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::machine-i2c-class"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::waveshare-lcd",
+      "label": "Waveshare LCD",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-protocol",
+        "learning-micropython::spi-protocol"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::framebuf-module",
+      "label": "Framebuf Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::framebuf-framebuffer-class",
+      "label": "framebuf.FrameBuffer Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::framebuf-module"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::framebuf-mono-hlsb-format",
+      "label": "framebuf.MONO_HLSB Format",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::framebuf-module",
+        "learning-micropython::framebuf-framebuffer-class"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::framebuf-rgb565-format",
+      "label": "framebuf.RGB565 Format",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::framebuf-module",
+        "learning-micropython::framebuf-framebuffer-class"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::bitmap-drawing",
+      "label": "Bitmap Drawing",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::framebuf-module",
+        "learning-micropython::framebuf-framebuffer-class",
+        "learning-micropython::framebuf-mono-hlsb-format"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::custom-drawing-functions",
+      "label": "Custom Drawing Functions",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::framebuf-module",
+        "learning-micropython::framebuf-framebuffer-class"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::screen-coordinate-system",
+      "label": "Screen Coordinate System",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::oled-display",
+        "learning-micropython::tft-display"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::hstx-display-interface",
+      "label": "HSTX Display Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rp2040-chip",
+        "learning-micropython::tft-display"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::display-color-formats",
+      "label": "Display Color Formats",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::framebuf-rgb565-format",
+        "learning-micropython::framebuf-mono-hlsb-format"
+      ],
+      "taxonomy_id": "TFT",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::e-paper-display",
+      "label": "E-Paper Display",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol"
+      ],
+      "taxonomy_id": "EPAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::e-ink-technology",
+      "label": "E-Ink Technology",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::e-paper-display"
+      ],
+      "taxonomy_id": "EPAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::e-paper-refresh-rate",
+      "label": "E-Paper Refresh Rate",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::e-paper-display"
+      ],
+      "taxonomy_id": "EPAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::e-paper-low-power",
+      "label": "E-Paper Low Power",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::e-paper-display"
+      ],
+      "taxonomy_id": "EPAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::e-paper-spi-interface",
+      "label": "E-Paper SPI Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::e-paper-display"
+      ],
+      "taxonomy_id": "EPAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::waveshare-e-paper-driver",
+      "label": "Waveshare E-Paper Driver",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::e-paper-display",
+        "learning-micropython::e-paper-spi-interface"
+      ],
+      "taxonomy_id": "EPAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::passive-buzzer",
+      "label": "Passive Buzzer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pulse-width-modulation-pwm",
+        "learning-micropython::pwm-frequency"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::active-buzzer",
+      "label": "Active Buzzer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::digital-output"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::tone-generation",
+      "label": "Tone Generation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pulse-width-modulation-pwm",
+        "learning-micropython::passive-buzzer",
+        "learning-micropython::pwm-frequency"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::musical-note-frequencies",
+      "label": "Musical Note Frequencies",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::tone-generation"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::play-a-scale",
+      "label": "Play a Scale",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::musical-note-frequencies",
+        "learning-micropython::tone-generation",
+        "learning-micropython::for-loop"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::play-a-melody",
+      "label": "Play a Melody",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::musical-note-frequencies",
+        "learning-micropython::tone-generation",
+        "learning-micropython::list",
+        "learning-micropython::for-loop"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::mario-theme-program",
+      "label": "Mario Theme Program",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::play-a-melody"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::eight-key-piano-program",
+      "label": "Eight-Key Piano Program",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::play-a-melody",
+        "learning-micropython::button-input",
+        "learning-micropython::tone-generation"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::wav-audio-file",
+      "label": "WAV Audio File",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::file-read-and-write"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::mp3-to-wav-conversion",
+      "label": "MP3 to WAV Conversion",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::wav-audio-file"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::audio-playback",
+      "label": "Audio Playback",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2s-protocol",
+        "learning-micropython::machine-i2s-class",
+        "learning-micropython::wav-audio-file"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2s-audio-output",
+      "label": "I2S Audio Output",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2s-protocol",
+        "learning-micropython::machine-i2s-class",
+        "learning-micropython::audio-playback"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2s-standard",
+      "label": "I2S Standard",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2s-protocol"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dac-digital-to-analog-converter",
+      "label": "DAC (Digital-to-Analog Converter)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::analog-signal",
+        "learning-micropython::digital-signal"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::midi-protocol",
+      "label": "MIDI Protocol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::tone-generation"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::sound-parts-list",
+      "label": "Sound Parts List",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::passive-buzzer",
+        "learning-micropython::active-buzzer"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::audio-amplifier",
+      "label": "Audio Amplifier",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::dac-digital-to-analog-converter",
+        "learning-micropython::current"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::speaker-wiring",
+      "label": "Speaker Wiring",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::passive-buzzer",
+        "learning-micropython::audio-amplifier",
+        "learning-micropython::breadboard"
+      ],
+      "taxonomy_id": "SND",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::wi-fi-basics",
+      "label": "Wi-Fi Basics",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::raspberry-pi-pico-w",
+        "learning-micropython::esp32-microcontroller"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ssid-and-password",
+      "label": "SSID and Password",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::wi-fi-basics"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::network-module",
+      "label": "network Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::wi-fi-basics"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::network-wlan-class",
+      "label": "network.WLAN Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::network-module"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::wlan-connect-method",
+      "label": "WLAN.connect() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::network-wlan-class",
+        "learning-micropython::ssid-and-password"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::wlan-isconnected-method",
+      "label": "WLAN.isconnected() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::network-wlan-class",
+        "learning-micropython::wlan-connect-method"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ip-address",
+      "label": "IP Address",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::wi-fi-basics",
+        "learning-micropython::wlan-isconnected-method"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::mac-address",
+      "label": "MAC Address",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::wi-fi-basics"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::http-protocol",
+      "label": "HTTP Protocol",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::wi-fi-basics",
+        "learning-micropython::ip-address"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::http-get-request",
+      "label": "HTTP GET Request",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::http-protocol",
+        "learning-micropython::urequests-module"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::urequests-module",
+      "label": "urequests Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::http-protocol"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::json-parsing",
+      "label": "JSON Parsing",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::urequests-module",
+        "learning-micropython::dictionary",
+        "learning-micropython::ujson-module"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ujson-module",
+      "label": "ujson Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::dictionary"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::web-server-on-pico-w",
+      "label": "Web Server on Pico W",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::network-wlan-class",
+        "learning-micropython::socket-module",
+        "learning-micropython::socket-socket-class"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::socket-module",
+      "label": "socket Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::ip-address",
+        "learning-micropython::http-protocol"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::socket-socket-class",
+      "label": "socket.socket() Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::socket-module"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::tcp-vs-udp",
+      "label": "TCP vs UDP",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::http-protocol",
+        "learning-micropython::socket-module"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rest-api-basics",
+      "label": "REST API Basics",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::http-protocol",
+        "learning-micropython::http-get-request",
+        "learning-micropython::json-parsing"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::weather-api-integration",
+      "label": "Weather API Integration",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rest-api-basics",
+        "learning-micropython::http-get-request",
+        "learning-micropython::json-parsing"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ntp-time-sync",
+      "label": "NTP Time Sync",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::http-protocol",
+        "learning-micropython::ip-address"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::wifi-clock-project",
+      "label": "WiFi Clock Project",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ntp-time-sync",
+        "learning-micropython::oled-text-method",
+        "learning-micropython::oled-show-method"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::web-server-neopixel-control",
+      "label": "Web Server NeoPixel Control",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::web-server-on-pico-w",
+        "learning-micropython::neopixel-module",
+        "learning-micropython::neopixel-fill-method"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::upip-package-manager",
+      "label": "upip Package Manager",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::http-protocol"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::over-the-air-update-concept",
+      "label": "Over-the-Air Update Concept",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::upip-package-manager",
+        "learning-micropython::web-server-on-pico-w"
+      ],
+      "taxonomy_id": "WIFI",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::interrupt-handler",
+      "label": "Interrupt Handler",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::irq-interrupt-request",
+      "label": "IRQ (Interrupt Request)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::gpio-pin",
+        "learning-micropython::interrupt-handler"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pin-irq-method",
+      "label": "Pin.irq() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-pin-class",
+        "learning-micropython::interrupt-handler"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::timer-class",
+      "label": "Timer Class",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-timer"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-timer",
+      "label": "machine.Timer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::timer-callback",
+      "label": "Timer Callback",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-timer",
+        "learning-micropython::function-definition"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::periodic-vs-one-shot-timer",
+      "label": "Periodic vs One-Shot Timer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-timer",
+        "learning-micropython::timer-class"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::non-blocking-programming",
+      "label": "Non-Blocking Programming",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::interrupt-handler",
+        "learning-micropython::machine-timer"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::blocking-vs-non-blocking",
+      "label": "Blocking vs Non-Blocking",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::non-blocking-programming",
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::machine-time-pulse-us",
+      "label": "machine.time_pulse_us()",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::micropython-modules",
+        "learning-micropython::gpio-pin"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::utime-sleep",
+      "label": "utime.sleep()",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::utime-ticks-ms",
+      "label": "utime.ticks_ms()",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::utime-module"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::utime-ticks-diff",
+      "label": "utime.ticks_diff()",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::utime-ticks-ms"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::multi-core-programming",
+      "label": "Multi-Core Programming",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rp2040-dual-core",
+        "learning-micropython::thread-module"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::thread-module",
+      "label": "_thread Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::rp2040-dual-core"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::core-0-and-core-1",
+      "label": "Core 0 and Core 1",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rp2040-dual-core",
+        "learning-micropython::multi-core-programming"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::shared-memory-between-cores",
+      "label": "Shared Memory Between Cores",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::multi-core-programming",
+        "learning-micropython::core-0-and-core-1"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::memory-management",
+      "label": "Memory Management",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::ram-on-pico"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::garbage-collection",
+      "label": "Garbage Collection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::memory-management",
+        "learning-micropython::gc-module"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::gc-module",
+      "label": "gc Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-modules",
+        "learning-micropython::memory-management"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::heap-memory",
+      "label": "Heap Memory",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::memory-management",
+        "learning-micropython::ram-on-pico"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::stack-memory",
+      "label": "Stack Memory",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::memory-management",
+        "learning-micropython::ram-on-pico"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::micropython-file-system",
+      "label": "MicroPython File System",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython",
+        "learning-micropython::uos-module"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::open-function",
+      "label": "open() Function",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-file-system"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::file-read-and-write",
+      "label": "File Read and Write",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::open-function"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::os-listdir-method",
+      "label": "os.listdir() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::uos-module",
+        "learning-micropython::micropython-file-system"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::os-mkdir-method",
+      "label": "os.mkdir() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::uos-module",
+        "learning-micropython::micropython-file-system"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::os-remove-method",
+      "label": "os.remove() Method",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::uos-module",
+        "learning-micropython::micropython-file-system"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::sd-card-reader",
+      "label": "SD Card Reader",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::machine-spi-class"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::spi-sd-card-interface",
+      "label": "SPI SD Card Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::spi-bus-pins-mosi-miso-sck-cs",
+        "learning-micropython::sd-card-reader"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::uos-module-413",
+      "label": "uos Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-standard-library",
+        "learning-micropython::uos-module"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::persistent-storage",
+      "label": "Persistent Storage",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython-file-system",
+        "learning-micropython::file-read-and-write"
+      ],
+      "taxonomy_id": "FS",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::debugging-strategy",
+      "label": "Debugging Strategy",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::error-and-exception"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::print-debugging",
+      "label": "Print Debugging",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::print-statement",
+        "learning-micropython::debugging-strategy"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::error-message-reading",
+      "label": "Error Message Reading",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::error-and-exception",
+        "learning-micropython::try-except-block"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::traceback-interpretation",
+      "label": "Traceback Interpretation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::error-message-reading"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-debugging",
+      "label": "I2C Debugging",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-scanner",
+        "learning-micropython::debugging-strategy"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::spi-debugging",
+      "label": "SPI Debugging",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::debugging-strategy"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::debugging-with-thonny",
+      "label": "Debugging with Thonny",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::thonny-ide",
+        "learning-micropython::debugging-strategy"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::stack-trace-viewer",
+      "label": "Stack Trace Viewer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::traceback-interpretation",
+        "learning-micropython::debugging-with-thonny"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::heap-viewer",
+      "label": "Heap Viewer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::heap-memory",
+        "learning-micropython::debugging-with-thonny"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::minicom-serial-monitor",
+      "label": "Minicom Serial Monitor",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::uart-protocol"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::logic-probe",
+      "label": "Logic Probe",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::multimeter",
+        "learning-micropython::gpio-pin"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::common-wiring-errors",
+      "label": "Common Wiring Errors",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::wiring-diagram",
+        "learning-micropython::debugging-strategy"
+      ],
+      "taxonomy_id": "DBG",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pio-programmable-i-o-state-machine",
+      "label": "PIO (Programmable I/O) State Machine",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rp2040-pio-programmable-i-o",
+        "learning-micropython::rp2040-chip"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pio-assembly-language",
+      "label": "PIO Assembly Language",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pio-programmable-i-o-state-machine"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pio-for-ws2812b",
+      "label": "PIO for WS2812B",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pio-programmable-i-o-state-machine",
+        "learning-micropython::ws2812b-protocol"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::assembler-in-micropython",
+      "label": "Assembler in MicroPython",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::pio-assembly-language"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::fft-algorithm",
+      "label": "FFT Algorithm",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::fast-fourier-transform-fft",
+        "learning-micropython::for-loop"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::fft-optimization",
+      "label": "FFT Optimization",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::fft-algorithm"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::dma-direct-memory-access",
+      "label": "DMA (Direct Memory Access)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rp2040-chip",
+        "learning-micropython::memory-management"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::frame-buffer",
+      "label": "Frame Buffer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::framebuf-module",
+        "learning-micropython::framebuf-framebuffer-class"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::i2c-scanner-program",
+      "label": "I2C Scanner Program",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::i2c-scanner",
+        "learning-micropython::i2c-scan-method"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::string-formatting",
+      "label": "String Formatting",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::string",
+        "learning-micropython::print-statement"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::conda-virtual-environment",
+      "label": "Conda Virtual Environment",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::circuitpython-vs-micropython",
+      "label": "CircuitPython vs MicroPython",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::micropython"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::mpremote-file-commands",
+      "label": "mpremote File Commands",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::mpremote-tool"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::measuring-battery-voltage",
+      "label": "Measuring Battery Voltage",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::vsys-pin",
+        "learning-micropython::machine-adc-class",
+        "learning-micropython::adc-read-u16-method"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::vsys-voltage-measurement",
+      "label": "VSYS Voltage Measurement",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::vsys-pin",
+        "learning-micropython::measuring-battery-voltage"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::watchdog-timer",
+      "label": "Watchdog Timer",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-timer",
+        "learning-micropython::micropython"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rtc-real-time-clock",
+      "label": "RTC (Real-Time Clock)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-timer",
+        "learning-micropython::ntp-time-sync"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::low-power-sleep-mode",
+      "label": "Low-Power Sleep Mode",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::machine-timer",
+        "learning-micropython::memory-management"
+      ],
+      "taxonomy_id": "HADV",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::generative-ai-for-coding",
+      "label": "Generative AI for Coding",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program",
+        "learning-micropython::micropython"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::prompt-engineering-basics",
+      "label": "Prompt Engineering Basics",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::generative-ai-for-coding"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ai-code-generation",
+      "label": "AI Code Generation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::generative-ai-for-coding",
+        "learning-micropython::prompt-engineering-basics"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ai-code-review",
+      "label": "AI Code Review",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ai-code-generation",
+        "learning-micropython::debugging-strategy"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::debugging-with-ai",
+      "label": "Debugging with AI",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::ai-code-review",
+        "learning-micropython::debugging-strategy"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ai-concept-explanation",
+      "label": "AI Concept Explanation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::generative-ai-for-coding",
+        "learning-micropython::prompt-engineering-basics"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::ai-hardware-suggestion",
+      "label": "AI Hardware Suggestion",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::generative-ai-for-coding",
+        "learning-micropython::microcontroller"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::maker-pi-rp2040-kit",
+      "label": "Maker Pi RP2040 Kit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::cytron-maker-pi-rp2040",
+        "learning-micropython::neopixel-led",
+        "learning-micropython::hc-sr04-ultrasonic-sensor"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::maker-pi-pico-kit",
+      "label": "Maker Pi Pico Kit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::maker-pi-pico",
+        "learning-micropython::digital-output",
+        "learning-micropython::button-input"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::maker-nano-rp2040-kit",
+      "label": "Maker Nano RP2040 Kit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::maker-nano-rp2040",
+        "learning-micropython::digital-output"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pwm-kit-project",
+      "label": "PWM Kit Project",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::cytron-maker-pi-rp2040",
+        "learning-micropython::potentiometer",
+        "learning-micropython::oled-display",
+        "learning-micropython::pulse-width-modulation-pwm"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::tone-generator-kit",
+      "label": "Tone Generator Kit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::potentiometer",
+        "learning-micropython::passive-buzzer",
+        "learning-micropython::tone-generation"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::spectrum-analyzer-kit",
+      "label": "Spectrum Analyzer Kit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microphone-inmp441",
+        "learning-micropython::fast-fourier-transform-fft",
+        "learning-micropython::neopixel-matrix"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::neopixel-rotary-kit",
+      "label": "NeoPixel Rotary Kit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-strip",
+        "learning-micropython::rotary-encoder"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::larson-scanner-kit",
+      "label": "Larson Scanner Kit",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-strip",
+        "learning-micropython::for-loop"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rfid-rc522-module",
+      "label": "RFID RC522 Module",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rfid-rc522-spi-interface",
+      "label": "RFID RC522 SPI Interface",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::spi-protocol",
+        "learning-micropython::spi-bus-pins-mosi-miso-sck-cs",
+        "learning-micropython::rfid-rc522-module"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::rfid-card-reading",
+      "label": "RFID Card Reading",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::rfid-rc522-spi-interface"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::moving-rainbow-project",
+      "label": "Moving Rainbow Project",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::neopixel-strip",
+        "learning-micropython::color-wheel-animation",
+        "learning-micropython::button-input"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::decomposition",
+      "label": "Decomposition",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::computer-program"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pattern-recognition",
+      "label": "Pattern Recognition",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::for-loop",
+        "learning-micropython::decomposition"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::abstraction",
+      "label": "Abstraction",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::function-definition",
+        "learning-micropython::decomposition"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::algorithm-design",
+      "label": "Algorithm Design",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::function-definition",
+        "learning-micropython::decomposition"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::pseudocode",
+      "label": "Pseudocode",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::algorithm-design"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::flowchart",
+      "label": "Flowchart",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::algorithm-design",
+        "learning-micropython::pseudocode"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::loop-invariant",
+      "label": "Loop Invariant",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::for-loop",
+        "learning-micropython::while-loop",
+        "learning-micropython::algorithm-design"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::state-machine",
+      "label": "State Machine",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::conditional-statement",
+        "learning-micropython::algorithm-design"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::event-driven-programming",
+      "label": "Event-Driven Programming",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::interrupt-handler",
+        "learning-micropython::state-machine"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::modular-programming",
+      "label": "Modular Programming",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::function-definition",
+        "learning-micropython::function-call",
+        "learning-micropython::abstraction"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::project-requirements",
+      "label": "Project Requirements",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::algorithm-design",
+        "learning-micropython::decomposition"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::prototype-design",
+      "label": "Prototype Design",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::project-requirements",
+        "learning-micropython::breadboard"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::breadboard-prototype",
+      "label": "Breadboard Prototype",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::breadboard",
+        "learning-micropython::prototype-design"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::wiring-diagram-creation",
+      "label": "Wiring Diagram Creation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::wiring-diagram",
+        "learning-micropython::prototype-design"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::component-selection",
+      "label": "Component Selection",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::microcontroller",
+        "learning-micropython::led-light-emitting-diode",
+        "learning-micropython::dc-motor",
+        "learning-micropython::project-requirements"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::bill-of-materials-bom",
+      "label": "Bill of Materials (BOM)",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::component-selection"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::solderless-assembly",
+      "label": "Solderless Assembly",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::breadboard",
+        "learning-micropython::breadboard-rails",
+        "learning-micropython::breadboard-rows",
+        "learning-micropython::jumper-wire"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::code-organization",
+      "label": "Code Organization",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::function-definition",
+        "learning-micropython::modular-programming"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::version-control-basics",
+      "label": "Version Control Basics",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::source-code"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::git-basics",
+      "label": "Git Basics",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::version-control-basics"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::readme-documentation",
+      "label": "README Documentation",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::version-control-basics",
+        "learning-micropython::string"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::project-demonstration",
+      "label": "Project Demonstration",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::project-requirements",
+        "learning-micropython::breadboard-prototype",
+        "learning-micropython::code-organization"
+      ],
+      "taxonomy_id": "APP",
+      "level": "core"
+    },
+    {
+      "id": "learning-micropython::mip-package-manager",
+      "label": "mip Package Manager",
+      "subject_id": "learning-micropython",
+      "dependencies": [
+        "learning-micropython::mpremote-tool",
+        "learning-micropython::micropython"
+      ],
+      "taxonomy_id": "UENV",
+      "level": "core"
+    }
+  ]
+}

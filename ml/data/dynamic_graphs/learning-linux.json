@@ -1,0 +1,5402 @@
+{
+  "subject_id": "learning-linux",
+  "title": "Learning Linux",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "HIST": {
+      "classifier_name": "History and Philosophy",
+      "color": "LightCoral"
+    },
+    "SHELL": {
+      "classifier_name": "Shell Fundamentals",
+      "color": "PeachPuff"
+    },
+    "FSYS": {
+      "classifier_name": "File System",
+      "color": "LightYellow"
+    },
+    "PERM": {
+      "classifier_name": "Permissions and Security",
+      "color": "Thistle"
+    },
+    "TEXT": {
+      "classifier_name": "Text Processing",
+      "color": "PaleGreen"
+    },
+    "EDIT": {
+      "classifier_name": "Text Editors",
+      "color": "Honeydew"
+    },
+    "CONF": {
+      "classifier_name": "Configuration",
+      "color": "LavenderBlush"
+    },
+    "PROC": {
+      "classifier_name": "Process Management",
+      "color": "PowderBlue"
+    },
+    "PKG": {
+      "classifier_name": "Package Management",
+      "color": "MistyRose"
+    },
+    "NET": {
+      "classifier_name": "Networking",
+      "color": "LightSteelBlue"
+    },
+    "STOR": {
+      "classifier_name": "Storage and Performance",
+      "color": "PaleTurquoise"
+    },
+    "RPI": {
+      "classifier_name": "Raspberry Pi",
+      "color": "LightPink"
+    },
+    "CLOUD": {
+      "classifier_name": "Cloud and Containers",
+      "color": "Aquamarine"
+    },
+    "DEV": {
+      "classifier_name": "Development Tools",
+      "color": "Lavender"
+    },
+    "ADMIN": {
+      "classifier_name": "System Administration",
+      "color": "Gainsboro"
+    },
+    "CAP": {
+      "classifier_name": "Capstone Projects",
+      "color": "Plum"
+    }
+  },
+  "concepts": [
+    {
+      "id": "learning-linux::operating-system",
+      "label": "Operating System",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::unix-history",
+        "learning-linux::shell",
+        "learning-linux::file-system",
+        "learning-linux::user-accounts",
+        "learning-linux::processes",
+        "learning-linux::network-basics",
+        "learning-linux::storage-devices",
+        "learning-linux::virtual-machines",
+        "learning-linux::linux-security",
+        "learning-linux::system-administration",
+        "learning-linux::display-configuration",
+        "learning-linux::audio-configuration"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::unix-history",
+      "label": "UNIX History",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::bell-labs",
+        "learning-linux::unix-philosophy",
+        "learning-linux::bsd-unix",
+        "learning-linux::unix-system-v"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::bell-labs",
+      "label": "Bell Labs",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ken-thompson",
+        "learning-linux::dennis-ritchie"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ken-thompson",
+      "label": "Ken Thompson",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "HIST",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::dennis-ritchie",
+      "label": "Dennis Ritchie",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::c-programming-language"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::c-programming-language",
+      "label": "C Programming Language",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::portability",
+        "learning-linux::c-vs-rust"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::unix-philosophy",
+      "label": "UNIX Philosophy",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::small-modular-tools",
+        "learning-linux::portability",
+        "learning-linux::open-source",
+        "learning-linux::posix-standards",
+        "learning-linux::shell"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::small-modular-tools",
+      "label": "Small Modular Tools",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::pipe-operator"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::portability",
+      "label": "Portability",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::posix-standards"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::open-source",
+      "label": "Open Source",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::gnu-project",
+        "learning-linux::linux-kernel",
+        "learning-linux::version-control"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gnu-project",
+      "label": "GNU Project",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::richard-stallman",
+        "learning-linux::linux-kernel"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::richard-stallman",
+      "label": "Richard Stallman",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "HIST",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::linux-kernel",
+      "label": "Linux Kernel",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::linus-torvalds",
+        "learning-linux::linux-distributions",
+        "learning-linux::future-of-linux"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::linus-torvalds",
+      "label": "Linus Torvalds",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "HIST",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::linux-distributions",
+      "label": "Linux Distributions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::debian",
+        "learning-linux::package-manager",
+        "learning-linux::raspberry-pi",
+        "learning-linux::raspberry-pi-os",
+        "learning-linux::python-on-linux",
+        "learning-linux::linux-careers"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::debian",
+      "label": "Debian",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ubuntu",
+        "learning-linux::apt-package-manager"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ubuntu",
+      "label": "Ubuntu",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ppa-repositories"
+      ],
+      "taxonomy_id": "HIST",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::bsd-unix",
+      "label": "BSD Unix",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "HIST",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::unix-system-v",
+      "label": "UNIX System V",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "HIST",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::posix-standards",
+      "label": "POSIX Standards",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "HIST",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::shell",
+      "label": "Shell",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::bash-shell",
+        "learning-linux::zsh-shell",
+        "learning-linux::terminal-emulator",
+        "learning-linux::shell-configuration",
+        "learning-linux::environment-variables",
+        "learning-linux::shell-variable",
+        "learning-linux::alias-command",
+        "learning-linux::shell-functions",
+        "learning-linux::login-shell",
+        "learning-linux::interactive-shell",
+        "learning-linux::non-interactive-shell",
+        "learning-linux::type-command",
+        "learning-linux::shell-scripts"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::bash-shell",
+      "label": "Bash Shell",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::bashrc-file",
+        "learning-linux::bash-profile"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::zsh-shell",
+      "label": "Zsh Shell",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::zshrc-file"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::terminal-emulator",
+      "label": "Terminal Emulator",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::command-line-interface",
+        "learning-linux::pi-terminal",
+        "learning-linux::screen-command",
+        "learning-linux::terminal-customization"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::command-line-interface",
+      "label": "Command Line Interface",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::shell-prompt",
+        "learning-linux::command-syntax",
+        "learning-linux::tab-completion",
+        "learning-linux::command-history",
+        "learning-linux::arrow-key-navigation",
+        "learning-linux::ctrl-key-shortcuts",
+        "learning-linux::clear-command",
+        "learning-linux::exit-command"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::shell-prompt",
+      "label": "Shell Prompt",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::custom-prompts"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::command-syntax",
+      "label": "Command Syntax",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::command-arguments",
+        "learning-linux::command-options",
+        "learning-linux::man-pages",
+        "learning-linux::help-command",
+        "learning-linux::echo-command",
+        "learning-linux::date-command",
+        "learning-linux::cal-command",
+        "learning-linux::uptime-command",
+        "learning-linux::whoami-command",
+        "learning-linux::hostname-command",
+        "learning-linux::uname-command",
+        "learning-linux::cowsay",
+        "learning-linux::figlet",
+        "learning-linux::sl-command",
+        "learning-linux::linux-easter-eggs"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::command-arguments",
+      "label": "Command Arguments",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::script-arguments"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::command-options",
+      "label": "Command Options",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::command-flags",
+        "learning-linux::ls-options",
+        "learning-linux::grep-options",
+        "learning-linux::ps-options",
+        "learning-linux::tar-options"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::command-flags",
+      "label": "Command Flags",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tab-completion",
+      "label": "Tab Completion",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::command-history",
+      "label": "Command History",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::history-command"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::history-command",
+      "label": "History Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::arrow-key-navigation",
+      "label": "Arrow Key Navigation",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ctrl-key-shortcuts",
+      "label": "Ctrl Key Shortcuts",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::clear-command",
+      "label": "Clear Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::exit-command",
+      "label": "Exit Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::man-pages",
+      "label": "Man Pages",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::whatis-command",
+        "learning-linux::apropos-command"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::help-command",
+      "label": "Help Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::whatis-command",
+      "label": "Whatis Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::apropos-command",
+      "label": "Apropos Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::echo-command",
+      "label": "Echo Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::printf-command"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::printf-command",
+      "label": "Printf Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::date-command",
+      "label": "Date Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cal-command",
+      "label": "Cal Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::uptime-command",
+      "label": "Uptime Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::whoami-command",
+      "label": "Whoami Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::hostname-command",
+      "label": "Hostname Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::uname-command",
+      "label": "Uname Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::version-information"
+      ],
+      "taxonomy_id": "SHELL",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::version-information",
+      "label": "Version Information",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "SHELL",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-system",
+      "label": "File System",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::root-directory",
+        "learning-linux::home-directory",
+        "learning-linux::current-directory",
+        "learning-linux::ls-command",
+        "learning-linux::directory-structure",
+        "learning-linux::file-command",
+        "learning-linux::stat-command",
+        "learning-linux::touch-command",
+        "learning-linux::mkdir-command",
+        "learning-linux::cp-command",
+        "learning-linux::mv-command",
+        "learning-linux::rm-command",
+        "learning-linux::cat-command",
+        "learning-linux::symbolic-links",
+        "learning-linux::hard-links",
+        "learning-linux::file-attributes",
+        "learning-linux::file-permissions",
+        "learning-linux::file-compression",
+        "learning-linux::find-command",
+        "learning-linux::locate-command",
+        "learning-linux::whereis-command",
+        "learning-linux::mount-command",
+        "learning-linux::df-command",
+        "learning-linux::du-command",
+        "learning-linux::file-system-types"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::root-directory",
+      "label": "Root Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::home-directory",
+        "learning-linux::absolute-path",
+        "learning-linux::directory-structure"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::home-directory",
+      "label": "Home Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::home-subdirectories",
+        "learning-linux::tilde-expansion",
+        "learning-linux::home-variable"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::current-directory",
+      "label": "Current Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::parent-directory",
+        "learning-linux::relative-path",
+        "learning-linux::pwd-command",
+        "learning-linux::cd-command"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::parent-directory",
+      "label": "Parent Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::relative-path"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::absolute-path",
+      "label": "Absolute Path",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cd-command",
+        "learning-linux::pathnames"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::relative-path",
+      "label": "Relative Path",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cd-command",
+        "learning-linux::pathnames"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::pwd-command",
+      "label": "Pwd Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cd-command",
+      "label": "Cd Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ls-command",
+      "label": "Ls Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ls-options",
+        "learning-linux::hidden-files",
+        "learning-linux::tree-command",
+        "learning-linux::file-globbing"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ls-options",
+      "label": "Ls Options",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::hidden-files",
+      "label": "Hidden Files",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::dot-files"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::dot-files",
+      "label": "Dot Files",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::vimrc-configuration",
+        "learning-linux::shell-configuration"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::directory-structure",
+      "label": "Directory Structure",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::bin-directory",
+        "learning-linux::etc-directory",
+        "learning-linux::var-directory",
+        "learning-linux::tmp-directory",
+        "learning-linux::usr-directory",
+        "learning-linux::opt-directory",
+        "learning-linux::dev-directory",
+        "learning-linux::proc-directory",
+        "learning-linux::tree-command"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::bin-directory",
+      "label": "Bin Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::path-variable"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::etc-directory",
+      "label": "Etc Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::fstab-file"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::var-directory",
+      "label": "Var Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::log-files"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::tmp-directory",
+      "label": "Tmp Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::usr-directory",
+      "label": "Usr Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::opt-directory",
+      "label": "Opt Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::dev-directory",
+      "label": "Dev Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::device-files"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::proc-directory",
+      "label": "Proc Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::home-subdirectories",
+      "label": "Home Subdirectories",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::desktop-directory",
+        "learning-linux::documents-directory",
+        "learning-linux::downloads-directory"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::desktop-directory",
+      "label": "Desktop Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::documents-directory",
+      "label": "Documents Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::downloads-directory",
+      "label": "Downloads Directory",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tree-command",
+      "label": "Tree Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-command",
+      "label": "File Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::stat-command",
+      "label": "Stat Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pathnames",
+      "label": "Pathnames",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cp-command",
+        "learning-linux::mv-command",
+        "learning-linux::symbolic-links",
+        "learning-linux::find-command"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::touch-command",
+      "label": "Touch Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::mkdir-command",
+      "label": "Mkdir Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::rmdir-command"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::rmdir-command",
+      "label": "Rmdir Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cp-command",
+      "label": "Cp Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::scp-command"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::mv-command",
+      "label": "Mv Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::rm-command",
+      "label": "Rm Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::rm-recursive"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::rm-recursive",
+      "label": "Rm Recursive",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cat-command",
+      "label": "Cat Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::head-command",
+        "learning-linux::tail-command",
+        "learning-linux::less-command",
+        "learning-linux::more-command",
+        "learning-linux::wc-command",
+        "learning-linux::sort-command",
+        "learning-linux::cut-command",
+        "learning-linux::paste-command",
+        "learning-linux::diff-command",
+        "learning-linux::grep-command",
+        "learning-linux::sed-command",
+        "learning-linux::awk-command",
+        "learning-linux::text-streams",
+        "learning-linux::tr-command",
+        "learning-linux::rev-command",
+        "learning-linux::fold-command",
+        "learning-linux::text-editors"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::head-command",
+      "label": "Head Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tail-command",
+      "label": "Tail Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::less-command",
+      "label": "Less Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::more-command",
+      "label": "More Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::wc-command",
+      "label": "Wc Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::sort-command",
+      "label": "Sort Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::uniq-command"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::uniq-command",
+      "label": "Uniq Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cut-command",
+      "label": "Cut Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::paste-command",
+      "label": "Paste Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::diff-command",
+      "label": "Diff Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::symbolic-links",
+      "label": "Symbolic Links",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ln-command"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::hard-links",
+      "label": "Hard Links",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ln-command"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ln-command",
+      "label": "Ln Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-globbing",
+      "label": "File Globbing",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::wildcards"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::wildcards",
+      "label": "Wildcards",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::asterisk-wildcard",
+        "learning-linux::question-mark-wildcard",
+        "learning-linux::bracket-expressions",
+        "learning-linux::brace-expansion",
+        "learning-linux::tilde-expansion",
+        "learning-linux::file-search-patterns"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::asterisk-wildcard",
+      "label": "Asterisk Wildcard",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::question-mark-wildcard",
+      "label": "Question Mark Wildcard",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::bracket-expressions",
+      "label": "Bracket Expressions",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::brace-expansion",
+      "label": "Brace Expansion",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tilde-expansion",
+      "label": "Tilde Expansion",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "FSYS",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-attributes",
+      "label": "File Attributes",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::file-timestamps"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::file-timestamps",
+      "label": "File Timestamps",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::find-by-time"
+      ],
+      "taxonomy_id": "FSYS",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::file-permissions",
+      "label": "File Permissions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::read-permission",
+        "learning-linux::write-permission",
+        "learning-linux::execute-permission",
+        "learning-linux::owner-permissions",
+        "learning-linux::group-permissions",
+        "learning-linux::other-permissions",
+        "learning-linux::chown-command",
+        "learning-linux::chgrp-command"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::read-permission",
+      "label": "Read Permission",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::owner-permissions",
+        "learning-linux::group-permissions",
+        "learning-linux::other-permissions"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::write-permission",
+      "label": "Write Permission",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::owner-permissions",
+        "learning-linux::group-permissions",
+        "learning-linux::other-permissions"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::execute-permission",
+      "label": "Execute Permission",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::owner-permissions",
+        "learning-linux::group-permissions",
+        "learning-linux::other-permissions",
+        "learning-linux::setuid-bit",
+        "learning-linux::setgid-bit",
+        "learning-linux::sticky-bit",
+        "learning-linux::script-permissions"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::owner-permissions",
+      "label": "Owner Permissions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::permission-notation"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::group-permissions",
+      "label": "Group Permissions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::permission-notation"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::other-permissions",
+      "label": "Other Permissions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::permission-notation"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::permission-notation",
+      "label": "Permission Notation",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::numeric-permissions",
+        "learning-linux::chmod-command"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::numeric-permissions",
+      "label": "Numeric Permissions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::chmod-command",
+        "learning-linux::umask-command"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::chmod-command",
+      "label": "Chmod Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::chown-command",
+      "label": "Chown Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::chgrp-command",
+      "label": "Chgrp Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::user-accounts",
+      "label": "User Accounts",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::root-user",
+        "learning-linux::user-groups",
+        "learning-linux::user-authentication",
+        "learning-linux::user-management"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::root-user",
+      "label": "Root User",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::sudo-command",
+        "learning-linux::su-command",
+        "learning-linux::setuid-bit"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::sudo-command",
+      "label": "Sudo Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::su-command",
+      "label": "Su Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::user-groups",
+      "label": "User Groups",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::primary-group",
+        "learning-linux::secondary-groups",
+        "learning-linux::setgid-bit",
+        "learning-linux::group-management"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::primary-group",
+      "label": "Primary Group",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::secondary-groups",
+      "label": "Secondary Groups",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::umask-command",
+      "label": "Umask Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::default-permissions"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::default-permissions",
+      "label": "Default Permissions",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::setuid-bit",
+      "label": "Setuid Bit",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::special-permissions"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::setgid-bit",
+      "label": "Setgid Bit",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::special-permissions"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::sticky-bit",
+      "label": "Sticky Bit",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::special-permissions"
+      ],
+      "taxonomy_id": "PERM",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::special-permissions",
+      "label": "Special Permissions",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PERM",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::grep-command",
+      "label": "Grep Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::grep-options",
+        "learning-linux::regular-expressions"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::grep-options",
+      "label": "Grep Options",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::regular-expressions",
+      "label": "Regular Expressions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::basic-regex",
+        "learning-linux::regex-metacharacters",
+        "learning-linux::sed-command",
+        "learning-linux::awk-patterns",
+        "learning-linux::vim-search-replace"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::basic-regex",
+      "label": "Basic Regex",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::extended-regex"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::extended-regex",
+      "label": "Extended Regex",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::regex-metacharacters",
+      "label": "Regex Metacharacters",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::regex-anchors",
+        "learning-linux::regex-character-classes",
+        "learning-linux::regex-quantifiers"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::regex-anchors",
+      "label": "Regex Anchors",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::regex-character-classes",
+      "label": "Regex Character Classes",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::regex-quantifiers",
+      "label": "Regex Quantifiers",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::sed-command",
+      "label": "Sed Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::sed-substitution"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::sed-substitution",
+      "label": "Sed Substitution",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::awk-command",
+      "label": "Awk Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::awk-fields",
+        "learning-linux::awk-patterns"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::awk-fields",
+      "label": "Awk Fields",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::awk-patterns",
+      "label": "Awk Patterns",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::text-streams",
+      "label": "Text Streams",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::standard-input",
+        "learning-linux::standard-output",
+        "learning-linux::standard-error"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::standard-input",
+      "label": "Standard Input",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::redirection",
+        "learning-linux::pipe-operator"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::standard-output",
+      "label": "Standard Output",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::redirection",
+        "learning-linux::pipe-operator",
+        "learning-linux::tee-command"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::standard-error",
+      "label": "Standard Error",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::redirection",
+        "learning-linux::error-redirection"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::redirection",
+      "label": "Redirection",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::output-redirection",
+        "learning-linux::input-redirection",
+        "learning-linux::error-redirection"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::output-redirection",
+      "label": "Output Redirection",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::append-redirection"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::input-redirection",
+      "label": "Input Redirection",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::append-redirection",
+      "label": "Append Redirection",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::error-redirection",
+      "label": "Error Redirection",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pipe-operator",
+      "label": "Pipe Operator",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::pipeline-commands"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::pipeline-commands",
+      "label": "Pipeline Commands",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::xargs-command",
+        "learning-linux::tee-command"
+      ],
+      "taxonomy_id": "TEXT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::xargs-command",
+      "label": "Xargs Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tee-command",
+      "label": "Tee Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tr-command",
+      "label": "Tr Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::rev-command",
+      "label": "Rev Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::fold-command",
+      "label": "Fold Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "TEXT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::text-editors",
+      "label": "Text Editors",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::nano-editor",
+        "learning-linux::vi-editor",
+        "learning-linux::editor-selection",
+        "learning-linux::vscode-on-linux",
+        "learning-linux::code-editors"
+      ],
+      "taxonomy_id": "EDIT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::nano-editor",
+      "label": "Nano Editor",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::nano-commands",
+        "learning-linux::nano-shortcuts"
+      ],
+      "taxonomy_id": "EDIT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::nano-commands",
+      "label": "Nano Commands",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::nano-shortcuts",
+      "label": "Nano Shortcuts",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vi-editor",
+      "label": "Vi Editor",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::vim-editor"
+      ],
+      "taxonomy_id": "EDIT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::vim-editor",
+      "label": "Vim Editor",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::vim-modes",
+        "learning-linux::vim-navigation",
+        "learning-linux::vim-save-and-quit",
+        "learning-linux::vim-search-replace",
+        "learning-linux::vimrc-configuration"
+      ],
+      "taxonomy_id": "EDIT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::vim-modes",
+      "label": "Vim Modes",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::vim-insert-mode",
+        "learning-linux::vim-command-mode",
+        "learning-linux::vim-visual-mode"
+      ],
+      "taxonomy_id": "EDIT",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::vim-insert-mode",
+      "label": "Vim Insert Mode",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vim-command-mode",
+      "label": "Vim Command Mode",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vim-visual-mode",
+      "label": "Vim Visual Mode",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vim-navigation",
+      "label": "Vim Navigation",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vim-save-and-quit",
+      "label": "Vim Save and Quit",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vim-search-replace",
+      "label": "Vim Search Replace",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vimrc-configuration",
+      "label": "Vimrc Configuration",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::editor-selection",
+      "label": "Editor Selection",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "EDIT",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::shell-configuration",
+      "label": "Shell Configuration",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::bashrc-file",
+        "learning-linux::bash-profile",
+        "learning-linux::zshrc-file",
+        "learning-linux::profile-file",
+        "learning-linux::source-command",
+        "learning-linux::shell-startup-order",
+        "learning-linux::terminal-customization"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::bashrc-file",
+      "label": "Bashrc File",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::shell-startup-order"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::bash-profile",
+      "label": "Bash Profile",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::shell-startup-order"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::zshrc-file",
+      "label": "Zshrc File",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::profile-file",
+      "label": "Profile File",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::environment-variables",
+      "label": "Environment Variables",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::path-variable",
+        "learning-linux::home-variable",
+        "learning-linux::user-variable",
+        "learning-linux::shell-variable",
+        "learning-linux::export-command",
+        "learning-linux::script-variables",
+        "learning-linux::ps1-variable"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::path-variable",
+      "label": "PATH Variable",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::which-command"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::home-variable",
+      "label": "HOME Variable",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::user-variable",
+      "label": "USER Variable",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::shell-variable",
+      "label": "SHELL Variable",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::export-command",
+      "label": "Export Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::source-command",
+      "label": "Source Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::alias-command",
+      "label": "Alias Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::creating-aliases",
+        "learning-linux::removing-aliases"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::creating-aliases",
+      "label": "Creating Aliases",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::removing-aliases",
+      "label": "Removing Aliases",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::shell-functions",
+      "label": "Shell Functions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::shell-scripts"
+      ],
+      "taxonomy_id": "CONF",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::shell-startup-order",
+      "label": "Shell Startup Order",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::login-shell",
+      "label": "Login Shell",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::interactive-shell",
+      "label": "Interactive Shell",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::non-interactive-shell",
+      "label": "Non-Interactive Shell",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CONF",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::processes",
+      "label": "Processes",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::process-id",
+        "learning-linux::parent-process",
+        "learning-linux::foreground-process",
+        "learning-linux::background-process",
+        "learning-linux::ps-command",
+        "learning-linux::top-command",
+        "learning-linux::kill-command",
+        "learning-linux::process-priority",
+        "learning-linux::pgrep-command",
+        "learning-linux::process-states",
+        "learning-linux::cron-daemon",
+        "learning-linux::system-monitoring",
+        "learning-linux::debugging-tools"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::process-id",
+      "label": "Process ID",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::parent-process",
+        "learning-linux::kill-command"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::parent-process",
+      "label": "Parent Process",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::child-process",
+        "learning-linux::zombie-processes"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::child-process",
+      "label": "Child Process",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::foreground-process",
+      "label": "Foreground Process",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::jobs-command",
+        "learning-linux::bg-command"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::background-process",
+      "label": "Background Process",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::jobs-command",
+        "learning-linux::fg-command",
+        "learning-linux::nohup-command",
+        "learning-linux::ampersand-operator"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ps-command",
+      "label": "Ps Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ps-options"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ps-options",
+      "label": "Ps Options",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::top-command",
+      "label": "Top Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::htop-command"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::htop-command",
+      "label": "Htop Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::kill-command",
+      "label": "Kill Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::kill-signals",
+        "learning-linux::killall-command",
+        "learning-linux::pkill-command"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::kill-signals",
+      "label": "Kill Signals",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::killall-command",
+      "label": "Killall Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pkill-command",
+      "label": "Pkill Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::jobs-command",
+      "label": "Jobs Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::fg-command",
+        "learning-linux::bg-command"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::fg-command",
+      "label": "Fg Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::bg-command",
+      "label": "Bg Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::nohup-command",
+      "label": "Nohup Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ampersand-operator",
+      "label": "Ampersand Operator",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::process-priority",
+      "label": "Process Priority",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::nice-command",
+        "learning-linux::renice-command"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::nice-command",
+      "label": "Nice Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::renice-command",
+      "label": "Renice Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pgrep-command",
+      "label": "Pgrep Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::process-states",
+      "label": "Process States",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::zombie-processes"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::zombie-processes",
+      "label": "Zombie Processes",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::package-manager",
+      "label": "Package Manager",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::software-packages",
+        "learning-linux::package-repositories",
+        "learning-linux::apt-package-manager",
+        "learning-linux::snap-packages",
+        "learning-linux::flatpak",
+        "learning-linux::homebrew"
+      ],
+      "taxonomy_id": "PKG",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::software-packages",
+      "label": "Software Packages",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::package-dependencies"
+      ],
+      "taxonomy_id": "PKG",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::package-repositories",
+      "label": "Package Repositories",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::repository-sources",
+        "learning-linux::ppa-repositories"
+      ],
+      "taxonomy_id": "PKG",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::apt-package-manager",
+      "label": "APT Package Manager",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::apt-update",
+        "learning-linux::apt-install",
+        "learning-linux::apt-remove",
+        "learning-linux::apt-search",
+        "learning-linux::apt-show",
+        "learning-linux::dpkg-command"
+      ],
+      "taxonomy_id": "PKG",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::apt-update",
+      "label": "Apt Update",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::apt-upgrade",
+        "learning-linux::software-updates"
+      ],
+      "taxonomy_id": "PKG",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::apt-upgrade",
+      "label": "Apt Upgrade",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::software-updates"
+      ],
+      "taxonomy_id": "PKG",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::apt-install",
+      "label": "Apt Install",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::apt-remove",
+      "label": "Apt Remove",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::apt-search",
+      "label": "Apt Search",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::apt-show",
+      "label": "Apt Show",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::dpkg-command",
+      "label": "Dpkg Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::snap-packages",
+      "label": "Snap Packages",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::flatpak",
+      "label": "Flatpak",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::homebrew",
+      "label": "Homebrew",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::brew-install",
+        "learning-linux::brew-update"
+      ],
+      "taxonomy_id": "PKG",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::brew-install",
+      "label": "Brew Install",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::brew-update",
+      "label": "Brew Update",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::package-dependencies",
+      "label": "Package Dependencies",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::repository-sources",
+      "label": "Repository Sources",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ppa-repositories",
+      "label": "PPA Repositories",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PKG",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::software-updates",
+      "label": "Software Updates",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::security-updates"
+      ],
+      "taxonomy_id": "PKG",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::network-basics",
+      "label": "Network Basics",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ip-address",
+        "learning-linux::mac-address",
+        "learning-linux::dns",
+        "learning-linux::network-interfaces",
+        "learning-linux::netstat-command",
+        "learning-linux::curl-command",
+        "learning-linux::wget-command",
+        "learning-linux::ssh-protocol",
+        "learning-linux::firewall-basics",
+        "learning-linux::network-ports",
+        "learning-linux::wifi-configuration",
+        "learning-linux::pi-ethernet-port",
+        "learning-linux::internet-of-things",
+        "learning-linux::cloud-computing",
+        "learning-linux::container-networking",
+        "learning-linux::network-administrator"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ip-address",
+      "label": "IP Address",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::dns",
+        "learning-linux::ping-command",
+        "learning-linux::traceroute-command"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::mac-address",
+      "label": "MAC Address",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::dns",
+      "label": "DNS",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::hostname-resolution",
+        "learning-linux::pi-hole-ad-blocker",
+        "learning-linux::dns-server"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::hostname-resolution",
+      "label": "Hostname Resolution",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::network-interfaces",
+      "label": "Network Interfaces",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ifconfig-command",
+        "learning-linux::ip-command"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ifconfig-command",
+      "label": "Ifconfig Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ip-command",
+      "label": "Ip Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ping-command",
+      "label": "Ping Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::network-troubleshooting"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::traceroute-command",
+      "label": "Traceroute Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::network-troubleshooting"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::netstat-command",
+      "label": "Netstat Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ss-command",
+        "learning-linux::network-troubleshooting"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ss-command",
+      "label": "Ss Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::curl-command",
+      "label": "Curl Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::wget-command",
+      "label": "Wget Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ssh-protocol",
+      "label": "SSH Protocol",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ssh-command",
+        "learning-linux::ssh-keys",
+        "learning-linux::ssh-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ssh-command",
+      "label": "SSH Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ssh-config",
+        "learning-linux::scp-command",
+        "learning-linux::remote-access",
+        "learning-linux::ssh-to-cloud"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ssh-keys",
+      "label": "SSH Keys",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::github-ssh-keys",
+        "learning-linux::key-based-auth"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ssh-config",
+      "label": "SSH Config",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::scp-command",
+      "label": "SCP Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::rsync-command",
+        "learning-linux::secure-file-transfer"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::rsync-command",
+      "label": "Rsync Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::backup-server"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::firewall-basics",
+      "label": "Firewall Basics",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ufw-firewall"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ufw-firewall",
+      "label": "UFW Firewall",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::firewall-rules"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::network-ports",
+      "label": "Network Ports",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::netstat-command",
+        "learning-linux::port-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::wifi-configuration",
+      "label": "WiFi Configuration",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::pi-wifi"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::network-troubleshooting",
+      "label": "Network Troubleshooting",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-compression",
+      "label": "File Compression",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::gzip-command",
+        "learning-linux::bzip2-command",
+        "learning-linux::xz-command",
+        "learning-linux::tar-command",
+        "learning-linux::zip-command",
+        "learning-linux::archive-formats",
+        "learning-linux::compression-ratios",
+        "learning-linux::7zip-command"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gzip-command",
+      "label": "Gzip Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::gunzip-command"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gunzip-command",
+      "label": "Gunzip Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::bzip2-command",
+      "label": "Bzip2 Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::xz-command",
+      "label": "Xz Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tar-command",
+      "label": "Tar Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::tar-create",
+        "learning-linux::tar-extract",
+        "learning-linux::tar-options",
+        "learning-linux::file-archiving"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::tar-create",
+      "label": "Tar Create",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tar-extract",
+      "label": "Tar Extract",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::tar-options",
+      "label": "Tar Options",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::zip-command",
+      "label": "Zip Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::unzip-command",
+        "learning-linux::file-archiving"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::unzip-command",
+      "label": "Unzip Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::archive-formats",
+      "label": "Archive Formats",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::compression-ratios",
+      "label": "Compression Ratios",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::7zip-command",
+      "label": "7zip Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-archiving",
+      "label": "File Archiving",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::find-command",
+      "label": "Find Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::find-by-name",
+        "learning-linux::find-by-type",
+        "learning-linux::find-by-size",
+        "learning-linux::find-by-time",
+        "learning-linux::find-with-exec",
+        "learning-linux::file-search-patterns",
+        "learning-linux::recursive-search",
+        "learning-linux::search-optimization"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::find-by-name",
+      "label": "Find by Name",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::find-by-type",
+      "label": "Find by Type",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::find-by-size",
+      "label": "Find by Size",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::find-by-time",
+      "label": "Find by Time",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::find-with-exec",
+      "label": "Find with Exec",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::locate-command",
+      "label": "Locate Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::updatedb-command",
+        "learning-linux::search-optimization",
+        "learning-linux::index-databases"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::updatedb-command",
+      "label": "Updatedb Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::index-databases"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::which-command",
+      "label": "Which Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::whereis-command",
+      "label": "Whereis Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::type-command",
+      "label": "Type Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-search-patterns",
+      "label": "File Search Patterns",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::recursive-search",
+      "label": "Recursive Search",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::search-optimization",
+      "label": "Search Optimization",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::index-databases",
+      "label": "Index Databases",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cron-daemon",
+      "label": "Cron Daemon",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::crontab-command",
+        "learning-linux::at-command",
+        "learning-linux::systemd-timers",
+        "learning-linux::anacron"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::crontab-command",
+      "label": "Crontab Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cron-syntax"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::cron-syntax",
+      "label": "Cron Syntax",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cron-schedule-fields",
+        "learning-linux::cron-examples"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::cron-schedule-fields",
+      "label": "Cron Schedule Fields",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cron-examples"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::cron-examples",
+      "label": "Cron Examples",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::at-command",
+      "label": "At Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::batch-command"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::batch-command",
+      "label": "Batch Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::systemd-timers",
+      "label": "Systemd Timers",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::anacron",
+      "label": "Anacron",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::shell-scripts",
+      "label": "Shell Scripts",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::script-shebang",
+        "learning-linux::script-permissions",
+        "learning-linux::script-variables",
+        "learning-linux::script-arguments",
+        "learning-linux::script-exit-codes",
+        "learning-linux::automation-scripts",
+        "learning-linux::final-projects"
+      ],
+      "taxonomy_id": "PROC",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::script-shebang",
+      "label": "Script Shebang",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::script-permissions",
+      "label": "Script Permissions",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::script-variables",
+      "label": "Script Variables",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::script-arguments",
+      "label": "Script Arguments",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::script-exit-codes",
+      "label": "Script Exit Codes",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "PROC",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::storage-devices",
+      "label": "Storage Devices",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::block-devices",
+        "learning-linux::character-devices",
+        "learning-linux::device-files",
+        "learning-linux::mount-command",
+        "learning-linux::disk-partitions",
+        "learning-linux::lsblk-command",
+        "learning-linux::df-command",
+        "learning-linux::usb-drives",
+        "learning-linux::swap-space",
+        "learning-linux::container-volumes"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::block-devices",
+      "label": "Block Devices",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::character-devices",
+      "label": "Character Devices",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::device-files",
+      "label": "Device Files",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::mount-command",
+      "label": "Mount Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::umount-command",
+        "learning-linux::fstab-file"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::umount-command",
+      "label": "Umount Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::fstab-file",
+      "label": "Fstab File",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::disk-partitions",
+      "label": "Disk Partitions",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::fdisk-command",
+        "learning-linux::swap-partition"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::fdisk-command",
+      "label": "Fdisk Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::lsblk-command",
+      "label": "Lsblk Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::df-command",
+      "label": "Df Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::disk-usage"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::du-command",
+      "label": "Du Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::disk-usage"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::usb-drives",
+      "label": "USB Drives",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::flash-drives",
+        "learning-linux::pi-usb-ports"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::flash-drives",
+      "label": "Flash Drives",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::swap-space",
+      "label": "Swap Space",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::swap-file",
+        "learning-linux::swap-partition"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::swap-file",
+      "label": "Swap File",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::swap-partition",
+      "label": "Swap Partition",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-system-types",
+      "label": "File System Types",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ext4-file-system",
+        "learning-linux::ntfs-support"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ext4-file-system",
+      "label": "Ext4 File System",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ntfs-support",
+      "label": "NTFS Support",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::system-monitoring",
+      "label": "System Monitoring",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cpu-usage",
+        "learning-linux::memory-usage",
+        "learning-linux::vmstat-command",
+        "learning-linux::iostat-command",
+        "learning-linux::sar-command",
+        "learning-linux::performance-tuning",
+        "learning-linux::system-load",
+        "learning-linux::monitoring-dashboard"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::cpu-usage",
+      "label": "CPU Usage",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::top-command",
+        "learning-linux::cpu-benchmarks"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::memory-usage",
+      "label": "Memory Usage",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::top-command",
+        "learning-linux::free-command"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::disk-usage",
+      "label": "Disk Usage",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::disk-benchmarks"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::free-command",
+      "label": "Free Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vmstat-command",
+      "label": "Vmstat Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::iostat-command",
+      "label": "Iostat Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::sar-command",
+      "label": "Sar Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::performance-tuning",
+      "label": "Performance Tuning",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cpu-benchmarks",
+        "learning-linux::disk-benchmarks",
+        "learning-linux::gpu-performance",
+        "learning-linux::bottleneck-analysis"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::cpu-benchmarks",
+      "label": "CPU Benchmarks",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::bottleneck-analysis"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::disk-benchmarks",
+      "label": "Disk Benchmarks",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::bottleneck-analysis"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gpu-performance",
+      "label": "GPU Performance",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::system-load",
+      "label": "System Load",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::load-average"
+      ],
+      "taxonomy_id": "STOR",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::load-average",
+      "label": "Load Average",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::bottleneck-analysis",
+      "label": "Bottleneck Analysis",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "STOR",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::raspberry-pi",
+      "label": "Raspberry Pi",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::raspberry-pi-models",
+        "learning-linux::raspberry-pi-os",
+        "learning-linux::pi-gpio-header",
+        "learning-linux::pi-camera-module",
+        "learning-linux::pi-usb-ports",
+        "learning-linux::pi-hdmi-ports",
+        "learning-linux::pi-ethernet-port",
+        "learning-linux::pi-wifi",
+        "learning-linux::pi-bluetooth",
+        "learning-linux::internet-of-things",
+        "learning-linux::retropie"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::raspberry-pi-models",
+      "label": "Raspberry Pi Models",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::raspberry-pi-zero",
+        "learning-linux::raspberry-pi-4",
+        "learning-linux::raspberry-pi-5"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::raspberry-pi-zero",
+      "label": "Raspberry Pi Zero",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::raspberry-pi-4",
+      "label": "Raspberry Pi 4",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::raspberry-pi-5",
+      "label": "Raspberry Pi 5",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::raspberry-pi-500"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::raspberry-pi-500",
+      "label": "Raspberry Pi 500",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::raspberry-pi-os",
+      "label": "Raspberry Pi OS",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::pi-imager"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::pi-imager",
+      "label": "Pi Imager",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::sd-card-setup"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::sd-card-setup",
+      "label": "SD Card Setup",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::pi-first-boot"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::pi-first-boot",
+      "label": "Pi First Boot",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::raspi-config",
+        "learning-linux::pi-desktop",
+        "learning-linux::pi-terminal"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::raspi-config",
+      "label": "Raspi-Config",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-desktop",
+      "label": "Pi Desktop",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-terminal",
+      "label": "Pi Terminal",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-gpio-header",
+      "label": "Pi GPIO Header",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::gpio-pins"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gpio-pins",
+      "label": "GPIO Pins",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::gpio-voltage",
+        "learning-linux::gpio-ground-pins",
+        "learning-linux::gpio-power-pins",
+        "learning-linux::gpio-data-pins",
+        "learning-linux::gpio-programming"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gpio-voltage",
+      "label": "GPIO Voltage",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::gpio-ground-pins",
+      "label": "GPIO Ground Pins",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::gpio-power-pins",
+      "label": "GPIO Power Pins",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::external-power"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gpio-data-pins",
+      "label": "GPIO Data Pins",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-camera-module",
+      "label": "Pi Camera Module",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::security-cameras"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::pi-usb-ports",
+      "label": "Pi USB Ports",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-hdmi-ports",
+      "label": "Pi HDMI Ports",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-ethernet-port",
+      "label": "Pi Ethernet Port",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-wifi",
+      "label": "Pi WiFi",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-bluetooth",
+      "label": "Pi Bluetooth",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::bluetooth-audio"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gpio-programming",
+      "label": "GPIO Programming",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::gpio-input",
+        "learning-linux::gpio-output",
+        "learning-linux::digital-signals",
+        "learning-linux::pwm-signals"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gpio-input",
+      "label": "GPIO Input",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::button-input",
+        "learning-linux::sensor-reading"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gpio-output",
+      "label": "GPIO Output",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::led-control",
+        "learning-linux::motor-control"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::digital-signals",
+      "label": "Digital Signals",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pwm-signals",
+      "label": "PWM Signals",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::led-control",
+        "learning-linux::motor-control"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::led-control",
+      "label": "LED Control",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::led-strip"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::led-strip",
+      "label": "LED Strip",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::neopixel-leds"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::neopixel-leds",
+      "label": "NeoPixel LEDs",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::button-input",
+      "label": "Button Input",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::sensor-reading",
+      "label": "Sensor Reading",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::temperature-sensor",
+        "learning-linux::motion-sensor",
+        "learning-linux::light-sensor",
+        "learning-linux::iot-sensors"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::temperature-sensor",
+      "label": "Temperature Sensor",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::temperature-logging"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::motion-sensor",
+      "label": "Motion Sensor",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::motion-detection"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::light-sensor",
+      "label": "Light Sensor",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::motor-control",
+      "label": "Motor Control",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::dc-motors",
+        "learning-linux::servo-motors",
+        "learning-linux::stepper-motors",
+        "learning-linux::motor-drivers",
+        "learning-linux::external-power"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::dc-motors",
+      "label": "DC Motors",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::servo-motors",
+      "label": "Servo Motors",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::stepper-motors",
+      "label": "Stepper Motors",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::motor-drivers",
+      "label": "Motor Drivers",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::external-power",
+      "label": "External Power",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::current-monitoring"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::current-monitoring",
+      "label": "Current Monitoring",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::internet-of-things",
+      "label": "Internet of Things",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::iot-sensors",
+        "learning-linux::iot-protocols",
+        "learning-linux::home-automation"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::iot-sensors",
+      "label": "IoT Sensors",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::iot-protocols",
+      "label": "IoT Protocols",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::mqtt-protocol"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::mqtt-protocol",
+      "label": "MQTT Protocol",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::home-automation",
+      "label": "Home Automation",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::smart-home-hub",
+        "learning-linux::home-monitoring",
+        "learning-linux::remote-access",
+        "learning-linux::web-dashboard",
+        "learning-linux::home-assistant",
+        "learning-linux::node-red",
+        "learning-linux::ifttt-integration",
+        "learning-linux::voice-control",
+        "learning-linux::automation-scripts"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::smart-home-hub",
+      "label": "Smart Home Hub",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::home-monitoring",
+      "label": "Home Monitoring",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::temperature-logging",
+        "learning-linux::security-cameras",
+        "learning-linux::motion-detection",
+        "learning-linux::data-logging",
+        "learning-linux::alerts-and-notifications"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::temperature-logging",
+      "label": "Temperature Logging",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::security-cameras",
+      "label": "Security Cameras",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::motion-detection",
+      "label": "Motion Detection",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::remote-access",
+      "label": "Remote Access",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::web-dashboard",
+      "label": "Web Dashboard",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::data-logging",
+      "label": "Data Logging",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::time-series-data"
+      ],
+      "taxonomy_id": "RPI",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::time-series-data",
+      "label": "Time Series Data",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::alerts-and-notifications",
+      "label": "Alerts and Notifications",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::home-assistant",
+      "label": "Home Assistant",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::node-red",
+      "label": "Node-RED",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::ifttt-integration",
+      "label": "IFTTT Integration",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::voice-control",
+      "label": "Voice Control",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::automation-scripts",
+      "label": "Automation Scripts",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "RPI",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cloud-computing",
+      "label": "Cloud Computing",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::virtual-machines",
+        "learning-linux::cloud-providers",
+        "learning-linux::docker",
+        "learning-linux::terraform-basics",
+        "learning-linux::cloud-security",
+        "learning-linux::cost-management",
+        "learning-linux::cloud-engineer"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::virtual-machines",
+      "label": "Virtual Machines",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cloud-linux-instances"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::cloud-providers",
+      "label": "Cloud Providers",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::aws-basics"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::aws-basics",
+      "label": "AWS Basics",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cloud-linux-instances"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::cloud-linux-instances",
+      "label": "Cloud Linux Instances",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ssh-to-cloud",
+        "learning-linux::cloud-deployment"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ssh-to-cloud",
+      "label": "SSH to Cloud",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::docker",
+      "label": "Docker",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::docker-images",
+        "learning-linux::docker-containers",
+        "learning-linux::docker-commands",
+        "learning-linux::devops-engineer"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::docker-images",
+      "label": "Docker Images",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::docker-containers",
+        "learning-linux::docker-build",
+        "learning-linux::container-registry"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::docker-containers",
+      "label": "Docker Containers",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::docker-run",
+        "learning-linux::docker-compose",
+        "learning-linux::container-networking",
+        "learning-linux::container-volumes",
+        "learning-linux::microservices"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::docker-commands",
+      "label": "Docker Commands",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::docker-run",
+        "learning-linux::docker-build"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::docker-run",
+      "label": "Docker Run",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::docker-build",
+      "label": "Docker Build",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::dockerfile"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::dockerfile",
+      "label": "Dockerfile",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::docker-compose",
+      "label": "Docker Compose",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::container-networking",
+      "label": "Container Networking",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::container-volumes",
+      "label": "Container Volumes",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::terraform-basics",
+      "label": "Terraform Basics",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::infrastructure-as-code",
+        "learning-linux::terraform-providers",
+        "learning-linux::terraform-resources",
+        "learning-linux::cloud-deployment",
+        "learning-linux::devops-engineer"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::infrastructure-as-code",
+      "label": "Infrastructure as Code",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::terraform-providers",
+      "label": "Terraform Providers",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::terraform-resources",
+      "label": "Terraform Resources",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cloud-deployment",
+      "label": "Cloud Deployment",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::container-registry",
+      "label": "Container Registry",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::microservices",
+      "label": "Microservices",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cloud-security",
+      "label": "Cloud Security",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cost-management",
+      "label": "Cost Management",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CLOUD",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::version-control",
+      "label": "Version Control",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::git-basics",
+        "learning-linux::github"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::git-basics",
+      "label": "Git Basics",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::git-init",
+        "learning-linux::git-clone",
+        "learning-linux::git-add",
+        "learning-linux::git-pull",
+        "learning-linux::git-branch"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::git-init",
+      "label": "Git Init",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::git-clone",
+      "label": "Git Clone",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::git-add",
+      "label": "Git Add",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::git-commit"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::git-commit",
+      "label": "Git Commit",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::git-push"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::git-push",
+      "label": "Git Push",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::git-pull",
+      "label": "Git Pull",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::git-branch",
+      "label": "Git Branch",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::git-merge"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::git-merge",
+      "label": "Git Merge",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::github",
+      "label": "GitHub",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::github-repositories",
+        "learning-linux::github-ssh-keys"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::github-repositories",
+      "label": "GitHub Repositories",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::github-ssh-keys",
+      "label": "GitHub SSH Keys",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::python-on-linux",
+      "label": "Python on Linux",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::python3-command",
+        "learning-linux::pip-package-manager",
+        "learning-linux::virtual-environments",
+        "learning-linux::thonny-ide"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::python3-command",
+      "label": "Python3 Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pip-package-manager",
+      "label": "Pip Package Manager",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::virtual-environments",
+      "label": "Virtual Environments",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::venv-module",
+        "learning-linux::conda-environment"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::venv-module",
+      "label": "Venv Module",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::conda-environment",
+      "label": "Conda Environment",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vscode-on-linux",
+      "label": "VSCode on Linux",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::thonny-ide",
+      "label": "Thonny IDE",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::code-editors",
+      "label": "Code Editors",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::debugging-tools",
+      "label": "Debugging Tools",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::gdb-debugger",
+        "learning-linux::print-debugging"
+      ],
+      "taxonomy_id": "DEV",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gdb-debugger",
+      "label": "GDB Debugger",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::print-debugging",
+      "label": "Print Debugging",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "DEV",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::linux-security",
+      "label": "Linux Security",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::cloud-security",
+        "learning-linux::user-authentication",
+        "learning-linux::ssh-security",
+        "learning-linux::port-security",
+        "learning-linux::file-encryption",
+        "learning-linux::secure-file-transfer",
+        "learning-linux::security-updates",
+        "learning-linux::vulnerability-scanning",
+        "learning-linux::log-files",
+        "learning-linux::security-best-practices"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::user-authentication",
+      "label": "User Authentication",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::password-security"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::password-security",
+      "label": "Password Security",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::password-management"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ssh-security",
+      "label": "SSH Security",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::key-based-auth"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::key-based-auth",
+      "label": "Key-Based Auth",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::firewall-rules",
+      "label": "Firewall Rules",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::port-security",
+      "label": "Port Security",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::file-encryption",
+      "label": "File Encryption",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::gpg-encryption"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::gpg-encryption",
+      "label": "GPG Encryption",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::secure-file-transfer",
+      "label": "Secure File Transfer",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::security-updates",
+      "label": "Security Updates",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vulnerability-scanning",
+      "label": "Vulnerability Scanning",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::log-files",
+      "label": "Log Files",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::audit-logs"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::audit-logs",
+      "label": "Audit Logs",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::security-best-practices",
+      "label": "Security Best Practices",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "NET",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::system-administration",
+      "label": "System Administration",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::user-management",
+        "learning-linux::group-management",
+        "learning-linux::shutdown-command",
+        "learning-linux::system-services",
+        "learning-linux::boot-process",
+        "learning-linux::system-administrator"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::user-management",
+      "label": "User Management",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::useradd-command",
+        "learning-linux::usermod-command",
+        "learning-linux::userdel-command"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::useradd-command",
+      "label": "Useradd Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::usermod-command",
+      "label": "Usermod Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::userdel-command",
+      "label": "Userdel Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::group-management",
+      "label": "Group Management",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::password-management",
+      "label": "Password Management",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::passwd-command"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::passwd-command",
+      "label": "Passwd Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::shutdown-command",
+      "label": "Shutdown Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::reboot-command"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::reboot-command",
+      "label": "Reboot Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::system-services",
+      "label": "System Services",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::systemd-timers",
+        "learning-linux::systemctl-command"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::systemctl-command",
+      "label": "Systemctl Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::service-status",
+        "learning-linux::service-start-stop"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::service-status",
+      "label": "Service Status",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::service-start-stop",
+      "label": "Service Start Stop",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::boot-process",
+      "label": "Boot Process",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::display-configuration",
+      "label": "Display Configuration",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::hdmi-output",
+        "learning-linux::multiple-displays",
+        "learning-linux::display-resolution"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::hdmi-output",
+      "label": "HDMI Output",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::pi-hdmi-ports"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::multiple-displays",
+      "label": "Multiple Displays",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::display-resolution",
+      "label": "Display Resolution",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::screen-command",
+      "label": "Screen Command",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::tmux-multiplexer"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::tmux-multiplexer",
+      "label": "Tmux Multiplexer",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::audio-configuration",
+      "label": "Audio Configuration",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::alsa-audio",
+        "learning-linux::pulseaudio",
+        "learning-linux::volume-control",
+        "learning-linux::audio-output",
+        "learning-linux::bluetooth-audio",
+        "learning-linux::usb-audio",
+        "learning-linux::sound-testing",
+        "learning-linux::audio-troubleshooting"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::alsa-audio",
+      "label": "ALSA Audio",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pulseaudio",
+      "label": "PulseAudio",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::volume-control",
+      "label": "Volume Control",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::audio-output",
+      "label": "Audio Output",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::bluetooth-audio",
+      "label": "Bluetooth Audio",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::usb-audio",
+      "label": "USB Audio",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::sound-testing",
+      "label": "Sound Testing",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::audio-troubleshooting",
+      "label": "Audio Troubleshooting",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::terminal-customization",
+      "label": "Terminal Customization",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::custom-prompts",
+        "learning-linux::terminal-colors",
+        "learning-linux::neofetch"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::custom-prompts",
+      "label": "Custom Prompts",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ps1-variable"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ps1-variable",
+      "label": "PS1 Variable",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::terminal-colors",
+      "label": "Terminal Colors",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::ansi-color-codes"
+      ],
+      "taxonomy_id": "ADMIN",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::ansi-color-codes",
+      "label": "ANSI Color Codes",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::neofetch",
+      "label": "Neofetch",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cowsay",
+      "label": "Cowsay",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::figlet",
+      "label": "Figlet",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::sl-command",
+      "label": "Sl Command",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::linux-easter-eggs",
+      "label": "Linux Easter Eggs",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "ADMIN",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::final-projects",
+      "label": "Final Projects",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::web-server-setup",
+        "learning-linux::game-server",
+        "learning-linux::media-server",
+        "learning-linux::pi-hole-ad-blocker",
+        "learning-linux::dns-server",
+        "learning-linux::vpn-server",
+        "learning-linux::retro-gaming",
+        "learning-linux::network-storage",
+        "learning-linux::backup-server",
+        "learning-linux::monitoring-dashboard",
+        "learning-linux::portfolio-project"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::web-server-setup",
+      "label": "Web Server Setup",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::nginx-server",
+        "learning-linux::apache-server"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::nginx-server",
+      "label": "Nginx Server",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::apache-server",
+      "label": "Apache Server",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::game-server",
+      "label": "Game Server",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::minecraft-server"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::minecraft-server",
+      "label": "Minecraft Server",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::media-server",
+      "label": "Media Server",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::plex-server",
+        "learning-linux::jellyfin-server"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::plex-server",
+      "label": "Plex Server",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::jellyfin-server",
+      "label": "Jellyfin Server",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::pi-hole-ad-blocker",
+      "label": "Pi-Hole Ad Blocker",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::dns-server",
+      "label": "DNS Server",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::vpn-server",
+      "label": "VPN Server",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::wireguard-vpn"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::wireguard-vpn",
+      "label": "WireGuard VPN",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::retro-gaming",
+      "label": "Retro Gaming",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::retropie"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::retropie",
+      "label": "RetroPie",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::network-storage",
+      "label": "Network Storage",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::nas-server"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::nas-server",
+      "label": "NAS Server",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::backup-server",
+      "label": "Backup Server",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::monitoring-dashboard",
+      "label": "Monitoring Dashboard",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::portfolio-project",
+      "label": "Portfolio Project",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::linux-careers",
+      "label": "Linux Careers",
+      "subject_id": "learning-linux",
+      "dependencies": [
+        "learning-linux::system-administrator",
+        "learning-linux::devops-engineer",
+        "learning-linux::network-administrator",
+        "learning-linux::cloud-engineer",
+        "learning-linux::linux-certifications",
+        "learning-linux::linux-in-space",
+        "learning-linux::linux-in-cars"
+      ],
+      "taxonomy_id": "CAP",
+      "level": "core"
+    },
+    {
+      "id": "learning-linux::system-administrator",
+      "label": "System Administrator",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::devops-engineer",
+      "label": "DevOps Engineer",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::network-administrator",
+      "label": "Network Administrator",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::cloud-engineer",
+      "label": "Cloud Engineer",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::linux-certifications",
+      "label": "Linux Certifications",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::linux-in-space",
+      "label": "Linux in Space",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::linux-in-cars",
+      "label": "Linux in Cars",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::c-vs-rust",
+      "label": "C vs Rust",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    },
+    {
+      "id": "learning-linux::future-of-linux",
+      "label": "Future of Linux",
+      "subject_id": "learning-linux",
+      "dependencies": [],
+      "taxonomy_id": "CAP",
+      "level": "foundational"
+    }
+  ]
+}

@@ -1,0 +1,1538 @@
+{
+  "subject_id": "intelligent-textbooks",
+  "title": "intelligent-textbooks",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {},
+  "concepts": [
+    {
+      "id": "intelligent-textbooks::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [],
+      "taxonomy_id": "found",
+      "level": "foundational"
+    },
+    {
+      "id": "intelligent-textbooks::microsite",
+      "label": "Microsite",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::intelligent-textbook"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::build-process",
+      "label": "Build Process",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::microsite"
+      ],
+      "taxonomy_id": "found",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::docs-directory",
+      "label": "Docs Directory",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::build-process"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::mkdocs",
+      "label": "Mkdocs",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::build-process"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::markdown-basics",
+      "label": "Markdown Basics",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::markdown-images",
+      "label": "Markdown Images",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-basics"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::image-directory",
+      "label": "Image Directory",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-images"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::markdown-links",
+      "label": "Markdown Links",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-basics"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::deep-linking",
+      "label": "Deep Linking",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-links"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::github-pages",
+      "label": "GitHub Pages",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::build-process",
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::mkdocs-material",
+      "label": "Mkdocs Material",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::mkdocs-yaml",
+      "label": "Mkdocs Yaml",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::theme-features",
+      "label": "Theme Features",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-material"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::navigation-config",
+      "label": "Navigation Config",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::top-navigation",
+      "label": "Top Navigation",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::navigation-config"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::footer-navigation",
+      "label": "Footer Navigation",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::navigation-config"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::navigation-options",
+      "label": "Navigation Options",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::navigation-config"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::previous-page",
+      "label": "Previous Page",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::navigation-config",
+        "intelligent-textbooks::navigation-options"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::next-page",
+      "label": "Next Page",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::navigation-config",
+        "intelligent-textbooks::navigation-options"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::logo-setup",
+      "label": "Logo Setup",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::favicon-setup",
+      "label": "Favicon Setup",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::color-palette",
+      "label": "Color Palette",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::primary-color",
+      "label": "Primary Color",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::theme-features",
+        "intelligent-textbooks::color-palette"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::accent-color",
+      "label": "Accent Color",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::theme-features",
+        "intelligent-textbooks::color-palette"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::code-copy",
+      "label": "Code Copy",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::edit-links",
+      "label": "Edit Links",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::theme-features",
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::screen-layout",
+      "label": "Screen Layout",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::site-search",
+      "label": "Site Search",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::advanced-linking",
+      "label": "Advanced Linking",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::deep-linking"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::yaml-config",
+      "label": "Yaml Config",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::admonitions",
+      "label": "Admonitions",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-material",
+        "intelligent-textbooks::mkdocs-yaml"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::equations",
+      "label": "Equations",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-material",
+        "intelligent-textbooks::mkdocs-yaml"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::latex",
+      "label": "LaTeX",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::equations"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::mathjax",
+      "label": "MathJax",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::latex",
+        "intelligent-textbooks::latex"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::code-highlighting",
+      "label": "Code Highlighting",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-basics",
+        "intelligent-textbooks::mkdocs-yaml"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::interactive-content",
+      "label": "Interactive Content",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-basics"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::simulations",
+      "label": "Simulations",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::interactive-content"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::animations",
+      "label": "Animations",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::interactive-content"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::microsims",
+      "label": "MicroSims",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::interactive-content",
+        "intelligent-textbooks::simulations",
+        "intelligent-textbooks::animations"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::iframes",
+      "label": "Iframes",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::microsims"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::glossary",
+      "label": "Glossary",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-links"
+      ],
+      "taxonomy_id": "2",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::glossary-linking",
+      "label": "Glossary Linking",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::deep-linking",
+        "intelligent-textbooks::glossary"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::table-of-contents",
+      "label": "Table Of Contents",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-links"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::quizzes",
+      "label": "Quizzes",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::interactive-content"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::multiple-choice",
+      "label": "Multiple Choice",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::quizzes"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::mk-in-html",
+      "label": "Mk_In_Html",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs",
+        "intelligent-textbooks::multiple-choice"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::logo-css",
+      "label": "Logo CSS",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::logo-setup",
+        "intelligent-textbooks::custom-css"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::favicon-generation",
+      "label": "Favicon Generation",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::favicon-setup"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::custom-css",
+      "label": "Custom CSS",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::html-templates",
+      "label": "HTML Templates",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::theme-features",
+        "intelligent-textbooks::microsims"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::social-previews",
+      "label": "Social Previews",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::html-templates"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::open-graph",
+      "label": "Open Graph",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::social-previews"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::preview-testing",
+      "label": "Preview Testing",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::social-previews",
+        "intelligent-textbooks::open-graph"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::image-standards",
+      "label": "Image Standards",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-images",
+        "intelligent-textbooks::open-graph"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::page-metadata",
+      "label": "Page Metadata",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::social-testing",
+      "label": "Social Testing",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::social-previews",
+        "intelligent-textbooks::preview-testing"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::feedback-forms",
+      "label": "Feedback Forms",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::footer-navigation"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::google-analytics",
+      "label": "Google Analytics",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml",
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::visual-studio-code",
+      "label": "Visual Studio Code",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs",
+        "intelligent-textbooks::github-pages"
+      ],
+      "taxonomy_id": "1",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::markdown-plugins",
+      "label": "Markdown Plugins",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-basics"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::github-integration",
+      "label": "GitHub Integration",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::github-pages"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::git-commands",
+      "label": "Git Commands",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::github-integration"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::conda-setup",
+      "label": "Conda Setup",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::conda-commands",
+      "label": "Conda Commands",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::conda-setup"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::semantic-search",
+      "label": "Semantic Search",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::site-search"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::embeddings",
+      "label": "Embeddings",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::semantic-search"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::vector-stores",
+      "label": "Vector Stores",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::embeddings"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::concept-graph",
+      "label": "Concept Graph",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::intelligent-textbook"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::custom-lessons",
+      "label": "Custom Lessons",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::concept-graph"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::chatbots",
+      "label": "Chatbots",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::semantic-search"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::graph-database",
+      "label": "Graph Database",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::concept-graph"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::concept-expansion",
+      "label": "Concept Expansion",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::concept-graph"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::content-graph",
+      "label": "Content Graph",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::concept-graph"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::personalization",
+      "label": "Personalization",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::content-graph"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::cookies",
+      "label": "Cookies",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::personalization"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::data-privacy",
+      "label": "Data Privacy",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::cookies"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::recommendations",
+      "label": "Recommendations",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::content-graph"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::cloud-apis",
+      "label": "Cloud APIs",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::future-outlook",
+      "label": "Future Outlook",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::intelligent-textbook"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::repo-structure",
+      "label": "Repo Structure",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::build-process"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::content-folders",
+      "label": "Content Folders",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::repo-structure"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::naming-conventions",
+      "label": "Naming Conventions",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::content-folders"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::link-management",
+      "label": "Link Management",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-links"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::broken-links",
+      "label": "Broken Links",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::link-management"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::github-actions",
+      "label": "GitHub Actions",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::github-pages"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::mkdocs-plugins",
+      "label": "Mkdocs Plugins",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::theme-extensions",
+      "label": "Theme Extensions",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::homepage-layout",
+      "label": "Homepage Layout",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::screen-layout"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::landing-page",
+      "label": "Landing Page",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::homepage-layout"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::hero-images",
+      "label": "Hero Images",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-images"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::navigation-sections",
+      "label": "Navigation Sections",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::navigation-config"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::external-js",
+      "label": "External JS",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::html-templates"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::env-variables",
+      "label": "Env Variables",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::local-builds",
+      "label": "Local Builds",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::build-process"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::large-media",
+      "label": "Large Media",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::image-standards"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::doc-versioning",
+      "label": "Doc Versioning",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::build-process"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::multiple-languages",
+      "label": "Multiple Languages",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs-yaml"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::print-to-pdf",
+      "label": "Print To PDF",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::markdown-basics"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::mobile-responsive",
+      "label": "Mobile Responsive",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::keyboard-shortcuts",
+      "label": "Keyboard Shortcuts",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::custom-css"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::mermaid-diagrams",
+      "label": "Mermaid Diagrams",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::interactive-content"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::data-charts",
+      "label": "Data Charts",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mermaid-diagrams"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::index-pages",
+      "label": "Index Pages",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::table-of-contents"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::yaml-frontmatter",
+      "label": "YAML Frontmatter",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::yaml-config"
+      ],
+      "taxonomy_id": "3",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::search-plugins",
+      "label": "Search Plugins",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::site-search"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::audio-embeds",
+      "label": "Audio Embeds",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::iframes"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::video-embeds",
+      "label": "Video Embeds",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::iframes"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::collapsible-sections",
+      "label": "Collapsible Sections",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::admonitions"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::hints-tooltips",
+      "label": "Hints Tooltips",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::admonitions"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::code-diffs",
+      "label": "Code Diffs",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::code-highlighting"
+      ],
+      "taxonomy_id": "5",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::comments",
+      "label": "Comments",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::interactive-content"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::user-behavior",
+      "label": "User Behavior",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::google-analytics"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::heatmaps",
+      "label": "Heatmaps",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::user-behavior"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::a-b-testing",
+      "label": "A/B Testing",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::heatmaps"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::user-logins",
+      "label": "User Logins",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::personalization"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::preference-storage",
+      "label": "Preference Storage",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::cookies"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::auto-recommendations",
+      "label": "Auto Recommendations",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::recommendations"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::content-scheduling",
+      "label": "Content Scheduling",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::build-process"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::feature-flags",
+      "label": "Feature Flags",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::mkdocs"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::offline-access",
+      "label": "Offline Access",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::site-search"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::full-text-search",
+      "label": "Full-Text Search",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::site-search"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::nlp",
+      "label": "NLP",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::semantic-search"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::ai-summaries",
+      "label": "AI Summaries",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::nlp"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::flashcards",
+      "label": "Flashcards",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::concept-graph"
+      ],
+      "taxonomy_id": "6",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::spaced-repetition",
+      "label": "Spaced Repetition",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::flashcards"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::related-reading",
+      "label": "Related Reading",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::content-graph"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::adaptive-quizzes",
+      "label": "Adaptive Quizzes",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::multiple-choice"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::lms-integration",
+      "label": "LMS Integration",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::github-pages"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::data-exports",
+      "label": "Data Exports",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::google-analytics"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::webhooks",
+      "label": "Webhooks",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::cloud-apis"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::vector-databases",
+      "label": "Vector Databases",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::vector-stores"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::chatbot-tuning",
+      "label": "Chatbot Tuning",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::chatbots"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::llm-usage",
+      "label": "LLM Usage",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::chatbots"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::auto-glossaries",
+      "label": "Auto Glossaries",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::glossary"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::quiz-mastery",
+      "label": "Quiz Mastery",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::quizzes"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::concept-visualization",
+      "label": "Concept Visualization",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::concept-graph"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::adaptive-difficulty",
+      "label": "Adaptive Difficulty",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::adaptive-quizzes"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::progress-tracking",
+      "label": "Progress Tracking",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::user-behavior"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::instant-feedback",
+      "label": "Instant Feedback",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::feedback-forms"
+      ],
+      "taxonomy_id": "9",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::voice-assistants",
+      "label": "Voice Assistants",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::chatbots"
+      ],
+      "taxonomy_id": "7",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::custom-domains",
+      "label": "Custom Domains",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::github-pages"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::cdn",
+      "label": "CDN",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::github-pages"
+      ],
+      "taxonomy_id": "8",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::dark-mode",
+      "label": "Dark Mode",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::theme-features"
+      ],
+      "taxonomy_id": "4",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::wcag",
+      "label": "WCAG",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::intelligent-textbook"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::assistive-tech",
+      "label": "Assistive Tech",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::wcag"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::localization",
+      "label": "Localization",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::multiple-languages"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::machine-translation",
+      "label": "Machine Translation",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::localization"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::future-proofing",
+      "label": "Future-Proofing",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::future-outlook"
+      ],
+      "taxonomy_id": "goal",
+      "level": "core"
+    },
+    {
+      "id": "intelligent-textbooks::refinement-cycle",
+      "label": "Refinement Cycle",
+      "subject_id": "intelligent-textbooks",
+      "dependencies": [
+        "intelligent-textbooks::future-proofing"
+      ],
+      "taxonomy_id": "10",
+      "level": "core"
+    }
+  ]
+}

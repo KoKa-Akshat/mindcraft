@@ -1,0 +1,3268 @@
+{
+  "subject_id": "statistics-course",
+  "title": "AP Statistics Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "MistyRose"
+    },
+    "EDA1": {
+      "classifier_name": "Exploratory Data Analysis I",
+      "color": "PeachPuff"
+    },
+    "EDA2": {
+      "classifier_name": "Exploratory Data Analysis II",
+      "color": "LightYellow"
+    },
+    "REG": {
+      "classifier_name": "Regression & Correlation",
+      "color": "Honeydew"
+    },
+    "STUDY": {
+      "classifier_name": "Study Design",
+      "color": "PaleTurquoise"
+    },
+    "PROB": {
+      "classifier_name": "Probability",
+      "color": "Lavender"
+    },
+    "RAND": {
+      "classifier_name": "Random Variables",
+      "color": "LavenderBlush"
+    },
+    "SAMP": {
+      "classifier_name": "Sampling Distributions",
+      "color": "Thistle"
+    },
+    "CIPR": {
+      "classifier_name": "Confidence Intervals",
+      "color": "PowderBlue"
+    },
+    "HTPR": {
+      "classifier_name": "Hypothesis Testing",
+      "color": "PaleGreen"
+    },
+    "TMEA": {
+      "classifier_name": "Inference for Means",
+      "color": "Aquamarine"
+    },
+    "CHISQ": {
+      "classifier_name": "Chi-Square Tests",
+      "color": "LightPink"
+    },
+    "REGF": {
+      "classifier_name": "Regression Inference",
+      "color": "Plum"
+    },
+    "COMM": {
+      "classifier_name": "Communication & Synthesis",
+      "color": "Gainsboro"
+    }
+  },
+  "concepts": [
+    {
+      "id": "statistics-course::statistics",
+      "label": "Statistics",
+      "subject_id": "statistics-course",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "statistics-course::data",
+      "label": "Data",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::variable",
+      "label": "Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::observation",
+      "label": "Observation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::dataset",
+      "label": "Dataset",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::data",
+        "statistics-course::observation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::categorical-variable",
+      "label": "Categorical Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::quantitative-variable",
+      "label": "Quantitative Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::discrete-variable",
+      "label": "Discrete Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::quantitative-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::continuous-variable",
+      "label": "Continuous Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::quantitative-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::population",
+      "label": "Population",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sample",
+      "label": "Sample",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::population"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::parameter",
+      "label": "Parameter",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::population"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::statistic",
+      "label": "Statistic",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::distribution",
+      "label": "Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::data",
+        "statistics-course::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::frequency-table",
+      "label": "Frequency Table",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::relative-frequency",
+      "label": "Relative Frequency",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::frequency-table"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::cumulative-frequency",
+      "label": "Cumulative Frequency",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::relative-frequency"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::bar-graph",
+      "label": "Bar Graph",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::categorical-variable",
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::pie-chart",
+      "label": "Pie Chart",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::categorical-variable",
+        "statistics-course::relative-frequency"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::dotplot",
+      "label": "Dotplot",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::quantitative-variable",
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::stemplot",
+      "label": "Stemplot",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::quantitative-variable",
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::histogram",
+      "label": "Histogram",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::quantitative-variable",
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::choosing-bin-width",
+      "label": "Choosing Bin Width",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::histogram"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::shape-of-distribution",
+      "label": "Shape of Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::symmetric-distribution",
+      "label": "Symmetric Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::skewed-left",
+      "label": "Skewed Left",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::skewed-right",
+      "label": "Skewed Right",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::unimodal-distribution",
+      "label": "Unimodal Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::bimodal-distribution",
+      "label": "Bimodal Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::uniform-distribution",
+      "label": "Uniform Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::outlier",
+      "label": "Outlier",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::distribution",
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::identifying-outliers",
+      "label": "Identifying Outliers",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::outlier",
+        "statistics-course::interquartile-range"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::center-of-distribution",
+      "label": "Center of Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::spread-of-distribution",
+      "label": "Spread of Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::mean",
+      "label": "Mean",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::quantitative-variable",
+        "statistics-course::center-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::median",
+      "label": "Median",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::quantitative-variable",
+        "statistics-course::center-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::mode",
+      "label": "Mode",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::center-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::resistant-measure",
+      "label": "Resistant Measure",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::mean",
+        "statistics-course::median",
+        "statistics-course::outlier"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::comparing-mean-and-median",
+      "label": "Comparing Mean and Median",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::mean",
+        "statistics-course::median",
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::range",
+      "label": "Range",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::spread-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::interquartile-range",
+      "label": "Interquartile Range",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::spread-of-distribution",
+        "statistics-course::quartiles"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::quartiles",
+      "label": "Quartiles",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::median",
+        "statistics-course::percentile"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::five-number-summary",
+      "label": "Five-Number Summary",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::median",
+        "statistics-course::quartiles",
+        "statistics-course::range"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::boxplot",
+      "label": "Boxplot",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::five-number-summary"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::modified-boxplot",
+      "label": "Modified Boxplot",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::boxplot",
+        "statistics-course::identifying-outliers"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::comparing-distributions",
+      "label": "Comparing Distributions",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::boxplot",
+        "statistics-course::histogram",
+        "statistics-course::mean",
+        "statistics-course::standard-deviation"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::standard-deviation",
+      "label": "Standard Deviation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::spread-of-distribution",
+        "statistics-course::mean"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::variance",
+      "label": "Variance",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::standard-deviation"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-variance",
+      "label": "Calculating Variance",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::variance"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::percentile",
+      "label": "Percentile",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::relative-frequency",
+        "statistics-course::median"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::z-score",
+      "label": "Z-Score",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::mean",
+        "statistics-course::standard-deviation"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-z-scores",
+      "label": "Calculating Z-Scores",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::z-score"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::interpreting-z-scores",
+      "label": "Interpreting Z-Scores",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::calculating-z-scores"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::standardization",
+      "label": "Standardization",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::z-score"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::comparing-with-z-scores",
+      "label": "Comparing with Z-Scores",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::interpreting-z-scores",
+        "statistics-course::standardization"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::normal-distribution",
+      "label": "Normal Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::symmetric-distribution",
+        "statistics-course::mean",
+        "statistics-course::standard-deviation"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::parameters-of-normal",
+      "label": "Parameters of Normal",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::normal-distribution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::empirical-rule",
+      "label": "Empirical Rule",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::normal-distribution",
+        "statistics-course::standard-deviation"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::68-95-99-7-rule",
+      "label": "68-95-99.7 Rule",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::empirical-rule"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::standard-normal-curve",
+      "label": "Standard Normal Curve",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::normal-distribution",
+        "statistics-course::standardization"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::normal-table",
+      "label": "Normal Table",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::standard-normal-curve"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::finding-normal-probs",
+      "label": "Finding Normal Probs",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::normal-table"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::inverse-normal-calcs",
+      "label": "Inverse Normal Calcs",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::finding-normal-probs"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::normal-probability-plot",
+      "label": "Normal Probability Plot",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::normal-distribution",
+        "statistics-course::assessing-normality"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::assessing-normality",
+      "label": "Assessing Normality",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::normal-distribution",
+        "statistics-course::histogram",
+        "statistics-course::shape-of-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::density-curve",
+      "label": "Density Curve",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::area-under-curve",
+      "label": "Area Under Curve",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::density-curve"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::technology-for-normal",
+      "label": "Technology for Normal",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::finding-normal-probs",
+        "statistics-course::inverse-normal-calcs"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::two-way-table",
+      "label": "Two-Way Table",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::categorical-variable"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::marginal-distribution",
+      "label": "Marginal Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::two-way-table"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::conditional-distribution",
+      "label": "Conditional Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::two-way-table",
+        "statistics-course::marginal-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-conditionals",
+      "label": "Calculating Conditionals",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::conditional-distribution"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::association",
+      "label": "Association",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::two-way-table",
+        "statistics-course::conditional-distribution"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::simpson-s-paradox",
+      "label": "Simpson's Paradox",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::association",
+        "statistics-course::lurking-variable"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::scatterplot",
+      "label": "Scatterplot",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::quantitative-variable",
+        "statistics-course::explanatory-variable",
+        "statistics-course::response-variable"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::describing-scatterplots",
+      "label": "Describing Scatterplots",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::scatterplot",
+        "statistics-course::direction-of-association",
+        "statistics-course::form-of-association",
+        "statistics-course::strength-of-association"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::explanatory-variable",
+      "label": "Explanatory Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::response-variable",
+      "label": "Response Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::direction-of-association",
+      "label": "Direction of Association",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::association",
+        "statistics-course::scatterplot"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::positive-association",
+      "label": "Positive Association",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::direction-of-association"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::negative-association",
+      "label": "Negative Association",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::direction-of-association"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::form-of-association",
+      "label": "Form of Association",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::scatterplot"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::linear-form",
+      "label": "Linear Form",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::form-of-association"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::nonlinear-form",
+      "label": "Nonlinear Form",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::form-of-association"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::strength-of-association",
+      "label": "Strength of Association",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::association",
+        "statistics-course::scatterplot"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::correlation-coefficient",
+      "label": "Correlation Coefficient",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::linear-form",
+        "statistics-course::strength-of-association"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-correlation",
+      "label": "Calculating Correlation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::correlation-coefficient",
+        "statistics-course::z-score"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::properties-of-correlation",
+      "label": "Properties of Correlation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::correlation-coefficient"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::correlation-limitations",
+      "label": "Correlation Limitations",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::properties-of-correlation",
+        "statistics-course::outlier"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::least-squares-regression",
+      "label": "Least Squares Regression",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::linear-form",
+        "statistics-course::correlation-coefficient"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::regression-line",
+      "label": "Regression Line",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::least-squares-regression"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::regression-equation",
+      "label": "Regression Equation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::regression-line"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::slope-interpretation",
+      "label": "Slope Interpretation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::regression-equation",
+        "statistics-course::explanatory-variable",
+        "statistics-course::response-variable"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::y-intercept-interpretation",
+      "label": "Y-Intercept Interpretation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::regression-equation"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::making-predictions",
+      "label": "Making Predictions",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::regression-equation"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::extrapolation-dangers",
+      "label": "Extrapolation Dangers",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::making-predictions"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::residual",
+      "label": "Residual",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::regression-line",
+        "statistics-course::making-predictions"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-residuals",
+      "label": "Calculating Residuals",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::residual"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::residual-plot",
+      "label": "Residual Plot",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::calculating-residuals"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::interpreting-residuals",
+      "label": "Interpreting Residuals",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::residual-plot",
+        "statistics-course::linear-form"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::coefficient-of-determination",
+      "label": "Coefficient of Determination",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::correlation-coefficient",
+        "statistics-course::residual"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::r-squared-interpretation",
+      "label": "R-Squared Interpretation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::coefficient-of-determination"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::influential-point",
+      "label": "Influential Point",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::regression-line",
+        "statistics-course::residual"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::leverage",
+      "label": "Leverage",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::influential-point"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::outliers-in-regression",
+      "label": "Outliers in Regression",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::influential-point",
+        "statistics-course::outlier"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::lurking-variable",
+      "label": "Lurking Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::association"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::causation",
+      "label": "Causation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::association"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::correlation-vs-causation",
+      "label": "Correlation vs Causation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::correlation-coefficient",
+        "statistics-course::causation",
+        "statistics-course::lurking-variable"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::observational-study",
+      "label": "Observational Study",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample",
+        "statistics-course::causation"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::experiment",
+      "label": "Experiment",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::causation"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::comparing-studies",
+      "label": "Comparing Studies",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::observational-study",
+        "statistics-course::experiment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::experimental-units",
+      "label": "Experimental Units",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::experiment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::subjects",
+      "label": "Subjects",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::experimental-units"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::treatment",
+      "label": "Treatment",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::experiment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::factor",
+      "label": "Factor",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::treatment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::levels-of-a-factor",
+      "label": "Levels of a Factor",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::factor"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::placebo",
+      "label": "Placebo",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::treatment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::placebo-effect",
+      "label": "Placebo Effect",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::placebo"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::control-group",
+      "label": "Control Group",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::experiment",
+        "statistics-course::placebo"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::comparison-in-experiments",
+      "label": "Comparison in Experiments",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::control-group",
+        "statistics-course::treatment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::blinding",
+      "label": "Blinding",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::placebo-effect",
+        "statistics-course::bias"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::single-blind-experiment",
+      "label": "Single-Blind Experiment",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::blinding"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::double-blind-experiment",
+      "label": "Double-Blind Experiment",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::blinding",
+        "statistics-course::single-blind-experiment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::random-assignment",
+      "label": "Random Assignment",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::experiment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::why-randomize",
+      "label": "Why Randomize",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::confounding-variable",
+        "statistics-course::bias"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::randomized-block-design",
+      "label": "Randomized Block Design",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-assignment",
+        "statistics-course::stratified-random-sample"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::matched-pairs-design",
+      "label": "Matched Pairs Design",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-assignment",
+        "statistics-course::randomized-block-design"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::completely-randomized-design",
+      "label": "Completely Randomized Design",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-assignment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::replication",
+      "label": "Replication",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::experiment"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::confounding-variable",
+      "label": "Confounding Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::experiment",
+        "statistics-course::lurking-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::identifying-confounding",
+      "label": "Identifying Confounding",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::confounding-variable"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::bias",
+      "label": "Bias",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample",
+        "statistics-course::observational-study"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sources-of-bias",
+      "label": "Sources of Bias",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::bias"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::census",
+      "label": "Census",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::population"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::simple-random-sample",
+      "label": "Simple Random Sample",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::random-number-generator",
+      "label": "Random Number Generator",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-phenomenon"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::stratified-random-sample",
+      "label": "Stratified Random Sample",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::simple-random-sample"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::when-to-stratify",
+      "label": "When to Stratify",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::stratified-random-sample"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::cluster-sample",
+      "label": "Cluster Sample",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::simple-random-sample"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::systematic-sample",
+      "label": "Systematic Sample",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::simple-random-sample"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::convenience-sample",
+      "label": "Convenience Sample",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::bias",
+        "statistics-course::sample"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::voluntary-response-sample",
+      "label": "Voluntary Response Sample",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::bias",
+        "statistics-course::sample"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::undercoverage",
+      "label": "Undercoverage",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::bias",
+        "statistics-course::population"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::nonresponse-bias",
+      "label": "Nonresponse Bias",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::bias"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::response-bias",
+      "label": "Response Bias",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::bias"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::wording-of-questions",
+      "label": "Wording of Questions",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::response-bias"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::designing-surveys",
+      "label": "Designing Surveys",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::simple-random-sample",
+        "statistics-course::undercoverage",
+        "statistics-course::nonresponse-bias",
+        "statistics-course::response-bias"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::random-phenomenon",
+      "label": "Random Phenomenon",
+      "subject_id": "statistics-course",
+      "dependencies": [],
+      "taxonomy_id": "PROB",
+      "level": "foundational"
+    },
+    {
+      "id": "statistics-course::probability",
+      "label": "Probability",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistics"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::probability-rules",
+      "label": "Probability Rules",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::probability"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sample-space",
+      "label": "Sample Space",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-phenomenon",
+        "statistics-course::event"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::event",
+      "label": "Event",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-phenomenon"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::complement-of-event",
+      "label": "Complement of Event",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::event",
+        "statistics-course::probability-rules"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::mutually-exclusive-events",
+      "label": "Mutually Exclusive Events",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::event"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::disjoint-events",
+      "label": "Disjoint Events",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::mutually-exclusive-events"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::independent-events",
+      "label": "Independent Events",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::event"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::dependent-events",
+      "label": "Dependent Events",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::independent-events"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::addition-rule",
+      "label": "Addition Rule",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::mutually-exclusive-events",
+        "statistics-course::probability-rules"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::general-addition-rule",
+      "label": "General Addition Rule",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::addition-rule",
+        "statistics-course::venn-diagram"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::multiplication-rule",
+      "label": "Multiplication Rule",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::independent-events",
+        "statistics-course::probability-rules"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::general-multiplication-rule",
+      "label": "General Multiplication Rule",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::multiplication-rule"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::conditional-probability",
+      "label": "Conditional Probability",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::probability",
+        "statistics-course::dependent-events"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-conditionals-163",
+      "label": "Calculating Conditionals",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::conditional-probability",
+        "statistics-course::two-way-table"
+      ],
+      "taxonomy_id": "EDA2",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::bayes-intuition",
+      "label": "Bayes Intuition",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::conditional-probability",
+        "statistics-course::general-multiplication-rule"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::tree-diagram",
+      "label": "Tree Diagram",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::general-multiplication-rule"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::using-tree-diagrams",
+      "label": "Using Tree Diagrams",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::tree-diagram",
+        "statistics-course::conditional-probability"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::venn-diagram",
+      "label": "Venn Diagram",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::event",
+        "statistics-course::complement-of-event"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::using-venn-diagrams",
+      "label": "Using Venn Diagrams",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::venn-diagram",
+        "statistics-course::addition-rule"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::simulation",
+      "label": "Simulation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-phenomenon",
+        "statistics-course::probability"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::designing-simulations",
+      "label": "Designing Simulations",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::simulation"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::random-digit-table",
+      "label": "Random Digit Table",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::simulation",
+        "statistics-course::random-number-generator"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::law-of-large-numbers",
+      "label": "Law of Large Numbers",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::probability",
+        "statistics-course::simulation"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::random-variable",
+      "label": "Random Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-phenomenon",
+        "statistics-course::variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::discrete-random-variable",
+      "label": "Discrete Random Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-variable",
+        "statistics-course::discrete-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::probability-distribution",
+      "label": "Probability Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-variable",
+        "statistics-course::probability-rules"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::valid-distribution",
+      "label": "Valid Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::probability-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::expected-value",
+      "label": "Expected Value",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::probability-distribution",
+        "statistics-course::mean"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-expected-value",
+      "label": "Calculating Expected Value",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::expected-value"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::variance-of-random-variable",
+      "label": "Variance of Random Variable",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::probability-distribution",
+        "statistics-course::variance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::standard-deviation-of-rv",
+      "label": "Standard Deviation of RV",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::variance-of-random-variable"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::linear-transformation",
+      "label": "Linear Transformation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::expected-value",
+        "statistics-course::variance-of-random-variable"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::combining-random-variables",
+      "label": "Combining Random Variables",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::random-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sum-of-random-variables",
+      "label": "Sum of Random Variables",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::combining-random-variables",
+        "statistics-course::expected-value",
+        "statistics-course::variance-of-random-variable"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::difference-of-rvs",
+      "label": "Difference of RVs",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sum-of-random-variables"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::binomial-setting",
+      "label": "Binomial Setting",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::independent-events",
+        "statistics-course::discrete-random-variable"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::binomial-conditions",
+      "label": "Binomial Conditions",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::binomial-setting"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::binomial-distribution",
+      "label": "Binomial Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::binomial-setting",
+        "statistics-course::probability-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::binomial-probability",
+      "label": "Binomial Probability",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::binomial-distribution"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::binomial-formula",
+      "label": "Binomial Formula",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::binomial-probability"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::binomial-mean",
+      "label": "Binomial Mean",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::binomial-distribution",
+        "statistics-course::expected-value"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::binomial-standard-dev",
+      "label": "Binomial Standard Dev",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::binomial-distribution",
+        "statistics-course::standard-deviation-of-rv"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::geometric-setting",
+      "label": "Geometric Setting",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::independent-events",
+        "statistics-course::discrete-random-variable"
+      ],
+      "taxonomy_id": "RAND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::geometric-distribution",
+      "label": "Geometric Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::geometric-setting",
+        "statistics-course::probability-distribution"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::geometric-probability",
+      "label": "Geometric Probability",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::geometric-distribution"
+      ],
+      "taxonomy_id": "PROB",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::geometric-mean",
+      "label": "Geometric Mean",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::geometric-distribution",
+        "statistics-course::expected-value"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sampling-variability",
+      "label": "Sampling Variability",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample",
+        "statistics-course::statistic"
+      ],
+      "taxonomy_id": "SAMP",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sampling-distribution",
+      "label": "Sampling Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sampling-variability",
+        "statistics-course::probability-distribution"
+      ],
+      "taxonomy_id": "SAMP",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::unbiased-estimator",
+      "label": "Unbiased Estimator",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sampling-distribution",
+        "statistics-course::parameter"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::biased-estimator",
+      "label": "Biased Estimator",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::unbiased-estimator"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sample-proportion",
+      "label": "Sample Proportion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample",
+        "statistics-course::categorical-variable",
+        "statistics-course::statistic"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sampling-dist-of-proportion",
+      "label": "Sampling Dist of Proportion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample-proportion",
+        "statistics-course::sampling-distribution"
+      ],
+      "taxonomy_id": "SAMP",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::mean-of-sample-proportion",
+      "label": "Mean of Sample Proportion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sampling-dist-of-proportion",
+        "statistics-course::unbiased-estimator"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sd-of-sample-proportion",
+      "label": "SD of Sample Proportion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sampling-dist-of-proportion",
+        "statistics-course::standard-deviation-of-rv"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::conditions-for-proportion-sd",
+      "label": "Conditions for Proportion SD",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sd-of-sample-proportion"
+      ],
+      "taxonomy_id": "SAMP",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sample-mean",
+      "label": "Sample Mean",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample",
+        "statistics-course::mean",
+        "statistics-course::statistic"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sampling-dist-of-mean",
+      "label": "Sampling Dist of Mean",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample-mean",
+        "statistics-course::sampling-distribution"
+      ],
+      "taxonomy_id": "SAMP",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::mean-of-sample-mean",
+      "label": "Mean of Sample Mean",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sampling-dist-of-mean",
+        "statistics-course::unbiased-estimator"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sd-of-sample-mean",
+      "label": "SD of Sample Mean",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sampling-dist-of-mean",
+        "statistics-course::standard-deviation-of-rv"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::central-limit-theorem",
+      "label": "Central Limit Theorem",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sampling-dist-of-mean",
+        "statistics-course::normal-distribution"
+      ],
+      "taxonomy_id": "SAMP",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::clt-conditions",
+      "label": "CLT Conditions",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::central-limit-theorem"
+      ],
+      "taxonomy_id": "SAMP",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::normal-approximation",
+      "label": "Normal Approximation",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::central-limit-theorem",
+        "statistics-course::sampling-dist-of-proportion",
+        "statistics-course::finding-normal-probs"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::statistical-inference",
+      "label": "Statistical Inference",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistic",
+        "statistics-course::parameter",
+        "statistics-course::sampling-distribution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::point-estimate",
+      "label": "Point Estimate",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistical-inference",
+        "statistics-course::statistic"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::interval-estimate",
+      "label": "Interval Estimate",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistical-inference"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::confidence-interval",
+      "label": "Confidence Interval",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::interval-estimate",
+        "statistics-course::margin-of-error"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::margin-of-error",
+      "label": "Margin of Error",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sampling-distribution",
+        "statistics-course::standard-error"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::confidence-level",
+      "label": "Confidence Level",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::confidence-interval"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::interpreting-confidence",
+      "label": "Interpreting Confidence",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::confidence-level"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::critical-value",
+      "label": "Critical Value",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::standard-normal-curve",
+        "statistics-course::confidence-level"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::z-critical-values",
+      "label": "Z Critical Values",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::critical-value",
+        "statistics-course::normal-table"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::standard-error",
+      "label": "Standard Error",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sd-of-sample-proportion",
+        "statistics-course::sd-of-sample-mean"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::ci-for-one-proportion",
+      "label": "CI for One Proportion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::confidence-interval",
+        "statistics-course::sample-proportion",
+        "statistics-course::z-critical-values",
+        "statistics-course::standard-error"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::conditions-for-ci-proportion",
+      "label": "Conditions for CI Proportion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::ci-for-one-proportion",
+        "statistics-course::conditions-for-proportion-sd"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::interpreting-ci",
+      "label": "Interpreting CI",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::ci-for-one-proportion",
+        "statistics-course::interpreting-confidence"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::ci-width-factors",
+      "label": "CI Width Factors",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::margin-of-error"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sample-size-for-ci",
+      "label": "Sample Size for CI",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::ci-width-factors"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::ci-for-difference-in-props",
+      "label": "CI for Difference in Props",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::ci-for-one-proportion",
+        "statistics-course::difference-of-rvs"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::pooled-proportion",
+      "label": "Pooled Proportion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::ci-for-difference-in-props"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::hypothesis-test",
+      "label": "Hypothesis Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistical-inference"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::null-hypothesis",
+      "label": "Null Hypothesis",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::hypothesis-test",
+        "statistics-course::parameter"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::alternative-hypothesis",
+      "label": "Alternative Hypothesis",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::hypothesis-test"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::writing-hypotheses",
+      "label": "Writing Hypotheses",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::null-hypothesis",
+        "statistics-course::alternative-hypothesis"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::one-sided-test",
+      "label": "One-Sided Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::alternative-hypothesis"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::two-sided-test",
+      "label": "Two-Sided Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::alternative-hypothesis"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::test-statistic",
+      "label": "Test Statistic",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::hypothesis-test",
+        "statistics-course::z-score"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::p-value",
+      "label": "P-Value",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::test-statistic",
+        "statistics-course::finding-normal-probs"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-p-values",
+      "label": "Calculating P-Values",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::p-value"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::interpreting-p-values",
+      "label": "Interpreting P-Values",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::p-value"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::significance-level",
+      "label": "Significance Level",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::hypothesis-test"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::choosing-alpha",
+      "label": "Choosing Alpha",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::significance-level",
+        "statistics-course::type-ii-error"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::statistical-significance",
+      "label": "Statistical Significance",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::p-value",
+        "statistics-course::significance-level"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::making-conclusions",
+      "label": "Making Conclusions",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistical-significance",
+        "statistics-course::interpreting-p-values"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::type-i-error",
+      "label": "Type I Error",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::null-hypothesis",
+        "statistics-course::statistical-significance"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::type-ii-error",
+      "label": "Type II Error",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::null-hypothesis",
+        "statistics-course::alternative-hypothesis"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::error-tradeoffs",
+      "label": "Error Tradeoffs",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::type-i-error",
+        "statistics-course::type-ii-error"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::power-of-a-test",
+      "label": "Power of a Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::type-ii-error"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::factors-affecting-power",
+      "label": "Factors Affecting Power",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::power-of-a-test",
+        "statistics-course::sample-size-for-ci"
+      ],
+      "taxonomy_id": "STUDY",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::test-for-one-proportion",
+      "label": "Test for One Proportion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::hypothesis-test",
+        "statistics-course::sample-proportion",
+        "statistics-course::test-statistic"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::conditions-for-z-test",
+      "label": "Conditions for Z-Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::test-for-one-proportion",
+        "statistics-course::conditions-for-proportion-sd"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::test-for-two-proportions",
+      "label": "Test for Two Proportions",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::test-for-one-proportion",
+        "statistics-course::ci-for-difference-in-props"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::t-distribution",
+      "label": "T-Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::normal-distribution",
+        "statistics-course::degrees-of-freedom"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::t-vs-z-distribution",
+      "label": "T vs Z Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::t-distribution",
+        "statistics-course::standard-normal-curve"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::degrees-of-freedom",
+      "label": "Degrees of Freedom",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample"
+      ],
+      "taxonomy_id": "TMEA",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::t-critical-values",
+      "label": "T Critical Values",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::t-distribution",
+        "statistics-course::critical-value"
+      ],
+      "taxonomy_id": "CIPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::one-sample-t-interval",
+      "label": "One-Sample T-Interval",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::confidence-interval",
+        "statistics-course::sample-mean",
+        "statistics-course::t-critical-values",
+        "statistics-course::standard-error"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::conditions-for-t-procedures",
+      "label": "Conditions for T-Procedures",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::one-sample-t-interval",
+        "statistics-course::assessing-normality"
+      ],
+      "taxonomy_id": "TMEA",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::one-sample-t-test",
+      "label": "One-Sample T-Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::hypothesis-test",
+        "statistics-course::sample-mean",
+        "statistics-course::t-distribution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::two-sample-t-interval",
+      "label": "Two-Sample T-Interval",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::one-sample-t-interval",
+        "statistics-course::difference-of-rvs"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::two-sample-t-test",
+      "label": "Two-Sample T-Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::one-sample-t-test",
+        "statistics-course::two-sample-t-interval"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::pooled-vs-unpooled",
+      "label": "Pooled vs Unpooled",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::two-sample-t-test"
+      ],
+      "taxonomy_id": "TMEA",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::paired-t-test",
+      "label": "Paired T-Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::one-sample-t-test",
+        "statistics-course::paired-data"
+      ],
+      "taxonomy_id": "TMEA",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::paired-data",
+      "label": "Paired Data",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::matched-pairs-design",
+        "statistics-course::sample-mean"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::when-to-pair",
+      "label": "When to Pair",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::paired-data",
+        "statistics-course::paired-t-test"
+      ],
+      "taxonomy_id": "TMEA",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::robustness",
+      "label": "Robustness",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::conditions-for-t-procedures",
+        "statistics-course::outlier"
+      ],
+      "taxonomy_id": "TMEA",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::chi-square-distribution",
+      "label": "Chi-Square Distribution",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::degrees-of-freedom"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::chi-square-statistic",
+      "label": "Chi-Square Statistic",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::chi-square-distribution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::goodness-of-fit-test",
+      "label": "Goodness-of-Fit Test",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::chi-square-statistic",
+        "statistics-course::hypothesis-test"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::gof-hypotheses",
+      "label": "GOF Hypotheses",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::goodness-of-fit-test",
+        "statistics-course::writing-hypotheses"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::expected-counts",
+      "label": "Expected Counts",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::probability-distribution"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::observed-counts",
+      "label": "Observed Counts",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::frequency-table"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::calculating-chi-square",
+      "label": "Calculating Chi-Square",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::chi-square-statistic",
+        "statistics-course::expected-counts",
+        "statistics-course::observed-counts"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::conditions-for-chi-square",
+      "label": "Conditions for Chi-Square",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::goodness-of-fit-test",
+        "statistics-course::expected-counts"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::gof-conclusion",
+      "label": "GOF Conclusion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::goodness-of-fit-test",
+        "statistics-course::making-conclusions"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::test-for-homogeneity",
+      "label": "Test for Homogeneity",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::chi-square-statistic",
+        "statistics-course::two-way-table"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::homogeneity-setup",
+      "label": "Homogeneity Setup",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::test-for-homogeneity",
+        "statistics-course::writing-hypotheses"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::test-for-independence",
+      "label": "Test for Independence",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::chi-square-statistic",
+        "statistics-course::association"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::independence-setup",
+      "label": "Independence Setup",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::test-for-independence",
+        "statistics-course::writing-hypotheses"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::chi-square-conclusion",
+      "label": "Chi-Square Conclusion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::test-for-homogeneity",
+        "statistics-course::test-for-independence",
+        "statistics-course::making-conclusions"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::inference-for-slope",
+      "label": "Inference for Slope",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistical-inference",
+        "statistics-course::regression-line"
+      ],
+      "taxonomy_id": "REGF",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::regression-model",
+      "label": "Regression Model",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::regression-line",
+        "statistics-course::random-variable"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::slope-parameter",
+      "label": "Slope Parameter",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::regression-model",
+        "statistics-course::parameter"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::t-interval-for-slope",
+      "label": "T-Interval for Slope",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::inference-for-slope",
+        "statistics-course::t-critical-values",
+        "statistics-course::standard-error-of-slope"
+      ],
+      "taxonomy_id": "REGF",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::t-test-for-slope",
+      "label": "T-Test for Slope",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::inference-for-slope",
+        "statistics-course::one-sample-t-test",
+        "statistics-course::slope-parameter"
+      ],
+      "taxonomy_id": "REGF",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::standard-error-of-slope",
+      "label": "Standard Error of Slope",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::standard-error",
+        "statistics-course::residual"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::conditions-for-regression",
+      "label": "Conditions for Regression",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::inference-for-slope",
+        "statistics-course::linearity-condition",
+        "statistics-course::independence-condition",
+        "statistics-course::normality-of-residuals",
+        "statistics-course::equal-variance-condition"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::linearity-condition",
+      "label": "Linearity Condition",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::residual-plot",
+        "statistics-course::interpreting-residuals"
+      ],
+      "taxonomy_id": "REGF",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::independence-condition",
+      "label": "Independence Condition",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::observational-study",
+        "statistics-course::random-assignment"
+      ],
+      "taxonomy_id": "CHISQ",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::normality-of-residuals",
+      "label": "Normality of Residuals",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::residual",
+        "statistics-course::assessing-normality"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::equal-variance-condition",
+      "label": "Equal Variance Condition",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::residual-plot",
+        "statistics-course::variance"
+      ],
+      "taxonomy_id": "EDA1",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::regression-conclusion",
+      "label": "Regression Conclusion",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::t-test-for-slope",
+        "statistics-course::making-conclusions"
+      ],
+      "taxonomy_id": "REG",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::practical-significance",
+      "label": "Practical Significance",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::statistical-significance",
+        "statistics-course::effect-size"
+      ],
+      "taxonomy_id": "HTPR",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::stat-vs-practical-sig",
+      "label": "Stat vs Practical Sig",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::practical-significance"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::effect-size",
+      "label": "Effect Size",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::standard-deviation",
+        "statistics-course::coefficient-of-determination"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::sample-size-impact",
+      "label": "Sample Size Impact",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample-size-for-ci",
+        "statistics-course::factors-affecting-power",
+        "statistics-course::effect-size"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::study-limitations",
+      "label": "Study Limitations",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::observational-study",
+        "statistics-course::bias"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::generalizability",
+      "label": "Generalizability",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::sample",
+        "statistics-course::population",
+        "statistics-course::study-limitations"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::statistical-report-writing",
+      "label": "Statistical Report Writing",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::making-conclusions"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::communicating-results",
+      "label": "Communicating Results",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::interpreting-ci",
+        "statistics-course::making-conclusions",
+        "statistics-course::chi-square-conclusion",
+        "statistics-course::regression-conclusion"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::four-step-process",
+      "label": "Four-Step Process",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::writing-hypotheses",
+        "statistics-course::making-conclusions",
+        "statistics-course::communicating-results"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    },
+    {
+      "id": "statistics-course::ap-exam-strategies",
+      "label": "AP Exam Strategies",
+      "subject_id": "statistics-course",
+      "dependencies": [
+        "statistics-course::four-step-process",
+        "statistics-course::statistical-report-writing"
+      ],
+      "taxonomy_id": "COMM",
+      "level": "core"
+    }
+  ]
+}

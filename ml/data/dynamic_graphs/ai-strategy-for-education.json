@@ -1,0 +1,2377 @@
+{
+  "subject_id": "ai-strategy-for-education",
+  "title": "AI Strategy for Education",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation AI Concepts",
+      "color": "SteelBlue"
+    },
+    "CAPM": {
+      "classifier_name": "AI Capability Measurement",
+      "color": "DodgerBlue"
+    },
+    "GENAI": {
+      "classifier_name": "Generative AI and Content",
+      "color": "LightSkyBlue"
+    },
+    "AGENT": {
+      "classifier_name": "Agentic AI Workforce",
+      "color": "Orange"
+    },
+    "STRAT": {
+      "classifier_name": "AI Strategy Foundations",
+      "color": "DarkSlateBlue"
+    },
+    "FUNNEL": {
+      "classifier_name": "Idea Funnel Workflow",
+      "color": "DarkGreen"
+    },
+    "ITB": {
+      "classifier_name": "Intelligent Textbooks",
+      "color": "LimeGreen"
+    },
+    "LRNTECH": {
+      "classifier_name": "Learning Telemetry and Analytics",
+      "color": "Gold"
+    },
+    "PEDMOD": {
+      "classifier_name": "Pedagogical Models",
+      "color": "Teal"
+    },
+    "RISK": {
+      "classifier_name": "Risk, Ethics and Responsible AI",
+      "color": "Crimson"
+    },
+    "EQUITY": {
+      "classifier_name": "Equity and Access",
+      "color": "DarkRed"
+    },
+    "GOV": {
+      "classifier_name": "Governance, Policy and Change",
+      "color": "MediumPurple"
+    },
+    "PLAN": {
+      "classifier_name": "Strategic Planning Tools",
+      "color": "Indigo"
+    }
+  },
+  "concepts": [
+    {
+      "id": "ai-strategy-for-education::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "ai-strategy-for-education::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::artificial-intelligence"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::machine-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::neural-network",
+      "label": "Neural Network",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::machine-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::training-data",
+      "label": "Training Data",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::machine-learning"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::model-parameters",
+      "label": "Model Parameters",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::neural-network",
+        "ai-strategy-for-education::training-data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::foundation-model",
+      "label": "Foundation Model",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::large-language-model",
+        "ai-strategy-for-education::model-parameters"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::frontier-model",
+      "label": "Frontier Model",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::foundation-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::prompt",
+      "label": "Prompt",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::prompt"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::context-window",
+      "label": "Context Window",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::prompt"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::token",
+      "label": "Token",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::inference",
+      "label": "Inference",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::model-parameters"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::hallucination",
+      "label": "Hallucination",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::inference"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::world-model",
+      "label": "World Model",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::generative-ai",
+        "ai-strategy-for-education::inference"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::public-knowledge",
+      "label": "Public Knowledge",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::large-language-model"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::private-knowledge",
+      "label": "Private Knowledge",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::public-knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::multimodal-ai",
+      "label": "Multimodal AI",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::generative-ai"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-agent",
+      "label": "AI Agent",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::generative-ai",
+        "ai-strategy-for-education::inference"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-benchmark",
+      "label": "AI Benchmark",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::artificial-intelligence"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::mmlu-benchmark",
+      "label": "MMLU Benchmark",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-benchmark"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::task-horizon",
+      "label": "Task Horizon",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-benchmark",
+        "ai-strategy-for-education::ai-agent"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::metr-study",
+      "label": "METR Study",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::task-horizon"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::long-task-rate",
+      "label": "Long Task Rate",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::metr-study"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::fifty-percent-reliability",
+      "label": "Fifty Percent Reliability",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::long-task-rate"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::capability-doubling",
+      "label": "Capability Doubling",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::long-task-rate",
+        "ai-strategy-for-education::exponential-growth"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::exponential-growth",
+      "label": "Exponential Growth",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [],
+      "taxonomy_id": "CAPM",
+      "level": "foundational"
+    },
+    {
+      "id": "ai-strategy-for-education::doubling-time",
+      "label": "Doubling Time",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::exponential-growth"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::moores-law-analogy",
+      "label": "Moores Law Analogy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::exponential-growth"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::capability-trajectory",
+      "label": "Capability Trajectory",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::capability-doubling",
+        "ai-strategy-for-education::long-task-rate"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::capability-forecasting",
+      "label": "Capability Forecasting",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::capability-trajectory",
+        "ai-strategy-for-education::doubling-time"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::adoption-versus-capability",
+      "label": "Adoption Versus Capability",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::capability-trajectory"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::reasoning-model",
+      "label": "Reasoning Model",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::frontier-model"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::one-shot-task",
+      "label": "One Shot Task",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::prompt"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::agentic-task-completion",
+      "label": "Agentic Task Completion",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-agent",
+        "ai-strategy-for-education::task-horizon"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::cost-per-task",
+      "label": "Cost Per Task",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::inference"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::model-release-cadence",
+      "label": "Model Release Cadence",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::frontier-model"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::benchmark-saturation",
+      "label": "Benchmark Saturation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-benchmark"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::intelligence-versus-price",
+      "label": "Intelligence Versus Price",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::cost-per-task",
+        "ai-strategy-for-education::model-release-cadence"
+      ],
+      "taxonomy_id": "CAPM",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::text-generation",
+      "label": "Text Generation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::generative-ai"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::image-generation",
+      "label": "Image Generation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::generative-ai",
+        "ai-strategy-for-education::multimodal-ai"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::content-democratization",
+      "label": "Content Democratization",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::text-generation",
+        "ai-strategy-for-education::image-generation"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::open-source-models",
+      "label": "Open Source Models",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::foundation-model"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::local-ai-models",
+      "label": "Local AI Models",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::open-source-models"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::declining-ai-cost",
+      "label": "Declining AI Cost",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::cost-per-task",
+        "ai-strategy-for-education::open-source-models"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-tutoring",
+      "label": "AI Tutoring",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::conversational-ai",
+        "ai-strategy-for-education::generative-ai"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::conversational-ai",
+      "label": "Conversational AI",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::generative-ai"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::retrieval-augmented-generation",
+      "label": "Retrieval Augmented Generation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::private-knowledge",
+        "ai-strategy-for-education::prompt"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::fine-tuning",
+      "label": "Fine Tuning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::training-data",
+        "ai-strategy-for-education::foundation-model"
+      ],
+      "taxonomy_id": "GENAI",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-strategy",
+      "label": "AI Strategy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::strategic-planning",
+        "ai-strategy-for-education::artificial-intelligence"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::knowledge-organization",
+      "label": "Knowledge Organization",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::public-knowledge",
+        "ai-strategy-for-education::private-knowledge"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::strategic-planning",
+      "label": "Strategic Planning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::knowledge-organization"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::digital-transformation",
+      "label": "Digital Transformation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::strategic-planning",
+        "ai-strategy-for-education::artificial-intelligence"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::center-of-excellence",
+      "label": "Center Of Excellence",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-strategy"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::return-on-investment",
+      "label": "Return On Investment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::strategic-planning"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::use-case-identification",
+      "label": "Use Case Identification",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-strategy"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::build-versus-buy",
+      "label": "Build Versus Buy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::return-on-investment"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::vendor-selection",
+      "label": "Vendor Selection",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::build-versus-buy",
+        "ai-strategy-for-education::total-cost-of-ownership"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::total-cost-of-ownership",
+      "label": "Total Cost Of Ownership",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::return-on-investment"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::strategic-urgency",
+      "label": "Strategic Urgency",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::capability-doubling",
+        "ai-strategy-for-education::adoption-versus-capability"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::competitive-advantage",
+      "label": "Competitive Advantage",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-strategy",
+        "ai-strategy-for-education::digital-transformation"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::innovation-culture",
+      "label": "Innovation Culture",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-strategy"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::stakeholder-alignment",
+      "label": "Stakeholder Alignment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::strategic-planning"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::executive-sponsorship",
+      "label": "Executive Sponsorship",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::stakeholder-alignment"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::idea-funnel",
+      "label": "Idea Funnel",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::center-of-excellence",
+        "ai-strategy-for-education::strategic-planning"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::idea-generation",
+      "label": "Idea Generation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-literacy-training",
+        "ai-strategy-for-education::use-case-identification"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-literacy-training",
+      "label": "AI Literacy Training",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::artificial-intelligence",
+        "ai-strategy-for-education::ai-tutoring"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::idea-submission-form",
+      "label": "Idea Submission Form",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-generation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::idea-registry",
+      "label": "Idea Registry",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-submission-form"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::idea-metadata",
+      "label": "Idea Metadata",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-registry"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::problem-statement",
+      "label": "Problem Statement",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-generation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::idea-evaluation",
+      "label": "Idea Evaluation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-registry",
+        "ai-strategy-for-education::problem-statement"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::feasibility-assessment",
+      "label": "Feasibility Assessment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-evaluation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::risk-scoring",
+      "label": "Risk Scoring",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-evaluation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::benefit-scoring",
+      "label": "Benefit Scoring",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-evaluation",
+        "ai-strategy-for-education::return-on-investment"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::cost-estimation",
+      "label": "Cost Estimation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-evaluation",
+        "ai-strategy-for-education::total-cost-of-ownership"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::scoring-rubric",
+      "label": "Scoring Rubric",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::feasibility-assessment",
+        "ai-strategy-for-education::risk-scoring",
+        "ai-strategy-for-education::benefit-scoring"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::expert-review-panel",
+      "label": "Expert Review Panel",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-evaluation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::idea-feedback-loop",
+      "label": "Idea Feedback Loop",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::expert-review-panel"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::idea-recognition-awards",
+      "label": "Idea Recognition Awards",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-generation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::project-selection",
+      "label": "Project Selection",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::scoring-rubric",
+        "ai-strategy-for-education::expert-review-panel"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::project-portfolio",
+      "label": "Project Portfolio",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-selection"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::quick-wins",
+      "label": "Quick Wins",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-selection"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::strategic-bets",
+      "label": "Strategic Bets",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-selection",
+        "ai-strategy-for-education::strategic-urgency"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::resource-assignment",
+      "label": "Resource Assignment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-portfolio"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::project-team-formation",
+      "label": "Project Team Formation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::resource-assignment"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::shared-code-repository",
+      "label": "Shared Code Repository",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-team-formation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::cross-team-collaboration",
+      "label": "Cross Team Collaboration",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-team-formation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::project-evaluation",
+      "label": "Project Evaluation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-team-formation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::success-metrics",
+      "label": "Success Metrics",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-evaluation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::key-performance-indicator",
+      "label": "Key Performance Indicator",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::success-metrics"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::pipeline-report",
+      "label": "Pipeline Report",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-portfolio"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::funnel-stage-tracking",
+      "label": "Funnel Stage Tracking",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::idea-funnel",
+        "ai-strategy-for-education::pipeline-report"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::quarterly-executive-report",
+      "label": "Quarterly Executive Report",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::pipeline-report",
+        "ai-strategy-for-education::key-performance-indicator",
+        "ai-strategy-for-education::executive-sponsorship"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::lessons-learned",
+      "label": "Lessons Learned",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-evaluation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::problem-taxonomy",
+      "label": "Problem Taxonomy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::problem-statement",
+        "ai-strategy-for-education::idea-evaluation"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::solution-taxonomy",
+      "label": "Solution Taxonomy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::build-versus-buy",
+        "ai-strategy-for-education::problem-taxonomy"
+      ],
+      "taxonomy_id": "FUNNEL",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::intelligent-textbook",
+      "label": "Intelligent Textbook",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::generative-ai",
+        "ai-strategy-for-education::ai-tutoring"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::adaptive-content",
+      "label": "Adaptive Content",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::interactive-simulation",
+      "label": "Interactive Simulation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::microsim",
+      "label": "MicroSim",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::interactive-simulation"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::open-educational-resources",
+      "label": "Open Educational Resources",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::content-cost-collapse",
+      "label": "Content Cost Collapse",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::declining-ai-cost",
+        "ai-strategy-for-education::open-educational-resources"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ten-thousand-textbooks",
+      "label": "Ten Thousand Textbooks",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook",
+        "ai-strategy-for-education::content-cost-collapse"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::textbook-procurement",
+      "label": "Textbook Procurement",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ten-thousand-textbooks",
+        "ai-strategy-for-education::build-versus-buy"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::curriculum-alignment",
+      "label": "Curriculum Alignment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-content-generation",
+      "label": "AI Content Generation",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::text-generation",
+        "ai-strategy-for-education::intelligent-textbook"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::content-quality-assessment",
+      "label": "Content Quality Assessment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-content-generation",
+        "ai-strategy-for-education::scoring-rubric"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::concept-learning-graph",
+      "label": "Concept Learning Graph",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook",
+        "ai-strategy-for-education::curriculum-alignment"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::learning-record",
+      "label": "Learning Record",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::xapi-standard",
+      "label": "xAPI Standard",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::learning-record"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::learning-record-store",
+      "label": "Learning Record Store",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::xapi-standard"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::learning-analytics",
+      "label": "Learning Analytics",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::learning-record-store"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-driven-lms",
+      "label": "AI Driven LMS",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::learning-management-system",
+        "ai-strategy-for-education::predictive-analytics"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::learning-management-system",
+      "label": "Learning Management System",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::recommended-learning-plan",
+      "label": "Recommended Learning Plan",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-driven-lms",
+        "ai-strategy-for-education::personalized-learning-path"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::personalized-learning-path",
+      "label": "Personalized Learning Path",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::learning-analytics"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::mastery-tracking",
+      "label": "Mastery Tracking",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::learning-analytics"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::early-alert-system",
+      "label": "Early Alert System",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::predictive-analytics"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::data-interoperability",
+      "label": "Data Interoperability",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::xapi-standard"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::data-portability",
+      "label": "Data Portability",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::data-interoperability"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::student-data-ownership",
+      "label": "Student Data Ownership",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::data-portability"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::predictive-analytics",
+      "label": "Predictive Analytics",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::learning-analytics"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::learning-telemetry",
+      "label": "Learning Telemetry",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::xapi-standard",
+        "ai-strategy-for-education::learning-analytics"
+      ],
+      "taxonomy_id": "LRNTECH",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::alpha-school-model",
+      "label": "Alpha School Model",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::two-hour-learning",
+        "ai-strategy-for-education::project-based-learning",
+        "ai-strategy-for-education::pro-social-learning"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::two-hour-learning",
+      "label": "Two Hour Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-tutoring",
+        "ai-strategy-for-education::mastery-based-progression"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::project-based-learning",
+      "label": "Project Based Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::skill-development"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::team-based-learning",
+      "label": "Team Based Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-based-learning"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::hyperpersonalized-learning",
+      "label": "Hyperpersonalized Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::personalized-learning-path",
+        "ai-strategy-for-education::recommended-learning-plan"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::mastery-based-progression",
+      "label": "Mastery Based Progression",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::mastery-tracking"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::self-paced-learning",
+      "label": "Self Paced Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::mastery-based-progression"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::blended-learning",
+      "label": "Blended Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::learning-management-system",
+        "ai-strategy-for-education::project-based-learning"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::flipped-classroom",
+      "label": "Flipped Classroom",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::blended-learning"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::competency-based-education",
+      "label": "Competency Based Education",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::mastery-tracking"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::teacher-role-shift",
+      "label": "Teacher Role Shift",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-tutoring"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::mentorship-model",
+      "label": "Mentorship Model",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::teacher-role-shift"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::socratic-method",
+      "label": "Socratic Method",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::conversational-ai",
+        "ai-strategy-for-education::ai-tutoring"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::authentic-assessment",
+      "label": "Authentic Assessment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-based-learning"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::formative-assessment",
+      "label": "Formative Assessment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::mastery-tracking"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::skill-development",
+      "label": "Skill Development",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-tutoring"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::lifelong-learning",
+      "label": "Lifelong Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::skill-development"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::responsible-ai",
+      "label": "Responsible AI",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-ethics",
+        "ai-strategy-for-education::artificial-intelligence"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-ethics",
+      "label": "AI Ethics",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::artificial-intelligence"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::algorithmic-bias",
+      "label": "Algorithmic Bias",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::training-data",
+        "ai-strategy-for-education::ai-ethics"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::fairness-in-ai",
+      "label": "Fairness In AI",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::algorithmic-bias"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::data-privacy",
+      "label": "Data Privacy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-ethics",
+        "ai-strategy-for-education::private-knowledge"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ferpa-compliance",
+      "label": "FERPA Compliance",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::data-privacy"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::coppa-compliance",
+      "label": "COPPA Compliance",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::data-privacy"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::student-data-protection",
+      "label": "Student Data Protection",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::data-privacy",
+        "ai-strategy-for-education::student-data-ownership"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-hallucination-risk",
+      "label": "AI Hallucination Risk",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::hallucination"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::over-reliance-on-ai",
+      "label": "Over Reliance On AI",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-tutoring"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::skill-atrophy",
+      "label": "Skill Atrophy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::over-reliance-on-ai"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::academic-integrity",
+      "label": "Academic Integrity",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::over-reliance-on-ai",
+        "ai-strategy-for-education::text-generation"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-detection-tools",
+      "label": "AI Detection Tools",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::academic-integrity",
+        "ai-strategy-for-education::text-generation"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::misinformation-risk",
+      "label": "Misinformation Risk",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::hallucination",
+        "ai-strategy-for-education::text-generation"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::transparency",
+      "label": "Transparency",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::responsible-ai"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::explainability",
+      "label": "Explainability",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::responsible-ai",
+        "ai-strategy-for-education::model-parameters"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::human-in-the-loop",
+      "label": "Human In The Loop",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::responsible-ai",
+        "ai-strategy-for-education::ai-agent"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-safety",
+      "label": "AI Safety",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::responsible-ai",
+        "ai-strategy-for-education::frontier-model"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::vendor-lock-in",
+      "label": "Vendor Lock In",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::vendor-selection",
+        "ai-strategy-for-education::open-source-models"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::risk-register",
+      "label": "Risk Register",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::risk-scoring",
+        "ai-strategy-for-education::responsible-ai"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::risk-reward-tradeoff",
+      "label": "Risk Reward Tradeoff",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::risk-register",
+        "ai-strategy-for-education::benefit-scoring"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::student-well-being",
+      "label": "Student Well Being",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::over-reliance-on-ai",
+        "ai-strategy-for-education::screen-time-concerns"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::screen-time-concerns",
+      "label": "Screen Time Concerns",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-tutoring"
+      ],
+      "taxonomy_id": "RISK",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::digital-divide",
+      "label": "Digital Divide",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::access-to-devices",
+        "ai-strategy-for-education::broadband-access"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::educational-equity",
+      "label": "Educational Equity",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-ethics"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::access-to-devices",
+      "label": "Access To Devices",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::educational-equity"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::broadband-access",
+      "label": "Broadband Access",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::educational-equity"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::title-i-schools",
+      "label": "Title I Schools",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::educational-equity"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::under-resourced-schools",
+      "label": "Under Resourced Schools",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::title-i-schools",
+        "ai-strategy-for-education::digital-divide"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::resource-disparity",
+      "label": "Resource Disparity",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::digital-divide"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::equity-impact-scoring",
+      "label": "Equity Impact Scoring",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::educational-equity",
+        "ai-strategy-for-education::scoring-rubric"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-access-inequality",
+      "label": "AI Access Inequality",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::digital-divide",
+        "ai-strategy-for-education::declining-ai-cost"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::inclusive-design",
+      "label": "Inclusive Design",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::educational-equity",
+        "ai-strategy-for-education::fairness-in-ai"
+      ],
+      "taxonomy_id": "EQUITY",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-governance",
+      "label": "AI Governance",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::responsible-ai",
+        "ai-strategy-for-education::ai-strategy"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::centralized-governance",
+      "label": "Centralized Governance",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-governance"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::decentralized-governance",
+      "label": "Decentralized Governance",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-governance"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-use-policy",
+      "label": "AI Use Policy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-governance"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::academic-integrity-policy",
+      "label": "Academic Integrity Policy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-use-policy",
+        "ai-strategy-for-education::academic-integrity"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::change-management",
+      "label": "Change Management",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::digital-transformation"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::implementation-roadmap",
+      "label": "Implementation Roadmap",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::change-management",
+        "ai-strategy-for-education::strategic-planning"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-literacy-program",
+      "label": "AI Literacy Program",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-literacy-training",
+        "ai-strategy-for-education::professional-development"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::professional-development",
+      "label": "Professional Development",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::change-management"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::school-board-engagement",
+      "label": "School Board Engagement",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::stakeholder-alignment"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::parent-engagement",
+      "label": "Parent Engagement",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::stakeholder-alignment"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::community-engagement",
+      "label": "Community Engagement",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::parent-engagement",
+        "ai-strategy-for-education::school-board-engagement"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::policy-framework",
+      "label": "Policy Framework",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-governance",
+        "ai-strategy-for-education::ai-use-policy"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::pilot-program",
+      "label": "Pilot Program",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::implementation-roadmap"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::scaling-strategy",
+      "label": "Scaling Strategy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::pilot-program",
+        "ai-strategy-for-education::implementation-roadmap"
+      ],
+      "taxonomy_id": "GOV",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::swot-analysis",
+      "label": "SWOT Analysis",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::strategic-planning",
+        "ai-strategy-for-education::ai-strategy"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::strengths-analysis",
+      "label": "Strengths Analysis",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::swot-analysis"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::weaknesses-analysis",
+      "label": "Weaknesses Analysis",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::swot-analysis"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::opportunities-analysis",
+      "label": "Opportunities Analysis",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::swot-analysis"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::threats-analysis",
+      "label": "Threats Analysis",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::swot-analysis",
+        "ai-strategy-for-education::risk-register"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::institutional-archetype",
+      "label": "Institutional Archetype",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::swot-analysis",
+        "ai-strategy-for-education::under-resourced-schools"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::gap-analysis",
+      "label": "Gap Analysis",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::weaknesses-analysis",
+        "ai-strategy-for-education::opportunities-analysis"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::strategic-roadmap",
+      "label": "Strategic Roadmap",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::implementation-roadmap",
+        "ai-strategy-for-education::swot-analysis"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::capstone-ai-strategy",
+      "label": "Capstone AI Strategy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::swot-analysis",
+        "ai-strategy-for-education::idea-funnel",
+        "ai-strategy-for-education::ai-governance",
+        "ai-strategy-for-education::implementation-roadmap",
+        "ai-strategy-for-education::agent-governance"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::board-ready-strategy",
+      "label": "Board Ready Strategy",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::capstone-ai-strategy",
+        "ai-strategy-for-education::quarterly-executive-report",
+        "ai-strategy-for-education::school-board-engagement"
+      ],
+      "taxonomy_id": "PLAN",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::personal-ai-agents",
+      "label": "Personal AI Agents",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::ai-agent",
+        "ai-strategy-for-education::ai-tutoring"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::ai-agent-persona",
+      "label": "AI Agent Persona",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::personal-ai-agents",
+        "ai-strategy-for-education::conversational-ai"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::agent-workforce",
+      "label": "Agent Workforce",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::personal-ai-agents"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::agent-task-assignment",
+      "label": "Agent Task Assignment",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::personal-ai-agents",
+        "ai-strategy-for-education::agentic-task-completion"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::multi-agent-coordination",
+      "label": "Multi Agent Coordination",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::agent-workforce",
+        "ai-strategy-for-education::agent-task-assignment"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::agent-orchestration",
+      "label": "Agent Orchestration",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::multi-agent-coordination"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::agent-governance",
+      "label": "Agent Governance",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::agent-workforce",
+        "ai-strategy-for-education::ai-governance"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::human-agent-collaboration",
+      "label": "Human Agent Collaboration",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::personal-ai-agents",
+        "ai-strategy-for-education::human-in-the-loop"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::progress-monitoring-agent",
+      "label": "Progress Monitoring Agent",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::agent-task-assignment",
+        "ai-strategy-for-education::mastery-tracking"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::parent-communication-agent",
+      "label": "Parent Communication Agent",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::agent-task-assignment",
+        "ai-strategy-for-education::parent-engagement"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::term-planning-agent",
+      "label": "Term Planning Agent",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::agent-task-assignment",
+        "ai-strategy-for-education::strategic-planning"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::critical-thinking-agent",
+      "label": "Critical Thinking Agent",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::agent-task-assignment",
+        "ai-strategy-for-education::socratic-method"
+      ],
+      "taxonomy_id": "AGENT",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::pro-social-learning",
+      "label": "Pro-Social Learning",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::team-based-learning"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::extracurricular-activities",
+      "label": "Extracurricular Activities",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::project-based-learning",
+        "ai-strategy-for-education::pro-social-learning"
+      ],
+      "taxonomy_id": "PEDMOD",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::learning-graph",
+      "label": "Learning Graph",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::concept-learning-graph",
+        "ai-strategy-for-education::curriculum-alignment"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::five-levels-of-textbooks",
+      "label": "Five Levels of Textbooks",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::intelligent-textbook"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::static-textbooks",
+      "label": "Static Textbooks",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::five-levels-of-textbooks"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::interactive-textbooks",
+      "label": "Interactive Textbooks",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::five-levels-of-textbooks",
+        "ai-strategy-for-education::microsim",
+        "ai-strategy-for-education::concept-learning-graph"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::adaptive-textbooks",
+      "label": "Adaptive Textbooks",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::interactive-textbooks",
+        "ai-strategy-for-education::adaptive-content",
+        "ai-strategy-for-education::learning-record"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::chatbot-textbooks",
+      "label": "Chatbot Textbooks",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::adaptive-textbooks",
+        "ai-strategy-for-education::ai-tutoring",
+        "ai-strategy-for-education::conversational-ai"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    },
+    {
+      "id": "ai-strategy-for-education::autonomous-ai-textbooks",
+      "label": "Autonomous AI Textbooks",
+      "subject_id": "ai-strategy-for-education",
+      "dependencies": [
+        "ai-strategy-for-education::chatbot-textbooks",
+        "ai-strategy-for-education::ai-content-generation"
+      ],
+      "taxonomy_id": "ITB",
+      "level": "core"
+    }
+  ]
+}

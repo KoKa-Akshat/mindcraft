@@ -1,0 +1,4309 @@
+{
+  "subject_id": "moss",
+  "title": "Moss: Biology, Ecology, Design, and Sustainability",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "MistyRose"
+    },
+    "TYPES": {
+      "classifier_name": "Moss Types & Identification",
+      "color": "PeachPuff"
+    },
+    "ECOL": {
+      "classifier_name": "Ecology & Ecosystems",
+      "color": "Honeydew"
+    },
+    "WATER": {
+      "classifier_name": "Water & Climate",
+      "color": "PaleTurquoise"
+    },
+    "GARD": {
+      "classifier_name": "Garden Design",
+      "color": "PaleGreen"
+    },
+    "INDOOR": {
+      "classifier_name": "Indoor Moss Systems",
+      "color": "LightYellow"
+    },
+    "ARCH": {
+      "classifier_name": "Architecture & Sustainability",
+      "color": "LightSteelBlue"
+    },
+    "ART": {
+      "classifier_name": "Art, Culture & Expression",
+      "color": "Lavender"
+    },
+    "PRACT": {
+      "classifier_name": "Practical Skills & DIY",
+      "color": "Thistle"
+    },
+    "EDUC": {
+      "classifier_name": "Education & Life Stages",
+      "color": "LightPink"
+    },
+    "ADV": {
+      "classifier_name": "Advanced & Systems Topics",
+      "color": "PowderBlue"
+    },
+    "FUTURE": {
+      "classifier_name": "Future Applications",
+      "color": "Plum"
+    },
+    "XCUT": {
+      "classifier_name": "Cross-Cutting Skills & Science",
+      "color": "Gainsboro"
+    }
+  },
+  "concepts": [
+    {
+      "id": "moss::moss-definition",
+      "label": "Moss Definition",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::bryophytes",
+      "label": "Bryophytes",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::liverworts",
+      "label": "Liverworts",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bryophytes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::hornworts",
+      "label": "Hornworts",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bryophytes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::non-vascular-plants",
+      "label": "Non-Vascular Plants",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::vascular-plants",
+      "label": "Vascular Plants",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::plant-evolution",
+      "label": "Plant Evolution",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::land-plant-origins",
+      "label": "Land Plant Origins",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::plant-evolution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-diversity",
+      "label": "Moss Diversity",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::bryophytes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-classification",
+      "label": "Moss Classification",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-diversity",
+        "moss::bryophytes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-vs-ferns",
+      "label": "Moss vs Ferns",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::vascular-plants"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-vs-grass",
+      "label": "Moss vs Grass",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::vascular-plants"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-vs-succulents",
+      "label": "Moss vs Succulents",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::vascular-plants"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-vs-algae",
+      "label": "Moss vs Algae",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::land-plant-origins"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::vascular-system",
+      "label": "Vascular System",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::vascular-plants"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::non-vascular-transport",
+      "label": "Non-Vascular Transport",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::non-vascular-plants",
+        "moss::vascular-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::growth-rate-comparison",
+      "label": "Growth Rate Comparison",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::vascular-plants"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::environmental-resilience",
+      "label": "Environmental Resilience",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::plant-evolution"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::gametophyte",
+      "label": "Gametophyte",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bryophytes",
+        "moss::moss-life-cycle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::sporophyte",
+      "label": "Sporophyte",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bryophytes",
+        "moss::moss-life-cycle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::alternation-of-generations",
+      "label": "Alternation of Generations",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::gametophyte",
+        "moss::sporophyte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::rhizoids",
+      "label": "Rhizoids",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::non-vascular-plants",
+        "moss::gametophyte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-leaves",
+      "label": "Moss Leaves",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::gametophyte",
+        "moss::moss-cell-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-stems",
+      "label": "Moss Stems",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::gametophyte",
+        "moss::moss-cell-structure"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::spore-capsule",
+      "label": "Spore Capsule",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sporophyte",
+        "moss::spores"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::seta",
+      "label": "Seta",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sporophyte",
+        "moss::spore-capsule"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::calyptra",
+      "label": "Calyptra",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sporophyte",
+        "moss::spore-capsule"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::spores",
+      "label": "Spores",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bryophytes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::spore-dispersal",
+      "label": "Spore Dispersal",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::spores",
+        "moss::spore-capsule"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::spores-vs-seeds",
+      "label": "Spores vs Seeds",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::spores",
+        "moss::vascular-plants"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::water-in-fertilization",
+      "label": "Water in Fertilization",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::gametophyte",
+        "moss::moss-sexual-reproduction"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-life-cycle",
+      "label": "Moss Life Cycle",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::bryophytes"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::protonema",
+      "label": "Protonema",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::spores",
+        "moss::moss-life-cycle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-sexual-reproduction",
+      "label": "Moss Sexual Reproduction",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::gametophyte",
+        "moss::sporophyte"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::asexual-reproduction",
+      "label": "Asexual Reproduction",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-life-cycle"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-cell-structure",
+      "label": "Moss Cell Structure",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::cell-biology-basics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::chloroplasts-in-moss",
+      "label": "Chloroplasts in Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-cell-structure",
+        "moss::photosynthesis-in-moss"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::photosynthesis-in-moss",
+      "label": "Photosynthesis in Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-cell-structure",
+        "moss::light-and-energy-basics"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "moss::sheet-moss",
+      "label": "Sheet Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-growth-forms"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::cushion-moss",
+      "label": "Cushion Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-growth-forms"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::haircap-moss",
+      "label": "Haircap Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::acrocarpous-moss"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::rock-cap-moss",
+      "label": "Rock Cap Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-growth-forms"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::sphagnum-moss",
+      "label": "Sphagnum Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::peat-moss"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::peat-moss",
+      "label": "Peat Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::bryophytes"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::fern-moss",
+      "label": "Fern Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::pleurocarpous-moss"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::mood-moss",
+      "label": "Mood Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::acrocarpous-moss"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::reindeer-moss",
+      "label": "Reindeer Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-classification"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::java-moss",
+      "label": "Java Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::aquatic-moss"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::star-moss",
+      "label": "Star Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::acrocarpous-moss"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::broom-moss",
+      "label": "Broom Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::acrocarpous-moss"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::plume-moss",
+      "label": "Plume Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::pleurocarpous-moss"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::forest-moss",
+      "label": "Forest Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-habitat-types"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::aquatic-moss",
+      "label": "Aquatic Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-habitat-types"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::urban-moss",
+      "label": "Urban Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-habitat-types",
+        "moss::urban-ecology"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-habitat-types",
+      "label": "Moss Habitat Types",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::acrocarpous-moss",
+      "label": "Acrocarpous Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-growth-forms"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::pleurocarpous-moss",
+      "label": "Pleurocarpous Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-growth-forms"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-growth-forms",
+      "label": "Moss Growth Forms",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-diversity"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-identification",
+      "label": "Moss Identification",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-classification",
+        "moss::hand-lens-use",
+        "moss::moss-color-variation",
+        "moss::moss-texture"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-field-guides",
+      "label": "Moss Field Guides",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-identification",
+        "moss::moss-photography"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::dichotomous-key-basics",
+      "label": "Dichotomous Key Basics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-identification",
+        "moss::taxonomy-basics"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-photography",
+      "label": "Moss Photography",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-identification",
+        "moss::digital-documentation"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::hand-lens-use",
+      "label": "Hand Lens Use",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::scientific-observation"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-color-variation",
+      "label": "Moss Color Variation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-cell-structure"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-texture",
+      "label": "Moss Texture",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-growth-forms"
+      ],
+      "taxonomy_id": "TYPES",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-ecology",
+      "label": "Moss Ecology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::ecosystem-services"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::ecosystem-services",
+      "label": "Ecosystem Services",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "ECOL",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::water-retention",
+      "label": "Water Retention",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::capillary-action",
+        "moss::water-absorption-mechanics"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::soil-formation",
+      "label": "Soil Formation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::soil-science-basics"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::primary-succession",
+      "label": "Primary Succession",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::microhabitats",
+      "label": "Microhabitats",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-forests",
+      "label": "Moss in Forests",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::forest-moss",
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-tundra",
+      "label": "Moss in Tundra",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::desiccation-tolerance"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-wetlands",
+      "label": "Moss in Wetlands",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::peat-bogs"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-deserts",
+      "label": "Moss in Deserts",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::desiccation-tolerance"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-biodiversity",
+      "label": "Moss Biodiversity",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-diversity",
+        "moss::moss-ecology",
+        "moss::biodiversity-value"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::capillary-action",
+      "label": "Capillary Action",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::non-vascular-transport",
+        "moss::water-cycle-basics"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::water-absorption-mechanics",
+      "label": "Water Absorption Mechanics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::non-vascular-transport",
+        "moss::capillary-action"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::fog-harvesting",
+      "label": "Fog Harvesting",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-absorption-mechanics"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::rainfall-interception",
+      "label": "Rainfall Interception",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-retention",
+        "moss::hydrological-cycle"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::evapotranspiration",
+      "label": "Evapotranspiration",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-retention",
+        "moss::hydrological-cycle"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::hydrological-cycle",
+      "label": "Hydrological Cycle",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-cycle-basics"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-water-storage",
+      "label": "Moss Water Storage",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-retention",
+        "moss::sphagnum-water-holding"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::desiccation-tolerance",
+      "label": "Desiccation Tolerance",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::environmental-resilience",
+        "moss::water-retention"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::rehydration-ability",
+      "label": "Rehydration Ability",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::desiccation-tolerance"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::carbon-sequestration",
+      "label": "Carbon Sequestration",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::photosynthesis-in-moss",
+        "moss::carbon-cycle"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::carbon-cycle",
+      "label": "Carbon Cycle",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "WATER",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::moss-as-carbon-sink",
+      "label": "Moss as Carbon Sink",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::carbon-sequestration",
+        "moss::carbon-cycle"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::climate-change-effects",
+      "label": "Climate Change Effects",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::carbon-cycle"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-climate-indicators",
+      "label": "Moss Climate Indicators",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::climate-change-effects",
+        "moss::bioindicator-species"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::temperature-sensitivity",
+      "label": "Temperature Sensitivity",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::climate-change-effects",
+        "moss::environmental-resilience"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::pollution-sensitivity",
+      "label": "Pollution Sensitivity",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::air-quality-monitoring",
+      "label": "Air Quality Monitoring",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::pollution-sensitivity",
+        "moss::ecological-monitoring"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::bioindicator-species",
+      "label": "Bioindicator Species",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::pollution-sensitivity"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::heavy-metal-absorption",
+      "label": "Heavy Metal Absorption",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::pollution-sensitivity",
+        "moss::water-absorption-mechanics"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-and-acid-rain",
+      "label": "Moss and Acid Rain",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::pollution-sensitivity",
+        "moss::ph-and-chemistry-basics"
+      ],
+      "taxonomy_id": "WATER",
+      "level": "core"
+    },
+    {
+      "id": "moss::urban-ecology",
+      "label": "Urban Ecology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::community-ecology"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::ecological-monitoring",
+      "label": "Ecological Monitoring",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::data-collection-methods"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-microbiome",
+      "label": "Moss Microbiome",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-associated-bacteria",
+      "label": "Moss-Associated Bacteria",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-microbiome"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-associated-fungi",
+      "label": "Moss-Associated Fungi",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-microbiome"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::nitrogen-fixation",
+      "label": "Nitrogen Fixation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-associated-bacteria",
+        "moss::nutrient-cycles"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::symbiotic-systems",
+      "label": "Symbiotic Systems",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::decomposition-role",
+      "label": "Decomposition Role",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::nutrient-cycles"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::nutrient-cycling",
+      "label": "Nutrient Cycling",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::nutrient-cycles",
+        "moss::decomposition-role"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-food-webs",
+      "label": "Moss Food Webs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::food-web-concepts"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::invertebrate-habitats",
+      "label": "Invertebrate Habitats",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::microhabitats"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::peat-bogs",
+      "label": "Peat Bogs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::peat-moss",
+        "moss::peatland-ecology"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::peatland-ecology",
+      "label": "Peatland Ecology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::peat-moss",
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::sphagnum-water-holding",
+      "label": "Sphagnum Water Holding",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sphagnum-moss",
+        "moss::water-retention"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::wetland-conservation",
+      "label": "Wetland Conservation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-wetlands",
+        "moss::conservation-principles"
+      ],
+      "taxonomy_id": "ECOL",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-garden-benefits",
+      "label": "Moss Garden Benefits",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::low-maintenance-gardens",
+        "moss::moss-aesthetic-qualities"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::low-maintenance-gardens",
+      "label": "Low Maintenance Gardens",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::ecosystem-services"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::no-mowing-required",
+      "label": "No Mowing Required",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::moss-lawn-alternative"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::shade-tolerance",
+      "label": "Shade Tolerance",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::light-conditions"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-aesthetic-qualities",
+      "label": "Moss Aesthetic Qualities",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-color-variation",
+        "moss::moss-texture"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::site-assessment",
+      "label": "Site Assessment",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::light-conditions",
+        "moss::moisture-levels",
+        "moss::soil-acidity",
+        "moss::climate-zones"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::light-conditions",
+      "label": "Light Conditions",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::light-and-energy-basics"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::moisture-levels",
+      "label": "Moisture Levels",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-cycle-basics"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::soil-acidity",
+      "label": "Soil Acidity",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::soil-science-basics",
+        "moss::ph-and-chemistry-basics"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::soil-ph-testing",
+      "label": "Soil pH Testing",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::soil-acidity",
+        "moss::experimental-design"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::climate-zones",
+      "label": "Climate Zones",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "GARD",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::hardiness-zones",
+      "label": "Hardiness Zones",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::climate-zones"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::species-selection",
+      "label": "Species Selection",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::site-assessment",
+        "moss::moss-identification"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-garden-site-prep",
+      "label": "Moss Garden Site Prep",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::site-assessment",
+        "moss::soil-compaction"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::removing-existing-grass",
+      "label": "Removing Existing Grass",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-site-prep"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::soil-compaction",
+      "label": "Soil Compaction",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::soil-science-basics"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::transplanting-moss",
+      "label": "Transplanting Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::species-selection",
+        "moss::moss-garden-site-prep",
+        "moss::ethical-harvesting"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::encouraging-growth",
+      "label": "Encouraging Growth",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::transplanting-moss",
+        "moss::watering-techniques"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::watering-techniques",
+      "label": "Watering Techniques",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moisture-levels",
+        "moss::water-quality"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::japanese-moss-gardens",
+      "label": "Japanese Moss Gardens",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::japanese-garden-design",
+        "moss::moss-garden-benefits"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::woodland-garden-style",
+      "label": "Woodland Garden Style",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::shade-garden-design"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::minimalist-zen-layouts",
+      "label": "Minimalist Zen Layouts",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::zen-garden-principles",
+        "moss::moss-garden-benefits"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-pathways",
+      "label": "Moss Pathways",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::moss-and-stone-design"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-and-stone-design",
+      "label": "Moss and Stone Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::moss-aesthetic-qualities"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-ground-cover",
+      "label": "Moss Ground Cover",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::species-selection"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::companion-plants",
+      "label": "Companion Plants",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::species-selection",
+        "moss::shade-garden-design"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::shade-garden-design",
+      "label": "Shade Garden Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::shade-tolerance",
+        "moss::light-conditions"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::rain-garden-integration",
+      "label": "Rain Garden Integration",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::stormwater-management"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-lawn-alternative",
+      "label": "Moss Lawn Alternative",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::turf-grass-comparison"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::turf-grass-comparison",
+      "label": "Turf Grass Comparison",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::vascular-plants"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::cost-comparison",
+      "label": "Cost Comparison",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-lawn-alternative",
+        "moss::cost-benefit-analysis"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::water-use-comparison",
+      "label": "Water Use Comparison",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-lawn-alternative",
+        "moss::water-stewardship"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::chemical-input-reduction",
+      "label": "Chemical Input Reduction",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-lawn-alternative",
+        "moss::environmental-ethics"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::carbon-footprint-analysis",
+      "label": "Carbon Footprint Analysis",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-lawn-alternative",
+        "moss::carbon-sequestration",
+        "moss::life-cycle-assessment"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::maintenance-calendar",
+      "label": "Maintenance Calendar",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::encouraging-growth",
+        "moss::phenology"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::seasonal-moss-care",
+      "label": "Seasonal Moss Care",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::encouraging-growth",
+        "moss::winter-dormancy",
+        "moss::spring-recovery"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::winter-dormancy",
+      "label": "Winter Dormancy",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::desiccation-tolerance"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::spring-recovery",
+      "label": "Spring Recovery",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::winter-dormancy",
+        "moss::rehydration-ability"
+      ],
+      "taxonomy_id": "GARD",
+      "level": "core"
+    },
+    {
+      "id": "moss::mossarium-definition",
+      "label": "Mossarium Definition",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-garden-benefits"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::open-mossariums",
+      "label": "Open Mossariums",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::humidity-balance"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::closed-mossariums",
+      "label": "Closed Mossariums",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::humidity-balance"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::mossarium-materials",
+      "label": "Mossarium Materials",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::glass-container-selection"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::glass-container-selection",
+      "label": "Glass Container Selection",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::substrate-layers",
+      "label": "Substrate Layers",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::substrate-selection"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::drainage-layer",
+      "label": "Drainage Layer",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::substrate-layers"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::activated-charcoal-layer",
+      "label": "Activated Charcoal Layer",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::substrate-layers"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::mossarium-soil-mix",
+      "label": "Mossarium Soil Mix",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::substrate-layers",
+        "moss::soil-science-basics"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::mossarium-assembly",
+      "label": "Mossarium Assembly",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-materials",
+        "moss::substrate-layers",
+        "moss::drainage-layer",
+        "moss::activated-charcoal-layer",
+        "moss::mossarium-soil-mix"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::humidity-balance",
+      "label": "Humidity Balance",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::humidity-control"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::condensation-management",
+      "label": "Condensation Management",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::closed-mossariums",
+        "moss::humidity-balance"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::mossarium-lighting",
+      "label": "Mossarium Lighting",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::lighting-options"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::led-grow-lights",
+      "label": "LED Grow Lights",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-lighting",
+        "moss::light-spectrum-needs"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::natural-light-needs",
+      "label": "Natural Light Needs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-lighting",
+        "moss::light-conditions"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::mossarium-maintenance",
+      "label": "Mossarium Maintenance",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-assembly",
+        "moss::misting-techniques"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::misting-techniques",
+      "label": "Misting Techniques",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::watering-techniques"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::pruning-moss",
+      "label": "Pruning Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-assembly"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::mold-prevention",
+      "label": "Mold Prevention",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mold-management"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::pest-management",
+      "label": "Pest Management",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-pest-control"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-tabletop-designs",
+      "label": "Moss Tabletop Designs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::miniature-landscapes"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::glass-installations",
+      "label": "Glass Installations",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::glass-container-selection"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::miniature-landscapes",
+      "label": "Miniature Landscapes",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::design-thinking"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::living-moss-walls",
+      "label": "Living Moss Walls",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::vertical-garden-systems",
+        "moss::moss-wall-irrigation"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::preserved-moss",
+      "label": "Preserved Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::living-vs-preserved-moss",
+      "label": "Living vs Preserved Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::preserved-moss",
+        "moss::living-moss-walls"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-wall-irrigation",
+      "label": "Moss Wall Irrigation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::vertical-garden-systems",
+        "moss::automated-misting"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::structural-requirements",
+      "label": "Structural Requirements",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::living-moss-walls",
+        "moss::roof-structural-load"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::vertical-garden-systems",
+      "label": "Vertical Garden Systems",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition",
+        "moss::green-infrastructure"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::biophilic-design",
+      "label": "Biophilic Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::nature-connection-indoors",
+        "moss::urban-green-spaces"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::stress-reduction-benefits",
+      "label": "Stress Reduction Benefits",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biophilic-design",
+        "moss::psychological-benefits"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::indoor-air-quality",
+      "label": "Indoor Air Quality",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biophilic-design"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::psychological-benefits",
+      "label": "Psychological Benefits",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biophilic-design",
+        "moss::nature-connection-indoors"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::nature-connection-indoors",
+      "label": "Nature Connection Indoors",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mossarium-definition"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::office-moss-installations",
+      "label": "Office Moss Installations",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biophilic-design",
+        "moss::moss-in-commercial-buildings"
+      ],
+      "taxonomy_id": "INDOOR",
+      "level": "core"
+    },
+    {
+      "id": "moss::green-roofs",
+      "label": "Green Roofs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::green-infrastructure"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::green-roof-types",
+      "label": "Green Roof Types",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::green-roofs"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::extensive-green-roofs",
+      "label": "Extensive Green Roofs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::green-roof-types"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::intensive-green-roofs",
+      "label": "Intensive Green Roofs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::green-roof-types"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-roof-benefits",
+      "label": "Moss Roof Benefits",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::sound-absorption",
+        "moss::stormwater-management"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::roof-structural-load",
+      "label": "Roof Structural Load",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::green-roofs",
+        "moss::building-envelope"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::roof-waterproofing",
+      "label": "Roof Waterproofing",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::green-roofs",
+        "moss::building-envelope"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::passive-cooling",
+      "label": "Passive Cooling",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::thermal-insulation"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::moisture-buffering",
+      "label": "Moisture Buffering",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-retention",
+        "moss::building-envelope"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::sound-absorption",
+      "label": "Sound Absorption",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::building-envelope"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::thermal-insulation",
+      "label": "Thermal Insulation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::building-envelope"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::stormwater-management",
+      "label": "Stormwater Management",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-retention",
+        "moss::hydrological-cycle",
+        "moss::green-infrastructure"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::runoff-reduction",
+      "label": "Runoff Reduction",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::stormwater-management",
+        "moss::permeable-surfaces"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::heat-island-effect",
+      "label": "Heat Island Effect",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::urban-ecology",
+        "moss::climate-literacy"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::heat-island-mitigation",
+      "label": "Heat Island Mitigation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::heat-island-effect",
+        "moss::green-roofs",
+        "moss::urban-green-spaces"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::urban-green-spaces",
+      "label": "Urban Green Spaces",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::urban-ecology",
+        "moss::green-infrastructure"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-commercial-buildings",
+      "label": "Moss in Commercial Buildings",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biophilic-design",
+        "moss::maintenance-economics"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::office-branding-nature",
+      "label": "Office Branding Nature",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-commercial-buildings",
+        "moss::biophilic-design"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::maintenance-economics",
+      "label": "Maintenance Economics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::cost-benefit-analysis"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::sustainable-architecture",
+      "label": "Sustainable Architecture",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::green-roofs",
+        "moss::sustainable-homes",
+        "moss::sustainability-principles"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::leed-certification",
+      "label": "LEED Certification",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sustainable-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::living-building-challenge",
+      "label": "Living Building Challenge",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sustainable-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::climate-resilient-cities",
+      "label": "Climate-Resilient Cities",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::heat-island-mitigation",
+        "moss::stormwater-management",
+        "moss::sustainable-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::urban-biodiversity",
+      "label": "Urban Biodiversity",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::urban-green-spaces",
+        "moss::biodiversity-value"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::permeable-surfaces",
+      "label": "Permeable Surfaces",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::stormwater-management",
+        "moss::green-infrastructure"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::green-infrastructure",
+      "label": "Green Infrastructure",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::ecosystem-services",
+        "moss::urban-ecology"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::sustainable-homes",
+      "label": "Sustainable Homes",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moisture-buffering",
+        "moss::sound-absorption",
+        "moss::sustainability-principles"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::energy-efficiency",
+      "label": "Energy Efficiency",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::passive-cooling",
+        "moss::thermal-insulation"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "moss::building-envelope",
+      "label": "Building Envelope",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "ARCH",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::moss-art-overview",
+      "label": "Moss Art Overview",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-aesthetic-qualities"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::framed-moss-art",
+      "label": "Framed Moss Art",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-art-overview",
+        "moss::preserved-moss"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-paintings",
+      "label": "Moss Paintings",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-art-overview",
+        "moss::moss-color-in-design"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-graffiti",
+      "label": "Moss Graffiti",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-art-overview",
+        "moss::moss-propagation"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::living-sculptures",
+      "label": "Living Sculptures",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-art-overview",
+        "moss::sculpture-armatures"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::sculpture-armatures",
+      "label": "Sculpture Armatures",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-art-overview",
+        "moss::moss-substrates-for-art"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-substrates-for-art",
+      "label": "Moss Substrates for Art",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-art-overview",
+        "moss::substrate-selection"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-color-in-design",
+      "label": "Moss Color in Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-color-variation",
+        "moss::moss-art-overview"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::texture-in-moss-art",
+      "label": "Texture in Moss Art",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-texture",
+        "moss::moss-art-overview"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-photography-art",
+      "label": "Moss Photography Art",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-photography",
+        "moss::moss-art-overview"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::japanese-garden-design",
+      "label": "Japanese Garden Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::wabi-sabi-philosophy",
+        "moss::zen-garden-principles"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::wabi-sabi-philosophy",
+      "label": "Wabi-Sabi Philosophy",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::historical-moss-uses"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::zen-garden-principles",
+      "label": "Zen Garden Principles",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::wabi-sabi-philosophy"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-ikebana",
+      "label": "Moss in Ikebana",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::japanese-garden-design",
+        "moss::moss-definition"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::historical-moss-uses",
+      "label": "Historical Moss Uses",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::plant-evolution"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::celtic-moss-traditions",
+      "label": "Celtic Moss Traditions",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::historical-moss-uses"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-literature",
+      "label": "Moss in Literature",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::historical-moss-uses"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-folklore",
+      "label": "Moss in Folklore",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::historical-moss-uses"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::contemplative-gardens",
+      "label": "Contemplative Gardens",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::japanese-garden-design",
+        "moss::healing-gardens"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::sacred-groves",
+      "label": "Sacred Groves",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::historical-moss-uses",
+        "moss::contemplative-gardens"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::healing-gardens",
+      "label": "Healing Gardens",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biophilic-design",
+        "moss::therapeutic-gardens"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::sensory-garden-design",
+      "label": "Sensory Garden Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::healing-gardens",
+        "moss::sensory-engagement"
+      ],
+      "taxonomy_id": "ART",
+      "level": "core"
+    },
+    {
+      "id": "moss::ethical-harvesting",
+      "label": "Ethical Harvesting",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::wild-harvesting-concerns",
+        "moss::conservation-principles"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::wild-harvesting-concerns",
+      "label": "Wild Harvesting Concerns",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::conservation-principles"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::harvesting-permits",
+      "label": "Harvesting Permits",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::wild-harvesting-concerns",
+        "moss::land-use-ethics"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::sustainable-collection",
+      "label": "Sustainable Collection",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::ethical-harvesting",
+        "moss::sustainability-certs"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-propagation",
+      "label": "Moss Propagation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::asexual-reproduction"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::fragmentation-method",
+      "label": "Fragmentation Method",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-propagation"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-slurry-method",
+      "label": "Moss Slurry Method",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-propagation"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::slurry-myths",
+      "label": "Slurry Myths",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-slurry-method",
+        "moss::evidence-based-practice"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::division-method",
+      "label": "Division Method",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-propagation"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::spore-propagation",
+      "label": "Spore Propagation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-propagation",
+        "moss::spores"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::growth-medium-prep",
+      "label": "Growth Medium Prep",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-propagation",
+        "moss::substrate-selection"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-nursery-setup",
+      "label": "Moss Nursery Setup",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-propagation",
+        "moss::growth-medium-prep",
+        "moss::commercial-suppliers"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::commercial-suppliers",
+      "label": "Commercial Suppliers",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-propagation",
+        "moss::sustainability-certs"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::sustainability-certs",
+      "label": "Sustainability Certs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sustainability-principles"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::browning-moss-causes",
+      "label": "Browning Moss Causes",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::drying-issues",
+        "moss::overwatering-myths"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::drying-issues",
+      "label": "Drying Issues",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::desiccation-tolerance"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::overwatering-myths",
+      "label": "Overwatering Myths",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::evidence-based-practice"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-pest-control",
+      "label": "Moss Pest Control",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::mold-management",
+      "label": "Mold Management",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::algae-competition",
+      "label": "Algae Competition",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-vs-algae",
+        "moss::competition"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::weed-removal",
+      "label": "Weed Removal",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::competition"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::substrate-selection",
+      "label": "Substrate Selection",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::soil-science-basics"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::perlite-use",
+      "label": "Perlite Use",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::substrate-selection"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::peat-free-substrates",
+      "label": "Peat-Free Substrates",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::substrate-selection",
+        "moss::sustainability-principles"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::mist-systems",
+      "label": "Mist Systems",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::watering-techniques"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::spray-bottle-technique",
+      "label": "Spray Bottle Technique",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::watering-techniques"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::automated-misting",
+      "label": "Automated Misting",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::mist-systems"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::lighting-options",
+      "label": "Lighting Options",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::light-conditions",
+        "moss::light-and-energy-basics"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::natural-vs-artificial-light",
+      "label": "Natural vs Artificial Light",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::lighting-options"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::light-spectrum-needs",
+      "label": "Light Spectrum Needs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::lighting-options",
+        "moss::light-and-energy-basics"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::humidity-control",
+      "label": "Humidity Control",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moisture-levels",
+        "moss::air-circulation"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::temperature-management",
+      "label": "Temperature Management",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::climate-zones",
+        "moss::air-circulation"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::air-circulation",
+      "label": "Air Circulation",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "PRACT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::water-quality",
+      "label": "Water Quality",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-cycle-basics"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::rainwater-collection",
+      "label": "Rainwater Collection",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-quality",
+        "moss::water-stewardship"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::distilled-water-use",
+      "label": "Distilled Water Use",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-quality"
+      ],
+      "taxonomy_id": "PRACT",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-k-12-education",
+      "label": "Moss in K-12 Education",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::moss-stem-integration"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::hands-on-moss-labs",
+      "label": "Hands-On Moss Labs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education",
+        "moss::lab-safety"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::outdoor-exploration",
+      "label": "Outdoor Exploration",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::simple-experiments",
+      "label": "Simple Experiments",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education",
+        "moss::scientific-method-review"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-stem-integration",
+      "label": "Moss STEM Integration",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition",
+        "moss::systems-thinking"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::biology-lesson-plans",
+      "label": "Biology Lesson Plans",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education",
+        "moss::moss-stem-integration"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::systems-thinking-labs",
+      "label": "Systems Thinking Labs",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education",
+        "moss::systems-thinking"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::microscope-activities",
+      "label": "Microscope Activities",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education",
+        "moss::microscopy-basics"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-journaling",
+      "label": "Moss Journaling",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education",
+        "moss::field-notebook-skills"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::nature-walk-curriculum",
+      "label": "Nature Walk Curriculum",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education",
+        "moss::outdoor-exploration"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-senior-living",
+      "label": "Moss in Senior Living",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::therapeutic-gardens",
+      "label": "Therapeutic Gardens",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::horticultural-therapy"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::low-maintenance-greenery",
+      "label": "Low-Maintenance Greenery",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::low-maintenance-gardens"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::sensory-engagement",
+      "label": "Sensory Engagement",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::therapeutic-gardens"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::horticultural-therapy",
+      "label": "Horticultural Therapy",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::memory-care-gardens",
+      "label": "Memory Care Gardens",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-senior-living",
+        "moss::horticultural-therapy"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::accessibility-design",
+      "label": "Accessibility Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-senior-living",
+        "moss::design-thinking"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::intergenerational-projects",
+      "label": "Intergenerational Projects",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-k-12-education",
+        "moss::moss-in-senior-living",
+        "moss::collaborative-learning"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::community-moss-gardens",
+      "label": "Community Moss Gardens",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-garden-benefits",
+        "moss::intergenerational-projects",
+        "moss::collaborative-learning"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::citizen-science",
+      "label": "Citizen Science",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::citizen-science-projects"
+      ],
+      "taxonomy_id": "EDUC",
+      "level": "core"
+    },
+    {
+      "id": "moss::systems-thinking",
+      "label": "Systems Thinking",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::feedback-loops",
+        "moss::emergent-properties"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::distributed-systems",
+      "label": "Distributed Systems",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::systems-thinking",
+        "moss::non-vascular-transport"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::resilience-patterns",
+      "label": "Resilience Patterns",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::systems-thinking",
+        "moss::environmental-resilience"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::low-resource-optimization",
+      "label": "Low-Resource Optimization",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::systems-thinking",
+        "moss::non-vascular-transport"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::feedback-loops",
+      "label": "Feedback Loops",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "ADV",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::emergent-properties",
+      "label": "Emergent Properties",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "ADV",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::biomimicry",
+      "label": "Biomimicry",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::systems-thinking"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::water-capture-strategies",
+      "label": "Water Capture Strategies",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-absorption-mechanics",
+        "moss::fog-harvesting"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::surface-optimization",
+      "label": "Surface Optimization",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biomimicry"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::passive-design-lessons",
+      "label": "Passive Design Lessons",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biomimicry",
+        "moss::passive-cooling"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::bio-inspired-materials",
+      "label": "Bio-Inspired Materials",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::biomimicry",
+        "moss::bio-materials"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::growth-rate-measurement",
+      "label": "Growth Rate Measurement",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::data-collection-methods",
+        "moss::growth-rate-comparison"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::moisture-sensors",
+      "label": "Moisture Sensors",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::data-collection-methods",
+        "moss::moisture-levels"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::data-collection-methods",
+      "label": "Data Collection Methods",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::scientific-method-review"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::experimental-design",
+      "label": "Experimental Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::scientific-method-review",
+        "moss::hypothesis-testing"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::scientific-method-review",
+      "label": "Scientific Method Review",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "ADV",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::hypothesis-testing",
+      "label": "Hypothesis Testing",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::scientific-method-review"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::data-collection-methods"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::statistical-analysis",
+      "label": "Statistical Analysis",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::data-collection-methods",
+        "moss::hypothesis-testing"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::citizen-science-projects",
+      "label": "Citizen Science Projects",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::data-collection-methods",
+        "moss::inaturalist-platform"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::inaturalist-platform",
+      "label": "iNaturalist Platform",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::data-collection-methods",
+        "moss::digital-documentation"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-surveys",
+      "label": "Moss Surveys",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::citizen-science-projects",
+        "moss::species-mapping"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::species-mapping",
+      "label": "Species Mapping",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::citizen-science-projects",
+        "moss::moss-identification"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::ai-moss-identification",
+      "label": "AI Moss Identification",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::image-recognition",
+        "moss::moss-identification"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::image-recognition",
+      "label": "Image Recognition",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::machine-learning-basics"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::machine-learning-basics",
+      "label": "Machine Learning Basics",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "ADV",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::garden-recommendation-ai",
+      "label": "Garden Recommendation AI",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::ai-moss-identification",
+        "moss::species-selection",
+        "moss::machine-learning-basics"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::adaptive-learning-systems",
+      "label": "Adaptive Learning Systems",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::machine-learning-basics",
+        "moss::garden-recommendation-ai"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::microsim-development",
+      "label": "MicroSim Development",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::simulation-modeling",
+        "moss::interactive-visualization"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::simulation-modeling",
+      "label": "Simulation Modeling",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::statistical-analysis"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::parameter-tuning",
+      "label": "Parameter Tuning",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::microsim-development",
+        "moss::simulation-modeling"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::interactive-visualization",
+      "label": "Interactive Visualization",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::data-visualization"
+      ],
+      "taxonomy_id": "ADV",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-in-space-habitats",
+      "label": "Moss in Space Habitats",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::closed-loop-ecosystems",
+        "moss::low-resource-plants"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::closed-loop-ecosystems",
+      "label": "Closed-Loop Ecosystems",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::systems-thinking"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::life-support-systems",
+      "label": "Life Support Systems",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::closed-loop-ecosystems"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::low-resource-plants",
+      "label": "Low-Resource Plants",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::non-vascular-plants",
+        "moss::low-resource-optimization"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::mars-habitat-design",
+      "label": "Mars Habitat Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-in-space-habitats",
+        "moss::closed-loop-ecosystems"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::synthetic-biology",
+      "label": "Synthetic Biology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::genetics-basics"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::engineered-moss",
+      "label": "Engineered Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::synthetic-biology",
+        "moss::moss-biotechnology"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::gene-editing-overview",
+      "label": "Gene Editing Overview",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::synthetic-biology",
+        "moss::genetics-basics"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::bioengineering-ethics",
+      "label": "Bioengineering Ethics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::synthetic-biology",
+        "moss::environmental-ethics"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::bio-materials",
+      "label": "Bio-Materials",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-biotechnology"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-based-insulation",
+      "label": "Moss-Based Insulation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bio-materials",
+        "moss::thermal-insulation"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::carbon-negative-materials",
+      "label": "Carbon-Negative Materials",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bio-materials",
+        "moss::carbon-sequestration"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::sustainable-packaging",
+      "label": "Sustainable Packaging",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bio-materials",
+        "moss::biodegradable-materials"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::biodegradable-materials",
+      "label": "Biodegradable Materials",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::bio-materials"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::circular-economy",
+      "label": "Circular Economy",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sustainability-principles"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::green-manufacturing",
+      "label": "Green Manufacturing",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::circular-economy",
+        "moss::sustainability-principles"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::moss-biotechnology",
+      "label": "Moss Biotechnology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-definition"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::phytoremediation",
+      "label": "Phytoremediation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::heavy-metal-absorption",
+        "moss::environmental-restoration"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::environmental-restoration",
+      "label": "Environmental Restoration",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::habitat-restoration"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::rewilding-with-moss",
+      "label": "Rewilding with Moss",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::environmental-restoration",
+        "moss::native-species-priority"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::ecosystem-engineering",
+      "label": "Ecosystem Engineering",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::environmental-restoration",
+        "moss::systems-thinking"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::future-urban-design",
+      "label": "Future Urban Design",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::climate-resilient-cities",
+        "moss::sustainable-architecture"
+      ],
+      "taxonomy_id": "FUTURE",
+      "level": "core"
+    },
+    {
+      "id": "moss::scientific-observation",
+      "label": "Scientific Observation",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::field-notebook-skills",
+      "label": "Field Notebook Skills",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::scientific-observation"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::lab-safety",
+      "label": "Lab Safety",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::microscopy-basics",
+      "label": "Microscopy Basics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::scientific-observation"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::digital-documentation",
+      "label": "Digital Documentation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::scientific-observation"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::research-skills",
+      "label": "Research Skills",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::literature-review-basics",
+        "moss::technical-writing"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::literature-review-basics",
+      "label": "Literature Review Basics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::critical-thinking"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::presentation-skills",
+      "label": "Presentation Skills",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::technical-writing"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::technical-writing",
+      "label": "Technical Writing",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::collaborative-learning",
+      "label": "Collaborative Learning",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::project-management",
+      "label": "Project Management",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::design-thinking"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::design-thinking",
+      "label": "Design Thinking",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::iterative-prototyping",
+      "label": "Iterative Prototyping",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::design-thinking"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::evidence-based-practice",
+      "label": "Evidence-Based Practice",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::scientific-method-review",
+        "moss::critical-thinking"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::environmental-ethics",
+      "label": "Environmental Ethics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::critical-thinking"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::conservation-principles",
+      "label": "Conservation Principles",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::environmental-ethics"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::sustainability-principles",
+      "label": "Sustainability Principles",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::environmental-ethics"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::biodiversity-value",
+      "label": "Biodiversity Value",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::conservation-principles",
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::ecosystem-health",
+      "label": "Ecosystem Health",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::biodiversity-value"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::climate-literacy",
+      "label": "Climate Literacy",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::carbon-cycle",
+        "moss::climate-change-effects"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::water-stewardship",
+      "label": "Water Stewardship",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::water-cycle-basics",
+        "moss::environmental-ethics"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::land-use-ethics",
+      "label": "Land Use Ethics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::environmental-ethics"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::native-species-priority",
+      "label": "Native Species Priority",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::conservation-principles",
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::invasive-species-aware",
+      "label": "Invasive Species Aware",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::conservation-principles",
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::habitat-restoration",
+      "label": "Habitat Restoration",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::conservation-principles"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::soil-science-basics",
+      "label": "Soil Science Basics",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::ph-and-chemistry-basics",
+      "label": "pH and Chemistry Basics",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::light-and-energy-basics",
+      "label": "Light and Energy Basics",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::water-cycle-basics",
+      "label": "Water Cycle Basics",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::nutrient-cycles",
+      "label": "Nutrient Cycles",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::carbon-cycle",
+        "moss::water-cycle-basics"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::food-web-concepts",
+      "label": "Food Web Concepts",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::nutrient-cycles"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::population-dynamics",
+      "label": "Population Dynamics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::community-ecology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::community-ecology",
+      "label": "Community Ecology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::landscape-ecology",
+      "label": "Landscape Ecology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::community-ecology",
+        "moss::biogeography-basics"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::biogeography-basics",
+      "label": "Biogeography Basics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::plant-evolution"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::phenology",
+      "label": "Phenology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::climate-zones"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::plant-anatomy-basics",
+      "label": "Plant Anatomy Basics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::vascular-plants"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::cell-biology-basics",
+      "label": "Cell Biology Basics",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::genetics-basics",
+      "label": "Genetics Basics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::cell-biology-basics"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::taxonomy-basics",
+      "label": "Taxonomy Basics",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-classification"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::evolutionary-biology",
+      "label": "Evolutionary Biology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::plant-evolution",
+        "moss::natural-selection"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::adaptation",
+      "label": "Adaptation",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::evolutionary-biology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::natural-selection",
+      "label": "Natural Selection",
+      "subject_id": "moss",
+      "dependencies": [],
+      "taxonomy_id": "XCUT",
+      "level": "foundational"
+    },
+    {
+      "id": "moss::convergent-evolution",
+      "label": "Convergent Evolution",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::evolutionary-biology",
+        "moss::adaptation"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::coevolution",
+      "label": "Coevolution",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::evolutionary-biology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::mutualism",
+      "label": "Mutualism",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::symbiotic-systems"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::parasitism",
+      "label": "Parasitism",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::competition",
+      "label": "Competition",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::community-ecology"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::ecological-niche",
+      "label": "Ecological Niche",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::community-ecology",
+        "moss::competition"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::succession",
+      "label": "Succession",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::moss-ecology",
+        "moss::primary-succession"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::disturbance-ecology",
+      "label": "Disturbance Ecology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::succession"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::restoration-ecology",
+      "label": "Restoration Ecology",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::conservation-principles"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::cost-benefit-analysis",
+      "label": "Cost-Benefit Analysis",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::critical-thinking"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    },
+    {
+      "id": "moss::life-cycle-assessment",
+      "label": "Life Cycle Assessment",
+      "subject_id": "moss",
+      "dependencies": [
+        "moss::sustainability-principles",
+        "moss::cost-benefit-analysis"
+      ],
+      "taxonomy_id": "XCUT",
+      "level": "core"
+    }
+  ]
+}

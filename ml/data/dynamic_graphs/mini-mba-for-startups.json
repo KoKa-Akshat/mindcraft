@@ -1,0 +1,2173 @@
+{
+  "subject_id": "mini-mba-for-startups",
+  "title": "Ole Cup Entrepreneurship: A Liberal Arts Guide to the St. Olaf Pitch Competition",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "IKIH": {
+      "classifier_name": "Ikigai and Self-Discovery",
+      "color": "DarkOrchid"
+    },
+    "IDEA": {
+      "classifier_name": "Ideation and Creativity",
+      "color": "DarkGreen"
+    },
+    "OPP": {
+      "classifier_name": "Opportunity Recognition",
+      "color": "Gold"
+    },
+    "VALC": {
+      "classifier_name": "Value and Customer Discovery",
+      "color": "Teal"
+    },
+    "LEAN": {
+      "classifier_name": "Lean and MVP Thinking",
+      "color": "DodgerBlue"
+    },
+    "SOC": {
+      "classifier_name": "Social Ventures and Impact",
+      "color": "Crimson"
+    },
+    "TEAM": {
+      "classifier_name": "Team and Leadership",
+      "color": "MediumPurple"
+    },
+    "BIZ": {
+      "classifier_name": "Business Model Canvas",
+      "color": "DarkGoldenrod"
+    },
+    "FIN": {
+      "classifier_name": "Financial Fundamentals",
+      "color": "OliveDrab"
+    },
+    "MRKT": {
+      "classifier_name": "Marketing and Storytelling",
+      "color": "HotPink"
+    },
+    "PITCH": {
+      "classifier_name": "Pitching and Competition",
+      "color": "Orange"
+    }
+  },
+  "concepts": [
+    {
+      "id": "mini-mba-for-startups::entrepreneurship",
+      "label": "Entrepreneurship",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "mini-mba-for-startups::liberal-arts-education",
+      "label": "Liberal Arts Education",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "mini-mba-for-startups::creativity",
+      "label": "Creativity",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "mini-mba-for-startups::innovation",
+      "label": "Innovation",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::creativity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::problem-solving",
+      "label": "Problem Solving",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::creativity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::critical-thinking",
+      "label": "Critical Thinking",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::problem-solving"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::growth-mindset",
+      "label": "Growth Mindset",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "mini-mba-for-startups::risk-tolerance",
+      "label": "Risk Tolerance",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::growth-mindset"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::resilience",
+      "label": "Resilience",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::growth-mindset",
+        "mini-mba-for-startups::risk-tolerance"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::self-awareness",
+      "label": "Self-Awareness",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::growth-mindset"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::motivation",
+      "label": "Motivation",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::self-awareness"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::curiosity",
+      "label": "Curiosity",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "mini-mba-for-startups::ethical-reasoning",
+      "label": "Ethical Reasoning",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::critical-thinking"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::communication-skills",
+      "label": "Communication Skills",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "mini-mba-for-startups::collaboration",
+      "label": "Collaboration",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::communication-skills"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ikigai",
+      "label": "Ikigai",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship",
+        "mini-mba-for-startups::self-awareness"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::reason-for-being",
+      "label": "Reason for Being",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ikigai"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::what-you-love",
+      "label": "What You Love",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::self-awareness",
+        "mini-mba-for-startups::curiosity"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::what-you-are-good-at",
+      "label": "What You Are Good At",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::self-awareness",
+        "mini-mba-for-startups::personal-values-assessment"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::what-the-world-needs",
+      "label": "What the World Needs",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::curiosity",
+        "mini-mba-for-startups::ethical-reasoning"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::what-you-can-be-paid-for",
+      "label": "What You Can Be Paid For",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::passion-intersection",
+      "label": "Passion Intersection",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ikigai",
+        "mini-mba-for-startups::what-you-love",
+        "mini-mba-for-startups::what-you-are-good-at"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::mission-intersection",
+      "label": "Mission Intersection",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ikigai",
+        "mini-mba-for-startups::what-you-love",
+        "mini-mba-for-startups::what-the-world-needs"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::vocation-intersection",
+      "label": "Vocation Intersection",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ikigai",
+        "mini-mba-for-startups::what-you-are-good-at",
+        "mini-mba-for-startups::what-the-world-needs"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::profession-intersection",
+      "label": "Profession Intersection",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ikigai",
+        "mini-mba-for-startups::what-you-are-good-at",
+        "mini-mba-for-startups::what-you-can-be-paid-for"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ikigai-venn-diagram",
+      "label": "Ikigai Venn Diagram",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::passion-intersection",
+        "mini-mba-for-startups::mission-intersection",
+        "mini-mba-for-startups::vocation-intersection",
+        "mini-mba-for-startups::profession-intersection"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::personal-values-assessment",
+      "label": "Personal Values Assessment",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::self-awareness"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::strength-identification",
+      "label": "Strength Identification",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::what-you-are-good-at",
+        "mini-mba-for-startups::personal-values-assessment"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::purpose-discovery",
+      "label": "Purpose Discovery",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::reason-for-being",
+        "mini-mba-for-startups::mission-intersection"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::personal-brand",
+      "label": "Personal Brand",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::strength-identification",
+        "mini-mba-for-startups::purpose-discovery"
+      ],
+      "taxonomy_id": "IKIH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ideation",
+      "label": "Ideation",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::creativity",
+        "mini-mba-for-startups::curiosity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::brainstorming",
+      "label": "Brainstorming",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ideation"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::cross-disciplinary-creativity",
+      "label": "Cross-Disciplinary Creativity",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::liberal-arts-education",
+        "mini-mba-for-startups::creativity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::scamper-method",
+      "label": "SCAMPER Method",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ideation",
+        "mini-mba-for-startups::brainstorming"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::design-thinking",
+      "label": "Design Thinking",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::problem-solving",
+        "mini-mba-for-startups::ideation"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::user-empathy-mapping",
+      "label": "User Empathy Mapping",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::design-thinking"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::random-association-technique",
+      "label": "Random Association Technique",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::curiosity",
+        "mini-mba-for-startups::ideation"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::problem-inversion",
+      "label": "Problem Inversion",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::problem-solving",
+        "mini-mba-for-startups::ideation"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::observation-skills",
+      "label": "Observation Skills",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::curiosity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::music-as-idea-source",
+      "label": "Music as Idea Source",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::liberal-arts-education",
+        "mini-mba-for-startups::cross-disciplinary-creativity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::visual-arts-as-idea-source",
+      "label": "Visual Arts as Idea Source",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::liberal-arts-education",
+        "mini-mba-for-startups::cross-disciplinary-creativity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::theater-as-idea-source",
+      "label": "Theater as Idea Source",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::liberal-arts-education",
+        "mini-mba-for-startups::cross-disciplinary-creativity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::science-as-idea-source",
+      "label": "Science as Idea Source",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::liberal-arts-education",
+        "mini-mba-for-startups::cross-disciplinary-creativity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::humanities-as-idea-source",
+      "label": "Humanities as Idea Source",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::liberal-arts-education",
+        "mini-mba-for-startups::cross-disciplinary-creativity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::creative-confidence",
+      "label": "Creative Confidence",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::creativity",
+        "mini-mba-for-startups::growth-mindset",
+        "mini-mba-for-startups::ideation"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::idea-capture",
+      "label": "Idea Capture",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ideation"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::divergent-thinking",
+      "label": "Divergent Thinking",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::creativity",
+        "mini-mba-for-startups::ideation"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::convergent-thinking",
+      "label": "Convergent Thinking",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::critical-thinking",
+        "mini-mba-for-startups::divergent-thinking"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::prototyping-mindset",
+      "label": "Prototyping Mindset",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::design-thinking",
+        "mini-mba-for-startups::creative-confidence"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::liberal-arts-advantage",
+      "label": "Liberal Arts Advantage",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::liberal-arts-education",
+        "mini-mba-for-startups::cross-disciplinary-creativity"
+      ],
+      "taxonomy_id": "IDEA",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::opportunity-vs-idea",
+      "label": "Opportunity vs. Idea",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship",
+        "mini-mba-for-startups::ideation"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-pain-points",
+      "label": "Customer Pain Points",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::user-empathy-mapping",
+        "mini-mba-for-startups::observation-skills"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::underserved-markets",
+      "label": "Underserved Markets",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::opportunity-vs-idea",
+        "mini-mba-for-startups::customer-pain-points"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::social-gaps",
+      "label": "Social Gaps",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ethical-reasoning",
+        "mini-mba-for-startups::what-the-world-needs",
+        "mini-mba-for-startups::customer-pain-points"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::trend-analysis",
+      "label": "Trend Analysis",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::critical-thinking",
+        "mini-mba-for-startups::observation-skills"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::demographic-shifts",
+      "label": "Demographic Shifts",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::trend-analysis"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::technology-waves",
+      "label": "Technology Waves",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::trend-analysis"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::cultural-movements",
+      "label": "Cultural Movements",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::trend-analysis"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::regulatory-changes",
+      "label": "Regulatory Changes",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ethical-reasoning",
+        "mini-mba-for-startups::trend-analysis"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::opportunity-evaluation-matrix",
+      "label": "Opportunity Evaluation Matrix",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::opportunity-vs-idea",
+        "mini-mba-for-startups::trend-analysis"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::market-research",
+      "label": "Market Research",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::opportunity-vs-idea"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::primary-research",
+      "label": "Primary Research",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::market-research"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::secondary-research",
+      "label": "Secondary Research",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::market-research"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::problem-solution-fit",
+      "label": "Problem-Solution Fit",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::opportunity-vs-idea",
+        "mini-mba-for-startups::customer-pain-points"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::market-need-validation",
+      "label": "Market Need Validation",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::market-research",
+        "mini-mba-for-startups::problem-solution-fit"
+      ],
+      "taxonomy_id": "OPP",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::value-proposition",
+      "label": "Value Proposition",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::problem-solution-fit"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::value-proposition-canvas",
+      "label": "Value Proposition Canvas",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::value-proposition",
+        "mini-mba-for-startups::customer-pains",
+        "mini-mba-for-startups::customer-gains",
+        "mini-mba-for-startups::pain-relievers",
+        "mini-mba-for-startups::gain-creators"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-segments",
+      "label": "Customer Segments",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::market-research"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-jobs",
+      "label": "Customer Jobs",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-segments"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-pains",
+      "label": "Customer Pains",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-pain-points",
+        "mini-mba-for-startups::customer-segments"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-gains",
+      "label": "Customer Gains",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-segments",
+        "mini-mba-for-startups::customer-jobs"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::pain-relievers",
+      "label": "Pain Relievers",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::value-proposition",
+        "mini-mba-for-startups::customer-pains"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::gain-creators",
+      "label": "Gain Creators",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::value-proposition",
+        "mini-mba-for-startups::customer-gains"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::features-vs-benefits",
+      "label": "Features vs. Benefits",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::value-proposition"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::the-mom-test",
+      "label": "The Mom Test",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-interviews"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-interviews",
+      "label": "Customer Interviews",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-pain-points",
+        "mini-mba-for-startups::customer-segments"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::competitive-differentiation",
+      "label": "Competitive Differentiation",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::value-proposition"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::unique-selling-proposition",
+      "label": "Unique Selling Proposition",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::competitive-differentiation"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::early-adopters",
+      "label": "Early Adopters",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-segments"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::target-customer-profile",
+      "label": "Target Customer Profile",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::persona-development"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::persona-development",
+      "label": "Persona Development",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-segments"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::jobs-to-be-done-framework",
+      "label": "Jobs to Be Done Framework",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-jobs"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::user-journey-map",
+      "label": "User Journey Map",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::user-empathy-mapping",
+        "mini-mba-for-startups::target-customer-profile"
+      ],
+      "taxonomy_id": "VALC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::lean-startup-methodology",
+      "label": "Lean Startup Methodology",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship",
+        "mini-mba-for-startups::growth-mindset"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::build-measure-learn-cycle",
+      "label": "Build-Measure-Learn Cycle",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::lean-startup-methodology"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::minimum-viable-product",
+      "label": "Minimum Viable Product",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::prototyping-mindset",
+        "mini-mba-for-startups::lean-startup-methodology"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::riskiest-assumption",
+      "label": "Riskiest Assumption",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::lean-startup-methodology",
+        "mini-mba-for-startups::hypothesis-testing"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::hypothesis-testing",
+      "label": "Hypothesis Testing",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::critical-thinking"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::experiment-design",
+      "label": "Experiment Design",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::hypothesis-testing"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::paper-prototype",
+      "label": "Paper Prototype",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::prototyping-mindset",
+        "mini-mba-for-startups::minimum-viable-product"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::wireframe",
+      "label": "Wireframe",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::minimum-viable-product"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::landing-page-test",
+      "label": "Landing Page Test",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::minimum-viable-product",
+        "mini-mba-for-startups::wireframe"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::a-b-testing",
+      "label": "A/B Testing",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::landing-page-test",
+        "mini-mba-for-startups::experiment-design"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::validated-learning",
+      "label": "Validated Learning",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::build-measure-learn-cycle",
+        "mini-mba-for-startups::a-b-testing"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-feedback-loop",
+      "label": "Customer Feedback Loop",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-interviews",
+        "mini-mba-for-startups::validated-learning"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::pivot-vs-persevere-decision",
+      "label": "Pivot vs. Persevere Decision",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-feedback-loop",
+        "mini-mba-for-startups::lean-startup-methodology"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::product-market-fit",
+      "label": "Product-Market Fit",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::problem-solution-fit",
+        "mini-mba-for-startups::customer-feedback-loop"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::learning-metrics",
+      "label": "Learning Metrics",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::build-measure-learn-cycle",
+        "mini-mba-for-startups::validated-learning"
+      ],
+      "taxonomy_id": "LEAN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::social-entrepreneurship",
+      "label": "Social Entrepreneurship",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship",
+        "mini-mba-for-startups::ethical-reasoning"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::social-venture",
+      "label": "Social Venture",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::social-entrepreneurship"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::nonprofit-model",
+      "label": "Nonprofit Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::social-venture"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::for-profit-model",
+      "label": "For-Profit Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::hybrid-social-enterprise",
+      "label": "Hybrid Social Enterprise",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::nonprofit-model",
+        "mini-mba-for-startups::for-profit-model"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::b-corp-certification",
+      "label": "B-Corp Certification",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::hybrid-social-enterprise"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::benefit-corporation",
+      "label": "Benefit Corporation",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::hybrid-social-enterprise"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::cooperative-model",
+      "label": "Cooperative Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::hybrid-social-enterprise"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::social-impact-measurement",
+      "label": "Social Impact Measurement",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ethical-reasoning",
+        "mini-mba-for-startups::social-venture"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::theory-of-change",
+      "label": "Theory of Change",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::social-entrepreneurship",
+        "mini-mba-for-startups::social-impact-measurement"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::social-return-on-investment",
+      "label": "Social Return on Investment",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::social-impact-measurement"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::triple-bottom-line",
+      "label": "Triple Bottom Line",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ethical-reasoning",
+        "mini-mba-for-startups::social-venture"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::mission-driven-organization",
+      "label": "Mission-Driven Organization",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::social-venture",
+        "mini-mba-for-startups::stakeholder-theory"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::stakeholder-theory",
+      "label": "Stakeholder Theory",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship",
+        "mini-mba-for-startups::ethical-reasoning"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::community-engagement",
+      "label": "Community Engagement",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::collaboration",
+        "mini-mba-for-startups::social-venture"
+      ],
+      "taxonomy_id": "SOC",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::team-formation",
+      "label": "Team Formation",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship",
+        "mini-mba-for-startups::collaboration"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::team-diversity",
+      "label": "Team Diversity",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::team-formation"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::complementary-skills",
+      "label": "Complementary Skills",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::strength-identification",
+        "mini-mba-for-startups::team-diversity"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::builder-role",
+      "label": "Builder Role",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::complementary-skills"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::seller-role",
+      "label": "Seller Role",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::complementary-skills"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::visionary-role",
+      "label": "Visionary Role",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::purpose-discovery",
+        "mini-mba-for-startups::complementary-skills"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::co-founder-pitch",
+      "label": "Co-Founder Pitch",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::communication-skills",
+        "mini-mba-for-startups::team-formation"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::co-founder-agreement",
+      "label": "Co-Founder Agreement",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::co-founder-pitch",
+        "mini-mba-for-startups::equity-split"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::founder-vesting",
+      "label": "Founder Vesting",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::co-founder-agreement"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::conflict-resolution",
+      "label": "Conflict Resolution",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::critical-thinking",
+        "mini-mba-for-startups::team-communication"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::equity-split",
+      "label": "Equity Split",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::team-formation"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::team-communication",
+      "label": "Team Communication",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::communication-skills",
+        "mini-mba-for-startups::team-formation"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::role-definition",
+      "label": "Role Definition",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::complementary-skills",
+        "mini-mba-for-startups::skill-gap-analysis"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::skill-gap-analysis",
+      "label": "Skill Gap Analysis",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::strength-identification",
+        "mini-mba-for-startups::complementary-skills"
+      ],
+      "taxonomy_id": "TEAM",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::business-model",
+      "label": "Business Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::entrepreneurship"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::business-model-canvas",
+      "label": "Business Model Canvas",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::value-proposition",
+        "mini-mba-for-startups::business-model"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::revenue-streams",
+      "label": "Revenue Streams",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::business-model-canvas"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::channels",
+      "label": "Channels",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::business-model-canvas"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-relationships",
+      "label": "Customer Relationships",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-segments",
+        "mini-mba-for-startups::business-model-canvas"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::key-resources",
+      "label": "Key Resources",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::business-model-canvas"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::key-activities",
+      "label": "Key Activities",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::business-model-canvas"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::key-partnerships",
+      "label": "Key Partnerships",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::business-model-canvas"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::cost-structure",
+      "label": "Cost Structure",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::business-model-canvas"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::direct-channels",
+      "label": "Direct Channels",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::channels"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::indirect-channels",
+      "label": "Indirect Channels",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::channels"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-acquisition",
+      "label": "Customer Acquisition",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::early-adopters",
+        "mini-mba-for-startups::channels"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-retention",
+      "label": "Customer Retention",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-relationships",
+        "mini-mba-for-startups::customer-acquisition"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::subscription-model",
+      "label": "Subscription Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::revenue-streams"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::marketplace-model",
+      "label": "Marketplace Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::revenue-streams"
+      ],
+      "taxonomy_id": "BIZ",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::revenue-model",
+      "label": "Revenue Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::revenue-streams"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::product-sales-model",
+      "label": "Product Sales Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::revenue-model"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::licensing-model",
+      "label": "Licensing Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::revenue-model"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::freemium-model",
+      "label": "Freemium Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::revenue-model"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::service-revenue-model",
+      "label": "Service Revenue Model",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::revenue-model"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-acquisition-cost",
+      "label": "Customer Acquisition Cost",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-acquisition"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::lifetime-customer-value",
+      "label": "Lifetime Customer Value",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-retention",
+        "mini-mba-for-startups::customer-acquisition-cost"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::gross-margin",
+      "label": "Gross Margin",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::cost-structure",
+        "mini-mba-for-startups::revenue-model"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::break-even-analysis",
+      "label": "Break-Even Analysis",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::gross-margin",
+        "mini-mba-for-startups::fixed-costs",
+        "mini-mba-for-startups::variable-costs"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::financial-projection",
+      "label": "Financial Projection",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::break-even-analysis",
+        "mini-mba-for-startups::cash-flow"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::cash-flow",
+      "label": "Cash Flow",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::revenue-streams",
+        "mini-mba-for-startups::cost-structure"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::fixed-costs",
+      "label": "Fixed Costs",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::cost-structure"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::variable-costs",
+      "label": "Variable Costs",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::cost-structure"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::unit-economics",
+      "label": "Unit Economics",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-acquisition-cost",
+        "mini-mba-for-startups::lifetime-customer-value",
+        "mini-mba-for-startups::gross-margin"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::bootstrapping",
+      "label": "Bootstrapping",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::financial-projection",
+        "mini-mba-for-startups::cash-flow"
+      ],
+      "taxonomy_id": "FIN",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::brand-identity",
+      "label": "Brand Identity",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::personal-brand",
+        "mini-mba-for-startups::unique-selling-proposition"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::brand-story",
+      "label": "Brand Story",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::brand-identity",
+        "mini-mba-for-startups::hero-s-journey"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::hero-s-journey",
+      "label": "Hero's Journey",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::communication-skills"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::founder-story",
+      "label": "Founder Story",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::personal-brand",
+        "mini-mba-for-startups::brand-story"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::word-of-mouth-marketing",
+      "label": "Word-of-Mouth Marketing",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-acquisition",
+        "mini-mba-for-startups::network-effects"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::social-media-marketing",
+      "label": "Social Media Marketing",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-acquisition",
+        "mini-mba-for-startups::brand-identity"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::campus-marketing",
+      "label": "Campus Marketing",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::social-media-marketing"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::content-marketing",
+      "label": "Content Marketing",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::brand-story",
+        "mini-mba-for-startups::social-media-marketing"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::network-effects",
+      "label": "Network Effects",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::business-model"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::zero-budget-marketing",
+      "label": "Zero-Budget Marketing",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::word-of-mouth-marketing",
+        "mini-mba-for-startups::campus-marketing"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::viral-loop",
+      "label": "Viral Loop",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::word-of-mouth-marketing",
+        "mini-mba-for-startups::network-effects"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::press-coverage",
+      "label": "Press Coverage",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::brand-identity",
+        "mini-mba-for-startups::content-marketing"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::pitch-story-arc",
+      "label": "Pitch Story Arc",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::brand-story",
+        "mini-mba-for-startups::storytelling-frameworks"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::storytelling-frameworks",
+      "label": "Storytelling Frameworks",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::communication-skills",
+        "mini-mba-for-startups::hero-s-journey"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::early-adopter-strategy",
+      "label": "Early Adopter Strategy",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::early-adopters",
+        "mini-mba-for-startups::customer-acquisition"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::customer-referral-program",
+      "label": "Customer Referral Program",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-retention",
+        "mini-mba-for-startups::word-of-mouth-marketing"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::competitive-landscape-analysis",
+      "label": "Competitive Landscape Analysis",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::opportunity-evaluation-matrix",
+        "mini-mba-for-startups::competitive-differentiation"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::market-sizing",
+      "label": "Market Sizing",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::market-research",
+        "mini-mba-for-startups::customer-segments"
+      ],
+      "taxonomy_id": "MRKT",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::pitch-deck",
+      "label": "Pitch Deck",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::business-model-canvas",
+        "mini-mba-for-startups::pitch-story-arc"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::problem-slide",
+      "label": "Problem Slide",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-pain-points",
+        "mini-mba-for-startups::pitch-deck"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::solution-slide",
+      "label": "Solution Slide",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::value-proposition",
+        "mini-mba-for-startups::pitch-deck"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::market-size-slide",
+      "label": "Market Size Slide",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::market-sizing",
+        "mini-mba-for-startups::pitch-deck"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::traction-slide",
+      "label": "Traction Slide",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::validated-learning",
+        "mini-mba-for-startups::pitch-deck"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::team-slide",
+      "label": "Team Slide",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::team-formation",
+        "mini-mba-for-startups::pitch-deck"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ask-slide",
+      "label": "Ask Slide",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::financial-projection",
+        "mini-mba-for-startups::pitch-deck"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::total-addressable-market",
+      "label": "Total Addressable Market",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::customer-segments",
+        "mini-mba-for-startups::market-sizing"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::serviceable-addressable-market",
+      "label": "Serviceable Addressable Market",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::total-addressable-market"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::serviceable-obtainable-market",
+      "label": "Serviceable Obtainable Market",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::serviceable-addressable-market"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::slide-design-principles",
+      "label": "Slide Design Principles",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::pitch-deck"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::pitch-delivery",
+      "label": "Pitch Delivery",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::communication-skills",
+        "mini-mba-for-startups::pitch-deck"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::q-a-handling",
+      "label": "Q&A Handling",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::critical-thinking",
+        "mini-mba-for-startups::pitch-delivery"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::elevator-pitch",
+      "label": "Elevator Pitch",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::communication-skills",
+        "mini-mba-for-startups::pitch-story-arc"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::video-pitch",
+      "label": "Video Pitch",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::pitch-deck",
+        "mini-mba-for-startups::pitch-delivery"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::live-pitch",
+      "label": "Live Pitch",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::pitch-delivery",
+        "mini-mba-for-startups::q-a-handling"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ole-cup-timeline",
+      "label": "Ole Cup Timeline",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [],
+      "taxonomy_id": "PITCH",
+      "level": "foundational"
+    },
+    {
+      "id": "mini-mba-for-startups::ole-cup-eligibility",
+      "label": "Ole Cup Eligibility",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ole-cup-timeline"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ole-cup-mentoring-phase",
+      "label": "Ole Cup Mentoring Phase",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ole-cup-timeline"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ole-cup-application",
+      "label": "Ole Cup Application",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::pitch-deck",
+        "mini-mba-for-startups::ole-cup-eligibility"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ole-cup-judging-criteria",
+      "label": "Ole Cup Judging Criteria",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ole-cup-timeline"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::ole-cup-competition",
+      "label": "Ole Cup Competition",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ole-cup-application",
+        "mini-mba-for-startups::ole-cup-mentoring-phase",
+        "mini-mba-for-startups::ole-cup-judging-criteria"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::people-s-choice-award",
+      "label": "People's Choice Award",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ole-cup-competition"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::minnesota-cup",
+      "label": "Minnesota Cup",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::ole-cup-competition"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    },
+    {
+      "id": "mini-mba-for-startups::post-competition-launch",
+      "label": "Post-Competition Launch",
+      "subject_id": "mini-mba-for-startups",
+      "dependencies": [
+        "mini-mba-for-startups::bootstrapping",
+        "mini-mba-for-startups::ole-cup-competition"
+      ],
+      "taxonomy_id": "PITCH",
+      "level": "core"
+    }
+  ]
+}

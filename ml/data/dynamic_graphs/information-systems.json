@@ -1,0 +1,6267 @@
+{
+  "subject_id": "information-systems",
+  "title": "Information Systems",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Foundation Concepts",
+      "color": "SteelBlue"
+    },
+    "ROLE": {
+      "classifier_name": "Role of IS in Organizations",
+      "color": "DarkSlateBlue"
+    },
+    "ARCH": {
+      "classifier_name": "Information Systems Architecture",
+      "color": "DarkGreen"
+    },
+    "APPDEV": {
+      "classifier_name": "Application Development",
+      "color": "LimeGreen"
+    },
+    "DATA": {
+      "classifier_name": "Data and Information Management",
+      "color": "Gold"
+    },
+    "DATAGOV": {
+      "classifier_name": "Data Governance and Quality",
+      "color": "DarkGoldenrod"
+    },
+    "BI": {
+      "classifier_name": "Business Intelligence and Analytics",
+      "color": "Khaki"
+    },
+    "ENT": {
+      "classifier_name": "Enterprise Systems",
+      "color": "Teal"
+    },
+    "NET": {
+      "classifier_name": "Networks and Telecommunications",
+      "color": "DodgerBlue"
+    },
+    "CLOUD": {
+      "classifier_name": "Cloud Computing",
+      "color": "LightSkyBlue"
+    },
+    "SEC": {
+      "classifier_name": "Security of Information Assets",
+      "color": "Crimson"
+    },
+    "PRIV": {
+      "classifier_name": "Privacy, Compliance, and Regulation",
+      "color": "DarkRed"
+    },
+    "PM": {
+      "classifier_name": "IS Project Management",
+      "color": "MediumPurple"
+    },
+    "BPM": {
+      "classifier_name": "Business Process Management",
+      "color": "Indigo"
+    },
+    "SAD": {
+      "classifier_name": "Systems Analysis and Design",
+      "color": "DarkOrchid"
+    },
+    "HCI": {
+      "classifier_name": "Human-Computer Interaction",
+      "color": "HotPink"
+    },
+    "ITSM": {
+      "classifier_name": "IT Service Management",
+      "color": "OliveDrab"
+    },
+    "AIIS": {
+      "classifier_name": "AI in Information Systems",
+      "color": "Orange"
+    },
+    "RAI": {
+      "classifier_name": "Responsible and Ethical AI",
+      "color": "Coral"
+    },
+    "AILAW": {
+      "classifier_name": "AI Law and Regulation",
+      "color": "Peru"
+    },
+    "AISEC": {
+      "classifier_name": "AI and Information Security",
+      "color": "SaddleBrown"
+    },
+    "AIPROD": {
+      "classifier_name": "AI Productivity Impact",
+      "color": "Tomato"
+    },
+    "KGENS": {
+      "classifier_name": "Knowledge Graphs and Enterprise Nervous System",
+      "color": "DeepPink"
+    },
+    "EMRG": {
+      "classifier_name": "Emerging Topics",
+      "color": "DimGray"
+    }
+  },
+  "concepts": [
+    {
+      "id": "information-systems::information-system",
+      "label": "Information System",
+      "subject_id": "information-systems",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "information-systems::data",
+      "label": "Data",
+      "subject_id": "information-systems",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "information-systems::information",
+      "label": "Information",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::knowledge",
+      "label": "Knowledge",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::dikw-hierarchy",
+      "label": "DIKW Hierarchy",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::information",
+        "information-systems::knowledge"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::hardware",
+      "label": "Hardware",
+      "subject_id": "information-systems",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "information-systems::software",
+      "label": "Software",
+      "subject_id": "information-systems",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "information-systems::network",
+      "label": "Network",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::hardware",
+        "information-systems::software"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::user",
+      "label": "User",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::business-process",
+      "label": "Business Process",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::organization",
+      "label": "Organization",
+      "subject_id": "information-systems",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "information-systems::stakeholder",
+      "label": "Stakeholder",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::business-value",
+      "label": "Business Value",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization",
+        "information-systems::stakeholder"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::strategy",
+      "label": "Strategy",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization",
+        "information-systems::business-value"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::digital-transformation",
+      "label": "Digital Transformation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::strategy"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::it-vs-is-distinction",
+      "label": "IT vs IS Distinction",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::software"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sociotechnical-system",
+      "label": "Sociotechnical System",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::user",
+        "information-systems::business-process"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::abet-cac-criteria",
+      "label": "ABET CAC Criteria",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::it-vs-is-distinction"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::strategic-alignment",
+      "label": "Strategic Alignment",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::strategy",
+        "information-systems::abet-cac-criteria"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::value-chain",
+      "label": "Value Chain",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::business-process",
+        "information-systems::business-value"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::porter-five-forces",
+      "label": "Porter Five Forces",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::strategy",
+        "information-systems::value-chain"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::competitive-advantage",
+      "label": "Competitive Advantage",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::strategy",
+        "information-systems::value-chain",
+        "information-systems::porter-five-forces"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::business-capability",
+      "label": "Business Capability",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization",
+        "information-systems::strategy"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::it-governance",
+      "label": "IT Governance",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::digital-transformation",
+        "information-systems::abet-cac-criteria",
+        "information-systems::strategic-alignment"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cobit-framework",
+      "label": "COBIT Framework",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::it-governance"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::itil-framework",
+      "label": "ITIL Framework",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::it-governance"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cio-role",
+      "label": "CIO Role",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::it-governance"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cto-role",
+      "label": "CTO Role",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cio-role"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cdo-role",
+      "label": "CDO Role",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::cio-role"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ciso-role",
+      "label": "CISO Role",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cio-role"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::enterprise-architect-role",
+      "label": "Enterprise Architect Role",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cio-role"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::business-analyst-role",
+      "label": "Business Analyst Role",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cio-role"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-steward-role",
+      "label": "Data Steward Role",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::cdo-role"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::is-ethics",
+      "label": "IS Ethics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::organization"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::professional-responsibility",
+      "label": "Professional Responsibility",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::is-ethics"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vendor-management",
+      "label": "Vendor Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization",
+        "information-systems::itil-framework"
+      ],
+      "taxonomy_id": "ROLE",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::application-portfolio",
+      "label": "Application Portfolio",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::enterprise-architect-role"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::three-tier-architecture",
+      "label": "Three-Tier Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::software"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::n-tier-architecture",
+      "label": "N-Tier Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::three-tier-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::presentation-tier",
+      "label": "Presentation Tier",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::three-tier-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::application-tier",
+      "label": "Application Tier",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::three-tier-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-tier",
+      "label": "Data Tier",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::three-tier-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::enterprise-architecture",
+      "label": "Enterprise Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-architect-role",
+        "information-systems::application-portfolio"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::togaf-framework",
+      "label": "TOGAF Framework",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::zachman-framework",
+      "label": "Zachman Framework",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::reference-architecture",
+      "label": "Reference Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::solution-architecture",
+      "label": "Solution Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::integration-pattern",
+      "label": "Integration Pattern",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::three-tier-architecture",
+        "information-systems::enterprise-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::enterprise-service-bus",
+      "label": "Enterprise Service Bus",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::integration-pattern"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::api-gateway",
+      "label": "API Gateway",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::integration-pattern",
+        "information-systems::enterprise-service-bus"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-oriented-architecture",
+      "label": "Service-Oriented Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::integration-pattern"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::microservices-architecture",
+      "label": "Microservices Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::three-tier-architecture",
+        "information-systems::service-oriented-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::monolithic-architecture",
+      "label": "Monolithic Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::three-tier-architecture",
+        "information-systems::microservices-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::event-driven-architecture",
+      "label": "Event-Driven Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::integration-pattern",
+        "information-systems::service-oriented-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::rest-api",
+      "label": "REST API",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::integration-pattern",
+        "information-systems::api-gateway"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::graphql-api",
+      "label": "GraphQL API",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::rest-api"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::webhooks",
+      "label": "Webhooks",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::integration-pattern",
+        "information-systems::event-driven-architecture"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::openapi-specification",
+      "label": "OpenAPI Specification",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::rest-api"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::api-versioning",
+      "label": "API Versioning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::rest-api"
+      ],
+      "taxonomy_id": "ARCH",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sdlc",
+      "label": "SDLC",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::business-process"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::waterfall-model",
+      "label": "Waterfall Model",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sdlc"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::agile-methodology",
+      "label": "Agile Methodology",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sdlc",
+        "information-systems::waterfall-model"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::scrum-framework",
+      "label": "Scrum Framework",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::agile-methodology"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::kanban-method",
+      "label": "Kanban Method",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::agile-methodology"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::extreme-programming",
+      "label": "Extreme Programming",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::agile-methodology"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::requirements-elicitation",
+      "label": "Requirements Elicitation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sdlc"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::functional-requirement",
+      "label": "Functional Requirement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::requirements-elicitation"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::non-functional-requirement",
+      "label": "Non-Functional Requirement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::requirements-elicitation"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::user-story",
+      "label": "User Story",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::agile-methodology",
+        "information-systems::requirements-elicitation",
+        "information-systems::functional-requirement"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::acceptance-criteria",
+      "label": "Acceptance Criteria",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::functional-requirement",
+        "information-systems::user-story"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sprint",
+      "label": "Sprint",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::scrum-framework"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sprint-planning",
+      "label": "Sprint Planning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::scrum-framework",
+        "information-systems::sprint"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sprint-review",
+      "label": "Sprint Review",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sprint",
+        "information-systems::sprint-planning"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sprint-retrospective",
+      "label": "Sprint Retrospective",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sprint",
+        "information-systems::sprint-review"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::daily-standup",
+      "label": "Daily Standup",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::scrum-framework",
+        "information-systems::sprint"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::continuous-integration",
+      "label": "Continuous Integration",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::sdlc"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::continuous-delivery",
+      "label": "Continuous Delivery",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::continuous-integration"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::version-control",
+      "label": "Version Control",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::sdlc"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::git-workflow",
+      "label": "Git Workflow",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::version-control"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::code-review",
+      "label": "Code Review",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::version-control",
+        "information-systems::git-workflow"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::build-vs-buy-vs-saas",
+      "label": "Build vs Buy vs SaaS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::vendor-management"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::low-code-platform",
+      "label": "Low-Code Platform",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::build-vs-buy-vs-saas"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::citizen-developer",
+      "label": "Citizen Developer",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::low-code-platform"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::technical-debt",
+      "label": "Technical Debt",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::sdlc"
+      ],
+      "taxonomy_id": "APPDEV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-modeling",
+      "label": "Data Modeling",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::conceptual-data-model",
+      "label": "Conceptual Data Model",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-modeling"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::logical-data-model",
+      "label": "Logical Data Model",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::conceptual-data-model"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::physical-data-model",
+      "label": "Physical Data Model",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::logical-data-model"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::entity-relationship-diagram",
+      "label": "Entity Relationship Diagram",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-modeling",
+        "information-systems::conceptual-data-model"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::entity",
+      "label": "Entity",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-modeling"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::attribute",
+      "label": "Attribute",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::relationship",
+      "label": "Relationship",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cardinality",
+      "label": "Cardinality",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity-relationship-diagram",
+        "information-systems::relationship"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::primary-key",
+      "label": "Primary Key",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity",
+        "information-systems::attribute"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::foreign-key",
+      "label": "Foreign Key",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::relationship",
+        "information-systems::primary-key"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::database-index",
+      "label": "Database Index",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::primary-key"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::database-constraint",
+      "label": "Database Constraint",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::primary-key",
+        "information-systems::foreign-key"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::normalization",
+      "label": "Normalization",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::logical-data-model",
+        "information-systems::primary-key",
+        "information-systems::foreign-key"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::first-normal-form",
+      "label": "First Normal Form",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::normalization"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::second-normal-form",
+      "label": "Second Normal Form",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::first-normal-form"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::third-normal-form",
+      "label": "Third Normal Form",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::second-normal-form"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::denormalization",
+      "label": "Denormalization",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::normalization",
+        "information-systems::third-normal-form"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sql-language",
+      "label": "SQL Language",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::logical-data-model",
+        "information-systems::primary-key"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::select-statement",
+      "label": "SELECT Statement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sql-language"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::join-operation",
+      "label": "JOIN Operation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::foreign-key",
+        "information-systems::sql-language",
+        "information-systems::select-statement"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::subquery",
+      "label": "Subquery",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::select-statement",
+        "information-systems::join-operation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::window-function",
+      "label": "Window Function",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::select-statement"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::stored-procedure",
+      "label": "Stored Procedure",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sql-language"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::database-view",
+      "label": "Database View",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sql-language",
+        "information-systems::select-statement"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::transaction",
+      "label": "Transaction",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sql-language"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::acid-properties",
+      "label": "ACID Properties",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::transaction"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::isolation-level",
+      "label": "Isolation Level",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::transaction",
+        "information-systems::acid-properties"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::concurrency-control",
+      "label": "Concurrency Control",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::transaction",
+        "information-systems::isolation-level"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::database-migration",
+      "label": "Database Migration",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::logical-data-model",
+        "information-systems::sql-language"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::relational-database",
+      "label": "Relational Database",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::normalization",
+        "information-systems::sql-language"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::postgresql",
+      "label": "PostgreSQL",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::relational-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::mysql",
+      "label": "MySQL",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::relational-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sql-server",
+      "label": "SQL Server",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::relational-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::analytical-database",
+      "label": "Analytical Database",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::relational-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::oltp-vs-olap",
+      "label": "OLTP vs OLAP",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::transaction",
+        "information-systems::relational-database",
+        "information-systems::analytical-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-warehouse",
+      "label": "Data Warehouse",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::analytical-database",
+        "information-systems::oltp-vs-olap"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::star-schema",
+      "label": "Star Schema",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-warehouse"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::snowflake-schema",
+      "label": "Snowflake Schema",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::star-schema"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::fact-table",
+      "label": "Fact Table",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::star-schema"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::dimension-table",
+      "label": "Dimension Table",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::star-schema"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::slowly-changing-dimension",
+      "label": "Slowly Changing Dimension",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::dimension-table"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::columnar-storage",
+      "label": "Columnar Storage",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::analytical-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::snowflake-platform",
+      "label": "Snowflake Platform",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-warehouse",
+        "information-systems::columnar-storage"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::amazon-redshift",
+      "label": "Amazon Redshift",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-warehouse",
+        "information-systems::columnar-storage"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::key-value-store",
+      "label": "Key-Value Store",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::relational-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::redis",
+      "label": "Redis",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::key-value-store"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::dynamodb",
+      "label": "DynamoDB",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::key-value-store"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::column-family-store",
+      "label": "Column-Family Store",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::columnar-storage",
+        "information-systems::key-value-store"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::apache-cassandra",
+      "label": "Apache Cassandra",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::column-family-store"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::hbase",
+      "label": "HBase",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::column-family-store"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::document-database",
+      "label": "Document Database",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::relational-database",
+        "information-systems::key-value-store"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::mongodb",
+      "label": "MongoDB",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::document-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::json-document",
+      "label": "JSON Document",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::document-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::xml-document",
+      "label": "XML Document",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::document-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::database-selection",
+      "label": "Database Selection",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::relational-database",
+        "information-systems::analytical-database",
+        "information-systems::key-value-store",
+        "information-systems::column-family-store",
+        "information-systems::document-database"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cap-theorem",
+      "label": "CAP Theorem",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::relational-database",
+        "information-systems::key-value-store"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::polyglot-persistence",
+      "label": "Polyglot Persistence",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::database-selection",
+        "information-systems::cap-theorem"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-lake",
+      "label": "Data Lake",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-warehouse",
+        "information-systems::document-database",
+        "information-systems::json-document"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-lakehouse",
+      "label": "Data Lakehouse",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-warehouse",
+        "information-systems::data-lake"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::etl-process",
+      "label": "ETL Process",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-warehouse"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::elt-process",
+      "label": "ELT Process",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-warehouse",
+        "information-systems::data-lakehouse",
+        "information-systems::etl-process"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-pipeline",
+      "label": "Data Pipeline",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::etl-process",
+        "information-systems::elt-process"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::master-data-management",
+      "label": "Master Data Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity",
+        "information-systems::relational-database"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-quality",
+      "label": "Data Quality",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::master-data-management"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-lineage",
+      "label": "Data Lineage",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-pipeline",
+        "information-systems::data-quality"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-catalog",
+      "label": "Data Catalog",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::master-data-management",
+        "information-systems::data-quality"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-dictionary",
+      "label": "Data Dictionary",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity",
+        "information-systems::data-catalog"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::metadata-management",
+      "label": "Metadata Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-catalog",
+        "information-systems::data-dictionary"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-owner",
+      "label": "Data Owner",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-steward-role",
+        "information-systems::data-catalog"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-governance-council",
+      "label": "Data Governance Council",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::it-governance",
+        "information-systems::data-steward-role",
+        "information-systems::data-owner"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::dama-dmbok",
+      "label": "DAMA DMBOK",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-governance-council"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-mesh",
+      "label": "Data Mesh",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::microservices-architecture",
+        "information-systems::data-lake",
+        "information-systems::data-owner"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-product",
+      "label": "Data Product",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-mesh"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-contract",
+      "label": "Data Contract",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-mesh",
+        "information-systems::data-product"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::schema-evolution",
+      "label": "Schema Evolution",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::logical-data-model",
+        "information-systems::database-migration",
+        "information-systems::data-contract"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-retention-policy",
+      "label": "Data Retention Policy",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::it-governance"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::records-management",
+      "label": "Records Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-retention-policy"
+      ],
+      "taxonomy_id": "DATAGOV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::descriptive-analytics",
+      "label": "Descriptive Analytics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::data-warehouse"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::diagnostic-analytics",
+      "label": "Diagnostic Analytics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::descriptive-analytics"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::predictive-analytics",
+      "label": "Predictive Analytics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::diagnostic-analytics"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::prescriptive-analytics",
+      "label": "Prescriptive Analytics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::predictive-analytics"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::key-performance-indicator",
+      "label": "Key Performance Indicator",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::business-value",
+        "information-systems::descriptive-analytics"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::metric-definition",
+      "label": "Metric Definition",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::key-performance-indicator"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::dashboard-design",
+      "label": "Dashboard Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::descriptive-analytics",
+        "information-systems::key-performance-indicator"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::self-service-bi",
+      "label": "Self-Service BI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-warehouse",
+        "information-systems::dashboard-design"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::olap-cube",
+      "label": "OLAP Cube",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::oltp-vs-olap",
+        "information-systems::data-warehouse"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cube-drilldown",
+      "label": "Cube Drilldown",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::olap-cube"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::pivot-table",
+      "label": "Pivot Table",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::olap-cube"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::power-bi",
+      "label": "Power BI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::dashboard-design",
+        "information-systems::self-service-bi"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::tableau",
+      "label": "Tableau",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::dashboard-design",
+        "information-systems::self-service-bi"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-visualization",
+      "label": "Data Visualization",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::dashboard-design"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::chart-selection",
+      "label": "Chart Selection",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-visualization"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::embedded-analytics",
+      "label": "Embedded Analytics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::rest-api",
+        "information-systems::dashboard-design"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::balanced-scorecard",
+      "label": "Balanced Scorecard",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::key-performance-indicator"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::decision-support-system",
+      "label": "Decision Support System",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::prescriptive-analytics"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-storytelling",
+      "label": "Data Storytelling",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-visualization",
+        "information-systems::chart-selection"
+      ],
+      "taxonomy_id": "BI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::enterprise-resource-planning",
+      "label": "Enterprise Resource Planning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::business-process",
+        "information-systems::organization"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::erp-implementation",
+      "label": "ERP Implementation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-resource-planning"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::crm-system",
+      "label": "CRM System",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::business-process"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::supply-chain-management",
+      "label": "Supply Chain Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::value-chain"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::inventory-management",
+      "label": "Inventory Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::supply-chain-management"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::procurement-system",
+      "label": "Procurement System",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::supply-chain-management"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::hris",
+      "label": "HRIS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::organization"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::payroll-system",
+      "label": "Payroll System",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::hris"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::talent-management",
+      "label": "Talent Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::hris"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::configuration-vs-customization",
+      "label": "Configuration vs Customization",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-resource-planning",
+        "information-systems::erp-implementation"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::big-bang-vs-phased-rollout",
+      "label": "Big Bang vs Phased Rollout",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::erp-implementation"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::best-of-breed-vs-suite",
+      "label": "Best of Breed vs Suite",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-resource-planning",
+        "information-systems::crm-system"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::implementation-partner",
+      "label": "Implementation Partner",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::vendor-management",
+        "information-systems::erp-implementation"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::industry-cloud",
+      "label": "Industry Cloud",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-resource-planning",
+        "information-systems::iaas"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::post-erp-review",
+      "label": "Post-ERP Review",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::erp-implementation"
+      ],
+      "taxonomy_id": "ENT",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::local-area-network",
+      "label": "Local Area Network",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::wide-area-network",
+      "label": "Wide Area Network",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network",
+        "information-systems::local-area-network"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::internet",
+      "label": "Internet",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network",
+        "information-systems::wide-area-network"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::intranet",
+      "label": "Intranet",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::local-area-network",
+        "information-systems::internet"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::extranet",
+      "label": "Extranet",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::intranet"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vpn",
+      "label": "VPN",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::internet",
+        "information-systems::extranet"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sd-wan",
+      "label": "SD-WAN",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::wide-area-network",
+        "information-systems::vpn"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::bandwidth-capacity-planning",
+      "label": "Bandwidth Capacity Planning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::latency",
+      "label": "Latency",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network",
+        "information-systems::bandwidth-capacity-planning"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::throughput",
+      "label": "Throughput",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network",
+        "information-systems::bandwidth-capacity-planning"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-level-agreement",
+      "label": "Service Level Agreement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::latency",
+        "information-systems::throughput"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cloud-connectivity",
+      "label": "Cloud Connectivity",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::internet",
+        "information-systems::vpn",
+        "information-systems::network-monitoring"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::network-redundancy",
+      "label": "Network Redundancy",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network",
+        "information-systems::wide-area-network"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::network-monitoring",
+      "label": "Network Monitoring",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network",
+        "information-systems::latency",
+        "information-systems::throughput"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::telecom-procurement",
+      "label": "Telecom Procurement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::vendor-management",
+        "information-systems::wide-area-network"
+      ],
+      "taxonomy_id": "NET",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cloud-computing",
+      "label": "Cloud Computing",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::internet"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::nist-cloud-definition",
+      "label": "NIST Cloud Definition",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::iaas",
+      "label": "IaaS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing",
+        "information-systems::nist-cloud-definition"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::paas",
+      "label": "PaaS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing",
+        "information-systems::nist-cloud-definition"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::saas",
+      "label": "SaaS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing",
+        "information-systems::nist-cloud-definition"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::faas",
+      "label": "FaaS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-cloud-definition",
+        "information-systems::paas"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::public-cloud",
+      "label": "Public Cloud",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::private-cloud",
+      "label": "Private Cloud",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::hybrid-cloud",
+      "label": "Hybrid Cloud",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::public-cloud",
+        "information-systems::private-cloud"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::multi-cloud",
+      "label": "Multi-Cloud",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::public-cloud"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::capex-vs-opex",
+      "label": "CapEx vs OpEx",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing",
+        "information-systems::saas"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cloud-cost-model",
+      "label": "Cloud Cost Model",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing",
+        "information-systems::capex-vs-opex"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::finops",
+      "label": "FinOps",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::capex-vs-opex",
+        "information-systems::cloud-cost-model"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::reserved-instance",
+      "label": "Reserved Instance",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::iaas",
+        "information-systems::cloud-cost-model"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::container",
+      "label": "Container",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::iaas"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::docker",
+      "label": "Docker",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::container"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::kubernetes",
+      "label": "Kubernetes",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::container",
+        "information-systems::docker"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cloud-migration",
+      "label": "Cloud Migration",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing",
+        "information-systems::hybrid-cloud"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::six-rs-of-migration",
+      "label": "Six Rs of Migration",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-migration"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::lift-and-shift",
+      "label": "Lift and Shift",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-migration",
+        "information-systems::six-rs-of-migration"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vendor-lock-in",
+      "label": "Vendor Lock-In",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::vendor-management",
+        "information-systems::saas"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cloud-center-of-excellence",
+      "label": "Cloud Center of Excellence",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing",
+        "information-systems::finops"
+      ],
+      "taxonomy_id": "CLOUD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cia-triad",
+      "label": "CIA Triad",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::confidentiality",
+      "label": "Confidentiality",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::integrity",
+      "label": "Integrity",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::availability",
+      "label": "Availability",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::aaa-framework",
+      "label": "AAA Framework",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::authentication",
+      "label": "Authentication",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::user",
+        "information-systems::aaa-framework"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::authorization",
+      "label": "Authorization",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::authentication"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::multifactor-authentication",
+      "label": "Multifactor Authentication",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::authentication"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::single-sign-on",
+      "label": "Single Sign-On",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::authentication"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::identity-provider",
+      "label": "Identity Provider",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::authentication",
+        "information-systems::single-sign-on"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::saml",
+      "label": "SAML",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::identity-provider"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::oauth-2-0",
+      "label": "OAuth 2.0",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::identity-provider"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::openid-connect",
+      "label": "OpenID Connect",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::oauth-2-0"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::role-based-access-control",
+      "label": "Role-Based Access Control",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::authorization"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::attribute-based-access-control",
+      "label": "Attribute-Based Access Control",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::authorization",
+        "information-systems::role-based-access-control"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::least-privilege",
+      "label": "Least Privilege",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::authorization",
+        "information-systems::role-based-access-control"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::zero-trust-architecture",
+      "label": "Zero Trust Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::role-based-access-control",
+        "information-systems::least-privilege"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::encryption-at-rest",
+      "label": "Encryption at Rest",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::confidentiality"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::encryption-in-transit",
+      "label": "Encryption in Transit",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::confidentiality"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::tls-protocol",
+      "label": "TLS Protocol",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::encryption-in-transit",
+        "information-systems::digital-signature"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::public-key-infrastructure",
+      "label": "Public Key Infrastructure",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::tls-protocol",
+        "information-systems::hashing"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::symmetric-encryption",
+      "label": "Symmetric Encryption",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::confidentiality"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::asymmetric-encryption",
+      "label": "Asymmetric Encryption",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::confidentiality",
+        "information-systems::symmetric-encryption"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::key-management",
+      "label": "Key Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::symmetric-encryption",
+        "information-systems::asymmetric-encryption"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::hashing",
+      "label": "Hashing",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::integrity"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::digital-signature",
+      "label": "Digital Signature",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::asymmetric-encryption",
+        "information-systems::hashing"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::nist-csf",
+      "label": "NIST CSF",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::iso-27001",
+      "label": "ISO 27001",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cis-controls",
+      "label": "CIS Controls",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad",
+        "information-systems::nist-csf"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::threat-modeling",
+      "label": "Threat Modeling",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad",
+        "information-systems::nist-csf"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::stride-method",
+      "label": "STRIDE Method",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::threat-modeling"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vulnerability-management",
+      "label": "Vulnerability Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad",
+        "information-systems::threat-modeling"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::penetration-testing",
+      "label": "Penetration Testing",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::vulnerability-management"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::siem",
+      "label": "SIEM",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network-monitoring",
+        "information-systems::cia-triad"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::security-operations-center",
+      "label": "Security Operations Center",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::siem"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::incident-response",
+      "label": "Incident Response",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad",
+        "information-systems::nist-csf"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::audit-trail",
+      "label": "Audit Trail",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::integrity",
+        "information-systems::siem"
+      ],
+      "taxonomy_id": "SEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::gdpr",
+      "label": "GDPR",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization",
+        "information-systems::it-governance"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ccpa-cpra",
+      "label": "CCPA CPRA",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::hipaa",
+      "label": "HIPAA",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization",
+        "information-systems::it-governance"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sox",
+      "label": "SOX",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization",
+        "information-systems::it-governance"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::pci-dss",
+      "label": "PCI-DSS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::it-governance",
+        "information-systems::cia-triad"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-subject-rights",
+      "label": "Data Subject Rights",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::right-to-erasure",
+      "label": "Right to Erasure",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::data-subject-rights"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-portability",
+      "label": "Data Portability",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::data-subject-rights"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::privacy-by-design",
+      "label": "Privacy by Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::data-subject-rights"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::privacy-impact-assessment",
+      "label": "Privacy Impact Assessment",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::privacy-by-design"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-processing-agreement",
+      "label": "Data Processing Agreement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-residency",
+      "label": "Data Residency",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::data-processing-agreement"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cross-border-transfer",
+      "label": "Cross-Border Transfer",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::data-residency"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::standard-contractual-clauses",
+      "label": "Standard Contractual Clauses",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cross-border-transfer"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::schrems-ii",
+      "label": "Schrems II",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cross-border-transfer",
+        "information-systems::standard-contractual-clauses"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::records-retention",
+      "label": "Records Retention",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::records-management",
+        "information-systems::gdpr"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-minimization",
+      "label": "Data Minimization",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::privacy-by-design"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::purpose-limitation",
+      "label": "Purpose Limitation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::data-minimization"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::lawful-basis",
+      "label": "Lawful Basis",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::consent-management",
+      "label": "Consent Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::gdpr",
+        "information-systems::lawful-basis"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-breach-notification",
+      "label": "Data Breach Notification",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::incident-response",
+        "information-systems::gdpr"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::privacy-engineering",
+      "label": "Privacy Engineering",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::privacy-by-design",
+        "information-systems::privacy-impact-assessment"
+      ],
+      "taxonomy_id": "PRIV",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::project-charter",
+      "label": "Project Charter",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::organization"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::scope-statement",
+      "label": "Scope Statement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-charter"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::stakeholder-analysis",
+      "label": "Stakeholder Analysis",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::stakeholder",
+        "information-systems::project-charter"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::stakeholder-register",
+      "label": "Stakeholder Register",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::stakeholder-analysis"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::work-breakdown-structure",
+      "label": "Work Breakdown Structure",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::scope-statement"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::project-schedule",
+      "label": "Project Schedule",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::work-breakdown-structure"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::gantt-chart",
+      "label": "Gantt Chart",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-schedule"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::critical-path-method",
+      "label": "Critical Path Method",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-schedule"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::project-triangle",
+      "label": "Project Triangle",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::scope-statement",
+        "information-systems::project-schedule"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::risk-register",
+      "label": "Risk Register",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-charter",
+        "information-systems::project-triangle"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::risk-mitigation",
+      "label": "Risk Mitigation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::risk-register"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::issue-log",
+      "label": "Issue Log",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::risk-register"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::change-control",
+      "label": "Change Control",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::scope-statement",
+        "information-systems::risk-register"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::communication-plan",
+      "label": "Communication Plan",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::stakeholder-register"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::pmbok-guide",
+      "label": "PMBOK Guide",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-charter"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::prince2",
+      "label": "PRINCE2",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-charter",
+        "information-systems::pmbok-guide"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::agile-project-management",
+      "label": "Agile Project Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::agile-methodology",
+        "information-systems::pmbok-guide"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::waterfall-project-management",
+      "label": "Waterfall Project Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::waterfall-model",
+        "information-systems::pmbok-guide"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::hybrid-project-management",
+      "label": "Hybrid Project Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::agile-project-management",
+        "information-systems::waterfall-project-management"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::burndown-chart",
+      "label": "Burndown Chart",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sprint",
+        "information-systems::agile-project-management"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::velocity",
+      "label": "Velocity",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sprint",
+        "information-systems::burndown-chart"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::earned-value-management",
+      "label": "Earned Value Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-schedule",
+        "information-systems::project-triangle"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::project-closure",
+      "label": "Project Closure",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-charter",
+        "information-systems::project-triangle"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::lessons-learned",
+      "label": "Lessons Learned",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sprint-retrospective",
+        "information-systems::project-closure"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::project-portfolio-management",
+      "label": "Project Portfolio Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::application-portfolio",
+        "information-systems::pmbok-guide"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::program-management",
+      "label": "Program Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-portfolio-management"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::pmo",
+      "label": "PMO",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-portfolio-management"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::resource-leveling",
+      "label": "Resource Leveling",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::project-schedule"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::estimation-techniques",
+      "label": "Estimation Techniques",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::work-breakdown-structure",
+        "information-systems::project-schedule"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::stakeholder-engagement",
+      "label": "Stakeholder Engagement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::stakeholder-analysis",
+        "information-systems::communication-plan"
+      ],
+      "taxonomy_id": "PM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::process-modeling",
+      "label": "Process Modeling",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::business-process"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::bpmn-notation",
+      "label": "BPMN Notation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-modeling"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::pool-and-lane",
+      "label": "Pool and Lane",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::bpmn-notation"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::process-activity",
+      "label": "Process Activity",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::bpmn-notation"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::gateway",
+      "label": "Gateway",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::bpmn-notation",
+        "information-systems::process-activity"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::process-event",
+      "label": "Process Event",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::bpmn-notation"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::as-is-process",
+      "label": "As-Is Process",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-modeling"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::to-be-process",
+      "label": "To-Be Process",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-modeling",
+        "information-systems::as-is-process"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::process-reengineering",
+      "label": "Process Reengineering",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::as-is-process",
+        "information-systems::to-be-process"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::lean-methodology",
+      "label": "Lean Methodology",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-reengineering"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::six-sigma",
+      "label": "Six Sigma",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-reengineering"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::dmaic",
+      "label": "DMAIC",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::six-sigma"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::workflow-automation",
+      "label": "Workflow Automation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-modeling",
+        "information-systems::to-be-process"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::robotic-process-automation",
+      "label": "Robotic Process Automation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::workflow-automation"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::rpa-tools",
+      "label": "RPA Tools",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::robotic-process-automation"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::process-mining",
+      "label": "Process Mining",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::as-is-process",
+        "information-systems::robotic-process-automation"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::continuous-improvement",
+      "label": "Continuous Improvement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::lean-methodology",
+        "information-systems::six-sigma"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::value-stream-mapping",
+      "label": "Value Stream Mapping",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-modeling",
+        "information-systems::lean-methodology"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::business-rules-engine",
+      "label": "Business Rules Engine",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-activity",
+        "information-systems::gateway"
+      ],
+      "taxonomy_id": "BPM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::feasibility-study",
+      "label": "Feasibility Study",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sdlc",
+        "information-systems::requirements-elicitation"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cost-benefit-analysis",
+      "label": "Cost Benefit Analysis",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::feasibility-study"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::use-case",
+      "label": "Use Case",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::requirements-elicitation",
+        "information-systems::functional-requirement"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::use-case-diagram",
+      "label": "Use Case Diagram",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::use-case"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::activity-diagram",
+      "label": "Activity Diagram",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::process-modeling"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sequence-diagram",
+      "label": "Sequence Diagram",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::use-case"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::class-diagram",
+      "label": "Class Diagram",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity",
+        "information-systems::relationship"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::state-diagram",
+      "label": "State Diagram",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::use-case"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::uml-for-is",
+      "label": "UML for IS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::use-case-diagram",
+        "information-systems::activity-diagram",
+        "information-systems::sequence-diagram",
+        "information-systems::class-diagram",
+        "information-systems::state-diagram"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::joint-application-design",
+      "label": "Joint Application Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::requirements-elicitation"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::prototyping",
+      "label": "Prototyping",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::requirements-elicitation",
+        "information-systems::functional-requirement"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::wireframe",
+      "label": "Wireframe",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::prototyping"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::mockup",
+      "label": "Mockup",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::wireframe"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::functional-specification",
+      "label": "Functional Specification",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::functional-requirement",
+        "information-systems::prototyping"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::requirements-traceability",
+      "label": "Requirements Traceability",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::requirements-elicitation",
+        "information-systems::acceptance-criteria"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::gap-analysis",
+      "label": "Gap Analysis",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::as-is-process",
+        "information-systems::to-be-process"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::make-or-buy-decision",
+      "label": "Make or Buy Decision",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::build-vs-buy-vs-saas",
+        "information-systems::cost-benefit-analysis"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::rfp-process",
+      "label": "RFP Process",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::make-or-buy-decision"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vendor-evaluation",
+      "label": "Vendor Evaluation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::vendor-management",
+        "information-systems::rfp-process"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::system-testing",
+      "label": "System Testing",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::continuous-integration"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::user-acceptance-testing",
+      "label": "User Acceptance Testing",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::acceptance-criteria",
+        "information-systems::system-testing"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::test-plan",
+      "label": "Test Plan",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::system-testing",
+        "information-systems::user-acceptance-testing"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::defect-tracking",
+      "label": "Defect Tracking",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::system-testing"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cutover-plan",
+      "label": "Cutover Plan",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::erp-implementation",
+        "information-systems::user-acceptance-testing"
+      ],
+      "taxonomy_id": "SAD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::usability-principle",
+      "label": "Usability Principle",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::user"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::nielsen-heuristics",
+      "label": "Nielsen Heuristics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::usability-principle"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::accessibility-wcag",
+      "label": "Accessibility WCAG",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::usability-principle"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::user-research",
+      "label": "User Research",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::user",
+        "information-systems::usability-principle"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::persona",
+      "label": "Persona",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::user-research"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::journey-map",
+      "label": "Journey Map",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::persona"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::information-architecture",
+      "label": "Information Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::usability-principle"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::interaction-design",
+      "label": "Interaction Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::usability-principle"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::visual-design",
+      "label": "Visual Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::interaction-design"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::form-design",
+      "label": "Form Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::usability-principle",
+        "information-systems::interaction-design"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::error-message-design",
+      "label": "Error Message Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::form-design"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::mobile-first-design",
+      "label": "Mobile First Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::usability-principle"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::responsive-design",
+      "label": "Responsive Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::mobile-first-design"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::inclusive-design",
+      "label": "Inclusive Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::accessibility-wcag"
+      ],
+      "taxonomy_id": "HCI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::itil-service-lifecycle",
+      "label": "ITIL Service Lifecycle",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-framework"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-strategy",
+      "label": "Service Strategy",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-service-lifecycle"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-design",
+      "label": "Service Design",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-service-lifecycle"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-transition",
+      "label": "Service Transition",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-service-lifecycle"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-operation",
+      "label": "Service Operation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-service-lifecycle"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::continual-service-improvement",
+      "label": "Continual Service Improvement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-service-lifecycle",
+        "information-systems::continuous-improvement"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::incident-management",
+      "label": "Incident Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::service-operation"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::problem-management",
+      "label": "Problem Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::incident-management"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::itil-change-management",
+      "label": "ITIL Change Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::change-control",
+        "information-systems::service-transition"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::configuration-management",
+      "label": "Configuration Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::service-transition"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cmdb",
+      "label": "CMDB",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::configuration-management"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-catalog",
+      "label": "Service Catalog",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::service-design"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-level-management",
+      "label": "Service Level Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::service-level-agreement",
+        "information-systems::service-design"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sla-metrics",
+      "label": "SLA Metrics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::service-level-agreement",
+        "information-systems::service-level-management"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ola",
+      "label": "OLA",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::service-level-management"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::help-desk",
+      "label": "Help Desk",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::incident-management"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::service-desk-tier",
+      "label": "Service Desk Tier",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::help-desk"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ticket-lifecycle",
+      "label": "Ticket Lifecycle",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::incident-management",
+        "information-systems::help-desk"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::knowledge-management",
+      "label": "Knowledge Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::knowledge",
+        "information-systems::help-desk"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::observability",
+      "label": "Observability",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::network-monitoring",
+        "information-systems::service-operation"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::slo-and-sli",
+      "label": "SLO and SLI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::service-level-management",
+        "information-systems::observability"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::error-budget",
+      "label": "Error Budget",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::slo-and-sli"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::on-call-rotation",
+      "label": "On-Call Rotation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::incident-management"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::postmortem",
+      "label": "Postmortem",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::lessons-learned",
+        "information-systems::incident-management",
+        "information-systems::problem-management"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::blameless-culture",
+      "label": "Blameless Culture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::postmortem"
+      ],
+      "taxonomy_id": "ITSM",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::artificial-intelligence",
+      "label": "Artificial Intelligence",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::machine-learning",
+      "label": "Machine Learning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::predictive-ml",
+      "label": "Predictive ML",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::predictive-analytics",
+        "information-systems::machine-learning"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::generative-ai",
+      "label": "Generative AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::artificial-intelligence",
+        "information-systems::machine-learning"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::large-language-model",
+      "label": "Large Language Model",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::generative-ai"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::foundation-model",
+      "label": "Foundation Model",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::generative-ai",
+        "information-systems::large-language-model"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::prompt",
+      "label": "Prompt",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::large-language-model"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::prompt-engineering",
+      "label": "Prompt Engineering",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::prompt"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::retrieval-augmented-generation",
+      "label": "Retrieval Augmented Generation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::generative-ai",
+        "information-systems::large-language-model"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vector-embedding",
+      "label": "Vector Embedding",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vector-database",
+      "label": "Vector Database",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::key-value-store",
+        "information-systems::retrieval-augmented-generation",
+        "information-systems::vector-embedding"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-agent",
+      "label": "AI Agent",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::generative-ai"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::agentic-workflow",
+      "label": "Agentic Workflow",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::workflow-automation",
+        "information-systems::ai-agent"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-erp",
+      "label": "AI in ERP",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-resource-planning",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-crm",
+      "label": "AI in CRM",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::crm-system",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-itsm",
+      "label": "AI in ITSM",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-service-lifecycle",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-value-chain",
+      "label": "AI Value Chain",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::artificial-intelligence",
+        "information-systems::retrieval-augmented-generation"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::build-vs-buy-ai",
+      "label": "Build vs Buy AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::build-vs-buy-vs-saas",
+        "information-systems::ai-value-chain"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::model-api",
+      "label": "Model API",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::rest-api",
+        "information-systems::foundation-model"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::model-card",
+      "label": "Model Card",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::foundation-model"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::system-card",
+      "label": "System Card",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::foundation-model",
+        "information-systems::model-card"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::hallucination",
+      "label": "Hallucination",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::generative-ai",
+        "information-systems::large-language-model"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::grounding",
+      "label": "Grounding",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::retrieval-augmented-generation",
+        "information-systems::hallucination"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::guardrail",
+      "label": "Guardrail",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::generative-ai",
+        "information-systems::hallucination"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::human-in-the-loop",
+      "label": "Human in the Loop",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::user",
+        "information-systems::guardrail"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::rag-architecture",
+      "label": "RAG Architecture",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::retrieval-augmented-generation",
+        "information-systems::vector-database"
+      ],
+      "taxonomy_id": "AIIS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::nist-ai-rmf",
+      "label": "NIST AI RMF",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-csf",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-govern-function",
+      "label": "AI Govern Function",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-map-function",
+      "label": "AI Map Function",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-measure-function",
+      "label": "AI Measure Function",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-manage-function",
+      "label": "AI Manage Function",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::iso-iec-42001",
+      "label": "ISO IEC 42001",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::iso-27001",
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::bias-audit",
+      "label": "Bias Audit",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning",
+        "information-systems::ai-measure-function"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::algorithmic-fairness",
+      "label": "Algorithmic Fairness",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::bias-audit"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::explainability",
+      "label": "Explainability",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning",
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::transparency",
+      "label": "Transparency",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-ai-rmf",
+        "information-systems::explainability"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-acceptable-use-policy",
+      "label": "AI Acceptable Use Policy",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-govern-function"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sanctioned-model-list",
+      "label": "Sanctioned Model List",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::build-vs-buy-ai",
+        "information-systems::ai-acceptable-use-policy"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::shadow-ai",
+      "label": "Shadow AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::build-vs-buy-ai",
+        "information-systems::ai-acceptable-use-policy"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-incident-management",
+      "label": "AI Incident Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::incident-response",
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-inventory",
+      "label": "AI Inventory",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-govern-function"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-impact-assessment",
+      "label": "AI Impact Assessment",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::privacy-impact-assessment",
+        "information-systems::ai-map-function"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::responsible-ai-principles",
+      "label": "Responsible AI Principles",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-ai-rmf",
+        "information-systems::algorithmic-fairness",
+        "information-systems::transparency"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::trustworthy-ai",
+      "label": "Trustworthy AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::responsible-ai-principles"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-ethics-committee",
+      "label": "AI Ethics Committee",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::is-ethics",
+        "information-systems::ai-govern-function"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::human-oversight-tier",
+      "label": "Human Oversight Tier",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::human-in-the-loop",
+        "information-systems::responsible-ai-principles"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-data-provenance",
+      "label": "AI Data Provenance",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-lineage",
+        "information-systems::ai-govern-function"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::training-data-documentation",
+      "label": "Training Data Documentation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning",
+        "information-systems::ai-data-provenance"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::datasheet-for-datasets",
+      "label": "Datasheet for Datasets",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::training-data-documentation"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-sustainability",
+      "label": "AI Sustainability",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::responsible-ai-principles"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-labor-impact",
+      "label": "AI Labor Impact",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::responsible-ai-principles"
+      ],
+      "taxonomy_id": "RAI",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::eu-ai-act",
+      "label": "EU AI Act",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-risk-tier",
+      "label": "AI Risk Tier",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::eu-ai-act"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::unacceptable-risk-ai",
+      "label": "Unacceptable Risk AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-risk-tier"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::high-risk-ai",
+      "label": "High Risk AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-risk-tier"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::limited-risk-ai",
+      "label": "Limited Risk AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-risk-tier"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::minimal-risk-ai",
+      "label": "Minimal Risk AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-risk-tier"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::us-ai-executive-order",
+      "label": "US AI Executive Order",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::nist-ai-rmf"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::colorado-ai-act",
+      "label": "Colorado AI Act",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::eu-ai-act",
+        "information-systems::us-ai-executive-order"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::nyc-aedt-law",
+      "label": "NYC AEDT Law",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::us-ai-executive-order"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-healthcare-hipaa",
+      "label": "AI in Healthcare HIPAA",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::hipaa",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-lending-ecoa",
+      "label": "AI in Lending ECOA",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::algorithmic-fairness",
+        "information-systems::high-risk-ai"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-education-ferpa",
+      "label": "AI in Education FERPA",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::artificial-intelligence",
+        "information-systems::us-ai-executive-order"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::copyright-and-training-data",
+      "label": "Copyright and Training Data",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::training-data-documentation"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-procurement-clause",
+      "label": "AI Procurement Clause",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::vendor-management",
+        "information-systems::system-card",
+        "information-systems::eu-ai-act"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vendor-system-card-review",
+      "label": "Vendor System Card Review",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::system-card",
+        "information-systems::ai-procurement-clause"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-cross-border-transfer",
+      "label": "AI Cross-Border Transfer",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cross-border-transfer",
+        "information-systems::eu-ai-act"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::automated-decision-making",
+      "label": "Automated Decision-Making",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::predictive-analytics",
+        "information-systems::high-risk-ai"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::right-to-explanation",
+      "label": "Right to Explanation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::explainability",
+        "information-systems::automated-decision-making"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-liability",
+      "label": "AI Liability",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-labor-impact",
+        "information-systems::automated-decision-making"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-disclosure-requirement",
+      "label": "AI Disclosure Requirement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::transparency",
+        "information-systems::high-risk-ai"
+      ],
+      "taxonomy_id": "AILAW",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-threat-landscape",
+      "label": "AI Threat Landscape",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cia-triad",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::prompt-injection",
+      "label": "Prompt Injection",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::prompt",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::indirect-prompt-injection",
+      "label": "Indirect Prompt Injection",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::retrieval-augmented-generation",
+        "information-systems::prompt-injection"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::jailbreaking",
+      "label": "Jailbreaking",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::prompt-injection"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::training-data-poisoning",
+      "label": "Training Data Poisoning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::training-data-documentation",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::model-inversion",
+      "label": "Model Inversion",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::membership-inference",
+      "label": "Membership Inference",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::model-exfiltration",
+      "label": "Model Exfiltration",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::adversarial-example",
+      "label": "Adversarial Example",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::owasp-llm-top-10",
+      "label": "OWASP LLM Top 10",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::generative-ai",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::mitre-atlas",
+      "label": "MITRE ATLAS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::secure-ai-sdlc",
+      "label": "Secure AI SDLC",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sdlc",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-red-teaming",
+      "label": "AI Red Teaming",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::penetration-testing",
+        "information-systems::owasp-llm-top-10"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-output-filtering",
+      "label": "AI Output Filtering",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::guardrail",
+        "information-systems::owasp-llm-top-10"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-input-sanitization",
+      "label": "AI Input Sanitization",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::guardrail",
+        "information-systems::prompt-injection"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-logging-and-audit",
+      "label": "AI Logging and Audit",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::audit-trail",
+        "information-systems::owasp-llm-top-10"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::defensive-ai-in-soc",
+      "label": "Defensive AI in SOC",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::security-operations-center",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-phishing-detection",
+      "label": "AI Phishing Detection",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::predictive-analytics",
+        "information-systems::defensive-ai-in-soc"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-code-review-security",
+      "label": "AI Code Review Security",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::code-review",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-loss-prevention-for-ai",
+      "label": "Data Loss Prevention for AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::shadow-ai",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-sandbox",
+      "label": "AI Sandbox",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-threat-landscape",
+        "information-systems::secure-ai-sdlc"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::confidential-computing-for-ai",
+      "label": "Confidential Computing for AI",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::symmetric-encryption",
+        "information-systems::ai-threat-landscape"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::federated-learning",
+      "label": "Federated Learning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::machine-learning",
+        "information-systems::confidential-computing-for-ai"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::differential-privacy",
+      "label": "Differential Privacy",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-minimization",
+        "information-systems::machine-learning"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::synthetic-data",
+      "label": "Synthetic Data",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::training-data-documentation",
+        "information-systems::differential-privacy"
+      ],
+      "taxonomy_id": "AISEC",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-help-desk",
+      "label": "AI in Help Desk",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::help-desk",
+        "information-systems::generative-ai"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::intelligent-ticket-routing",
+      "label": "Intelligent Ticket Routing",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ticket-lifecycle",
+        "information-systems::predictive-ml"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::virtual-agent",
+      "label": "Virtual Agent",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::generative-ai",
+        "information-systems::ai-in-help-desk"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::knowledge-base-copilot",
+      "label": "Knowledge Base Copilot",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::knowledge-management",
+        "information-systems::retrieval-augmented-generation"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ticket-deflection",
+      "label": "Ticket Deflection",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-in-help-desk",
+        "information-systems::knowledge-base-copilot"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-app-development",
+      "label": "AI in App Development",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::software",
+        "information-systems::generative-ai"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::code-completion",
+      "label": "Code Completion",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-in-app-development"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-pair-programmer",
+      "label": "AI Pair Programmer",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::code-review",
+        "information-systems::code-completion"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-test-generation",
+      "label": "AI Test Generation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::system-testing",
+        "information-systems::ai-in-app-development"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-code-review",
+      "label": "AI Code Review",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::code-review",
+        "information-systems::ai-in-app-development"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-documentation",
+      "label": "AI Documentation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-in-app-development"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::developer-productivity-metrics",
+      "label": "Developer Productivity Metrics",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::metric-definition",
+        "information-systems::ai-in-app-development"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-it-operations",
+      "label": "AI in IT Operations",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::service-operation",
+        "information-systems::artificial-intelligence"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::aiops",
+      "label": "AIOps",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::observability",
+        "information-systems::ai-in-it-operations"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::anomaly-detection-in-ops",
+      "label": "Anomaly Detection in Ops",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::predictive-ml",
+        "information-systems::aiops"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::automated-remediation",
+      "label": "Automated Remediation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-change-management",
+        "information-systems::aiops"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-in-business-analysis",
+      "label": "AI in Business Analysis",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::business-analyst-role",
+        "information-systems::generative-ai"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-requirements-drafting",
+      "label": "AI Requirements Drafting",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::requirements-elicitation",
+        "information-systems::ai-in-business-analysis"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-status-synthesis",
+      "label": "AI Status Synthesis",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::communication-plan",
+        "information-systems::ai-in-business-analysis"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-risk-identification",
+      "label": "AI Risk Identification",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::risk-register",
+        "information-systems::ai-in-business-analysis"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::productivity-measurement",
+      "label": "Productivity Measurement",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::metric-definition",
+        "information-systems::developer-productivity-metrics"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::baseline-and-stop-loss",
+      "label": "Baseline and Stop Loss",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::risk-mitigation",
+        "information-systems::productivity-measurement"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-change-management",
+      "label": "AI Change Management",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::itil-change-management",
+        "information-systems::human-oversight-tier",
+        "information-systems::productivity-measurement"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::workforce-transition",
+      "label": "Workforce Transition",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ai-labor-impact",
+        "information-systems::ai-change-management"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::reskilling-strategy",
+      "label": "Reskilling Strategy",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::workforce-transition"
+      ],
+      "taxonomy_id": "AIPROD",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::knowledge-graph",
+      "label": "Knowledge Graph",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data",
+        "information-systems::data-modeling",
+        "information-systems::relationship"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::property-graph-model",
+      "label": "Property Graph Model",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::knowledge-graph"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::node-and-edge",
+      "label": "Node and Edge",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::knowledge-graph",
+        "information-systems::property-graph-model"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::graph-schema",
+      "label": "Graph Schema",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::logical-data-model",
+        "information-systems::property-graph-model"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ontology",
+      "label": "Ontology",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::knowledge",
+        "information-systems::graph-schema"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::taxonomy-in-is",
+      "label": "Taxonomy in IS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ontology"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::schema-org",
+      "label": "Schema.org",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ontology"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::domain-vocabulary",
+      "label": "Domain Vocabulary",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ontology",
+        "information-systems::taxonomy-in-is"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::cypher-query-language",
+      "label": "Cypher Query Language",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sql-language",
+        "information-systems::property-graph-model"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::gql-standard",
+      "label": "GQL Standard",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cypher-query-language"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::neo4j",
+      "label": "Neo4j",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::property-graph-model",
+        "information-systems::cypher-query-language"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::amazon-neptune",
+      "label": "Amazon Neptune",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::property-graph-model",
+        "information-systems::cypher-query-language"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::tigergraph",
+      "label": "TigerGraph",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::property-graph-model",
+        "information-systems::cypher-query-language"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::memgraph",
+      "label": "Memgraph",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::property-graph-model",
+        "information-systems::cypher-query-language"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::graph-traversal",
+      "label": "Graph Traversal",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::node-and-edge",
+        "information-systems::cypher-query-language"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::graph-algorithm",
+      "label": "Graph Algorithm",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::graph-traversal"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::shortest-path",
+      "label": "Shortest Path",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::graph-algorithm"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::community-detection",
+      "label": "Community Detection",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::graph-algorithm"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::centrality",
+      "label": "Centrality",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::graph-algorithm"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::entity-resolution",
+      "label": "Entity Resolution",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity",
+        "information-systems::master-data-management"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::identity-reconciliation",
+      "label": "Identity Reconciliation",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity-resolution"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::record-linkage",
+      "label": "Record Linkage",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::entity-resolution",
+        "information-systems::identity-reconciliation"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::enterprise-knowledge-graph",
+      "label": "Enterprise Knowledge Graph",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-architecture",
+        "information-systems::knowledge-graph",
+        "information-systems::ontology",
+        "information-systems::entity-resolution"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::semantic-layer",
+      "label": "Semantic Layer",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::ontology",
+        "information-systems::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::single-source-of-meaning",
+      "label": "Single Source of Meaning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::master-data-management",
+        "information-systems::semantic-layer"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::graphrag",
+      "label": "GraphRAG",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::retrieval-augmented-generation",
+        "information-systems::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::vector-and-graph-hybrid",
+      "label": "Vector and Graph Hybrid",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::vector-database",
+        "information-systems::graphrag"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::kg-construction",
+      "label": "KG Construction",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::knowledge-graph",
+        "information-systems::ontology",
+        "information-systems::entity-resolution"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::kg-from-unstructured-text",
+      "label": "KG from Unstructured Text",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::large-language-model",
+        "information-systems::kg-construction"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::enterprise-nervous-system",
+      "label": "Enterprise Nervous System",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::event-driven-architecture",
+        "information-systems::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::event-source",
+      "label": "Event Source",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::event-driven-architecture",
+        "information-systems::enterprise-nervous-system"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::external-signal",
+      "label": "External Signal",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::porter-five-forces",
+        "information-systems::event-source"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::streaming-platform",
+      "label": "Streaming Platform",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::event-driven-architecture",
+        "information-systems::event-source"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::apache-kafka",
+      "label": "Apache Kafka",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::streaming-platform"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::apache-flink",
+      "label": "Apache Flink",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::streaming-platform"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::complex-event-processing",
+      "label": "Complex Event Processing",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::streaming-platform"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::event-enrichment",
+      "label": "Event Enrichment",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-knowledge-graph",
+        "information-systems::event-source"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::rule-engine",
+      "label": "Rule Engine",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::business-rules-engine",
+        "information-systems::enterprise-nervous-system"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::policy-engine",
+      "label": "Policy Engine",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::it-governance",
+        "information-systems::rule-engine"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ens-actuator",
+      "label": "ENS Actuator",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::workflow-automation",
+        "information-systems::enterprise-nervous-system"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sense-and-respond-loop",
+      "label": "Sense and Respond Loop",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::enterprise-nervous-system",
+        "information-systems::ens-actuator"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::real-time-decisioning",
+      "label": "Real-Time Decisioning",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::decision-support-system",
+        "information-systems::sense-and-respond-loop"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::competitor-signal-monitoring",
+      "label": "Competitor Signal Monitoring",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::porter-five-forces",
+        "information-systems::external-signal",
+        "information-systems::complex-event-processing"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sentiment-stream-ingestion",
+      "label": "Sentiment Stream Ingestion",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::streaming-platform",
+        "information-systems::event-enrichment"
+      ],
+      "taxonomy_id": "KGENS",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::sustainable-it",
+      "label": "Sustainable IT",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::digital-transformation"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::green-computing",
+      "label": "Green Computing",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sustainable-it"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::circular-it",
+      "label": "Circular IT",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::sustainable-it"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::data-mesh-principles",
+      "label": "Data Mesh Principles",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-mesh",
+        "information-systems::data-product"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::federated-data-governance",
+      "label": "Federated Data Governance",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::data-governance-council",
+        "information-systems::data-mesh-principles"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::post-quantum-cryptography",
+      "label": "Post-Quantum Cryptography",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::asymmetric-encryption"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::crypto-agility",
+      "label": "Crypto Agility",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::key-management",
+        "information-systems::post-quantum-cryptography"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::edge-computing-for-is",
+      "label": "Edge Computing for IS",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::cloud-computing"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::digital-twin",
+      "label": "Digital Twin",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::information-system",
+        "information-systems::edge-computing-for-is"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::industry-4-0",
+      "label": "Industry 4.0",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::digital-transformation",
+        "information-systems::digital-twin"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    },
+    {
+      "id": "information-systems::ai-native-organization",
+      "label": "AI-Native Organization",
+      "subject_id": "information-systems",
+      "dependencies": [
+        "information-systems::digital-transformation",
+        "information-systems::responsible-ai-principles",
+        "information-systems::enterprise-knowledge-graph"
+      ],
+      "taxonomy_id": "EMRG",
+      "level": "core"
+    }
+  ]
+}

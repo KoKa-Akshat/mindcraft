@@ -1,0 +1,2363 @@
+{
+  "subject_id": "business",
+  "title": "International Baccalaureate Business Management HL Learning Graph",
+  "version": "0.1.0",
+  "created": "2026-08-18",
+  "groups": {
+    "FOUND": {
+      "classifier_name": "Business Foundations",
+      "color": "SteelBlue"
+    },
+    "ENV": {
+      "classifier_name": "External Environment",
+      "color": "DarkSlateBlue"
+    },
+    "ORG": {
+      "classifier_name": "Organization And Governance",
+      "color": "DarkGreen"
+    },
+    "STRAT": {
+      "classifier_name": "Strategy And Growth",
+      "color": "LimeGreen"
+    },
+    "HRM": {
+      "classifier_name": "Human Resource Management",
+      "color": "Gold"
+    },
+    "FINA": {
+      "classifier_name": "Finance And Accounts",
+      "color": "DarkGoldenrod"
+    },
+    "MKTG": {
+      "classifier_name": "Marketing",
+      "color": "Khaki"
+    },
+    "OPS": {
+      "classifier_name": "Operations And Supply Chains",
+      "color": "Teal"
+    },
+    "DATA": {
+      "classifier_name": "Quantitative Analysis",
+      "color": "DodgerBlue"
+    },
+    "ETHC": {
+      "classifier_name": "Ethics And Sustainability",
+      "color": "Crimson"
+    },
+    "GLOB": {
+      "classifier_name": "Global Business",
+      "color": "MediumPurple"
+    },
+    "IA": {
+      "classifier_name": "Research And Assessment",
+      "color": "Orange"
+    }
+  },
+  "concepts": [
+    {
+      "id": "business::business-purpose",
+      "label": "Business Purpose",
+      "subject_id": "business",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "business::needs-and-wants",
+      "label": "Needs And Wants",
+      "subject_id": "business",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "business::scarcity",
+      "label": "Scarcity",
+      "subject_id": "business",
+      "dependencies": [],
+      "taxonomy_id": "FOUND",
+      "level": "foundational"
+    },
+    {
+      "id": "business::opportunity-cost",
+      "label": "Opportunity Cost",
+      "subject_id": "business",
+      "dependencies": [
+        "business::scarcity"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::goods-and-services",
+      "label": "Goods And Services",
+      "subject_id": "business",
+      "dependencies": [
+        "business::needs-and-wants"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::value-proposition",
+      "label": "Value Proposition",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-purpose",
+        "business::goods-and-services"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::inputs-processes-outputs",
+      "label": "Inputs Processes Outputs",
+      "subject_id": "business",
+      "dependencies": [
+        "business::goods-and-services"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::added-value",
+      "label": "Added Value",
+      "subject_id": "business",
+      "dependencies": [
+        "business::value-proposition",
+        "business::inputs-processes-outputs"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::revenue",
+      "label": "Revenue",
+      "subject_id": "business",
+      "dependencies": [
+        "business::goods-and-services"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::cost",
+      "label": "Cost",
+      "subject_id": "business",
+      "dependencies": [
+        "business::goods-and-services"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::profit",
+      "label": "Profit",
+      "subject_id": "business",
+      "dependencies": [
+        "business::revenue",
+        "business::cost"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::cash-flow",
+      "label": "Cash Flow",
+      "subject_id": "business",
+      "dependencies": [
+        "business::revenue",
+        "business::cost"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::stakeholder",
+      "label": "Stakeholder",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-purpose"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::market",
+      "label": "Market",
+      "subject_id": "business",
+      "dependencies": [
+        "business::needs-and-wants",
+        "business::goods-and-services"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::competition",
+      "label": "Competition",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::risk",
+      "label": "Risk",
+      "subject_id": "business",
+      "dependencies": [
+        "business::opportunity-cost",
+        "business::competition"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::decision-making",
+      "label": "Decision Making",
+      "subject_id": "business",
+      "dependencies": [
+        "business::opportunity-cost",
+        "business::risk"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::tradeoff",
+      "label": "Tradeoff",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cost",
+        "business::risk"
+      ],
+      "taxonomy_id": "FOUND",
+      "level": "core"
+    },
+    {
+      "id": "business::microenvironment",
+      "label": "Microenvironment",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::macroenvironment",
+      "label": "Macroenvironment",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market",
+        "business::competition"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::pestle-analysis",
+      "label": "PESTLE Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::decision-making"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::economic-cycle",
+      "label": "Economic Cycle",
+      "subject_id": "business",
+      "dependencies": [
+        "business::macroenvironment"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::interest-rates",
+      "label": "Interest Rates",
+      "subject_id": "business",
+      "dependencies": [
+        "business::economic-cycle"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::inflation",
+      "label": "Inflation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::economic-cycle"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::exchange-rates",
+      "label": "Exchange Rates",
+      "subject_id": "business",
+      "dependencies": [
+        "business::economic-cycle"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::government-policy",
+      "label": "Government Policy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::pestle-analysis"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::regulation",
+      "label": "Regulation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::government-policy"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::technological-change",
+      "label": "Technological Change",
+      "subject_id": "business",
+      "dependencies": [
+        "business::macroenvironment"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::social-trends",
+      "label": "Social Trends",
+      "subject_id": "business",
+      "dependencies": [
+        "business::macroenvironment"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::environmental-pressure",
+      "label": "Environmental Pressure",
+      "subject_id": "business",
+      "dependencies": [
+        "business::pestle-analysis"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::scenario-planning",
+      "label": "Scenario Planning",
+      "subject_id": "business",
+      "dependencies": [
+        "business::pestle-analysis",
+        "business::risk"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::business-ecosystem",
+      "label": "Business Ecosystem",
+      "subject_id": "business",
+      "dependencies": [
+        "business::microenvironment",
+        "business::macroenvironment"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::industry-dynamics",
+      "label": "Industry Dynamics",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-ecosystem",
+        "business::competition"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::market-growth",
+      "label": "Market Growth",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market",
+        "business::economic-cycle"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::barriers-to-entry",
+      "label": "Barriers To Entry",
+      "subject_id": "business",
+      "dependencies": [
+        "business::industry-dynamics"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::competitive-pressure",
+      "label": "Competitive Pressure",
+      "subject_id": "business",
+      "dependencies": [
+        "business::industry-dynamics",
+        "business::barriers-to-entry"
+      ],
+      "taxonomy_id": "ENV",
+      "level": "core"
+    },
+    {
+      "id": "business::entrepreneurship",
+      "label": "Entrepreneurship",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-purpose",
+        "business::opportunity-cost"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::intrapreneurship",
+      "label": "Intrapreneurship",
+      "subject_id": "business",
+      "dependencies": [
+        "business::entrepreneurship",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::business-objectives",
+      "label": "Business Objectives",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-purpose",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::mission-statement",
+      "label": "Mission Statement",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-objectives"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::vision-statement",
+      "label": "Vision Statement",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-objectives"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::business-structure",
+      "label": "Business Structure",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-objectives"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::sole-proprietorship",
+      "label": "Sole Proprietorship",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-structure"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::partnership",
+      "label": "Partnership",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-structure"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::corporation",
+      "label": "Corporation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-structure"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::franchise-model",
+      "label": "Franchise Model",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-structure"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::social-enterprise",
+      "label": "Social Enterprise",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-structure",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::multinational-enterprise",
+      "label": "Multinational Enterprise",
+      "subject_id": "business",
+      "dependencies": [
+        "business::corporation",
+        "business::industry-dynamics"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::public-sector-organization",
+      "label": "Public Sector Organization",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-structure"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::private-sector-organization",
+      "label": "Private Sector Organization",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-structure"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::corporate-governance",
+      "label": "Corporate Governance",
+      "subject_id": "business",
+      "dependencies": [
+        "business::stakeholder",
+        "business::corporation"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::board-of-directors",
+      "label": "Board Of Directors",
+      "subject_id": "business",
+      "dependencies": [
+        "business::corporate-governance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::shareholder-value",
+      "label": "Shareholder Value",
+      "subject_id": "business",
+      "dependencies": [
+        "business::corporation",
+        "business::profit"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::stakeholder-conflict",
+      "label": "Stakeholder Conflict",
+      "subject_id": "business",
+      "dependencies": [
+        "business::stakeholder",
+        "business::corporate-governance"
+      ],
+      "taxonomy_id": "ORG",
+      "level": "core"
+    },
+    {
+      "id": "business::strategic-analysis",
+      "label": "Strategic Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::decision-making",
+        "business::pestle-analysis"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::competitive-advantage",
+      "label": "Competitive Advantage",
+      "subject_id": "business",
+      "dependencies": [
+        "business::value-proposition",
+        "business::competition"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::swot-analysis",
+      "label": "SWOT Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::strategic-analysis",
+        "business::pestle-analysis"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::ansoff-matrix",
+      "label": "Ansoff Matrix",
+      "subject_id": "business",
+      "dependencies": [
+        "business::strategic-analysis",
+        "business::market"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::porters-five-forces",
+      "label": "Porters Five Forces",
+      "subject_id": "business",
+      "dependencies": [
+        "business::strategic-analysis",
+        "business::industry-dynamics"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::growth-strategy",
+      "label": "Growth Strategy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::strategic-analysis",
+        "business::business-objectives"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::internal-growth",
+      "label": "Internal Growth",
+      "subject_id": "business",
+      "dependencies": [
+        "business::growth-strategy"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::external-growth",
+      "label": "External Growth",
+      "subject_id": "business",
+      "dependencies": [
+        "business::growth-strategy"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::merger",
+      "label": "Merger",
+      "subject_id": "business",
+      "dependencies": [
+        "business::external-growth"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::acquisition",
+      "label": "Acquisition",
+      "subject_id": "business",
+      "dependencies": [
+        "business::external-growth"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::joint-venture",
+      "label": "Joint Venture",
+      "subject_id": "business",
+      "dependencies": [
+        "business::external-growth"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::strategic-alliance",
+      "label": "Strategic Alliance",
+      "subject_id": "business",
+      "dependencies": [
+        "business::external-growth"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::economies-of-scale",
+      "label": "Economies Of Scale",
+      "subject_id": "business",
+      "dependencies": [
+        "business::external-growth",
+        "business::cost"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::diseconomies-of-scale",
+      "label": "Diseconomies Of Scale",
+      "subject_id": "business",
+      "dependencies": [
+        "business::economies-of-scale"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::synergy",
+      "label": "Synergy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::external-growth",
+        "business::diseconomies-of-scale"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::decision-tree",
+      "label": "Decision Tree",
+      "subject_id": "business",
+      "dependencies": [
+        "business::strategic-analysis",
+        "business::risk"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::sensitivity-analysis",
+      "label": "Sensitivity Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::decision-tree",
+        "business::growth-strategy"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::strategic-positioning",
+      "label": "Strategic Positioning",
+      "subject_id": "business",
+      "dependencies": [
+        "business::competitive-advantage",
+        "business::porters-five-forces"
+      ],
+      "taxonomy_id": "STRAT",
+      "level": "core"
+    },
+    {
+      "id": "business::organizational-structure",
+      "label": "Organizational Structure",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-structure",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::hierarchy",
+      "label": "Hierarchy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::organizational-structure"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::flat-structure",
+      "label": "Flat Structure",
+      "subject_id": "business",
+      "dependencies": [
+        "business::organizational-structure"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::matrix-structure",
+      "label": "Matrix Structure",
+      "subject_id": "business",
+      "dependencies": [
+        "business::organizational-structure"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::centralization",
+      "label": "Centralization",
+      "subject_id": "business",
+      "dependencies": [
+        "business::organizational-structure",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::decentralization",
+      "label": "Decentralization",
+      "subject_id": "business",
+      "dependencies": [
+        "business::organizational-structure",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::span-of-control",
+      "label": "Span Of Control",
+      "subject_id": "business",
+      "dependencies": [
+        "business::organizational-structure"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::delegation",
+      "label": "Delegation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::span-of-control",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::leadership-style",
+      "label": "Leadership Style",
+      "subject_id": "business",
+      "dependencies": [
+        "business::organizational-structure",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::management-functions",
+      "label": "Management Functions",
+      "subject_id": "business",
+      "dependencies": [
+        "business::leadership-style"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::motivation-theory",
+      "label": "Motivation Theory",
+      "subject_id": "business",
+      "dependencies": [
+        "business::leadership-style",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::maslows-hierarchy",
+      "label": "Maslows Hierarchy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::motivation-theory"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::herzbergs-theory",
+      "label": "Herzbergs Theory",
+      "subject_id": "business",
+      "dependencies": [
+        "business::motivation-theory"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::mcgregors-theory-x-y",
+      "label": "McGregors Theory X Y",
+      "subject_id": "business",
+      "dependencies": [
+        "business::motivation-theory"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::communication-flow",
+      "label": "Communication Flow",
+      "subject_id": "business",
+      "dependencies": [
+        "business::organizational-structure",
+        "business::leadership-style"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::collective-bargaining",
+      "label": "Collective Bargaining",
+      "subject_id": "business",
+      "dependencies": [
+        "business::communication-flow",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::performance-appraisal",
+      "label": "Performance Appraisal",
+      "subject_id": "business",
+      "dependencies": [
+        "business::motivation-theory",
+        "business::communication-flow"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::workforce-planning",
+      "label": "Workforce Planning",
+      "subject_id": "business",
+      "dependencies": [
+        "business::performance-appraisal",
+        "business::organizational-structure"
+      ],
+      "taxonomy_id": "HRM",
+      "level": "core"
+    },
+    {
+      "id": "business::sources-of-finance",
+      "label": "Sources Of Finance",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-purpose",
+        "business::risk"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::equity-finance",
+      "label": "Equity Finance",
+      "subject_id": "business",
+      "dependencies": [
+        "business::sources-of-finance"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::debt-finance",
+      "label": "Debt Finance",
+      "subject_id": "business",
+      "dependencies": [
+        "business::sources-of-finance"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::venture-capital",
+      "label": "Venture Capital",
+      "subject_id": "business",
+      "dependencies": [
+        "business::sources-of-finance",
+        "business::growth-strategy"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::fixed-costs",
+      "label": "Fixed Costs",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cost"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::variable-costs",
+      "label": "Variable Costs",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cost"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::contribution",
+      "label": "Contribution",
+      "subject_id": "business",
+      "dependencies": [
+        "business::fixed-costs",
+        "business::variable-costs"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::break-even-analysis",
+      "label": "Break Even Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::fixed-costs",
+        "business::variable-costs",
+        "business::revenue"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::income-statement",
+      "label": "Income Statement",
+      "subject_id": "business",
+      "dependencies": [
+        "business::revenue",
+        "business::cost",
+        "business::profit"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::balance-sheet",
+      "label": "Balance Sheet",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cash-flow",
+        "business::profit"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::cash-flow-statement",
+      "label": "Cash Flow Statement",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cash-flow"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::working-capital",
+      "label": "Working Capital",
+      "subject_id": "business",
+      "dependencies": [
+        "business::balance-sheet",
+        "business::cash-flow-statement"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::liquidity-ratio",
+      "label": "Liquidity Ratio",
+      "subject_id": "business",
+      "dependencies": [
+        "business::balance-sheet",
+        "business::working-capital"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::profitability-ratio",
+      "label": "Profitability Ratio",
+      "subject_id": "business",
+      "dependencies": [
+        "business::income-statement",
+        "business::balance-sheet"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::efficiency-ratio",
+      "label": "Efficiency Ratio",
+      "subject_id": "business",
+      "dependencies": [
+        "business::income-statement",
+        "business::balance-sheet"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::cash-budget",
+      "label": "Cash Budget",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cash-flow-statement",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::payback-period",
+      "label": "Payback Period",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cash-budget",
+        "business::risk"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::net-present-value",
+      "label": "Net Present Value",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cash-flow-statement",
+        "business::decision-making",
+        "business::payback-period"
+      ],
+      "taxonomy_id": "FINA",
+      "level": "core"
+    },
+    {
+      "id": "business::market-orientation",
+      "label": "Market Orientation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::product-orientation",
+      "label": "Product Orientation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::value-proposition"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::customer-orientation",
+      "label": "Customer Orientation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-orientation",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::market-research",
+      "label": "Market Research",
+      "subject_id": "business",
+      "dependencies": [
+        "business::decision-making",
+        "business::market"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::primary-research",
+      "label": "Primary Research",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-research"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::secondary-research",
+      "label": "Secondary Research",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-research"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::market-segmentation",
+      "label": "Market Segmentation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-research",
+        "business::market"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::target-market",
+      "label": "Target Market",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-segmentation"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::positioning",
+      "label": "Positioning",
+      "subject_id": "business",
+      "dependencies": [
+        "business::target-market",
+        "business::product-orientation"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::marketing-objectives",
+      "label": "Marketing Objectives",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-orientation",
+        "business::business-purpose"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::product-strategy",
+      "label": "Product Strategy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::marketing-objectives",
+        "business::positioning"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::pricing-strategy",
+      "label": "Pricing Strategy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::marketing-objectives",
+        "business::competitive-advantage"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::place-strategy",
+      "label": "Place Strategy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::marketing-objectives"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::promotion-strategy",
+      "label": "Promotion Strategy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::marketing-objectives",
+        "business::product-strategy"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::brand-identity",
+      "label": "Brand Identity",
+      "subject_id": "business",
+      "dependencies": [
+        "business::positioning",
+        "business::promotion-strategy"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::digital-marketing",
+      "label": "Digital Marketing",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-research",
+        "business::promotion-strategy"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::omnichannel-strategy",
+      "label": "Omnichannel Strategy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::digital-marketing",
+        "business::place-strategy"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::international-marketing",
+      "label": "International Marketing",
+      "subject_id": "business",
+      "dependencies": [
+        "business::digital-marketing",
+        "business::brand-identity"
+      ],
+      "taxonomy_id": "MKTG",
+      "level": "core"
+    },
+    {
+      "id": "business::operations-management",
+      "label": "Operations Management",
+      "subject_id": "business",
+      "dependencies": [
+        "business::inputs-processes-outputs",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::job-production",
+      "label": "Job Production",
+      "subject_id": "business",
+      "dependencies": [
+        "business::operations-management"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::batch-production",
+      "label": "Batch Production",
+      "subject_id": "business",
+      "dependencies": [
+        "business::operations-management"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::flow-production",
+      "label": "Flow Production",
+      "subject_id": "business",
+      "dependencies": [
+        "business::operations-management"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::lean-production",
+      "label": "Lean Production",
+      "subject_id": "business",
+      "dependencies": [
+        "business::flow-production",
+        "business::cost"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::mass-customization",
+      "label": "Mass Customization",
+      "subject_id": "business",
+      "dependencies": [
+        "business::flow-production",
+        "business::market"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::quality-assurance",
+      "label": "Quality Assurance",
+      "subject_id": "business",
+      "dependencies": [
+        "business::operations-management",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::quality-control",
+      "label": "Quality Control",
+      "subject_id": "business",
+      "dependencies": [
+        "business::operations-management",
+        "business::stakeholder"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::total-quality-management",
+      "label": "Total Quality Management",
+      "subject_id": "business",
+      "dependencies": [
+        "business::quality-assurance",
+        "business::quality-control"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::kaizen",
+      "label": "Kaizen",
+      "subject_id": "business",
+      "dependencies": [
+        "business::total-quality-management"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::benchmarking",
+      "label": "Benchmarking",
+      "subject_id": "business",
+      "dependencies": [
+        "business::quality-assurance",
+        "business::competition"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::location-decision",
+      "label": "Location Decision",
+      "subject_id": "business",
+      "dependencies": [
+        "business::operations-management",
+        "business::macroenvironment"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::supply-chain",
+      "label": "Supply Chain",
+      "subject_id": "business",
+      "dependencies": [
+        "business::location-decision",
+        "business::market"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::inventory-management",
+      "label": "Inventory Management",
+      "subject_id": "business",
+      "dependencies": [
+        "business::supply-chain",
+        "business::cost"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::buffer-stock",
+      "label": "Buffer Stock",
+      "subject_id": "business",
+      "dependencies": [
+        "business::inventory-management"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::just-in-time",
+      "label": "Just In Time",
+      "subject_id": "business",
+      "dependencies": [
+        "business::inventory-management",
+        "business::buffer-stock"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::business-continuity",
+      "label": "Business Continuity",
+      "subject_id": "business",
+      "dependencies": [
+        "business::supply-chain",
+        "business::risk"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::contingency-planning",
+      "label": "Contingency Planning",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-continuity",
+        "business::risk"
+      ],
+      "taxonomy_id": "OPS",
+      "level": "core"
+    },
+    {
+      "id": "business::data-interpretation",
+      "label": "Data Interpretation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::decision-making"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::descriptive-statistics",
+      "label": "Descriptive Statistics",
+      "subject_id": "business",
+      "dependencies": [
+        "business::data-interpretation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::time-series",
+      "label": "Time Series",
+      "subject_id": "business",
+      "dependencies": [
+        "business::data-interpretation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::moving-average",
+      "label": "Moving Average",
+      "subject_id": "business",
+      "dependencies": [
+        "business::time-series"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::trend-analysis",
+      "label": "Trend Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::time-series",
+        "business::moving-average"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::sales-forecasting",
+      "label": "Sales Forecasting",
+      "subject_id": "business",
+      "dependencies": [
+        "business::trend-analysis",
+        "business::market-research"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::regression-analysis",
+      "label": "Regression Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::data-interpretation",
+        "business::trend-analysis"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::correlation",
+      "label": "Correlation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::data-interpretation",
+        "business::regression-analysis"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::ratio-analysis",
+      "label": "Ratio Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::income-statement",
+        "business::balance-sheet",
+        "business::cash-flow-statement"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::variance-analysis",
+      "label": "Variance Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cash-budget",
+        "business::data-interpretation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::decision-criteria",
+      "label": "Decision Criteria",
+      "subject_id": "business",
+      "dependencies": [
+        "business::data-interpretation",
+        "business::tradeoff"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::cost-benefit-analysis",
+      "label": "Cost Benefit Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::decision-criteria",
+        "business::net-present-value"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::forecast-reliability",
+      "label": "Forecast Reliability",
+      "subject_id": "business",
+      "dependencies": [
+        "business::sales-forecasting",
+        "business::correlation"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::scenario-comparison",
+      "label": "Scenario Comparison",
+      "subject_id": "business",
+      "dependencies": [
+        "business::forecast-reliability",
+        "business::decision-tree"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::quantitative-assumption",
+      "label": "Quantitative Assumption",
+      "subject_id": "business",
+      "dependencies": [
+        "business::data-interpretation",
+        "business::risk"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::financial-modeling",
+      "label": "Financial Modeling",
+      "subject_id": "business",
+      "dependencies": [
+        "business::ratio-analysis",
+        "business::variance-analysis"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::operational-metrics",
+      "label": "Operational Metrics",
+      "subject_id": "business",
+      "dependencies": [
+        "business::financial-modeling",
+        "business::operations-management"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::dashboard-reporting",
+      "label": "Dashboard Reporting",
+      "subject_id": "business",
+      "dependencies": [
+        "business::financial-modeling",
+        "business::operational-metrics"
+      ],
+      "taxonomy_id": "DATA",
+      "level": "core"
+    },
+    {
+      "id": "business::ethical-dilemma",
+      "label": "Ethical Dilemma",
+      "subject_id": "business",
+      "dependencies": [
+        "business::stakeholder",
+        "business::tradeoff"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::corporate-responsibility",
+      "label": "Corporate Responsibility",
+      "subject_id": "business",
+      "dependencies": [
+        "business::ethical-dilemma",
+        "business::corporate-governance"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::sustainability",
+      "label": "Sustainability",
+      "subject_id": "business",
+      "dependencies": [
+        "business::corporate-responsibility",
+        "business::environmental-pressure"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::triple-bottom-line",
+      "label": "Triple Bottom Line",
+      "subject_id": "business",
+      "dependencies": [
+        "business::sustainability",
+        "business::business-objectives"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::environmental-social-governance",
+      "label": "Environmental Social Governance",
+      "subject_id": "business",
+      "dependencies": [
+        "business::corporate-responsibility",
+        "business::sustainability"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::business-ethics",
+      "label": "Business Ethics",
+      "subject_id": "business",
+      "dependencies": [
+        "business::ethical-dilemma"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::governance-policy",
+      "label": "Governance Policy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-ethics",
+        "business::corporate-governance"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::stakeholder-impact",
+      "label": "Stakeholder Impact",
+      "subject_id": "business",
+      "dependencies": [
+        "business::corporate-responsibility",
+        "business::stakeholder-conflict"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::reputation-risk",
+      "label": "Reputation Risk",
+      "subject_id": "business",
+      "dependencies": [
+        "business::stakeholder-impact",
+        "business::risk"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::compliance-culture",
+      "label": "Compliance Culture",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-ethics",
+        "business::leadership-style"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::whistleblowing",
+      "label": "Whistleblowing",
+      "subject_id": "business",
+      "dependencies": [
+        "business::compliance-culture",
+        "business::governance-policy"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::fair-trade",
+      "label": "Fair Trade",
+      "subject_id": "business",
+      "dependencies": [
+        "business::corporate-responsibility"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::circular-economy",
+      "label": "Circular Economy",
+      "subject_id": "business",
+      "dependencies": [
+        "business::sustainability",
+        "business::supply-chain"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::carbon-footprint",
+      "label": "Carbon Footprint",
+      "subject_id": "business",
+      "dependencies": [
+        "business::sustainability",
+        "business::supply-chain"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::diversity-inclusion",
+      "label": "Diversity Inclusion",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-ethics"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::responsible-sourcing",
+      "label": "Responsible Sourcing",
+      "subject_id": "business",
+      "dependencies": [
+        "business::fair-trade"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::social-impact",
+      "label": "Social Impact",
+      "subject_id": "business",
+      "dependencies": [
+        "business::corporate-responsibility",
+        "business::responsible-sourcing"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::ethical-decision-framework",
+      "label": "Ethical Decision Framework",
+      "subject_id": "business",
+      "dependencies": [
+        "business::ethical-dilemma",
+        "business::decision-making",
+        "business::stakeholder-impact"
+      ],
+      "taxonomy_id": "ETHC",
+      "level": "core"
+    },
+    {
+      "id": "business::globalization",
+      "label": "Globalization",
+      "subject_id": "business",
+      "dependencies": [
+        "business::exchange-rates",
+        "business::technological-change"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::international-trade",
+      "label": "International Trade",
+      "subject_id": "business",
+      "dependencies": [
+        "business::globalization",
+        "business::market"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::trade-bloc",
+      "label": "Trade Bloc",
+      "subject_id": "business",
+      "dependencies": [
+        "business::international-trade"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::exchange-risk",
+      "label": "Exchange Risk",
+      "subject_id": "business",
+      "dependencies": [
+        "business::globalization",
+        "business::exchange-rates"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::cross-cultural-management",
+      "label": "Cross Cultural Management",
+      "subject_id": "business",
+      "dependencies": [
+        "business::globalization",
+        "business::communication-flow"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::localization",
+      "label": "Localization",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cross-cultural-management",
+        "business::target-market"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::global-branding",
+      "label": "Global Branding",
+      "subject_id": "business",
+      "dependencies": [
+        "business::brand-identity",
+        "business::globalization"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::market-entry",
+      "label": "Market Entry",
+      "subject_id": "business",
+      "dependencies": [
+        "business::growth-strategy"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::exporting",
+      "label": "Exporting",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-entry"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::licensing",
+      "label": "Licensing",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-entry"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::foreign-direct-investment",
+      "label": "Foreign Direct Investment",
+      "subject_id": "business",
+      "dependencies": [
+        "business::market-entry",
+        "business::sources-of-finance"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::offshoring",
+      "label": "Offshoring",
+      "subject_id": "business",
+      "dependencies": [
+        "business::international-trade",
+        "business::supply-chain"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::outsourcing",
+      "label": "Outsourcing",
+      "subject_id": "business",
+      "dependencies": [
+        "business::international-trade",
+        "business::strategic-alliance"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::global-supply-chain",
+      "label": "Global Supply Chain",
+      "subject_id": "business",
+      "dependencies": [
+        "business::international-trade",
+        "business::supply-chain"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::geopolitical-risk",
+      "label": "Geopolitical Risk",
+      "subject_id": "business",
+      "dependencies": [
+        "business::global-supply-chain",
+        "business::risk"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::tariff-barrier",
+      "label": "Tariff Barrier",
+      "subject_id": "business",
+      "dependencies": [
+        "business::international-trade",
+        "business::regulation"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::labor-standards",
+      "label": "Labor Standards",
+      "subject_id": "business",
+      "dependencies": [
+        "business::cross-cultural-management",
+        "business::diversity-inclusion"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::global-competition",
+      "label": "Global Competition",
+      "subject_id": "business",
+      "dependencies": [
+        "business::globalization",
+        "business::competition",
+        "business::market-entry"
+      ],
+      "taxonomy_id": "GLOB",
+      "level": "core"
+    },
+    {
+      "id": "business::case-study-analysis",
+      "label": "Case Study Analysis",
+      "subject_id": "business",
+      "dependencies": [
+        "business::strategic-analysis",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::evidence-based-judgment",
+      "label": "Evidence Based Judgment",
+      "subject_id": "business",
+      "dependencies": [
+        "business::decision-making",
+        "business::case-study-analysis"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::research-question",
+      "label": "Research Question",
+      "subject_id": "business",
+      "dependencies": [
+        "business::evidence-based-judgment",
+        "business::market-research"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::primary-data-collection",
+      "label": "Primary Data Collection",
+      "subject_id": "business",
+      "dependencies": [
+        "business::evidence-based-judgment",
+        "business::primary-research"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::secondary-data-review",
+      "label": "Secondary Data Review",
+      "subject_id": "business",
+      "dependencies": [
+        "business::evidence-based-judgment",
+        "business::secondary-research"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::sampling-method",
+      "label": "Sampling Method",
+      "subject_id": "business",
+      "dependencies": [
+        "business::primary-data-collection",
+        "business::secondary-data-review"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::questionnaire-design",
+      "label": "Questionnaire Design",
+      "subject_id": "business",
+      "dependencies": [
+        "business::primary-data-collection",
+        "business::sampling-method"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::interview-protocol",
+      "label": "Interview Protocol",
+      "subject_id": "business",
+      "dependencies": [
+        "business::primary-data-collection",
+        "business::sampling-method"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::data-reliability",
+      "label": "Data Reliability",
+      "subject_id": "business",
+      "dependencies": [
+        "business::primary-data-collection",
+        "business::forecast-reliability"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::data-validity",
+      "label": "Data Validity",
+      "subject_id": "business",
+      "dependencies": [
+        "business::secondary-data-review",
+        "business::forecast-reliability"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::research-ethics",
+      "label": "Research Ethics",
+      "subject_id": "business",
+      "dependencies": [
+        "business::evidence-based-judgment",
+        "business::ethical-decision-framework"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::internal-assessment",
+      "label": "Internal Assessment",
+      "subject_id": "business",
+      "dependencies": [
+        "business::case-study-analysis",
+        "business::evidence-based-judgment",
+        "business::research-ethics"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::business-recommendation",
+      "label": "Business Recommendation",
+      "subject_id": "business",
+      "dependencies": [
+        "business::internal-assessment",
+        "business::decision-making"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::implementation-plan",
+      "label": "Implementation Plan",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-recommendation",
+        "business::contingency-planning"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::evaluation-criteria",
+      "label": "Evaluation Criteria",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-recommendation",
+        "business::decision-criteria"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::reflective-conclusion",
+      "label": "Reflective Conclusion",
+      "subject_id": "business",
+      "dependencies": [
+        "business::evaluation-criteria",
+        "business::data-validity"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::strategic-justification",
+      "label": "Strategic Justification",
+      "subject_id": "business",
+      "dependencies": [
+        "business::business-recommendation",
+        "business::strategic-positioning",
+        "business::net-present-value"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    },
+    {
+      "id": "business::presentation-of-findings",
+      "label": "Presentation Of Findings",
+      "subject_id": "business",
+      "dependencies": [
+        "business::reflective-conclusion",
+        "business::strategic-justification"
+      ],
+      "taxonomy_id": "IA",
+      "level": "core"
+    }
+  ]
+}
