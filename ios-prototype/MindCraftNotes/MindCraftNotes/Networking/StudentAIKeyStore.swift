@@ -301,7 +301,7 @@ final class StudentAIKeyStore: ObservableObject {
         var components = URLComponents()
         components.scheme = "https"
         components.host = Provider.gemini.host
-        components.path = "/v1beta/models/gemini-2.5-flash:generateContent"
+        components.path = "/v1beta/models/gemini-3.6-flash:generateContent"
         components.queryItems = [URLQueryItem(name: "key", value: key)]
         guard let url = components.url, url.host == Provider.gemini.host
         else { return .failure(.unavailable) }
@@ -315,12 +315,20 @@ final class StudentAIKeyStore: ObservableObject {
             ],
             "generationConfig": [
                 "temperature": 0.2,
-                "maxOutputTokens": 1024,
-                // Gemini 2.5 models spend maxOutputTokens on hidden
-                // "thinking" first by default - with a 1024 budget that can
-                // consume the whole allowance and return zero visible text.
-                // Same intent as groqChat's `reasoning_effort: "low"`.
-                "thinkingConfig": ["thinkingBudget": 0],
+                // Verified live 2026-08-23: gemini-2.5-flash is gone ("no
+                // longer available to new users" per Google's own 404,
+                // which names gemini-3.6-flash as the replacement) and
+                // 3.6 400s on `thinkingConfig.thinkingBudget: 0`
+                // ("invalid argument") - thinking can't be disabled here
+                // the way it could on 2.5. Worse than just losing that
+                // optimization: with `badRequestMeansRejected` below, that
+                // 400 would have been misreported to every student as
+                // "your key was rejected" even with a perfectly valid key.
+                // Padding maxOutputTokens generously instead (a trivial
+                // "reply OK" prompt alone burned ~100 hidden thinking
+                // tokens in testing) - Google doesn't penalize an unused
+                // ceiling, `finishReason: STOP` fires on its own.
+                "maxOutputTokens": 8192,
             ],
         ])
         // Google rejects a bad/malformed API key with 400 INVALID_ARGUMENT,
