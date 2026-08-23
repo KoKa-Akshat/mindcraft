@@ -599,6 +599,11 @@ struct DeskGridDashboardView: View {
             .gesture(spaceGesture)
             .task { await syncConnectedBoxes() }
             .task { await loadWeakness() }
+            // Eager load (2026-08-23) - the real per-concept nodes now
+            // paint straight onto the page itself (`binderBookFrame`'s
+            // `BinderKnowledgeDots`), not just the Knowledge Map card you
+            // used to have to tap into first.
+            .task { await knowledgeGraphClient.load() }
             .onAppear {
                 // Real STT/vision-OCR can't be driven by an automated test
                 // (no simulator camera/mic), so this seeds an already-
@@ -1673,6 +1678,12 @@ struct DeskGridDashboardView: View {
                 .shadow(color: .black.opacity(0.22), radius: 16, y: 8)
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .fill(Color(gridHex: "faf6ea"))
+                .padding(9)
+            // Real per-concept knowledge, imprinted on the page itself
+            // (2026-08-23, explicit ask) - not decoration, the same nodes
+            // `knowledgeGraphClient` already fetched for the Knowledge Map
+            // card, just quiet enough here to read as paper texture.
+            BinderKnowledgeDots(nodes: knowledgeGraphClient.nodes)
                 .padding(9)
             content()
                 .padding(.horizontal, 32)
@@ -3765,14 +3776,13 @@ private enum WorkArtboard {
     /// Homework Help/Moodle hidden the same way Intel's tile already was
     /// while this is active, see `tileBoard`).
     static let contentViewerBinder = CGRect(x: 130, y: 40, width: 1181, height: 768)
-    /// Landing state: Binder alone at ~94% of the 1440pt board the moment
-    /// you land on the dashboard, not one of four competing tiles. Width
-    /// 1354 (1440 * 0.94), horizontally centered (x=43, recentered as
-    /// (1440-1354)/2). Widened from an earlier 88% pass (2026-08-22,
-    /// explicit ask: "expand it to occupy 94% of the screen") - height/y
-    /// (768/40) unchanged, already ≈94.8% of the board's 810pt height, so
-    /// only width needed to move.
-    static let landingBinder = CGRect(x: 43, y: 40, width: 1354, height: 768)
+    /// Landing state: Binder IS the page (2026-08-23, explicit ask:
+    /// "superimpose Binder on top of the page we have... I don't want
+    /// [Binder in a box that moves around] anymore"). Full board, no
+    /// margin - a real step past the 94% pass this replaces, which still
+    /// left a visible cream `BlueprintGrid` gutter on every side making
+    /// Binder read as a card floating on the page rather than being it.
+    static let landingBinder = CGRect(x: 0, y: 0, width: 1440, height: 810)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed
@@ -3868,6 +3878,50 @@ private struct KnowledgeGraphCanvas: View {
                 )
             }
         }
+    }
+}
+
+/// The page's own background, made real (2026-08-23, explicit ask:
+/// "superimpose Binder on top of the page... it's going to have this
+/// knowledge displayed like dots inside the page"). Same real per-concept
+/// nodes `KnowledgeGraphCanvas` draws big inside the Knowledge Map card -
+/// here as a quiet, low-opacity texture across the whole page instead of a
+/// second competing visualization. No edges, no glow, no size-by-
+/// engagement - just real status color at each concept's real position,
+/// faded back so it reads as paper texture until you look for it.
+private struct BinderKnowledgeDots: View {
+    let nodes: [KnowledgeGraphNode]
+
+    var body: some View {
+        Canvas { context, size in
+            guard !nodes.isEmpty else { return }
+            let padding = 0.08
+            let xs = nodes.compactMap(\.x)
+            let ys = nodes.compactMap(\.y)
+            let minX = xs.min() ?? 0, maxX = xs.max() ?? 1
+            let minY = ys.min() ?? 0, maxY = ys.max() ?? 1
+            let spanX = max(maxX - minX, 0.0001)
+            let spanY = max(maxY - minY, 0.0001)
+            for node in nodes {
+                guard let x = node.x, let y = node.y else { continue }
+                let nx = padding + (x - minX) / spanX * (1 - 2 * padding)
+                let ny = padding + (y - minY) / spanY * (1 - 2 * padding)
+                let p = CGPoint(x: nx * size.width, y: ny * size.height)
+                let dotColor: Color
+                switch node.status {
+                case "mastered": dotColor = Color(gridHex: "3fae5a")
+                case "in_progress": dotColor = Color(gridHex: "d9a441")
+                case "struggling": dotColor = Color(gridHex: "c1121f")
+                default: dotColor = Color(gridHex: "b7aed6")
+                }
+                let r: CGFloat = 2.5
+                context.fill(
+                    Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
+                    with: .color(dotColor.opacity(0.35))
+                )
+            }
+        }
+        .allowsHitTesting(false)
     }
 }
 
