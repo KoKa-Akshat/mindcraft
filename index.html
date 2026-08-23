@@ -206,7 +206,25 @@
 
   /* ---------- the desk (cream, three surfaces) ---------- */
   .desk-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,22px); margin-top:clamp(40px,6vh,60px);}
+  .desk-grid-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:1080px){.desk-grid-4{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:860px){.desk-grid{grid-template-columns:1fr;}}
+  /* mock: live-sim previews standing in for a static screenshot (2026-08-23) -
+     same iframes already embedded bigger elsewhere on this page, shrunk and
+     inert (tabindex=-1, pointer-events none) so they read as a preview
+     image, not a second interactive widget competing with the real one
+     above. */
+  .mock .mock-img[src*="sims/"], .mock-split-top iframe{border:0; pointer-events:none;}
+  iframe.mock-img{position:absolute; inset:0; width:100%; height:100%;}
+  .mock-split{display:flex; flex-direction:column;}
+  .mock-split-top{position:relative; flex:1; overflow:hidden; border-bottom:1px solid var(--edge);}
+  .mock-split-top iframe{position:absolute; inset:0; width:100%; height:100%;}
+  .mock-split-bottom{position:relative !important; inset:auto !important; flex:1;}
+  .mock-recommend{align-items:center; justify-content:center; text-align:center; gap:6px;}
+  .mock-recommend .mock-stamp{font-style:normal; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; font-family:var(--mono); color:rgba(20,58,46,.5);}
+  .mock-recommend .mock-q{font-size:16px; font-weight:600;}
+  .mock-rec-arrow{color:var(--leaf); font-size:16px;}
+  .mock-q-rec{color:var(--leaf);}
   .reel-strip{margin-top:44px; padding-top:36px; border-top:1px solid var(--edge);}
   .reel-label{display:block; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--chalk-faint); margin-bottom:16px;}
   .reel-row{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
@@ -289,6 +307,16 @@
   .jpoint p{font-size:15px; line-height:1.55; color:var(--chalk-dim);}
   .jpoint p strong{color:var(--chalk); font-weight:600;}
   @media (max-width:860px){.jesse-grid{grid-template-columns:1fr;}}
+  .jesse-sub{margin-top:56px;}
+  .jesse-sub.jesse-sub-first{margin-top:8px;}
+  .jesse-sub-title{
+    font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--leaf2); margin:0 0 10px;
+  }
+  .jesse-human-teaser{margin-top:48px; padding-top:28px; border-top:1px solid var(--edge); text-align:center;}
+  .jesse-human-teaser p{margin:0;}
+  .jesse-human-teaser p strong{font-size:20px; color:var(--chalk);}
+  .jesse-human-names{margin-top:6px !important; font-size:13px; color:var(--chalk-faint);}
 
   /* ---------- the gate (dark) ---------- */
   .gate-sec{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
@@ -580,14 +608,14 @@
     <div class="kicker reveal">For the kid the page keeps losing</div>
     <h2 class="h2 reveal">Some brains just don't do paragraphs.</h2>
     <p class="lede reveal">The paragraph is one door. Every idea here has more than one.</p>
-    <p class="brains-formats reveal"><strong>A simulation</strong>, <strong>a story</strong>, <strong>a voice</strong>, <strong>a picture</strong> &mdash; whichever door opens for you.</p>
+    <p class="brains-formats reveal"><strong>A simulation</strong>, <strong>a story</strong>, <strong>a voice</strong>, <strong>a picture</strong>: whichever door opens for you.</p>
     <p class="brains-engine reveal">This isn't a settings toggle. The engine tracks which representation lands for you and leads with it next time.</p>
     <p class="brains-note reveal">We don't diagnose and we don't treat. We just stopped insisting on the one format that already lost you.</p>
-    <p class="brains-library reveal">Most platforms hand you a wall of text and call it a lesson. We're building the opposite: an always-growing library of interactive simulations, one gated page at a time, open to whatever you're stuck on next &mdash; not just the one below.</p>
+    <p class="brains-library reveal">Most platforms hand you a wall of text and call it a lesson. We're building the opposite: an always-growing library of interactive simulations, one gated page at a time, open to whatever you're stuck on next, not just the one below.</p>
 
     <div class="brains-archive-box reveal">
       <img src="img/marketing/book-cover-calculus.webp" alt="" loading="lazy">
-      <p>113 free, open textbooks &mdash; no login, no pitch, open to any curious student.</p>
+      <p>113 free, open textbooks. No login, no pitch, open to any curious student.</p>
       <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">Browse the archive</a>
     </div>
 
@@ -604,6 +632,7 @@
     </div>
 
     <div class="sim-showcase reveal">
+      <a class="sim-showcase-cta" href="https://joinmindcraft.com/dans-archive.html">Browse archive</a>
       <div class="sim-showcase-head">
         <span class="sim-showcase-tag">What's next for you &middot; CC BY-NC-SA</span>
         <h3>Watch the frontier move.</h3>
@@ -612,7 +641,7 @@
       <div class="sim-showcase-frame">
         <iframe src="sims/zpd/index.html" title="Watch the frontier move, a Zone of Proximal Development explorer" loading="lazy"></iframe>
       </div>
-      <p class="sim-showcase-foot">This is the same idea The Desk's own knowledge map is built on &mdash; mastery isn't fixed, it's a frontier.</p>
+      <p class="sim-showcase-foot">This is the same idea The Desk's own knowledge map is built on: mastery isn't fixed, it's a frontier.</p>
     </div>
   </div>
 </section>
@@ -621,25 +650,34 @@
 <section class="stage-desk" id="desk">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal">One desk, three surfaces</div>
+    <div class="kicker reveal">One desk, four surfaces</div>
     <h2 class="h2 reveal">Not a folder. A collaborator.</h2>
-    <p class="lede reveal">Type a question in plain language and Jesse turns it into a simulation or a book chapter &mdash; yours to keep, yours to teach with. Every student's record stays theirs too: exportable, deletable, never for sale.</p>
-    <div class="desk-grid">
+    <p class="lede reveal">Type a question in plain language and Jesse turns it into a simulation or a book chapter, yours to keep, yours to teach with. Every student's record stays theirs too: exportable, deletable, never for sale.</p>
+    <div class="desk-grid desk-grid-4">
       <div class="desk-card reveal">
-        <div class="mock" aria-hidden="true">
-          <img class="mock-img" src="img/marketing/dash-work-screenshot.webp" alt="" loading="lazy">
+        <div class="mock mock-split" aria-hidden="true">
+          <div class="mock-split-top"><iframe src="sims/lever-force-amplifier.html" loading="lazy" tabindex="-1"></iframe></div>
+          <img class="mock-img mock-split-bottom" src="img/marketing/dash-work-screenshot.webp" alt="" loading="lazy">
         </div>
-        <div class="cap"><b>Notes</b><h3>The work lives here</h3><p>Notes, binder, email, and calendar on one surface. Drop in a photo of tonight's worksheet.</p></div>
+        <div class="cap"><b>Your Work</b><h3>The work lives here</h3><p>Notes, binder, email, and calendar on one surface. Drop in a photo of tonight's worksheet.</p></div>
       </div>
       <div class="desk-card reveal">
         <div class="mock" aria-hidden="true">
-          <div class="mock-solver">
-            <span class="mock-stamp">Thales of Miletus &middot; Giza, foot of the pyramid, 600 BC</span>
-            <p class="mock-q">The priests want the pyramid's height without anyone climbing it. Thales measures the shadow against his staff&hellip;</p>
-            <div class="mock-choices"><div class="mock-choice"></div><div class="mock-choice pick"></div><div class="mock-choice"></div><div class="mock-choice"></div></div>
-          </div>
+          <iframe class="mock-img" src="sims/zpd/index.html" loading="lazy" tabindex="-1"></iframe>
         </div>
         <div class="cap"><b>Solver</b><h3>The gap gets found</h3><p>A gap scan charts where the fog is, without grades or verdicts. Practice arrives inside a story, like the pyramid Thales measured by its shadow.</p></div>
+      </div>
+      <div class="desk-card reveal">
+        <div class="mock" aria-hidden="true">
+          <div class="mock-solver mock-recommend">
+            <span class="mock-stamp">Your goal</span>
+            <p class="mock-q">Investment Banker</p>
+            <div class="mock-rec-arrow">&darr;</div>
+            <span class="mock-stamp">Recommended next</span>
+            <p class="mock-q mock-q-rec">Financial Statements</p>
+          </div>
+        </div>
+        <div class="cap"><b>Recommend</b><h3>Built around your goal</h3><p>Say what you're aiming for and the path re-sorts around it, the next concept picked because it actually gets you there.</p></div>
       </div>
       <div class="desk-card reveal">
         <div class="mock" aria-hidden="true">
@@ -665,14 +703,20 @@
   <div class="wrap">
     <div class="kicker reveal">How the free tier stays free</div>
     <h2 class="h2 reveal">Supercharge your Desk on your own free key.</h2>
-    <p class="lede reveal">Google gives every student a free AI key at Google AI Studio &mdash; no card, no waitlist, about two minutes to claim. The Desk walks you through it during setup, then every homework question, study plan, and desk answer runs on your own account. Your usage, your key, your data. Not ours.</p>
+    <p class="lede reveal">Google gives every student a free AI key at Google AI Studio, no card, no waitlist, about two minutes to claim. The Desk walks you through it during setup, then every homework question, study plan, and desk answer runs on your own account. Your usage, your key, your data. Not ours.</p>
     <div class="power-stats reveal">
       <div class="pstat"><b>26,600+</b><span>concepts mapped across the knowledge engine</span></div>
       <div class="pstat"><b>100+</b><span>real subject graphs, from Euclid to AP Chemistry</span></div>
       <div class="pstat"><b>113</b><span>free interactive textbooks in the open archive</span></div>
-      <div class="pstat"><b>$0</b><span>to start &mdash; no card, no waitlist, ever</span></div>
+      <div class="pstat"><b>$0</b><span>to start. No card, no waitlist, ever</span></div>
     </div>
-    <p class="why-note reveal">Real numbers, not projections &mdash; same standard as everything else on this page.</p>
+    <p class="why-note reveal">Real numbers, not projections. Same standard as everything else on this page.</p>
+    <div class="jesse-points power-points reveal">
+      <div class="jpoint reveal"><i>yours</i><p><strong>Your key, your data.</strong> Nothing routes through our AI account. It's a straight line from you to the model, not through us.</p></div>
+      <div class="jpoint reveal"><i>promise</i><p><strong>Never training data.</strong> A student's work stays theirs, full stop. Not a product, not something we sell.</p></div>
+      <div class="jpoint reveal"><i>ahead of it</i><p><strong>Building toward formal compliance</strong> as the platform grows, instead of waiting for a regulator to make us.</p></div>
+      <div class="jpoint reveal"><i>the edge</i><p><strong>This is the actual differentiation.</strong> Every number above runs on a student's own key, not a shared pool we could quietly mine.</p></div>
+    </div>
   </div>
 </section>
 
@@ -680,44 +724,49 @@
 <section class="stage-desk" id="jesse" style="background:var(--field-1); border-top:1px solid var(--edge);">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="jesse-grid">
-      <div>
-        <div class="kicker reveal">Jesse &middot; the voice at the desk</div>
-        <h2 class="h2 reveal">Tap the disc. Jesse listens.</h2>
-        <p class="lede reveal">Stays on the line while you wander the app, the way a person would.</p>
-        <div class="jesse-points">
-          <div class="jpoint reveal"><i>real</i><p><strong>Shipped.</strong> A native voice in the iPad app today, not a chat box wearing a headset.</p></div>
-          <div class="jpoint reveal"><i>scoped</i><p><strong>Knows the page you're on.</strong> Ask about the problem in front of you.</p></div>
-          <div class="jpoint reveal"><i>next</i><p><strong>Learning to ask back.</strong> We're testing a version that asks you the next question instead of handing over the answer. It ships when it clears the gate.</p></div>
+    <div class="kicker reveal">Jesse &middot; the voice at the desk</div>
+
+    <div class="jesse-sub jesse-sub-first reveal">
+      <h3 class="jesse-sub-title">Jesse Talks</h3>
+      <div class="jesse-grid">
+        <div>
+          <h2 class="h2 reveal">Tap the disc. Jesse listens.</h2>
+          <p class="lede reveal">Stays on the line while you wander the app, the way a person would.</p>
+          <div class="jesse-points">
+            <div class="jpoint reveal"><i>real</i><p><strong>Shipped.</strong> A native voice in the iPad app today, not a chat box wearing a headset.</p></div>
+            <div class="jpoint reveal"><i>scoped</i><p><strong>Knows the page you're on.</strong> Ask about the problem in front of you.</p></div>
+            <div class="jpoint reveal"><i>next</i><p><strong>Learning to ask back.</strong> We're testing a version that asks you the next question instead of handing over the answer. It ships when it clears the gate.</p></div>
+          </div>
         </div>
-      </div>
-      <div class="jesse-demo reveal" id="jesseDemo">
-        <button class="jesse-disc" type="button" id="jesseDisc" aria-pressed="false">Press</button>
-        <p class="jesse-words" id="jesseWords"><span class="you">Tap the disc. Jesse listens.</span></p>
-        <p class="jesse-hint" id="jesseHint">A scripted taste. The real Jesse listens, in the app.</p>
-        <div class="jesse-reveal" id="jesseReveal" hidden>
-          <div class="jesse-reveal-frame"><iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe></div>
-          <p class="jesse-reveal-cap">Real simulation, not a mockup. Try dragging it.</p>
+        <div class="jesse-demo reveal" id="jesseDemo">
+          <button class="jesse-disc" type="button" id="jesseDisc" aria-pressed="false">Press</button>
+          <p class="jesse-words" id="jesseWords"><span class="you">Tap the disc. Jesse listens.</span></p>
+          <p class="jesse-hint" id="jesseHint">A scripted taste. The real Jesse listens, in the app.</p>
+          <div class="jesse-reveal" id="jesseReveal" hidden>
+            <div class="jesse-reveal-frame"><iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe></div>
+            <p class="jesse-reveal-cap">Real simulation, not a mockup. Try dragging it.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ================= THE GATE ================= -->
-<section class="gate-sec" id="honesty">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">Our promise about the AI</div>
-    <h2 class="h2 reveal">Checked before you ever see it.</h2>
-    <p class="lede reveal">Every AI-made lesson runs a gauntlet before a student sees it, and <strong>most attempts don't make it.</strong> We built it that way.</p>
-    <div class="gate-flow reveal" aria-label="The quality gate, in order">
-      <span class="gate-step">fit check</span><span class="gate-arrow">&rarr;</span>
-      <span class="gate-step">generate</span><span class="gate-arrow">&rarr;</span>
-      <span class="gate-step">render</span><span class="gate-arrow">&rarr;</span>
-      <span class="gate-step">structural rubric</span><span class="gate-arrow">&rarr;</span>
-      <span class="gate-step">visual + pedagogical gate</span><span class="gate-arrow">&rarr;</span>
-      <span class="gate-step final">a student sees it</span>
+    <div class="jesse-sub jesse-routes reveal" id="honesty">
+      <h3 class="jesse-sub-title">Jesse Routes</h3>
+      <h2 class="h2 reveal">Checked before you ever see it.</h2>
+      <p class="lede reveal">Every AI-made lesson runs a gauntlet before a student sees it, and <strong>most attempts don't make it.</strong> We built it that way.</p>
+      <div class="gate-flow reveal" aria-label="The quality gate, in order">
+        <span class="gate-step">fit check</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step">generate</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step">render</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step">structural rubric</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step">visual + pedagogical gate</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step final">a student sees it</span>
+      </div>
+    </div>
+
+    <div class="jesse-human-teaser reveal">
+      <p><strong>Need a little more human help? Sure.</strong></p>
+      <p class="jesse-human-names">The engineering sophomore &middot; the design senior &middot; the CS junior, on call below.</p>
     </div>
   </div>
 </section>
