@@ -17,7 +17,30 @@ struct SessionReportsView: View {
     private let cream = Color(gridHex: "fff8e9")
 
     var body: some View {
-        NavigationStack {
+        // Plain VStack, not NavigationStack (2026-08-22, in-binder
+        // consolidation) - this now renders inside the dashboard's own
+        // binder tile via tileInnerCard, which already supplies the card
+        // chrome; a second nested nav bar would be a redundant frame
+        // inside a frame. The single caller (DeskGridDashboardView) is the
+        // only one left after this change, so there's no standalone
+        // full-screen usage to keep this shape for.
+        VStack(spacing: 0) {
+            HStack {
+                Text("Session Reports")
+                    .font(.system(size: 17, weight: .bold, design: .rounded))
+                    .foregroundColor(ink)
+                Spacer()
+                Button(action: onClose) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(ink.opacity(0.4))
+                }
+                .accessibilityIdentifier("deskGridContentViewerClose")
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+            .padding(.bottom, 8)
+
             Group {
                 if isLoading && !hasLoadedOnce {
                     ProgressView().tint(ink)
@@ -35,15 +58,8 @@ struct SessionReportsView: View {
                     }
                 }
             }
-            .background(cream.ignoresSafeArea())
-            .navigationTitle("Session Reports")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Close", action: onClose)
-                }
-            }
         }
+        .background(cream)
         .task {
             reports = await SessionReportsClient.fetchRecent()
             isLoading = false
