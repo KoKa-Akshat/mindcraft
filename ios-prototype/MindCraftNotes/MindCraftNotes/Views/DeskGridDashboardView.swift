@@ -189,8 +189,6 @@ struct DeskGridDashboardView: View {
     /// style ZStack overlay — sidesteps that system's documented touch-
     /// swallowing bug class entirely (see CLAUDE.md's FieldDeskView
     /// section) by using UIKit's own presentation controller instead.
-    @State private var showBookLibrary = false
-    @State private var showSessionReports = false
     @State private var homeworkUploading = false
     @State private var homeworkError: String?
     @State private var homeworkUploads: [HomeworkUploadSummary] = []
@@ -240,6 +238,16 @@ struct DeskGridDashboardView: View {
     /// flow stays reachable from `WorkflowLibraryView`'s own "Open Archive"
     /// entry, just not this one anymore.
     @State private var viewingArchiveBrowser = false
+    /// Design Studio / Resume / Session Reports, now shown INSIDE the
+    /// binder's own content-viewer space instead of a separate screen
+    /// (2026-08-22, explicit ask: "everything should be displayed inside
+    /// the dash binder... so you can see and interact with the entire
+    /// system from this one place"). Same mutually-exclusive-via-
+    /// `closeBinderContentViewer` discipline as every other `viewingXxx`
+    /// flag above.
+    @State private var viewingDesignStudio = false
+    @State private var viewingResumeAgent = false
+    @State private var viewingSessionReports = false
     /// The lesson currently shown as a summary + "what you'll learn" card
     /// in Homework Help WHILE browsing the archive (2026-08-19, explicit
     /// ask: "per click homework help shows you a book summary and what you
@@ -309,6 +317,10 @@ struct DeskGridDashboardView: View {
     /// why (the explicit "it does not speak" ask).
     @State private var showCreateBook = false
 
+    // Persistent "Ask anything" bar on the binder's plain landing (2026-08-22).
+    @State private var binderAskDraft = ""
+    @FocusState private var binderAskFocused: Bool
+
     /// True whenever Binder should be showing ANY of the merged-space
     /// content modes above rather than its own normal titles/blurb - the
     /// single condition every layout/visibility check below reads instead
@@ -318,6 +330,7 @@ struct DeskGridDashboardView: View {
     /// a new mode is exactly the kind of bug this centralizes away).
     private var binderContentViewerActive: Bool {
         viewingUpload != nil || viewingBook != nil || viewingKnowledgeGraphInBinder || viewingArchiveBrowser
+            || viewingDesignStudio || viewingResumeAgent || viewingSessionReports
     }
 
     private func closeBinderContentViewer() {
@@ -325,6 +338,9 @@ struct DeskGridDashboardView: View {
         viewingBook = nil
         viewingKnowledgeGraphInBinder = false
         viewingArchiveBrowser = false
+        viewingDesignStudio = false
+        viewingResumeAgent = false
+        viewingSessionReports = false
         archiveSummaryLesson = nil
         archiveSearchQuery = ""
         archiveSearchResults = []
@@ -376,8 +392,14 @@ struct DeskGridDashboardView: View {
     /// FieldDeskView's older overlays.
     @State private var activeSidebarFlow: SidebarFlow?
 
+    /// Pruned to Practice only (2026-08-22): `.presentation`/`.gdoc` were
+    /// already dead (real triggers route through `onOpenCreate`, never
+    /// `openSidebarFlow`), and `.resume`/`.develop` moved to the binder's
+    /// own content-viewer (`viewingResumeAgent`/`viewingDesignStudio`) -
+    /// see `binderUtilityRow`. The two-pane slide this drives stays alive
+    /// for Practice alone.
     private enum SidebarFlow: Equatable {
-        case presentation, gdoc, resume, develop, englishPractice
+        case englishPractice
     }
 
     // MARK: - Agent takeover (any real ask, not just the email/draft case)
@@ -704,6 +726,19 @@ struct DeskGridDashboardView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
+        // Explicit keyboard exemption (2026-08-22, real regression fix):
+        // this whole screen's board scale is computed from THIS
+        // GeometryReader's own geo.size (`scale = min(w/1440, h/810)`) -
+        // the new binder ask bar's TextField means the keyboard can now
+        // appear here for the first time, and without this, the keyboard
+        // showing shrinks geo.size.height, which shrinks the WHOLE binder/
+        // board proportionally (not just the text field area) - the exact
+        // "binder shrinks in dimension" bug already fixed once for a
+        // different cause. The bare .ignoresSafeArea() above already
+        // covers this in principle (its default region is .all, which
+        // includes .keyboard), but naming .keyboard explicitly here is the
+        // reliable fix in practice for a GeometryReader-sized root view.
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .onChange(of: intelLines) { _, lines in boxBus.intelLines = lines }
         .onChange(of: binderTitles) { _, titles in boxBus.binderTitles = titles }
         .onChange(of: jesseCall.workDashboardLesson) { _, lesson in handleNewLesson(lesson) }
@@ -728,9 +763,6 @@ struct DeskGridDashboardView: View {
         .fullScreenCover(item: $presentedGeneratedSim) { sim in
             GeneratedSimView(sim: sim) { presentedGeneratedSim = nil }
         }
-        .sheet(isPresented: $showBookLibrary) {
-            BookLibraryView(onFileChapterBook: onFileChapterBook)
-        }
         .sheet(isPresented: $showJesseRail) {
             JesseRailView(studentName: studentName, context: "workDashboard", headerTrailing: AnyView(jesseBoxIconRow))
                 .presentationDetents([.medium])
@@ -743,9 +775,6 @@ struct DeskGridDashboardView: View {
                     Task { libraryBooks = (try? await BookLibraryClient.listBooks()) ?? libraryBooks }
                 }
             )
-        }
-        .fullScreenCover(isPresented: $showSessionReports) {
-            SessionReportsView(onClose: { showSessionReports = false })
         }
         // No Exit control here anymore - moved into the Manage page
         // (logo tap) so the dashboard itself stays clean. onClose is still
@@ -1382,6 +1411,11 @@ struct DeskGridDashboardView: View {
     /// doubled in size absorbing Email/Gcal) and open their destination
     /// directly on tap instead.
     private func handleTile(_ kind: TileKind) {
+        // A background tap on the binder while a content viewer (Archive/
+        // Design/Resume/...) is open used to fall through to onOpenBinder()
+        // below - easy to hit by accident on Design's drag-heavy canvas.
+        // Added 2026-08-22 alongside the in-binder consolidation.
+        if kind == .binder, binderContentViewerActive { return }
         if kind == .binder {
             let box = boxID(kind)
             if tileShowsContent(kind), boxBus.hungry != box {
@@ -1639,10 +1673,72 @@ struct DeskGridDashboardView: View {
                 .fill(Color(gridHex: "faf6ea"))
                 .padding(9)
             content()
-                .padding(.horizontal, 24)
-                .padding(.vertical, 16)
+                .padding(.horizontal, 32)
+                .padding(.vertical, 24)
+                .safeAreaInset(edge: .bottom) { binderAskBar }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    /// Persistent "Ask anything" Jesse bar (2026-08-22, explicit ask: "the
+    /// Jesse input... always attached to what is open"). Feeds
+    /// `JesseCallSession.submitTextTurn(_:)` under the same `workDashboard`
+    /// context the dashboard's own greeting already uses, landing in the
+    /// SAME transcript `JesseRailView` renders - "Jesse stays with you"
+    /// whether typed here or opened via the Answer chip. Scoped to the
+    /// binder's plain landing state for this pass (where `binderBookFrame`
+    /// is actually used) - the other content-viewer states (Archive/
+    /// Design/Resume/...) have their own chrome and aren't wrapped here.
+    private var binderAskBar: some View {
+        // A written line on the page, not a floating search control
+        // (2026-08-22, explicit ask: "blend these into the page's
+        // background seamlessly, you shouldn't read like a UI") - no
+        // capsule, no card, no shadow. A thin ink underline (the same
+        // sketch-line language the reference spec asked for), lime only
+        // where the cursor actually is.
+        let ink = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
+        let lime = Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)
+        return HStack(spacing: 10) {
+            Image(systemName: "sparkle")
+                .font(.system(size: 13))
+                .foregroundColor(ink.opacity(binderAskFocused ? 0.75 : 0.35))
+            TextField("Ask anything…", text: $binderAskDraft)
+                .textFieldStyle(.plain)
+                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .foregroundColor(ink)
+                .focused($binderAskFocused)
+                .onSubmit(submitBinderAsk)
+            Button(action: submitBinderAsk) {
+                Image(systemName: "arrow.up")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(binderAskDraft.isEmpty ? ink.opacity(0.25) : Color(gridHex: "faf6ea"))
+                    .frame(width: 26, height: 26)
+                    .background(Circle().fill(binderAskDraft.isEmpty ? Color.clear : ink))
+            }
+            .buttonStyle(.plain)
+            .disabled(binderAskDraft.isEmpty)
+            .accessibilityIdentifier("deskGridBinderAskSubmit")
+        }
+        .padding(.vertical, 10)
+        .overlay(alignment: .bottom) {
+            Rectangle()
+                .fill(binderAskFocused ? lime.opacity(0.8) : ink.opacity(0.12))
+                .frame(height: binderAskFocused ? 2 : 1)
+        }
+        .padding(.top, 12)
+        .animation(.easeOut(duration: 0.18), value: binderAskFocused)
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "askbar").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("deskGridBinderAskBar")
+                .allowsHitTesting(false)
+        }
+    }
+
+    private func submitBinderAsk() {
+        let text = binderAskDraft
+        binderAskDraft = ""
+        jesseCall.submitTextTurn(text)
     }
 
     /// Gold binder-ring column - a real HStack sibling between the graph
@@ -1664,6 +1760,60 @@ struct DeskGridDashboardView: View {
         .frame(maxHeight: .infinity)
     }
 
+    /// Picks Binder's content-viewer body and erases it to ONE concrete
+    /// type (2026-08-22) - replaces four separate if/else-if branches that
+    /// used to live directly in `tileBody`'s already highest-risk chain
+    /// (a real stack-overflow crash was fixed there tonight via `AnyView`
+    /// on the plain-landing branch). Consolidating every viewer mode
+    /// behind a single `AnyView?` here means adding Design/Resume/Reports
+    /// makes this chain SHORTER, not longer - one branch instead of seven.
+    /// A book takes priority over an upload (2026-08-19: opening a book
+    /// while an old upload was mid-view should show the book, not silently
+    /// no-op) - `closeBinderContentViewer` already keeps these mutually
+    /// exclusive, this ordering is a second, cheap guarantee, not the only
+    /// one.
+    private func binderContentViewerSelection(ink: Color) -> AnyView? {
+        if let viewingBook {
+            // Deliberately NOT wrapped in tileInnerCard - StudySessionView
+            // paints its own dark rounded panel + white text (its real
+            // visual identity, see its `embedded` doc comment), which
+            // tileInnerCard's white card background would sit uselessly
+            // behind/clash with rather than complement.
+            return AnyView(StudySessionView(
+                lesson: viewingBook.lesson,
+                embedded: true,
+                onClose: closeBinderContentViewer,
+                onOpenMicroSim: { sim in presentedMicroSim = sim },
+                onOpenGeneratedSim: { sim in presentedGeneratedSim = sim }
+            ))
+        }
+        if viewingArchiveBrowser {
+            return AnyView(tileInnerCard { archiveBrowserBody(ink: ink) })
+        }
+        if viewingKnowledgeGraphInBinder {
+            return AnyView(tileInnerCard { knowledgeGraphContentViewerBody(ink: ink) })
+        }
+        if let viewingUpload {
+            return AnyView(tileInnerCard { uploadContentViewerBody(viewingUpload, ink: ink) })
+        }
+        // Design/Resume paint their own full backgrounds (same reasoning
+        // as StudySessionView above), so - like it - they're NOT wrapped in
+        // tileInnerCard. Both self-scale from whatever GeometryReader frame
+        // they're given (own internal 1440x810 artboard math), so they
+        // correctly shrink to fit `WorkArtboard.contentViewerBinder`
+        // instead of needing any special-casing here.
+        if viewingDesignStudio {
+            return AnyView(DesignStudioView(studentName: studentName, onClose: closeBinderContentViewer, embedded: true))
+        }
+        if viewingResumeAgent {
+            return AnyView(ResumeAgentView(onClose: closeBinderContentViewer, studentName: studentName, embedded: true))
+        }
+        if viewingSessionReports {
+            return AnyView(tileInnerCard { SessionReportsView(onClose: closeBinderContentViewer) })
+        }
+        return nil
+    }
+
     @ViewBuilder
     private func tileBody(_ kind: TileKind, phase: MascotPhase) -> some View {
         // Homework Help now sits in the same near-white card as Binder/
@@ -1680,25 +1830,8 @@ struct DeskGridDashboardView: View {
         // book, not silently no-op) - in practice `closeBinderContentViewer`
         // already keeps these mutually exclusive, this ordering is a second,
         // cheap guarantee, not the only one.
-        if kind == .binder, let viewingBook {
-            // Deliberately NOT wrapped in tileInnerCard - StudySessionView
-            // paints its own dark rounded panel + white text (its real
-            // visual identity, see its `embedded` doc comment), which
-            // tileInnerCard's white card background would sit uselessly
-            // behind/clash with rather than complement.
-            StudySessionView(
-                lesson: viewingBook.lesson,
-                embedded: true,
-                onClose: closeBinderContentViewer,
-                onOpenMicroSim: { sim in presentedMicroSim = sim },
-                onOpenGeneratedSim: { sim in presentedGeneratedSim = sim }
-            )
-        } else if kind == .binder, viewingArchiveBrowser {
-            tileInnerCard { archiveBrowserBody(ink: ink) }
-        } else if kind == .binder, viewingKnowledgeGraphInBinder {
-            tileInnerCard { knowledgeGraphContentViewerBody(ink: ink) }
-        } else if kind == .binder, let viewingUpload {
-            tileInnerCard { uploadContentViewerBody(viewingUpload, ink: ink) }
+        if kind == .binder, let selection = binderContentViewerSelection(ink: ink) {
+            selection
         } else if agentTakeoverActive && kind == .binder && (agentEmail != nil || agentDraftBusy || agentBinderLines != nil) {
             AnyView(agentBinderTakeoverView(ink: ink))
         } else if agentTakeoverActive && kind == .intel {
@@ -2152,32 +2285,76 @@ struct DeskGridDashboardView: View {
     /// Library on the right. Tapping the graph preview reuses the exact
     /// same action `handleTile(.moodle)` already performs - relocated,
     /// not rebuilt.
+    // AnyView, not `some View` (2026-08-22, real crash fix): a fresh stack
+    // overflow (EXC_BAD_ACCESS / SIGSEGV, "Could not determine thread index
+    // for stack guard region") hit LIVE on-device immediately after the
+    // 94%-binder pass added another VStack + .overlay layer on top of this
+    // function's already-deep call site (photoTile -> tileBoard ->
+    // DeskGridDashboardView.body.getter - confirmed from the real crash
+    // report's symbolicated stack, which spent the bulk of its 117 frames
+    // recursing inside swift_getTypeByMangledName/AttributeGraph trying to
+    // resolve this closure's opaque return type). This function's own
+    // doc-comment already flagged `tileBody`'s giant if/else-if chain as
+    // this file's highest-risk area - erasing the type right at this
+    // boundary caps the complexity increase here without touching that
+    // chain itself.
+    private func binderLandingBody(ink: Color) -> AnyView {
+        AnyView(binderLandingBodyContent(ink: ink))
+    }
+
     @ViewBuilder
-    private func binderLandingBody(ink: Color) -> some View {
+    private func binderLandingBodyContent(ink: Color) -> some View {
         HStack(alignment: .top, spacing: 18) {
-            Button {
-                closeBinderContentViewer()
-                viewingKnowledgeGraphInBinder = true
-                Task { await knowledgeGraphClient.load() }
-            } label: {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Knowledge Map")
-                        .font(.mcContent(size: 17, weight: .semibold))
-                        .foregroundColor(ink)
-                    knowledgeGraphTileBody()
+            VStack(spacing: 10) {
+                Button {
+                    closeBinderContentViewer()
+                    viewingKnowledgeGraphInBinder = true
+                    Task { await knowledgeGraphClient.load() }
+                } label: {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Knowledge Map")
+                            .font(.mcContent(size: 17, weight: .semibold))
+                            .foregroundColor(ink)
+                        knowledgeGraphTileBody()
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color.white))
                 }
-                .padding(10)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color.white))
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridBinderGraphPreview")
+
+                // Archive, stacked directly under the Knowledge Map card
+                // (2026-08-22, explicit ask: "put this under knowledge
+                // graph") - moved out of the topic grid below, which is now
+                // Chapter Library books only.
+                Button {
+                    closeBinderContentViewer()
+                    viewingArchiveBrowser = true
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "archivebox.fill")
+                            .font(.system(size: 14))
+                            .foregroundColor(ink.opacity(0.55))
+                        Text("Open Archive")
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
+                            .foregroundColor(ink)
+                        Spacer(minLength: 0)
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity)
+                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridTopicTile_openArchive")
             }
-            .buttonStyle(.plain)
             .frame(width: 260)
-            .accessibilityIdentifier("deskGridBinderGraphPreview")
 
             binderRingSpine
 
             topicTileGrid(ink: ink)
         }
+        .overlay(alignment: .bottomTrailing) { binderUtilityRow }
         .task {
             // Plain .task, not .task(id:) - keying it to libraryBooksLoaded
             // and then setting that same flag true INSIDE this task self-
@@ -2193,10 +2370,9 @@ struct DeskGridDashboardView: View {
 
     /// Real Chapter Library books as tappable tiles, matching the
     /// reference's 2x3 grid with a real progress bar per book
-    /// (`AssembledBookSummary.coverageLabel`'s underlying numbers). One
-    /// fixed "Open Archive" tile maps to the existing Archive dock action
-    /// rather than mixing in a second content source (confirmed: Chapter
-    /// Library only).
+    /// (`AssembledBookSummary.coverageLabel`'s underlying numbers). Chapter
+    /// Library only - Archive now lives under the Knowledge Map card
+    /// instead of mixed into this grid (see `binderLandingBody`).
     @ViewBuilder
     private func topicTileGrid(ink: Color) -> some View {
         ScrollView {
@@ -2229,28 +2405,58 @@ struct DeskGridDashboardView: View {
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("deskGridTopicTile_\(book.subjectId)")
                 }
-                Button {
-                    closeBinderContentViewer()
-                    viewingArchiveBrowser = true
-                } label: {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Image(systemName: "archivebox.fill")
-                            .font(.system(size: 16))
-                            .foregroundColor(ink.opacity(0.55))
-                        Text("Open Archive")
-                            .font(.system(size: 13, weight: .bold, design: .rounded))
-                            .foregroundColor(ink)
-                        Spacer(minLength: 0)
-                    }
-                    .padding(10)
-                    .frame(height: 110, alignment: .topLeading)
-                    .frame(maxWidth: .infinity)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white))
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskGridTopicTile_openArchive")
             }
         }
+    }
+
+    /// Design / Reports / Resume / Settings - moved off the main dock
+    /// (2026-08-22, explicit ask: cut the toolbar to 4 primary actions) into
+    /// a compact, icon-only row tucked in the binder's bottom-right corner -
+    /// literally satisfies "Settings... in the lower right corner" while
+    /// keeping these reachable without competing for attention with the
+    /// primary Practice/Discuss/Create actions. Design/Reports/Resume now
+    /// open INSIDE the binder's own content-viewer space (2026-08-22,
+    /// second explicit ask: "everything should be displayed inside the
+    /// dash binder... not the whole page") instead of the old separate-
+    /// screen flow-pane/fullScreenCover mechanisms - same reasoning
+    /// `closeBinderContentViewer()`-then-`viewingXxx = true` already uses
+    /// for Archive/Knowledge Map. `jesseCall.end()` mirrors
+    /// `openSidebarFlow`'s own existing fix for the same reason: both
+    /// destinations embed their own JesseRailView under a different
+    /// context, and skipping this would silently no-op their call buttons
+    /// under the dashboard's ambient call.
+    private var binderUtilityRow: some View {
+        HStack(spacing: 6) {
+            binderUtilityIcon("square.grid.2x2.fill", identifier: "deskGridBinderUtility_Design") {
+                jesseCall.end()
+                closeBinderContentViewer()
+                viewingDesignStudio = true
+            }
+            binderUtilityIcon("doc.text.magnifyingglass", identifier: "deskGridBinderUtility_Reports") {
+                closeBinderContentViewer()
+                viewingSessionReports = true
+            }
+            binderUtilityIcon("person.text.rectangle", identifier: "deskGridBinderUtility_Resume") {
+                jesseCall.end()
+                closeBinderContentViewer()
+                viewingResumeAgent = true
+            }
+            binderUtilityIcon("gearshape.fill", identifier: "deskGridBinderUtility_Settings", action: onOpenManage)
+        }
+        .padding(8)
+        .background(Capsule().fill(Color.white.opacity(0.9)).shadow(color: .black.opacity(0.12), radius: 6, y: 2))
+        .padding(14)
+    }
+
+    private func binderUtilityIcon(_ system: String, identifier: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: system)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(Color(gridHex: "143a2e").opacity(0.65))
+                .frame(width: 30, height: 30)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(identifier)
     }
 
     /// The REAL `KnowledgeMapView` in the merged Binder+Intel space
@@ -3094,20 +3300,8 @@ struct DeskGridDashboardView: View {
     @ViewBuilder
     private func flowPane(_ flow: SidebarFlow) -> some View {
         switch flow {
-        case .presentation:
-            CreateCanvasView(kind: .presentation, studentName: studentName, onClose: closeSidebarFlow)
-        case .gdoc:
-            CreateCanvasView(kind: .gdoc, studentName: studentName, onClose: closeSidebarFlow)
-        case .resume:
-            ResumeAgentView(onClose: closeSidebarFlow, studentName: studentName)
         case .englishPractice:
             EnglishPracticeView(onClose: closeSidebarFlow, studentName: studentName)
-        case .develop:
-            // Straight into the one content canvas (2026-08-19) - the
-            // Workflows/Books toggle shell (`DevelopStudioView`) is gone.
-            // Book-drafting still exists, but scoped inside a `.chapter`
-            // box on this canvas rather than as a competing top-level mode.
-            DesignStudioView(studentName: studentName, onClose: closeSidebarFlow)
         }
     }
 
@@ -3140,8 +3334,21 @@ struct DeskGridDashboardView: View {
             // pane), so it's absent here same as before, just the relative
             // order of what IS here now matches.
             dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridSidebarDock_Practice") { openSidebarFlow(.englishPractice) }
-            dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridSidebarDock_Design") { openSidebarFlow(.develop) }
-            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridSidebarDock_Resume") { openSidebarFlow(.resume) }
+            // Design/Resume now open INSIDE the binder (2026-08-22) - close
+            // the Practice flow pane at the same time so the dashboard
+            // that slides back into view already shows the destination.
+            dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridSidebarDock_Design") {
+                jesseCall.end()
+                closeBinderContentViewer()
+                viewingDesignStudio = true
+                closeSidebarFlow()
+            }
+            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridSidebarDock_Resume") {
+                jesseCall.end()
+                closeBinderContentViewer()
+                viewingResumeAgent = true
+                closeSidebarFlow()
+            }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridSidebarDock_Settings", action: onOpenManage)
             Spacer(minLength: 0)
         }
@@ -3171,71 +3378,38 @@ struct DeskGridDashboardView: View {
     /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
     /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
-        // Explicit ask (2026-08-18, second pass): "i just want the search
-        // bar to be clean Archive Flows and Book for now." Memo/Transcribe
-        // moved to the icon row above Jesse's greeting (see
-        // jesseBoxIconRow); Learn removed too now that it's been clarified
-        // twice - "the dashboard IS learn" means the dock doesn't also need
-        // a separate Learn destination. Note: this makes LearnStudioView
-        // (including "Study a Book") unreachable from this dock - the
-        // screen and its code are untouched, just not linked to from here
-        // anymore. Flag this if that's not what was meant.
-        // Order (2026-08-19, explicit ask: "the order should be practice
-        // archive design resume settings consistently") - same order on
-        // every dock variant that carries these chips.
+        // Reframed as exactly Learn / Practice / Create / Answer
+        // (2026-08-22, explicit ask from a hand sketch + written spec: "the
+        // large left area is not merely a dashboard preview - it is the
+        // live Binder. Clicking Learn, Practice, Create, or Answer
+        // transforms that same area"). Archive, Design, Reports, Resume,
+        // and Settings stay INSIDE the binder itself (Archive under the
+        // Knowledge Map card, the rest in the compact utility row - see
+        // binderLandingBody / binderUtilityRow), not on this dock.
         HStack(spacing: 8) {
+            // Learn (2026-08-22, real fourth module - not the earlier
+            // "dashboard IS learn" removal, this is a deliberate, symmetric
+            // re-add alongside Practice/Create/Answer): returns the binder
+            // to its plain landing (book tiles + Knowledge Map preview),
+            // matching "Learn - books, lessons, knowledge paths" and the
+            // spec's own principle that the binder's default state already
+            // IS the learning surface, not a separate destination.
+            dockChip("Learn", system: "book.closed.fill", identifier: "deskGridDock_Learn") { closeBinderContentViewer() }
             // English speaking/writing practice (2026-08-19) - a live Jesse
             // conversation.
             dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridDock_Practice") { openSidebarFlow(.englishPractice) }
-            // 2026-08-19, explicit ask: Archive now opens the in-Binder
-            // browser (see viewingArchiveBrowser) instead of the old
-            // full-screen ArchiveWorkflowView - that flow is still reachable
-            // via WorkflowLibraryView's own "Open Archive" entry (onOpenArchive
-            // stays wired there), just not from this button anymore.
-            dockChip("Archive", system: "archivebox.fill", identifier: "deskGridDock_Archive") {
-                closeBinderContentViewer()
-                viewingArchiveBrowser = true
-            }
-            // Jesse's rail moved here from the old "Intel" landing tile
-            // (2026-08-22, Binder-to-88%-at-landing pass) - that tile was
-            // actually JesseRailView (chat/call card), not Gmail/Calendar;
-            // renamed the chip to match what it really opens. Dock-only,
-            // appears on tap, matching the explicit ask: Jesse stays quiet
-            // and out of the way on landing instead of always on screen.
-            dockChip("Jesse", system: "sparkles", identifier: "deskGridDock_Jesse") { showJesseRail = true }
-            // "+Book" replaced with "Design" (2026-08-18, explicit ask:
-            // "next to Archive, should be Design on the search bar... move
-            // it from the toolbar to the search bar. Remove Book"). The
-            // Develop toggle shell this used to open is gone (2026-08-19)
-            // - `.develop` now lands directly on the one unified content
-            // canvas (`DesignStudioView`), where Book-drafting lives inside
-            // a `.chapter` box instead of behind a mode switch. Still the
-            // same destination the sidebar's own "Develop" icon opens.
-            dockChip("Design", system: "square.grid.2x2.fill", identifier: "deskGridDock_Design") { openSidebarFlow(.develop) }
-            // Chapter Library (2026-08-20) — assembled, gated teaching
-            // prose, distinct from Archive (Dan McCreary's book excerpts)
-            // and from Design's own Book-drafting box: this is finished,
-            // gate-passed, dependency-ordered content a student reads.
-            dockChip("Library", system: "books.vertical.fill", identifier: "deskGridDock_Library") { showBookLibrary = true }
-            // Session Reports (2026-08-21) - the first real display surface
-            // for the ZPD/sim-telemetry pipeline shipped tonight
-            // (SimInteractionClient -> generate-session-report.ts ->
-            // Firestore); reports were being written with nowhere to read
-            // them back until this.
-            dockChip("Reports", system: "doc.text.magnifyingglass", identifier: "deskGridDock_Reports") { showSessionReports = true }
-            // Resume + Settings moved here from the left sidebar (2026-08-19,
-            // explicit ask: "add the settings and resume to the search bar
-            // dock too... use that space to make the boxes bigger
-            // horizontally as well as vertically") - the sidebar itself now
-            // only renders while a flow pane is active (see leftSidebar's
-            // own call site), so it no longer reserves width against
-            // tileBoard's scale on the plain dashboard.
-            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridDock_Resume") { openSidebarFlow(.resume) }
-            dockChip("Settings", system: "gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
-            // "+ New" (2026-08-22, reference images' top-right New tab) -
-            // additive, alongside the existing dock rather than replacing
-            // it (confirmed) - opens the real Create-a-book flow.
-            dockChip("New", system: "plus.circle.fill", identifier: "deskGridDock_New") { showCreateBook = true }
+            // Create - "ask it to create simulations and guide your own
+            // learning": opens the real topic-in, lessons-out generation
+            // flow (CreateBookView), not DesignStudioView's general
+            // authoring canvas (that lives in the binder's utility row -
+            // see deskGridBinderUtility_Design).
+            dockChip("Create", system: "wand.and.stars", identifier: "deskGridDock_Create") { showCreateBook = true }
+            // Answer (2026-08-22, renamed from "Discuss") - "Answer -
+            // Jesse, mentors, feedback." Same destination as before
+            // (JesseRailView's chat/call card). Dock-only, appears on tap -
+            // Jesse stays quiet and out of the way on landing instead of
+            // always on screen.
+            dockChip("Answer", system: "bubble.left.and.bubble.right.fill", identifier: "deskGridDock_Answer") { showJesseRail = true }
             searchField(placeholder: "Search", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
         .padding(.horizontal, 16)
@@ -3280,7 +3454,12 @@ struct DeskGridDashboardView: View {
             // order matches workDock's own (2026-08-19, "practice archive
             // design resume settings consistently").
             dockChip("Practice", system: "waveform.and.mic", identifier: "deskGridFlowsPractice") { openSidebarFlow(.englishPractice) }
-            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridFlowsResume") { openSidebarFlow(.resume) }
+            dockChip("Resume", system: "person.text.rectangle", identifier: "deskGridFlowsResume") {
+                jesseCall.end()
+                setRail(.none)
+                closeBinderContentViewer()
+                viewingResumeAgent = true
+            }
             dockChip("Settings", system: "gearshape.fill", identifier: "deskGridFlowsSettings", action: onOpenManage)
             searchField(
                 placeholder: "Search Presentation, Resume, Archive, Book…",
@@ -3551,14 +3730,14 @@ private enum WorkArtboard {
     /// Homework Help/Moodle hidden the same way Intel's tile already was
     /// while this is active, see `tileBoard`).
     static let contentViewerBinder = CGRect(x: 130, y: 40, width: 1181, height: 768)
-    /// Landing state (2026-08-22, explicit ask + reference images):
-    /// Binder alone at ~88% of the 1440pt board the moment you land on the
-    /// dashboard, not one of four competing tiles. Width 1267 (1440 * 0.88),
-    /// horizontally centered (x=87), same height/bottom-edge convention as
-    /// `contentViewerBinder` above (y:40, height:768, bottom edge at 808 -
-    /// 2pt shy of the board's true 810 edge, matching the established
-    /// "eighth pass" spacing this file already settled on).
-    static let landingBinder = CGRect(x: 87, y: 40, width: 1267, height: 768)
+    /// Landing state: Binder alone at ~94% of the 1440pt board the moment
+    /// you land on the dashboard, not one of four competing tiles. Width
+    /// 1354 (1440 * 0.94), horizontally centered (x=43, recentered as
+    /// (1440-1354)/2). Widened from an earlier 88% pass (2026-08-22,
+    /// explicit ask: "expand it to occupy 94% of the screen") - height/y
+    /// (768/40) unchanged, already ≈94.8% of the board's 810pt height, so
+    /// only width needed to move.
+    static let landingBinder = CGRect(x: 43, y: 40, width: 1354, height: 768)
 }
 
 /// Gentle, always-on pulse for the Knowledge Graph tile's empty-state seed

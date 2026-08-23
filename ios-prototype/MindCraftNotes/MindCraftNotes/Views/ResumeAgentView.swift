@@ -28,6 +28,13 @@ struct ResumeAgentView: View {
     /// stays open and shows Apply Today as a nested cover rather than
     /// closing, unlike the old flow this replaces.
     var onApply: (() -> Void)? = nil
+    /// True when this renders inside the Work Dashboard's binder content-
+    /// viewer instead of full-screen (2026-08-22, in-binder consolidation).
+    /// Defaults false so FieldDeskView's existing full-screen presentation
+    /// is unaffected. `scale`'s own math needs no change either way - it
+    /// already derives from whatever GeometryReader frame this view is
+    /// given, not the screen's own bounds.
+    var embedded: Bool = false
 
     private enum ContentMode { case profile, applications, importWeb }
 
@@ -61,7 +68,7 @@ struct ResumeAgentView: View {
             .frame(width: geo.size.width, height: geo.size.height)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: embedded ? [] : .all)
         .overlay(alignment: .topTrailing) {
             Button(action: onClose) {
                 Text("Done")
@@ -77,7 +84,7 @@ struct ResumeAgentView: View {
             .accessibilityIdentifier("resumeAgentBack")
             .accessibilityLabel("Done")
         }
-        .statusBarHidden(true)
+        .statusBarHidden(!embedded)
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
             Text(verbatim: "resume").font(.system(size: 1)).foregroundColor(.clear)
@@ -95,10 +102,15 @@ struct ResumeAgentView: View {
             case .applications:
                 JobOSShellView(onClose: { mode = .profile }, resumeDraft: jesseCall.resumeDraft, fillsAvailableSpace: true)
             case .importWeb:
-                ResumeAgentWebView(onApply: {
-                    onApply?()
-                    mode = .applications
-                })
+                ResumeAgentWebView(
+                    onApply: {
+                        onApply?()
+                        mode = .applications
+                    },
+                    onIngest: { fileName, linkedin, suggestions in
+                        jobOSStore.ingestFromJesse(fileName: fileName, linkedinUrl: linkedin, suggestions: suggestions)
+                    }
+                )
             }
             if mode == .profile {
                 VStack {
@@ -327,6 +339,14 @@ private struct ResumeDottedGrid: View {
 
 private struct ResumeAgentWebView: UIViewRepresentable {
     var onApply: (() -> Void)?
+    /// Real bug fix (2026-08-22): the bridge's "apply" handler used to
+    /// construct its OWN fresh `JobOSStore()` instead of reaching the
+    /// view's real `@StateObject` one - two disconnected in-memory store
+    /// instances, so an import here could silently fail to show up on the
+    /// board the student is looking at. Threaded as a callback instead of
+    /// passing the store object itself, matching this file's existing
+    /// `onApply` closure convention exactly.
+    var onIngest: ((_ fileName: String, _ linkedin: String, _ suggestions: [(company: String, role: String, why: String, query: String)]) -> Void)?
 
     static var resumeURL: URL {
         if let override = UserDefaults.standard.string(forKey: "deskOs.resumeAgentURL"),
@@ -336,7 +356,7 @@ private struct ResumeAgentWebView: UIViewRepresentable {
         return URL(string: "https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r8")!
     }
 
-    func makeCoordinator() -> Coord { Coord(onApply: onApply) }
+    func makeCoordinator() -> Coord { Coord(onApply: onApply, onIngest: onIngest) }
 
     func makeUIView(context: Context) -> WKWebView {
         let ucc = WKUserContentController()
@@ -361,13 +381,18 @@ private struct ResumeAgentWebView: UIViewRepresentable {
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
         context.coordinator.onApply = onApply
+        context.coordinator.onIngest = onIngest
     }
 
     final class Coord: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
         var onApply: (() -> Void)?
+        var onIngest: ((_ fileName: String, _ linkedin: String, _ suggestions: [(company: String, role: String, why: String, query: String)]) -> Void)?
         weak var webView: WKWebView?
 
-        init(onApply: (() -> Void)?) { self.onApply = onApply }
+        init(onApply: (() -> Void)?, onIngest: ((_ fileName: String, _ linkedin: String, _ suggestions: [(company: String, role: String, why: String, query: String)]) -> Void)?) {
+            self.onApply = onApply
+            self.onIngest = onIngest
+        }
 
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             decisionHandler(.allow)
@@ -404,8 +429,7 @@ private struct ResumeAgentWebView: UIViewRepresentable {
                     )
                 }
                 Task { @MainActor in
-                    let store = JobOSStore()
-                    store.ingestFromJesse(fileName: fileName, linkedinUrl: linkedin, suggestions: suggestions)
+                    self.onIngest?(fileName, linkedin, suggestions)
                     self.onApply?()
                 }
             }

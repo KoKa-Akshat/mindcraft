@@ -147,6 +147,7 @@
 		D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */; };
 		D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */; };
 		D6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */; };
+		D6DISCOVERINTC01A2B3 /* DiscoverInternshipsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DISCOVERINTC01A2B3 /* DiscoverInternshipsClient.swift */; };
 		D6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */; };
 		D6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift */; };
 		D701D0CAFA36FDCD398C790B /* storyArt in Resources */ = {isa = PBXBuildFile; fileRef = 6C6EE743854CB1274F574739 /* storyArt */; };
@@ -155,6 +156,7 @@
 		D7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */; };
 		D7JESSECALL01A2B3 /* JesseCallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JESSECALL01A2B3 /* JesseCallSession.swift */; };
 		D7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */; };
+		D7JOBOSADDON01A2B3 /* JobOSAddOn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7JOBOSADDON01A2B3 /* JobOSAddOn.swift */; };
 		D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7MOODLECLIENT01A2 /* MoodleClient.swift */; };
 		D7STUDENTAIKEY01 /* StudentAIKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */; };
 		D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */; };
@@ -321,6 +323,7 @@
 		C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveClient.swift; sourceTree = "<group>"; };
 		C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailClient.swift; sourceTree = "<group>"; };
 		C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailDigestClient.swift; sourceTree = "<group>"; };
+		C6DISCOVERINTC01A2B3 /* DiscoverInternshipsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverInternshipsClient.swift; sourceTree = "<group>"; };
 		C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailDigestStore.swift; sourceTree = "<group>"; };
 		C6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSLinkedInGraph.swift; sourceTree = "<group>"; };
 		C7078B04335739E9939AA984 /* MicroSimView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MicroSimView.swift; sourceTree = "<group>"; };
@@ -329,6 +332,7 @@
 		C7GMAILBOXVW01A2B3C4 /* GmailWorkflowBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailWorkflowBoxView.swift; sourceTree = "<group>"; };
 		C7JESSECALL01A2B3 /* JesseCallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JesseCallSession.swift; sourceTree = "<group>"; };
 		C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSRoleDetailView.swift; sourceTree = "<group>"; };
+		C7JOBOSADDON01A2B3 /* JobOSAddOn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobOSAddOn.swift; sourceTree = "<group>"; };
 		C7MOODLECLIENT01A2 /* MoodleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodleClient.swift; sourceTree = "<group>"; };
 		C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAIKeyStore.swift; sourceTree = "<group>"; };
 		C804A39BF276CEEBF088A65C /* actToc.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = actToc.json; sourceTree = "<group>"; };
@@ -487,6 +491,7 @@
 				B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */,
 				C6GMAILCLIENT01A2B3C4 /* GmailClient.swift */,
 				C6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift */,
+				C6DISCOVERINTC01A2B3 /* DiscoverInternshipsClient.swift */,
 				C6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift */,
 				C6DRIVECLIENT01A2B3C4 /* DriveClient.swift */,
 				C9DESKASKCLIENT01A2 /* DeskAskClient.swift */,
@@ -672,6 +677,7 @@
 				C5JOBOSSHELL01A2B3C4 /* JobOSShellView.swift */,
 				C6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift */,
 				C7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift */,
+				C7JOBOSADDON01A2B3 /* JobOSAddOn.swift */,
 			);
 			path = JobOS;
 			sourceTree = "<group>";
@@ -914,11 +920,13 @@
 				D3JOBOSMODEL01A2B3C4 /* JobOSModels.swift in Sources */,
 				D6JOBOSGRAPH01A2B3C4 /* JobOSLinkedInGraph.swift in Sources */,
 				D7JOBOSDETAIL01A2B3 /* JobOSRoleDetailView.swift in Sources */,
+				D7JOBOSADDON01A2B3 /* JobOSAddOn.swift in Sources */,
 				E1F7A5318293A4C5D6E7F809 /* ActFieldChrome.swift in Sources */,
 				FC08164293A4B5C6D7E8F91A /* FieldDeskStore.swift in Sources */,
 				A19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift in Sources */,
 				D6GMAILCLIENT01A2B3C4 /* GmailClient.swift in Sources */,
 				D6GMAILDIGESTCL01A2B3 /* GmailDigestClient.swift in Sources */,
+				D6DISCOVERINTC01A2B3 /* DiscoverInternshipsClient.swift in Sources */,
 				D6GMAILDIGESTST01A2B3 /* GmailDigestStore.swift in Sources */,
 				D6DRIVECLIENT01A2B3C4 /* DriveClient.swift in Sources */,
 				D9DESKASKCLIENT01A2 /* DeskAskClient.swift in Sources */,

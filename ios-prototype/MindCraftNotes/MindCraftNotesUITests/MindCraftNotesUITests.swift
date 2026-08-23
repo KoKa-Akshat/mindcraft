@@ -2210,8 +2210,8 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        let designChip = app.buttons["deskGridDock_Design"]
-        XCTAssertTrue(designChip.waitForExistence(timeout: 10), "expected Design dock chip (opens the content canvas)")
+        let designChip = app.buttons["deskGridBinderUtility_Design"]
+        XCTAssertTrue(designChip.waitForExistence(timeout: 10), "expected Design utility icon (opens the content canvas)")
         designChip.tap()
 
         let addChapter = app.buttons["designStudioAdd_chapter"]
@@ -2319,7 +2319,7 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridDock_Archive"].tap()
+        app.buttons["deskGridTopicTile_openArchive"].tap()
         XCTAssertTrue(app.descendants(matching: .any)["deskGridArchiveSummaryEmpty"].waitForExistence(timeout: 5), "expected Homework Help to go blank/prompt before a book is picked")
         XCTAssertFalse(app.staticTexts["Tap to upload a photo or PDF"].exists, "expected Homework Help's normal upload prompt to be replaced while archive browsing")
         XCTAssertTrue(app.buttons["deskGridContentViewerClose"].exists, "expected the archive browser's close button")
@@ -2329,16 +2329,18 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertFalse(app.descendants(matching: .any)["deskGridArchiveSummaryEmpty"].exists, "expected closing to dismiss the archive browser")
     }
 
-    /// Real regression coverage for two live bug reports (2026-08-19):
-    /// "im not seeing dans books in archuve at all" and "toolbar move to
-    /// the bottom in design and resume too we dont need that vertical
-    /// column there." Confirmed via a real screenshot that "DAN'S ARCHIVE"
-    /// lists real book rows (Calculus, Algebra I, Biology, ...) from the
-    /// real `ArchiveBooksClient` round trip - those rows aren't asserted
-    /// on by identifier here for the same reason `deskGridArchiveBook_*`
-    /// (the bundled-book rows) already couldn't be: they sit inside the
-    /// same ScrollView-inside-the-scaled-artboard position that doesn't
-    /// publish children to the accessibility tree (see
+    /// Real regression coverage for two live bug reports: "im not seeing
+    /// dans books in archuve at all" (2026-08-19) and "the binder shrinks
+    /// in dimension" when Design Studio opens (2026-08-22, fixed by moving
+    /// Design into the SAME in-binder content-viewer architecture Archive
+    /// already uses, rather than the old separate flow-pane screen).
+    /// Confirmed via a real screenshot that "DAN'S ARCHIVE" lists real book
+    /// rows (Calculus, Algebra I, Biology, ...) from the real
+    /// `ArchiveBooksClient` round trip - those rows aren't asserted on by
+    /// identifier here for the same reason `deskGridArchiveBook_*` (the
+    /// bundled-book rows) already couldn't be: they sit inside the same
+    /// ScrollView-inside-the-scaled-artboard position that doesn't publish
+    /// children to the accessibility tree (see
     /// `testArchiveBrowserOpensWithSearchAndBlankHomeworkHelp`'s doc
     /// comment for the full explanation). What's checked here is what
     /// reliably resolves.
@@ -2347,17 +2349,18 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridDock_Archive"].tap()
+        app.buttons["deskGridTopicTile_openArchive"].tap()
         XCTAssertTrue(app.buttons["deskGridContentViewerClose"].waitForExistence(timeout: 5), "expected the archive browser to open")
         app.buttons["deskGridContentViewerClose"].tap()
 
-        // The vertical leftSidebar is gone - Resume/Design/Settings live in
-        // the bottom dock now, including while a flow pane (Resume/Develop)
-        // is open, which is the one place that dock used to be unreachable.
-        app.buttons["deskGridDock_Design"].tap()
-        XCTAssertTrue(app.buttons["deskGridSidebarDock_Resume"].waitForExistence(timeout: 5), "expected the bottom dock's Resume chip while inside a flow pane")
-        XCTAssertTrue(app.buttons["deskGridSidebarDock_Settings"].exists, "expected the bottom dock's Settings chip while inside a flow pane")
-        XCTAssertFalse(app.buttons["deskGridSidebar_Resume"].exists, "expected the old vertical sidebar's Resume icon to be gone")
+        // Design now opens INSIDE the binder (2026-08-22) - never leaves
+        // the dashboard, no separate flow-pane screen, no sidebarFlowDock.
+        app.buttons["deskGridBinderUtility_Design"].tap()
+        XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected Design Studio's own canvas dock to appear in-binder")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].exists, "expected the dashboard to still be mounted - Design never navigates away from it")
+        XCTAssertFalse(app.descendants(matching: .any)["deskGridSidebarFlowToolbar"].exists, "expected the old separate-screen flow-pane toolbar to NOT appear for Design anymore")
+        app.buttons["designStudioDone"].tap()
+        XCTAssertTrue(app.buttons["deskGridBinderGraphPreview"].waitForExistence(timeout: 5), "expected closing Design to return to the binder's plain landing")
     }
 
     func testEnglishPracticeOpensFromDockAndCloses() {
@@ -2497,7 +2500,7 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridDock_Design"].tap()
+        app.buttons["deskGridBinderUtility_Design"].tap()
         XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected the content-type tool pills")
         XCTAssertTrue(app.staticTexts["0 boxes \u{00b7} 0 connections"].exists, "expected an empty canvas")
 
@@ -2550,7 +2553,7 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridDock_Design"].tap()
+        app.buttons["deskGridBinderUtility_Design"].tap()
         XCTAssertTrue(app.buttons["designStudioAdd_branch"].waitForExistence(timeout: 10), "expected the Branch tool pill")
 
         app.buttons["designStudioAdd_branch"].tap()
@@ -2614,34 +2617,30 @@ final class MindCraftNotesUITests: XCTestCase {
     /// ask, second time asked more forcefully after the first pass
     /// deferred it): sidebar destinations slide into the same canvas
     /// instead of opening a separate full-screen cover, the sidebar stays
-    /// reachable the whole time (so a second destination can be opened
-    /// directly, without returning to the dashboard first), and closing
-    /// lands back on the dashboard.
-    /// Presentation/GDoc dropped out of the sidebar itself (2026-08-18,
-    /// explicit ask: "remove presentation and google docs from the flows...
-    /// we dont need them yet"), so this now exercises Resume -> Develop
-    /// instead - same pan-in-place + stay-switchable mechanic, just a
-    /// different pair of destinations that are still actually reachable.
-    /// Entry point updated again (2026-08-19): the left sidebar only
-    /// renders WHILE a flow pane is active now (it stopped reserving width
-    /// against tileBoard on the plain dashboard - see leftSidebar's call
-    /// site), so the first flow must open from the dock's own Resume chip;
-    /// the sidebar then appears and is what keeps flows switchable.
+    /// Resume and Design both now open INSIDE the binder's content-viewer
+    /// space (2026-08-22 consolidation) instead of a separate sliding flow
+    /// pane - this test now covers an in-binder round trip through both in
+    /// sequence: each opens directly from the utility row, each closes with
+    /// its own control back to the binder's plain landing, and the
+    /// dashboard itself is never left in between.
     func testSidebarFlowsPanInPlaceAndStaySwitchable() {
         let app = launchFieldDeskApp()
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridDock_Resume"].tap()
+        app.buttons["deskGridBinderUtility_Resume"].tap()
         XCTAssertTrue(app.descendants(matching: .any)["resumeAgentRoot"].waitForExistence(timeout: 10), "expected Resume's own content, not a separate cover with no dashboard trace")
-        XCTAssertTrue(app.buttons["deskGridSidebar_Develop"].waitForExistence(timeout: 5), "expected the sidebar to stay reachable while a flow is open")
+        XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].exists, "expected the dashboard to still be mounted - Resume never navigates away from it")
 
-        app.buttons["deskGridSidebar_Develop"].tap()
-        XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected switching directly to Develop without returning to the dashboard first")
-        XCTAssertFalse(app.descendants(matching: .any)["resumeAgentRoot"].exists, "expected Resume's content to be gone once Develop took over the same pane")
+        app.buttons["resumeAgentBack"].tap()
+        XCTAssertTrue(app.buttons["deskGridBinderGraphPreview"].waitForExistence(timeout: 5), "expected closing Resume to return to the binder's plain landing")
+
+        app.buttons["deskGridBinderUtility_Design"].tap()
+        XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected Design Studio's own canvas dock to appear in-binder")
+        XCTAssertFalse(app.descendants(matching: .any)["resumeAgentRoot"].exists, "expected Resume's content to be gone once Design took over the same viewer slot")
 
         app.buttons["designStudioDone"].tap()
-        XCTAssertTrue(app.buttons["deskGridTile_Homework Help"].waitForExistence(timeout: 10), "expected closing a flow to land back on the dashboard")
+        XCTAssertTrue(app.buttons["deskGridBinderGraphPreview"].waitForExistence(timeout: 10), "expected closing Design to return to the binder's plain landing")
     }
 
     func testHomeworkHelpTileTapOpensDocumentPicker() {

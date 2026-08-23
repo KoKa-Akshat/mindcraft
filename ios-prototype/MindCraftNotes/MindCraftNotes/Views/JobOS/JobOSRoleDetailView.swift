@@ -4,6 +4,7 @@ import SwiftUI
 /// every reach-out with the exact match rule that put them on this job.
 struct JobOSRoleDetailView: View {
     @ObservedObject var store: JobOSStore
+    @ObservedObject private var addOn = JobOSAddOnStore.shared
     let roleId: String
     /// See `JobOSShellView`'s own doc comment on this same parameter -
     /// threaded explicitly through the `.sheet` boundary rather than via
@@ -130,7 +131,23 @@ struct JobOSRoleDetailView: View {
         }
     }
 
+    /// Gated behind the real Mac alumni add-on entitlement (2026-08-22) -
+    /// this whole section is the LinkedIn-graph/CRM alumni-matching layer
+    /// being sold as a paid add-on to Mac students specifically.
+    @ViewBuilder
     private func reachOut(_ role: JobOSRole) -> some View {
+        if addOn.hasMacAlumniAddOn {
+            reachOutContent(role)
+        } else {
+            section("Reach out to") {
+                Text("Alumni-network matching is a Macalester add-on. Ask your program lead to enable it.")
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(jobHex: "8a8478"))
+            }
+        }
+    }
+
+    private func reachOutContent(_ role: JobOSRole) -> some View {
         let people = store.reachOuts(for: role)
         return section("Reach out to") {
             Text("Ranked from your LinkedIn graph, then CRM. Each card shows the match rule. We do not scrape LinkedIn. OpenID cannot see connections.")

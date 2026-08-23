@@ -24,6 +24,7 @@ struct JobOSShellView: View {
 
     @Environment(\.dismiss) private var dismiss
     @StateObject private var store = JobOSStore()
+    @ObservedObject private var addOn = JobOSAddOnStore.shared
     @State private var openRole: JobOSRole?
     @State private var confirmApplyId: String?
     @State private var showAddRole = false
@@ -34,6 +35,12 @@ struct JobOSShellView: View {
     @State private var showWritingSheet = false
     @State private var linkDraftId: String?
     @State private var linkDraftURL = ""
+
+    // Real discovery loop (2026-08-22) - see DiscoverInternshipsClient.
+    @State private var showDiscovery = false
+    @State private var discoveryLoading = false
+    @State private var discoveryCandidates: [DiscoverInternshipsClient.Candidate] = []
+    @State private var discoveryReason: String?
 
     // One board shell (desk-card language).
     @State private var boardSize = CGSize(width: 520, height: 620)
@@ -111,6 +118,27 @@ struct JobOSShellView: View {
                 }
             )
             .presentationDetents([.large])
+        }
+        .sheet(isPresented: $showDiscovery) {
+            JobOSDiscoverySheet(
+                loading: discoveryLoading,
+                candidates: discoveryCandidates,
+                reason: discoveryReason,
+                onAdd: { candidate in
+                    store.addRole(
+                        company: candidate.company,
+                        role: candidate.role,
+                        location: candidate.location,
+                        lane: "Apply Now",
+                        fit: 80,
+                        url: candidate.roleUrl,
+                        why: candidate.why,
+                        deadline: candidate.deadline,
+                        source: "discovery",
+                        verificationStatus: candidate.verificationStatus
+                    )
+                }
+            )
         }
         .sheet(isPresented: $showAddRole) { AddRoleSheet(store: store) }
         .sheet(isPresented: $showAddContact) { AddContactSheet(store: store) }
@@ -348,6 +376,10 @@ struct JobOSShellView: View {
 
             Menu {
                 if store.isBoardReady {
+                    Button("Discover internships", systemImage: "sparkle.magnifyingglass") {
+                        showDiscovery = true
+                        Task { await runDiscovery() }
+                    }
                     Button("Add role", systemImage: "plus") { showAddRole = true }
                     Button("Add contact", systemImage: "person.badge.plus") { showAddContact = true }
                     Button("Daily sync note", systemImage: "arrow.triangle.2.circlepath") { showSync = true }
@@ -358,8 +390,15 @@ struct JobOSShellView: View {
                         store.disconnectLinkedIn()
                     }
                 }
-                Button("Load Augeo design example", systemImage: "person.2") {
-                    store.loadAugeoDesignExample()
+                // Mac alumni layer, gated behind the real paid-add-on
+                // entitlement (2026-08-22) - JobOSAddOnStore reads
+                // users/{uid}.macAlumniAddOn live, same admin-settable
+                // shape as program/stickerPlan until real payment
+                // processing exists.
+                if addOn.hasMacAlumniAddOn {
+                    Button("Load Augeo design example", systemImage: "person.2") {
+                        store.loadAugeoDesignExample()
+                    }
                 }
                 Button("Clear board", systemImage: "trash", role: .destructive) {
                     store.clearBoard()
@@ -689,6 +728,25 @@ struct JobOSShellView: View {
         let line = JobOSReachOutBuilder.namesLine(store.reachOuts(for: role))
         return line.isEmpty ? "—" : line
     }
+
+    /// Real discovery loop trigger (2026-08-22) - calls the live webhook,
+    /// never writes to the board itself. See DiscoverInternshipsClient and
+    /// JobOSDiscoverySheet's onAdd for where a candidate actually reaches
+    /// store.addRole, which only happens on an explicit tap.
+    private func runDiscovery() async {
+        discoveryLoading = true
+        discoveryReason = nil
+        let result = await DiscoverInternshipsClient.discover()
+        discoveryLoading = false
+        switch result {
+        case .ok(let candidates):
+            discoveryCandidates = candidates
+            if candidates.isEmpty { discoveryReason = "No new real openings found this run — try again later." }
+        case .rateLimited(let reason), .unavailable(let reason):
+            discoveryCandidates = []
+            discoveryReason = reason
+        }
+    }
 }
 
 // MARK: - Sheets
@@ -1010,6 +1068,64 @@ private struct AddContactSheet: View {
                         dismiss()
                     }
                 }
+            }
+        }
+    }
+}
+
+/// Real discovery results, reviewed one at a time before anything reaches
+/// the board (2026-08-22) - "Add to board" is the ONLY thing that calls
+/// store.addRole; closing this sheet without tapping adds nothing, matching
+/// this feature's existing never-silently-mutate discipline.
+private struct JobOSDiscoverySheet: View {
+    let loading: Bool
+    let candidates: [DiscoverInternshipsClient.Candidate]
+    let reason: String?
+    let onAdd: (DiscoverInternshipsClient.Candidate) -> Void
+    @Environment(\.dismiss) private var dismiss
+    @State private var addedCompanies: Set<String> = []
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if loading {
+                    ProgressView("Searching real internships and summer programs…")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if candidates.isEmpty {
+                    Text(reason ?? "Nothing found this run.")
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+                        .padding(24)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    List(candidates, id: \.company) { candidate in
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(candidate.company).font(.system(size: 16, weight: .bold, design: .rounded))
+                            Text(candidate.role).font(.system(size: 13, weight: .semibold, design: .rounded))
+                            if !candidate.location.isEmpty {
+                                Text(candidate.location).font(.system(size: 12, design: .rounded)).foregroundColor(Color(jobHex: "8a8478"))
+                            }
+                            Text(candidate.why).font(.system(size: 12, design: .rounded)).foregroundColor(Color(jobHex: "8a8478"))
+                            HStack {
+                                Text(candidate.verificationStatus == "link_verified" ? "Link verified" : "Verify before applying")
+                                    .font(.system(size: 10, weight: .heavy, design: .rounded))
+                                    .padding(.horizontal, 8).padding(.vertical, 3)
+                                    .background(Capsule().fill(Color(jobHex: candidate.verificationStatus == "link_verified" ? "c4f547" : "efe8dc")))
+                                Spacer()
+                                Button(addedCompanies.contains(candidate.company) ? "Added" : "Add to board") {
+                                    onAdd(candidate)
+                                    addedCompanies.insert(candidate.company)
+                                }
+                                .disabled(addedCompanies.contains(candidate.company))
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+            }
+            .navigationTitle("Discover")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Done") { dismiss() } }
             }
         }
     }

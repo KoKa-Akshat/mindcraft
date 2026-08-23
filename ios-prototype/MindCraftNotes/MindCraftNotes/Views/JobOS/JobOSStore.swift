@@ -1,9 +1,18 @@
 import Foundation
 import Combine
+import FirebaseAuth
+import FirebaseFirestore
 
-/// Local-first Apply today board - `deskOs.jobOs.state.v2` UserDefaults JSON.
-/// Starts empty (asset boxes only). Roles stay blank until the student uploads
-/// a resume and connects LinkedIn. Firestore stub: `users/{uid}/jobOS/*`.
+/// Local-first Apply today board - `deskOs.jobOs.state.v2` UserDefaults JSON,
+/// now ALSO synced to `users/{uid}/jobOS/state` in Firestore (2026-08-22 -
+/// the old "Firestore stub" comment is resolved for real here, not deferred
+/// again, since this board is becoming a sellable asset - see the Mac
+/// alumni add-on work in JobOSAddOn.swift). Local persist stays as the
+/// instant-load/offline cache; Firestore is the real source of truth that
+/// syncs in behind it, same "local-first, synced honestly" shape
+/// GmailDigestStore already proves out in this codebase. Starts empty
+/// (asset boxes only). Roles stay blank until the student uploads a resume
+/// and connects LinkedIn.
 @MainActor
 final class JobOSStore: ObservableObject {
     /// v2 drops the old personal campus seed that was auto-loaded into v1.
@@ -16,6 +25,18 @@ final class JobOSStore: ObservableObject {
     @Published private(set) var graph: JobOSLinkedInGraph
     @Published private(set) var loadError: String?
     @Published var toast: String?
+
+    private let db = Firestore.firestore()
+    private var firestoreListener: ListenerRegistration?
+    private var authStateHandle: NSObjectProtocol?
+    private var currentUid: String?
+    /// True once a real snapshot (even an empty/non-existent one) has come
+    /// back from Firestore for the current uid - distinguishes "haven't
+    /// heard from Firestore yet" (don't push local state up, might race a
+    /// listener that's about to deliver real remote data) from "Firestore
+    /// confirmed there's nothing there yet" (a genuinely fresh student,
+    /// safe to push the current local state up as the seed).
+    private var hasReceivedFirstSnapshot = false
 
     init() {
         // Drop legacy personal dump so students never see Akshat’s tracker.
@@ -33,6 +54,57 @@ final class JobOSStore: ObservableObject {
             loadError = "macalesterApplySeed.json missing from bundle"
         }
         graph = Self.loadGraph() ?? .empty
+
+        subscribeToFirestore()
+    }
+
+    deinit {
+        firestoreListener?.remove()
+        if let authStateHandle {
+            Auth.auth().removeStateDidChangeListener(authStateHandle)
+        }
+    }
+
+    // MARK: - Firestore sync
+
+    private func subscribeToFirestore() {
+        guard FirebaseBootstrap.isConfigured, !Self.uiTesting else { return }
+        authStateHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
+            self?.subscribeToDoc(for: user)
+        }
+    }
+
+    private func subscribeToDoc(for user: User?) {
+        firestoreListener?.remove()
+        firestoreListener = nil
+        hasReceivedFirstSnapshot = false
+        currentUid = user?.uid
+        guard let user else { return }
+
+        let docRef = db.collection("users").document(user.uid).collection("jobOS").document("state")
+        firestoreListener = docRef.addSnapshotListener { [weak self] snapshot, _ in
+            guard let self else { return }
+            self.hasReceivedFirstSnapshot = true
+            guard let snapshot, snapshot.exists, let remote = try? snapshot.data(as: JobOSState.self) else {
+                // No remote doc yet for this student - push the current
+                // local state up as the real seed, rather than silently
+                // leaving Firestore empty until the next local mutation.
+                self.pushToFirestore()
+                return
+            }
+            self.state = remote
+            Self.persist(remote)
+        }
+    }
+
+    /// Fire-and-forget, matching every other store in this codebase
+    /// (GmailDigestStore, BinderStore) - a failed write shouldn't block the
+    /// student from seeing the state they already have locally.
+    private func pushToFirestore() {
+        guard FirebaseBootstrap.isConfigured, !Self.uiTesting else { return }
+        guard let uid = currentUid ?? Auth.auth().currentUser?.uid else { return }
+        let docRef = db.collection("users").document(uid).collection("jobOS").document("state")
+        try? docRef.setData(from: state)
     }
 
     /// Board unlocks after resume upload + LinkedIn connect.
@@ -253,7 +325,9 @@ final class JobOSStore: ObservableObject {
         url: String,
         why: String,
         deadline: String? = nil,
-        careerUrl: String? = nil
+        careerUrl: String? = nil,
+        source: String = "manual",
+        verificationStatus: String? = nil
     ) {
         let c = company.trimmingCharacters(in: .whitespacesAndNewlines)
         let r = role.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -282,7 +356,10 @@ final class JobOSStore: ObservableObject {
             resumeReady: state.assets.contains { $0.kind == "resume" && $0.status == "ready" },
             coverLetterReady: false,
             liveStatus: url.isEmpty ? "Verify posting" : "Live signal",
-            lastChecked: JobOSTime.dayStamp()
+            lastChecked: JobOSTime.dayStamp(),
+            source: source,
+            verificationStatus: verificationStatus,
+            discoveredAt: source == "discovery" ? JobOSTime.isoNow() : nil
         )
         item.contacts = JobOSReachOutBuilder.namesLine(reachOuts(for: item))
         state.roles.append(item)
@@ -681,8 +758,7 @@ final class JobOSStore: ObservableObject {
     private func save() {
         Self.persist(state)
         Self.persistGraph(graph)
-        // Firestore stub - agent mount will push users/{uid}/jobOS/state.
-        // Intentionally no network write yet (honest local-first).
+        pushToFirestore()
     }
 
     private func log(_ type: String, _ detail: String) {

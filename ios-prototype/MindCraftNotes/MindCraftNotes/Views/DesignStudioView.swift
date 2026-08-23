@@ -25,6 +25,13 @@ import SwiftUI
 struct DesignStudioView: View {
     var studentName: String
     var onClose: () -> Void
+    /// True when this renders inside the Work Dashboard's binder content-
+    /// viewer instead of full-screen (2026-08-22, in-binder consolidation).
+    /// Defaults false so FieldDeskView's existing full-screen presentation
+    /// is unaffected. `scale`'s own math needs no change either way - it
+    /// already derives from whatever GeometryReader frame this view is
+    /// given, not the screen's own bounds.
+    var embedded: Bool = false
 
     @EnvironmentObject private var jesseCall: JesseCallSession
     @StateObject private var graph = ContentGraphStore()
@@ -91,8 +98,8 @@ struct DesignStudioView: View {
             .frame(width: geo.size.width, height: geo.size.height)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .ignoresSafeArea()
-        .statusBarHidden(true)
+        .ignoresSafeArea(edges: embedded ? [] : .all)
+        .statusBarHidden(!embedded)
         .fullScreenCover(item: $chapterFlowBox) { box in
             // Scoped chapter flow - the existing BookWorkflowView Jesse
             // loop, seeded from THIS box and saving back to the canvas

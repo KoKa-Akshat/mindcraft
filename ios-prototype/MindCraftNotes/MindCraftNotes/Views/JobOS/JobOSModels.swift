@@ -1,8 +1,8 @@
 import Foundation
 
-/// Macalester Job OS - mirrors the Excel Command Center sheets/columns.
-/// Local-first now; Firestore path stubbed for later agent sync:
-/// `users/{uid}/jobOS/*` (applications, contacts, queue, events, careerPages).
+/// Job OS - mirrors the Excel Command Center sheets/columns. Local UserDefaults
+/// cache for instant load, synced to Firestore at `users/{uid}/jobOS/state`
+/// (see JobOSStore's Firestore sync section) as the real source of truth.
 
 struct JobOSState: Codable, Equatable {
     var school: String
@@ -50,6 +50,15 @@ struct JobOSRole: Codable, Identifiable, Equatable {
     var coverLetterReady: Bool
     var liveStatus: String
     var lastChecked: String?
+    /// Added for the real discovery/reconciliation pipeline (2026-08-22).
+    /// Deliberately Optional, not defaulted-non-Optional: JobOSState/JobOSRole
+    /// are plain Codable with no custom decoder, so a non-Optional addition
+    /// would throw decoding every already-persisted student's saved state,
+    /// silently falling through to the seed/empty-starter path and wiping
+    /// their real board on the next app update.
+    var source: String? = nil             // "manual" | "jesse" | "discovery"
+    var verificationStatus: String? = nil // "link_verified" | "llm_suggested" | "unverified"
+    var discoveredAt: String? = nil
 }
 
 struct JobOSContact: Codable, Identifiable, Equatable {
