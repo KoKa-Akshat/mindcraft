@@ -96,14 +96,14 @@ struct GeminiOnboardingView: View {
                 .foregroundColor(ink)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Text("Google gives students Gemini free for a year. MindCraft uses that key - your key - for homework help, study plans, and Jesse's answers. That's what keeps The Desk free, and it means your questions run on your own account, not through ours.")
+            Text("Google gives everyone a free Gemini key at aistudio.google.com - no card, no age check. MindCraft uses that key - your key - for homework help, study plans, and Jesse's answers. That's what keeps The Desk free, and it means your questions run on your own account, not through ours.")
                 .font(.mcContent(size: 17))
                 .foregroundColor(ink.opacity(0.75))
                 .lineSpacing(4)
                 .fixedSize(horizontal: false, vertical: true)
 
             VStack(alignment: .leading, spacing: 12) {
-                perkRow(icon: "key.fill", text: "Free for students - Google's offer, about two minutes to claim.")
+                perkRow(icon: "key.fill", text: "Free for everyone - Google's own offer, about two minutes to claim.")
                 perkRow(icon: "lock.fill", text: "The key is saved only in this device's Keychain. Never on MindCraft's servers.")
                 perkRow(icon: "sparkles", text: "It unlocks homework help, study plans, and desk questions.")
             }
@@ -133,18 +133,38 @@ struct GeminiOnboardingView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             VStack(alignment: .leading, spacing: 14) {
-                // TODO(human): drop in the real, verified URL for Google's
-                // student Gemini offer once confirmed (and consider a
-                // tappable Link here). No verified link existed when this
-                // flow was built (2026-08-23), so the copy deliberately
-                // tells the student what to SEARCH for rather than
-                // deep-linking to a guessed URL that could rot or mislead.
+                // Verified 2026-08-23: Google's free-for-a-year "AI Pro"
+                // student offer (gemini.google/students/) requires SheerID
+                // verification of active HIGHER-ED enrollment, age 18+ - it
+                // explicitly excludes high schoolers, "even those who have
+                // been accepted to university" (per Google's own published
+                // terms). Since MindCraft's students ARE high schoolers
+                // (see CLAUDE.md), that offer can't be this flow's primary
+                // path - most students here would hit a dead end. Google AI
+                // Studio's standalone API key (aistudio.google.com/apikey)
+                // has no age or enrollment gate, is genuinely free (a real,
+                // generous no-card-required tier), and is what this flow
+                // actually needs - immediate use, not eligibility-gated.
                 numberedStep(1, title: "Open Google AI Studio",
-                             body: "On any browser, search \u{201C}Google AI Studio\u{201D} and sign in with your school Google account. Students get Google's Gemini offer free for a year - look for the student offer banner, or search \u{201C}Gemini student offer\u{201D}.")
+                             body: "On any browser, go to aistudio.google.com and sign in with any Google account - no school email or age check needed.")
                 numberedStep(2, title: "Create an API key",
-                             body: "In AI Studio, tap \u{201C}Get API key\u{201D} \u{2192} \u{201C}Create API key\u{201D}. It's one button - no card, no billing setup.")
+                             body: "Tap \u{201C}Get API key\u{201D} \u{2192} \u{201C}Create API key\u{201D}. It's one button - no card, no billing setup, works immediately.")
                 numberedStep(3, title: "Copy it",
                              body: "The key looks like a long string starting with \u{201C}AIza\u{201D}. Copy it - you'll paste it here on the next screen.")
+            }
+
+            // College-track students (18+, actively enrolled) can ALSO
+            // claim Google's separate "AI Pro free for a year" offer for
+            // higher usage limits - shown as a bonus, not the main path,
+            // since most students here don't qualify for it.
+            VStack(alignment: .leading, spacing: 6) {
+                Text("In college already?")
+                    .font(.mcChrome(size: 13, weight: .bold))
+                    .foregroundColor(ink.opacity(0.6))
+                Text("Search \u{201C}Google AI Pro student offer\u{201D} - actively-enrolled college students 18+ can claim a full free year of Gemini Pro's higher usage limits on top of the free key above.")
+                    .font(.mcChrome(size: 13, weight: .medium))
+                    .foregroundColor(ink.opacity(0.55))
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             primaryButton("I have my key", a11y: "geminiOnboardingHaveKey") {
