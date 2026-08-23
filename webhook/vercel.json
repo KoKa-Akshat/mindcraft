@@ -48,7 +48,9 @@
     { "source": "/api/archive-books", "destination": "/api/app-actions?action=archive-books" },
     { "source": "/api/english-practice", "destination": "/api/app-actions?action=english-practice" },
     { "source": "/api/discover-internships", "destination": "/api/app-actions?action=discover-internships" },
-    { "source": "/api/reconcile-applications", "destination": "/api/app-actions?action=reconcile-applications" }
+    { "source": "/api/reconcile-applications", "destination": "/api/app-actions?action=reconcile-applications" },
+    { "source": "/api/list-generated-sims", "destination": "/api/app-actions?action=list-generated-sims" },
+    { "source": "/api/microsims", "destination": "/api/app-actions?action=microsims" }
   ],
   "crons": [
     { "path": "/api/cron-fireflies", "schedule": "0 6 * * *" },

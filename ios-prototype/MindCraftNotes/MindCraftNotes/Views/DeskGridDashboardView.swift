@@ -4262,6 +4262,13 @@ private struct ArchiveChapterSimView: View {
     var onUseInClass: () -> Void
     var onClose: () -> Void
     @State private var addedToBinder = false
+    /// Un-bundled Dan's-archive sims arrive with `simHtml == nil` plus a
+    /// `microSimId` - content is fetched per-sim on open (4,013 sims'
+    /// worth is far too much to prefetch into the grid), assembled
+    /// server-side by /api/microsims into the same self-contained html
+    /// shape every other source already renders.
+    @State private var remoteHTML: String?
+    @State private var remoteFailed = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -4274,13 +4281,18 @@ private struct ArchiveChapterSimView: View {
                         .foregroundColor(.secondary)
                 }
                 Spacer(minLength: 0)
-                Button(addedToBinder ? "Added to Binder" : "Use in class") {
-                    onUseInClass()
-                    addedToBinder = true
+                // "Use in class" files the sim's WHOLE book into the Binder
+                // - only chapter-book sims HAVE a book to file, so the
+                // button would be a broken promise on the other two stores.
+                if sim.source == .chapterBook {
+                    Button(addedToBinder ? "Added to Binder" : "Use in class") {
+                        onUseInClass()
+                        addedToBinder = true
+                    }
+                    .disabled(addedToBinder)
+                    .font(.system(size: 13, weight: .heavy, design: .rounded))
+                    .accessibilityIdentifier("deskGridArchiveSimUseInClass")
                 }
-                .disabled(addedToBinder)
-                .font(.system(size: 13, weight: .heavy, design: .rounded))
-                .accessibilityIdentifier("deskGridArchiveSimUseInClass")
                 Button(action: onClose) {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 22))
@@ -4290,8 +4302,18 @@ private struct ArchiveChapterSimView: View {
                 .accessibilityIdentifier("deskGridArchiveSimClose")
             }
             .padding(14)
-            if let html = sim.section.simHtml {
+            if let html = sim.section.simHtml ?? remoteHTML {
                 InlineSimWebView(html: html)
+            } else if let microSimId = sim.microSimId, !remoteFailed {
+                ProgressView("Fetching from Dan's archive\u{2026}")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .task {
+                        if let html = await MicroSimCatalogClient.fetchHTML(id: microSimId) {
+                            remoteHTML = html
+                        } else {
+                            remoteFailed = true
+                        }
+                    }
             } else {
                 Text("This simulation isn't available right now.")
                     .foregroundColor(.secondary)

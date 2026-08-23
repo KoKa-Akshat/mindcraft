@@ -150,10 +150,11 @@ struct ArchiveWorkflowView: View {
 /// "Simulations first" browse view — explicit live ask, 2026-08-22: "all
 /// the simulations we have should also be shown on the archive... the
 /// simulations first, where teachers can write simulations and pull one to
-/// use for their classes." Flattens every `AssembledBookSection` with a
-/// real `simHtml` across every synced Chapter Library book
-/// (`BookLibraryClient`) into one grid, instead of requiring a teacher to
-/// open a whole book to find a sim inside it.
+/// use for their classes." Shows the full three-store union
+/// `ArchiveSimsLoader.loadAll()` now produces (Chapter Library book sims +
+/// the generated_sims library + Dan McCreary's extracted MicroSim corpus —
+/// see that loader's doc comment for the data bug the union fixed), instead
+/// of requiring a teacher to open a whole book to find a sim inside it.
 ///
 /// Honest scope note: "pull one to use for their classes" reuses the real,
 /// existing Binder mechanism (`BinderStore.addChapterBook`) — Binder has no
@@ -260,7 +261,14 @@ private struct ArchiveSimulationsBrowseView: View {
             .map { ArchiveSimEntry(id: "\(book.subjectId)_\($0.conceptId)", bookSubjectId: book.subjectId, bookTitle: book.title, section: $0) }
         let existingIds = Set(sims.map(\.id))
         sims.append(contentsOf: newOnes.filter { !existingIds.contains($0.id) })
-        sims.sort { $0.bookTitle == $1.bookTitle ? $0.section.title < $1.section.title : $0.bookTitle < $1.bookTitle }
+        // Same ordering ArchiveSimsLoader.loadAll produces (source rank,
+        // then book, then title) so a fresh generation doesn't scramble
+        // the store-grouped list it lands in.
+        sims.sort { lhs, rhs in
+            if lhs.source != rhs.source { return lhs.source < rhs.source }
+            if lhs.bookTitle != rhs.bookTitle { return lhs.bookTitle < rhs.bookTitle }
+            return (lhs.section.simTitle ?? lhs.section.title) < (rhs.section.simTitle ?? rhs.section.title)
+        }
     }
 }
 
@@ -270,12 +278,27 @@ private struct ArchiveSimPlayerSheet: View {
     @ObservedObject var binder: BinderStore
     @Environment(\.dismiss) private var dismiss
     @State private var addedToBinder = false
+    /// Same on-open content fetch as `ArchiveChapterSimView` (the Work
+    /// dashboard's player): un-bundled Dan's-archive sims carry no html
+    /// until opened - /api/microsims assembles it on demand.
+    @State private var remoteHTML: String?
+    @State private var remoteFailed = false
 
     var body: some View {
         NavigationStack {
             Group {
-                if let html = sim.section.simHtml {
+                if let html = sim.section.simHtml ?? remoteHTML {
                     InlineSimWebView(html: html)
+                } else if let microSimId = sim.microSimId, !remoteFailed {
+                    ProgressView("Fetching from Dan's archive\u{2026}")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .task {
+                            if let html = await MicroSimCatalogClient.fetchHTML(id: microSimId) {
+                                remoteHTML = html
+                            } else {
+                                remoteFailed = true
+                            }
+                        }
                 } else {
                     Text("This simulation isn't available right now.")
                         .foregroundColor(.secondary)
@@ -292,12 +315,17 @@ private struct ArchiveSimPlayerSheet: View {
                     // Files the sim's whole book into the Binder - see this
                     // view's parent doc comment for why that's the real
                     // granularity Binder supports today, not just this page.
-                    Button(addedToBinder ? "Added to Binder" : "Use in class") {
-                        binder.addChapterBook(title: sim.bookTitle, subjectId: sim.bookSubjectId)
-                        addedToBinder = true
+                    // Only chapter-book sims HAVE a book to file; on the
+                    // generated / Dan's-archive stores this would silently
+                    // file a book pointer nothing can open.
+                    if sim.source == .chapterBook {
+                        Button(addedToBinder ? "Added to Binder" : "Use in class") {
+                            binder.addChapterBook(title: sim.bookTitle, subjectId: sim.bookSubjectId)
+                            addedToBinder = true
+                        }
+                        .disabled(addedToBinder)
+                        .accessibilityIdentifier("archiveSimUseInClass")
                     }
-                    .disabled(addedToBinder)
-                    .accessibilityIdentifier("archiveSimUseInClass")
                 }
             }
         }
