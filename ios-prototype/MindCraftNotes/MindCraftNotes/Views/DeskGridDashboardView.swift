@@ -974,19 +974,32 @@ struct DeskGridDashboardView: View {
     private func photoTile(_ kind: TileKind) -> some View {
         let phase = mascotPhase(kind)
         let awake = phase != .sleeping
+        // The binder-as-the-whole-page landing (boxRect ->
+        // `WorkArtboard.landingBinder`) gets NO tile chrome at all
+        // (2026-08-23, live feedback: after `binderBookFrame` lost its
+        // dark-green cover, this wrapper's own cream-gradient rounded
+        // card + shadow was the remaining "big box outline" - the whole
+        // point is one continuous page, so the card look only survives in
+        // the expanded/rail and content-viewer modes where Binder really
+        // is one tile among others).
+        let fullPageBinder = kind == .binder && !binderContentViewerActive && !expanded
         return VStack(alignment: .leading, spacing: 6) {
             // Back to dark green - the board background reverted to
             // cream (2026-08-18, "take it back to white polka dots"),
             // and white-on-cream is unreadable.
-            Text(kind.title)
-                .font(.system(size: 15, weight: .bold, design: .rounded))
-                .foregroundColor(Color(gridHex: "143a2e"))
+            if !fullPageBinder {
+                Text(kind.title)
+                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(gridHex: "143a2e"))
+            }
             Button {
                 handleTile(kind)
             } label: {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .fill(LinearGradient(colors: kind.wash, startPoint: .topLeading, endPoint: .bottomTrailing))
+                    if !fullPageBinder {
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .fill(LinearGradient(colors: kind.wash, startPoint: .topLeading, endPoint: .bottomTrailing))
+                    }
                     // Grown + real data: rows replace the mascot. Sleeping /
                     // working / not-yet-grown keep the mascot (Assignment B).
                     // Binder is a filing system, not a connector - it never
@@ -1016,11 +1029,14 @@ struct DeskGridDashboardView: View {
                     .padding(5)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-                .shadow(color: .black.opacity(0.14), radius: 12, y: 6)
+                // Corner radius 0 on the full-page landing: a rounded clip
+                // would shave BinderKnowledgeDots out of the page corners
+                // even with no visible card behind it.
+                .clipShape(RoundedRectangle(cornerRadius: fullPageBinder ? 0 : 18, style: .continuous))
+                .shadow(color: fullPageBinder ? .clear : .black.opacity(0.14), radius: 12, y: 6)
                 .overlay(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .strokeBorder(awake ? Color.clear : Color(gridHex: "143a2e").opacity(0.2), style: StrokeStyle(lineWidth: 1, dash: [5, 4]))
+                        .strokeBorder((awake || fullPageBinder) ? Color.clear : Color(gridHex: "143a2e").opacity(0.2), style: StrokeStyle(lineWidth: 1, dash: [5, 4]))
                 )
             }
             .buttonStyle(.plain)
@@ -1661,30 +1677,25 @@ struct DeskGridDashboardView: View {
             )
     }
 
-    /// Leather-notebook chrome for Binder's landing page (2026-08-22,
-    /// reference images: dark green cover, cream pages, gold binder rings
-    /// down the seam). Deliberately separate from `tileInnerCard` above -
-    /// that helper is shared by every tile that still uses the plain white-
-    /// card look; only Binder's own landing state gets this treatment.
-    /// Reuses the app's existing dark green brand tone (the same
-    /// rgb(20,58,46) already used for Jesse's icon plate/call buttons
-    /// throughout this file) rather than introducing a new color.
+    /// Binder's landing paints straight onto the page now (2026-08-23,
+    /// live feedback after the full-bleed pass: even spanning the whole
+    /// board, the dark-green rounded "cover" + cream inset page still read
+    /// as "a box" - "horror" - so BOTH RoundedRectangle layers and their
+    /// shadow are gone entirely, not just shrunk or recolored). No fill of
+    /// any kind here either: the screen's own cream page behind the board
+    /// (`Color(gridHex: "fff8e9")` + `BlueprintGrid`) shows straight
+    /// through, which is the only way to guarantee zero visible seam
+    /// between "inside the old card" and the page around it - painting a
+    /// matching cream fill would still cover the blueprint grid lines and
+    /// leave a ghost rectangle where they stop. The real per-concept
+    /// `BinderKnowledgeDots` texture stays: it belongs to the page itself,
+    /// not to the removed cover (2026-08-23, explicit ask - the same nodes
+    /// `knowledgeGraphClient` already fetched for the Knowledge Map card,
+    /// quiet enough to read as paper texture).
     @ViewBuilder
     private func binderBookFrame<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
-        let cover = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
         ZStack {
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(cover)
-                .shadow(color: .black.opacity(0.22), radius: 16, y: 8)
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(Color(gridHex: "faf6ea"))
-                .padding(9)
-            // Real per-concept knowledge, imprinted on the page itself
-            // (2026-08-23, explicit ask) - not decoration, the same nodes
-            // `knowledgeGraphClient` already fetched for the Knowledge Map
-            // card, just quiet enough here to read as paper texture.
             BinderKnowledgeDots(nodes: knowledgeGraphClient.nodes)
-                .padding(9)
             content()
                 .padding(.horizontal, 32)
                 .padding(.vertical, 24)
@@ -2315,7 +2326,13 @@ struct DeskGridDashboardView: View {
                     }
                     .padding(10)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color.white))
+                    // No white card behind it anymore (2026-08-23, live
+                    // feedback: everything on the binder landing sits
+                    // straight on the cream page - no border/shadow
+                    // separating it from the paper). contentShape keeps
+                    // the whole old card area tappable now that there's
+                    // no opaque fill to catch touches.
+                    .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("deskGridBinderGraphPreview")
@@ -2339,7 +2356,10 @@ struct DeskGridDashboardView: View {
                     }
                     .padding(10)
                     .frame(maxWidth: .infinity)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white))
+                    // Same page-blend as the Knowledge Map card above -
+                    // visual styling only, the archive action/data path is
+                    // untouched.
+                    .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("deskGridTopicTile_openArchive")
@@ -2386,9 +2406,7 @@ struct DeskGridDashboardView: View {
     @ViewBuilder
     private func moduleBoxColumn(ink: Color) -> some View {
         VStack(spacing: 12) {
-            moduleBox("Learn", system: "book.closed.fill", identifier: "deskGridModule_Learn", ink: ink) {
-                closeBinderContentViewer()
-            }
+            learnModuleBox(ink: ink)
             moduleBox("Practice", system: "waveform.and.mic", identifier: "deskGridModule_Practice", ink: ink) {
                 openSidebarFlow(.englishPractice)
             }
@@ -2398,7 +2416,48 @@ struct DeskGridDashboardView: View {
             moduleBox("Answer", system: "bubble.left.and.bubble.right.fill", identifier: "deskGridModule_Answer", ink: ink) {
                 showJesseRail = true
             }
+            // Leverage (2026-08-23, explicit ask: "add a resume box...
+            // called Leverage" alongside the existing four) - the EXACT
+            // same action the binder utility row's Resume icon already
+            // performs (`deskGridBinderUtility_Resume`), including the
+            // jesseCall.end() that lets ResumeAgentView's own call button
+            // start a correctly-contexted call. A fifth entry point, not a
+            // new destination.
+            moduleBox("Leverage", system: "briefcase.fill", identifier: "deskGridModule_Leverage", ink: ink) {
+                jesseCall.end()
+                closeBinderContentViewer()
+                viewingResumeAgent = true
+            }
         }
+    }
+
+    /// Learn's box carries the raccoon itself (2026-08-23, explicit ask) -
+    /// the same static `JesseRailView.raccoonImage` every Jesse surface in
+    /// this app already uses (search-field icon, Jesse rail), NOT a new
+    /// asset - instead of the generic book SF Symbol the other module
+    /// boxes get. Bespoke view rather than another `moduleBox` parameter:
+    /// an Image-vs-SF-Symbol fork inside the shared helper would leak
+    /// this one box's special case into all five call sites.
+    private func learnModuleBox(ink: Color) -> some View {
+        Button {
+            closeBinderContentViewer()
+        } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                JesseRailView.raccoonImage
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 42)
+                Text("Learn")
+                    .font(.mcContent(size: 16, weight: .semibold))
+                    .foregroundColor(ink)
+                Spacer(minLength: 0)
+            }
+            .padding(14)
+            .frame(maxWidth: .infinity, minHeight: 84, alignment: .topLeading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("deskGridModule_Learn")
     }
 
     private func moduleBox(_ title: String, system: String, identifier: String, ink: Color, action: @escaping () -> Void) -> some View {
@@ -2414,7 +2473,11 @@ struct DeskGridDashboardView: View {
             }
             .padding(14)
             .frame(maxWidth: .infinity, minHeight: 84, alignment: .topLeading)
-            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color.white))
+            // White card fill dropped (2026-08-23, live feedback: the
+            // module boxes blend straight into the cream page, no
+            // border/shadow). contentShape keeps the full box area
+            // tappable without an opaque fill.
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier(identifier)
@@ -2452,7 +2515,11 @@ struct DeskGridDashboardView: View {
                         .padding(10)
                         .frame(height: 110, alignment: .topLeading)
                         .frame(maxWidth: .infinity)
-                        .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white))
+                        // Books print straight onto the page too - same
+                        // 2026-08-23 chrome-removal pass as the module
+                        // boxes; a grid of white cards was the last set of
+                        // "boxes" left floating on the paper.
+                        .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("deskGridTopicTile_\(book.subjectId)")
@@ -2496,7 +2563,9 @@ struct DeskGridDashboardView: View {
             binderUtilityIcon("gearshape.fill", identifier: "deskGridBinderUtility_Settings", action: onOpenManage)
         }
         .padding(8)
-        .background(Capsule().fill(Color.white.opacity(0.9)).shadow(color: .black.opacity(0.12), radius: 6, y: 2))
+        // Capsule + shadow dropped (2026-08-23, same chrome-removal pass:
+        // no floating white pills on the page) - the icons sit quietly on
+        // the paper itself.
         .padding(14)
     }
 
@@ -3430,45 +3499,49 @@ struct DeskGridDashboardView: View {
     /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
     /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
-        // A genuinely different bottom dock from the four module boxes
-        // (2026-08-22, explicit correction: Learn/Practice/Create/Answer
-        // belong in the workspace's right column, not here - see
-        // `moduleBoxColumn`). This dock is Binder / Map / Calendar /
-        // Friends / Settings, per the spec's own "a separate, minimal
-        // bottom dock for Binder, Map, Calendar, Friends, and Settings."
-        HStack(spacing: 8) {
-            dockChip("Binder", system: "book.closed.fill", identifier: "deskGridDock_Binder") { closeBinderContentViewer() }
-            dockChip("Map", system: "map.fill", identifier: "deskGridDock_Map") {
-                closeBinderContentViewer()
-                viewingKnowledgeGraphInBinder = true
-                Task { await knowledgeGraphClient.load() }
+        // No capsule/pill container anymore (2026-08-23, live feedback:
+        // "remove the toolbar" - the app goes full-screen with no visible
+        // toolbar chrome; the items sit straight on the page). Same
+        // actions as before, regrouped into three clusters instead of one
+        // wide row:
+        //   bottom-LEFT  - Friends + Settings, a small quiet icon pair
+        //   bottom-CENTER - Jesse ("put Jesse at the center"): the raccoon
+        //                  itself, opening the same JesseRailView sheet
+        //                  the Answer module box opens (`showJesseRail`) -
+        //                  on this screen that sheet IS Jesse's presence,
+        //                  so its entry point is what gets the center seat
+        //   bottom-RIGHT - Binder / Map / Calendar chips + the
+        //                  ask-anything field, all functioning exactly as
+        //                  before (repositioning only, no rewiring).
+        // ZStack, not one HStack with Spacers: Jesse stays truly screen-
+        // centered regardless of how the two side clusters' widths differ.
+        ZStack {
+            jesseDockCenter
+            HStack(spacing: 8) {
+                binderUtilityIcon("person.2.fill", identifier: "deskGridDock_Friends") {
+                    jesseCall.end()
+                    closeBinderContentViewer()
+                    viewingFriends = true
+                }
+                binderUtilityIcon("gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
+                Spacer(minLength: 0)
+                dockChip("Binder", system: "book.closed.fill", identifier: "deskGridDock_Binder") { closeBinderContentViewer() }
+                dockChip("Map", system: "map.fill", identifier: "deskGridDock_Map") {
+                    closeBinderContentViewer()
+                    viewingKnowledgeGraphInBinder = true
+                    Task { await knowledgeGraphClient.load() }
+                }
+                dockChip("Calendar", system: "calendar", identifier: "deskGridDock_Calendar", action: onOpenCalendar)
+                // "Ask anything" folded into this existing field (2026-08-22,
+                // explicit ask) - `submitSearch` already does real keyword
+                // routing + a full agent takeover for anything longer.
+                // Fixed width now that the row has no capsule bounding it:
+                // an unbounded field would stretch across the screen center
+                // and sit on top of Jesse.
+                searchField(placeholder: "Ask anything…", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
+                    .frame(width: 240)
             }
-            dockChip("Calendar", system: "calendar", identifier: "deskGridDock_Calendar", action: onOpenCalendar)
-            dockChip("Friends", system: "person.2.fill", identifier: "deskGridDock_Friends") {
-                jesseCall.end()
-                closeBinderContentViewer()
-                viewingFriends = true
-            }
-            dockChip("Settings", system: "gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
-            // "Ask anything" folded into this existing field (2026-08-22,
-            // explicit ask: "ask anything can be done in the search bar
-            // under so no need to put it there") instead of the separate
-            // bar this dock used to also carry - `submitSearch` already
-            // does real keyword routing + a full agent takeover for
-            // anything longer, which IS ask-anything, not a stub.
-            searchField(placeholder: "Ask anything…", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
-        // White/cream, not the old black capsule (2026-08-18, explicit
-        // ask: "why is the background for the toolbar not the same like
-        // the white") - matches every other card on this dashboard
-        // (`tileInnerCard`'s own near-white fill + soft shadow) instead of
-        // being the one dark element floating on the cream board.
-        .background(
-            Capsule().fill(Color(white: 0.985))
-                .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
-        )
         // NOT .accessibilityIdentifier() directly on this container - that
         // clobbers every child dockChip's own identifier with this one
         // (confirmed live: each chip reported identifier
@@ -3483,6 +3556,30 @@ struct DeskGridDashboardView: View {
                 .accessibilityIdentifier("deskGridDashboardToolbar")
                 .allowsHitTesting(false)
         }
+    }
+
+    /// Jesse's bottom-center seat (2026-08-23, explicit ask: "put Jesse at
+    /// the center"). The raccoon is `JesseRailView.raccoonImage` - the
+    /// exact static image the search field's content-viewer icon and the
+    /// Jesse rail itself already use, not a new asset - and the action is
+    /// the same `showJesseRail = true` the Answer module box fires, since
+    /// that sheet is Jesse's actual presence on this screen.
+    private var jesseDockCenter: some View {
+        Button { showJesseRail = true } label: {
+            VStack(spacing: 2) {
+                JesseRailView.raccoonImage
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 32)
+                Text("Jesse")
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundColor(tileInk)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("deskGridDock_Jesse")
+        .accessibilityLabel("Talk to Jesse")
     }
 
     private var flowsDock: some View {
