@@ -1,11 +1,13 @@
 # MindCraft Brand Book
 
-**Version 2.1 · 2026-08-13**  
+**Version 2.2 · 2026-08-23**  
 Product name on the web: **The Desk by MindCraft**. App chrome / home screen: **The Desk**.  
 Pedagogy translation of research: [`docs/canon/PEDAGOGY.md`](docs/canon/PEDAGOGY.md) · Research OS: [`agent_work/research/`](agent_work/research/) (Constitution v1.16).  
 Shareable PDF: regenerate with `python3 docs/canon/generate_brand_book.py` → `BRAND_BOOK.pdf`.
 
 **v2.1 addition note:** adds the evidence/ownership layer to §4 Vision — every interaction becomes evidence, evidence becomes a student-owned map, and that map is exportable and deletable, not just visible. This is an addition, not a pivot: the essence, manifesto, personas, and voice below are unchanged. Prompted by a conversation with learning-graph researcher Dan McCreary; see the caution below before using his name anywhere public.
+
+**v2.2 addition note (2026-08-23):** adds a new "Why" story to §14 — a Jesse-centered, direct-address version of the data-ownership pledge from §4/the cred strip, written by Akshat for the marketing homepage. Content-only addition, no repositioning. One live rule tension to flag rather than silently resolve: the submitted text used one emoji; §8 states "No emoji in product copy, ever." The canonical text below keeps the emoji as Akshat wrote it (this book records what was actually said); the live marketing-site version has it removed to stay consistent with the standing rule until/unless that rule is revisited.
 
 This document governs every design, copy, product, and marketing decision at MindCraft. When two options conflict, this book breaks the tie. When the book itself is unclear, the Brand Essence breaks the tie. Read it before you write a headline, pick a color, name a feature, or ship a screen. Agents: start at [`docs/canon/README.md`](docs/canon/README.md).
 
@@ -465,6 +467,31 @@ Ten real contexts, final copy quality. This is what the brand sounds like in the
 
 **Elevator pitch, 30-second version** (same voice, compressed — use where the two-minute version doesn't fit):
 > MindCraft is office hours from your room. Students bring anything they're working on — an essay, a math problem, a presentation, code, or even a startup idea — and collaborate live with a college mentor who can help them move forward. Unlike traditional tutoring, students aren't locked into one tutor or one subject. MindCraft combines on-demand human guidance, AI, meetings, notes, and creation tools in one collaborative workspace. We're building the operating system where students think, create, and get unstuck.
+
+**Marketing homepage "Why" story** (added 2026-08-23 — see v2.2 note above; direct-address, Jesse-centered, sits above the elevator pitch on the page):
+> Why? Two minds craft better than one.
+>
+> Our students don't just learn — they use AI and real mentors to reach their goals.
+>
+> We built The Desk because being a student is hard. It gets even harder when you're trying to figure everything out without direction, support, or someone who truly understands how you learn.
+>
+> We got you.
+>
+> Meet Jesse, your learning companion. Jesse pays attention to how you learn, what excites you, where you get stuck, and what you might be ready for next. Whether you're completing a project, developing social skills, exploring a new field, or applying for internships, Jesse helps you keep moving forward.
+>
+> And when AI is not enough, Jesse brings in a real college tutor who has done it before — someone who understands the journey and can support you through all your different adventures.
+>
+> We also believe your learning data should belong to you. Not your school district. Not Amazon. Not publishers or third parties. MindCraft gives you control over your data. You decide what to keep private and what you want to share with tutors, parents, or institutions. We are building our privacy, security, and compliance foundations before launch so that student ownership is part of the product from day one.
+>
+> There is only one fun caveat. If you build something incredible or make a connection between ideas that is too cool to ignore, Jesse might ask if you want to share it with your parents or tutors 😋
+>
+> Because learning should be celebrated. Curiosity should be encouraged. And discovering something meaningful should feel exciting.
+>
+> And one day, when you have gone through your own adventures, we hope you will come back as a tutor and support a student standing where you once stood.
+>
+> Learn with support. Build with confidence. Then come back and lift someone else.
+>
+> Thank you.
 
 **Company page copy** (LinkedIn or equivalent company-profile surface):
 > Tagline: Office hours from your room. Think, create, collaborate, and get unstuck with AI and real college mentors.
