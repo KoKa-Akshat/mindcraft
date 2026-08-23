@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import UniformTypeIdentifiers
 import PhotosUI
 import PDFKit
@@ -118,6 +119,13 @@ struct FieldDeskView: View {
     /// Field Book wiring is a separate, more invasive pass into an
     /// already-high-risk file).
     @State private var showLearnStudio = false
+    /// Phone-only Practice destination (2026-08-23) - `EnglishPracticeView`
+    /// already exists and works (a live Jesse conversation, no document
+    /// panel), but until now was only reachable through
+    /// DeskGridDashboardView's own internal sidebar-flow pane, which the
+    /// phone dashboard doesn't have. Same fullScreenCover shape as
+    /// showLearnStudio/showDesignStudio just below.
+    @State private var showEnglishPractice = false
     /// Real nav-intent target ("study quadratic equations" via Ask The Desk
     /// -> `study_concept` action) - threaded into `DashboardView` so it
     /// opens straight to that concept's chapter instead of just the roadmap.
@@ -658,7 +666,47 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if openOverlays.contains(.deskGridDashboard) {
+                if openOverlays.contains(.deskGridDashboard) && UIDevice.current.userInterfaceIdiom == .phone {
+                    // Phone layout (2026-08-23) - a genuinely different
+                    // screen, not a scaled DeskGridDashboardView (see
+                    // DeskPhoneDashboardView's own doc comment for why).
+                    // Every card action below reuses a destination
+                    // FieldDeskView already owns as a real full-screen
+                    // presentation - Learn/Leverage/Create/Continue mirror
+                    // the exact same triggers the iPad path uses a few
+                    // lines down (showLearnStudio, showResumeAgent, the
+                    // .createCanvas/.binderOverlay overlays); Practice
+                    // and Answer are new only in that no top-level trigger
+                    // existed yet for them outside DeskGridDashboardView's
+                    // own internal sidebar flow.
+                    AnyView(
+                        DeskPhoneDashboardView(
+                            studentName: deskChromeName ?? "there",
+                            onContinueWork: {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    _ = openOverlays.insert(.binderOverlay)
+                                }
+                            },
+                            onLearn: { showLearnStudio = true },
+                            onPractice: { showEnglishPractice = true },
+                            onCreate: {
+                                createCanvasKind = .presentation
+                                withAnimation(.easeInOut(duration: 0.28)) {
+                                    _ = openOverlays.insert(.createCanvas)
+                                }
+                            },
+                            onAnswer: {
+                                if !jesseCall.isActive {
+                                    jesseCall.begin(context: "workDashboard", studentName: deskChromeName ?? "there")
+                                }
+                                showJesseCallSheet = true
+                            },
+                            onLeverage: { showResumeAgent = true }
+                        )
+                        .transition(.opacity)
+                        .zIndex(88)
+                    )
+                } else if openOverlays.contains(.deskGridDashboard) {
                     AnyView(
                     DeskGridDashboardView(
                         initialRail: dashboardStartRail,
@@ -1333,6 +1381,10 @@ struct FieldDeskView: View {
         }
         .fullScreenCover(isPresented: $showLearnStudio) {
             LearnStudioView(studentName: deskChromeName ?? "there", onClose: { showLearnStudio = false })
+                .environmentObject(jesseCall)
+        }
+        .fullScreenCover(isPresented: $showEnglishPractice) {
+            EnglishPracticeView(onClose: { showEnglishPractice = false }, studentName: deskChromeName ?? "there")
                 .environmentObject(jesseCall)
         }
         .fullScreenCover(isPresented: $showDesignStudio) {
