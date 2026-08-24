@@ -78,6 +78,7 @@
   .kicker::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 12px rgba(196,245,71,.7); flex:none;}
   .h2{font-size:clamp(34px,4.6vw,58px); max-width:20ch;}
   .lede{margin-top:18px; font-size:clamp(16px,1.6vw,19px); font-weight:400; line-height:1.62; color:var(--chalk-dim); max-width:60ch;}
+  .jesse-caption{margin-top:6px; margin-bottom:-6px; font-style:italic; font-size:15px; color:var(--leaf2);}
   .lede strong{color:var(--chalk); font-weight:600;}
   .serif{font-family:var(--serif); font-style:italic; font-weight:500;}
   .aside{
@@ -530,7 +531,7 @@
   </a>
   <div class="nav-links">
     <a href="#why">Why us</a>
-    <a href="#desk">The Desk</a>
+    <a href="#jesse">The Desk</a>
     <a href="#honesty">Our promise</a>
     <a href="#mentors">Mentors</a>
     <a href="#power">Free AI</a>
@@ -550,7 +551,7 @@
     <p class="lead">Bring whatever you're stuck on, and someone who has done it before is in the room. <span class="serif">Built by people who still wonder why the moon follows the car.</span></p>
     <div class="hero-actions">
       <a class="btn primary" href="#start">Claim your desk</a>
-      <a class="btn soft" href="#desk">See how it works</a>
+      <a class="btn soft" href="#jesse">See how it works</a>
     </div>
   </div>
 </section>
@@ -602,6 +603,81 @@
   </div>
 </section>
 
+<!-- ================= JESSE ================= -->
+<section class="stage-desk" id="jesse" style="background:var(--field-1); border-top:1px solid var(--edge);">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal">Jesse &middot; the voice at the desk</div>
+
+    <div class="jesse-sub jesse-sub-first reveal">
+      <h3 class="jesse-sub-title">Jesse Talks</h3>
+      <div class="jesse-grid">
+        <div>
+          <h2 class="h2 reveal">Tap the disc. Jesse listens.</h2>
+          <p class="lede jesse-caption reveal">A cute collaborator.</p>
+          <p class="lede reveal">Stays on the line while you wander the app, the way a person would.</p>
+          <div class="jesse-points">
+            <div class="jpoint reveal"><i>real</i><p><strong>Shipped.</strong> A native voice in the iPad app today, not a chat box wearing a headset.</p></div>
+            <div class="jpoint reveal"><i>scoped</i><p><strong>Knows the page you're on.</strong> Ask about the problem in front of you.</p></div>
+            <div class="jpoint reveal"><i>next</i><p><strong>Learning to ask back.</strong> We're testing a version that asks you the next question instead of handing over the answer. It ships when it clears the gate.</p></div>
+          </div>
+        </div>
+        <div class="jesse-demo reveal" id="jesseDemo">
+          <button class="jesse-disc" type="button" id="jesseDisc" aria-pressed="false">Press</button>
+          <p class="jesse-words" id="jesseWords"><span class="you">Tap the disc. Jesse listens.</span></p>
+          <p class="jesse-hint" id="jesseHint">A scripted taste. The real Jesse listens, in the app.</p>
+          <div class="jesse-reveal" id="jesseReveal" hidden>
+            <div class="jesse-reveal-frame"><iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe></div>
+            <p class="jesse-reveal-cap">Real simulation, not a mockup. Try dragging it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="jesse-sub jesse-routes reveal" id="honesty">
+      <h3 class="jesse-sub-title">Jesse Routes</h3>
+      <h2 class="h2 reveal">Checked before you ever see it.</h2>
+      <p class="lede reveal">Every AI-made lesson runs a gauntlet before a student sees it, and <strong>most attempts don't make it.</strong> We built it that way.</p>
+      <div class="gate-flow reveal" aria-label="The quality gate, in order">
+        <span class="gate-step">fit check</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step">generate</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step">render</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step">structural rubric</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step">visual + pedagogical gate</span><span class="gate-arrow">&rarr;</span>
+        <span class="gate-step final">a student sees it</span>
+      </div>
+    </div>
+
+    <div class="jesse-human-teaser reveal">
+      <p><strong>Need a little more human help? Sure.</strong></p>
+      <p class="jesse-human-names">The engineering sophomore &middot; the design senior &middot; the CS junior, on call below.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POWER (free student AI) ================= -->
+<section class="stage-desk" id="power">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal">How the free tier stays free</div>
+    <h2 class="h2 reveal">Supercharge your Desk on your own free key.</h2>
+    <p class="lede reveal">Google gives every student a free AI key at Google AI Studio, no card, no waitlist, about two minutes to claim. The Desk walks you through it during setup, then every homework question, study plan, and desk answer runs on your own account. Your usage, your key, your data. Not ours.</p>
+    <div class="power-stats reveal">
+      <div class="pstat"><b>26,600+</b><span>concepts mapped across the knowledge engine</span></div>
+      <div class="pstat"><b>100+</b><span>real subject graphs, from Euclid to AP Chemistry</span></div>
+      <div class="pstat"><b>113</b><span>free interactive textbooks in the open archive</span></div>
+      <div class="pstat"><b>$0</b><span>to start. No card, no waitlist, ever</span></div>
+    </div>
+    <p class="why-note reveal">Real numbers, not projections. Same standard as everything else on this page.</p>
+    <div class="jesse-points power-points reveal">
+      <div class="jpoint reveal"><i>yours</i><p><strong>Your key, your data.</strong> Nothing routes through our AI account. It's a straight line from you to the model, not through us.</p></div>
+      <div class="jpoint reveal"><i>promise</i><p><strong>Never training data.</strong> A student's work stays theirs, full stop. Not a product, not something we sell.</p></div>
+      <div class="jpoint reveal"><i>ahead of it</i><p><strong>Building toward formal compliance</strong> as the platform grows, instead of waiting for a regulator to make us.</p></div>
+      <div class="jpoint reveal"><i>the edge</i><p><strong>This is the actual differentiation.</strong> Every number above runs on a student's own key, not a shared pool we could quietly mine.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= EVERY BRAIN ================= -->
 <section class="stage-desk" id="brains">
   <div class="grid-bg" aria-hidden="true"></div>
@@ -645,137 +721,12 @@
   </div>
 </section>
 
-<!-- ================= THE DESK ================= -->
-<section class="stage-desk" id="desk">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">One desk, four surfaces</div>
-    <h2 class="h2 reveal">Not a folder. A collaborator.</h2>
-    <p class="lede reveal">Type a question in plain language and Jesse turns it into a simulation or a book chapter, yours to keep, yours to teach with. Every student's record stays theirs too: exportable, deletable, never for sale.</p>
-    <div class="desk-grid desk-grid-4">
-      <div class="desk-card reveal">
-        <div class="mock mock-split" aria-hidden="true">
-          <div class="mock-split-top"><iframe src="sims/lever-force-amplifier.html" loading="lazy" tabindex="-1"></iframe></div>
-          <img class="mock-img mock-split-bottom" src="img/marketing/dash-work-screenshot.webp" alt="" loading="lazy">
-        </div>
-        <div class="cap"><b>Your Work</b><h3>The work lives here</h3></div>
-      </div>
-      <div class="desk-card reveal">
-        <div class="mock" aria-hidden="true">
-          <iframe class="mock-img" src="sims/zpd/index.html" loading="lazy" tabindex="-1"></iframe>
-        </div>
-        <div class="cap"><b>Solver</b><h3>The gap gets found</h3></div>
-      </div>
-      <div class="desk-card reveal">
-        <div class="mock" aria-hidden="true">
-          <div class="mock-solver mock-recommend">
-            <span class="mock-stamp">Your goal</span>
-            <p class="mock-q">Investment Banker</p>
-            <div class="mock-rec-arrow">&darr;</div>
-            <span class="mock-stamp">Recommended next</span>
-            <p class="mock-q mock-q-rec">Financial Statements</p>
-          </div>
-        </div>
-        <div class="cap"><b>Recommend</b><h3>Built around your goal</h3></div>
-      </div>
-      <div class="desk-card reveal">
-        <div class="mock" aria-hidden="true">
-          <img class="mock-img" src="img/marketing/knowledge-map-screenshot.webp" alt="" loading="lazy">
-        </div>
-        <div class="cap"><b>Map</b><h3>Mastery you can see</h3></div>
-      </div>
-    </div>
-    <div class="reel-strip reveal">
-      <span class="reel-label">See it move</span>
-      <div class="reel-row">
-        <div class="reel-item"><img src="img/app/reel-notes.webp" alt="Notes surface in motion" loading="lazy"><small>Notes</small></div>
-        <div class="reel-item"><img src="img/app/reel-map.webp" alt="Knowledge Map in motion" loading="lazy"><small>Map</small></div>
-        <div class="reel-item"><img src="img/app/reel-create.webp" alt="Create surface in motion" loading="lazy"><small>Create</small></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= POWER (free student AI) ================= -->
-<section class="stage-desk" id="power">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">How the free tier stays free</div>
-    <h2 class="h2 reveal">Supercharge your Desk on your own free key.</h2>
-    <p class="lede reveal">Google gives every student a free AI key at Google AI Studio, no card, no waitlist, about two minutes to claim. The Desk walks you through it during setup, then every homework question, study plan, and desk answer runs on your own account. Your usage, your key, your data. Not ours.</p>
-    <div class="power-stats reveal">
-      <div class="pstat"><b>26,600+</b><span>concepts mapped across the knowledge engine</span></div>
-      <div class="pstat"><b>100+</b><span>real subject graphs, from Euclid to AP Chemistry</span></div>
-      <div class="pstat"><b>113</b><span>free interactive textbooks in the open archive</span></div>
-      <div class="pstat"><b>$0</b><span>to start. No card, no waitlist, ever</span></div>
-    </div>
-    <p class="why-note reveal">Real numbers, not projections. Same standard as everything else on this page.</p>
-    <div class="jesse-points power-points reveal">
-      <div class="jpoint reveal"><i>yours</i><p><strong>Your key, your data.</strong> Nothing routes through our AI account. It's a straight line from you to the model, not through us.</p></div>
-      <div class="jpoint reveal"><i>promise</i><p><strong>Never training data.</strong> A student's work stays theirs, full stop. Not a product, not something we sell.</p></div>
-      <div class="jpoint reveal"><i>ahead of it</i><p><strong>Building toward formal compliance</strong> as the platform grows, instead of waiting for a regulator to make us.</p></div>
-      <div class="jpoint reveal"><i>the edge</i><p><strong>This is the actual differentiation.</strong> Every number above runs on a student's own key, not a shared pool we could quietly mine.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= JESSE ================= -->
-<section class="stage-desk" id="jesse" style="background:var(--field-1); border-top:1px solid var(--edge);">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">Jesse &middot; the voice at the desk</div>
-
-    <div class="jesse-sub jesse-sub-first reveal">
-      <h3 class="jesse-sub-title">Jesse Talks</h3>
-      <div class="jesse-grid">
-        <div>
-          <h2 class="h2 reveal">Tap the disc. Jesse listens.</h2>
-          <p class="lede reveal">Stays on the line while you wander the app, the way a person would.</p>
-          <div class="jesse-points">
-            <div class="jpoint reveal"><i>real</i><p><strong>Shipped.</strong> A native voice in the iPad app today, not a chat box wearing a headset.</p></div>
-            <div class="jpoint reveal"><i>scoped</i><p><strong>Knows the page you're on.</strong> Ask about the problem in front of you.</p></div>
-            <div class="jpoint reveal"><i>next</i><p><strong>Learning to ask back.</strong> We're testing a version that asks you the next question instead of handing over the answer. It ships when it clears the gate.</p></div>
-          </div>
-        </div>
-        <div class="jesse-demo reveal" id="jesseDemo">
-          <button class="jesse-disc" type="button" id="jesseDisc" aria-pressed="false">Press</button>
-          <p class="jesse-words" id="jesseWords"><span class="you">Tap the disc. Jesse listens.</span></p>
-          <p class="jesse-hint" id="jesseHint">A scripted taste. The real Jesse listens, in the app.</p>
-          <div class="jesse-reveal" id="jesseReveal" hidden>
-            <div class="jesse-reveal-frame"><iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe></div>
-            <p class="jesse-reveal-cap">Real simulation, not a mockup. Try dragging it.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="jesse-sub jesse-routes reveal" id="honesty">
-      <h3 class="jesse-sub-title">Jesse Routes</h3>
-      <h2 class="h2 reveal">Checked before you ever see it.</h2>
-      <p class="lede reveal">Every AI-made lesson runs a gauntlet before a student sees it, and <strong>most attempts don't make it.</strong> We built it that way.</p>
-      <div class="gate-flow reveal" aria-label="The quality gate, in order">
-        <span class="gate-step">fit check</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step">generate</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step">render</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step">structural rubric</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step">visual + pedagogical gate</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step final">a student sees it</span>
-      </div>
-    </div>
-
-    <div class="jesse-human-teaser reveal">
-      <p><strong>Need a little more human help? Sure.</strong></p>
-      <p class="jesse-human-names">The engineering sophomore &middot; the design senior &middot; the CS junior, on call below.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ================= MENTORS ================= -->
 <section class="mentors" id="mentors">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="kicker reveal">Real people, on call</div>
-    <h2 class="h2 reveal">Real students. Real subjects.</h2>
+    <h2 class="h2 reveal">Jesse can route you to real tutors.</h2>
     <div class="mentor-cards">
       <div class="mcard reveal">
         <div class="who"><span class="ava" style="background:#247a4d;">EN</span><div><h4>The engineering sophomore</h4><span class="meta">Math &middot; physics &middot; the click</span></div></div>
