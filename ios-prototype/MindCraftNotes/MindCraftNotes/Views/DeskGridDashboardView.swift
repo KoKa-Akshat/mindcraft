@@ -2478,7 +2478,12 @@ struct DeskGridDashboardView: View {
     private func moduleBoxColumn(ink: Color) -> some View {
         VStack(spacing: 12) {
             learnModuleBox(ink: ink)
-            moduleBox("Create", system: "wand.and.stars", identifier: "deskGridModule_Create", ink: ink) {
+            // Renamed to PencilWork (2026-08-24, explicit ask) - same box,
+            // same action (showCreateBook), identifier kept stable
+            // (deskGridModule_Create still refers to the box's ORIGINAL
+            // name, not its current display text - same convention as
+            // deskGridModule_Design below, now displaying "Create").
+            moduleBox("PencilWork", system: "wand.and.stars", identifier: "deskGridModule_Create", ink: ink) {
                 showCreateBook = true
             }
             // "Answer" removed 2026-08-23, explicit ask: "we don't need
@@ -2491,7 +2496,10 @@ struct DeskGridDashboardView: View {
             // chip) and not from this column. Same embedded-in-Binder
             // pattern `viewingDesignStudio` already uses at every other
             // call site, not a new presentation.
-            moduleBox("Design", system: "square.grid.2x2.fill", identifier: "deskGridModule_Design", ink: ink) {
+            // Renamed to Create (2026-08-24, explicit ask: "Design should
+            // be Create") - same box, same action (opens the node-canvas
+            // DesignStudioView), identifier kept stable.
+            moduleBox("Create", system: "square.grid.2x2.fill", identifier: "deskGridModule_Design", ink: ink) {
                 closeBinderContentViewer()
                 viewingDesignStudio = true
             }
@@ -2502,7 +2510,11 @@ struct DeskGridDashboardView: View {
             // jesseCall.end() that lets ResumeAgentView's own call button
             // start a correctly-contexted call. A fifth entry point, not a
             // new destination.
-            moduleBox("Leverage", system: "briefcase.fill", identifier: "deskGridModule_Leverage", ink: ink) {
+            //
+            // Renamed to Kamana (2026-08-24, explicit ask - "Kamana" is
+            // Nepali for good luck). Same box, same action, identifier
+            // kept stable.
+            moduleBox("Kamana", system: "briefcase.fill", identifier: "deskGridModule_Leverage", ink: ink) {
                 jesseCall.end()
                 closeBinderContentViewer()
                 viewingResumeAgent = true
@@ -2528,7 +2540,12 @@ struct DeskGridDashboardView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: 42)
-                Text("Learn + Practice")
+                // Renamed to Gurukul (2026-08-24, explicit ask - a
+                // traditional term for a place of learning/mentorship).
+                // Same box, same action (onOpenStudyCompanion), same
+                // raccoon art the founder confirmed liking here already -
+                // identifier kept stable (deskGridModule_Learn).
+                Text("Gurukul")
                     .font(.mcContent(size: 16, weight: .semibold))
                     .foregroundColor(ink)
                 Spacer(minLength: 0)

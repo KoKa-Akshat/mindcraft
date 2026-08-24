@@ -51,7 +51,6 @@ struct StudyCompanionView: View {
             VStack(spacing: 0) {
                 header
                 transcript
-                quickActions
                 inputBar
             }
             .background(Color(shex: "f3f1ec").ignoresSafeArea())
@@ -166,13 +165,17 @@ struct StudyCompanionView: View {
                     .frame(width: 26, height: 26)
             }
             .frame(width: 44, height: 44)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Learn + Practice")
+            // "Study mode" caption removed (2026-08-24, explicit ask:
+            // "instead of the study mode caption right now since it block
+            // what the student is saying to Jesse") - quickActions moved
+            // up into this same slot instead, so the chips sit under the
+            // title rather than down by the input bar competing with
+            // whatever the student just typed/said.
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Gurukul")
                     .font(.system(size: 17, weight: .bold, design: .rounded))
                     .foregroundColor(Color(shex: "0c1207"))
-                Text(jesseCall.isActive ? "Study mode · talking with Jesse" : "Study mode")
-                    .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(shex: "0c1207").opacity(0.5))
+                quickActions
             }
             Spacer(minLength: 0)
             if jesseCall.workDashboardLesson != nil {
@@ -293,15 +296,16 @@ struct StudyCompanionView: View {
     }
 
     private var quickActions: some View {
+        // No horizontal padding here anymore (2026-08-24) - this now lives
+        // inside the header's own already-inset title VStack, not as a
+        // full-width row of its own between the transcript and input bar.
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 quickChip("📚 Build a lesson on this") { send("Build a lesson on this") }
                 quickChip("✏️ Quiz me") { send("I want to practice") }
                 quickChip("📄 Summarize my upload") { send("Summarize what I uploaded") }
             }
-            .padding(.horizontal, 20)
         }
-        .padding(.vertical, 8)
     }
 
     private func quickChip(_ title: String, action: @escaping () -> Void) -> some View {
