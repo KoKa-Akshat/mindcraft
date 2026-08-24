@@ -61,12 +61,27 @@ final class StudentAIKeyStore: ObservableObject {
         let trimmed = key.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, let data = trimmed.data(using: .utf8) else { return false }
 
+        // Real bug, found 2026-08-23 while investigating a live report
+        // ("why is it still asking me for my AI key"): this match query
+        // used to omit kSecAttrAccount, so it matched ANY stored key
+        // under this service regardless of which provider it belonged
+        // to. Saving a second provider's key found the FIRST provider's
+        // existing item and overwrote its account + data in place -
+        // silently converting it into the new provider's key rather than
+        // coexisting alongside it. That directly contradicts
+        // readAllCredentials()'s own doc comment (2026-08-21 fix) which
+        // already assumes multiple providers' keys can be stored
+        // simultaneously - the read side was fixed to try every stored
+        // credential, but the write side could still only ever hold one.
+        // Scoping the match to this specific provider's account is the
+        // actual fix - now saving Anthropic never touches an existing
+        // Gemini/Groq item.
         let match: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
+            kSecAttrAccount as String: provider.rawValue,
         ]
         let updates: [String: Any] = [
-            kSecAttrAccount as String: provider.rawValue,
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
             kSecValueData as String: data,
         ]
