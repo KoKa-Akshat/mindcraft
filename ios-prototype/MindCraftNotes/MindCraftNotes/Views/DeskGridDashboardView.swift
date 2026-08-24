@@ -553,7 +553,34 @@ struct DeskGridDashboardView: View {
                 // margin above AND below it; top-aligning removes the
                 // above-margin entirely so the tile column actually sits
                 // at the screen's top edge instead of floating mid-screen.
-                tileBoard(scale: scale, board: board)
+                //
+                // Real fix (2026-08-23, live report: "the map is not
+                // filling vertically" - true even after the Knowledge Map
+                // field itself was fixed to correctly claim all the height
+                // ITS OWN box offers). Root cause: `board` is `artboard *
+                // scale`, and `scale` is bound by whichever dimension is
+                // tighter (`min(w/1440, h/810)`) - on this device width is
+                // the binding constraint, so `board.height < geo.size.
+                // height` by design (same letterboxing BlueprintGrid's own
+                // 2026-08-18 fix already worked around for the dots). The
+                // plain Binder landing (`isPlainBinderLanding` below) is
+                // already documented elsewhere in this file as "one
+                // continuous page," not board content that needs
+                // 1440x810-relative positioning like the other tiles still
+                // do - so it now renders as its own full-geo.size sibling
+                // here, same escape hatch BlueprintGrid already uses,
+                // instead of through `pin()`'s board-scaled box (which
+                // WorkArtboard.landingBinder happened to size at 100% of
+                // the artboard, but 100% of a letterboxed artboard is
+                // still short of the real screen). `tileBoard` skips its
+                // own binder pin in this same case so it isn't rendered
+                // twice.
+                let isPlainBinderLanding = !binderContentViewerActive && !expanded
+                if isPlainBinderLanding {
+                    photoTile(.binder)
+                        .frame(width: geo.size.width, height: geo.size.height)
+                }
+                tileBoard(scale: scale, board: board, skipBinder: isPlainBinderLanding)
                     .scaleEffect(spaceZoom * liveZoom)
                     .offset(x: spacePan.width + livePan.width, y: spacePan.height + livePan.height)
                 // Same dimmed-background + centered-card popup family as
@@ -571,9 +598,9 @@ struct DeskGridDashboardView: View {
             .task { await syncConnectedBoxes() }
             .task { await loadWeakness() }
             // Eager load (2026-08-23) - the real per-concept nodes now
-            // paint straight onto the page itself (`binderBookFrame`'s
-            // `BinderKnowledgeDots`), not just the Knowledge Map card you
-            // used to have to tap into first.
+            // fill the Knowledge Map's own diffuse field on first render
+            // (`UnifiedKnowledgeFieldCanvas`, in `binderWorkspaceColumn`),
+            // not just after tapping into the full graph viewer.
             .task { await knowledgeGraphClient.load() }
             .onAppear {
                 // Real STT/vision-OCR can't be driven by an automated test
@@ -785,7 +812,7 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    private func tileBoard(scale: CGFloat, board: CGSize) -> some View {
+    private func tileBoard(scale: CGFloat, board: CGSize, skipBinder: Bool = false) -> some View {
         ZStack(alignment: .topLeading) {
             Color.clear
                 .frame(width: board.width, height: board.height)
@@ -823,8 +850,14 @@ struct DeskGridDashboardView: View {
                         }
                 }
             }
-            pin(boxRect(.binder), scale: scale) {
-                photoTile(.binder)
+            // skipBinder: true means the plain landing already rendered
+            // Binder as its own full-geo.size sibling one level up (see
+            // body's own doc comment) - rendering it again here through
+            // the board-scaled pin() would double it.
+            if !skipBinder {
+                pin(boxRect(.binder), scale: scale) {
+                    photoTile(.binder)
+                }
             }
             if expanded {
                 pin(rail == .memo ? WorkArtboard.memoRail : WorkArtboard.flowsRail, scale: scale) {
@@ -996,9 +1029,9 @@ struct DeskGridDashboardView: View {
                     .padding(5)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                // Corner radius 0 on the full-page landing: a rounded clip
-                // would shave BinderKnowledgeDots out of the page corners
-                // even with no visible card behind it.
+                // Corner radius 0 on the full-page landing: with no
+                // visible card behind it, a rounded clip would just shave
+                // the page's own content out of its corners for no reason.
                 .clipShape(RoundedRectangle(cornerRadius: fullPageBinder ? 0 : 18, style: .continuous))
                 .shadow(color: fullPageBinder ? .clear : .black.opacity(0.14), radius: 12, y: 6)
                 .overlay(
@@ -1654,15 +1687,16 @@ struct DeskGridDashboardView: View {
     /// through, which is the only way to guarantee zero visible seam
     /// between "inside the old card" and the page around it - painting a
     /// matching cream fill would still cover the blueprint grid lines and
-    /// leave a ghost rectangle where they stop. The real per-concept
-    /// `BinderKnowledgeDots` texture stays: it belongs to the page itself,
-    /// not to the removed cover (2026-08-23, explicit ask - the same nodes
-    /// `knowledgeGraphClient` already fetched for the Knowledge Map card,
-    /// quiet enough to read as paper texture).
+    /// leave a ghost rectangle where they stop. The `BinderKnowledgeDots`
+    /// whole-page concept texture that used to render here is gone
+    /// (2026-08-23, Knowledge Map merge): those same real nodes are now
+    /// the diffuse field INSIDE the Knowledge Map itself
+    /// (`UnifiedKnowledgeFieldCanvas`, in `binderWorkspaceColumn`) -
+    /// drawing them a second time here, faint, directly behind that same
+    /// map would double the exact same dots at two different scales.
     @ViewBuilder
     private func binderBookFrame<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
         ZStack {
-            BinderKnowledgeDots(nodes: knowledgeGraphClient.nodes)
             content()
                 .padding(.horizontal, 32)
                 .padding(.vertical, 24)
@@ -2251,9 +2285,9 @@ struct DeskGridDashboardView: View {
             HStack(alignment: .top, spacing: 16) {
                 // Widened 2026-08-23, explicit ask: "expand the map to
                 // occupy... space right before Learn Practice" - the
-                // ambient map (topicTileGrid, inside this column) gets more
-                // real room, the module box column on the right shrinks to
-                // match.
+                // unified Knowledge Map field (inside this column) gets
+                // more real room, the module box column on the right
+                // shrinks to match.
                 // maxHeight: .infinity added 2026-08-23, explicit ask:
                 // "increase the vertical space the opening knowledge map
                 // and everything takes, bring them almost close to jesse
@@ -2262,9 +2296,10 @@ struct DeskGridDashboardView: View {
                 // no height constraint at all, so it sized to its own
                 // shortest child's natural height (the Knowledge Map
                 // preview card) and left the rest of the column's real
-                // height as blank cream space above the dock. topicTileGrid
-                // is a GeometryReader inside this column - it now actually
-                // gets the full real height to spread its field across.
+                // height as blank cream space above the dock.
+                // binderWorkspaceColumn's field is a GeometryReader inside
+                // this column - it now actually gets the full real height
+                // to spread across.
                 binderWorkspaceColumn(ink: ink)
                     .frame(width: geo.size.width * 0.76, height: geo.size.height, alignment: .top)
 
@@ -2274,16 +2309,10 @@ struct DeskGridDashboardView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        // Real ask (2026-08-23): "the four icons under leverage should be
-        // notes transcribe gmail and calendar instead of the current 4" -
-        // swapped Design/Reports/Resume/Settings (binderUtilityRow, now
-        // unused - Design and Resume/Leverage are real module boxes, and
-        // Settings is on the main dock; Session Reports has no other entry
-        // point after this, a real trade-off worth naming rather than
-        // silently dropping) for jesseBoxIconRow's real Notes/Transcribe/
-        // Gmail/Calendar actions - the exact same four already used
-        // elsewhere on this screen (Answer's old header row).
-        .overlay(alignment: .bottomTrailing) { jesseBoxIconRow.padding(22) }
+        // jesseBoxIconRow moved off this overlay (2026-08-23, explicit
+        // ask: "put the 4 icons on top of the search bar instead of below
+        // leverage") - see `bottomDock`'s own overlay for where it lives
+        // now.
         .task {
             // Plain .task, not .task(id:) - keying it to libraryBooksLoaded
             // and then setting that same flag true INSIDE this task self-
@@ -2297,51 +2326,113 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// The workspace itself - Knowledge Map, Archive, and the Chapter
-    /// Library grid, unchanged from before this pass. This is "one
-    /// dominant workspace showing the student's current idea, lesson,
-    /// project, or knowledge map" - the left 68% column.
+    /// The workspace itself - ONE unified Knowledge Map filling the whole
+    /// column (2026-08-23, Knowledge Map merge - direct ask: "why is map
+    /// nor mixing with the second column and the dots highlighted should
+    /// be organically in the map"). Used to be three side-by-side pieces
+    /// [200pt preview | decorative binderRingSpine | separate ambient
+    /// garden] that never visually read as one thing. Now: the real
+    /// per-concept graph IS the ambient field (dimmed, spread across the
+    /// full column), with recommended books as a highlighted, labeled
+    /// overlay layer sitting organically inside that same field instead
+    /// of on a second, disconnected canvas. `binderRingSpine` is dropped
+    /// here - its "open-book center seam" meaning doesn't apply once
+    /// there's no longer a visual seam between two halves (kept as a
+    /// `private var` in case it's wanted elsewhere).
+    ///
+    /// Tapping anywhere in the empty field still opens the full
+    /// interactive graph viewer (`deskGridBinderGraphPreview` - same
+    /// identifier and action as the old preview card, so existing UI
+    /// tests keep passing); tapping a book dot opens that book, exactly
+    /// as `topicTileGrid` did. See KNOWLEDGE_MAP_MERGE_PLAN.md for the
+    /// full design writeup, including the honest caveat that book
+    /// placement is still a deterministic hash (`ambientGardenPosition`),
+    /// not a real semantic position - Section 2's Phase 2 spike is what
+    /// would change that, and is explicitly not part of this pass.
     @ViewBuilder
     private func binderWorkspaceColumn(ink: Color) -> some View {
-        HStack(alignment: .top, spacing: 18) {
-            VStack(spacing: 10) {
-                Button {
-                    closeBinderContentViewer()
-                    viewingKnowledgeGraphInBinder = true
-                    Task { await knowledgeGraphClient.load() }
-                } label: {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Knowledge Map")
-                            .font(.mcContent(size: 17, weight: .semibold))
-                            .foregroundColor(ink)
-                        knowledgeGraphTileBody()
-                    }
-                    .padding(10)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    // No white card behind it anymore (2026-08-23, live
-                    // feedback: everything on the binder landing sits
-                    // straight on the cream page - no border/shadow
-                    // separating it from the paper). contentShape keeps
-                    // the whole old card area tappable now that there's
-                    // no opaque fill to catch touches.
-                    .contentShape(Rectangle())
+        let nodes = knowledgeGraphClient.nodes
+        let recommendedBooks = libraryBooks.filter { $0.totalConcepts > 0 && $0.coveredConcepts > 0 }
+        let mastered = nodes.filter { $0.status == "mastered" }.count
+
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 10) {
+                Text("Knowledge Map")
+                    .font(.mcContent(size: 17, weight: .semibold))
+                    .foregroundColor(ink)
+                Spacer(minLength: 0)
+                if !nodes.isEmpty {
+                    Text("\(mastered)/\(nodes.count) concepts mastered")
+                        .font(.system(size: 11, weight: .heavy, design: .rounded))
+                        .foregroundColor(ink.opacity(0.6))
+                    knowledgeGraphLegend
                 }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskGridBinderGraphPreview")
-                // "Open Archive" button moved out of here (2026-08-23,
-                // explicit ask: "move that archive button next to friends")
-                // - it's a dock icon now, see workDock.
             }
-            // Narrowed from 260 the same pass as the map's own width bump
-            // above - Knowledge Map only ever needed to fit its own small
-            // preview canvas, and the ambient map is the thing that should
-            // get the reclaimed space.
-            .frame(width: 200)
 
-            binderRingSpine
+            // Real fix (2026-08-23, live report: "expand the map and
+            // everything more vertically" - a GeometryReader sitting
+            // inside a plain VStack has no guaranteed height on its own;
+            // without an explicit maxHeight it can settle to a small
+            // ideal size instead of claiming the rest of the column,
+            // which is exactly "empty space underneath" - the outer
+            // `.frame(height: geo.size.height)` this whole function
+            // receives from binderLandingBodyContent only bounds the
+            // VStack's MAX, it doesn't force this GeometryReader row to
+            // actually fill it.
+            GeometryReader { geo in
+                let conceptPositions = graphNormalizedPositions(nodes: nodes, size: geo.size, padding: 0.1)
+                let bookPositions: [String: CGPoint] = Dictionary(
+                    uniqueKeysWithValues: recommendedBooks
+                        .sorted { $0.subjectId < $1.subjectId }
+                        .compactMap { book -> (String, CGPoint)? in
+                            guard let p = ambientGardenPosition(for: book, in: geo.size, avoiding: Array(conceptPositions.values)) else { return nil }
+                            return (book.subjectId, p)
+                        }
+                )
 
-            topicTileGrid(ink: ink)
+                ZStack {
+                    // Background tap target - identical action/identifier
+                    // to the old 200pt preview card, now spanning the
+                    // whole field so tapping empty space anywhere still
+                    // opens the full graph.
+                    Button {
+                        closeBinderContentViewer()
+                        viewingKnowledgeGraphInBinder = true
+                        Task { await knowledgeGraphClient.load() }
+                    } label: {
+                        Color.clear.contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("deskGridBinderGraphPreview")
+
+                    UnifiedKnowledgeFieldCanvas(
+                        nodes: nodes, edges: knowledgeGraphClient.edges,
+                        books: recommendedBooks, bookPositions: bookPositions, ink: ink,
+                        onOpenBook: { onOpenBinderChapterBook($0.subjectId, $0.title) }
+                    )
+
+                    if nodes.isEmpty && recommendedBooks.isEmpty {
+                        VStack(spacing: 10) {
+                            if knowledgeGraphClient.isLoading {
+                                ProgressView().tint(ink)
+                                Text("Mapping your knowledge\u{2026}")
+                            } else {
+                                emptyGraphSeed
+                                Text("This grows as you learn and engage with new things.")
+                            }
+                        }
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(ink.opacity(0.7))
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .allowsHitTesting(false)
+                    }
+                }
+                .frame(width: geo.size.width, height: geo.size.height)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .frame(maxHeight: .infinity, alignment: .top)
     }
 
     /// Real progress dots in the gutter between the workspace and the
@@ -2473,105 +2564,21 @@ struct DeskGridDashboardView: View {
         .accessibilityIdentifier(identifier)
     }
 
-    /// Ambient study garden - replaces the old book-tile grid (2026-08-23,
-    /// explicit ask: "just have some kind of nice beautiful 3d drawing over
-    /// that space and it lights up with study session... shows Jesse neat
-    /// background art to inhabit this space, then as you learn it fills up
-    /// with stuff"). Scoped to a real 2D Canvas treatment rather than
-    /// literal SceneKit/RealityKit 3D (confirmed with the founder) - same
-    /// glow/status-color drawing language `KnowledgeGraphCanvas`/
-    /// `BinderKnowledgeDots` already use elsewhere in this file, not a new
-    /// visual language.
-    ///
-    /// Recommended-only, same-day follow-up (2026-08-23, explicit ask: "the
-    /// dots which the system thinks I should study next are the dots whose
-    /// names are shown and are yellow. Otherwise, we don't need to show
-    /// random books... if there's nothing to show, fine, just show the
-    /// map").
-    ///
-    /// Real correction, same day: `coveredConcepts`/`totalConcepts` is
-    /// CONTENT completeness (how much of the book has real, gated
-    /// prose/sims - `book_assembler.AssembledBook.covered_concepts`'s own
-    /// doc comment: "with gated prose"), NOT student progress/mastery -
-    /// there is no per-student signal on `AssembledBookSummary` at all.
-    /// The original filter here (`0 < covered < total`) was built on the
-    /// wrong reading of that field and actively HID the richest, most
-    /// complete books (confirmed live: a freshly rebuilt 23/23 Calculus
-    /// book disappeared under the old filter for being "too done"). The
-    /// real, honest bar is just "has any real content" - `coveredConcepts
-    /// > 0` - so a book someone actually invested in showing up correctly
-    /// glows, whole or partial. Real per-student "study this next"
-    /// targeting is the ML `/recommend` engine's job (per-CONCEPT
-    /// weakness, not on this model at all) - naming that gap rather than
-    /// quietly overstating what this dot means.
-    @ViewBuilder
-    private func topicTileGrid(ink: Color) -> some View {
-        let recommendedBooks = libraryBooks.filter { $0.totalConcepts > 0 && $0.coveredConcepts > 0 }
-        let recommendColor = Color(gridHex: "d9a441")
-        GeometryReader { geo in
-            ZStack {
-                Canvas { context, size in
-                    for book in recommendedBooks {
-                        guard let p = ambientGardenPosition(for: book, in: size) else { continue }
-                        let progress = min(1, Double(book.coveredConcepts) / Double(book.totalConcepts))
-                        let r: CGFloat = 11 + CGFloat(progress) * 14
-                        let glow = r * 2.8
-                        context.fill(
-                            Path(ellipseIn: CGRect(x: p.x - glow, y: p.y - glow, width: glow * 2, height: glow * 2)),
-                            with: .radialGradient(
-                                Gradient(colors: [recommendColor.opacity(0.3 + progress * 0.3), recommendColor.opacity(0)]),
-                                center: p, startRadius: 0, endRadius: glow
-                            )
-                        )
-                        context.fill(
-                            Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
-                            with: .color(recommendColor.opacity(0.6 + progress * 0.4))
-                        )
-                        context.stroke(
-                            Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
-                            with: .color(.white.opacity(0.6)), lineWidth: 1
-                        )
-                    }
-                }
-                .allowsHitTesting(false)
-
-                ForEach(recommendedBooks) { book in
-                    if let p = ambientGardenPosition(for: book, in: geo.size) {
-                        Button {
-                            onOpenBinderChapterBook(book.subjectId, book.title)
-                        } label: {
-                            VStack(spacing: 4) {
-                                Color.clear.frame(width: 52, height: 52)
-                                Text(book.title)
-                                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                                    .foregroundColor(ink.opacity(0.85))
-                                    .lineLimit(1)
-                                    .frame(width: 110)
-                            }
-                            .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                        .position(p)
-                        .accessibilityIdentifier("deskGridTopicTile_\(book.subjectId)")
-                    }
-                }
-
-                if recommendedBooks.isEmpty {
-                    Text("Nothing calling for attention right now — this space lights up as you study.")
-                        .font(.system(size: 13, weight: .medium, design: .rounded))
-                        .foregroundColor(ink.opacity(0.45))
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: 260)
-                }
-            }
-            .frame(width: geo.size.width, height: geo.size.height)
-        }
-    }
-
     /// Deterministic scatter so each book's glow sits in a stable spot
     /// across re-renders instead of jumping around - hashed from the
     /// book's own real `subjectId`, not random per frame.
-    private func ambientGardenPosition(for book: AssembledBookSummary, in size: CGSize) -> CGPoint? {
+    ///
+    /// `avoiding` added 2026-08-23 (Knowledge Map merge, "the dots
+    /// highlighted should be organically in the map"): now that book
+    /// dots sit inside the SAME field as the real concept nodes instead
+    /// of a separate empty canvas, a hashed position can land right on
+    /// top of a concept dot it has no real relationship to. A cheap,
+    /// deterministic repulsion nudge pushes the book dot away from any
+    /// concept within ~40pt - honest Phase-1 placement, not a claim that
+    /// a book "belongs" near whichever concept it happened to land by
+    /// (see KNOWLEDGE_MAP_MERGE_PLAN.md §2 for the real semantic-
+    /// placement idea this deliberately defers).
+    private func ambientGardenPosition(for book: AssembledBookSummary, in size: CGSize, avoiding conceptPoints: [CGPoint] = []) -> CGPoint? {
         guard size.width > 1, size.height > 1 else { return nil }
         var hasher = Hasher()
         hasher.combine(book.subjectId)
@@ -2580,7 +2587,20 @@ struct DeskGridDashboardView: View {
         let fy = Double((h / 1000) % 1000) / 1000.0
         let x = 0.14 + fx * 0.72
         let y = 0.16 + fy * 0.68
-        return CGPoint(x: x * size.width, y: y * size.height)
+        var p = CGPoint(x: x * size.width, y: y * size.height)
+        let minDistance: CGFloat = 40
+        for cp in conceptPoints {
+            let dx = p.x - cp.x, dy = p.y - cp.y
+            let dist = (dx * dx + dy * dy).squareRoot()
+            if dist < 0.001 {
+                p.x += minDistance
+            } else if dist < minDistance {
+                let nx = dx / dist, ny = dy / dist
+                p.x += nx * (minDistance - dist)
+                p.y += ny * (minDistance - dist)
+            }
+        }
+        return p
     }
 
     // binderUtilityRow (Design/Reports/Resume/Settings) removed 2026-08-23,
@@ -3215,6 +3235,25 @@ struct DeskGridDashboardView: View {
             // now that there's nothing to clear.
             .padding(.leading, 24)
             .padding(.trailing, 24)
+            // jesseBoxIconRow moved here (2026-08-23, explicit ask: "put
+            // the 4 icons on top of the search bar instead of below
+            // leverage") - was an overlay on binderLandingBodyContent,
+            // positioned near wherever the module column's Leverage box
+            // happened to land. This is bottomDock's own screen-global
+            // coordinate space, so "above the search bar" is exact rather
+            // than approximate: trailing padding matches the search
+            // field's own 240pt width + this dock's 24pt trailing inset,
+            // bottom padding clears the 60pt-tall dock bar itself. Only
+            // shown for workDock (Notes/Transcribe/Gmail/Calendar are
+            // workDashboard actions - flowsDock/sidebarFlowDock have their
+            // own separate docks and don't apply).
+            .overlay(alignment: .bottomTrailing) {
+                if activeSidebarFlow == nil, rail != .flows {
+                    jesseBoxIconRow
+                        .padding(.trailing, 24)
+                        .padding(.bottom, 76)
+                }
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
             // Pushed down further (2026-08-19, explicit ask: "push the
             // search bar a little bit down now").
@@ -3747,37 +3786,36 @@ private struct PulseEffect: ViewModifier {
 /// real status, edges weighted by their real Beta-Binomial posterior
 /// (`edge.weight`). A visual pass (2026-08-18, explicit ask: "why his
 /// look so cool ours look bad") over the original flat, same-size dots.
+/// Shared real-PCA-bounding-box-to-canvas remap (2026-08-23) - factored
+/// out of `KnowledgeGraphCanvas` so `UnifiedKnowledgeFieldCanvas` uses the
+/// exact same math instead of a second copy that could silently drift.
+/// Node x/y are raw PCA-axis projections (mean-centered, roughly [-3, 3],
+/// NOT already normalized to [0,1]) - see `KnowledgeGraphCanvas`'s
+/// original 2026-08-18 fix for why this remap exists at all.
+fileprivate func graphNormalizedPositions(nodes: [KnowledgeGraphNode], size: CGSize, padding: Double) -> [String: CGPoint] {
+    let xs = nodes.compactMap(\.x)
+    let ys = nodes.compactMap(\.y)
+    let minX = xs.min() ?? 0, maxX = xs.max() ?? 1
+    let minY = ys.min() ?? 0, maxY = ys.max() ?? 1
+    let spanX = max(maxX - minX, 0.0001)
+    let spanY = max(maxY - minY, 0.0001)
+    var positions: [String: CGPoint] = [:]
+    for node in nodes {
+        guard let x = node.x, let y = node.y else { continue }
+        let nx = padding + (x - minX) / spanX * (1 - 2 * padding)
+        let ny = padding + (y - minY) / spanY * (1 - 2 * padding)
+        positions[node.id] = CGPoint(x: nx * size.width, y: ny * size.height)
+    }
+    return positions
+}
+
 private struct KnowledgeGraphCanvas: View {
     let nodes: [KnowledgeGraphNode]
     let edges: [KnowledgeGraphEdge]
 
     var body: some View {
         Canvas { context, size in
-            // Real node x/y are raw PCA-axis projections from the ML
-            // backend (mean-centered, roughly [-3, 3], NOT already
-            // normalized to [0,1]) - multiplying them directly by canvas
-            // size treated them as if they were, which put the graph off
-            // -center and, for a real node spread, genuinely garbled
-            // (2026-08-18, explicit ask: "the knowledge graph still is not
-            // centered... it's displaying shit"). Remap the graph's own
-            // real bounding box into a padded square that fills the
-            // canvas instead of assuming a fixed range.
-            let padding = 0.12
-            let xs = nodes.compactMap(\.x)
-            let ys = nodes.compactMap(\.y)
-            let minX = xs.min() ?? 0, maxX = xs.max() ?? 1
-            let minY = ys.min() ?? 0, maxY = ys.max() ?? 1
-            let spanX = max(maxX - minX, 0.0001)
-            let spanY = max(maxY - minY, 0.0001)
-
-            func point(_ node: KnowledgeGraphNode) -> CGPoint? {
-                guard let x = node.x, let y = node.y else { return nil }
-                let nx = padding + (x - minX) / spanX * (1 - 2 * padding)
-                let ny = padding + (y - minY) / spanY * (1 - 2 * padding)
-                return CGPoint(x: nx * size.width, y: ny * size.height)
-            }
-            var positions: [String: CGPoint] = [:]
-            for node in nodes { positions[node.id] = point(node) }
+            let positions = graphNormalizedPositions(nodes: nodes, size: size, padding: 0.12)
 
             for edge in edges {
                 guard let from = positions[edge.from], let to = positions[edge.to] else { continue }
@@ -3791,7 +3829,7 @@ private struct KnowledgeGraphCanvas: View {
                 )
             }
             for node in nodes {
-                guard let p = point(node) else { continue }
+                guard let p = positions[node.id] else { continue }
                 let dotColor: Color
                 switch node.status {
                 case "mastered": dotColor = Color(gridHex: "3fae5a")
@@ -3819,47 +3857,150 @@ private struct KnowledgeGraphCanvas: View {
     }
 }
 
-/// The page's own background, made real (2026-08-23, explicit ask:
-/// "superimpose Binder on top of the page... it's going to have this
-/// knowledge displayed like dots inside the page"). Same real per-concept
-/// nodes `KnowledgeGraphCanvas` draws big inside the Knowledge Map card -
-/// here as a quiet, low-opacity texture across the whole page instead of a
-/// second competing visualization. No edges, no glow, no size-by-
-/// engagement - just real status color at each concept's real position,
-/// faded back so it reads as paper texture until you look for it.
-private struct BinderKnowledgeDots: View {
+/// The unified Knowledge Map field (2026-08-23, see
+/// `binderWorkspaceColumn`'s doc comment + KNOWLEDGE_MAP_MERGE_PLAN.md).
+/// Two granularities in one visualization: the real concept graph is a
+/// dimmed, diffuse field filling the whole space (same visual language
+/// as `KnowledgeGraphCanvas`, just quieter - roughly half the opacity,
+/// smaller dots, no per-node label), with recommended books drawn ON TOP
+/// as a highlighted overlay - larger, brighter, white-ringed, and
+/// labeled, which is what makes them read as "the important dots" against
+/// the quiet field behind them rather than a same-size color clash.
+/// `bookPositions` is precomputed by the caller (`ambientGardenPosition`
+/// + the repulsion nudge, which needs the concept positions this struct
+/// also draws from) so this stays a pure rendering struct like
+/// `KnowledgeGraphCanvas`, not one that reaches back into the parent
+/// view's own methods.
+private struct UnifiedKnowledgeFieldCanvas: View {
     let nodes: [KnowledgeGraphNode]
+    let edges: [KnowledgeGraphEdge]
+    let books: [AssembledBookSummary]
+    let bookPositions: [String: CGPoint]
+    let ink: Color
+    let onOpenBook: (AssembledBookSummary) -> Void
+
+    private let recommendColor = Color(gridHex: "d9a441")
 
     var body: some View {
-        Canvas { context, size in
-            guard !nodes.isEmpty else { return }
-            let padding = 0.08
-            let xs = nodes.compactMap(\.x)
-            let ys = nodes.compactMap(\.y)
-            let minX = xs.min() ?? 0, maxX = xs.max() ?? 1
-            let minY = ys.min() ?? 0, maxY = ys.max() ?? 1
-            let spanX = max(maxX - minX, 0.0001)
-            let spanY = max(maxY - minY, 0.0001)
-            for node in nodes {
-                guard let x = node.x, let y = node.y else { continue }
-                let nx = padding + (x - minX) / spanX * (1 - 2 * padding)
-                let ny = padding + (y - minY) / spanY * (1 - 2 * padding)
-                let p = CGPoint(x: nx * size.width, y: ny * size.height)
-                let dotColor: Color
-                switch node.status {
-                case "mastered": dotColor = Color(gridHex: "3fae5a")
-                case "in_progress": dotColor = Color(gridHex: "d9a441")
-                case "struggling": dotColor = Color(gridHex: "c1121f")
-                default: dotColor = Color(gridHex: "b7aed6")
+        GeometryReader { geo in
+            let conceptPositions = graphNormalizedPositions(nodes: nodes, size: geo.size, padding: 0.1)
+
+            ZStack {
+                // Layer 1: dimmed diffuse concept field - the "spread out"
+                // texture. allowsHitTesting(false) so taps fall through to
+                // the background preview button underneath this whole view.
+                Canvas { context, size in
+                    for edge in edges {
+                        guard let from = conceptPositions[edge.from], let to = conceptPositions[edge.to] else { continue }
+                        var path = Path()
+                        path.move(to: from)
+                        path.addLine(to: to)
+                        context.stroke(
+                            path,
+                            with: .color(Color(gridHex: "5b3e8f").opacity(0.1 + edge.weight * 0.22)),
+                            lineWidth: 1 + edge.weight * 1.5
+                        )
+                    }
+                    // Real fix (2026-08-23, live report: "the map is not
+                    // diffusing across the screen"): the field WAS being
+                    // drawn correctly, spread across the whole column via
+                    // the same real bounding-box remap KnowledgeGraphCanvas
+                    // uses - it just wasn't VISIBLE. "Dimmed" (the plan's
+                    // own word) got compounded with the canvas being much
+                    // bigger than the old 200pt preview: same 42 dots,
+                    // 3-4x the area, AND roughly half the opacity/size on
+                    // top of that reads as "basically empty," not "spread
+                    // out." Spreading a fixed dot count across more area
+                    // already IS what makes a field read as diffuse -
+                    // shrinking the dots on top of that was the actual
+                    // bug. Sized back up close to KnowledgeGraphCanvas's
+                    // own original numbers; the book overlay stays
+                    // visually dominant purely through being 2-3x bigger
+                    // + labeled + white-ringed, not through suppressing
+                    // this layer into near-invisibility.
+                    for node in nodes {
+                        guard let p = conceptPositions[node.id] else { continue }
+                        let dotColor = conceptStatusColor(node.status)
+                        let engagement = min(1, Double(node.eventCount ?? 0) / 10)
+                        let r: CGFloat = 4 + CGFloat(engagement) * 4.5
+                        let glowRadius = r * 2.2
+                        context.fill(
+                            Path(ellipseIn: CGRect(x: p.x - glowRadius, y: p.y - glowRadius, width: glowRadius * 2, height: glowRadius * 2)),
+                            with: .radialGradient(
+                                Gradient(colors: [dotColor.opacity(0.3), dotColor.opacity(0)]),
+                                center: p, startRadius: 0, endRadius: glowRadius
+                            )
+                        )
+                        context.fill(Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)), with: .color(dotColor.opacity(0.8)))
+                        context.stroke(
+                            Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
+                            with: .color(.white.opacity(0.5)), lineWidth: 0.75
+                        )
+                    }
                 }
-                let r: CGFloat = 2.5
-                context.fill(
-                    Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
-                    with: .color(dotColor.opacity(0.35))
-                )
+                .allowsHitTesting(false)
+
+                // Layer 2: book glow - the highlighted overlay, same
+                // drawing `topicTileGrid` used to do on its own separate
+                // canvas, now layered directly over the concept field.
+                Canvas { context, size in
+                    for book in books {
+                        guard let p = bookPositions[book.subjectId] else { continue }
+                        let progress = min(1, Double(book.coveredConcepts) / Double(max(book.totalConcepts, 1)))
+                        let r: CGFloat = 11 + CGFloat(progress) * 14
+                        let glow = r * 2.8
+                        context.fill(
+                            Path(ellipseIn: CGRect(x: p.x - glow, y: p.y - glow, width: glow * 2, height: glow * 2)),
+                            with: .radialGradient(
+                                Gradient(colors: [recommendColor.opacity(0.3 + progress * 0.3), recommendColor.opacity(0)]),
+                                center: p, startRadius: 0, endRadius: glow
+                            )
+                        )
+                        context.fill(
+                            Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
+                            with: .color(recommendColor.opacity(0.6 + progress * 0.4))
+                        )
+                        context.stroke(
+                            Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
+                            with: .color(.white.opacity(0.6)), lineWidth: 1
+                        )
+                    }
+                }
+                .allowsHitTesting(false)
+
+                // Layer 3: real tap targets, identical action/identifiers
+                // to the old topicTileGrid.
+                ForEach(books) { book in
+                    if let p = bookPositions[book.subjectId] {
+                        Button {
+                            onOpenBook(book)
+                        } label: {
+                            VStack(spacing: 4) {
+                                Color.clear.frame(width: 52, height: 52)
+                                Text(book.title)
+                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .foregroundColor(ink.opacity(0.85))
+                                    .lineLimit(1)
+                                    .frame(width: 110)
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .position(p)
+                        .accessibilityIdentifier("deskGridTopicTile_\(book.subjectId)")
+                    }
+                }
             }
         }
-        .allowsHitTesting(false)
+    }
+
+    private func conceptStatusColor(_ status: String?) -> Color {
+        switch status {
+        case "mastered": return Color(gridHex: "3fae5a")
+        case "in_progress": return Color(gridHex: "d9a441")
+        case "struggling": return Color(gridHex: "c1121f")
+        default: return Color(gridHex: "b7aed6")
+        }
     }
 }
 
