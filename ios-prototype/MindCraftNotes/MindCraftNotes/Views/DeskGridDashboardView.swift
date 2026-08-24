@@ -2482,8 +2482,12 @@ struct DeskGridDashboardView: View {
             // same action (showCreateBook), identifier kept stable
             // (deskGridModule_Create still refers to the box's ORIGINAL
             // name, not its current display text - same convention as
-            // deskGridModule_Design below, now displaying "Create").
-            moduleBox("PencilWork", system: "wand.and.stars", identifier: "deskGridModule_Create", ink: ink) {
+            // deskGridModule_Design below, now displaying "Create"). Gets
+            // its own mascot treatment (see mascotModuleBox's doc comment
+            // for why this is a badge on the same raccoon rather than new
+            // artwork) instead of the plain wand.and.stars icon the other
+            // two module boxes still use.
+            mascotModuleBox("PencilWork", badgeSystem: "pencil.and.scribble", identifier: "deskGridModule_Create", ink: ink) {
                 showCreateBook = true
             }
             // "Answer" removed 2026-08-23, explicit ask: "we don't need
@@ -2513,8 +2517,9 @@ struct DeskGridDashboardView: View {
             //
             // Renamed to Kamana (2026-08-24, explicit ask - "Kamana" is
             // Nepali for good luck). Same box, same action, identifier
-            // kept stable.
-            moduleBox("Kamana", system: "briefcase.fill", identifier: "deskGridModule_Leverage", ink: ink) {
+            // kept stable. Mascot treatment with a star badge (good-luck
+            // wish), same reasoning as PencilWork above.
+            mascotModuleBox("Kamana", badgeSystem: "sparkles", identifier: "deskGridModule_Leverage", ink: ink) {
                 jesseCall.end()
                 closeBinderContentViewer()
                 viewingResumeAgent = true
@@ -2575,6 +2580,48 @@ struct DeskGridDashboardView: View {
             // module boxes blend straight into the cream page, no
             // border/shadow). contentShape keeps the full box area
             // tappable without an opaque fill.
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(identifier)
+    }
+
+    /// PencilWork and Kamana's mascot treatment (2026-08-24, explicit ask:
+    /// "i want different Jesse to be sitting on top of PaperWork, kamana
+    /// and gurukul instead of the current logos please design them pretty
+    /// and beautiful... be creative"). Real custom art per box needs either
+    /// generated illustrations (blocked tonight - the founder's Higgsfield
+    /// account has no active plan/credits, and starting a paid trial
+    /// without them there to confirm the card charge isn't something to
+    /// do unilaterally) or hand-authored assets neither of us has right
+    /// now. This is the honest middle ground: the SAME raccoon mascot
+    /// Gurukul already uses (not a new asset), with a small distinct
+    /// accent badge per box so they still read as visually different from
+    /// each other and from a plain SF Symbol - not the final art, a real
+    /// placeholder worth swapping for generated/illustrated poses once
+    /// there's a plan to pay for that.
+    private func mascotModuleBox(_ title: String, badgeSystem: String, identifier: String, ink: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 8) {
+                ZStack(alignment: .bottomTrailing) {
+                    JesseRailView.raccoonImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 34)
+                    Image(systemName: badgeSystem)
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .background(Circle().fill(ink))
+                        .offset(x: 6, y: 4)
+                }
+                Text(title)
+                    .font(.mcContent(size: 16, weight: .semibold))
+                    .foregroundColor(ink)
+                Spacer(minLength: 0)
+            }
+            .padding(14)
+            .frame(maxWidth: .infinity, minHeight: 84, alignment: .topLeading)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
