@@ -29,7 +29,20 @@ struct BookReaderView: View {
     /// ask: "show the time required to generate it and then the credits
     /// required to generate it... after the chapter was generated."
     var generationInfo: ChapterBookGenerationInfo? = nil
+    /// Section `conceptId`s the student's actual question matched, nil to
+    /// show the whole book (2026-08-23, direct ask: "we dont show all
+    /// pages... we show what pages are relevant to that learning
+    /// session"). Set by `JesseCallSession.openedChapterBookFocusConceptIds`
+    /// for a voice-matched sub-topic inside a large archive book; nil for
+    /// every full-book-browsing entry point (Chapter Library / Binder /
+    /// freshly generated book - see that property's own doc comment for
+    /// why each case is nil or not). `showingAllPages` below is the
+    /// explicit escape hatch back to the full table of contents - a filter
+    /// should narrow the default view, not delete the rest of the book.
+    var focusConceptIds: Set<String>? = nil
     var onClose: () -> Void
+
+    @State private var showingAllPages = false
 
     // Real discussion mode (2026-08-22) - same environment injection
     // pattern already used by StudySessionView/JesseRailView, not a new
@@ -52,13 +65,37 @@ struct BookReaderView: View {
     private let cream = Color(gridHex: "fff8e9")
     private let lime = Color(gridHex: "c4f547")
 
-    private var pages: [AssembledBookSection] {
+    private var allPages: [AssembledBookSection] {
         book.chapters.flatMap(\.sections)
+    }
+
+    /// The real, non-empty subset a focus would narrow to - nil when
+    /// there's no focus, or the focus set matches nothing (a stale/empty
+    /// match should never leave the student looking at zero pages, so it's
+    /// treated the same as no focus at all).
+    private var focusedPages: [AssembledBookSection]? {
+        guard let focusConceptIds, !focusConceptIds.isEmpty else { return nil }
+        let filtered = allPages.filter { focusConceptIds.contains($0.conceptId) }
+        return filtered.isEmpty ? nil : filtered
+    }
+
+    /// The set actually shown right now - filtered unless there's no real
+    /// focus to filter by, or the student has tapped through to see all.
+    private var pages: [AssembledBookSection] {
+        guard !showingAllPages, let focusedPages else { return allPages }
+        return focusedPages
+    }
+
+    private var isFiltered: Bool {
+        pages.count < allPages.count
     }
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                if focusedPages != nil {
+                    focusBanner
+                }
                 TabView(selection: $pageIndex) {
                     ForEach(Array(pages.enumerated()), id: \.offset) { index, section in
                         ScrollView {
@@ -107,7 +144,12 @@ struct BookReaderView: View {
     /// on text-only pages isn't sim telemetry.
     private func closeAndFlushTelemetry() {
         recordDwell(forPage: pageIndex)
-        let records: [SimInteractionRecord] = pages.enumerated().compactMap { index, section in
+        flushEngagementTelemetry(currentPages: pages)
+        onClose()
+    }
+
+    private func flushEngagementTelemetry(currentPages: [AssembledBookSection]) {
+        let records: [SimInteractionRecord] = currentPages.enumerated().compactMap { index, section in
             guard section.simHtml != nil else { return nil }
             let dwellMs = dwellMsByPage[index] ?? 0
             let touches = touchCountByPage[index] ?? 0
@@ -121,7 +163,25 @@ struct BookReaderView: View {
             )
         }
         SimInteractionClient.log(records)
-        onClose()
+    }
+
+    /// `dwellMsByPage`/`touchCountByPage` are keyed by index into `pages`,
+    /// which was a stable, unchanging array until this filter/"see all"
+    /// toggle existed - toggling reshuffles what index N means, so a raw
+    /// index carried across the toggle would misattribute one section's
+    /// engagement to a different one. Flush what's accumulated under the
+    /// OLD indexing before switching, then reset and re-locate the page the
+    /// student was actually looking at by its real identity (conceptId) in
+    /// the NEW array.
+    private func toggleShowingAllPages() {
+        recordDwell(forPage: pageIndex)
+        let viewedConceptId = pages.indices.contains(pageIndex) ? pages[pageIndex].conceptId : nil
+        flushEngagementTelemetry(currentPages: pages)
+        dwellMsByPage = [:]
+        touchCountByPage = [:]
+        showingAllPages.toggle()
+        pageIndex = pages.firstIndex(where: { $0.conceptId == viewedConceptId }) ?? 0
+        pageEnteredAt = Date()
     }
 
     @ViewBuilder
@@ -154,37 +214,41 @@ struct BookReaderView: View {
                 .foregroundColor(ink.opacity(0.5))
             }
 
-            // Real bug, live testing 2026-08-21 (same night as the fix
-            // above, on a real Stoicism book): that fix's "summary is the
-            // whole caption, the sim is the teaching surface" reasoning
-            // silently assumed every page GETS a sim. Abstract concepts
-            // (real example: "The Rational Order: Logos and Nature") are
-            // correctly judged not sim-worthy at generation time - but with
-            // no sim AND no body, those pages had nothing but a two-
-            // sentence summary. Direct report: "the first few pages are
-            // empty... don't just leave it empty." Full body text (already
-            // generated, already gated - never hidden text, unlike the
-            // rejected disclosure approach) fills that gap on exactly the
-            // pages that need it; sim pages are completely unchanged.
-            if section.simHtml == nil, !section.body.isEmpty {
+            // Real, deliberate reversal (2026-08-23, explicit live ask:
+            // "the sims should be or the concepts in the sims should be
+            // explained and how it related to the chapter should be
+            // explained too") of the 2026-08-21 decision this comment
+            // used to describe ("the summary is the whole caption, the
+            // sim is the teaching surface, no full body when a sim
+            // exists"). That worked for abstract, sim-less pages; it left
+            // sim pages with nothing but a title, a one-line summary, and
+            // a bare interactive widget with zero explanation of the
+            // concept it demonstrates - naming the reversal rather than
+            // quietly re-adding the text. Body always shows now, sim or
+            // not.
+            if !section.body.isEmpty {
                 Text(section.body)
                     .font(.mcContent(size: 15))
                     .foregroundColor(ink.opacity(0.9))
                     .lineSpacing(5)
             }
 
-            // The real, playable sim - the centerpiece of the page, not an
-            // afterthought link. Direct feedback, 2026-08-21: a
-            // "Read the full explanation" disclosure hiding the paragraph
-            // body was rejected outright - "masking the problem instead of
-            // finding a proper solution... short, powerful captions,
-            // interactive sims" - so there is deliberately no expand-to-
-            // read-more control here at all anymore. The summary above is
-            // the whole caption; the sim is the actual teaching surface.
-            // Depth comes from talking to Jesse (the discussion link right
-            // below, where one exists), not from more paragraphs.
+            // The real, playable sim - still the centerpiece of the page,
+            // just no longer the ONLY thing on it (see the reversal above).
             if let html = section.simHtml {
                 VStack(alignment: .leading, spacing: 6) {
+                    // The explicit prose->sim handoff (2026-08-23, same
+                    // ask - "how it related to the chapter should be
+                    // explained too"). `simBridge` already existed in this
+                    // model/schema (book_assembler.AssembledSection) but
+                    // was never rendered anywhere in this file - real gap,
+                    // not a new field.
+                    if let bridge = section.simBridge, !bridge.isEmpty {
+                        Text(bridge)
+                            .font(.mcContent(size: 14, weight: .semibold))
+                            .foregroundColor(ink.opacity(0.75))
+                            .italic()
+                    }
                     // Real fix, 2026-08-21: a fixed 340pt height looked
                     // fine on an iPad but was described as "horrible" on
                     // narrower/taller viewports - "imagine people being
@@ -237,6 +301,38 @@ struct BookReaderView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// The session-scoped-view banner (2026-08-23). Two states: narrowed
+    /// (default, tells the student why they're not seeing the full table
+    /// of contents and offers a way out) and expanded (the student tapped
+    /// through - offers a way back to just what's relevant). Always tells
+    /// the truth about how many pages exist either way, never just hides
+    /// the rest silently.
+    @ViewBuilder
+    private var focusBanner: some View {
+        HStack(spacing: 8) {
+            Image(systemName: showingAllPages ? "list.bullet" : "target")
+            if showingAllPages {
+                Text("Showing all \(allPages.count) chapters")
+            } else {
+                let n = focusedPages?.count ?? 0
+                Text(n == 1 ? "Showing the 1 chapter for this" : "Showing \(n) chapters for this")
+            }
+            Spacer()
+            Button(showingAllPages ? "Back to relevant" : "See all \(allPages.count)") {
+                withAnimation(.easeInOut(duration: 0.2)) { toggleShowingAllPages() }
+            }
+            .font(.system(size: 12, weight: .semibold, design: .rounded))
+        }
+        .font(.system(size: 12, weight: .medium, design: .rounded))
+        .foregroundColor(ink.opacity(0.65))
+        .padding(.horizontal, 20)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(lime.opacity(0.18))
+        .overlay(alignment: .bottom) { Rectangle().fill(ink.opacity(0.08)).frame(height: 1) }
+        .accessibilityIdentifier("bookReaderFocusBanner")
     }
 
     @ViewBuilder

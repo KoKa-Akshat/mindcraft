@@ -103,6 +103,13 @@ struct FieldDeskView: View {
     /// time (below) - `jesseCall.closeChapterBook()` nils the source right
     /// after, so this view needs its own copy to hand to BookReaderView.
     @State private var openBinderBookGenerationInfo: ChapterBookGenerationInfo?
+    /// Same handoff-capture reasoning as `openBinderBookGenerationInfo`
+    /// above, for `jesseCall.openedChapterBookFocusConceptIds` (2026-08-23).
+    /// Stays nil for the Chapter Library / ambient-map full-browse entry
+    /// point (line ~3331 below) - full-book browsing is deliberately
+    /// unaffected by session-scoped filtering, only a voice-matched
+    /// sub-topic should ever narrow the view.
+    @State private var openBinderBookFocusConceptIds: Set<String>?
     @State private var showDesignStudio = false
     @State private var showSchedulingWorkflows = false
     @State private var schedulingWorkflowsMinimized = false
@@ -114,6 +121,10 @@ struct FieldDeskView: View {
     @State private var showJesseCallSheet = false
     /// BYOB "Cook a Field Book" from the Binder popup.
     @State private var showByobStudio = false
+    /// A tapped Study Session row from the Binder popup's new section
+    /// (2026-08-23) - a plain transcript read-back sheet, same
+    /// item-driven-sheet shape as the rest of this file.
+    @State private var viewingStudySessionItem: BinderItem?
     /// Learn Studio — the five-pane concept-study screen, reachable from the
     /// `+` Add panel for now (lowest-risk entry point tonight; Binder/ACT
     /// Field Book wiring is a separate, more invasive pass into an
@@ -216,6 +227,13 @@ struct FieldDeskView: View {
     private enum FieldDeskOverlay: Hashable, CaseIterable {
         case actFieldBook, gmailBox, applyToday, workflowLibrary, deskGridDashboard, createCanvas, binderOverlay, calendarOverlay, intelOverlay
         case standaloneDesk, createStudio
+        /// The merged Learn+Practice AI study companion (2026-08-23,
+        /// explicit ask: "Learn and Practice can be merged... intelligent
+        /// AI conversational thing"). Same whole-screen-replace shape as
+        /// `.createCanvas`/`.binderOverlay` - dashboard stays mounted
+        /// underneath, this layers on top via zIndex, closing reveals the
+        /// dashboard again rather than Jesse's Kitchen.
+        case studyCompanion
 
         /// Blocks top chrome + the background pan/zoom touch catcher (see
         /// deskOverlayChromeBlocked). Exhaustive switch — the compiler now
@@ -226,7 +244,7 @@ struct FieldDeskView: View {
         /// of a silent runtime touch-swallowing bug.
         var blocksChrome: Bool {
             switch self {
-            case .actFieldBook, .gmailBox, .applyToday, .workflowLibrary, .deskGridDashboard, .createCanvas, .binderOverlay, .calendarOverlay, .intelOverlay:
+            case .actFieldBook, .gmailBox, .applyToday, .workflowLibrary, .deskGridDashboard, .createCanvas, .binderOverlay, .calendarOverlay, .intelOverlay, .studyCompanion:
                 return true
             case .standaloneDesk, .createStudio:
                 return false
@@ -666,6 +684,34 @@ struct FieldDeskView: View {
                     )
                 }
 
+                if openOverlays.contains(.studyCompanion) {
+                    AnyView(
+                        StudyCompanionView(
+                            studentName: deskChromeName ?? "there",
+                            onClose: {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    _ = openOverlays.remove(.studyCompanion)
+                                }
+                            },
+                            onSaveSession: { topic, transcript in
+                                binderStore.addStudySession(topic: topic, transcript: transcript)
+                            }
+                        )
+                        .environmentObject(jesseCall)
+                        .transition(.opacity)
+                        .zIndex(89)
+                        // No wrapper .accessibilityIdentifier here - same
+                        // clobbering bug class documented in CLAUDE.md
+                        // (confirmed here 2026-08-23): StudyCompanionView
+                        // already self-identifies via its own marker
+                        // ("studyCompanionView"), and an outer identifier on
+                        // this call site would stomp both that marker AND
+                        // every nested child identifier
+                        // (studyCompanionMic/Send/Input/...) down to this
+                        // one value instead.
+                    )
+                }
+
                 if openOverlays.contains(.deskGridDashboard) && UIDevice.current.userInterfaceIdiom == .phone {
                     // Phone layout (2026-08-23) - a genuinely different
                     // screen, not a scaled DeskGridDashboardView (see
@@ -817,6 +863,16 @@ struct FieldDeskView: View {
                         onSyncCalendar: { Task { await refreshDeskCalendar() } },
                         onOpenLearnStudio: { showLearnStudio = true },
                         onOpenArchive: { showArchiveWorkflow = true },
+                        // Merged Learn+Practice study companion (2026-08-23) -
+                        // whole-screen overlay, same insert-into-openOverlays
+                        // shape as onOpenCreate/onOpenBinder above, not a
+                        // column-only swap - "whatever we have on the dash
+                        // changes" per the explicit ask.
+                        onOpenStudyCompanion: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                _ = openOverlays.insert(.studyCompanion)
+                            }
+                        },
                         // Real bug fix (2026-08-23): was openManageFromChrome(),
                         // which posts .mcOpenHubFromDesk - the hub page, not
                         // real Settings. AccountManageView needs a direct path
@@ -1337,9 +1393,11 @@ struct FieldDeskView: View {
             )
         }
         .fullScreenCover(item: $openBinderBook) { book in
-            BookReaderView(book: book, generationInfo: openBinderBookGenerationInfo, onClose: {
+            BookReaderView(book: book, generationInfo: openBinderBookGenerationInfo,
+                            focusConceptIds: openBinderBookFocusConceptIds, onClose: {
                 openBinderBook = nil
                 openBinderBookGenerationInfo = nil
+                openBinderBookFocusConceptIds = nil
             })
         }
         // Jesse found a real Chapter Library book by voice (2026-08-21) -
@@ -1354,6 +1412,7 @@ struct FieldDeskView: View {
             binderStore.addChapterBook(title: book.title, subjectId: book.subjectId)
             openBinderBook = book
             openBinderBookGenerationInfo = jesseCall.openedChapterBookGenerationInfo
+            openBinderBookFocusConceptIds = jesseCall.openedChapterBookFocusConceptIds
             jesseCall.closeChapterBook()
         }
         .sheet(isPresented: $showJesseCallSheet) {
@@ -3147,6 +3206,12 @@ struct FieldDeskView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 14) {
+                        // Saved Study Companion conversations (2026-08-23,
+                        // explicit ask - see BinderStore.addStudySession's
+                        // own doc comment). Listed first: this is the fresh,
+                        // active-use tab, Memo/Doc/BYOB are the older filing
+                        // cabinets underneath it.
+                        binderSection("Study Sessions", id: "StudySessions", items: binderStore.items(types: "study_session"))
                         binderSection("Memo", id: "Memo", items: binderStore.items(types: "memo"))
                         binderSection("Doc", id: "Doc", items: binderStore.items(types: "doc", "book"))
                         binderSection("BYOB", id: "BYOB", items: binderStore.items(types: "byob"), showCook: true)
@@ -3166,6 +3231,25 @@ struct FieldDeskView: View {
                     .accessibilityIdentifier("fieldDeskBinderOverlay")
                     .allowsHitTesting(false)
             }
+        }
+        .sheet(item: $viewingStudySessionItem) { item in
+            NavigationView {
+                ScrollView {
+                    Text(item.body)
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundColor(Color(fdHex: "0c1207"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(18)
+                }
+                .navigationTitle(item.title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Done") { viewingStudySessionItem = nil }
+                    }
+                }
+            }
+            .accessibilityIdentifier("fieldDeskStudySessionViewer")
         }
     }
 
@@ -3192,6 +3276,13 @@ struct FieldDeskView: View {
                     if item.type == "book", item.source == "chapter_library" {
                         Button {
                             openChapterBookFromBinder(subjectId: item.body, fallbackTitle: item.title)
+                        } label: {
+                            binderItemRow(item)
+                        }
+                        .buttonStyle(.plain)
+                    } else if item.type == "study_session" {
+                        Button {
+                            viewingStudySessionItem = item
                         } label: {
                             binderItemRow(item)
                         }
@@ -3252,6 +3343,11 @@ struct FieldDeskView: View {
                 // generation - never show stale stats from whatever book
                 // was open before this one.
                 openBinderBookGenerationInfo = nil
+                // Full-book browsing from the Binder/Chapter Library is
+                // always unfiltered - explicitly clear rather than trust
+                // this @State var wasn't left set by an earlier voice-
+                // matched sub-topic session for a DIFFERENT book.
+                openBinderBookFocusConceptIds = nil
             } catch {
                 flash("Couldn't reopen \(fallbackTitle) right now")
             }

@@ -227,6 +227,21 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// 2026-08-21: "show the time required to generate it and then the
     /// credits required to generate it... after the chapter was generated."
     @Published private(set) var openedChapterBookGenerationInfo: ChapterBookGenerationInfo?
+    /// Which section(s) of `openedChapterBook` the student's actual spoken
+    /// topic matched, nil when the whole book is relevant. Real gap
+    /// (2026-08-23, direct ask: "we dont show all pages... we show what
+    /// pages are relevant to that learning session"): before this, asking
+    /// about one specific sub-topic ("the chain rule") inside a large
+    /// archive book (Calculus, 23 chapters) opened the ENTIRE book at page
+    /// 1 - correct content, wrong scope, forcing the student through every
+    /// tab to find the one they asked about. nil for a whole-title match
+    /// (the student asked about the SUBJECT, not a sub-topic - showing
+    /// everything is correct) and for a freshly generated book (Tier 3 -
+    /// `BookGenerationClient.generate(topic:)` already scopes its output
+    /// to just the requested topic, so every section it returns is already
+    /// relevant). BookReaderView reads this to open pre-filtered to the
+    /// matched section(s), with its own affordance to see the rest.
+    @Published private(set) var openedChapterBookFocusConceptIds: Set<String>?
     /// Set the moment a topic is first recognized, cleared once the
     /// student answers - the real gap behind a live bug report
     /// (2026-08-18: "I said 'learn California bar'... the next thing
@@ -251,6 +266,20 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// `workDashboardLesson` already use - this class owns no navigation
     /// state itself.
     @Published var practiceRequested = false
+    /// True while `StudyCompanionView` (the merged Learn+Practice surface,
+    /// 2026-08-23) is on screen. Set/cleared by that view itself.
+    ///
+    /// Why this exists: `practiceRequested` is a fire-and-forget signal -
+    /// once set true, EVERY observer sees the same transition (SwiftUI has
+    /// no single-consumer model), so `DeskGridDashboardView`'s own
+    /// `.onChange(of: practiceRequested)` fires even while it's mounted
+    /// underneath Study Companion, teleporting the hidden dashboard's rail
+    /// to `.englishPractice` behind the student's back - invisible until
+    /// they close Study Companion and land somewhere they never asked for.
+    /// Gating `isPracticeRequest`'s branch on this flag (see `askJesse`)
+    /// stops that signal from ever firing while this surface owns the
+    /// conversation, instead of trying to race/undo it after the fact.
+    @Published var studyCompanionPresented = false
     /// Live gated-generation request state (LIVE_GATED_GENERATION_TEST_SPEC.md,
     /// closed-test only - see `LiveGatedGeneration.isEnabled`'s doc comment
     /// for the gate). Owned here rather than in a view because the request
@@ -372,6 +401,7 @@ final class JesseCallSession: NSObject, ObservableObject {
             pendingLearnGrade = nil
             openedChapterBook = nil
             openedChapterBookGenerationInfo = nil
+            openedChapterBookFocusConceptIds = nil
             // Short spoken greeting only, then text (2026-08-22, explicit
             // ask: "Jesse says Heyy! and then everything else is just
             // writing. no conversations please, it delays learning - just
@@ -457,6 +487,7 @@ final class JesseCallSession: NSObject, ObservableObject {
     func closeChapterBook() {
         openedChapterBook = nil
         openedChapterBookGenerationInfo = nil
+        openedChapterBookFocusConceptIds = nil
     }
 
     /// Real bug, live testing 2026-08-21: the Chapter Library (Tier 0) and
@@ -605,7 +636,17 @@ final class JesseCallSession: NSObject, ObservableObject {
     // MARK: - Listening
 
     func startListening() {
-        guard isActive, !isPaused, !isListening, !isThinking else { return }
+        // Real bug fix (2026-08-23, live report on StudyCompanionView:
+        // "when I speak there, it's not rendering anything") - every one of
+        // these four conditions used to fail SILENTLY (a bare `return`, no
+        // status set), which looks identical to "tapped the mic, nothing
+        // happened" whether the real cause was a genuine race (isActive not
+        // true yet right as the screen opens) or something the student
+        // could actually act on. Now each real cause says so.
+        guard isActive else { status = "Say hi to Jesse first - one sec."; return }
+        guard !isPaused else { status = "Call is paused."; return }
+        guard !isListening else { return }
+        guard !isThinking else { status = "Still working on your last question - one sec."; return }
         SFSpeechRecognizer.requestAuthorization { [weak self] auth in
             Task { @MainActor in
                 guard let self else { return }
@@ -690,6 +731,20 @@ final class JesseCallSession: NSObject, ObservableObject {
             return
         }
         Task { await askJesse(text) }
+    }
+
+    /// Typed-text counterpart to `finishListeningTurn()` above, for a real
+    /// text input box (StudyCompanionView, 2026-08-23) - same tail (append
+    /// the student's turn, then ask Jesse) minus the ASR-specific bits
+    /// (no live transcript/silence timer to tear down for a typed message).
+    /// Voice stays the primary path elsewhere in the app per CLAUDE.md
+    /// (tap-to-toggle mic, never hold-to-talk) - this is additive, not a
+    /// replacement.
+    func submitText(_ text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, isActive, !isAmbient else { return }
+        turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "student", text: trimmed, at: Date()))
+        Task { await askJesse(trimmed) }
     }
 
     func stopListening() {
@@ -829,8 +884,22 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         if context == "workDashboard", Self.isPracticeRequest(message) {
             guard isActive else { isThinking = false; return }
-            postText("On it - opening Practice now.")
-            practiceRequested = true
+            // Real fix, 2026-08-23, explicit ask: "if I tell you that I
+            // want to practice this vocal, including a lesson... it's
+            // still going to be a lesson" - while Study Companion owns the
+            // conversation, a practice request stays IN it (no context
+            // switch, no teleport to the separate Practice screen); the
+            // dedicated Practice screen is still exactly what every other
+            // "workDashboard" entry point (the dashboard's own Answer box)
+            // gets, unchanged - see studyCompanionPresented's own doc
+            // comment for why this can't be done by resetting
+            // practiceRequested after the fact instead.
+            if studyCompanionPresented {
+                postText("Sure - let's practice it right here. Go ahead and try it, or tell me what you want to be quizzed on.")
+            } else {
+                postText("On it - opening Practice now.")
+                practiceRequested = true
+            }
             isThinking = false
             return
         }
@@ -1120,14 +1189,42 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// strategy to reason about. Returns nil (not an error) on any
     /// network failure or empty catalog, same "fall through to the next
     /// real tier" shape every other source in this chain already has.
-    private static func matchChapterLibraryBook(topic: String) async -> AssembledBook? {
+    /// Returns the matched book plus WHICH section(s) the topic actually
+    /// hit - nil focus means the whole-title matched (the student asked
+    /// about the subject itself, so the whole book is relevant); a non-nil,
+    /// non-empty set means only specific section(s) matched (2026-08-23,
+    /// see `openedChapterBookFocusConceptIds`'s doc comment) and the caller
+    /// should open pre-filtered to just those.
+    private static func matchChapterLibraryBook(topic: String) async -> (book: AssembledBook, focusConceptIds: Set<String>?)? {
         let loweredTopic = topic.lowercased()
-        guard let summaries = try? await BookLibraryClient.listBooks(),
-              let match = summaries.first(where: { summary in
-                  summary.title.lowercased().contains(loweredTopic) || loweredTopic.contains(summary.title.lowercased())
-              })
-        else { return nil }
-        return try? await BookLibraryClient.getBook(subjectId: match.subjectId)
+        guard let summaries = try? await BookLibraryClient.listBooks() else { return nil }
+        if let match = summaries.first(where: { summary in
+            summary.title.lowercased().contains(loweredTopic) || loweredTopic.contains(summary.title.lowercased())
+        }) {
+            guard let book = try? await BookLibraryClient.getBook(subjectId: match.subjectId) else { return nil }
+            return (book, nil)
+        }
+        // Real fix (2026-08-23, live report: asking for a specific chapter
+        // topic like "the chain rule" instead of the whole book's own
+        // title fell straight through this whole-title-only check into
+        // fresh generation, even though a real, rich, already-assembled
+        // book covering it existed) - also check each real book's own
+        // CHAPTER titles, not just its top-level title. Real cost: one
+        // getBook fetch per candidate book whose title alone didn't match
+        // (bounded by however many books are actually synced, today a
+        // handful) - acceptable for a voice request that's already waiting
+        // on a network round trip either way.
+        for summary in summaries {
+            guard let book = try? await BookLibraryClient.getBook(subjectId: summary.subjectId) else { continue }
+            let matchedIds = book.chapters.flatMap(\.sections).filter { section in
+                let lowered = section.title.lowercased()
+                return lowered.contains(loweredTopic) || loweredTopic.contains(lowered)
+            }.map(\.conceptId)
+            if !matchedIds.isEmpty {
+                return (book, Set(matchedIds))
+            }
+        }
+        return nil
     }
 
     /// Strips a trailing self-description clause ("I'm in grade 8", "I am
@@ -1374,15 +1471,23 @@ final class JesseCallSession: NSObject, ObservableObject {
         // same loose-substring way BookGraphLoader matching already works
         // one tier down, so this doesn't need its own separate matching
         // strategy to reason about.
-        if let book = await Self.matchChapterLibraryBook(topic: topic) {
-            print("[JesseDebug] Tier-0 MATCHED book.title=\"\(book.title)\" book.subjectId=\(book.subjectId) for topic=\"\(topic)\"")
+        if let (book, focusConceptIds) = await Self.matchChapterLibraryBook(topic: topic) {
+            print("[JesseDebug] Tier-0 MATCHED book.title=\"\(book.title)\" book.subjectId=\(book.subjectId) focus=\(focusConceptIds?.count.description ?? "whole book") for topic=\"\(topic)\"")
             guard isActive else { return }
             pendingLearnTopic = nil
             openedChapterBook = book
             openedChapterBookGenerationInfo = nil
+            openedChapterBookFocusConceptIds = focusConceptIds
             syncWorkDashboardLesson(from: book, source: .archive(bookTitle: book.title))
-            let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
-            postText("Found it in the library - \(book.title), \(book.coverageLabel): \(sectionTitles.joined(separator: ", ")).")
+            let relevantSections = book.chapters.flatMap(\.sections).filter {
+                focusConceptIds == nil || focusConceptIds!.contains($0.conceptId)
+            }
+            let sectionTitles = relevantSections.map(\.title)
+            if focusConceptIds != nil {
+                postText("Found it - \(sectionTitles.joined(separator: ", ")), from \(book.title).")
+            } else {
+                postText("Found it in the library - \(book.title), \(book.coverageLabel): \(sectionTitles.joined(separator: ", ")).")
+            }
             return
         }
         let loweredTopic = topic.lowercased()
@@ -1491,6 +1596,10 @@ final class JesseCallSession: NSObject, ObservableObject {
             // student just now, so a "generated in 3m42s, $3.60" badge would
             // be a real lie, not a rounding error.
             openedChapterBookGenerationInfo = cached ? nil : ChapterBookGenerationInfo(costUsd: costUsd, elapsedSeconds: elapsedSeconds)
+            // Whole-book focus (nil) - unlike Tier 0's large pre-existing
+            // archive books, this book was generated specifically FOR this
+            // topic, so every section it returned is already relevant.
+            openedChapterBookFocusConceptIds = nil
             syncWorkDashboardLesson(from: book, source: .generated)
             let sectionTitles = book.chapters.flatMap(\.sections).map(\.title)
             Task { await LessonGraphIngestClient.ingest(topic: topic, chapterTitles: sectionTitles) }
@@ -1509,12 +1618,14 @@ final class JesseCallSession: NSObject, ObservableObject {
             workDashboardLesson = nil
             openedChapterBook = nil
             openedChapterBookGenerationInfo = nil
+            openedChapterBookFocusConceptIds = nil
             postText("I couldn't build a good enough lesson on that just now" + (reason.map { " - \($0)" } ?? "") + ". Want to try rephrasing it?")
             return
         case .rateLimited(let reason):
             workDashboardLesson = nil
             openedChapterBook = nil
             openedChapterBookGenerationInfo = nil
+            openedChapterBookFocusConceptIds = nil
             postText("I've hit today's generation limit - \(reason ?? "try again tomorrow").")
             return
         case .unavailable:
