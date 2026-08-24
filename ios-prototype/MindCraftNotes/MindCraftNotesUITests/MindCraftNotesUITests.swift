@@ -1025,11 +1025,17 @@ final class MindCraftNotesUITests: XCTestCase {
         // this one now), so "The Desk" wordmark, the "Jesse's" home
         // button, Call, and the whole Workflow market section are all
         // gone. Connect (Friends, swaps the Tutors section in place) and
-        // Back now live next to the greeting instead.
+        // Sign out now live next to the greeting instead.
+        //
+        // Swapped 2026-08-24 (explicit ask): the icon button next to the
+        // greeting is Sign out now (a door glyph, `deskHubSignOut`) - Back
+        // moved to a plain-text control at the bottom of the page
+        // (`hubBackFooter`, still `deskHubBackButton`), no longer visible
+        // without scrolling.
         let connectButton = app.buttons["deskHubConnectButton"]
         XCTAssertTrue(connectButton.waitForExistence(timeout: 10), "expected Connect next to the greeting on the desk hub")
-        XCTAssertTrue(app.buttons["deskHubBackButton"].waitForExistence(timeout: 3),
-                      "expected Back next to the greeting on the desk hub")
+        XCTAssertTrue(app.buttons["deskHubSignOut"].waitForExistence(timeout: 3),
+                      "expected Sign out (door icon) next to the greeting on the desk hub")
         let settingsButton = app.buttons["deskHubSettingsButton"]
         XCTAssertTrue(settingsButton.waitForExistence(timeout: 3),
                       "expected Settings next to Connect and Back")
@@ -1051,8 +1057,10 @@ final class MindCraftNotesUITests: XCTestCase {
                       "expected Settings to dismiss back to the hub")
         XCTAssertFalse(app.staticTexts["Start your mastery check-in"].exists,
                        "no bubble copy next to the Connect button")
-        XCTAssertTrue(app.buttons["deskHubCreateInstance"].waitForExistence(timeout: 3),
-                      "expected tappable Create an instance tile")
+        // Removed 2026-08-24, explicit ask: "remove the create an instance
+        // thing please" - the tile is gone from the hub, not just hidden.
+        XCTAssertFalse(app.buttons["deskHubCreateInstance"].exists,
+                        "expected the Create an instance tile to be removed")
         XCTAssertFalse(app.staticTexts["Your instances"].exists,
                        "Your instances heading should be gone")
         XCTAssertFalse(app.staticTexts["deskMasteryPct"].exists,

@@ -320,18 +320,27 @@ struct DeskShellView: View {
                         .accessibilityIdentifier("deskHubSettingsButton")
                         .accessibilityLabel("Settings")
 
+                        // Swapped 2026-08-24, explicit ask: "signout should
+                        // be the door icon in the back button sign and
+                        // instead of Sign out say back in the bottom" - this
+                        // top-row icon slot (next to Connect/Settings) is
+                        // now Sign out, represented by a real door glyph;
+                        // the plain-text "Back" control moved to that same
+                        // bottom-footer slot instead (`hubBackFooter`).
                         Button {
                             showHubPage = false
+                            fieldDeskRoute = nil
+                            authService.signOut()
                         } label: {
-                            Image(systemName: "chevron.left")
+                            Image(systemName: "door.left.hand.open")
                                 .font(.system(size: 14, weight: .bold))
                                 .foregroundColor(ShellColor.ink)
                                 .frame(width: 44, height: 44)
                                 .background(Circle().fill(Color.white.opacity(0.7)))
                         }
                         .buttonStyle(.plain)
-                        .accessibilityIdentifier("deskHubBackButton")
-                        .accessibilityLabel("Back")
+                        .accessibilityIdentifier("deskHubSignOut")
+                        .accessibilityLabel("Sign out")
                     }
                     .padding(.top, 4)
                     .padding(.bottom, 16)
@@ -353,7 +362,7 @@ struct DeskShellView: View {
                         tutorsNearbySection
                     }
 
-                    hubSignOutFooter
+                    hubBackFooter
                 }
                 // Pull content left toward the logo / wordmark.
                 .padding(.leading, 14)
@@ -391,23 +400,22 @@ struct DeskShellView: View {
     /// Sign out, moved off the primary nav row - it shouldn't share visual
     /// weight with "back to Jesse's." Sits under the Workflow Market section,
     /// the last thing on the hub page.
-    private var hubSignOutFooter: some View {
+    /// Renamed from "Sign out" (2026-08-24, explicit ask - see the top-row
+    /// button's own doc comment for the full swap): this footer control is
+    /// now plain navigation, closing the hub back to Field Desk, the exact
+    /// action the old chevron icon used to perform up top.
+    private var hubBackFooter: some View {
         HStack(spacing: 10) {
             Spacer()
-            // Sign out lives here now, not Exit - the persistent top-level
-            // chrome no longer has its own sign-out button either, so this
-            // is the one place it lives instead of being duplicated.
-            Button("Sign out") {
+            Button("Back") {
                 showHubPage = false
-                fieldDeskRoute = nil
-                authService.signOut()
             }
             .font(.system(size: 12, weight: .bold, design: .rounded))
             .foregroundColor(ShellColor.ink.opacity(0.55))
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
             .background(Capsule().stroke(ShellColor.ink.opacity(0.2), lineWidth: 1))
-            .accessibilityIdentifier("deskHubSignOut")
+            .accessibilityIdentifier("deskHubBackButton")
             Spacer()
         }
         .padding(.top, 26)
@@ -574,14 +582,16 @@ struct DeskShellView: View {
     }
 
     /// Real port of `renderHub()`'s `hub-card` markup, one card per
-    /// `DEFAULTS` entry (`js/bootHub.js`) + the real "Create an instance"
-    /// tile at the end.
+    /// `DEFAULTS` entry (`js/bootHub.js`). The leading "+ Create an
+    /// instance" tile is gone (2026-08-24, explicit ask: "remove the
+    /// create an instance thing please") - `createInstanceTile` and
+    /// `showCreateInstance`/`CreateInstanceStudioView` are unreachable
+    /// from here now (kept, not deleted outright, matching this app's own
+    /// convention for a removed entry point - see CLAUDE.md's "Known gaps"
+    /// on `showDocCook` for the same shape of intentionally-orphaned
+    /// feature).
     private var instanceGrid: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 240), spacing: 16)], spacing: 16) {
-            // "+ Create an instance" leads the grid now (was last) - the
-            // Open Learning Archive default card that used to lead it is
-            // gone, so this is the first thing under the greeting.
-            createInstanceTile
             ForEach(customInstances.instances) { inst in
                 instanceCard(
                     id: inst.id, name: inst.name, badge: inst.subject,
