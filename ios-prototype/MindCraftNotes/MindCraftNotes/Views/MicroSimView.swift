@@ -96,7 +96,16 @@ struct GeneratedSimView: View {
                 .accessibilityIdentifier("generatedSimClose")
             }
             .padding(14)
-            MicroSimInlineWebView(html: sim.html, baseURL: nil)
+            // Real bug fix (2026-08-23) - baseURL: nil was chosen here on
+            // the theory that a fully-self-contained page doesn't need a
+            // real origin; it does, because the one thing that's NOT
+            // inlined is the remote p5.js CDN `<script>` tag, and WKWebView
+            // can silently refuse cross-origin subresource loads from a
+            // null-origin (`loadHTMLString(_:baseURL: nil)`) document - see
+            // InlineSimWebView's own doc comment (MicroSimWebView.swift)
+            // for the confirmed root cause. Falls through to
+            // MicroSimInlineWebView's own real-https default instead.
+            MicroSimInlineWebView(html: sim.html)
         }
         .background(Color.white)
         // NOT a plain .accessibilityIdentifier() on the root - that

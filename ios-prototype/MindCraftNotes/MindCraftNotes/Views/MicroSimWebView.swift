@@ -56,7 +56,23 @@ struct InlineSimWebView: UIViewRepresentable {
         view.scrollView.pinchGestureRecognizer?.isEnabled = true
         view.scrollView.minimumZoomScale = 0.5
         view.scrollView.maximumZoomScale = 3.0
-        view.loadHTMLString(html, baseURL: nil)
+        // Real bug fix (2026-08-23, live report across multiple screens:
+        // "sims are not loading" / from 2026-08-21's own doc comment above,
+        // "I hit the play button, and nothing happens") - confirmed by
+        // fetching a real generated sim from the live webhook: every sim
+        // here loads p5.js from a remote CDN
+        // (`<script src="https://cdn.jsdelivr.net/...">`), not inlined.
+        // `loadHTMLString(_:baseURL: nil)` gives the page a null/opaque
+        // origin, and WKWebView can silently refuse to load cross-origin
+        // remote subresources (the CDN script) from a null-origin document
+        // - the container loads fine, the canvas just never initializes
+        // because p5's own functions (createCanvas, createSlider) were
+        // never defined. A real https baseURL gives the page a real origin
+        // that's allowed to fetch the CDN script, exactly the fix already
+        // applied one file over in `MicroSimInlineWebView` for the bundled
+        // McCreary set - just never carried over to this shared component,
+        // which is what Archive/Design Studio/BookReaderView actually use.
+        view.loadHTMLString(html, baseURL: URL(string: "https://mindcraft-93858.web.app/"))
 
         if onInteraction != nil {
             let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.touched(_:)))
