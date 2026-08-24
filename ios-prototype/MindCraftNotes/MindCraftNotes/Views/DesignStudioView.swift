@@ -85,11 +85,15 @@ struct DesignStudioView: View {
                         boxView(box, scale: scale)
                     }
 
-                    pin(StudioBoard.rightPanel, scale: scale) {
-                        if let id = selectedId, let box = graph.box(id) {
+                    // Jesse rail removed here (2026-08-24, explicit ask -
+                    // see StudioBoard.canvas's own doc comment). The
+                    // inspector now only renders, as a floating overlay,
+                    // when a box is actually selected - nothing occupies
+                    // this space otherwise, leaving the widened canvas
+                    // fully clear.
+                    if let id = selectedId, let box = graph.box(id) {
+                        pin(StudioBoard.inspectorOverlay, scale: scale) {
                             inspector(box)
-                        } else {
-                            JesseRailView(studentName: studentName, context: "designStudio")
                         }
                     }
                     pin(StudioBoard.timeline, scale: scale) { timelineStrip }
@@ -122,7 +126,7 @@ struct DesignStudioView: View {
         .fullScreenCover(isPresented: $showPreview) {
             BookPreviewView(
                 title: graph.resolvedTitle,
-                sections: graph.assembleSections(),
+                graph: graph,
                 onClose: { showPreview = false }
             )
         }
@@ -212,13 +216,24 @@ struct DesignStudioView: View {
             .opacity(graph.boxes.isEmpty ? 0.4 : 1)
             .accessibilityIdentifier("designStudioPreviewBook")
 
+            // Renamed to plain "Publish" (2026-08-24, explicit ask:
+            // "publish to binder should be publish which them published") -
+            // and once it succeeds, the button itself reflects "Published"
+            // rather than just the adjacent feedback text, same
+            // confirmed-state pattern StudyCompanionView's "Save to
+            // Binder" -> "Saved" already uses.
             Button(action: publish) {
-                Text(publishState == .publishing ? "Publishing\u{2026}" : "Publish to Binder")
-                    .font(.system(size: 12.5, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 9)
-                    .background(Capsule().fill(graph.canPublish ? Color.black : Color.black.opacity(0.25)))
+                HStack(spacing: 5) {
+                    if case .done = publishState {
+                        Image(systemName: "checkmark")
+                    }
+                    Text(publishButtonLabel)
+                }
+                .font(.system(size: 12.5, weight: .bold, design: .rounded))
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 9)
+                .background(Capsule().fill(graph.canPublish ? Color.black : Color.black.opacity(0.25)))
             }
             .buttonStyle(.plain)
             .disabled(!graph.canPublish || publishState == .publishing)
@@ -242,6 +257,14 @@ struct DesignStudioView: View {
                 .fill(Color(white: 0.985))
                 .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
         )
+    }
+
+    private var publishButtonLabel: String {
+        switch publishState {
+        case .publishing: return "Publishing\u{2026}"
+        case .done: return "Published"
+        default: return "Publish"
+        }
     }
 
     private func publishFeedback(_ message: String, color: Color) -> some View {
@@ -1146,63 +1169,69 @@ private extension CGFloat {
     var clampedForChrome: CGFloat { Swift.min(Swift.max(self, 0.75), 1.25) }
 }
 
-/// Read-through of the assembled book, exactly as the graph walk orders it
-/// - the same `ContentGraphStore.assembleSections()` walk publish uses, so
-/// what this shows IS what `Publish to Binder` writes (with one deliberate
+/// Read-through of the assembled book, walking the REAL graph structure -
+/// the same edges `ContentGraphStore.assembleBook()` walks to publish, so
+/// what this shows IS what `Publish` writes (with one deliberate
 /// difference: unwritten boxes appear here as clearly-labeled gaps, while
 /// publish drops them - a draft preview should show what's missing).
+///
+/// Real branching (2026-08-24, explicit ask: "preview shows connections
+/// too and branching properly... not just in a listic view cause boxes
+/// are connected sometimes") - `assembleSections()`'s own doc comment
+/// already named this gap honestly ("a real choose-your-path reader is a
+/// scoped-out gap this flatten does not pretend to solve"). This view no
+/// longer consumes that pre-flattened array: it walks `graph` itself
+/// (`section(for:)` renders one box at a time, factored out of
+/// `assembleSections()` for exactly this reuse) and renders a `.branch`
+/// box's multiple outgoing paths as real side-by-side tracks instead of
+/// a bullet list of "if you choose X" text - a student can see the
+/// structure, not just read about it.
 ///
 /// This is deliberately NOT `StudySessionView`: that reader labels its
 /// lessons "AI-generated" (correct for Jesse-generated lessons, a false
 /// attribution for a book the student authored on this canvas), and it's
-/// the flat-list reader anyway - the branching-reader gap documented on
-/// `assembleSections()` applies to it too.
+/// the flat-list reader anyway - same gap this view now closes for
+/// Design Studio's own preview.
 private struct BookPreviewView: View {
     let title: String
-    let sections: [ContentGraphStore.BookSection]
+    @ObservedObject var graph: ContentGraphStore
     var onClose: () -> Void
 
     var body: some View {
         ZStack {
             Color(dsHex: "fff8e9").ignoresSafeArea()
             DottedDesignGrid()
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
+            ScrollView([.vertical, .horizontal]) {
+                VStack(alignment: .leading, spacing: 20) {
                     Text("PREVIEW · WHAT PUBLISH PRODUCES")
                         .font(.system(size: 10, weight: .heavy, design: .rounded))
                         .tracking(1)
                         .foregroundColor(Color(dsHex: "143a2e").opacity(0.45))
                     Text(title)
-                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .font(.system(size: 28, weight: .bold, design: .rounded))
                         .foregroundColor(Color(dsHex: "143a2e"))
 
-                    ForEach(sections) { section in
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack(spacing: 7) {
-                                Image(systemName: section.type.glyph)
-                                    .font(.system(size: 11, weight: .bold))
-                                Text(section.title)
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                            }
-                            .foregroundColor(Color(dsHex: "143a2e"))
-                            Text(markdownish(section.body))
-                                .font(.system(size: 13.5, weight: .medium, design: .rounded))
-                                .foregroundColor(Color(dsHex: "143a2e").opacity(section.isPlaceholder ? 0.45 : 0.85))
-                                .italic(section.isPlaceholder)
-                                .fixedSize(horizontal: false, vertical: true)
+                    // Same pure-cycle fallback assembleSections() itself
+                    // uses (every box has an incoming edge, so there's no
+                    // real start) - a defined order beats a blank preview.
+                    let roots = graph.startBoxes.isEmpty
+                        ? Array(graph.boxes.sorted { ($0.position.y, $0.position.x) < ($1.position.y, $1.position.x) }.prefix(1))
+                        : graph.startBoxes
+                    VStack(alignment: .leading, spacing: 14) {
+                        ForEach(roots) { start in
+                            branchTrack(from: start, visited: [])
                         }
-                        .padding(18)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                .fill(Color(white: 0.985))
-                                .shadow(color: .black.opacity(0.07), radius: 8, y: 3)
-                        )
                     }
                 }
+                // Widened (2026-08-24, explicit ask: "make this longer to
+                // occupy the whole screen please like more breadth") - was
+                // capped at 720pt centered; a branching layout also
+                // genuinely needs the horizontal room for side-by-side
+                // tracks, not just more breathing room for a single column.
                 .padding(.vertical, 40)
-                .frame(maxWidth: 720)
-                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 48)
+                .frame(minWidth: 900)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .overlay(alignment: .topTrailing) {
@@ -1228,6 +1257,103 @@ private struct BookPreviewView: View {
         }
     }
 
+    /// Renders one box, then its continuation(s). A plain (non-branch) box
+    /// with a single successor reads as a straight vertical run, same
+    /// feel as the old flat list; a `.branch` box's multiple successors
+    /// render as real side-by-side columns (an HStack of independent
+    /// vertical tracks), each headed by its real choice label, so the
+    /// fork is something the student SEES, not just reads a bullet about.
+    /// `visited` prevents runaway recursion on a cycle (same guard
+    /// `assembleSections()`'s own walk uses, threaded through explicitly
+    /// here since this is a real recursive function - Swift can't infer
+    /// an opaque `some View` return type for a function that calls
+    /// itself, so this returns `AnyView`, the standard escape hatch for
+    /// recursive SwiftUI tree views).
+    private func branchTrack(from box: DesignBox, visited: Set<String>) -> AnyView {
+        guard !visited.contains(box.id) else { return AnyView(EmptyView()) }
+        var seen = visited
+        seen.insert(box.id)
+        let section = graph.section(for: box)
+        let outgoing = graph.edgesFrom(box.id)
+
+        let card = sectionCard(section)
+
+        if box.type == .branch, outgoing.count > 1 {
+            // Real fork: each choice gets its own labeled column with its
+            // own continuation walked independently underneath.
+            return AnyView(
+                VStack(alignment: .leading, spacing: 14) {
+                    card
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(alignment: .top, spacing: 20) {
+                            ForEach(Array(outgoing.enumerated()), id: \.element.id) { index, edge in
+                                VStack(alignment: .leading, spacing: 10) {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "arrow.turn.down.right")
+                                            .font(.system(size: 10, weight: .bold))
+                                        Text(edge.label?.isEmpty == false ? edge.label! : "Choice \(index + 1)")
+                                            .font(.system(size: 11.5, weight: .heavy, design: .rounded))
+                                            .tracking(0.3)
+                                    }
+                                    .foregroundColor(Color(dsHex: "b3261e"))
+                                    if let next = graph.box(edge.to) {
+                                        branchTrack(from: next, visited: seen)
+                                    } else {
+                                        Text("Not connected to anything yet.")
+                                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                                            .foregroundColor(Color(dsHex: "8a8478"))
+                                    }
+                                }
+                                .frame(width: 340, alignment: .leading)
+                                .padding(14)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                        .strokeBorder(Color(dsHex: "b3261e").opacity(0.25), style: StrokeStyle(lineWidth: 1.5, dash: [5, 4]))
+                                )
+                            }
+                        }
+                    }
+                }
+            )
+        }
+
+        // Straight run: this box, then whatever comes next stacked below.
+        return AnyView(
+            VStack(alignment: .leading, spacing: 14) {
+                card
+                ForEach(outgoing) { edge in
+                    if let next = graph.box(edge.to) {
+                        branchTrack(from: next, visited: seen)
+                    }
+                }
+            }
+        )
+    }
+
+    private func sectionCard(_ section: ContentGraphStore.BookSection) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 7) {
+                Image(systemName: section.type.glyph)
+                    .font(.system(size: 11, weight: .bold))
+                Text(section.title)
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+            }
+            .foregroundColor(Color(dsHex: "143a2e"))
+            Text(markdownish(section.body))
+                .font(.system(size: 13.5, weight: .medium, design: .rounded))
+                .foregroundColor(Color(dsHex: "143a2e").opacity(section.isPlaceholder ? 0.45 : 0.85))
+                .italic(section.isPlaceholder)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(18)
+        .frame(maxWidth: 640, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color(white: 0.985))
+                .shadow(color: .black.opacity(0.07), radius: 8, y: 3)
+        )
+    }
+
     /// Renders the sections' light markdown (bold/italic) inline; keeps
     /// newlines and literal "- " bullets as-is. Falls back to plain text
     /// if parsing ever fails - never drops content.
@@ -1247,8 +1373,18 @@ private struct BookPreviewView: View {
 /// its UI).
 private enum StudioBoard {
     static let header = CGRect(x: 40, y: 24, width: 1360, height: 60)
-    static let canvas = CGRect(x: 40, y: 100, width: 940, height: 556)
-    static let rightPanel = CGRect(x: 1004, y: 100, width: 396, height: 556)
+    // Widened to span the full board (2026-08-24, explicit ask: "we dont
+    // need a jesse here instead make this longer to occupy the whole
+    // screen please like more breadth") - was 940pt wide with a permanent
+    // 396pt Jesse-rail panel reserved to its right whenever nothing was
+    // selected. The inspector now floats as an overlay on top of this
+    // wide canvas only while a box is actually selected (see
+    // `inspectorOverlayRect`), instead of a permanently-reserved column.
+    static let canvas = CGRect(x: 40, y: 100, width: 1360, height: 556)
+    /// Where the inspector floats when a box is selected - same visual
+    /// position the old rightPanel occupied, just an overlay now instead
+    /// of a permanent reservation.
+    static let inspectorOverlay = CGRect(x: 1004, y: 100, width: 396, height: 556)
     static let timeline = CGRect(x: 40, y: 672, width: 1360, height: 46)
     static let dock = CGRect(x: 40, y: 734, width: 1360, height: 52)
     static let connectBanner = CGRect(x: 420, y: 112, width: 480, height: 40)

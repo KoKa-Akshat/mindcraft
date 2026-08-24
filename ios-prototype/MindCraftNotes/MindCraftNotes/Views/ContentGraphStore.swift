@@ -414,6 +414,76 @@ final class ContentGraphStore: ObservableObject {
     /// shows a two-line preview and has no reader at all). A real
     /// choose-your-path reader is a scoped-out gap this flatten does not
     /// pretend to solve.
+    /// One box rendered into its `BookSection` shape - factored out of
+    /// `assembleSections()` (2026-08-24) so the branching-aware preview
+    /// (`BookPreviewTree`) can render one box at a time while walking the
+    /// real graph structure itself, instead of only ever consuming the
+    /// pre-flattened array. Same exact per-type text this always produced;
+    /// no behavior change for `assembleSections()`'s own callers.
+    func section(for box: DesignBox) -> BookSection {
+        let heading = box.title.isEmpty ? "Untitled \(box.type.label.lowercased())" : box.title
+        switch box.type {
+        case .chapter:
+            let body = box.chapterBody.trimmingCharacters(in: .whitespacesAndNewlines)
+            return BookSection(
+                id: box.id, type: .chapter, title: heading,
+                body: body.isEmpty ? "This chapter hasn't been written yet." : body,
+                isPlaceholder: body.isEmpty
+            )
+        case .checkpoint:
+            var lines: [String] = []
+            if !box.checkpointQuestion.isEmpty { lines.append("**\(box.checkpointQuestion)**") }
+            if !box.checkpointAnswer.isEmpty { lines.append("_What a good answer looks like: \(box.checkpointAnswer)_") }
+            return BookSection(
+                id: box.id, type: .checkpoint, title: "Checkpoint · \(heading)",
+                body: lines.isEmpty ? "No question written yet." : lines.joined(separator: "\n\n"),
+                isPlaceholder: lines.isEmpty
+            )
+        case .simulation:
+            var lines: [String] = []
+            if !box.subtitle.isEmpty { lines.append(box.subtitle) }
+            if !box.referenceURL.isEmpty { lines.append("Reference: \(box.referenceURL)") }
+            // HONEST LIMIT, stated rather than hidden (same convention
+            // as the .branch flatten note below): a generated sim's
+            // HTML is real and playable INSIDE Design Studio
+            // (InlineSimWebView, same rendering path BookReaderView
+            // uses), but the published Binder book body is a flat
+            // markdown string rendered by StudySessionView as plain
+            // Text, not HTML - embedding the sim's markup there would
+            // just show broken raw tags, not a working sim. Until the
+            // Binder reader gains a structured "embedded sim" surface
+            // (StudySessionView already has one for voice-flow
+            // generated sims - GENERATED SIM section - this box's
+            // result isn't wired into it yet), publish can only name
+            // what exists, not embed it.
+            if !box.generatedSimHTML.isEmpty {
+                let label = box.generatedSimTitle.isEmpty ? heading : box.generatedSimTitle
+                lines.append("_AI-generated simulation ready: \u{201c}\(label)\u{201d} - open this box in Design Studio to run it. (Published books can't embed it yet - open the draft canvas instead.)_")
+            } else {
+                lines.append("_Built as a block workspace in Design Studio - open the canvas to run it._")
+            }
+            return BookSection(
+                id: box.id, type: .simulation, title: "Simulation · \(heading)",
+                body: lines.joined(separator: "\n\n"),
+                isPlaceholder: false
+            )
+        case .branch:
+            let outgoing = edgesFrom(box.id)
+            let choiceLines = outgoing.enumerated().map { index, edge -> String in
+                let choice = edge.label ?? "Choice \(index + 1)"
+                let target = self.box(edge.to).map { $0.title.isEmpty ? "Untitled" : $0.title } ?? "?"
+                return "- If you choose **\(choice)**: continue at \u{201c}\(target)\u{201d}"
+            }
+            return BookSection(
+                id: box.id, type: .branch, title: heading,
+                body: choiceLines.isEmpty
+                    ? "No paths connected yet."
+                    : "Choose a path:\n\n" + choiceLines.joined(separator: "\n"),
+                isPlaceholder: choiceLines.isEmpty
+            )
+        }
+    }
+
     func assembleSections() -> [BookSection] {
         var visited = Set<String>()
         var sections: [BookSection] = []
@@ -421,67 +491,7 @@ final class ContentGraphStore: ObservableObject {
         func render(_ box: DesignBox) {
             guard !visited.contains(box.id) else { return }
             visited.insert(box.id)
-            let heading = box.title.isEmpty ? "Untitled \(box.type.label.lowercased())" : box.title
-            switch box.type {
-            case .chapter:
-                let body = box.chapterBody.trimmingCharacters(in: .whitespacesAndNewlines)
-                sections.append(BookSection(
-                    id: box.id, type: .chapter, title: heading,
-                    body: body.isEmpty ? "This chapter hasn't been written yet." : body,
-                    isPlaceholder: body.isEmpty
-                ))
-            case .checkpoint:
-                var lines: [String] = []
-                if !box.checkpointQuestion.isEmpty { lines.append("**\(box.checkpointQuestion)**") }
-                if !box.checkpointAnswer.isEmpty { lines.append("_What a good answer looks like: \(box.checkpointAnswer)_") }
-                sections.append(BookSection(
-                    id: box.id, type: .checkpoint, title: "Checkpoint · \(heading)",
-                    body: lines.isEmpty ? "No question written yet." : lines.joined(separator: "\n\n"),
-                    isPlaceholder: lines.isEmpty
-                ))
-            case .simulation:
-                var lines: [String] = []
-                if !box.subtitle.isEmpty { lines.append(box.subtitle) }
-                if !box.referenceURL.isEmpty { lines.append("Reference: \(box.referenceURL)") }
-                // HONEST LIMIT, stated rather than hidden (same convention
-                // as the .branch flatten note below): a generated sim's
-                // HTML is real and playable INSIDE Design Studio
-                // (InlineSimWebView, same rendering path BookReaderView
-                // uses), but the published Binder book body is a flat
-                // markdown string rendered by StudySessionView as plain
-                // Text, not HTML - embedding the sim's markup there would
-                // just show broken raw tags, not a working sim. Until the
-                // Binder reader gains a structured "embedded sim" surface
-                // (StudySessionView already has one for voice-flow
-                // generated sims - GENERATED SIM section - this box's
-                // result isn't wired into it yet), publish can only name
-                // what exists, not embed it.
-                if !box.generatedSimHTML.isEmpty {
-                    let label = box.generatedSimTitle.isEmpty ? heading : box.generatedSimTitle
-                    lines.append("_AI-generated simulation ready: \u{201c}\(label)\u{201d} - open this box in Design Studio to run it. (Published books can't embed it yet - open the draft canvas instead.)_")
-                } else {
-                    lines.append("_Built as a block workspace in Design Studio - open the canvas to run it._")
-                }
-                sections.append(BookSection(
-                    id: box.id, type: .simulation, title: "Simulation · \(heading)",
-                    body: lines.joined(separator: "\n\n"),
-                    isPlaceholder: false
-                ))
-            case .branch:
-                let outgoing = edgesFrom(box.id)
-                let choiceLines = outgoing.enumerated().map { index, edge -> String in
-                    let choice = edge.label ?? "Choice \(index + 1)"
-                    let target = self.box(edge.to).map { $0.title.isEmpty ? "Untitled" : $0.title } ?? "?"
-                    return "- If you choose **\(choice)**: continue at \u{201c}\(target)\u{201d}"
-                }
-                sections.append(BookSection(
-                    id: box.id, type: .branch, title: heading,
-                    body: choiceLines.isEmpty
-                        ? "No paths connected yet."
-                        : "Choose a path:\n\n" + choiceLines.joined(separator: "\n"),
-                    isPlaceholder: choiceLines.isEmpty
-                ))
-            }
+            sections.append(section(for: box))
             for edge in edgesFrom(box.id) {
                 if let next = self.box(edge.to) { render(next) }
             }
