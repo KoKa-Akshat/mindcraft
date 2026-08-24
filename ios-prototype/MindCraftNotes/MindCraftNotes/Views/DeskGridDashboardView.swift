@@ -188,6 +188,18 @@ struct DeskGridDashboardView: View {
 
     // MARK: - Homework Help (the tile itself is the upload target now)
     @State private var showHomeworkImporter = false
+    // MARK: - Co-Work (2026-08-24, explicit ask - renamed from the tile's
+    // old single-purpose upload). Tapping the tile now offers a real
+    // choice instead of going straight to the old AI-hint-cards picker;
+    // each choice gets its OWN document picker instance rather than
+    // reusing showHomeworkImporter, since that one's onPick is wired to
+    // handleHomeworkFileUpload (the AI-hints path), a different flow.
+    @State private var showCoWorkChoice = false
+    @State private var showCoWorkOCRPicker = false
+    @State private var showCoWorkPresentationPicker = false
+    @State private var coWorkPages: [UIImage] = []
+    @State private var coWorkFileName = ""
+    @State private var showCoWorkAnnotate = false
     /// Chapter Library sheet (2026-08-20) — assembled, gated chapter
     /// content from mindcraft-content-engine's book_assembler, fetched live
     /// via BookLibraryClient. A plain `.sheet`, not another FieldDeskView-
@@ -842,11 +854,52 @@ struct DeskGridDashboardView: View {
                     // tile) but `.fileImporter`'s own picker never actually
                     // presented either way. See HomeworkDocumentPicker's doc
                     // comment.
+                    // Co-Work's two upload choices (2026-08-24) - both
+                    // pickers + the confirmation dialog attached at this
+                    // SAME call site as showHomeworkImporter's own sheet
+                    // above, deliberately - this exact spot is where a
+                    // hard-won earlier fix confirmed presentation modifiers
+                    // actually work for this tile (see the comment above);
+                    // attaching them anywhere else risks reproducing that
+                    // same "state flips correctly but nothing ever
+                    // presents" bug.
                     photoTile(.homeworkHelp)
                         .sheet(isPresented: $showHomeworkImporter) {
                             HomeworkDocumentPicker { url in
                                 Task { await handleHomeworkFileUpload(url) }
                             }
+                        }
+                        .confirmationDialog("Upload to", isPresented: $showCoWorkChoice, titleVisibility: .visible) {
+                            Button("Upload to Presentation") { showCoWorkPresentationPicker = true }
+                            Button("Upload OCR") { showCoWorkOCRPicker = true }
+                            Button("Cancel", role: .cancel) {}
+                        }
+                        .sheet(isPresented: $showCoWorkOCRPicker) {
+                            HomeworkDocumentPicker { url in
+                                coWorkFileName = url.lastPathComponent
+                                coWorkPages = CoWorkPageRenderer.renderPages(fileURL: url)
+                                showCoWorkAnnotate = true
+                            }
+                        }
+                        .sheet(isPresented: $showCoWorkPresentationPicker) {
+                            // Honest scope note: this opens the real
+                            // Presentation canvas (same onOpenCreate(.presentation)
+                            // the Add menu's own "Presentation" row uses) -
+                            // the picked file isn't embedded into a slide
+                            // yet, that needs a real content-attachment
+                            // contract CreateCanvasView doesn't have today.
+                            // Flagged rather than silently faked.
+                            HomeworkDocumentPicker { _ in
+                                showCoWorkPresentationPicker = false
+                                onOpenCreate(.presentation)
+                            }
+                        }
+                        .fullScreenCover(isPresented: $showCoWorkAnnotate) {
+                            CoWorkAnnotateView(
+                                fileName: coWorkFileName,
+                                pages: coWorkPages,
+                                onClose: { showCoWorkAnnotate = false }
+                            )
                         }
                 }
             }
@@ -891,7 +944,12 @@ struct DeskGridDashboardView: View {
             case .intel: return "Intel"
             case .moodle: return "Knowledge Graph"
             case .binder: return "Binder"
-            case .homeworkHelp: return "Homework Help"
+            // Renamed to Co-Work (2026-08-24, explicit ask: "remove this
+            // button and instead put Co-Work here") - same tile, its
+            // upload action now offers a real choice (Presentation vs
+            // OCR/annotate) instead of going straight into the old
+            // AI-hint-cards picker - see handleTile's .homeworkHelp case.
+            case .homeworkHelp: return "Co-Work"
             case .memo: return "Memo"
             }
         }
@@ -1465,7 +1523,11 @@ struct DeskGridDashboardView: View {
             viewingKnowledgeGraphInBinder = true
             Task { await knowledgeGraphClient.load() }
         case .homeworkHelp:
-            showHomeworkImporter = true
+            // Renamed to Co-Work (2026-08-24, explicit ask: "the upload
+            // button in Co-Work should have the option to upload to
+            // presentation or Upload OCR") - a real choice instead of
+            // going straight into the old AI-hint-cards picker.
+            showCoWorkChoice = true
         case .memo:
             setRail(rail == .memo ? .none : .memo)
         }
@@ -2014,7 +2076,10 @@ struct DeskGridDashboardView: View {
                     Image(systemName: "square.and.arrow.up")
                         .foregroundColor(ink)
                 }
-                Text(homeworkUploading ? "Reading\u{2026}" : "Tap to upload a photo or PDF")
+                // Renamed to Co-Work (2026-08-24) - tap now offers a real
+                // choice (Presentation / OCR-annotate) instead of going
+                // straight to a single upload destination.
+                Text(homeworkUploading ? "Reading\u{2026}" : "Tap to upload \u{2013} Presentation or OCR")
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .foregroundColor(ink)
             }
