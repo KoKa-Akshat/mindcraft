@@ -2249,8 +2249,12 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        let designChip = app.buttons["deskGridBinderUtility_Design"]
-        XCTAssertTrue(designChip.waitForExistence(timeout: 10), "expected Design utility icon (opens the content canvas)")
+        // Fixed 2026-08-23 (same pre-existing breakage class as the
+        // deskGridDock_Archive/deskGridModule_Design fixes elsewhere in
+        // this file): Design moved off a binder-utility icon onto a real
+        // module box.
+        let designChip = app.buttons["deskGridModule_Design"]
+        XCTAssertTrue(designChip.waitForExistence(timeout: 10), "expected Design module box (opens the content canvas)")
         designChip.tap()
 
         let addChapter = app.buttons["designStudioAdd_chapter"]
@@ -2358,7 +2362,13 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridTopicTile_openArchive"].tap()
+        // Fixed 2026-08-23 (found while scoping the Knowledge Map merge,
+        // unrelated pre-existing breakage): "Open Archive" moved off the
+        // topic-tile grid onto a real dock icon a while back
+        // (`deskGridDock_Archive`, `binderUtilityIcon` in
+        // DeskGridDashboardView.swift) - this test still tapped the old,
+        // now-nonexistent `deskGridTopicTile_openArchive` identifier.
+        app.buttons["deskGridDock_Archive"].tap()
         XCTAssertTrue(app.descendants(matching: .any)["deskGridArchiveSummaryEmpty"].waitForExistence(timeout: 5), "expected Homework Help to go blank/prompt before a book is picked")
         XCTAssertFalse(app.staticTexts["Tap to upload a photo or PDF"].exists, "expected Homework Help's normal upload prompt to be replaced while archive browsing")
         XCTAssertTrue(app.buttons["deskGridContentViewerClose"].exists, "expected the archive browser's close button")
@@ -2388,13 +2398,18 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridTopicTile_openArchive"].tap()
+        app.buttons["deskGridDock_Archive"].tap()
         XCTAssertTrue(app.buttons["deskGridContentViewerClose"].waitForExistence(timeout: 5), "expected the archive browser to open")
         app.buttons["deskGridContentViewerClose"].tap()
 
         // Design now opens INSIDE the binder (2026-08-22) - never leaves
         // the dashboard, no separate flow-pane screen, no sidebarFlowDock.
-        app.buttons["deskGridBinderUtility_Design"].tap()
+        // Fixed 2026-08-23 (found alongside the deskGridDock_Archive fix
+        // above, same pre-existing breakage class): Design moved off a
+        // binder-utility icon onto a real module box
+        // (`deskGridModule_Design`, moduleBoxColumn) - this test still
+        // tapped the old, now-nonexistent `deskGridBinderUtility_Design`.
+        app.buttons["deskGridModule_Design"].tap()
         XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected Design Studio's own canvas dock to appear in-binder")
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].exists, "expected the dashboard to still be mounted - Design never navigates away from it")
         XCTAssertFalse(app.descendants(matching: .any)["deskGridSidebarFlowToolbar"].exists, "expected the old separate-screen flow-pane toolbar to NOT appear for Design anymore")
@@ -2539,7 +2554,9 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridBinderUtility_Design"].tap()
+        // Fixed 2026-08-23 (same pre-existing breakage class fixed
+        // elsewhere in this file) - Design is a real module box now.
+        app.buttons["deskGridModule_Design"].tap()
         XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected the content-type tool pills")
         XCTAssertTrue(app.staticTexts["0 boxes \u{00b7} 0 connections"].exists, "expected an empty canvas")
 
@@ -2592,7 +2609,9 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridBinderUtility_Design"].tap()
+        // Fixed 2026-08-23 (same pre-existing breakage class fixed
+        // elsewhere in this file) - Design is a real module box now.
+        app.buttons["deskGridModule_Design"].tap()
         XCTAssertTrue(app.buttons["designStudioAdd_branch"].waitForExistence(timeout: 10), "expected the Branch tool pill")
 
         app.buttons["designStudioAdd_branch"].tap()
@@ -2667,14 +2686,20 @@ final class MindCraftNotesUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].waitForExistence(timeout: 15))
 
-        app.buttons["deskGridBinderUtility_Resume"].tap()
+        // Fixed 2026-08-23 (same pre-existing breakage class fixed
+        // elsewhere in this file): the old binder-utility Resume/Design
+        // icons are gone - Resume's action moved onto the "Leverage"
+        // module box (`deskGridModule_Leverage`, same jesseCall.end() +
+        // viewingResumeAgent = true action the old icon performed) and
+        // Design onto its own module box.
+        app.buttons["deskGridModule_Leverage"].tap()
         XCTAssertTrue(app.descendants(matching: .any)["resumeAgentRoot"].waitForExistence(timeout: 10), "expected Resume's own content, not a separate cover with no dashboard trace")
         XCTAssertTrue(app.descendants(matching: .any)["deskGridDashboard"].exists, "expected the dashboard to still be mounted - Resume never navigates away from it")
 
         app.buttons["resumeAgentBack"].tap()
         XCTAssertTrue(app.buttons["deskGridBinderGraphPreview"].waitForExistence(timeout: 5), "expected closing Resume to return to the binder's plain landing")
 
-        app.buttons["deskGridBinderUtility_Design"].tap()
+        app.buttons["deskGridModule_Design"].tap()
         XCTAssertTrue(app.buttons["designStudioAdd_chapter"].waitForExistence(timeout: 10), "expected Design Studio's own canvas dock to appear in-binder")
         XCTAssertFalse(app.descendants(matching: .any)["resumeAgentRoot"].exists, "expected Resume's content to be gone once Design took over the same viewer slot")
 
