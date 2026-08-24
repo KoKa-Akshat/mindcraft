@@ -162,6 +162,7 @@
 		D7MOODLECLIENT01A2 /* MoodleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7MOODLECLIENT01A2 /* MoodleClient.swift */; };
 		D7STUDENTAIKEY01 /* StudentAIKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7STUDENTAIKEY01 /* StudentAIKeyStore.swift */; };
 		D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */; };
+		7AB577290EB45B981CE8978E /* StudyCompanionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC9BBB9BA9FD050E1C2C0C2 /* StudyCompanionView.swift */; };
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
@@ -255,6 +256,7 @@
 		556F5046AF8C8C22E031B975 /* PracticeSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeSessionView.swift; sourceTree = "<group>"; };
 		5953BEECF1C8EFB5F3230D92 /* StudentLanguagePreference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudentLanguagePreference.swift; sourceTree = "<group>"; };
 		5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JesseRailView.swift; sourceTree = "<group>"; };
+		EDC9BBB9BA9FD050E1C2C0C2 /* StudyCompanionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudyCompanionView.swift; sourceTree = "<group>"; };
 		5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotesClient.swift; sourceTree = "<group>"; };
 		5B50609A6CA341D392B5BC37 /* DrawingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingStore.swift; sourceTree = "<group>"; };
 		5B5B08528F31192530B6B5DA /* SourceSerif4-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "SourceSerif4-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */,
 				C9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift */,
 				5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */,
+				EDC9BBB9BA9FD050E1C2C0C2 /* StudyCompanionView.swift */,
 				C7078B04335739E9939AA984 /* MicroSimView.swift */,
 				E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */,
 				D91E4C98C95DD18AB704697D /* EnglishPracticeView.swift */,
@@ -957,6 +960,7 @@
 				D9SIMSTUDIO01A2B3C4 /* SimulationStudioView.swift in Sources */,
 				D9FE32A2CBC826477D6BCDA2 /* ChatHistoryImportParser.swift in Sources */,
 				D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */,
+				7AB577290EB45B981CE8978E /* StudyCompanionView.swift in Sources */,
 				A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */,
 				580B5CBB823B80FC161D7182 /* ResumeAgentClient.swift in Sources */,
 				B751BD1AD01F55EF490ACCD6 /* BookGraphLoader.swift in Sources */,

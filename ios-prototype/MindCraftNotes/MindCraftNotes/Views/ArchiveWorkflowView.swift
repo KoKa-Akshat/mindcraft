@@ -40,10 +40,14 @@ struct ArchiveWorkflowView: View {
     /// `BookLibraryClient`) — this just surfaces them directly instead of
     /// requiring a teacher to open a whole book to find one. Listed FIRST
     /// (and set as the default tab below) to match "simulations first."
+    // `.books` (bundled book-concept-graph browser) removed 2026-08-23,
+    // explicit ask: "remove the books completely from the archive and keep
+    // just simulations" - real thin/placeholder content compared to the
+    // real sims here, and `LearnStudioView`'s own "Study a Book" picker
+    // already covers the same underlying data for anyone who wants it.
     private enum ArchiveTab: String, CaseIterable, Identifiable {
         case simulations = "Simulations"
         case dan = "Dan's Archive"
-        case books = "Book Library"
         var id: String { rawValue }
     }
     @State private var tab: ArchiveTab = .simulations
@@ -63,8 +67,6 @@ struct ArchiveWorkflowView: View {
             case .dan:
                 ArchiveWorkflowWebView(weakness: weakness)
                     .ignoresSafeArea()
-            case .books:
-                BookLibraryBrowseView()
             }
             VStack {
                 Picker("", selection: $tab) {
@@ -207,8 +209,15 @@ private struct ArchiveSimulationsBrowseView: View {
                                             .foregroundColor(.secondary)
                                             .lineLimit(1)
                                         Spacer(minLength: 0)
-                                        Label("Try it", systemImage: "play.fill")
-                                            .font(.system(size: 11, weight: .heavy, design: .rounded))
+                                        // "Try it" text label removed
+                                        // (2026-08-23, explicit ask: "remove
+                                        // the try it button... just the play
+                                        // button is fine because it works") -
+                                        // the whole card is still the one
+                                        // real tap target, this is just its
+                                        // visual affordance now.
+                                        Image(systemName: "play.fill")
+                                            .font(.system(size: 13, weight: .heavy))
                                             .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
                                     }
                                     .padding(12)
@@ -237,7 +246,10 @@ private struct ArchiveSimulationsBrowseView: View {
             }
         }
         .task { await load() }
-        .sheet(item: $selectedSim) { sim in
+        // fullScreenCover, not .sheet (2026-08-23, explicit ask: "use the
+        // entire simulations box to show them the sim") - same fix as the
+        // dashboard's own Archive sim player.
+        .fullScreenCover(item: $selectedSim) { sim in
             ArchiveSimPlayerSheet(sim: sim, binder: binder)
         }
         .sheet(isPresented: $showGenerateSheet) {
@@ -406,62 +418,6 @@ struct ArchiveGenerateSimSheet: View {
         case .unavailable(let reason):
             errorMessage = reason ?? "Couldn't reach the generation service."
         }
-    }
-}
-
-/// Read-only browse of the real, validated book concept graphs
-/// (mindcraft-content-engine's book -> concept-graph pipeline output,
-/// bundled in Resources/BookGraphs/ - same data `BookGraphLoader`/
-/// `LearnStudioView`'s "Study a Book" picker reads). Deliberately just
-/// browsing here, not "pick a concept to study" - that action lives in
-/// Learn Studio, this is the archive's own reading/reference view.
-private struct BookLibraryBrowseView: View {
-    var body: some View {
-        NavigationStack {
-            if BookGraphLoader.all.isEmpty {
-                Text("No book graphs bundled yet.")
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
-                    .foregroundColor(.secondary)
-            } else {
-                List(BookGraphLoader.all) { book in
-                    NavigationLink {
-                        List {
-                            ForEach(book.groupedByTaxonomy, id: \.taxonomy) { group in
-                                Section(group.taxonomy) {
-                                    ForEach(group.concepts) { concept in
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text(concept.label)
-                                                .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                            if !concept.dependencies.isEmpty {
-                                                Text("Builds on \(concept.dependencies.count) earlier concept\(concept.dependencies.count == 1 ? "" : "s")")
-                                                    .font(.system(size: 11, weight: .medium, design: .rounded))
-                                                    .foregroundColor(.secondary)
-                                            }
-                                        }
-                                        .padding(.vertical, 2)
-                                    }
-                                }
-                            }
-                        }
-                        .navigationTitle(book.title)
-                        .navigationBarTitleDisplayMode(.inline)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(book.title)
-                                .font(.system(size: 15, weight: .bold, design: .rounded))
-                            Text("\(book.concepts.count) concepts")
-                                .font(.system(size: 12, weight: .medium, design: .rounded))
-                                .foregroundColor(.secondary)
-                        }
-                        .padding(.vertical, 4)
-                    }
-                    .accessibilityIdentifier("archiveBookLibrary_\(book.subjectId)")
-                }
-                .navigationTitle("Book Library")
-                .navigationBarTitleDisplayMode(.inline)
-            }
-        }
-        .accessibilityIdentifier("archiveBookLibraryBrowse")
     }
 }
 

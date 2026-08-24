@@ -45,6 +45,12 @@ struct DesignStudioView: View {
     @State private var chapterFlowBox: DesignBox?
     /// `.simulation` box currently open in the Blockly workspace shell.
     @State private var simulationBox: DesignBox?
+    /// `.simulation` box currently browsing the real sim library for
+    /// (2026-08-23, explicit ask - see simulationInspector's own comment).
+    @State private var simLibraryBox: DesignBox?
+    /// Full-screen sim viewer state (2026-08-23, explicit ask: "use the
+    /// entire simulations box to show them the sim").
+    @State private var fullScreenSim: DesignSimPreview?
     /// Non-nil while an AI sim generation request is in flight for this
     /// box id - `generate-sim`'s real pipeline (fit-check -> generate ->
     /// rubric -> vision gate) is a genuine 15-60+ second job, not
@@ -130,6 +136,21 @@ struct DesignStudioView: View {
                 },
                 onClose: { simulationBox = nil }
             )
+        }
+        .sheet(item: $simLibraryBox) { box in
+            DesignStudioSimLibrarySheet(
+                onPick: { title, html in
+                    graph.updateBox(box.id) {
+                        $0.generatedSimHTML = html
+                        $0.generatedSimTitle = title
+                    }
+                    simLibraryBox = nil
+                },
+                onClose: { simLibraryBox = nil }
+            )
+        }
+        .fullScreenCover(item: $fullScreenSim) { preview in
+            FullScreenSimPlayer(title: preview.title, html: preview.html, onBack: { fullScreenSim = nil })
         }
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
@@ -692,15 +713,37 @@ struct DesignStudioView: View {
             }
 
             if !box.generatedSimHTML.isEmpty {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(box.generatedSimTitle.isEmpty ? "Generated sim" : box.generatedSimTitle)
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(dsHex: "143a2e"))
-                    InlineSimWebView(html: box.generatedSimHTML)
-                        .frame(height: 180)
-                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Color(dsHex: "143a2e").opacity(0.1)))
+                // Real ask (2026-08-23): "when I click on the sim use the
+                // entire simulations box to show them the sim and put a
+                // back button somewhere on top" - this 180pt inline
+                // preview needed pinch-and-scroll to actually use (a real
+                // p5.js sim is usually 800x650+). Tapping it now opens the
+                // real thing full-screen; the small box stays as a
+                // thumbnail/preview only.
+                Button {
+                    fullScreenSim = DesignSimPreview(
+                        title: box.generatedSimTitle.isEmpty ? "Generated sim" : box.generatedSimTitle,
+                        html: box.generatedSimHTML
+                    )
+                } label: {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Text(box.generatedSimTitle.isEmpty ? "Generated sim" : box.generatedSimTitle)
+                                .font(.system(size: 12, weight: .bold, design: .rounded))
+                                .foregroundColor(Color(dsHex: "143a2e"))
+                            Spacer(minLength: 0)
+                            Image(systemName: "arrow.up.left.and.arrow.down.right")
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundColor(Color(dsHex: "143a2e").opacity(0.5))
+                        }
+                        InlineSimWebView(html: box.generatedSimHTML)
+                            .frame(height: 180)
+                            .allowsHitTesting(false)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Color(dsHex: "143a2e").opacity(0.1)))
+                    }
                 }
+                .buttonStyle(.plain)
                 .accessibilityIdentifier("designStudioGeneratedSimPreview")
             }
 
@@ -716,6 +759,30 @@ struct DesignStudioView: View {
                 .padding(9)
                 .background(fieldBackground)
                 .accessibilityIdentifier("designStudioReferenceURL")
+
+            // Real ask (2026-08-23): "you should also be able to browse the
+            // sim library too... click that, open the sims archive and
+            // click sth to load that there in that box." Same real library
+            // Archive's own Simulations tab reads (ArchiveSimsLoader.loadAll
+            // - chapter-book sims + the generated_sims library + Dan
+            // McCreary's full catalog), not a new/parallel list. Picking one
+            // loads its real html straight into this box the same way
+            // "Generate with AI" does.
+            Button {
+                simLibraryBox = box
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "books.vertical.fill")
+                    Text("Browse sim library")
+                }
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundColor(Color(dsHex: "143a2e"))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .background(Capsule().strokeBorder(Color(dsHex: "143a2e").opacity(0.2)))
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("designStudioBrowseSimLibrary")
 
             Button {
                 simulationBox = box
@@ -1213,5 +1280,137 @@ private extension Color {
         let g = Double((value >> 8) & 0xff) / 255
         let b = Double(value & 0xff) / 255
         self.init(red: r, green: g, blue: b)
+    }
+}
+
+/// Identifiable wrapper so a plain (title, html) pair can drive a
+/// `.fullScreenCover(item:)` - `DesignBox` itself isn't right here since
+/// the founder's own "back button" ask is about the SIM, not the box.
+struct DesignSimPreview: Identifiable {
+    let id = UUID()
+    let title: String
+    let html: String
+}
+
+/// Real ask (2026-08-23): "use the entire simulations box to show them the
+/// sim and put a back button somewhere on top." Full-screen, not another
+/// small inline box - a real p5.js sim is usually 800x650+, the exact
+/// thing the small inspector preview couldn't show without pinch/scroll.
+private struct FullScreenSimPlayer: View {
+    let title: String
+    let html: String
+    var onBack: () -> Void
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 10) {
+                Button(action: onBack) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("fullScreenSimBack")
+                Spacer(minLength: 0)
+                Text(title)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .lineLimit(1)
+                Spacer(minLength: 0)
+                // Balances the Back button so the title stays visually
+                // centered - no action, just layout symmetry.
+                Image(systemName: "chevron.left").opacity(0)
+            }
+            .padding(14)
+            InlineSimWebView(html: html)
+        }
+        .background(Color.white)
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .topLeading) {
+            Text(verbatim: "fullscreen-sim").font(.system(size: 1)).foregroundColor(.clear)
+                .accessibilityIdentifier("fullScreenSimPlayer")
+                .allowsHitTesting(false)
+        }
+    }
+}
+
+/// Real ask (2026-08-23): "you should also be able to browse the sim
+/// library too... click that, open the sims archive and click sth to load
+/// that there in that box." Same real library Archive's own Simulations
+/// tab reads (`ArchiveSimsLoader.loadAll()` - chapter-book sims + the
+/// generated_sims library + Dan McCreary's full catalog), not a new/
+/// parallel list.
+private struct DesignStudioSimLibrarySheet: View {
+    var onPick: (_ title: String, _ html: String) -> Void
+    var onClose: () -> Void
+
+    @State private var sims: [ArchiveSimEntry] = []
+    @State private var isLoading = true
+    @State private var loadingId: String?
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if isLoading {
+                    ProgressView("Loading the simulation library\u{2026}")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if sims.isEmpty {
+                    Text("No simulations synced yet.")
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    List(sims) { sim in
+                        Button {
+                            Task { await pick(sim) }
+                        } label: {
+                            HStack(spacing: 10) {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(sim.section.simTitle ?? sim.section.title)
+                                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                                        .foregroundColor(.primary)
+                                    Text(sim.bookTitle)
+                                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                                        .foregroundColor(.secondary)
+                                }
+                                Spacer(minLength: 0)
+                                if loadingId == sim.id {
+                                    ProgressView()
+                                } else {
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 11, weight: .bold))
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                        .disabled(loadingId != nil)
+                        .accessibilityIdentifier("designStudioSimLibraryRow_\(sim.id)")
+                    }
+                }
+            }
+            .navigationTitle("Sim Library")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel", action: onClose)
+                }
+            }
+        }
+        .task {
+            sims = await ArchiveSimsLoader.loadAll()
+            isLoading = false
+        }
+        .accessibilityIdentifier("designStudioSimLibrarySheet")
+    }
+
+    private func pick(_ sim: ArchiveSimEntry) async {
+        loadingId = sim.id
+        defer { loadingId = nil }
+        let title = sim.section.simTitle ?? sim.section.title
+        if let html = sim.section.simHtml {
+            onPick(title, html)
+        } else if let microSimId = sim.microSimId, let html = await MicroSimCatalogClient.fetchHTML(id: microSimId) {
+            onPick(title, html)
+        }
     }
 }

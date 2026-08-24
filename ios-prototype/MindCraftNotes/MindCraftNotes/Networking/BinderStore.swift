@@ -141,6 +141,20 @@ final class BinderStore: ObservableObject {
         create(type: "book", title: title, body: subjectId, source: "chapter_library", storageRefs: [])
     }
 
+    /// A saved Study Companion conversation (2026-08-23, explicit ask:
+    /// "the conversations and sims generated are saved into a tab in the
+    /// binder"). No schema change needed - `type: "study_session"` fits the
+    /// existing flat shape exactly, `body` holds the plain-text transcript
+    /// (student/Jesse turns), same as `addBook`'s body holds chapter
+    /// markdown. A generated lesson from the same session already gets its
+    /// own durable `book`/`chapter_library` entry via the existing path
+    /// (`onFileChapterBook`/`handleNewLesson`) - this is the conversation
+    /// itself, not a second copy of the lesson content.
+    @discardableResult
+    func addStudySession(topic: String, transcript: String) -> String {
+        create(type: "study_session", title: topic, body: transcript, source: "jesse_study", storageRefs: [])
+    }
+
     /// Uploads each local file to Storage at `binder/{studentId}/{itemId}/{filename}`,
     /// then writes the `binder_items` doc with `type: "byob"`,
     /// `source: "upload"`. A single file failing to upload doesn't drop the

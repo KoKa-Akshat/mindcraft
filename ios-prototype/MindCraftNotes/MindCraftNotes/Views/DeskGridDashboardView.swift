@@ -133,6 +133,11 @@ struct DeskGridDashboardView: View {
     var onSyncCalendar: () -> Void = {}
     var onOpenLearnStudio: () -> Void = {}
     var onOpenArchive: () -> Void = {}
+    /// Opens the merged Learn+Practice AI study companion full-screen
+    /// (2026-08-23) - FieldDeskView's own `.studyCompanion` overlay, not a
+    /// workspace-column swap like `viewingXxx` below. The Learn+Practice
+    /// module box (see `learnModuleBox`) is this closure's one caller.
+    var onOpenStudyCompanion: () -> Void = {}
     /// The left sidebar's gear icon now opens the same Manage page the
     /// top-left logo used to (2026-08-18, explicit ask - the mark itself
     /// moved to top-right, see FieldDeskView's chrome overlay).
@@ -260,55 +265,21 @@ struct DeskGridDashboardView: View {
     /// `closeBinderContentViewer` shouldn't accidentally resurrect stale
     /// upload state.
     @State private var archiveSummaryLesson: WorkDashboardLesson?
-    @State private var archiveSearchQuery = ""
-    @State private var archiveSearchResults: [ArchiveRagClient.Hit] = []
-    @State private var archiveSearchLoading = false
-    /// Which archive title is mid-open (a real network round trip via
-    /// ArchiveRagClient, unlike the bundled BookGraphLoader books which
-    /// open instantly from local data) - drives a per-row spinner so a tap
-    /// gives immediate feedback instead of looking unresponsive.
-    @State private var archiveOpeningTitle: String?
-    /// Dan McCreary's real archive, browsable by title (2026-08-19, real
-    /// bug fix: "im not seeing dans books in archuve at all" - before this,
-    /// his archive was reachable only through live search, with no list to
-    /// browse the way the app's own bundled books already had one).
-    /// Fetched once when Archive mode opens (see `archiveBrowserBody`'s
-    /// `.task`), not on every re-render.
-    @State private var archiveBooks: [ArchiveBooksClient.Book] = []
-    @State private var archiveBooksLoading = false
-    /// Real error visibility (2026-08-19, live report: "archive is not
-    /// having all the dan books... it should show all books") - the actual
-    /// bug wasn't the endpoint (verified separately, returns all 18 real
-    /// books) but that `ArchiveBooksClient.list()` swallows every failure
-    /// (`try?`) into a plain empty array, indistinguishable on screen from
-    /// "still loading" or "genuinely empty" - a transient network hiccup on
-    /// a real device silently left the section looking broken/incomplete
-    /// with no way to tell why or retry.
-    @State private var archiveBooksError = false
-
-    /// "Simulations first" toggle — explicit live ask, 2026-08-22: "all the
-    /// simulations we have should also be shown on the archive... the
-    /// simulations first... then there's a little toggle at the top which
-    /// changes it to book view." `.simulations` is the default per that ask.
-    @State private var archiveViewMode: ArchiveViewMode = .simulations
+    // Book-browsing state (search, Dan's Archive listing, view-mode toggle)
+    // removed 2026-08-23, explicit ask: "remove the books completely from
+    // the archive and keep just simulations" - `archiveBrowserBody` is
+    // simulations-only now, see its own doc comment.
     @State private var archiveSims: [ArchiveSimEntry] = []
     @State private var archiveSimsLoading = false
     @State private var archiveSimsLoaded = false
     @State private var presentedArchiveSim: ArchiveSimEntry?
     @State private var showArchiveGenerateSim = false
     /// Jesse's rail, dock-only now (2026-08-22, Binder-to-88%-at-landing
-    /// pass + explicit ask: no idle Jesse presence on landing, appears on
-    /// tap). Real fix to a mistake made earlier the same pass: the dock
-    /// chip that replaced the old always-visible Intel tile was first
-    /// wired to `onOpenIntel` (a separate, unrelated overlay) - the tile
-    /// being removed was actually Jesse's own chat/call rail
-    /// (`JesseRailView`, `tileBody`'s `.intel` branch), not Gmail/Calendar.
-    @State private var showJesseRail = false
     /// Topic-tile grid on Binder's landing "page" (2026-08-22, reference
     /// images: real books with real progress bars, Chapter Library only -
     /// confirmed over mixing in Simulations/Dan's Archive, since those
-    /// don't carry a comparable progress number). Loaded once per session,
-    /// same one-shot convention `archiveBooks` already uses.
+    /// don't carry a comparable progress number). Loaded once per session
+    /// (the `libraryBooksLoaded` guard below skips re-fetching on re-render).
     @State private var libraryBooks: [AssembledBookSummary] = []
     @State private var libraryBooksLoaded = false
     /// "+ New" create-a-book flow (2026-08-22, reference images' top-right
@@ -344,8 +315,6 @@ struct DeskGridDashboardView: View {
         viewingSessionReports = false
         viewingFriends = false
         archiveSummaryLesson = nil
-        archiveSearchQuery = ""
-        archiveSearchResults = []
         // A live-sim request/verdict belongs to the Study Session that
         // asked for it - clearing here (which also drops any in-flight
         // request's eventual verdict, see clearLiveSimState) keeps a stale
@@ -477,6 +446,7 @@ struct DeskGridDashboardView: View {
         onSyncCalendar: @escaping () -> Void = {},
         onOpenLearnStudio: @escaping () -> Void = {},
         onOpenArchive: @escaping () -> Void = {},
+        onOpenStudyCompanion: @escaping () -> Void = {},
         onOpenManage: @escaping () -> Void = {},
         studentName: String = "there"
     ) {
@@ -505,6 +475,7 @@ struct DeskGridDashboardView: View {
         self.onSyncCalendar = onSyncCalendar
         self.onOpenLearnStudio = onOpenLearnStudio
         self.onOpenArchive = onOpenArchive
+        self.onOpenStudyCompanion = onOpenStudyCompanion
         self.onOpenManage = onOpenManage
         self.studentName = studentName
         _rail = State(initialValue: initialRail)
@@ -769,10 +740,6 @@ struct DeskGridDashboardView: View {
         }
         .fullScreenCover(item: $presentedGeneratedSim) { sim in
             GeneratedSimView(sim: sim) { presentedGeneratedSim = nil }
-        }
-        .sheet(isPresented: $showJesseRail) {
-            JesseRailView(studentName: studentName, context: "workDashboard", headerTrailing: AnyView(jesseBoxIconRow))
-                .presentationDetents([.medium])
         }
         .fullScreenCover(isPresented: $showCreateBook) {
             CreateBookView(
@@ -1774,7 +1741,7 @@ struct DeskGridDashboardView: View {
             return AnyView(tileInnerCard { SessionReportsView(onClose: closeBinderContentViewer) })
         }
         if viewingFriends {
-            return AnyView(tileInnerCard { FriendsView() })
+            return AnyView(tileInnerCard { FriendsView(studentName: studentName) })
         }
         return nil
     }
@@ -2282,8 +2249,24 @@ struct DeskGridDashboardView: View {
     private func binderLandingBodyContent(ink: Color) -> some View {
         GeometryReader { geo in
             HStack(alignment: .top, spacing: 16) {
+                // Widened 2026-08-23, explicit ask: "expand the map to
+                // occupy... space right before Learn Practice" - the
+                // ambient map (topicTileGrid, inside this column) gets more
+                // real room, the module box column on the right shrinks to
+                // match.
+                // maxHeight: .infinity added 2026-08-23, explicit ask:
+                // "increase the vertical space the opening knowledge map
+                // and everything takes, bring them almost close to jesse
+                // at the bottom... there is white space between those two
+                // that is currently unused" - this column previously had
+                // no height constraint at all, so it sized to its own
+                // shortest child's natural height (the Knowledge Map
+                // preview card) and left the rest of the column's real
+                // height as blank cream space above the dock. topicTileGrid
+                // is a GeometryReader inside this column - it now actually
+                // gets the full real height to spread its field across.
                 binderWorkspaceColumn(ink: ink)
-                    .frame(width: geo.size.width * 0.68)
+                    .frame(width: geo.size.width * 0.76, height: geo.size.height, alignment: .top)
 
                 binderProgressGutter
 
@@ -2291,7 +2274,16 @@ struct DeskGridDashboardView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .overlay(alignment: .bottomTrailing) { binderUtilityRow }
+        // Real ask (2026-08-23): "the four icons under leverage should be
+        // notes transcribe gmail and calendar instead of the current 4" -
+        // swapped Design/Reports/Resume/Settings (binderUtilityRow, now
+        // unused - Design and Resume/Leverage are real module boxes, and
+        // Settings is on the main dock; Session Reports has no other entry
+        // point after this, a real trade-off worth naming rather than
+        // silently dropping) for jesseBoxIconRow's real Notes/Transcribe/
+        // Gmail/Calendar actions - the exact same four already used
+        // elsewhere on this screen (Answer's old header row).
+        .overlay(alignment: .bottomTrailing) { jesseBoxIconRow.padding(22) }
         .task {
             // Plain .task, not .task(id:) - keying it to libraryBooksLoaded
             // and then setting that same flag true INSIDE this task self-
@@ -2336,35 +2328,15 @@ struct DeskGridDashboardView: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("deskGridBinderGraphPreview")
-
-                // Archive, stacked directly under the Knowledge Map card
-                // (2026-08-22, explicit ask: "put this under knowledge
-                // graph") - moved out of the topic grid below, which is now
-                // Chapter Library books only.
-                Button {
-                    closeBinderContentViewer()
-                    viewingArchiveBrowser = true
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "archivebox.fill")
-                            .font(.system(size: 14))
-                            .foregroundColor(ink.opacity(0.55))
-                        Text("Open Archive")
-                            .font(.system(size: 13, weight: .bold, design: .rounded))
-                            .foregroundColor(ink)
-                        Spacer(minLength: 0)
-                    }
-                    .padding(10)
-                    .frame(maxWidth: .infinity)
-                    // Same page-blend as the Knowledge Map card above -
-                    // visual styling only, the archive action/data path is
-                    // untouched.
-                    .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("deskGridTopicTile_openArchive")
+                // "Open Archive" button moved out of here (2026-08-23,
+                // explicit ask: "move that archive button next to friends")
+                // - it's a dock icon now, see workDock.
             }
-            .frame(width: 260)
+            // Narrowed from 260 the same pass as the map's own width bump
+            // above - Knowledge Map only ever needed to fit its own small
+            // preview canvas, and the ambient map is the thing that should
+            // get the reclaimed space.
+            .frame(width: 200)
 
             binderRingSpine
 
@@ -2394,7 +2366,7 @@ struct DeskGridDashboardView: View {
         .accessibilityIdentifier("deskGridBinderProgressGutter")
     }
 
-    /// Learn / Practice / Create / Answer as real, visible boxes in the
+    /// Learn+Practice / Create / Answer as real, visible boxes in the
     /// right column (2026-08-22, explicit correction: these were wrongly
     /// built as bottom-dock chips - "i told you to display the learn and
     /// the boxes i had made and the practice and other boxes would move
@@ -2403,18 +2375,34 @@ struct DeskGridDashboardView: View {
     /// used throughout this file, per the spec's own principle: "clicking
     /// Learn, Practice, Create, or Answer transforms that same area
     /// instead of navigating the student into disconnected pages."
+    ///
+    /// Learn and Practice merged into ONE box (2026-08-23, explicit ask:
+    /// "Learn and Practice can be merged... intelligent AI conversational
+    /// thing"). This one now goes full-screen (`onOpenStudyCompanion`,
+    /// FieldDeskView's `.studyCompanion` overlay), not the workspace-column
+    /// swap the other three still use - the founder's own words were
+    /// "whatever we have on the dash changes", the whole screen, not just
+    /// this column.
     @ViewBuilder
     private func moduleBoxColumn(ink: Color) -> some View {
         VStack(spacing: 12) {
             learnModuleBox(ink: ink)
-            moduleBox("Practice", system: "waveform.and.mic", identifier: "deskGridModule_Practice", ink: ink) {
-                openSidebarFlow(.englishPractice)
-            }
             moduleBox("Create", system: "wand.and.stars", identifier: "deskGridModule_Create", ink: ink) {
                 showCreateBook = true
             }
-            moduleBox("Answer", system: "bubble.left.and.bubble.right.fill", identifier: "deskGridModule_Answer", ink: ink) {
-                showJesseRail = true
+            // "Answer" removed 2026-08-23, explicit ask: "we don't need
+            // this answer feature at all instead bring back the old design
+            // that had n8n boxes and you could write in the boxes linking
+            // them and had connectors" - that's DesignStudioView's real
+            // node-canvas (DesignBox/ContentGraphStore: Chapter/Simulation/
+            // Checkpoint/Branch boxes with connecting edges), already
+            // built, just reachable elsewhere (the sidebar's own "Design"
+            // chip) and not from this column. Same embedded-in-Binder
+            // pattern `viewingDesignStudio` already uses at every other
+            // call site, not a new presentation.
+            moduleBox("Design", system: "square.grid.2x2.fill", identifier: "deskGridModule_Design", ink: ink) {
+                closeBinderContentViewer()
+                viewingDesignStudio = true
             }
             // Leverage (2026-08-23, explicit ask: "add a resume box...
             // called Leverage" alongside the existing four) - the EXACT
@@ -2431,23 +2419,25 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// Learn's box carries the raccoon itself (2026-08-23, explicit ask) -
-    /// the same static `JesseRailView.raccoonImage` every Jesse surface in
-    /// this app already uses (search-field icon, Jesse rail), NOT a new
-    /// asset - instead of the generic book SF Symbol the other module
-    /// boxes get. Bespoke view rather than another `moduleBox` parameter:
-    /// an Image-vs-SF-Symbol fork inside the shared helper would leak
-    /// this one box's special case into all five call sites.
+    /// Learn+Practice's box carries the raccoon itself (2026-08-23,
+    /// explicit ask) - the same static `JesseRailView.raccoonImage` every
+    /// Jesse surface in this app already uses (search-field icon, Jesse
+    /// rail), NOT a new asset - instead of the generic book SF Symbol the
+    /// other module boxes get. This is also the merged Learn+Practice
+    /// trigger: opens the full-screen study companion instead of the old
+    /// `closeBinderContentViewer()` no-op. Bespoke view rather than another
+    /// `moduleBox` parameter: an Image-vs-SF-Symbol fork inside the shared
+    /// helper would leak this one box's special case into every call site.
     private func learnModuleBox(ink: Color) -> some View {
         Button {
-            closeBinderContentViewer()
+            onOpenStudyCompanion()
         } label: {
             VStack(alignment: .leading, spacing: 8) {
                 JesseRailView.raccoonImage
                     .resizable()
                     .scaledToFit()
                     .frame(height: 42)
-                Text("Learn")
+                Text("Learn + Practice")
                     .font(.mcContent(size: 16, weight: .semibold))
                     .foregroundColor(ink)
                 Spacer(minLength: 0)
@@ -2483,91 +2473,122 @@ struct DeskGridDashboardView: View {
         .accessibilityIdentifier(identifier)
     }
 
-    /// Real Chapter Library books as tappable tiles, matching the
-    /// reference's 2x3 grid with a real progress bar per book
-    /// (`AssembledBookSummary.coverageLabel`'s underlying numbers). Chapter
-    /// Library only - Archive now lives under the Knowledge Map card
-    /// instead of mixed into this grid (see `binderLandingBody`).
+    /// Ambient study garden - replaces the old book-tile grid (2026-08-23,
+    /// explicit ask: "just have some kind of nice beautiful 3d drawing over
+    /// that space and it lights up with study session... shows Jesse neat
+    /// background art to inhabit this space, then as you learn it fills up
+    /// with stuff"). Scoped to a real 2D Canvas treatment rather than
+    /// literal SceneKit/RealityKit 3D (confirmed with the founder) - same
+    /// glow/status-color drawing language `KnowledgeGraphCanvas`/
+    /// `BinderKnowledgeDots` already use elsewhere in this file, not a new
+    /// visual language.
+    ///
+    /// Recommended-only, same-day follow-up (2026-08-23, explicit ask: "the
+    /// dots which the system thinks I should study next are the dots whose
+    /// names are shown and are yellow. Otherwise, we don't need to show
+    /// random books... if there's nothing to show, fine, just show the
+    /// map").
+    ///
+    /// Real correction, same day: `coveredConcepts`/`totalConcepts` is
+    /// CONTENT completeness (how much of the book has real, gated
+    /// prose/sims - `book_assembler.AssembledBook.covered_concepts`'s own
+    /// doc comment: "with gated prose"), NOT student progress/mastery -
+    /// there is no per-student signal on `AssembledBookSummary` at all.
+    /// The original filter here (`0 < covered < total`) was built on the
+    /// wrong reading of that field and actively HID the richest, most
+    /// complete books (confirmed live: a freshly rebuilt 23/23 Calculus
+    /// book disappeared under the old filter for being "too done"). The
+    /// real, honest bar is just "has any real content" - `coveredConcepts
+    /// > 0` - so a book someone actually invested in showing up correctly
+    /// glows, whole or partial. Real per-student "study this next"
+    /// targeting is the ML `/recommend` engine's job (per-CONCEPT
+    /// weakness, not on this model at all) - naming that gap rather than
+    /// quietly overstating what this dot means.
     @ViewBuilder
     private func topicTileGrid(ink: Color) -> some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 10)], spacing: 10) {
-                ForEach(libraryBooks) { book in
-                    Button {
-                        onOpenBinderChapterBook(book.subjectId, book.title)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Image(systemName: "book.closed.fill")
-                                .font(.system(size: 16))
-                                .foregroundColor(ink.opacity(0.55))
-                            Text(book.title)
-                                .font(.system(size: 13, weight: .bold, design: .rounded))
-                                .foregroundColor(ink)
-                                .lineLimit(2)
-                                .multilineTextAlignment(.leading)
-                            Spacer(minLength: 0)
-                            ProgressView(value: Double(book.coveredConcepts), total: Double(max(book.totalConcepts, 1)))
-                                .tint(Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255))
-                            Text(book.coverageLabel)
-                                .font(.system(size: 10, weight: .medium, design: .rounded))
-                                .foregroundColor(ink.opacity(0.55))
-                        }
-                        .padding(10)
-                        .frame(height: 110, alignment: .topLeading)
-                        .frame(maxWidth: .infinity)
-                        // Books print straight onto the page too - same
-                        // 2026-08-23 chrome-removal pass as the module
-                        // boxes; a grid of white cards was the last set of
-                        // "boxes" left floating on the paper.
-                        .contentShape(Rectangle())
+        let recommendedBooks = libraryBooks.filter { $0.totalConcepts > 0 && $0.coveredConcepts > 0 }
+        let recommendColor = Color(gridHex: "d9a441")
+        GeometryReader { geo in
+            ZStack {
+                Canvas { context, size in
+                    for book in recommendedBooks {
+                        guard let p = ambientGardenPosition(for: book, in: size) else { continue }
+                        let progress = min(1, Double(book.coveredConcepts) / Double(book.totalConcepts))
+                        let r: CGFloat = 11 + CGFloat(progress) * 14
+                        let glow = r * 2.8
+                        context.fill(
+                            Path(ellipseIn: CGRect(x: p.x - glow, y: p.y - glow, width: glow * 2, height: glow * 2)),
+                            with: .radialGradient(
+                                Gradient(colors: [recommendColor.opacity(0.3 + progress * 0.3), recommendColor.opacity(0)]),
+                                center: p, startRadius: 0, endRadius: glow
+                            )
+                        )
+                        context.fill(
+                            Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
+                            with: .color(recommendColor.opacity(0.6 + progress * 0.4))
+                        )
+                        context.stroke(
+                            Path(ellipseIn: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2)),
+                            with: .color(.white.opacity(0.6)), lineWidth: 1
+                        )
                     }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("deskGridTopicTile_\(book.subjectId)")
+                }
+                .allowsHitTesting(false)
+
+                ForEach(recommendedBooks) { book in
+                    if let p = ambientGardenPosition(for: book, in: geo.size) {
+                        Button {
+                            onOpenBinderChapterBook(book.subjectId, book.title)
+                        } label: {
+                            VStack(spacing: 4) {
+                                Color.clear.frame(width: 52, height: 52)
+                                Text(book.title)
+                                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                                    .foregroundColor(ink.opacity(0.85))
+                                    .lineLimit(1)
+                                    .frame(width: 110)
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .position(p)
+                        .accessibilityIdentifier("deskGridTopicTile_\(book.subjectId)")
+                    }
+                }
+
+                if recommendedBooks.isEmpty {
+                    Text("Nothing calling for attention right now — this space lights up as you study.")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(ink.opacity(0.45))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 260)
                 }
             }
+            .frame(width: geo.size.width, height: geo.size.height)
         }
     }
 
-    /// Design / Reports / Resume / Settings - moved off the main dock
-    /// (2026-08-22, explicit ask: cut the toolbar to 4 primary actions) into
-    /// a compact, icon-only row tucked in the binder's bottom-right corner -
-    /// literally satisfies "Settings... in the lower right corner" while
-    /// keeping these reachable without competing for attention with the
-    /// primary Practice/Discuss/Create actions. Design/Reports/Resume now
-    /// open INSIDE the binder's own content-viewer space (2026-08-22,
-    /// second explicit ask: "everything should be displayed inside the
-    /// dash binder... not the whole page") instead of the old separate-
-    /// screen flow-pane/fullScreenCover mechanisms - same reasoning
-    /// `closeBinderContentViewer()`-then-`viewingXxx = true` already uses
-    /// for Archive/Knowledge Map. `jesseCall.end()` mirrors
-    /// `openSidebarFlow`'s own existing fix for the same reason: both
-    /// destinations embed their own JesseRailView under a different
-    /// context, and skipping this would silently no-op their call buttons
-    /// under the dashboard's ambient call.
-    private var binderUtilityRow: some View {
-        HStack(spacing: 6) {
-            binderUtilityIcon("square.grid.2x2.fill", identifier: "deskGridBinderUtility_Design") {
-                jesseCall.end()
-                closeBinderContentViewer()
-                viewingDesignStudio = true
-            }
-            binderUtilityIcon("doc.text.magnifyingglass", identifier: "deskGridBinderUtility_Reports") {
-                closeBinderContentViewer()
-                viewingSessionReports = true
-            }
-            binderUtilityIcon("person.text.rectangle", identifier: "deskGridBinderUtility_Resume") {
-                jesseCall.end()
-                closeBinderContentViewer()
-                viewingResumeAgent = true
-            }
-            binderUtilityIcon("gearshape.fill", identifier: "deskGridBinderUtility_Settings", action: onOpenManage)
-        }
-        .padding(8)
-        // Capsule + shadow dropped (2026-08-23, same chrome-removal pass:
-        // no floating white pills on the page) - the icons sit quietly on
-        // the paper itself.
-        .padding(14)
+    /// Deterministic scatter so each book's glow sits in a stable spot
+    /// across re-renders instead of jumping around - hashed from the
+    /// book's own real `subjectId`, not random per frame.
+    private func ambientGardenPosition(for book: AssembledBookSummary, in size: CGSize) -> CGPoint? {
+        guard size.width > 1, size.height > 1 else { return nil }
+        var hasher = Hasher()
+        hasher.combine(book.subjectId)
+        let h = UInt64(bitPattern: Int64(hasher.finalize()))
+        let fx = Double(h % 1000) / 1000.0
+        let fy = Double((h / 1000) % 1000) / 1000.0
+        let x = 0.14 + fx * 0.72
+        let y = 0.16 + fy * 0.68
+        return CGPoint(x: x * size.width, y: y * size.height)
     }
+
+    // binderUtilityRow (Design/Reports/Resume/Settings) removed 2026-08-23,
+    // replaced at its one call site by jesseBoxIconRow (see the explicit
+    // ask quoted there). Design and Resume are real module boxes now
+    // (Design, Leverage) and Settings is on the main dock - Session
+    // Reports (viewingSessionReports) has no other entry point after this,
+    // a real, named trade-off, not an oversight.
 
     private func binderUtilityIcon(_ system: String, identifier: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
@@ -2575,6 +2596,18 @@ struct DeskGridDashboardView: View {
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Color(gridHex: "143a2e").opacity(0.65))
                 .frame(width: 30, height: 30)
+                // Real bug fix (2026-08-23, live report: "i cant click on
+                // either friends or sims or setting on the bottom left") -
+                // a live accessibility-tree dump showed each button's real
+                // hit-tested frame was only the SF Symbol's own tight glyph
+                // ink bounds (as small as 14x13pt for gearshape.fill), not
+                // the 30x30 frame above it - .buttonStyle(.plain) with no
+                // .contentShape reports/hit-tests the rendered content's
+                // intrinsic bounds, not the frame around it. A real finger
+                // tap on the padding around the glyph (most of the visual
+                // button) landed on nothing. contentShape makes the whole
+                // 30x30 square the real tap target, matching how it looks.
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier(identifier)
@@ -2657,26 +2690,20 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// Archive mode's body: your own generated books (real, local,
-    /// `BookGraphLoader.all` - the same data `askJesseWorkDashboard`
-    /// already matches against) plus a live search over Dan McCreary's
-    /// wider archive (real `ArchiveRagClient` hits, not a fabricated
-    /// catalog - there is no local manifest of his full library to browse
-    /// by title, only what a real query returns). Tapping any row opens
-    /// that book's real content the same way the rest of tonight's work
-    /// already does (`viewingBook`), and sets `archiveSummaryLesson` so
-    /// Homework Help shows its real "what you'll learn" alongside it.
-    private enum ArchiveViewMode: String, CaseIterable, Identifiable {
-        case simulations = "Simulations"
-        case books = "Books"
-        var id: String { rawValue }
-    }
-
+    /// Archive mode's body - simulations only now (2026-08-23, explicit
+    /// ask: "remove the books completely from the archive and keep just
+    /// simulations"). Used to also browse/search real book content
+    /// (`BookGraphLoader.all` + a live `ArchiveRagClient` search over Dan
+    /// McCreary's wider archive) - that whole path is gone, along with the
+    /// real bug it carried (`openArchiveBook` always left `chapterBodies`
+    /// empty, so every chapter tab silently repeated the same summary
+    /// string). Real per-book content is reached exclusively through the
+    /// Chapter Library / ambient map now, via `onOpenBinderChapterBook`.
     @ViewBuilder
     private func archiveBrowserBody(ink: Color) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Archive")
+                Text("Simulations")
                     .font(.system(size: 18, weight: .heavy, design: .rounded))
                     .foregroundColor(ink)
                 Spacer(minLength: 0)
@@ -2691,105 +2718,21 @@ struct DeskGridDashboardView: View {
                 .accessibilityIdentifier("deskGridContentViewerClose")
             }
 
-            Picker("", selection: $archiveViewMode) {
-                ForEach(ArchiveViewMode.allCases) { Text($0.rawValue).tag($0) }
-            }
-            .pickerStyle(.segmented)
-            .accessibilityIdentifier("deskGridArchiveModePicker")
-
-            if archiveViewMode == .simulations {
-                archiveSimulationsSection(ink: ink)
-            } else {
-                HStack(spacing: 8) {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(ink.opacity(0.4))
-                    TextField("Search Dan's archive\u{2026}", text: $archiveSearchQuery, onCommit: runArchiveSearch)
-                        .font(.system(size: 14, weight: .medium, design: .rounded))
-                        .foregroundColor(ink)
-                        .accessibilityIdentifier("deskGridArchiveSearchField")
-                    if archiveSearchLoading {
-                        ProgressView().tint(ink)
-                    }
-                }
-                .padding(10)
-                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color(gridHex: "f3f1ec")))
-
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 14) {
-                        if !archiveSearchResults.isEmpty {
-                            archiveSection("SEARCH RESULTS", ink: ink) {
-                                ForEach(archiveSearchResults, id: \.pageUrl) { hit in
-                                    archiveBookRow(
-                                        title: hit.bookTitle,
-                                        subtitle: hit.pageTitle,
-                                        ink: ink,
-                                        isOpening: archiveOpeningTitle == hit.bookTitle
-                                    ) { openArchiveBook(title: hit.bookTitle) }
-                                }
-                            }
-                        }
-                        archiveSection("YOUR BOOKS", ink: ink) {
-                            ForEach(BookGraphLoader.all) { book in
-                                archiveBookRow(
-                                    title: book.title,
-                                    subtitle: "\(book.concepts.count) concepts",
-                                    ink: ink,
-                                    isOpening: false
-                                ) { openBundledBook(book) }
-                                .accessibilityIdentifier("deskGridArchiveBook_\(book.id)")
-                            }
-                        }
-                        archiveSection("DAN'S ARCHIVE", ink: ink) {
-                            if archiveBooksLoading {
-                                ProgressView().tint(ink)
-                            } else if archiveBooksError {
-                                Button {
-                                    Task { await loadArchiveBooks() }
-                                } label: {
-                                    HStack(spacing: 6) {
-                                        Image(systemName: "arrow.clockwise")
-                                        Text("Couldn't load Dan's Archive - tap to retry")
-                                    }
-                                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                                    .foregroundColor(ink.opacity(0.75))
-                                }
-                                .buttonStyle(.plain)
-                                .accessibilityIdentifier("deskGridArchiveDanBooksRetry")
-                            } else {
-                                ForEach(archiveBooks) { book in
-                                    archiveBookRow(
-                                        title: book.bookTitle,
-                                        subtitle: "Open textbook",
-                                        ink: ink,
-                                        isOpening: archiveOpeningTitle == book.bookTitle
-                                    ) { openArchiveBook(title: book.bookTitle) }
-                                    .accessibilityIdentifier("deskGridArchiveDanBook_\(book.id)")
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            archiveSimulationsSection(ink: ink)
         }
-        // Fetched once per app session (the archiveBooks.isEmpty guard
-        // skips re-fetching on every later Archive open - this list is
-        // static enough not to need refreshing per-open the way the live
-        // knowledge graph does). Re-fires on a failed attempt too, since
-        // archiveBooks stays empty - closing and reopening Archive retries;
-        // archiveBooksError makes that failure visible instead of a silent
-        // blank section in the meantime.
-        .task(id: viewingArchiveBrowser) {
-            guard viewingArchiveBrowser, archiveBooks.isEmpty else { return }
-            await loadArchiveBooks()
-        }
-        .task(id: archiveViewMode) {
-            guard archiveViewMode == .simulations, !archiveSimsLoaded else { return }
+        .task {
+            guard !archiveSimsLoaded else { return }
             archiveSimsLoading = true
             archiveSims = await ArchiveSimsLoader.loadAll()
             archiveSimsLoaded = true
             archiveSimsLoading = false
         }
-        .sheet(item: $presentedArchiveSim) { sim in
+        // fullScreenCover, not .sheet (2026-08-23, explicit ask: "use the
+        // entire simulations box to show them the sim") - a plain .sheet
+        // on iPad presents as a large card with real margins around it,
+        // not edge-to-edge, which is exactly what made a sim (usually
+        // 800x650+) need pinch/scroll to actually see.
+        .fullScreenCover(item: $presentedArchiveSim) { sim in
             ArchiveChapterSimView(
                 sim: sim,
                 onUseInClass: { onFileChapterBook(sim.bookTitle, sim.bookSubjectId) },
@@ -2807,9 +2750,9 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// "Simulations first" default view of Archive — real, gated sims
-    /// flattened across every synced Chapter Library book. See
-    /// `archiveViewMode`'s doc comment for the live ask this answers.
+    /// Archive's one and only view now (2026-08-23, see
+    /// `archiveBrowserBody`'s doc comment) - real, gated sims flattened
+    /// across every synced Chapter Library book.
     @ViewBuilder
     private func archiveSimulationsSection(ink: Color) -> some View {
         if archiveSimsLoading {
@@ -2854,8 +2797,11 @@ struct DeskGridDashboardView: View {
                                     .foregroundColor(ink.opacity(0.55))
                                     .lineLimit(1)
                                 Spacer(minLength: 0)
-                                Label("Try it", systemImage: "play.fill")
-                                    .font(.system(size: 10, weight: .heavy, design: .rounded))
+                                // "Try it" text removed (2026-08-23, explicit
+                                // ask) - the whole card is still the real tap
+                                // target, this is just its icon now.
+                                Image(systemName: "play.fill")
+                                    .font(.system(size: 12, weight: .heavy))
                                     .foregroundColor(ink.opacity(0.8))
                             }
                             .padding(10)
@@ -2871,156 +2817,16 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// Shared by the initial `.task` fetch and the retry button - a
-    /// `.task(id:)` only re-runs when its id VALUE changes, so a retry tap
-    /// (id stays `viewingArchiveBrowser == true` the whole time) has to
-    /// call this directly rather than relying on the task re-firing.
-    private func loadArchiveBooks() async {
-        archiveBooksLoading = true
-        archiveBooksError = false
-        let result = await ArchiveBooksClient.list()
-        archiveBooks = result
-        archiveBooksError = result.isEmpty
-        archiveBooksLoading = false
-    }
-
-    @ViewBuilder
-    private func archiveSection<Content: View>(_ title: String, ink: Color, @ViewBuilder content: () -> Content) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(title)
-                .font(.system(size: 10, weight: .heavy, design: .rounded))
-                .tracking(0.6)
-                .foregroundColor(ink.opacity(0.5))
-            content()
-        }
-    }
-
-    private func archiveBookRow(title: String, subtitle: String, ink: Color, isOpening: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 10) {
-                Image(systemName: "book.closed.fill")
-                    .font(.system(size: 13))
-                    .foregroundColor(ink.opacity(0.5))
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(title)
-                        .font(.system(size: 14, weight: .bold, design: .rounded))
-                        .foregroundColor(ink)
-                        .lineLimit(1)
-                    Text(subtitle)
-                        .font(.system(size: 11, weight: .medium, design: .rounded))
-                        .foregroundColor(ink.opacity(0.55))
-                        .lineLimit(1)
-                }
-                Spacer(minLength: 0)
-                if isOpening {
-                    ProgressView().tint(ink)
-                } else {
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(ink.opacity(0.3))
-                }
-            }
-            .padding(10)
-            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white))
-        }
-        .buttonStyle(.plain)
-        .disabled(isOpening)
-    }
-
-    private func runArchiveSearch() {
-        let query = archiveSearchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !query.isEmpty else {
-            archiveSearchResults = []
-            return
-        }
-        archiveSearchLoading = true
-        Task {
-            let answer = await ArchiveRagClient.askDetailed(message: query, studentWeakness: nil)
-            archiveSearchResults = answer?.hits ?? []
-            archiveSearchLoading = false
-        }
-    }
-
-    /// Opens one of your own real generated book graphs. Real bug fix
-    /// (2026-08-23): this used to build the lesson from concept LABELS
-    /// only, with chapterBodies always empty - StudySessionView then had
-    /// nothing to show but its own "ask Jesse to build a sim" empty
-    /// state, even for subjects that already have real assembled content
-    /// sitting in Firestore. Now tries the real thing first
-    /// (BookLibraryClient.getBook, same call + section-mapping
-    /// JesseCallSession.syncWorkDashboardLesson already uses correctly),
-    /// falling back to the old concept-graph-only lesson only for
-    /// subjects that genuinely haven't been assembled yet - not a
-    /// regression, since that's exactly what rendered before.
-    private func openBundledBook(_ book: BookConceptGraph) {
-        let fallbackChapters = Array(book.concepts.prefix(12).map(\.label))
-        let fallbackLesson = WorkDashboardLesson(
-            topic: book.title,
-            source: .archive(bookTitle: book.title),
-            chapters: fallbackChapters,
-            chapterBodies: [],
-            definition: "From your archive: \(book.title).",
-            question: nil,
-            microsims: MicroSimLoader.matching(topic: book.title),
-            citations: []
-        )
-        archiveSummaryLesson = fallbackLesson
-        viewingBook = GeneratedBook(lesson: fallbackLesson)
-
-        Task {
-            guard let assembled = try? await BookLibraryClient.getBook(subjectId: book.subjectId) else { return }
-            let sections = assembled.chapters.flatMap(\.sections)
-            guard !sections.isEmpty else { return }
-            let lesson = WorkDashboardLesson(
-                topic: assembled.title,
-                source: .archive(bookTitle: assembled.title),
-                chapters: sections.map(\.title),
-                chapterBodies: sections.map { $0.summary.isEmpty ? $0.body : $0.summary },
-                definition: assembled.title,
-                question: nil,
-                microsims: MicroSimLoader.matching(topic: book.title),
-                citations: []
-            )
-            archiveSummaryLesson = lesson
-            viewingBook = GeneratedBook(lesson: lesson)
-        }
-    }
-
-    /// Opens a book from Dan's wider archive - a real network round trip
-    /// (same "table of contents" query `askJesseWorkDashboard`'s own
-    /// archive-match branch already uses), since there's no local manifest
-    /// of his library to build a lesson from offline the way
-    /// `openBundledBook` can.
-    private func openArchiveBook(title: String) {
-        archiveOpeningTitle = title
-        Task {
-            defer { archiveOpeningTitle = nil }
-            guard
-                let answer = await ArchiveRagClient.askDetailed(
-                    message: "Give me a short table of contents for \(title)",
-                    studentWeakness: nil
-                ),
-                !answer.hits.isEmpty
-            else { return }
-            var seenTitles = Set<String>()
-            let chapters = answer.hits.compactMap { hit -> String? in
-                guard seenTitles.insert(hit.pageTitle).inserted else { return nil }
-                return hit.pageTitle
-            }
-            let lesson = WorkDashboardLesson(
-                topic: title,
-                source: .archive(bookTitle: answer.hits[0].bookTitle),
-                chapters: chapters,
-                chapterBodies: [],
-                definition: answer.reply,
-                question: nil,
-                microsims: MicroSimLoader.matching(topic: title),
-                citations: answer.hits.map { LessonCitation(bookTitle: $0.bookTitle, pageTitle: $0.pageTitle, url: $0.pageUrl) }
-            )
-            archiveSummaryLesson = lesson
-            viewingBook = GeneratedBook(lesson: lesson)
-        }
-    }
+    // loadArchiveBooks / archiveSection / archiveBookRow / runArchiveSearch /
+    // openBundledBook / openArchiveBook removed 2026-08-23 along with the
+    // Archive book-browsing UI they only served (see archiveBrowserBody's
+    // doc comment) - this also removes a real, previously-flagged bug
+    // (openArchiveBook always built a lesson with chapterBodies: [], so
+    // every chapter tab silently fell back to the same single summary
+    // string with no per-chapter content or sim). Books open from the
+    // Chapter Library / ambient map now exclusively through
+    // `onOpenBinderChapterBook` -> FieldDeskView.openChapterBookFromBinder,
+    // which fetches real per-section content via BookLibraryClient.getBook.
 
     /// A single, real node glyph standing in for "you, before you've
     /// learned anything yet" - not a fabricated preview node, just this
@@ -3526,34 +3332,32 @@ struct DeskGridDashboardView: View {
     /// reuses the existing `onOpenFlow("book")` callback FieldDeskView
     /// already wires for the Flows rail's own Book row, not a new path.
     private var workDock: some View {
-        // Trimmed further (2026-08-23, explicit ask: "it's okay to remove
-        // binder map and calendar because you can kind of see it in the
-        // cache" - the workspace already shows current work directly, so
-        // those 3 shortcuts were redundant). Two clusters left:
-        //   bottom-LEFT  - Friends + Settings, unchanged
-        //   bottom-CENTER - Jesse: now the one "take me back" anchor (see
-        //                  jesseDockCenter's own doc comment)
-        // The ask-anything field moved to bottom-right on its own, no
-        // longer sharing the row with the removed chips.
-        // ZStack, not one HStack with Spacers: Jesse stays truly screen-
-        // centered regardless of the side cluster's width.
-        ZStack {
-            jesseDockCenter
-            HStack(spacing: 8) {
-                binderUtilityIcon("person.2.fill", identifier: "deskGridDock_Friends") {
-                    jesseCall.end()
-                    closeBinderContentViewer()
-                    viewingFriends = true
-                }
-                binderUtilityIcon("gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
-                Spacer(minLength: 0)
-                // "Ask anything" (2026-08-22, explicit ask) - `submitSearch`
-                // already does real keyword routing + a full agent takeover
-                // for anything longer. Fixed width so it can't stretch
-                // across the screen center and sit on top of Jesse.
-                searchField(placeholder: "Ask anything…", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
-                    .frame(width: 240)
+        // Rearranged 2026-08-23, explicit ask: "move that archive button
+        // next to friends... move the jesse logo on the bottom panel close
+        // to the search bar." Two clusters, plain HStack now (Jesse no
+        // longer needs independent screen-centering - see jesseDockCenter's
+        // own doc comment):
+        //   bottom-LEFT  - Friends, Archive, Settings
+        //   bottom-RIGHT - Jesse, then the ask-anything field right beside it
+        HStack(spacing: 8) {
+            binderUtilityIcon("person.2.fill", identifier: "deskGridDock_Friends") {
+                jesseCall.end()
+                closeBinderContentViewer()
+                viewingFriends = true
             }
+            binderUtilityIcon("archivebox.fill", identifier: "deskGridDock_Archive") {
+                closeBinderContentViewer()
+                viewingArchiveBrowser = true
+            }
+            binderUtilityIcon("gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
+            Spacer(minLength: 0)
+            jesseDockCenter
+            // "Ask anything" (2026-08-22, explicit ask) - `submitSearch`
+            // already does real keyword routing + a full agent takeover
+            // for anything longer. Fixed width so it can't stretch across
+            // the whole row.
+            searchField(placeholder: "Ask anything…", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
+                .frame(width: 240)
         }
         // NOT .accessibilityIdentifier() directly on this container - that
         // clobbers every child dockChip's own identifier with this one
@@ -3571,12 +3375,13 @@ struct DeskGridDashboardView: View {
         }
     }
 
-    /// Jesse's bottom-center seat (2026-08-23, explicit ask: "put Jesse at
-    /// the center"). The raccoon is `JesseRailView.raccoonImage` - the
-    /// exact static image the search field's content-viewer icon and the
-    /// Jesse rail itself already use, not a new asset. Action updated the
-    /// same day per a second explicit ask - see the button's own doc
-    /// comment below for why it's a "home" tap now, not chat.
+    /// Jesse's dock seat, now right beside the "Ask anything" field
+    /// (2026-08-23, explicit ask: "move the jesse logo on the bottom panel
+    /// close to the search bar" - superseding the same day's earlier
+    /// "put Jesse at the center" ask). The raccoon is
+    /// `JesseRailView.raccoonImage` - the exact static image the search
+    /// field's content-viewer icon and the Jesse rail itself already use,
+    /// not a new asset.
     private var jesseDockCenter: some View {
         // 2026-08-23, explicit ask: with Binder/Map/Calendar gone from the
         // dock, Jesse's icon becomes the one "take me back" anchor - the
@@ -3691,14 +3496,29 @@ struct DeskGridDashboardView: View {
             .background(Capsule().fill(Color(gridHex: "f3f1ec")))
 
             if !aiKeys.hasKey {
-                // Used to redirect into Homework Help's own "Connect your AI
-                // key" prompt - that prompt no longer exists now that
-                // Homework Help is a direct upload target with no settings
-                // screen of its own (see onFileHomeworkToBinder). Left as a
-                // plain disabled state rather than a broken redirect;
-                // Manage is the real destination for connecting a key.
-                EmptyView()
-                    .accessibilityLabel("Connect your AI key from Manage to power search")
+                // Real bug fix (2026-08-23, live report: "i cant click...
+                // ask anything on the bottom right") - the field really is
+                // meant to stay disabled with no key connected (Manage is
+                // the real destination), but an invisible EmptyView here
+                // meant a sighted student saw a search box that silently
+                // did nothing, with no way to tell why or what to do about
+                // it. A real, tappable prompt over the disabled field
+                // instead - same "Manage is the destination" reasoning,
+                // now actually visible and actionable.
+                Button(action: onOpenManage) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "key.fill")
+                        Text("Connect AI key")
+                    }
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundColor(tileInk.opacity(0.7))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(Capsule().fill(Color(gridHex: "f3f1ec")))
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridDashboardSearchConnectKey")
             }
         }
     }

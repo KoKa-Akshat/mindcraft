@@ -11,6 +11,8 @@ import EventKit
 /// scope given what data actually exists today). Each row can send a
 /// QCal invite.
 struct FriendsView: View {
+    var studentName: String = "there"
+
     @StateObject private var friendsStore = FriendsStore()
     @StateObject private var tutorClient = TutorDirectoryClient()
     @State private var newName = ""
@@ -19,6 +21,17 @@ struct FriendsView: View {
     @State private var pendingEvent: EKEvent?
     @State private var pendingPerson: (name: String, email: String)?
     @State private var calendarAccessDenied = false
+    /// Real Presentation/GDoc canvas (2026-08-23, explicit ask: "bring
+    /// that back for Friends tab when you click on Co-work button on the
+    /// bottom left... the presentation slides are google docs pages you
+    /// can add more to scribble and work"). Reuses the real, already-built
+    /// `CreateCanvasView(.gdoc)` - the "sandboxed" screen the founder is
+    /// referencing - rather than building a new one. Honest scope note:
+    /// this opens that existing native doc/whiteboard canvas; it does NOT
+    /// yet integrate real Google Docs API content the way the ask's
+    /// wording implies - that's a separate, bigger Google Docs
+    /// integration, not done here.
+    @State private var showCoWork = false
     @Environment(\.openURL) private var openURL
 
     private static let ink = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
@@ -64,6 +77,13 @@ struct FriendsView: View {
                 }
             }
             .padding(4)
+            .padding(.bottom, 50)
+        }
+        .overlay(alignment: .bottomLeading) {
+            coWorkButton.padding(14)
+        }
+        .fullScreenCover(isPresented: $showCoWork) {
+            CreateCanvasView(kind: .gdoc, studentName: studentName, onClose: { showCoWork = false })
         }
         .accessibilityIdentifier("friendsInlineSection")
         .sheet(item: Binding(
@@ -87,6 +107,24 @@ struct FriendsView: View {
         } message: {
             Text("Enable Calendar access for The Desk in Settings to send an invite.")
         }
+    }
+
+    private var coWorkButton: some View {
+        Button {
+            showCoWork = true
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: "person.2.wave.2.fill")
+                Text("Co-work")
+            }
+            .font(.system(size: 13, weight: .heavy, design: .rounded))
+            .foregroundColor(Self.ink)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .background(Capsule().fill(Self.lime))
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("friendsCoWork")
     }
 
     private var addFriendCard: some View {

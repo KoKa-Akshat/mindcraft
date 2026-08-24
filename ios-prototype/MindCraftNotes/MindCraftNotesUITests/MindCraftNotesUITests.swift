@@ -352,6 +352,45 @@ final class MindCraftNotesUITests: XCTestCase {
         XCTAssertTrue(pill.waitForNonExistence(timeout: 5), "expected the pill to disappear once the call actually ends")
     }
 
+    /// The real, live-code claim behind an explicit ask (2026-08-23): "if I
+    /// tell you that I want to practice this vocal, including a lesson...
+    /// it's still going to be a lesson, or is that possible?" Before the
+    /// fix this test guards, `JesseCallSession.practiceRequested` firing
+    /// while Study Companion was on top ALSO fired
+    /// `DeskGridDashboardView`'s own `.onChange` handler for the exact same
+    /// signal (mounted underneath, still very much alive - SwiftUI has no
+    /// single-consumer model for a `@Published` change), which calls
+    /// `openSidebarFlow` -> `jesseCall.end()`, silently killing the live
+    /// conversation Study Companion was still showing. Drives the real
+    /// typed-text dispatch path (`JesseCallSession.submitText` ->
+    /// `askJesse` -> `isPracticeRequest`), not a seeded mock - this is the
+    /// actual routing logic under test. "Study mode · talking with Jesse"
+    /// only renders while `jesseCall.isActive` is true, so its continued
+    /// presence after the practice request is the direct assertion that
+    /// the call was never ended out from under the student.
+    func testPracticeRequestStaysInStudyCompanionLesson() {
+        let app = launchFieldDeskApp()
+
+        let learnBox = app.buttons["deskGridModule_Learn"]
+        XCTAssertTrue(learnBox.waitForExistence(timeout: 10), "expected the merged Learn+Practice box on the dashboard")
+        learnBox.tap()
+
+        let studyCompanion = app.descendants(matching: .any)["studyCompanionView"]
+        XCTAssertTrue(studyCompanion.waitForExistence(timeout: 10), "expected Study Companion to open full-screen")
+        XCTAssertTrue(app.staticTexts["Study mode · talking with Jesse"].waitForExistence(timeout: 10), "expected the call to already be active on open")
+
+        let input = app.textFields["studyCompanionInput"]
+        XCTAssertTrue(input.waitForExistence(timeout: 5))
+        input.tap()
+        input.typeText("I want to practice")
+        app.buttons["studyCompanionSend"].tap()
+
+        // The real assertion: still the SAME live conversation afterward -
+        // not ended, not teleported away from Study Companion.
+        XCTAssertTrue(studyCompanion.waitForExistence(timeout: 5), "expected to still be in Study Companion after a practice request")
+        XCTAssertTrue(app.staticTexts["Study mode · talking with Jesse"].waitForExistence(timeout: 5), "expected the call to still be active - a practice request must not end() the live conversation")
+    }
+
     private func launchDashboardApp(extraArgs: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = ["--ui-testing-in-memory", "--ui-testing-skip-auth"] + extraArgs
