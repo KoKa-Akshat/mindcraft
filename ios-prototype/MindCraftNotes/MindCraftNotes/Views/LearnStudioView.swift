@@ -210,6 +210,16 @@ struct LearnStudioView: View {
                 JesseRailView(studentName: studentName, context: "learnStudio")
             }
         }
+        // Missing on this board only (2026-08-24) - CreateCanvasView and
+        // ResumeAgentView both already close their identical .topLeading
+        // ZStack with this same .frame(); without it, pin()'s .position()
+        // children report unbounded size upward, so the ZStack silently
+        // expands to fill the whole screen from (0,0) instead of staying
+        // at board size - content renders jammed into the top-left corner
+        // with all the scaled-down slack dumped as dead space on the
+        // right/bottom, instead of the outer ZStack's default .center
+        // alignment centering a properly-bounded board.
+        .frame(width: board.width, height: board.height)
     }
 
     private var intakeContent: some View {
@@ -430,6 +440,10 @@ struct LearnStudioView: View {
 
             pin(LearnBoard.dock, scale: scale) { studyDock }
         }
+        // Same missing constraint as intakeBoard above - keeps the board
+        // centered at its real scaled size instead of expanding to fill
+        // the screen from the top-left corner.
+        .frame(width: board.width, height: board.height)
     }
 
     private var definitionPane: some View {

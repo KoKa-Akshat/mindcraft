@@ -93,6 +93,13 @@ struct FieldDeskView: View {
     @State private var showResumeAgent = false
     @State private var showArchiveWorkflow = false
     @State private var showBookWorkflow = false
+    // Phone dashboard parity addition (2026-08-24) - Friends already exists
+    // as a real destination reachable elsewhere (grid dashboard's dock),
+    // just never had FieldDeskView-level state so the phone card list
+    // could reach it too. showDesignStudio already existed below
+    // (search-routing case "design") - reused as-is, not redeclared here.
+    @State private var showFriends = false
+    @State private var showConstellation = false
     /// Reopening a Chapter Library book filed in the Binder (2026-08-21) -
     /// `.fullScreenCover(item:)`, not another ZStack overlay flag, same
     /// reasoning as BookLibraryView's own `.sheet` (UIKit's own
@@ -728,26 +735,42 @@ struct FieldDeskView: View {
                     AnyView(
                         DeskPhoneDashboardView(
                             studentName: deskChromeName ?? "there",
-                            onContinueWork: {
+                            // Constellation (2026-08-24, explicit ask:
+                            // "continue your work should show me my
+                            // knowledge map... we don't show Dan's book we
+                            // show stars you can click") - was opening the
+                            // Binder overlay (a book/file list), swapped for
+                            // the real KnowledgeMapView-backed Constellation
+                            // screen, see its own doc comment.
+                            onContinueWork: { showConstellation = true },
+                            // Gurukul (2026-08-24) - same merged Learn+Practice
+                            // study companion overlay the grid dashboard's
+                            // Gurukul box opens via onOpenStudyCompanion below
+                            // (identical .studyCompanion insert), not the old
+                            // pre-merge LearnStudioView/EnglishPracticeView
+                            // this card used to point at.
+                            onLearn: {
                                 withAnimation(.easeInOut(duration: 0.2)) {
-                                    _ = openOverlays.insert(.binderOverlay)
+                                    _ = openOverlays.insert(.studyCompanion)
                                 }
                             },
-                            onLearn: { showLearnStudio = true },
-                            onPractice: { showEnglishPractice = true },
                             onCreate: {
                                 createCanvasKind = .presentation
                                 withAnimation(.easeInOut(duration: 0.28)) {
                                     _ = openOverlays.insert(.createCanvas)
                                 }
                             },
-                            onAnswer: {
-                                if !jesseCall.isActive {
-                                    jesseCall.begin(context: "workDashboard", studentName: deskChromeName ?? "there")
-                                }
-                                showJesseCallSheet = true
-                            },
-                            onLeverage: { showResumeAgent = true }
+                            // Design (2026-08-24) - swapped in for the old
+                            // "Answer" card, which the grid dashboard
+                            // removed entirely on 2026-08-23 ("we don't
+                            // need it" - Gurukul's own chat covers that).
+                            // Phone still had it as a live card pointing at
+                            // a destination the grid no longer offers.
+                            onDesign: { showDesignStudio = true },
+                            onLeverage: { showResumeAgent = true },
+                            onOpenSettings: { NotificationCenter.default.post(name: .mcOpenSettingsFromDesk, object: nil) },
+                            onOpenFriends: { showFriends = true },
+                            onLogout: { authService.signOut() }
                         )
                         .transition(.opacity)
                         .zIndex(88)
@@ -1381,6 +1404,26 @@ struct FieldDeskView: View {
         }
         .fullScreenCover(isPresented: $showArchiveWorkflow) {
             ArchiveWorkflowView(onClose: { showArchiveWorkflow = false })
+        }
+        // Phone dashboard's Design card (2026-08-24) reuses the existing
+        // $showDesignStudio fullScreenCover further below (search-routing
+        // case "design") - no new presentation needed here.
+        // Phone dashboard's Friends icon (2026-08-24) - a plain .sheet,
+        // not .fullScreenCover: FriendsView has no onClose of its own (the
+        // grid dashboard wraps it in tileInnerCard's chrome for that), so
+        // this relies on a sheet's built-in swipe-to-dismiss instead of
+        // adding a close button this view doesn't have a slot for.
+        .sheet(isPresented: $showFriends) {
+            FriendsView(studentName: deskChromeName ?? "there")
+        }
+        .fullScreenCover(isPresented: $showConstellation) {
+            ConstellationView(
+                onClose: { showConstellation = false },
+                onOpenArchive: {
+                    showConstellation = false
+                    showArchiveWorkflow = true
+                }
+            )
         }
         .fullScreenCover(isPresented: $showBookWorkflow) {
             BookWorkflowView(

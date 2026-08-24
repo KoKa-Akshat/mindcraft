@@ -164,6 +164,7 @@
 		D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */; };
 		7AB577290EB45B981CE8978E /* StudyCompanionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC9BBB9BA9FD050E1C2C0C2 /* StudyCompanionView.swift */; };
 		FD46250845B14AC680D44269 /* CoWorkAnnotateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CDDA0E4C6340CAAFF7323E /* CoWorkAnnotateView.swift */; };
+		AFBBE11A2087AADEFD2F17FD /* ConstellationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166715D7A3D760DC89C147D /* ConstellationView.swift */; };
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
@@ -259,6 +260,7 @@
 		5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JesseRailView.swift; sourceTree = "<group>"; };
 		EDC9BBB9BA9FD050E1C2C0C2 /* StudyCompanionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StudyCompanionView.swift; sourceTree = "<group>"; };
 		D0CDDA0E4C6340CAAFF7323E /* CoWorkAnnotateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CoWorkAnnotateView.swift; sourceTree = "<group>"; };
+		0166715D7A3D760DC89C147D /* ConstellationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConstellationView.swift; sourceTree = "<group>"; };
 		5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionNotesClient.swift; sourceTree = "<group>"; };
 		5B50609A6CA341D392B5BC37 /* DrawingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingStore.swift; sourceTree = "<group>"; };
 		5B5B08528F31192530B6B5DA /* SourceSerif4-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = "SourceSerif4-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 				5A10EB3BDDE04216B5B57403 /* JesseRailView.swift */,
 				EDC9BBB9BA9FD050E1C2C0C2 /* StudyCompanionView.swift */,
 				D0CDDA0E4C6340CAAFF7323E /* CoWorkAnnotateView.swift */,
+				0166715D7A3D760DC89C147D /* ConstellationView.swift */,
 				C7078B04335739E9939AA984 /* MicroSimView.swift */,
 				E0BAFFB8EAB3F099DB44C2C7 /* StudySessionView.swift */,
 				D91E4C98C95DD18AB704697D /* EnglishPracticeView.swift */,
@@ -965,6 +968,7 @@
 				D82368581E38D584FD93B658 /* JesseRailView.swift in Sources */,
 				7AB577290EB45B981CE8978E /* StudyCompanionView.swift in Sources */,
 				FD46250845B14AC680D44269 /* CoWorkAnnotateView.swift in Sources */,
+				AFBBE11A2087AADEFD2F17FD /* ConstellationView.swift in Sources */,
 				A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */,
 				580B5CBB823B80FC161D7182 /* ResumeAgentClient.swift in Sources */,
 				B751BD1AD01F55EF490ACCD6 /* BookGraphLoader.swift in Sources */,
@@ -1137,7 +1141,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1237,7 +1241,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
