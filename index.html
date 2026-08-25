@@ -4,17 +4,17 @@
 <title>The Desk by MindCraft</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Never work alone. Office hours from your room. The Desk by MindCraft.">
+<meta name="description" content="Built for visual learners. Learn anything through live simulations, interactive lessons, and a desk that adapts to you. The Desk by MindCraft.">
 <link rel="canonical" href="https://joinmindcraft.com/">
 <link rel="icon" type="image/png" href="img/favicon-raccoon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Desk by MindCraft">
-<meta property="og:description" content="Never work alone. Office hours from your room. The Desk by MindCraft.">
+<meta property="og:description" content="Built for visual learners. Learn anything through live simulations, interactive lessons, and a desk that adapts to you.">
 <meta property="og:url" content="https://joinmindcraft.com/">
 <meta property="og:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Desk by MindCraft">
-<meta name="twitter:description" content="Never work alone. Office hours from your room. The Desk by MindCraft.">
+<meta name="twitter:description" content="Built for visual learners. Learn anything through live simulations, interactive lessons, and a desk that adapts to you.">
 <meta name="twitter:image" content="https://joinmindcraft.com/img/mkt/og-first-panel.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,7 +86,7 @@
     color:var(--chalk-faint);
   }
 
-  /* cream stage override — same trick the live site uses */
+  /* cream stage override, same trick the live site uses */
   .stage-desk{
     --field:#ffffff; --field-1:#ffffff; --field-2:#fafaf8;
     --edge:rgba(20,58,46,.14); --edge-soft:rgba(20,58,46,.07);
@@ -101,9 +101,8 @@
   }
   .stage-desk::before{top:0; background:linear-gradient(to bottom, #070f0c, transparent);}
   .stage-desk::after{bottom:0; background:linear-gradient(to top, #070f0c, transparent);}
-  /* desk and jesse are both cream with no color change between them, so no fade belongs at that seam */
-  #desk::after, #jesse::before{content:none;}
-  #jesse::after, #brains::before{content:none;}
+  /* desk and create are consecutive cream stages, so no fade belongs at that seam */
+  #desk::after, #create::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -192,17 +191,72 @@
     .ticker{animation:none; flex-wrap:wrap; width:auto; justify-content:center;}
     .ticker > .tick-item:nth-child(n+6){display:none;}
   }
+  /* logo marquee variant of the ticker: one clean white band, college marks straight on it */
+  .ticker-band.logos{background:#fff;}
+  .ticker-band.logos .ticker-label{color:rgba(20,58,46,.5);}
+  .ticker-band.logos .ticker{animation-duration:34s; padding:24px 0 32px; align-items:center;}
+  .ticker-band.logos .tick-item{padding:0 clamp(30px,4vw,64px); align-items:center;}
+  .logo-mark{height:clamp(44px,5.4vw,64px); width:auto; max-width:220px; object-fit:contain; display:block;}
 
 
-  /* ---------- credibility strip ---------- */
-  .cred{padding:56px 0; border-top:1px solid var(--edge); border-bottom:1px solid var(--edge); background:var(--field-1);}
-  .cred-inner{display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center;}
-  .cred-inner > span{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--chalk-faint);}
-  .cred-schools{display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:14px clamp(18px,3.2vw,36px); list-style:none;}
-  .cred-schools li{font-family:var(--disp); font-weight:600; font-size:clamp(14px,1.6vw,18px); letter-spacing:-.01em; color:var(--chalk-dim);}
-  .cred-logo-chip{display:flex; align-items:center; justify-content:center; height:44px; padding:8px 16px; background:#fff; border-radius:10px;}
-  .cred-logo-chip img{height:100%; width:auto; max-width:120px; object-fit:contain; display:block;}
-  .cred-note{max-width:56ch; font-size:13px; color:var(--chalk-faint); line-height:1.55;}
+  /* ---------- sim library, top picks (cream) ---------- */
+  .simlib{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:clamp(36px,5vh,54px);}
+  @media (max-width:980px){.simlib{grid-template-columns:1fr 1fr;}}
+  @media (max-width:620px){.simlib{grid-template-columns:1fr;}}
+  .sim-card{
+    border-radius:20px; background:var(--field-2); box-shadow:0 2px 14px rgba(20,58,46,.06);
+    overflow:hidden; display:flex; flex-direction:column;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .sim-card:hover{transform:translateY(-4px); box-shadow:var(--shadow);}
+  .sim-card.open{grid-column:1/-1;}
+  .sim-card.open:hover{transform:none;}
+  .sim-face{padding:20px 20px 18px; display:flex; flex-direction:column; gap:8px; min-height:158px;}
+  .sim-tag{width:fit-content; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--leaf); background:rgba(36,122,77,.09); border-radius:999px; padding:4px 10px;}
+  .sim-card h3{font-size:18px;}
+  .sim-face p{font-size:13.5px; line-height:1.5; color:var(--chalk-dim);}
+  .sim-play{
+    margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
+    border:0; border-radius:999px; padding:9px 18px; cursor:pointer;
+    background:var(--lime); color:var(--lime-ink); font-size:12.5px; font-weight:700; letter-spacing:.02em;
+    box-shadow:0 8px 20px rgba(196,245,71,.25); transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .sim-play:hover{transform:translateY(-1px); box-shadow:0 12px 26px rgba(196,245,71,.35);}
+  .sim-play:focus-visible{outline:3px solid rgba(20,58,46,.5); outline-offset:2px;}
+  .sim-card.open .sim-play{display:none;}
+  .sim-stage{display:none; border-top:1px solid var(--edge); background:#fafafa;}
+  .sim-card.open .sim-stage{display:block;}
+  .sim-stage-frame iframe{display:block; width:100%; height:min(62vh,540px); border:0; background:#fff;}
+  .sim-stage-foot{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 16px; background:var(--field-2);}
+  .sim-stage-foot a{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.04em; color:var(--leaf);}
+  .sim-stage-foot a:hover{text-decoration:underline;}
+  .sim-close{border:1px solid var(--edge); border-radius:999px; padding:6px 14px; background:transparent; color:var(--chalk-dim); font-size:11.5px; font-weight:600; cursor:pointer;}
+  .sim-close:hover{border-color:var(--chalk); color:var(--chalk);}
+  .simlib-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px 32px; flex-wrap:wrap;}
+  .simlib-head .lede{margin-top:14px; font-family:var(--disp); font-weight:600; color:var(--chalk);}
+  .simlib-bullet{margin-top:10px; position:relative; padding-left:20px; font-size:15px; line-height:1.55; color:var(--chalk-dim); max-width:56ch;}
+  .simlib-bullet::before{content:""; position:absolute; left:0; top:.52em; width:9px; height:9px; border-radius:50%; background:var(--lime);}
+  .simlib-cta{display:flex; gap:10px; flex-wrap:wrap; margin-left:auto;}
+
+  /* ---------- create-your-own feature story (cream) ---------- */
+  .fx-flow{margin-top:clamp(40px,6vh,64px); display:grid; gap:clamp(36px,5.5vh,62px);}
+  .fx{display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(24px,4vw,56px); align-items:center;}
+  .fx.flip .fx-copy{order:2;}
+  @media (max-width:860px){.fx{grid-template-columns:1fr;} .fx.flip .fx-copy{order:0;}}
+  .fx-step{display:block; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--leaf); margin-bottom:10px;}
+  .fx-copy h3{font-size:clamp(21px,2.4vw,27px); margin-bottom:10px;}
+  .fx-copy p{font-size:15px; line-height:1.6; color:var(--chalk-dim); max-width:46ch;}
+  .fx-shot{border-radius:20px; background:#fff; border:1px solid rgba(20,58,46,.12); box-shadow:0 18px 44px rgba(20,58,46,.1); overflow:hidden;}
+  .fx-shot img{display:block; width:100%; height:auto;}
+  /* the frontier teaser that closes the create story */
+  .frontier-tease{margin-top:clamp(36px,5vh,56px); max-width:66ch; font-size:clamp(16px,1.7vw,19px); line-height:1.65; color:var(--chalk-dim);}
+  .frontier-tease strong{color:var(--chalk);}
+
+  /* ---------- frontier graph (dark) ---------- */
+  .frontier{background:var(--field-1); border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
+  .frontier-frame{margin-top:clamp(30px,4.5vh,44px); border-radius:18px; overflow:hidden; background:#070f0a; border:1px solid var(--edge); box-shadow:var(--shadow);}
+  .frontier-frame iframe{display:block; width:100%; height:min(70vh,600px); border:0;}
+  .frontier-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
 
 
   /* ---------- the desk (cream, three surfaces) ---------- */
@@ -353,7 +407,7 @@
   .sim-showcase{position:relative; margin-top:clamp(40px,6vh,64px); border-radius:24px; background:var(--field-2); padding:clamp(20px,3vw,32px);}
   .sim-showcase-cta{position:absolute; top:clamp(16px,2.6vw,26px); right:clamp(16px,2.6vw,26px); font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--lime-ink); background:var(--lime); padding:8px 14px; border-radius:999px; text-decoration:none; white-space:nowrap;}
   .brains-archive-box{margin-top:22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding:16px 20px; border-radius:16px; background:var(--field-2);}
-  .brains-archive-box img{width:44px; height:60px; object-fit:cover; border-radius:6px; flex:none;}
+  .brains-archive-box img{width:52px; height:60px; object-fit:contain; flex:none;}
   .brains-archive-box p{margin:0; font-size:13.5px; line-height:1.5; color:var(--chalk-dim); flex:1; min-width:180px;}
   .brains-archive-box a{flex:none;}
   .sim-showcase-head{max-width:70ch;}
@@ -530,13 +584,9 @@
     <span>The Desk</span>
   </a>
   <div class="nav-links">
-    <a href="#why">Why us</a>
-    <a href="#jesse">The Desk</a>
-    <a href="#honesty">Our promise</a>
-    <a href="#mentors">Mentors</a>
-    <a href="#power">Free AI</a>
-    <a href="#pricing">Pricing</a>
-    <a class="join" href="#start">Claim your desk</a>
+    <a href="#desk">The Desk</a>
+    <a href="#why">Why Us?</a>
+    <a class="join" href="#start">Claim Your Desk</a>
   </div>
 </nav>
 
@@ -546,35 +596,205 @@
   <canvas id="heroMap" aria-hidden="true"></canvas>
   <div class="hero-stage">
     <span class="hero-tag"><i>Early access</i> free right now &middot; a few seats each round</span>
-    <h1>Never work <em>alone.</em></h1>
-    <p class="sub">Office hours from your room.</p>
-    <p class="lead">Bring whatever you're stuck on, and someone who has done it before is in the room. <span class="serif">Built by people who still wonder why the moon follows the car.</span></p>
+    <h1>Built for <em>Visual Learners.</em></h1>
+    <p class="sub">See it. Move it. Get it.</p>
+    <p class="lead">Learn anything through live simulations and interactive lessons that reshape themselves around the way <span class="serif">your</span> brain works. No walls of text. No one-size-fits-all.</p>
     <div class="hero-actions">
       <a class="btn primary" href="#start">Claim your desk</a>
-      <a class="btn soft" href="#jesse">See how it works</a>
+      <a class="btn soft" href="#desk">Open the library</a>
     </div>
   </div>
 </section>
 
-<!-- ================= QUESTION TICKER ================= -->
-<div class="ticker-band" aria-label="Questions worth asking">
-  <p class="ticker-label">Every question is a door.</p>
+<!-- ================= COLLEGE LOGO MARQUEE ================= -->
+<div class="ticker-band logos" aria-label="Built with students from these colleges">
+  <p class="ticker-label">Built with students from</p>
   <div class="ticker" id="ticker">
     <!-- items duplicated in JS for the seamless loop -->
-    <div class="tick-item"><span class="q">How did they measure the pyramid without climbing it?</span><span class="a">ratios &middot; Thales, Giza, 600 BC</span><span class="dot"></span></div>
-    <div class="tick-item"><span class="q">Why does the dealer always win?</span><span class="a">probability &middot; Pascal, Paris, 1654</span><span class="dot"></span></div>
-
-    <div class="tick-item"><span class="q">How do ships know where they are at night?</span><span class="a">trigonometry &middot; Hipparchus, Rhodes</span><span class="dot"></span></div>
-    <div class="tick-item"><span class="q">What makes a loot drop feel fair?</span><span class="a">probability, again &middot; it follows you</span><span class="dot"></span></div>
-    <div class="tick-item"><span class="q">Why can't you fold a piece of paper eight times?</span><span class="a">exponents</span><span class="dot"></span></div>
+    <div class="tick-item"><img class="logo-mark" src="img/logos/oxford.svg" alt="University of Oxford" loading="lazy"></div>
+    <div class="tick-item"><img class="logo-mark" src="img/logos/unc.svg" alt="UNC Chapel Hill" loading="lazy"></div>
+    <div class="tick-item"><img class="logo-mark" src="img/logos/macalester.png" alt="Macalester College" loading="lazy"></div>
+    <div class="tick-item"><img class="logo-mark" src="img/logos/kenyon.svg" alt="Kenyon College" loading="lazy"></div>
+    <div class="tick-item"><img class="logo-mark" src="img/logos/uwc.png" alt="United World Colleges" loading="lazy"></div>
   </div>
 </div>
 
-<!-- ================= WHY ================= -->
+<!-- ================= THE DESK: SIM LIBRARY ================= -->
+<section class="stage-desk" id="desk">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal">The Desk &middot; a library you can touch</div>
+    <div class="simlib-head reveal">
+      <div>
+        <h2 class="h2">Some brains learn visually.</h2>
+        <p class="lede">4000+ live, interactive MicroSims.</p>
+        <p class="simlib-bullet">No homework: students interact with simulations, and The Desk tracks their learning outcomes.</p>
+      </div>
+      <div class="simlib-cta">
+        <a class="btn primary" href="https://joinmindcraft.com/dans-archive.html">Sim_Craft</a>
+      </div>
+    </div>
+
+    <div class="simlib reveal" aria-label="Top picks from the MicroSim library">
+      <article class="sim-card" data-sim="https://dmccreary.github.io/geometry-course/sims/pythagorean-theorem/main.html" data-title="Pythagorean Theorem MicroSim">
+        <div class="sim-face">
+          <span class="sim-tag">Geometry</span>
+          <h3>Pythagorean Theorem</h3>
+          <p>Why a&sup2; + b&sup2; = c&sup2;. Shown, not told.</p>
+          <button class="sim-play" type="button">&#9654; Play</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/geometry-course/sims/pythagorean-theorem/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+      <article class="sim-card" data-sim="https://dmccreary.github.io/calculus/sims/unit-circle/main.html" data-title="Interactive Unit Circle MicroSim">
+        <div class="sim-face">
+          <span class="sim-tag">Trigonometry</span>
+          <h3>The Unit Circle</h3>
+          <p>Spin the angle. Watch sine and cosine breathe.</p>
+          <button class="sim-play" type="button">&#9654; Play</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/calculus/sims/unit-circle/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+      <article class="sim-card" data-sim="sims/lever-force-amplifier.html" data-title="Lever Force Amplifier MicroSim">
+        <div class="sim-face">
+          <span class="sim-tag">Physics</span>
+          <h3>Lever Force Amplifier</h3>
+          <p>Drag the fulcrum. Feel the trade.</p>
+          <button class="sim-play" type="button">&#9654; Play</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="sims/lever-force-amplifier.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+      <article class="sim-card" data-sim="https://dmccreary.github.io/intro-to-physics-course/sims/projectile-motion/main.html" data-title="Projectile Motion MicroSim">
+        <div class="sim-face">
+          <span class="sim-tag">Physics</span>
+          <h3>Projectile Motion</h3>
+          <p>Aim, launch, and trace the arc yourself.</p>
+          <button class="sim-play" type="button">&#9654; Play</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/intro-to-physics-course/sims/projectile-motion/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+      <article class="sim-card" data-sim="https://dmccreary.github.io/intro-to-physics-course/sims/doppler-effect/main.html" data-title="Doppler Effect MicroSim">
+        <div class="sim-face">
+          <span class="sim-tag">Physics</span>
+          <h3>Doppler Effect</h3>
+          <p>Why the siren bends as it passes you.</p>
+          <button class="sim-play" type="button">&#9654; Play</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/intro-to-physics-course/sims/doppler-effect/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+      <article class="sim-card" data-sim="https://dmccreary.github.io/computer-science/sims/sorting-algorithm-race/main.html" data-title="Sorting Algorithm Race MicroSim">
+        <div class="sim-face">
+          <span class="sim-tag">Computer Science</span>
+          <h3>Sorting Algorithm Race</h3>
+          <p>Six algorithms, one starting gun.</p>
+          <button class="sim-play" type="button">&#9654; Play</button>
+        </div>
+        <div class="sim-stage">
+          <div class="sim-stage-frame"></div>
+          <div class="sim-stage-foot"><a href="https://dmccreary.github.io/computer-science/sims/sorting-algorithm-race/main.html" target="_blank" rel="noopener">Open full screen &#8599;</a><button class="sim-close" type="button">Close</button></div>
+        </div>
+      </article>
+    </div>
+    <div class="brains-archive-box reveal">
+      <img src="img/raccoon-mascot.png" alt="MindCraft raccoon mascot" loading="lazy">
+      <p>113 free, open digital books, loaded with sims. They level up as you engage.</p>
+      <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">Book_Craft</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CREATE YOUR OWN ================= -->
+<section class="stage-desk" id="create">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal">Create &middot; easy tools</div>
+    <h2 class="h2 reveal">Or create your own.</h2>
+    <p class="lede reveal">Personalized homework and lesson plans in minutes. From anywhere, even your phone. Made simple.</p>
+
+    <div class="fx-flow">
+      <div class="fx reveal">
+        <div class="fx-copy">
+          <span class="fx-step">01 &middot; Understand</span>
+          <h3>Gurukul: a companion that knows you.</h3>
+          <p>Smart at making visuals and sims. Ask about anything and it builds a fun, interactive way to learn it, right in the chat. And it remembers what works for you.</p>
+        </div>
+        <div class="fx-shot"><img src="img/mkt/feature-gurukul-chat.png" alt="Gurukul, the study companion chat, opening a Biology lesson with quick actions and Save to Binder" loading="lazy"></div>
+      </div>
+
+      <div class="fx flip reveal">
+        <div class="fx-copy">
+          <span class="fx-step">02 &middot; Design</span>
+          <h3>Design Studio.</h3>
+          <p>On-the-go lesson and homework creation with interactive sims, made easier with AI. No learning curve.</p>
+        </div>
+        <div class="fx-shot"><img src="img/mkt/feature-design-studio.png" alt="Design Studio canvas connecting a Geometry chapter to an AI-generated simulation with a live preview" loading="lazy"></div>
+      </div>
+
+      <div class="fx reveal">
+        <div class="fx-copy">
+          <span class="fx-step">03 &middot; Track</span>
+          <h3>Not just sims.</h3>
+          <p>The logic behind each sim turns every student interaction into learning data that matters.</p>
+        </div>
+        <div class="fx-shot"><img src="img/mkt/feature-sim-logic.png" alt="Simulation Workspace with drag-and-drop logic and loop blocks and a Run button" loading="lazy"></div>
+      </div>
+
+      <div class="fx flip reveal">
+        <div class="fx-copy">
+          <span class="fx-step">04 &middot; Collaborate</span>
+          <h3>Build it together.</h3>
+          <p>Practical by design, made for smooth, modern student collaboration.</p>
+        </div>
+        <div class="fx-shot"><img src="img/mkt/feature-ai-slides.png" alt="AI-powered presentation builder with Jesse on a voice call, a slide rail, and photo or PDF upload" loading="lazy"></div>
+      </div>
+
+      <div class="fx reveal">
+        <div class="fx-copy">
+          <span class="fx-step">05 &middot; Leverage</span>
+          <h3>The work becomes your passport.</h3>
+          <p>Tell Jesse what you did and the resume fills itself in. What you do helps us map you to bigger opportunities.</p>
+        </div>
+        <div class="fx-shot"><img src="img/mkt/feature-resume.png" alt="Your Resume builder with a checklist, LinkedIn Drive and PDF import, and Jesse on a live voice call" loading="lazy"></div>
+      </div>
+    </div>
+
+    <p class="frontier-tease reveal">One algorithm runs under all of it. It maps what a student has mastered, finds the edge of what's within reach, and recommends the next best concept to show them. That edge is <strong>the frontier</strong>, and what follows is a snippet of how deep our backend goes.</p>
+  </div>
+</section>
+
+<!-- ================= THE FRONTIER GRAPH ================= -->
+<section class="frontier" id="frontier">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal">The frontier graph</div>
+    <h2 class="h2 reveal">Learning has a shape.</h2>
+    <p class="lede reveal">Every question answered, every sim dragged, every session feeds a live map of what a student knows. The bright edge between what's mastered and what's within reach is <strong>the frontier.</strong> The Desk always teaches at yours: never busywork you've outgrown, never a leap you can't make yet.</p>
+    <div class="frontier-frame reveal">
+      <iframe src="sims/zpd/index.html" title="Watch the frontier move, a Zone of Proximal Development explorer" loading="lazy"></iframe>
+    </div>
+    <p class="frontier-foot reveal">Live and draggable: the Zone of Proximal Development, the same idea The Desk's own knowledge map runs on.</p>
+  </div>
+</section>
+
+<!-- ================= WHY US ================= -->
 <section class="stage-desk" id="why">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal">Why MindCraft</div>
+    <div class="kicker reveal">Why us</div>
     <h2 class="h2 reveal">This isn't about one test. It's about every one after it.</h2>
     <p class="why-photos-caption above reveal">Two versions of the same night.</p>
     <div class="why-photos reveal">
@@ -582,142 +802,6 @@
       <div class="why-photo"><img src="img/mkt/mkt-desk-together.jpg" alt="Two students working through a problem together" loading="lazy"><span>Office hours, together</span></div>
     </div>
     <p class="why-photos-caption below reveal">The only difference: who else was in the room.</p>
-  </div>
-</section>
-
-<!-- ================= CREDIBILITY ================= -->
-<section class="cred" aria-label="Who builds MindCraft">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="cred-inner reveal">
-      <span>Built with students from</span>
-      <ul class="cred-schools">
-        <li class="cred-logo-chip"><img src="img/logos/macalester.png" alt="Macalester College" loading="lazy"></li>
-        <li class="cred-logo-chip"><img src="img/logos/unc.svg" alt="UNC Chapel Hill" loading="lazy"></li>
-        <li class="cred-logo-chip"><img src="img/logos/oxford.svg" alt="University of Oxford" loading="lazy"></li>
-        <li class="cred-logo-chip"><img src="img/logos/kenyon.svg" alt="Kenyon College" loading="lazy"></li>
-        <li class="cred-logo-chip"><img src="img/logos/uwc.png" alt="United World Colleges" loading="lazy"></li>
-      </ul>
-      <p class="cred-note">Everywhere else, the platform keeps the student's data. Here the record goes back to the student, yours to export, yours to delete, never for sale.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= JESSE ================= -->
-<section class="stage-desk" id="jesse" style="background:var(--field-1); border-top:1px solid var(--edge);">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">Jesse &middot; the voice at the desk</div>
-
-    <div class="jesse-sub jesse-sub-first reveal">
-      <h3 class="jesse-sub-title">Jesse Talks</h3>
-      <div class="jesse-grid">
-        <div>
-          <h2 class="h2 reveal">Tap the disc. Jesse listens.</h2>
-          <p class="lede jesse-caption reveal">A cute collaborator.</p>
-          <p class="lede reveal">Stays on the line while you wander the app, the way a person would.</p>
-          <div class="jesse-points">
-            <div class="jpoint reveal"><i>real</i><p><strong>Shipped.</strong> A native voice in the iPad app today, not a chat box wearing a headset.</p></div>
-            <div class="jpoint reveal"><i>scoped</i><p><strong>Knows the page you're on.</strong> Ask about the problem in front of you.</p></div>
-            <div class="jpoint reveal"><i>next</i><p><strong>Learning to ask back.</strong> We're testing a version that asks you the next question instead of handing over the answer. It ships when it clears the gate.</p></div>
-          </div>
-        </div>
-        <div class="jesse-demo reveal" id="jesseDemo">
-          <button class="jesse-disc" type="button" id="jesseDisc" aria-pressed="false">Press</button>
-          <p class="jesse-words" id="jesseWords"><span class="you">Tap the disc. Jesse listens.</span></p>
-          <p class="jesse-hint" id="jesseHint">A scripted taste. The real Jesse listens, in the app.</p>
-          <div class="jesse-reveal" id="jesseReveal" hidden>
-            <div class="jesse-reveal-frame"><iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe></div>
-            <p class="jesse-reveal-cap">Real simulation, not a mockup. Try dragging it.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="jesse-sub jesse-routes reveal" id="honesty">
-      <h3 class="jesse-sub-title">Jesse Routes</h3>
-      <h2 class="h2 reveal">Checked before you ever see it.</h2>
-      <p class="lede reveal">Every AI-made lesson runs a gauntlet before a student sees it, and <strong>most attempts don't make it.</strong> We built it that way.</p>
-      <div class="gate-flow reveal" aria-label="The quality gate, in order">
-        <span class="gate-step">fit check</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step">generate</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step">render</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step">structural rubric</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step">visual + pedagogical gate</span><span class="gate-arrow">&rarr;</span>
-        <span class="gate-step final">a student sees it</span>
-      </div>
-    </div>
-
-    <div class="jesse-human-teaser reveal">
-      <p><strong>Need a little more human help? Sure.</strong></p>
-      <p class="jesse-human-names">The engineering sophomore &middot; the design senior &middot; the CS junior, on call below.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= POWER (free student AI) ================= -->
-<section class="stage-desk" id="power">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">How the free tier stays free</div>
-    <h2 class="h2 reveal">Supercharge your Desk on your own free key.</h2>
-    <p class="lede reveal">Google gives every student a free AI key at Google AI Studio, no card, no waitlist, about two minutes to claim. The Desk walks you through it during setup, then every homework question, study plan, and desk answer runs on your own account. Your usage, your key, your data. Not ours.</p>
-    <div class="power-stats reveal">
-      <div class="pstat"><b>26,600+</b><span>concepts mapped across the knowledge engine</span></div>
-      <div class="pstat"><b>100+</b><span>real subject graphs, from Euclid to AP Chemistry</span></div>
-      <div class="pstat"><b>113</b><span>free interactive textbooks in the open archive</span></div>
-      <div class="pstat"><b>$0</b><span>to start. No card, no waitlist, ever</span></div>
-    </div>
-    <p class="why-note reveal">Real numbers, not projections. Same standard as everything else on this page.</p>
-    <div class="jesse-points power-points reveal">
-      <div class="jpoint reveal"><i>yours</i><p><strong>Your key, your data.</strong> Nothing routes through our AI account. It's a straight line from you to the model, not through us.</p></div>
-      <div class="jpoint reveal"><i>promise</i><p><strong>Never training data.</strong> A student's work stays theirs, full stop. Not a product, not something we sell.</p></div>
-      <div class="jpoint reveal"><i>ahead of it</i><p><strong>Building toward formal compliance</strong> as the platform grows, instead of waiting for a regulator to make us.</p></div>
-      <div class="jpoint reveal"><i>the edge</i><p><strong>This is the actual differentiation.</strong> Every number above runs on a student's own key, not a shared pool we could quietly mine.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= EVERY BRAIN ================= -->
-<section class="stage-desk" id="brains">
-  <div class="grid-bg" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="kicker reveal">For the kid the page keeps losing</div>
-    <h2 class="h2 reveal">Some brains just don't do paragraphs.</h2>
-    <p class="lede reveal">The paragraph is one door. Every idea here has more than one.</p>
-    <p class="brains-formats reveal"><strong>A simulation</strong>, <strong>a story</strong>, <strong>a voice</strong>, <strong>a picture</strong>: whichever door opens for you.</p>
-    <p class="brains-engine reveal">This isn't a settings toggle. The engine tracks which representation lands for you and leads with it next time.</p>
-
-    <div class="brains-archive-box reveal">
-      <img src="img/marketing/book-cover-calculus.webp" alt="" loading="lazy">
-      <p>113 free, open textbooks. No login, no pitch, open to any curious student.</p>
-      <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">Browse the archive</a>
-    </div>
-
-    <div class="sim-showcase reveal">
-      <a class="sim-showcase-cta" href="https://joinmindcraft.com/dans-archive.html">Browse simulations</a>
-      <div class="sim-showcase-head">
-        <span class="sim-showcase-tag">Real, not a mockup &middot; one page from the library</span>
-        <h3>Try it. Drag the fulcrum.</h3>
-      </div>
-      <div class="sim-showcase-frame">
-        <iframe src="sims/lever-force-amplifier.html" title="Lever Force Amplifier, an AI-generated MicroSim" loading="lazy"></iframe>
-      </div>
-      <p class="sim-showcase-foot">AI-generated, quality-gated, and built to route you to the right support at the right time.</p>
-    </div>
-
-    <div class="sim-showcase reveal">
-      <a class="sim-showcase-cta" href="https://joinmindcraft.com/dans-archive.html">Browse archive</a>
-      <div class="sim-showcase-head">
-        <span class="sim-showcase-tag">What's next for you &middot; CC BY-NC-SA</span>
-        <h3>Watch the frontier move.</h3>
-        <p>The Zone of Proximal Development, live: the edge between what you can already do and what you're ready to learn next, and how it shifts as you practice.</p>
-      </div>
-      <div class="sim-showcase-frame">
-        <iframe src="sims/zpd/index.html" title="Watch the frontier move, a Zone of Proximal Development explorer" loading="lazy"></iframe>
-      </div>
-      <p class="sim-showcase-foot">This is the same idea The Desk's own knowledge map is built on: mastery isn't fixed, it's a frontier.</p>
-    </div>
   </div>
 </section>
 
@@ -791,7 +875,7 @@
       </details>
       <details>
         <summary>How do I know the AI isn't teaching my kid something wrong?</summary>
-        <p>We assume it will and check first; that's what the gate above is for. A failed lesson shows an honest &ldquo;couldn't make a good one yet.&rdquo;</p>
+        <p>We assume it will and check first: every AI-made lesson passes a quality gate before a student sees it. A failed lesson shows an honest &ldquo;couldn't make a good one yet.&rdquo;</p>
       </details>
       <details>
         <summary>Who are the mentors?</summary>
@@ -1049,49 +1133,31 @@
   }
   constellation('heroMap', 32000, .15);
 
-  // ----- Jesse scripted demo (clearly labeled a taste, not the live product) -----
+  // ----- sim library: play opens the real sim in place, close puts it away -----
   (function(){
-    var disc = document.getElementById('jesseDisc');
-    var words = document.getElementById('jesseWords');
-    var hint = document.getElementById('jesseHint');
-    var reveal = document.getElementById('jesseReveal');
-    if(!disc || !words) return;
-    var script = [
-      {who:'you', text:'“Jesse, help me learn for the ACT.”'},
-      {who:'jesse', text:'Let’s build you a study plan, starting with your weakest concept first.'},
-      {who:'jesse', text:'But there’s a twist: you won’t read it. You’ll drag it.'}
-    ];
-    var busy = false;
-    function typeLine(line, cls, done){
-      var i = 0, span = document.createElement('span');
-      if(cls) span.className = cls;
-      words.innerHTML = ''; words.appendChild(span);
-      var iv = setInterval(function(){
-        i += 2;
-        span.textContent = line.slice(0, i);
-        if(i >= line.length){ clearInterval(iv); if(done) setTimeout(done, 650); }
-      }, 24);
-    }
-    disc.addEventListener('click', function(){
-      if(busy) return;
-      busy = true;
-      disc.classList.add('is-hot');
-      disc.setAttribute('aria-pressed','true');
-      hint.textContent = 'Listening… well, pretending to. The real Jesse listens in the app.';
-      typeLine(script[0].text, 'you', function(){
-        typeLine(script[1].text, '', function(){
-          typeLine(script[2].text, '', function(){
-            disc.classList.remove('is-hot');
-            disc.setAttribute('aria-pressed','false');
-            hint.textContent = 'That’s the shape of it. The real conversation lives in the app.';
-            busy = false;
-            if(reveal){
-              reveal.hidden = false;
-              requestAnimationFrame(function(){ reveal.classList.add('in'); });
-            }
-          });
-        });
+    var cards = document.querySelectorAll('.sim-card');
+    cards.forEach(function(card){
+      var play = card.querySelector('.sim-play');
+      var closeBtn = card.querySelector('.sim-close');
+      var frame = card.querySelector('.sim-stage-frame');
+      if(!play || !frame) return;
+      function shut(c){
+        c.classList.remove('open');
+        var f = c.querySelector('.sim-stage-frame iframe');
+        if(f) f.remove();
+      }
+      play.addEventListener('click', function(){
+        cards.forEach(function(o){ if(o !== card) shut(o); });
+        if(!frame.querySelector('iframe')){
+          var f = document.createElement('iframe');
+          f.src = card.dataset.sim;
+          f.title = card.dataset.title || 'MicroSim';
+          frame.appendChild(f);
+        }
+        card.classList.add('open');
+        card.scrollIntoView({behavior:'smooth', block:'nearest'});
       });
+      if(closeBtn) closeBtn.addEventListener('click', function(){ shut(card); });
     });
   })();
 
