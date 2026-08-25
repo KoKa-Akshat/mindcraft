@@ -892,10 +892,17 @@ struct FieldDeskView: View {
                         onOpenArchive: { showArchiveWorkflow = true },
                         // Merged Learn+Practice study companion (2026-08-23) -
                         // whole-screen overlay, same insert-into-openOverlays
-                        // shape as onOpenCreate/onOpenBinder above, not a
+                        // shape as onOpenBinder above, not a
                         // column-only swap - "whatever we have on the dash
                         // changes" per the explicit ask.
-                        onOpenStudyCompanion: {
+                        // Gained an optional topic (2026-08-25) - a tapped
+                        // Knowledge Map concept passes its resolved label
+                        // through here (see DeskGridDashboardView's own
+                        // onOpenConcept), same pendingConstellationTopic ->
+                        // StudyCompanionView.initialTopic pipe
+                        // ConstellationView's own concept tap already uses.
+                        onOpenStudyCompanion: { topic in
+                            pendingConstellationTopic = topic
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 _ = openOverlays.insert(.studyCompanion)
                             }

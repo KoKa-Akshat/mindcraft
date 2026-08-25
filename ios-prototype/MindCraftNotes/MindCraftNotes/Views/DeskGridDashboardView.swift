@@ -134,9 +134,15 @@ struct DeskGridDashboardView: View {
     var onOpenArchive: () -> Void = {}
     /// Opens the merged Learn+Practice AI study companion full-screen
     /// (2026-08-23) - FieldDeskView's own `.studyCompanion` overlay, not a
-    /// workspace-column swap like `viewingXxx` below. The Learn+Practice
-    /// module box (see `learnModuleBox`) is this closure's one caller.
-    var onOpenStudyCompanion: () -> Void = {}
+    /// workspace-column swap like `viewingXxx` below.
+    /// Gained an optional topic param (2026-08-25, explicit ask: tapping a
+    /// concept on the Knowledge Map's "Open lesson" button did nothing -
+    /// onOpenConcept/onQuickPractice below were still stub closures,
+    /// exactly the bug ConstellationView's own equivalent already got
+    /// fixed for on 2026-08-25 earlier the same day, just never ported to
+    /// this screen's embedded map). nil (from learnModuleBox, the plain
+    /// Gurukul tile) opens idle, same as before this change.
+    var onOpenStudyCompanion: (_ topic: String?) -> Void = { _ in }
     /// The left sidebar's gear icon now opens the same Manage page the
     /// top-left logo used to (2026-08-18, explicit ask - the mark itself
     /// moved to top-right, see FieldDeskView's chrome overlay).
@@ -456,7 +462,7 @@ struct DeskGridDashboardView: View {
         onSyncCalendar: @escaping () -> Void = {},
         onOpenLearnStudio: @escaping () -> Void = {},
         onOpenArchive: @escaping () -> Void = {},
-        onOpenStudyCompanion: @escaping () -> Void = {},
+        onOpenStudyCompanion: @escaping (_ topic: String?) -> Void = { _ in },
         onOpenManage: @escaping () -> Void = {},
         studentName: String = "there"
     ) {
@@ -2609,7 +2615,7 @@ struct DeskGridDashboardView: View {
     /// helper would leak this one box's special case into every call site.
     private func learnModuleBox(ink: Color) -> some View {
         Button {
-            onOpenStudyCompanion()
+            onOpenStudyCompanion(nil)
         } label: {
             VStack(alignment: .leading, spacing: 8) {
                 JesseRailView.raccoonImage
@@ -2815,13 +2821,24 @@ struct DeskGridDashboardView: View {
                     studentPoints: knowledgeGraphClient.studentPoints,
                     axisLabels: knowledgeGraphClient.axisLabels,
                     conceptDisplays: conceptDisplays,
-                    // Not wired to a destination in THIS dashboard yet
-                    // (unlike DashboardView's own Map tab, which has a
-                    // chapter/practice screen to hand off to) - closing
-                    // back to the graph itself is an honest, safe fallback
-                    // rather than a fake navigation. Real follow-up, not
-                    // silently skipped.
-                    onOpenConcept: { _ in },
+                    // Real wire-up (2026-08-25, explicit ask: "talk it
+                    // through is not working, it should open the gurukul
+                    // jesse in ready to talk in this topic context") - was
+                    // an empty closure (see this block's own prior doc
+                    // comment: "not wired to a destination... real
+                    // follow-up, not silently skipped" - now it isn't).
+                    // Same resolve-id-to-label + open-Gurukul-with-topic
+                    // pattern ConstellationView's own onOpenConcept already
+                    // uses, via onOpenStudyCompanion's new topic param.
+                    // onQuickPractice stays a stub deliberately - no real
+                    // practice-by-concept-id destination exists yet to
+                    // hand off to, and silently routing it into Gurukul
+                    // too would misrepresent what tapping it does.
+                    onOpenConcept: { conceptId in
+                        let label = conceptDisplays[conceptId]?.label
+                            ?? conceptId.replacingOccurrences(of: "_", with: " ").capitalized
+                        onOpenStudyCompanion(label)
+                    },
                     onQuickPractice: { _ in },
                     // 2026-08-19, real complaint: "the display of fonts is
                     // horrible" - this view's type sizes were tuned for a
