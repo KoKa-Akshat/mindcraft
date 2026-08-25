@@ -121,8 +121,37 @@ final class DriveClient: ObservableObject {
             }
         }
 
+        // Real bug fix (2026-08-25, explicit ask: "why can't i connect to
+        // my gdrive yet... I should be able to create a folder there").
+        // This used to dead-end with "Create a Drive folder named exactly
+        // The Desk, then tap again" - asking a student to go create a
+        // precisely-named folder by hand in a separate app before this
+        // one would even connect. `drive.readonly` can't create anything
+        // (by design - it's the narrowest scope that can browse), so
+        // auto-creating here means also requesting `driveFile` up front,
+        // same escalation path `archiveEmails` above already uses for its
+        // own folder. `findOrCreateFolder` already exists for exactly
+        // this (that method), just never called from this path before.
+        if folderId == nil {
+            if !hasDriveFileScope, let presenter = Self.topViewController() {
+                _ = try? await Self.addScopes([Self.driveFile], user: user, from: presenter)
+                refreshScopeStatus()
+            }
+            if hasDriveFileScope {
+                // Re-fetch: `token` above was minted before the scope
+                // escalation, so it doesn't carry the just-granted
+                // `driveFile` permission - reusing it here would 403 on
+                // the create call (same reason `archiveEmails` above only
+                // fetches its token after `hasDriveFileScope` is true).
+                let escalatedToken = try await Self.refreshUser(user).accessToken.tokenString
+                let created = try await findOrCreateFolder(name: Self.folderNames[0], token: escalatedToken)
+                folderId = created
+                foundName = Self.folderNames[0]
+            }
+        }
+
         guard let folderId, let foundName else {
-            lastError = "Create a Drive folder named exactly The Desk, then tap again."
+            lastError = "Couldn't create your Drive folder - tap again, or create one named exactly The Desk yourself."
             folderName = nil
             files = []
             return []

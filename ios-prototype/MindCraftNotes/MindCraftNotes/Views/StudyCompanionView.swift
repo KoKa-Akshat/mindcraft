@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// The merged Learn+Practice AI study companion - Gurukul (2026-08-23,
 /// explicit ask: "Learn and Practice can be merged and have to kind of
@@ -82,6 +83,17 @@ struct StudyCompanionView: View {
     var body: some View {
         ZStack {
             stage
+                // Real bug fix (2026-08-25, explicit ask: "the keyboard
+                // appears but wont close when i lic on somehwere else on
+                // the screen... hard to hit enter or done when creating
+                // sims"). Neither text field here submits on Return (both
+                // are `axis: .vertical`, so Return inserts a newline, not
+                // a submit) and nothing was dismissing the keyboard on an
+                // outside tap - once it was up there was no way to see the
+                // Create/send button it was covering. `simultaneousGesture`
+                // (not `onTapGesture`) so this fires alongside taps on real
+                // buttons/fields underneath instead of stealing them.
+                .simultaneousGesture(TapGesture().onEnded(hideKeyboard))
 
             // Same lesson hand-off as before the redesign - the READING
             // experience is explicitly not what's being redesigned.
@@ -611,6 +623,11 @@ struct StudyCompanionView: View {
         formTopic = ""
         formLevel = nil
         formContentType = nil
+        hideKeyboard()
+    }
+
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 
     private var conversationFooter: some View {
@@ -820,6 +837,7 @@ struct StudyCompanionView: View {
     private func sendDraft() {
         let text = draftText
         draftText = ""
+        hideKeyboard()
         send(text)
     }
 

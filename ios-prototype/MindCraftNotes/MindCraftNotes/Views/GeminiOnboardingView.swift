@@ -36,6 +36,7 @@ struct GeminiOnboardingView: View {
     }
 
     @ObservedObject private var aiKeys = StudentAIKeyStore.shared
+    @ObservedObject private var drive = DriveClient.shared
     @State private var step: Step = .welcome
     @State private var keyDraft = ""
     @State private var connectPhase: ConnectPhase = .idle
@@ -54,26 +55,49 @@ struct GeminiOnboardingView: View {
             cream.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                ScrollView {
-                    Group {
-                        switch step {
-                        case .welcome: welcomeStep
-                        case .getKey: getKeyStep
-                        case .pasteKey: pasteKeyStep
-                        case .connected: connectedStep
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        Group {
+                            switch step {
+                            case .welcome: welcomeStep
+                            case .getKey: getKeyStep
+                            case .pasteKey: pasteKeyStep
+                            case .connected: connectedStep
+                            }
+                        }
+                        .frame(maxWidth: 560)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 32)
+                        .padding(.top, 48)
+                        .padding(.bottom, 24)
+                        Color.clear.frame(height: 1).id("bottom")
+                    }
+                    .onAppear {
+                        // Verification-only hook, same shape as this file's
+                        // other `--ui-testing-*` flags - no tap automation
+                        // exists on this device (see IOS_SESSION_HANDOFF.md)
+                        // so a screenshot can't otherwise reach the fold.
+                        if ProcessInfo.processInfo.arguments.contains("--ui-testing-gemini-scroll-bottom") {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                                withAnimation(nil) { proxy.scrollTo("bottom", anchor: .bottom) }
+                            }
                         }
                     }
-                    .frame(maxWidth: 560)
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 32)
-                    .padding(.top, 48)
-                    .padding(.bottom, 24)
                 }
 
                 footer
             }
         }
         .animation(.easeInOut(duration: 0.25), value: step)
+        .onAppear {
+            // Same on-device-verification-without-tap-automation pattern
+            // as StudyCompanionView's `--ui-testing-gurukul-script`
+            // (this device has no WebDriverAgent, see IOS_SESSION_HANDOFF.md)
+            // - jumps straight to a step so a screenshot can confirm it.
+            let args = ProcessInfo.processInfo.arguments
+            if args.contains("--ui-testing-gemini-getkey") { step = .getKey }
+            if args.contains("--ui-testing-gemini-connected") { step = .connected }
+        }
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
             // Invisible marker so XCUITest can assert "this screen exists"
@@ -127,45 +151,37 @@ struct GeminiOnboardingView: View {
         VStack(alignment: .leading, spacing: 22) {
             stepBadge("GET YOUR FREE KEY", index: 2)
 
-            Text("Three steps on Google's side.")
-                .font(.mcContent(size: 32, weight: .semibold))
+            // 2026-08-25, explicit ask: "not too many words you know nice
+            // neat" + "just say Three simple steps to get your free API
+            // key" - was a subcaption-heavy screen (3 full-paragraph
+            // numberedStep cards). Verified 2026-08-23 (kept, still true):
+            // Google AI Studio's standalone key (aistudio.google.com/apikey)
+            // has no age or enrollment gate - that's still the right target,
+            // this change is presentation only.
+            Text("Three simple steps to get your free API key.")
+                .font(.mcContent(size: 30, weight: .semibold))
                 .foregroundColor(ink)
                 .fixedSize(horizontal: false, vertical: true)
 
-            VStack(alignment: .leading, spacing: 14) {
-                // Verified 2026-08-23: Google's free-for-a-year "AI Pro"
-                // student offer (gemini.google/students/) requires SheerID
-                // verification of active HIGHER-ED enrollment, age 18+ - it
-                // explicitly excludes high schoolers, "even those who have
-                // been accepted to university" (per Google's own published
-                // terms). Since MindCraft's students ARE high schoolers
-                // (see CLAUDE.md), that offer can't be this flow's primary
-                // path - most students here would hit a dead end. Google AI
-                // Studio's standalone API key (aistudio.google.com/apikey)
-                // has no age or enrollment gate, is genuinely free (a real,
-                // generous no-card-required tier), and is what this flow
-                // actually needs - immediate use, not eligibility-gated.
-                numberedStep(1, title: "Open Google AI Studio",
-                             body: "On any browser, go to aistudio.google.com and sign in with any Google account - no school email or age check needed.")
-                numberedStep(2, title: "Create an API key",
-                             body: "Tap \u{201C}Get API key\u{201D} \u{2192} \u{201C}Create API key\u{201D}. It's one button - no card, no billing setup, works immediately.")
-                numberedStep(3, title: "Copy it",
-                             body: "The key looks like a long string starting with \u{201C}AIza\u{201D}. Copy it - you'll paste it here on the next screen.")
+            // Annotated mockup, not a screenshot (none exists to bundle) -
+            // same "illustrated, not photographic" style as the rest of
+            // this onboarding. Shows the two taps the student can't miss:
+            // the key icon, then Create API key.
+            aiStudioVisual
+
+            VStack(alignment: .leading, spacing: 10) {
+                bulletLine("Sign in with any Google account - no school email or age check")
+                bulletLine("Copy the key that appears (starts with \u{201C}AIza\u{201D})")
             }
 
             // College-track students (18+, actively enrolled) can ALSO
             // claim Google's separate "AI Pro free for a year" offer for
             // higher usage limits - shown as a bonus, not the main path,
             // since most students here don't qualify for it.
-            VStack(alignment: .leading, spacing: 6) {
-                Text("In college already?")
-                    .font(.mcChrome(size: 13, weight: .bold))
-                    .foregroundColor(ink.opacity(0.6))
-                Text("Search \u{201C}Google AI Pro student offer\u{201D} - actively-enrolled college students 18+ can claim a full free year of Gemini Pro's higher usage limits on top of the free key above.")
-                    .font(.mcChrome(size: 13, weight: .medium))
-                    .foregroundColor(ink.opacity(0.55))
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            Text("Already in college? Search \u{201C}Google AI Pro student offer\u{201D} for a free year of higher limits on top of this.")
+                .font(.mcChrome(size: 12, weight: .medium))
+                .foregroundColor(ink.opacity(0.5))
+                .fixedSize(horizontal: false, vertical: true)
 
             primaryButton("I have my key", a11y: "geminiOnboardingHaveKey") {
                 step = .pasteKey
@@ -277,42 +293,58 @@ struct GeminiOnboardingView: View {
                 .lineSpacing(4)
                 .fixedSize(horizontal: false, vertical: true)
 
-            // Honest "coming soon" placeholder - the Drive folder-connect
-            // step needs the Google Picker API and is a separate follow-up.
-            // It must never block finishing onboarding, so it's a disabled
-            // row here, not a step.
-            HStack(spacing: 12) {
-                Image(systemName: "folder.badge.plus")
-                    .font(.system(size: 18))
-                    .foregroundColor(muted)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Connect your Drive folder")
-                        .font(.mcChrome(size: 15, weight: .bold))
-                        .foregroundColor(ink.opacity(0.5))
-                    Text("Coming soon - file class notes straight into your own Drive.")
-                        .font(.mcChrome(size: 12, weight: .medium))
-                        .foregroundColor(muted)
+            // Real wire-up (2026-08-25, explicit ask: "why cant i conenct
+            // to my gdrive yet... i should be able to create a folder
+            // there and evreythign student related happens there"). Was a
+            // permanently-disabled "SOON" row. `connectAndReadFolder()`
+            // requests the `driveFile` scope and now auto-creates "The
+            // Desk" folder if it's missing (see DriveClient.readDeskFolder)
+            // instead of dead-ending on "create a folder yourself first" -
+            // that manual-precreation requirement was the actual reason
+            // this never worked for a fresh student.
+            Button {
+                Task { _ = await drive.connectAndReadFolder() }
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: drive.isConnected ? "checkmark.circle.fill" : "folder.badge.plus")
+                        .font(.system(size: 18))
+                        .foregroundColor(drive.isConnected ? green : ink.opacity(0.7))
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(drive.isConnected ? "Drive folder connected" : "Connect your Drive folder")
+                            .font(.mcChrome(size: 15, weight: .bold))
+                            .foregroundColor(ink)
+                        Text(driveSubtitle)
+                            .font(.mcChrome(size: 12, weight: .medium))
+                            .foregroundColor(drive.lastError != nil ? Color(onbHex: "b0473f") : muted)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer(minLength: 8)
+                    if drive.isBusy {
+                        ProgressView().tint(green)
+                    } else if !drive.isConnected {
+                        Text("CONNECT")
+                            .font(.mcChrome(size: 10, weight: .heavy))
+                            .tracking(1)
+                            .foregroundColor(limeInk)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Capsule().fill(lime))
+                    }
                 }
-                Spacer()
-                Text("SOON")
-                    .font(.mcChrome(size: 10, weight: .heavy))
-                    .tracking(1)
-                    .foregroundColor(muted)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Capsule().stroke(muted.opacity(0.5), lineWidth: 1))
+                .padding(16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .fill(paper)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                .strokeBorder(drive.isConnected ? green.opacity(0.35) : ink.opacity(0.12), style: StrokeStyle(lineWidth: 1, dash: drive.isConnected ? [] : [5, 4]))
+                        )
+                )
             }
-            .padding(16)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(paper)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .strokeBorder(ink.opacity(0.12), style: StrokeStyle(lineWidth: 1, dash: [5, 4]))
-                    )
-            )
-            .accessibilityIdentifier("geminiOnboardingDriveSoon")
+            .buttonStyle(.plain)
+            .disabled(drive.isBusy || drive.isConnected)
+            .accessibilityIdentifier("geminiOnboardingDriveConnect")
 
             primaryButton("Enter The Desk", a11y: "geminiOnboardingEnter") {
                 finish()
@@ -378,31 +410,106 @@ struct GeminiOnboardingView: View {
         }
     }
 
-    private func numberedStep(_ number: Int, title: String, body: String) -> some View {
-        HStack(alignment: .top, spacing: 14) {
-            Text("\(number)")
-                .font(.mcContent(size: 20, weight: .semibold))
-                .foregroundColor(green)
-                .frame(width: 34, height: 34)
-                .background(Circle().fill(lime.opacity(0.4)))
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.mcChrome(size: 16, weight: .bold))
-                    .foregroundColor(ink)
-                Text(body)
-                    .font(.mcChrome(size: 14, weight: .medium))
-                    .foregroundColor(ink.opacity(0.65))
-                    .lineSpacing(2)
-                    .fixedSize(horizontal: false, vertical: true)
+    /// Native mockup of the two taps that get a student their key (no real
+    /// screenshot exists to bundle, and a hand-drawn illustration matches
+    /// this onboarding's existing "illustrated, not photographic" style
+    /// better than a raster screenshot would anyway). Panel 1 = AI Studio's
+    /// toolbar, key icon called out bottom-left; panel 2 = the dialog that
+    /// opens, "Create API key" called out top-right - exactly the two
+    /// landmarks from the student's own screenshot (2026-08-25 ask).
+    private var aiStudioVisual: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            mockupPanel(caption: "Tap the key icon, bottom left") {
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(spacing: 10) {
+                        Image(systemName: "magnifyingglass").foregroundColor(muted)
+                        Image(systemName: "bell").foregroundColor(muted)
+                        Image(systemName: "gearshape").foregroundColor(muted)
+                        Spacer()
+                    }
+                    .font(.system(size: 14))
+                    Spacer(minLength: 30)
+                    HStack {
+                        ZStack {
+                            Circle().stroke(lime, lineWidth: 2).frame(width: 40, height: 40)
+                            Circle().fill(lime).frame(width: 30, height: 30)
+                            Image(systemName: "key.fill")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(limeInk)
+                        }
+                        calloutBadge("1")
+                        Spacer()
+                    }
+                }
+            }
+            mockupPanel(caption: "Then Create API key, top right") {
+                HStack {
+                    calloutBadge("2")
+                    Spacer()
+                    ZStack {
+                        Capsule().stroke(lime, lineWidth: 2).padding(-3)
+                        Text("Create API key")
+                            .font(.mcChrome(size: 13, weight: .bold))
+                            .foregroundColor(limeInk)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(lime))
+                    }
+                }
             }
         }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(paper)
-                .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).stroke(ink.opacity(0.1), lineWidth: 1))
-        )
+    }
+
+    /// One "browser chrome" mockup frame - two stacked instances make up
+    /// `aiStudioVisual` (the toolbar tap, then the dialog that opens).
+    private func mockupPanel<Content: View>(caption: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            VStack(spacing: 0) {
+                HStack(spacing: 6) {
+                    ForEach(0..<3, id: \.self) { _ in
+                        Circle().fill(ink.opacity(0.12)).frame(width: 7, height: 7)
+                    }
+                    Spacer()
+                    Text("aistudio.google.com")
+                        .font(.mcChrome(size: 11, weight: .semibold))
+                        .foregroundColor(ink.opacity(0.4))
+                    Spacer()
+                    Color.clear.frame(width: 21)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(ink.opacity(0.04))
+
+                content()
+                    .padding(14)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(Color.white)
+                    .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(ink.opacity(0.1), lineWidth: 1))
+            )
+            Text(caption)
+                .font(.mcChrome(size: 12, weight: .bold))
+                .foregroundColor(green)
+        }
+    }
+
+    private func calloutBadge(_ n: String) -> some View {
+        Text(n)
+            .font(.mcChrome(size: 11, weight: .heavy))
+            .foregroundColor(green)
+            .frame(width: 20, height: 20)
+            .background(Circle().fill(green.opacity(0.12)))
+    }
+
+    private func bulletLine(_ text: String) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Circle().fill(green).frame(width: 5, height: 5).padding(.top, 7)
+            Text(text)
+                .font(.mcChrome(size: 14, weight: .medium))
+                .foregroundColor(ink.opacity(0.7))
+                .fixedSize(horizontal: false, vertical: true)
+        }
     }
 
     private func primaryButton(_ label: String, a11y: String, disabled: Bool = false, action: @escaping () -> Void) -> some View {
@@ -446,6 +553,13 @@ struct GeminiOnboardingView: View {
             // Keep the saved key - it may be fine; the network wasn't.
             connectPhase = .failed("Couldn't reach Google right now - check your connection and tap Connect again.")
         }
+    }
+
+    private var driveSubtitle: String {
+        if let error = drive.lastError { return error }
+        if drive.isConnected { return "Everything student-related saves to \u{201C}\(drive.folderName ?? "The Desk")\u{201D}." }
+        if drive.isBusy { return "Connecting\u{2026}" }
+        return "Creates a folder in your Drive - class notes and sims save there."
     }
 
     private func finish() {
