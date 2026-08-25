@@ -346,6 +346,23 @@ struct GeminiOnboardingView: View {
             .disabled(drive.isBusy || drive.isConnected)
             .accessibilityIdentifier("geminiOnboardingDriveConnect")
 
+            // Same #if DEBUG admin-link pattern GmailWorkflowBoxView already
+            // uses for its own "enable the API" 403 (`enableApiURL`) - that
+            // property existed on DriveClient too but nothing ever surfaced
+            // it, so a 403 here previously read as a dead end with no next
+            // step besides finding Cloud Console by hand.
+            #if DEBUG
+            if let url = drive.enableApiURL {
+                Link(destination: url) {
+                    Text("Admin: enable Drive API \u{2192}")
+                        .font(.mcChrome(size: 12, weight: .bold))
+                        .foregroundColor(green)
+                        .underline()
+                }
+                .accessibilityIdentifier("geminiOnboardingDriveEnableApiLink")
+            }
+            #endif
+
             primaryButton("Enter The Desk", a11y: "geminiOnboardingEnter") {
                 finish()
             }
