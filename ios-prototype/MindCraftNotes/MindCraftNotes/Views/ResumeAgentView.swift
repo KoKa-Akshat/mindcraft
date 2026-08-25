@@ -61,48 +61,51 @@ struct ResumeAgentView: View {
     private let cream = Color(red: 255 / 255, green: 248 / 255, blue: 233 / 255)
 
     var body: some View {
-        GeometryReader { geo in
-            let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
-            ZStack {
-                if mode == .profile {
-                    // Gurukul-style dark stage (2026-08-25, explicit ask:
-                    // "it should look like Jesse(Gurukul) feature when you
-                    // click on it") - same ink/radial-gradient treatment as
-                    // StudyCompanionView's own `stage`, replacing the old
-                    // flat white content-box + JesseRailView pairing for
-                    // this mode specifically. Applications/Import below
-                    // keep their own existing cream/white styling
-                    // untouched - JobOSShellView's paper-board look and the
-                    // web import page aren't part of this redesign.
+        Group {
+            if mode == .profile {
+                // Gurukul-style dark stage (2026-08-25, explicit ask:
+                // "it should look like Jesse(Gurukul) feature... expand
+                // the dark all over the screen like gurukul not in a
+                // box"). StudyCompanionView's own `stage` is never boxed
+                // into the old fixed-1440x810-artboard-scaled-and-
+                // letterboxed layout every other mode/screen in this file
+                // uses (see ResumeArtboard/`pin` below) - it just fills
+                // whatever space it's given, so this does the same
+                // instead of pinning `resumeStage` inside a scaled box
+                // with visible dark margins around it. Applications/Import
+                // below keep the old artboard system untouched -
+                // JobOSShellView's paper-board look and the web import
+                // page aren't part of this redesign.
+                ZStack {
+                    stageInk.ignoresSafeArea()
+                    RadialGradient(
+                        colors: [Color(red: 26 / 255, green: 36 / 255, blue: 16 / 255).opacity(0.9), stageInk],
+                        center: .center, startRadius: 40, endRadius: 520
+                    ).ignoresSafeArea()
+                    resumeStage
+                }
+            } else {
+                GeometryReader { geo in
+                    let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
                     ZStack {
-                        stageInk.ignoresSafeArea()
-                        RadialGradient(
-                            colors: [Color(red: 26 / 255, green: 36 / 255, blue: 16 / 255).opacity(0.9), stageInk],
-                            center: .center, startRadius: 40, endRadius: 520
-                        ).ignoresSafeArea()
-                    }
-                } else {
-                    Color.white.ignoresSafeArea()
-                    // Same dotted-grid treatment as the Work dashboard
-                    // (2026-08-18, explicit ask: "all other panels should
-                    // have polka dots too") - duplicated per-file, matching
-                    // this codebase's existing convention.
-                    ResumeDottedGrid()
-                        .frame(width: geo.size.width, height: geo.size.height)
-                }
-                ZStack(alignment: .topLeading) {
-                    if mode == .profile {
-                        pin(ResumeArtboard.fullStage, scale: scale) { resumeStage }
-                    } else {
-                        pin(ResumeArtboard.content, scale: scale) { contentBox }
-                        pin(ResumeArtboard.jesseRail, scale: scale) {
-                            JesseRailView(studentName: studentName, context: "resume")
+                        Color.white.ignoresSafeArea()
+                        // Same dotted-grid treatment as the Work dashboard
+                        // (2026-08-18, explicit ask: "all other panels should
+                        // have polka dots too") - duplicated per-file, matching
+                        // this codebase's existing convention.
+                        ResumeDottedGrid()
+                            .frame(width: geo.size.width, height: geo.size.height)
+                        ZStack(alignment: .topLeading) {
+                            pin(ResumeArtboard.content, scale: scale) { contentBox }
+                            pin(ResumeArtboard.jesseRail, scale: scale) {
+                                JesseRailView(studentName: studentName, context: "resume")
+                            }
                         }
+                        .frame(width: artboard.width * scale, height: artboard.height * scale)
                     }
+                    .frame(width: geo.size.width, height: geo.size.height)
                 }
-                .frame(width: artboard.width * scale, height: artboard.height * scale)
             }
-            .frame(width: geo.size.width, height: geo.size.height)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(edges: embedded ? [] : .all)
@@ -549,10 +552,6 @@ struct ResumeAgentView: View {
 private enum ResumeArtboard {
     static let content = CGRect(x: 28, y: 48, width: 920, height: 560)
     static let jesseRail = CGRect(x: 980, y: 48, width: 432, height: 560)
-    // Full-width stage (2026-08-25) - .profile mode's own orb+panel layout
-    // is self-contained (mirrors StudyCompanionView's stage), unlike the
-    // content+jesseRail two-box split the other modes still use.
-    static let fullStage = CGRect(x: 28, y: 48, width: 1384, height: 714)
 }
 
 /// Same dotted-grid treatment as `DeskGridDashboardView.DottedDeskGrid` /
