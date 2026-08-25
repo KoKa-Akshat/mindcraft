@@ -33,18 +33,20 @@
 import { db } from './firebase'
 
 /** The real monthly dollar ceiling for this closed-test phase (Akshat,
- * 2026-08-19). Recorded spend that would push the running total at or past
- * this number blocks all NEW generation starts until next calendar month —
+ * 2026-08-19, raised 10 -> 25 on 2026-08-25 after the original $10 was
+ * genuinely exhausted by real testing volume mid-month). Recorded spend
+ * that would push the running total at or past this number blocks all NEW
+ * generation starts until next calendar month —
  * in-flight jobs still get their terminal poll answered (a job already
  * running has already spent the money; refusing to relay its own answer
  * doesn't save anything and would strand the student on a spinner).
  *
  * At the real measured cost of $0.18/attempt (2026-08-19 live test,
- * serve.py's commit message has the full evidence), $10/mo is roughly 55
+ * serve.py's commit message has the full evidence), $25/mo is roughly 140
  * attempts platform-wide — at the pipeline's real 1/10-6/10 yield, that's
- * somewhere around 5-33 shown sims a month. A genuinely small closed-test
- * budget, not a rollout-scale one. */
-export const PLATFORM_MONTHLY_BUDGET_USD = 10
+ * somewhere around 14-84 shown sims a month. Still a closed-test budget,
+ * not a rollout-scale one. */
+export const PLATFORM_MONTHLY_BUDGET_USD = 25
 
 /** Per-student secondary safety rail — unchanged from the original design.
  * Deliberately conservative so that even if every other safeguard were
