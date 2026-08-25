@@ -522,8 +522,14 @@ final class GmailClient: ObservableObject {
     @discardableResult
     func openComposeDraft(to: String, subject: String, body: String) -> Bool {
         #if canImport(UIKit)
+        // Same class of bug Greptile flagged in MoodleClient.form() (2026-08-16):
+        // `.urlQueryAllowed` leaves `&` and `=` unescaped, both of which are
+        // this query string's own field/key-value delimiters - an `&` or `=`
+        // inside a real subject/body (e.g. "Grades & Feedback") corrupts the
+        // param split. Alphanumeric-only is over-encoding-safe here, same
+        // fix applied there.
         func encode(_ s: String) -> String {
-            s.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            s.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? ""
         }
         let toParam = encode(to)
         let subjectParam = encode(subject)

@@ -2295,10 +2295,28 @@ struct DeskGridDashboardView: View {
                 Spacer(minLength: 0)
             } else {
                 HStack(spacing: 10) {
-                    let mastered = knowledgeGraphClient.nodes.filter { $0.status == "mastered" }.count
-                    Text("\(mastered)/\(knowledgeGraphClient.nodes.count) concepts mastered")
-                        .font(.system(size: 11, weight: .heavy, design: .rounded))
-                        .foregroundColor(tileInk.opacity(0.75))
+                    // Impact-weighted mastery (2026-08-24, explicit ask,
+                    // inspired by Dan McCreary's Concept Impact Score -
+                    // see ConceptImpactScore.swift's own doc comment). A
+                    // flat X/Y count treats a leaf concept and a
+                    // foundational hub as equally important; this weights
+                    // each mastered concept by its real recursive impact
+                    // on the graph instead, same log-normalized formula
+                    // chapter 28 uses for content length, applied to
+                    // mastery. Falls back to the plain count on an empty
+                    // graph or before any edges have loaded.
+                    if let weighted = ConceptImpactScore.impactWeightedMastery(
+                        nodes: knowledgeGraphClient.nodes, edges: knowledgeGraphClient.edges
+                    ) {
+                        Text("\(Int((weighted * 100).rounded()))% impact-weighted mastery")
+                            .font(.system(size: 11, weight: .heavy, design: .rounded))
+                            .foregroundColor(tileInk.opacity(0.75))
+                    } else {
+                        let mastered = knowledgeGraphClient.nodes.filter { $0.status == "mastered" }.count
+                        Text("\(mastered)/\(knowledgeGraphClient.nodes.count) concepts mastered")
+                            .font(.system(size: 11, weight: .heavy, design: .rounded))
+                            .foregroundColor(tileInk.opacity(0.75))
+                    }
                     Spacer(minLength: 0)
                     knowledgeGraphLegend
                 }

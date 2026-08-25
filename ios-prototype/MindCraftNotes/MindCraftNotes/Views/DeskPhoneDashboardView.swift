@@ -17,6 +17,11 @@ import SwiftUI
 /// just buttons that call into what's already there.
 struct DeskPhoneDashboardView: View {
     var studentName: String
+    /// Shared with ConstellationView (2026-08-24, explicit ask:
+    /// "displaying the number of content on Gurukul vs Dash... both ipad
+    /// and ios") - one load, owned by FieldDeskView, read here for
+    /// Gurukul's subtitle instead of a second separate fetch.
+    @ObservedObject var knowledgeGraphClient: KnowledgeGraphClient
     var onContinueWork: () -> Void
     var onLearn: () -> Void
     var onCreate: () -> Void
@@ -147,9 +152,21 @@ struct DeskPhoneDashboardView: View {
                     Text("Gurukul")
                         .font(.mcContent(size: 19, weight: .semibold))
                         .foregroundColor(ink)
-                    Text("Your books, lessons, and talking it through with Jesse.")
-                        .font(.mcChrome(size: 13))
-                        .foregroundColor(ink.opacity(0.6))
+                    // Impact-weighted mastery (2026-08-24, explicit ask -
+                    // see ConceptImpactScore.swift's own doc comment).
+                    // Falls back to the plain description before the
+                    // graph has loaded or if it's still empty.
+                    if let weighted = ConceptImpactScore.impactWeightedMastery(
+                        nodes: knowledgeGraphClient.nodes, edges: knowledgeGraphClient.edges
+                    ) {
+                        Text("\(Int((weighted * 100).rounded()))% impact-weighted mastery")
+                            .font(.mcChrome(size: 13))
+                            .foregroundColor(ink.opacity(0.6))
+                    } else {
+                        Text("Your books, lessons, and talking it through with Jesse.")
+                            .font(.mcChrome(size: 13))
+                            .foregroundColor(ink.opacity(0.6))
+                    }
                 }
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.right")

@@ -165,6 +165,7 @@
 		7AB577290EB45B981CE8978E /* StudyCompanionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC9BBB9BA9FD050E1C2C0C2 /* StudyCompanionView.swift */; };
 		FD46250845B14AC680D44269 /* CoWorkAnnotateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0CDDA0E4C6340CAAFF7323E /* CoWorkAnnotateView.swift */; };
 		AFBBE11A2087AADEFD2F17FD /* ConstellationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0166715D7A3D760DC89C147D /* ConstellationView.swift */; };
+		529A46E48C82B4C7DC8A0370 /* ConceptImpactScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD333148BF863BC0ACA81EC /* ConceptImpactScore.swift */; };
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
@@ -233,6 +234,7 @@
 		2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreStudentStore.swift; sourceTree = "<group>"; };
 		31B0DB4BE519576B363713A8 /* ArchiveBooksClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArchiveBooksClient.swift; sourceTree = "<group>"; };
 		333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeGraphClient.swift; sourceTree = "<group>"; };
+		4FD333148BF863BC0ACA81EC /* ConceptImpactScore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConceptImpactScore.swift; sourceTree = "<group>"; };
 		35E5B069E034C555E1E6D013 /* BookLibraryClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookLibraryClient.swift; sourceTree = "<group>"; };
 		5E2A97481B4E52F644921AE9 /* ArchiveSimsLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArchiveSimsLoader.swift; sourceTree = "<group>"; };
 		37A1FAD01B67C2F6AF235A10 /* SessionReportsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionReportsView.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				2EAAFE0F66A60907CDB1C332 /* FirestoreStudentStore.swift */,
 				7CDBCE2A4A4F89B33A5443D0 /* BinderStore.swift */,
 				333EDEE01284D66F3CAF76DD /* KnowledgeGraphClient.swift */,
+				4FD333148BF863BC0ACA81EC /* ConceptImpactScore.swift */,
 				5A9A2FA726DCF7636F59A480 /* SessionNotesClient.swift */,
 				CD38C7392605523E1A10E7F6 /* TutorDirectoryClient.swift */,
 				DFEC353EF8F1EADA0F99E274 /* DiagnosticClient.swift */,
@@ -880,6 +883,7 @@
 				8ACCA09803A0C1DF9B8F19BB /* FirestoreStudentStore.swift in Sources */,
 				08767AA809AC30C242D9FBC2 /* BinderStore.swift in Sources */,
 				9A6F2325A1FDC007FA06B7CA /* KnowledgeGraphClient.swift in Sources */,
+				529A46E48C82B4C7DC8A0370 /* ConceptImpactScore.swift in Sources */,
 				9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */,
 				B3D89B38899B7A196FE908B0 /* ContentsRoadmapView.swift in Sources */,
 				B791829F16C3DA51F9F0B4AC /* DashboardModels.swift in Sources */,

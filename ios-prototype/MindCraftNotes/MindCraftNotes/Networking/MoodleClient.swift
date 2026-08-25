@@ -234,10 +234,22 @@ final class MoodleClient: ObservableObject {
         return json
     }
 
+    /// Real bug fix (Greptile, 2026-08-16): `.urlQueryAllowed` leaves `&`,
+    /// `+`, `=`, and `#` unescaped - all four are valid in a general URL
+    /// query component, but here the query string IS the form body, where
+    /// `&` separates fields and `=` separates key/value. A Moodle username
+    /// or password containing any of them (e.g. a password with an `&`)
+    /// got silently corrupted into extra/broken fields, and Moodle then
+    /// rejected the login. Alphanumeric-only - matching Greptile's own
+    /// suggested fix - is over-encoding-safe here: percent-encoding a
+    /// character that didn't strictly need it is never wrong for a form
+    /// body, only under-encoding is.
+    private static let formValueAllowed: CharacterSet = .alphanumerics
+
     private static func form(_ fields: [String: String]) -> Data {
         fields.map { key, value in
-            let k = key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? key
-            let v = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? value
+            let k = key.addingPercentEncoding(withAllowedCharacters: formValueAllowed) ?? key
+            let v = value.addingPercentEncoding(withAllowedCharacters: formValueAllowed) ?? value
             return "\(k)=\(v)"
         }
         .joined(separator: "&")

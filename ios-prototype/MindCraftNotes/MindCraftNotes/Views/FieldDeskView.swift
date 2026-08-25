@@ -100,6 +100,14 @@ struct FieldDeskView: View {
     // (search-routing case "design") - reused as-is, not redeclared here.
     @State private var showFriends = false
     @State private var showConstellation = false
+    // Shared between DeskPhoneDashboardView's Gurukul card subtitle and
+    // ConstellationView (2026-08-24, explicit ask: "displaying the number
+    // of content on Gurukul vs Dash") - one load, read from both places,
+    // instead of two separate KnowledgeGraphClient fetches. iPad's grid
+    // dashboard keeps its own separate instance (DeskGridDashboardView is
+    // self-contained by design); this one only ever loads on phone, see
+    // the .task below.
+    @StateObject private var phoneKnowledgeGraphClient = KnowledgeGraphClient()
     /// Reopening a Chapter Library book filed in the Binder (2026-08-21) -
     /// `.fullScreenCover(item:)`, not another ZStack overlay flag, same
     /// reasoning as BookLibraryView's own `.sheet` (UIKit's own
@@ -735,6 +743,7 @@ struct FieldDeskView: View {
                     AnyView(
                         DeskPhoneDashboardView(
                             studentName: deskChromeName ?? "there",
+                            knowledgeGraphClient: phoneKnowledgeGraphClient,
                             // Constellation (2026-08-24, explicit ask:
                             // "continue your work should show me my
                             // knowledge map... we don't show Dan's book we
@@ -1422,8 +1431,14 @@ struct FieldDeskView: View {
                 onOpenArchive: {
                     showConstellation = false
                     showArchiveWorkflow = true
-                }
+                },
+                knowledgeGraphClient: phoneKnowledgeGraphClient
             )
+        }
+        .task {
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                await phoneKnowledgeGraphClient.load()
+            }
         }
         .fullScreenCover(isPresented: $showBookWorkflow) {
             BookWorkflowView(

@@ -36,6 +36,20 @@ struct KnowledgeMapView: View {
     /// false` there, unchanged); shrinking the loudest offenders here
     /// rather than leaving them at full-tab scale in a much smaller box.
     var embedded: Bool = false
+    /// Phone full-screen mode (2026-08-24, explicit ask: "this is for the
+    /// phone... its okay in ipad just here is bad so lets abridge" - tiny
+    /// dots, generous 20pt margins eating screen width, and tapping a node
+    /// pushed the detail panel in BELOW the canvas, shrinking it, on a
+    /// screen with no room to spare). `embedded` already covers the two
+    /// existing iPad shapes (full-tab vs the grid's shrunk merged-tile
+    /// box) - this is a genuinely third shape, phone only, default false
+    /// so neither existing iPad call site changes at all. Widens tap
+    /// targets, drops side margins to near-zero, and moves the detail/
+    /// route panel to a fixed-width column beside the canvas instead of a
+    /// section below it.
+    var phoneFullScreen: Bool = false
+
+    private var horizontalPad: CGFloat { embedded ? 4 : (phoneFullScreen ? 8 : 20) }
 
     @State private var zoom: CGFloat = 1
     @State private var zoomAnchor: CGFloat = 1
@@ -254,17 +268,17 @@ struct KnowledgeMapView: View {
             Text("Map")
                 .font(.system(size: embedded ? 16 : 30, weight: .bold, design: .rounded))
                 .foregroundColor(MapColor.ink)
-                .padding(.horizontal, embedded ? 4 : 20)
+                .padding(.horizontal, horizontalPad)
                 .padding(.top, embedded ? 0 : 8)
 
             if !nodes.isEmpty {
-                filterChips.padding(.horizontal, embedded ? 4 : 20)
+                filterChips.padding(.horizontal, horizontalPad)
             }
 
             if nodes.isEmpty {
-                emptyState.padding(.horizontal, embedded ? 4 : 20)
+                emptyState.padding(.horizontal, horizontalPad)
             } else {
-                ZStack(alignment: .topTrailing) {
+                let canvasCard = ZStack(alignment: .topTrailing) {
                     graphCanvas
                         .background(MapColor.canvasBg)
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
@@ -279,13 +293,38 @@ struct KnowledgeMapView: View {
                         .shadow(color: .black.opacity(0.06), radius: 12, y: 6)
                     zoomControls.padding(10)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.horizontal, embedded ? 4 : 20)
 
-                legendRow.padding(.horizontal, embedded ? 4 : 20)
+                // Side panel on phone (2026-08-24, explicit ask: "when you
+                // click on any individual dots it should open a tab on the
+                // right not below shrinking the graph") - a fixed-width
+                // column next to the canvas instead of a section below it
+                // that ate into the canvas's own height budget every time
+                // a node was tapped. iPad keeps the original below-canvas
+                // stack untouched.
+                if phoneFullScreen {
+                    HStack(spacing: 10) {
+                        canvasCard.frame(maxWidth: .infinity, maxHeight: .infinity)
+                        if let id = selectedId {
+                            ScrollView {
+                                detailOrRoutePanel(for: id)
+                            }
+                            .frame(width: 240)
+                            .transition(.move(edge: .trailing).combined(with: .opacity))
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.horizontal, horizontalPad)
+                    .animation(.easeInOut(duration: 0.22), value: selectedId)
+                } else {
+                    canvasCard
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(.horizontal, horizontalPad)
 
-                if let id = selectedId {
-                    detailOrRoutePanel(for: id).padding(.horizontal, embedded ? 4 : 20).padding(.bottom, 4)
+                    legendRow.padding(.horizontal, horizontalPad)
+
+                    if let id = selectedId {
+                        detailOrRoutePanel(for: id).padding(.horizontal, horizontalPad).padding(.bottom, 4)
+                    }
                 }
             }
         }
@@ -456,7 +495,13 @@ struct KnowledgeMapView: View {
         let accent: Color = kind == .unknown
             ? (zone == .ready ? MapColor.zpdReady : MapColor.zpdLocked)
             : kindColor(kind)
-        let baseRadius: CGFloat = isSelected ? (hasData ? 15 : 12.5) : (hasData ? 11 : 9.5)
+        // Bigger dots on phone (2026-08-24, explicit ask: "isnot there a
+        // bettwe way to show these dots... hard to navigate or see things
+        // at all") - the iPad sizing was well under a real touch target
+        // on a phone screen. iPad's own two shapes (embedded/full-tab)
+        // are untouched.
+        let radiusScale: CGFloat = phoneFullScreen ? 1.5 : 1
+        let baseRadius: CGFloat = (isSelected ? (hasData ? 15 : 12.5) : (hasData ? 11 : 9.5)) * radiusScale
         // "Node size should encode something real" - real engagement
         // (eventCount), continuously, layered on top of the existing
         // hasData/isSelected step so more-practiced nodes read as very

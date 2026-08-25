@@ -22,8 +22,13 @@ import SwiftUI
 struct ConstellationView: View {
     var onClose: () -> Void
     var onOpenArchive: () -> Void
+    /// Shared with DeskPhoneDashboardView's Gurukul card (2026-08-24,
+    /// explicit ask: "displaying the number of content on Gurukul vs
+    /// Dash") - injected from FieldDeskView rather than owned here, so
+    /// both places read the exact same load instead of two separate
+    /// fetches racing/disagreeing.
+    @ObservedObject var knowledgeGraphClient: KnowledgeGraphClient
 
-    @StateObject private var knowledgeGraphClient = KnowledgeGraphClient()
     private let conceptDisplays: [String: ConceptDisplay] = TocDataLoader.loadConceptDisplays()
 
     private let ink = Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255)
@@ -60,11 +65,31 @@ struct ConstellationView: View {
                     // silently faked here either.
                     onOpenConcept: { _ in },
                     onQuickPractice: { _ in },
-                    embedded: false
+                    embedded: false,
+                    phoneFullScreen: true
                 )
             }
         }
-        .task { await knowledgeGraphClient.load() }
+        .overlay(alignment: .bottomTrailing) {
+            // Impact-weighted mastery (2026-08-24, explicit ask - see
+            // ConceptImpactScore.swift's own doc comment). Bottom-trailing,
+            // opposite corner from the Archive button below, so neither
+            // collides with KnowledgeMapView's own top chrome (legend/
+            // filter chips) or the Done capsule.
+            if let weighted = ConceptImpactScore.impactWeightedMastery(
+                nodes: knowledgeGraphClient.nodes, edges: knowledgeGraphClient.edges
+            ) {
+                Text("\(Int((weighted * 100).rounded()))% impact-weighted mastery")
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundColor(ink)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Capsule().fill(Color.white))
+                    .padding(.bottom, 16)
+                    .padding(.trailing, 16)
+                    .accessibilityIdentifier("constellationImpactWeightedMastery")
+            }
+        }
         .overlay(alignment: .topTrailing) {
             Button(action: onClose) {
                 Text("Done")
