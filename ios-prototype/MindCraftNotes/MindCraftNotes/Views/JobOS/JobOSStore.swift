@@ -44,7 +44,14 @@ final class JobOSStore: ObservableObject {
             UserDefaults.standard.removeObject(forKey: Self.legacyStateKey)
         }
 
-        if let saved = Self.loadSaved() {
+        if ProcessInfo.processInfo.arguments.contains("--ui-testing-jobos") {
+            // Verification-only seed (2026-08-25, Phase 3 role-list
+            // redesign) - real roles never ship preloaded (see this
+            // class's own doc comment), this exists purely so the new
+            // card row + Link(destination:) can be screenshotted on a
+            // device with no tap automation available.
+            state = Self.uiTestingSeed()
+        } else if let saved = Self.loadSaved() {
             state = saved
         } else if let seeded = Self.loadBundleSeed() {
             state = seeded
@@ -728,6 +735,39 @@ final class JobOSStore: ObservableObject {
         log("reset", "Cleared Apply today board + LinkedIn graph")
         save()
         flash("Board cleared · upload to start")
+    }
+
+    private static func uiTestingSeed() -> JobOSState {
+        var state = emptyStarter()
+        state.assets = state.assets.map { asset in
+            var asset = asset
+            if asset.id == "resume" || asset.id == "link_linkedin" { asset.status = "ready" }
+            return asset
+        }
+        state.roles = [
+            JobOSRole(
+                id: "seed-1", rank: 0, actionLane: "Apply Now", company: "Anthropic", role: "Software Engineering Intern",
+                location: "San Francisco, CA", fitScore: 92, eligibility: "Eligible", deadline: "Sep 12",
+                applied: false, dateApplied: nil, contacts: "", processStatus: "Not Started", nextAction: "Apply",
+                roleUrl: "https://www.anthropic.com/careers", careerUrl: "https://www.anthropic.com/careers",
+                why: "", resumeReady: true, coverLetterReady: false, liveStatus: "Confirmed live", lastChecked: nil
+            ),
+            JobOSRole(
+                id: "seed-2", rank: 1, actionLane: "Apply + Outreach", company: "Google", role: "STEP Intern",
+                location: "Mountain View, CA", fitScore: 78, eligibility: "Eligible", deadline: "Oct 1",
+                applied: true, dateApplied: "Aug 20", contacts: "", processStatus: "Applied", nextAction: "Wait",
+                roleUrl: "https://careers.google.com", careerUrl: "https://careers.google.com",
+                why: "", resumeReady: true, coverLetterReady: false, liveStatus: "Confirmed live", lastChecked: nil
+            ),
+            JobOSRole(
+                id: "seed-3", rank: 2, actionLane: "Prepare", company: "Local Startup", role: "Product Intern",
+                location: "Remote", fitScore: nil, eligibility: "Unknown", deadline: nil,
+                applied: false, dateApplied: nil, contacts: "", processStatus: "Not Started", nextAction: "Research",
+                roleUrl: "", careerUrl: "",
+                why: "", resumeReady: false, coverLetterReady: false, liveStatus: "Verify posting", lastChecked: nil
+            )
+        ]
+        return state
     }
 
     private static func emptyStarter() -> JobOSState {

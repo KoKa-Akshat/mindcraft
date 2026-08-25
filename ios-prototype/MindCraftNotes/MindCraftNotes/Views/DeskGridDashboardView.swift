@@ -269,6 +269,7 @@ struct DeskGridDashboardView: View {
     /// flag above.
     @State private var viewingDesignStudio = false
     @State private var viewingResumeAgent = false
+    @State private var resumeStartInApplications = false
     @State private var viewingSessionReports = false
     /// The lesson currently shown as a summary + "what you'll learn" card
     /// in Homework Help WHILE browsing the archive (2026-08-19, explicit
@@ -654,6 +655,13 @@ struct DeskGridDashboardView: View {
                 // no-tap-automation verification need as the flags above,
                 // for the Gurukul-style resume redesign.
                 if ProcessInfo.processInfo.arguments.contains("--ui-testing-resume") {
+                    viewingResumeAgent = true
+                }
+                // Straight into JobOS/Applications (2026-08-25) - same
+                // reasoning as --ui-testing-resume above, for the role-list
+                // card redesign (Phase 3 of the resume rebuild).
+                if ProcessInfo.processInfo.arguments.contains("--ui-testing-jobos") {
+                    resumeStartInApplications = true
                     viewingResumeAgent = true
                 }
                 // Live gated-generation state seeds (closed test,
@@ -1835,7 +1843,7 @@ struct DeskGridDashboardView: View {
             return AnyView(DesignStudioView(studentName: studentName, onClose: closeBinderContentViewer, embedded: true))
         }
         if viewingResumeAgent {
-            return AnyView(ResumeAgentView(onClose: closeBinderContentViewer, studentName: studentName, embedded: true))
+            return AnyView(ResumeAgentView(onClose: closeBinderContentViewer, studentName: studentName, embedded: true, startInApplications: resumeStartInApplications))
         }
         if viewingSessionReports {
             return AnyView(tileInnerCard { SessionReportsView(onClose: closeBinderContentViewer) })

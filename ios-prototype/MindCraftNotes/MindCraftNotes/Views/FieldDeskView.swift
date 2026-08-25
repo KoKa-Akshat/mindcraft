@@ -90,6 +90,7 @@ struct FieldDeskView: View {
     @State private var chromeHideToken = UUID()
     @State private var showFindTutor = false
     @State private var showResumeAgent = false
+    @State private var jobOSUiTestingStartInApplications = false
     @State private var showArchiveWorkflow = false
     @State private var showBookWorkflow = false
     // Phone dashboard parity addition (2026-08-24) - Friends already exists
@@ -1384,7 +1385,8 @@ struct FieldDeskView: View {
                 studentName: deskChromeName ?? "there",
                 onApply: {
                     _ = store.fileArtifact(title: "Resume draft", note: "Filed from Jesse resume.", source: .resume)
-                }
+                },
+                startInApplications: jobOSUiTestingStartInApplications
             )
         }
         .fullScreenCover(isPresented: $showArchiveWorkflow) {
@@ -4139,6 +4141,14 @@ struct FieldDeskView: View {
         }
         if args.contains("--ui-testing-field-desk-add") {
             DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) { showAddPanel = true }
+        }
+        // Straight into Applications/JobOS (2026-08-25) - phone-side
+        // counterpart to DeskGridDashboardView's own --ui-testing-jobos,
+        // for screenshot-verifying the role-list card redesign (Phase 3
+        // of the resume rebuild) on a device with no tap automation.
+        if args.contains("--ui-testing-jobos") {
+            jobOSUiTestingStartInApplications = true
+            showResumeAgent = true
         }
         // Straight to a populated Gmail box - real OAuth isn't available in
         // this environment, so this exercises the digest/archive UI against

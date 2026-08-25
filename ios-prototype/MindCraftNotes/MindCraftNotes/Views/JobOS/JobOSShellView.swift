@@ -321,13 +321,28 @@ struct JobOSShellView: View {
     private var paperBoard: some View {
         VStack(spacing: 0) {
             headerBar
-            ScrollView {
-                VStack(alignment: .leading, spacing: 14) {
-                    workflowBoxes
-                    rolesBoxes
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 14) {
+                        workflowBoxes
+                        rolesBoxes
+                            .id("rolesTop")
+                    }
+                    .padding(16)
+                    .padding(.bottom, 28)
                 }
-                .padding(16)
-                .padding(.bottom, 28)
+                .onAppear {
+                    // Verification-only jump (2026-08-25) - no tap/scroll
+                    // automation exists on-device (see JobOSStore's own
+                    // --ui-testing-jobos seed), so the redesigned role
+                    // cards would otherwise sit unreachable below the fold
+                    // for a screenshot check.
+                    if ProcessInfo.processInfo.arguments.contains("--ui-testing-jobos") {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            proxy.scrollTo("rolesTop", anchor: .top)
+                        }
+                    }
+                }
             }
         }
         .background(Color(jobHex: "f7f3ee"))
@@ -563,20 +578,6 @@ struct JobOSShellView: View {
                 }
             }
 
-            HStack(spacing: 6) {
-                ForEach(["Role", "Comp", "Apply by", "Reach out", "Resume", "CL"], id: \.self) { title in
-                    Text(title)
-                        .font(.system(size: 10, weight: .heavy, design: .rounded))
-                        .foregroundColor(Color(jobHex: "8a8478"))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color(jobHex: "efe8dc"))
-                        )
-                }
-            }
-
             if !store.isBoardReady {
                 VStack(spacing: 10) {
                     Image(systemName: "tray")
@@ -618,46 +619,10 @@ struct JobOSShellView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 22)
             } else {
-                ForEach(Array(store.openRoles.prefix(16).enumerated()), id: \.element.id) { idx, role in
-                    Button { openRole = role } label: {
-                        HStack(spacing: 6) {
-                            cell {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("\(idx + 1). \(role.role)")
-                                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                                        .foregroundColor(Color(jobHex: "247a4d"))
-                                        .underline()
-                                        .lineLimit(2)
-                                    Text(role.company)
-                                        .font(.system(size: 10, weight: .medium, design: .rounded))
-                                        .foregroundColor(Color(jobHex: "8a8478"))
-                                }
-                            }
-                            cell {
-                                Text(role.fitScore.map { "\($0)" } ?? "-")
-                                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                            }
-                            cell {
-                                Text(role.deadline ?? "-")
-                                    .font(.system(size: 10, weight: .semibold, design: .rounded))
-                            }
-                            cell {
-                                Text(reachOutCell(role))
-                                    .font(.system(size: 10, weight: .medium, design: .rounded))
-                                    .lineLimit(2)
-                            }
-                            cell {
-                                Image(systemName: role.resumeReady ? "checkmark.square.fill" : "square")
-                                    .foregroundColor(role.resumeReady ? Color(jobHex: "247a4d") : Color(jobHex: "d9d2c5"))
-                            }
-                            cell {
-                                Image(systemName: role.coverLetterReady ? "checkmark.square.fill" : "square")
-                                    .foregroundColor(role.coverLetterReady ? Color(jobHex: "247a4d") : Color(jobHex: "d9d2c5"))
-                            }
-                        }
+                VStack(spacing: 8) {
+                    ForEach(Array(store.openRoles.prefix(16).enumerated()), id: \.element.id) { idx, role in
+                        roleRow(role, index: idx)
                     }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("jobOSRole_\(role.id)")
                 }
             }
         }
@@ -681,13 +646,98 @@ struct JobOSShellView: View {
             .background(Capsule().fill(done ? Color(jobHex: "c4f547") : Color(jobHex: "efe8dc")))
     }
 
-    private func cell<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
-        content()
-            .foregroundColor(Color(jobHex: "1c1a17"))
-            .frame(maxWidth: .infinity, minHeight: 48, alignment: .leading)
-            .padding(8)
-            .background(RoundedRectangle(cornerRadius: 10).fill(Color(jobHex: "f7f3ee")))
-            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(jobHex: "e4ddd0"), lineWidth: 1))
+    /// Row redesign (2026-08-25, explicit ask: "neatly and nice UI with
+    /// links clickable") - replaces the old fixed 6-column spreadsheet
+    /// cells (Role/Comp/Apply by/Reach out/Resume/CL, one `cell()` box
+    /// each) with a single card per role and a REAL `Link(destination:)`
+    /// to the posting - previously the only way to reach `role.roleUrl`
+    /// was tapping the whole row into `JobOSRoleDetailView`'s own Link,
+    /// which already existed there (see its `posting(_:)`) but nowhere in
+    /// this list. Matches that same `Link` pattern instead of inventing a
+    /// new one. Reach-out is now a one-line hint under company/location
+    /// (only shown when real contacts exist, `JobOSReachOutBuilder`) rather
+    /// than a fixed cell that read "—" for most rows.
+    private func roleRow(_ role: JobOSRole, index: Int) -> some View {
+        HStack(spacing: 10) {
+            Button { openRole = role } label: {
+                HStack(alignment: .top, spacing: 10) {
+                    Text("\(index + 1)")
+                        .font(.system(size: 11, weight: .heavy, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+                        .frame(width: 18, alignment: .leading)
+                        .padding(.top, 2)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(role.role)
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(jobHex: "143a2e"))
+                            .lineLimit(1)
+                        Text([role.company, role.location].filter { !$0.isEmpty }.joined(separator: " · "))
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                            .foregroundColor(Color(jobHex: "8a8478"))
+                            .lineLimit(1)
+                        let reachOutNames = JobOSReachOutBuilder.namesLine(store.reachOuts(for: role))
+                        if !reachOutNames.isEmpty {
+                            Text("Reach out: \(reachOutNames)")
+                                .font(.system(size: 10, weight: .semibold, design: .rounded))
+                                .foregroundColor(Color(jobHex: "247a4d"))
+                                .lineLimit(1)
+                        }
+                    }
+                    Spacer(minLength: 8)
+                    VStack(alignment: .trailing, spacing: 6) {
+                        HStack(spacing: 6) {
+                            if let fit = role.fitScore {
+                                miniChip("Fit \(fit)", fill: "efe8dc")
+                            }
+                            miniChip(role.processStatus, fill: "efe8dc")
+                        }
+                        if let deadline = role.deadline, !deadline.isEmpty {
+                            Text(deadline)
+                                .font(.system(size: 10, weight: .bold, design: .rounded))
+                                .foregroundColor(Color(jobHex: "8a8478"))
+                        }
+                        HStack(spacing: 4) {
+                            packetDot(role.resumeReady)
+                            packetDot(role.coverLetterReady)
+                        }
+                    }
+                }
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("jobOSRole_\(role.id)")
+
+            if let url = URL(string: role.roleUrl), !role.roleUrl.isEmpty {
+                Link(destination: url) {
+                    Image(systemName: "arrow.up.right.square.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color(jobHex: "247a4d"))
+                }
+                .accessibilityIdentifier("jobOSRoleLink_\(role.id)")
+            }
+        }
+        .padding(12)
+        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color(jobHex: "f7f3ee")))
+        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(Color(jobHex: "e4ddd0"), lineWidth: 1))
+    }
+
+    private func miniChip(_ title: String, fill: String) -> some View {
+        Text(title)
+            .font(.system(size: 10, weight: .heavy, design: .rounded))
+            .foregroundColor(Color(jobHex: "0c1207"))
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(Capsule().fill(Color(jobHex: fill)))
+    }
+
+    /// Resume/cover-letter packet readiness, demoted from a labeled
+    /// checkbox column to a compact dot pair - `coverLetterReady` is
+    /// still the always-`false` decorative flag it's always been
+    /// (`JobOSStore.addRole`, real generation is Phase 4), this just
+    /// stops giving it as much visual weight as real row data.
+    private func packetDot(_ ready: Bool) -> some View {
+        Circle()
+            .fill(ready ? Color(jobHex: "247a4d") : Color(jobHex: "d9d2c5"))
+            .frame(width: 7, height: 7)
     }
 
     // MARK: - Actions / helpers
@@ -722,11 +772,6 @@ struct JobOSShellView: View {
         case "link_linkedin": return "person.crop.circle.badge.checkmark"
         default: return "link"
         }
-    }
-
-    private func reachOutCell(_ role: JobOSRole) -> String {
-        let line = JobOSReachOutBuilder.namesLine(store.reachOuts(for: role))
-        return line.isEmpty ? "—" : line
     }
 
     /// Real discovery loop trigger (2026-08-22) - calls the live webhook,

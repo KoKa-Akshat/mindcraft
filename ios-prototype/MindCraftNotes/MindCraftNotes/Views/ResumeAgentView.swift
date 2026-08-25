@@ -37,6 +37,10 @@ struct ResumeAgentView: View {
     /// already derives from whatever GeometryReader frame this view is
     /// given, not the screen's own bounds.
     var embedded: Bool = false
+    /// UI-testing-only entry point (2026-08-25) - jumps straight to the
+    /// Applications/JobOS panel for on-device verification screenshots,
+    /// same no-tap-automation need as `--ui-testing-resume` itself.
+    var startInApplications: Bool = false
 
     private enum ContentMode { case profile, applications, importWeb }
 
@@ -125,6 +129,9 @@ struct ResumeAgentView: View {
             .accessibilityLabel("Done")
         }
         .statusBarHidden(!embedded)
+        .onAppear {
+            if startInApplications { mode = .applications }
+        }
         .accessibilityElement(children: .contain)
         .overlay(alignment: .topLeading) {
             Text(verbatim: "resume").font(.system(size: 1)).foregroundColor(.clear)
