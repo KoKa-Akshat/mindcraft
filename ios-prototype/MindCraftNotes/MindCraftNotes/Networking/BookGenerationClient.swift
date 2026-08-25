@@ -68,7 +68,16 @@ enum BookGenerationClient {
     /// how long THEY actually waited, not how long the job queue took.
     static func generate(topic: String, onProgress: @escaping (_ chaptersReady: Int, _ totalChapters: Int) -> Void = { _, _ in }) async -> Verdict {
         let start = Date()
-        guard let envelope = await post(["topic": topic]) else {
+        // BYOK (2026-08-25) - same wiring as GeneratedSimClient.requestSim,
+        // see StudentAIKeyStore.geminiKeyForServerGeneration's own doc
+        // comment for the one-time exception this makes to "the key never
+        // leaves the device." Omitted entirely when the student has no
+        // Gemini key saved, so behavior is unchanged for them.
+        var body: [String: Any] = ["topic": topic]
+        if let key = await StudentAIKeyStore.shared.geminiKeyForServerGeneration() {
+            body["studentGeminiKey"] = key
+        }
+        guard let envelope = await post(body) else {
             return .unavailable("Couldn't reach the generation service.")
         }
         switch envelope.status {

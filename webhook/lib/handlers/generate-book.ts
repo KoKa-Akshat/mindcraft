@@ -87,7 +87,7 @@ interface BookServiceJobPayload {
   estimated_cost_usd?: number
 }
 
-async function handleStart(uid: string, rawTopic: string, res: VercelResponse) {
+async function handleStart(uid: string, rawTopic: string, res: VercelResponse, studentGeminiKey?: string) {
   const topic = rawTopic.trim().slice(0, MAX_TOPIC)
   if (!topic) return res.status(400).json({ error: 'topic required' })
   const subjectId = onDemandSubjectId(topic)
@@ -100,23 +100,34 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse) {
     return res.status(200).json({ status: 'passed', cached: true, book: cached })
   }
 
-  const platformBudget = await checkPlatformBudget()
-  if (!platformBudget.allowed) {
-    return res.status(429).json({
-      status: 'rate_limited',
-      reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
-      platformBudgetExhausted: true,
-    })
-  }
+  // BYOK (2026-08-25) — same partial bypass as generate-sim.ts: when the
+  // student's own Gemini key is present, skip the platform checks for the
+  // START of this job (the expensive per-chapter prose/sim/discussion
+  // generation spends their quota, not ours), but every judge/gate call
+  // still runs on MindCraft's Anthropic account regardless (see
+  // content-engine's _run_book_job doc comment on the deliberate "one
+  // calibrated grader for everyone" line), so recordActualSpend on the
+  // terminal poll below still runs and still bills the platform budget
+  // for that real, smaller remaining cost.
+  if (!studentGeminiKey) {
+    const platformBudget = await checkPlatformBudget()
+    if (!platformBudget.allowed) {
+      return res.status(429).json({
+        status: 'rate_limited',
+        reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
+        platformBudgetExhausted: true,
+      })
+    }
 
-  const budget = await checkAndRecordAttempt(uid)
-  if (!budget.allowed) {
-    return res.status(429).json({
-      status: 'rate_limited',
-      reason: `Daily generation limit reached (${budget.attemptsToday}/${budget.cap}).`,
-      attemptsToday: budget.attemptsToday,
-      cap: budget.cap,
-    })
+    const budget = await checkAndRecordAttempt(uid)
+    if (!budget.allowed) {
+      return res.status(429).json({
+        status: 'rate_limited',
+        reason: `Daily generation limit reached (${budget.attemptsToday}/${budget.cap}).`,
+        attemptsToday: budget.attemptsToday,
+        cap: budget.cap,
+      })
+    }
   }
 
   if (!serviceConfigured()) {
@@ -130,7 +141,10 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse) {
     const serviceRes = await fetch(`${CONTENT_ENGINE_BASE}/generate-book`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Service-Key': CONTENT_ENGINE_SECRET },
-      body: JSON.stringify({ topic }),
+      body: JSON.stringify({
+        topic,
+        ...(studentGeminiKey ? { student_gemini_key: studentGeminiKey } : {}),
+      }),
     })
     const data = (await serviceRes.json().catch(() => ({}))) as { job_id?: string }
     if (!serviceRes.ok || !data.job_id) {
@@ -252,12 +266,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { topic?: string; jobId?: string }
+  const body = (req.body || {}) as { topic?: string; jobId?: string; studentGeminiKey?: string }
   if (typeof body.jobId === 'string' && body.jobId) {
     return handlePoll(body.jobId, res)
   }
   if (typeof body.topic === 'string' && body.topic) {
-    return handleStart(uid, body.topic, res)
+    const studentGeminiKey = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
+    return handleStart(uid, body.topic, res, studentGeminiKey || undefined)
   }
   return res.status(400).json({ error: 'topic (start) or jobId (poll) required' })
 }
