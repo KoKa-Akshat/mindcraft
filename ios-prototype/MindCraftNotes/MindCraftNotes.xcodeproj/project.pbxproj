@@ -82,7 +82,6 @@
 		9D00117C89A5E8CB2AA33B3D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3890F71414E363C12CC19397 /* DashboardView.swift */; };
 		A0B9ECAFF9098D879ADB2848 /* InstrumentSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA89772A91DB8CFBC977F2CF /* InstrumentSans-SemiBold.ttf */; };
 		A0BOOKAGENTCLIENT01 /* BookAgentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */; };
-		A0CREATECANVAS01A2 /* CreateCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CREATECANVAS01A2 /* CreateCanvasView.swift */; };
 		A0DESKCONTENTROW01 /* DeskContentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKCONTENTROW01 /* DeskContentRow.swift */; };
 		A0DESKGRID001A2E /* DeskGridDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DESKGRID001A2E /* DeskGridDashboardView.swift */; };
 		A19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */; };
@@ -305,7 +304,6 @@
 		ACFE41C5FA94193E2F3B720D /* SessionReportsClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SessionReportsClient.swift; sourceTree = "<group>"; };
 		AD8BF726CB03DB544A85969E /* AssembledBookModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssembledBookModels.swift; sourceTree = "<group>"; };
 		B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAgentClient.swift; sourceTree = "<group>"; };
-		B0CREATECANVAS01A2 /* CreateCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCanvasView.swift; sourceTree = "<group>"; };
 		B0DESKCONTENTROW01 /* DeskContentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskContentRow.swift; sourceTree = "<group>"; };
 		B0DESKGRID001A2E /* DeskGridDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskGridDashboardView.swift; sourceTree = "<group>"; };
 		B19B01C1A6E7F8091B2C3D4E /* AgentMailClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentMailClient.swift; sourceTree = "<group>"; };
@@ -588,7 +586,6 @@
 				B8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift */,
 				B0DESKGRID001A2E /* DeskGridDashboardView.swift */,
 				B0DESKCONTENTROW01 /* DeskContentRow.swift */,
-				B0CREATECANVAS01A2 /* CreateCanvasView.swift */,
 				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
 				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
@@ -962,7 +959,6 @@
 				A8AC7157E11A0001B2C3D4E5 /* ActInstanceShellView.swift in Sources */,
 				A0DESKGRID001A2E /* DeskGridDashboardView.swift in Sources */,
 				A0DESKCONTENTROW01 /* DeskContentRow.swift in Sources */,
-				A0CREATECANVAS01A2 /* CreateCanvasView.swift in Sources */,
 				A89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift in Sources */,
 				B0C259017B6359197378F0FD /* LearnStudioView.swift in Sources */,
 				DDE6FE79749CA9A22EBDA201 /* DesignStudioView.swift in Sources */,

@@ -67,8 +67,8 @@ struct FieldDeskView: View {
     ///
     /// NOT a mutually-exclusive "one overlay at a time" state machine:
     /// `.deskGridDashboard` (zIndex 88) deliberately stays in this set while
-    /// `.calendarOverlay`/`.intelOverlay`/`.binderOverlay`/`.gmailBox`/
-    /// `.createCanvas` (zIndex 89) are ALSO in it — Calendar/Intel/Binder
+    /// `.calendarOverlay`/`.intelOverlay`/`.binderOverlay`/`.gmailBox`
+    /// (zIndex 89) are ALSO in it — Calendar/Intel/Binder
     /// tapped from the Work dashboard render as popups layered ON TOP of the
     /// dashboard by design (dashboard stays mounted underneath so Done/close
     /// lands back on it, not on Jesse's Kitchen - previously a dead tap for
@@ -77,7 +77,6 @@ struct FieldDeskView: View {
     /// (see `FieldDeskOverlay.blocksChrome` / `floatDockBlocked`).
     @State private var openOverlays: Set<FieldDeskOverlay> = []
     @State private var dashboardStartRail: DeskGridDashboardView.Rail = .none
-    @State private var createCanvasKind: CreateCanvasKind = .presentation
     /// 0 = clear, 1 = solid white polka sheet covering the screen.
     @State private var polkaProgress: CGFloat = 0
     /// Widgets placed on the work desk via `+`.
@@ -246,12 +245,12 @@ struct FieldDeskView: View {
     }
 
     private enum FieldDeskOverlay: Hashable, CaseIterable {
-        case actFieldBook, gmailBox, applyToday, workflowLibrary, deskGridDashboard, createCanvas, binderOverlay, calendarOverlay, intelOverlay
+        case actFieldBook, gmailBox, applyToday, workflowLibrary, deskGridDashboard, binderOverlay, calendarOverlay, intelOverlay
         case standaloneDesk, createStudio
         /// The merged Learn+Practice AI study companion (2026-08-23,
         /// explicit ask: "Learn and Practice can be merged... intelligent
         /// AI conversational thing"). Same whole-screen-replace shape as
-        /// `.createCanvas`/`.binderOverlay` - dashboard stays mounted
+        /// `.binderOverlay` - dashboard stays mounted
         /// underneath, this layers on top via zIndex, closing reveals the
         /// dashboard again rather than Jesse's Kitchen.
         case studyCompanion
@@ -265,7 +264,7 @@ struct FieldDeskView: View {
         /// of a silent runtime touch-swallowing bug.
         var blocksChrome: Bool {
             switch self {
-            case .actFieldBook, .gmailBox, .applyToday, .workflowLibrary, .deskGridDashboard, .createCanvas, .binderOverlay, .calendarOverlay, .intelOverlay, .studyCompanion:
+            case .actFieldBook, .gmailBox, .applyToday, .workflowLibrary, .deskGridDashboard, .binderOverlay, .calendarOverlay, .intelOverlay, .studyCompanion:
                 return true
             case .standaloneDesk, .createStudio:
                 return false
@@ -771,12 +770,6 @@ struct FieldDeskView: View {
                                     _ = openOverlays.insert(.studyCompanion)
                                 }
                             },
-                            onCreate: {
-                                createCanvasKind = .presentation
-                                withAnimation(.easeInOut(duration: 0.28)) {
-                                    _ = openOverlays.insert(.createCanvas)
-                                }
-                            },
                             // Design (2026-08-24) - swapped in for the old
                             // "Answer" card, which the grid dashboard
                             // removed entirely on 2026-08-23 ("we don't
@@ -833,12 +826,6 @@ struct FieldDeskView: View {
                             let line = "Homework · \(title)"
                             if !store.intelLines.contains(line) {
                                 store.prependIntel(line)
-                            }
-                        },
-                        onOpenCreate: { kind in
-                            createCanvasKind = kind
-                            withAnimation(.easeInOut(duration: 0.28)) {
-                                _ = openOverlays.insert(.createCanvas)
                             }
                         },
                         onOpenFlow: { id in
@@ -1060,33 +1047,6 @@ struct FieldDeskView: View {
                         CreateStudioView(onClose: { closeCreateStudio() })
                             .zIndex(86)
                             .transition(.opacity)
-                    )
-                }
-
-                if openOverlays.contains(.createCanvas) {
-                    AnyView(
-                        CreateCanvasView(
-                            kind: createCanvasKind,
-                            studentName: deskChromeName ?? "there",
-                            // Explicit re-assert, not just relying on
-                            // `.deskGridDashboard` having stayed in `openOverlays`
-                            // the whole time Create Canvas was open - Done was landing back
-                            // on Create Canvas instead of the dashboard without
-                            // this (confirmed via UI test + screen recording).
-                            onClose: {
-                                withAnimation(.easeInOut(duration: 0.28)) {
-                                    _ = openOverlays.remove(.createCanvas)
-                                    _ = openOverlays.insert(.deskGridDashboard)
-                                }
-                            }
-                        )
-                        .zIndex(89)
-                        // Slides in from the right / back out to the right
-                        // instead of a plain crossfade - reads as an adjacent
-                        // panel on the same screen (Work stays put underneath,
-                        // never actually leaves) rather than teleporting to a
-                        // disconnected space.
-                        .transition(.move(edge: .trailing))
                     )
                 }
 
@@ -1835,18 +1795,22 @@ struct FieldDeskView: View {
         HStack(spacing: 0) {
             switch modeToggleKind {
             case .createWork:
-                modePill("Create", lime: true, id: "fieldDeskCreateButton") {
-                    openCreateCanvas()
-                }
-                modePill("Work", lime: false, id: "fieldDeskWorkButton") {
+                // Single pill now - was "Create"/"Work" (2026-08-25, "we
+                // dont need create anywhere" removed CreateCanvasView
+                // entirely, so there's nothing left to toggle to here).
+                modePill("Work", lime: true, id: "fieldDeskWorkButton") {
                     openWorkFromJesse()
                 }
             case .jessesCreate:
+                // Was "Jesse's"/"Create" - the second pill now goes
+                // straight to Work (openWorkCanvas already tears down
+                // .standaloneDesk on its own), same semantics as
+                // .jessesWork's own pill pair below just for this state.
                 modePill("Jesse's", lime: false, id: "fieldDeskJessesButton") {
                     closeStandaloneDesk()
                 }
-                modePill("Create", lime: true, id: "fieldDeskCreateButton") {
-                    openCreateCanvas()
+                modePill("Work", lime: true, id: "fieldDeskWorkButton") {
+                    openWorkFromJesse()
                 }
             case .jessesWork:
                 modePill("Jesse's", lime: false, id: "fieldDeskJessesButton") {
@@ -1905,23 +1869,7 @@ struct FieldDeskView: View {
         dashboardStartRail = rail
         _ = openOverlays.remove(.standaloneDesk)
         _ = openOverlays.remove(.createStudio)
-        _ = openOverlays.remove(.createCanvas)
         _ = openOverlays.insert(.deskGridDashboard)
-    }
-
-    /// PDF Create canvas (pages 1–3): slide or GDoc, Jesse rail, Ask dock.
-    private func openCreateCanvas() {
-        createCanvasKind = .presentation
-        _ = openOverlays.remove(.standaloneDesk)
-        _ = openOverlays.remove(.createStudio)
-        // Dashboard stays mounted (not torn down) - same shape as Binder/
-        // Calendar/Gmail. In practice this pill is hidden whenever the
-        // dashboard shows (deskOverlayChromeBlocked), but leaving this true
-        // matched the old tear-down-first pattern that read as "opening in
-        // a disconnected new space" everywhere else it was fixed tonight.
-        withAnimation(.easeInOut(duration: 0.28)) {
-            _ = openOverlays.insert(.createCanvas)
-        }
     }
 
     private func switchDeskToCreate() {
@@ -3825,20 +3773,6 @@ struct FieldDeskView: View {
                     placeWidget(.gdoc)
                 }
                 .accessibilityIdentifier("fieldDeskAddGdoc")
-
-                addMenuRow(
-                    title: "Presentation",
-                    subtitle: "Create screen · Jesse on the rail",
-                    system: "rectangle.on.rectangle.angled",
-                    enabled: true
-                ) {
-                    showAddPanel = false
-                    createCanvasKind = .presentation
-                    withAnimation(.easeInOut(duration: 0.28)) {
-                        _ = openOverlays.insert(.createCanvas)
-                    }
-                }
-                .accessibilityIdentifier("fieldDeskAddPresentation")
 
                 addMenuRow(
                     title: "Connect",

@@ -253,6 +253,34 @@ struct JesseRailView: View {
     }
 }
 
+/// Moved here from CreateCanvasView.swift when that file was deleted
+/// (2026-08-25, "we dont need create anywhere") - a real, shared
+/// dependency (also used by LearnStudioView), not per-file boilerplate
+/// like this file's own dotted-grid siblings elsewhere in the app, so it
+/// needed a real home rather than just disappearing with the rest of that
+/// file. `jrHex` below already carries the same color this used as
+/// `createHex` there.
+struct JesseMiniWaveform: View {
+    var active: Bool
+
+    var body: some View {
+        HStack(spacing: 2) {
+            ForEach(0..<7, id: \.self) { i in
+                Capsule()
+                    .fill(Color(jrHex: "247a4d").opacity(active ? 0.95 : 0.35))
+                    .frame(width: 3, height: active ? CGFloat([8, 14, 20, 12, 18, 10, 7][i]) : 7)
+            }
+        }
+        // Real bug (reported: bars kept pulsing after ending a call/
+        // transcribe): a `.repeatForever` animation bound only via
+        // `value:` doesn't reliably cancel when that value flips back to
+        // false - a known SwiftUI quirk. Fix: only repeat WHILE active;
+        // the return-to-rest transition uses a normal, non-repeating
+        // animation instead of trying to interrupt a live infinite loop.
+        .animation(active ? .easeInOut(duration: 0.28).repeatForever(autoreverses: true) : .easeInOut(duration: 0.2), value: active)
+    }
+}
+
 private extension Color {
     init(jrHex hex: String) {
         var value: UInt64 = 0

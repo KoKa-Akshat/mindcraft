@@ -103,7 +103,6 @@ struct DeskGridDashboardView: View {
     /// FieldDeskView since it holds the real BinderStore/FieldDeskStore
     /// instances this view doesn't.
     var onFileHomeworkToBinder: (_ title: String, _ body: String) -> Void = { _, _ in }
-    var onOpenCreate: (CreateCanvasKind) -> Void = { _ in }
     var onOpenFlow: (String) -> Void = { _ in }
     var onSaveMemo: (String) -> Void = { _ in }
     var onTranscribe: () -> Void = {}
@@ -189,14 +188,14 @@ struct DeskGridDashboardView: View {
     // MARK: - Homework Help (the tile itself is the upload target now)
     @State private var showHomeworkImporter = false
     // MARK: - Co-Work (2026-08-24, explicit ask - renamed from the tile's
-    // old single-purpose upload). Tapping the tile now offers a real
-    // choice instead of going straight to the old AI-hint-cards picker;
-    // each choice gets its OWN document picker instance rather than
+    // old single-purpose upload). Own document picker instance rather than
     // reusing showHomeworkImporter, since that one's onPick is wired to
-    // handleHomeworkFileUpload (the AI-hints path), a different flow.
-    @State private var showCoWorkChoice = false
+    // handleHomeworkFileUpload (the AI-hints path), a different flow. Used
+    // to offer a choice between this and an "Upload to Presentation"
+    // branch (showCoWorkChoice/showCoWorkPresentationPicker) - removed
+    // 2026-08-25 alongside the rest of CreateCanvasView, leaving OCR as
+    // the tile's only destination.
     @State private var showCoWorkOCRPicker = false
-    @State private var showCoWorkPresentationPicker = false
     @State private var coWorkPages: [UIImage] = []
     @State private var coWorkFileName = ""
     @State private var showCoWorkAnnotate = false
@@ -442,7 +441,6 @@ struct DeskGridDashboardView: View {
         onOpenIntel: @escaping () -> Void = {},
         onFileChapterBook: @escaping (_ title: String, _ subjectId: String) -> Void = { _, _ in },
         onFileHomeworkToBinder: @escaping (_ title: String, _ body: String) -> Void = { _, _ in },
-        onOpenCreate: @escaping (CreateCanvasKind) -> Void = { _ in },
         onOpenFlow: @escaping (String) -> Void = { _ in },
         onSaveMemo: @escaping (String) -> Void = { _ in },
         onTranscribe: @escaping () -> Void = {},
@@ -471,7 +469,6 @@ struct DeskGridDashboardView: View {
         self.onOpenIntel = onOpenIntel
         self.onFileChapterBook = onFileChapterBook
         self.onFileHomeworkToBinder = onFileHomeworkToBinder
-        self.onOpenCreate = onOpenCreate
         self.onOpenFlow = onOpenFlow
         self.onSaveMemo = onSaveMemo
         self.onTranscribe = onTranscribe
@@ -880,29 +877,17 @@ struct DeskGridDashboardView: View {
                                 Task { await handleHomeworkFileUpload(url) }
                             }
                         }
-                        .confirmationDialog("Upload to", isPresented: $showCoWorkChoice, titleVisibility: .visible) {
-                            Button("Upload to Presentation") { showCoWorkPresentationPicker = true }
-                            Button("Upload OCR") { showCoWorkOCRPicker = true }
-                            Button("Cancel", role: .cancel) {}
-                        }
+                        // Was a 2-way "Upload to Presentation / Upload OCR"
+                        // confirmationDialog (showCoWorkChoice) - the
+                        // Presentation branch is gone (2026-08-25, "we dont
+                        // need create anywhere"), leaving OCR as the only
+                        // real destination, so the tile now opens that
+                        // picker directly instead of asking first.
                         .sheet(isPresented: $showCoWorkOCRPicker) {
                             HomeworkDocumentPicker { url in
                                 coWorkFileName = url.lastPathComponent
                                 coWorkPages = CoWorkPageRenderer.renderPages(fileURL: url)
                                 showCoWorkAnnotate = true
-                            }
-                        }
-                        .sheet(isPresented: $showCoWorkPresentationPicker) {
-                            // Honest scope note: this opens the real
-                            // Presentation canvas (same onOpenCreate(.presentation)
-                            // the Add menu's own "Presentation" row uses) -
-                            // the picked file isn't embedded into a slide
-                            // yet, that needs a real content-attachment
-                            // contract CreateCanvasView doesn't have today.
-                            // Flagged rather than silently faked.
-                            HomeworkDocumentPicker { _ in
-                                showCoWorkPresentationPicker = false
-                                onOpenCreate(.presentation)
                             }
                         }
                         .fullScreenCover(isPresented: $showCoWorkAnnotate) {
@@ -1247,7 +1232,7 @@ struct DeskGridDashboardView: View {
             handleTile(.homeworkHelp)
         } else if query.contains("memo") {
             setRail(rail == .memo ? .none : .memo)
-        } else if query.contains("flows") || query.contains("presentation") || query.contains("gdoc")
+        } else if query.contains("flows")
             || query.contains("resume") || query.contains("archive") || query.contains("book") || query.contains("apply") {
             setRail(rail == .flows ? .none : .flows)
         } else {
@@ -1266,11 +1251,7 @@ struct DeskGridDashboardView: View {
             startAgentTakeover(raw)
             return
         }
-        if query.contains("presentation") || query.contains("slide") {
-            onOpenCreate(.presentation)
-        } else if query.contains("gdoc") || query.contains("doc") {
-            onOpenCreate(.gdoc)
-        } else if query.contains("resume") {
+        if query.contains("resume") {
             onOpenFlow("resume")
         } else if query.contains("archive") {
             onOpenFlow("archive")
@@ -1534,11 +1515,11 @@ struct DeskGridDashboardView: View {
             viewingKnowledgeGraphInBinder = true
             Task { await knowledgeGraphClient.load() }
         case .homeworkHelp:
-            // Renamed to Co-Work (2026-08-24, explicit ask: "the upload
-            // button in Co-Work should have the option to upload to
-            // presentation or Upload OCR") - a real choice instead of
-            // going straight into the old AI-hint-cards picker.
-            showCoWorkChoice = true
+            // Renamed to Co-Work (2026-08-24). Used to offer a choice
+            // between OCR and "Upload to Presentation" - the latter is
+            // gone (2026-08-25, with the rest of CreateCanvasView), so
+            // this goes straight to OCR now, same as before that rename.
+            showCoWorkOCRPicker = true
         case .memo:
             setRail(rail == .memo ? .none : .memo)
         }
@@ -2589,18 +2570,14 @@ struct DeskGridDashboardView: View {
             // that had n8n boxes and you could write in the boxes linking
             // them and had connectors" - that's DesignStudioView's real
             // node-canvas (DesignBox/ContentGraphStore: Chapter/Simulation/
-            // Checkpoint/Branch boxes with connecting edges), already
-            // built, just reachable elsewhere (the sidebar's own "Design"
-            // chip) and not from this column. Same embedded-in-Binder
-            // pattern `viewingDesignStudio` already uses at every other
-            // call site, not a new presentation.
-            // Renamed to Create (2026-08-24, explicit ask: "Design should
-            // be Create") - same box, same action (opens the node-canvas
-            // DesignStudioView), identifier kept stable.
-            moduleBox("Create", system: "square.grid.2x2.fill", identifier: "deskGridModule_Design", ink: ink) {
-                closeBinderContentViewer()
-                viewingDesignStudio = true
-            }
+            // Checkpoint/Branch boxes with connecting edges), still
+            // reachable via the sidebar's own "Design" chip
+            // (viewingDesignStudio = true at that call site, unchanged).
+            // This column's own "Create" shortcut to the same destination
+            // was removed 2026-08-25 (explicit ask: "the only Jesses on
+            // the ipad should be gurukul... we dont need create anywhere")
+            // - DesignStudioView itself is untouched, only this redundant
+            // entry point is gone.
             // Leverage (2026-08-23, explicit ask: "add a resume box...
             // called Leverage" alongside the existing four) - the EXACT
             // same action the binder utility row's Resume icon already
@@ -3781,8 +3758,6 @@ struct DeskGridDashboardView: View {
             Text("Flows")
                 .font(.system(size: 14, weight: .bold, design: .rounded))
                 .foregroundColor(Color(gridHex: "143a2e"))
-            flowRow("Presentation", system: "rectangle.on.rectangle") { onOpenCreate(.presentation) }
-            flowRow("GDoc", system: "doc.text") { onOpenCreate(.gdoc) }
             flowRow("Resume", system: "person.text.rectangle") { onOpenFlow("resume") }
             // Archive dropped as its own row (2026-08-17, explicit ask) -
             // blended into Learn Studio (Browse Archive button there) since

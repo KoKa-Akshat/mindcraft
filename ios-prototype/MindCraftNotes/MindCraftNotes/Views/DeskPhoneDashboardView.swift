@@ -11,7 +11,7 @@ import SwiftUI
 /// This is a "dumb" presentational menu on purpose: every card's action is
 /// a plain closure into destinations `FieldDeskView` ALREADY owns as real,
 /// working full-screen presentations (`showLearnStudio`, `showResumeAgent`,
-/// the `.createCanvas`/`.binderOverlay` overlays, `showJesseCallSheet`) -
+/// the `.binderOverlay` overlay, `showJesseCallSheet`) -
 /// "one thing owns the screen at a time" is already true of every one of
 /// those, so this view doesn't need its own card-ownership state machine,
 /// just buttons that call into what's already there.
@@ -24,7 +24,6 @@ struct DeskPhoneDashboardView: View {
     @ObservedObject var knowledgeGraphClient: KnowledgeGraphClient
     var onContinueWork: () -> Void
     var onLearn: () -> Void
-    var onCreate: () -> Void
     var onDesign: () -> Void
     var onLeverage: () -> Void
     var onOpenSettings: () -> Void
@@ -87,13 +86,6 @@ struct DeskPhoneDashboardView: View {
                     action: onContinueWork
                 )
                 learnCard
-                feedCard(
-                    title: "Create",
-                    subtitle: "Turn an idea into a presentation, doc, or book.",
-                    system: "wand.and.stars",
-                    identifier: "deskPhoneCard_Create",
-                    action: onCreate
-                )
                 feedCard(
                     title: "Design",
                     subtitle: "Sketch out a layout or a flow with Jesse.",
