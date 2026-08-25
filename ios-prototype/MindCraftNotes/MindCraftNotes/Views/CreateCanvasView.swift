@@ -34,7 +34,16 @@ struct CreateCanvasView: View {
     @State private var showHomeworkImporter = false
     @State private var homeworkUploading = false
     @State private var homeworkError: String?
+    /// gdoc's own deck-wide uploads (the dock). Presentation slides use
+    /// their own `CreateSlide.uploads` instead - see that field's doc
+    /// comment.
     @State private var homeworkUploads: [CreateHomeworkUpload] = []
+    /// Which slide the in-flight `showHomeworkImporter` sheet is for - nil
+    /// means "the gdoc dock's own shared list," set to a slide index means
+    /// "that slide's own uploads." One shared sheet/pipeline, routed by
+    /// this at completion (handleHomeworkUpload) rather than two separate
+    /// importer flows.
+    @State private var uploadTargetIndex: Int?
     @State private var spacePan: CGSize = .zero
     @State private var spaceZoom: CGFloat = 1
     @GestureState private var livePan: CGSize = .zero
@@ -50,12 +59,6 @@ struct CreateCanvasView: View {
 
     private var callLive: Bool {
         jesseCall.isActive && jesseCall.context == "create"
-    }
-
-    /// Slide-thumbnail picker. Not "people on the call" — it jumps
-    /// `slideIndex`. Visible whenever a deck has more than one slide.
-    private var showSlidesRail: Bool {
-        kind == .presentation && slides.count > 1
     }
 
     private var spaceGesture: some Gesture {
@@ -122,6 +125,16 @@ struct CreateCanvasView: View {
                 .accessibilityIdentifier("createCanvasRoot")
                 .allowsHitTesting(false)
         }
+        // Moved here from createDock (2026-08-25) - createDock itself no
+        // longer renders at all for .presentation (its upload button
+        // moved into presentationStage, per-slide), so a sheet modifier
+        // living only on createDock would never fire for that kind's own
+        // upload button. One shared sheet at the root works for both.
+        .sheet(isPresented: $showHomeworkImporter) {
+            HomeworkDocumentPicker { url in
+                Task { await handleHomeworkUpload(url) }
+            }
+        }
     }
 
     @ViewBuilder
@@ -132,18 +145,30 @@ struct CreateCanvasView: View {
         // live - it used to jump to a different box (CreateArtboard
         // .transcription) once callLive flipped, which read as teleporting
         // to a new tab instead of the conversation just continuing.
-        if callLive || showSlidesRail {
-            placed(CreateArtboard.liveSlide, scale: scale) { slideOrDoc }
-            placed(CreateArtboard.jesseRailLive, scale: scale) { jesseRail }
-            if showSlidesRail {
-                placed(CreateArtboard.slidesRail, scale: scale) { slidesRail }
-            }
+        //
+        // Presentation (2026-08-25, explicit ask): the slide rail moved
+        // from a right-hand column (shown only once there was >1 slide)
+        // to a permanent full-height LEFT sidebar that also absorbs the
+        // vertical space the bottom upload dock used to occupy - the dock
+        // itself is gone for this kind, its job replaced by each slide's
+        // own upload button (see presentationStage). This is now a fixed
+        // 3-column layout regardless of call state, so there's no more
+        // idle/live box-position split for presentation the way gdoc
+        // still has below.
+        if kind == .presentation {
+            placed(CreateArtboard.presSlidesRail, scale: scale) { slidesRail }
+            placed(CreateArtboard.presStage, scale: scale) { slideOrDoc }
+            placed(CreateArtboard.presJesseRail, scale: scale) { jesseRail }
         } else {
-            placed(CreateArtboard.idleStage, scale: scale) { slideOrDoc }
-            placed(CreateArtboard.jesseRailIdle, scale: scale) { jesseRail }
+            if callLive {
+                placed(CreateArtboard.liveSlide, scale: scale) { slideOrDoc }
+                placed(CreateArtboard.jesseRailLive, scale: scale) { jesseRail }
+            } else {
+                placed(CreateArtboard.idleStage, scale: scale) { slideOrDoc }
+                placed(CreateArtboard.jesseRailIdle, scale: scale) { jesseRail }
+            }
+            placed(CreateArtboard.dock, scale: scale) { createDock }
         }
-
-        placed(CreateArtboard.dock, scale: scale) { createDock }
     }
 
     private func placed<Content: View>(_ box: CGRect, scale: CGFloat, @ViewBuilder content: () -> Content) -> some View {
@@ -224,6 +249,23 @@ struct CreateCanvasView: View {
                         .foregroundColor(Color(createHex: "0c1207"))
                 }
                 .accessibilityIdentifier("createCanvasAddSlide")
+                // Per-slide upload (2026-08-25, explicit ask: "each page
+                // has its own little button to upload files... next to
+                // +Slide" - replaces the old deck-wide dock button).
+                // Attaches to THIS slide specifically, not the whole deck -
+                // uploadTargetIndex tells handleHomeworkUpload where the
+                // result belongs.
+                Button {
+                    uploadTargetIndex = safe
+                    showHomeworkImporter = true
+                } label: {
+                    Image(systemName: (homeworkUploading && uploadTargetIndex == safe) ? "hourglass" : "paperclip")
+                        .font(.system(size: 13, weight: .bold))
+                        .frame(width: 32, height: 32)
+                        .background(Circle().fill(Color.white.opacity(0.12)))
+                }
+                .disabled(homeworkUploading)
+                .accessibilityIdentifier("createCanvasSlideUpload")
                 Spacer()
                 Button { slideIndex = min(slides.count - 1, slideIndex + 1) } label: {
                     Image(systemName: "chevron.right")
@@ -235,6 +277,12 @@ struct CreateCanvasView: View {
             }
             .foregroundColor(.white)
             .buttonStyle(.plain)
+            if uploadTargetIndex == safe, let homeworkError {
+                Text(homeworkError)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(createHex: "e8877a"))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .padding(22)
         .background(
@@ -405,39 +453,65 @@ struct CreateCanvasView: View {
         }
     }
 
+    /// Redesigned 2026-08-25 (explicit ask): moved from a right-hand
+    /// column shown only for >1 slide to a permanent full-height LEFT
+    /// sidebar (see artboardContent), and restyled from solid dark cards
+    /// to a plain white list with thin divider lines - "so is easy to see
+    /// the screen." Each row also shows a small paperclip+count badge when
+    /// that slide has its own uploads (CreateSlide.uploads), the
+    /// read-back for the new per-slide upload button in presentationStage.
     private var slidesRail: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 0) {
             Text("Slides")
                 .font(.system(size: 12, weight: .bold, design: .rounded))
                 .foregroundColor(Color(createHex: "143a2e").opacity(0.45))
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 10)
+            Divider()
             ScrollView {
-                VStack(spacing: 8) {
+                VStack(spacing: 0) {
                     ForEach(Array(slides.enumerated()), id: \.element.id) { index, slide in
                         Button { slideIndex = index } label: {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(slide.title)
-                                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
-                                    .lineLimit(2)
+                            HStack(alignment: .top, spacing: 10) {
+                                Text("\(index + 1)")
+                                    .font(.system(size: 11, weight: .heavy, design: .rounded))
+                                    .foregroundColor(index == slideIndex ? Color(createHex: "247a4d") : Color(createHex: "143a2e").opacity(0.3))
+                                    .frame(width: 16, alignment: .leading)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(slide.title.isEmpty ? "Untitled slide" : slide.title)
+                                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                                        .foregroundColor(Color(createHex: "143a2e"))
+                                        .lineLimit(2)
+                                    if !slide.uploads.isEmpty {
+                                        HStack(spacing: 3) {
+                                            Image(systemName: "paperclip")
+                                            Text("\(slide.uploads.count)")
+                                        }
+                                        .font(.system(size: 10, weight: .semibold, design: .rounded))
+                                        .foregroundColor(Color(createHex: "247a4d").opacity(0.75))
+                                    }
+                                }
+                                Spacer(minLength: 0)
                             }
-                            .padding(10)
-                            .frame(maxWidth: .infinity, minHeight: 72, alignment: .topLeading)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .fill(index == slideIndex ? Color(createHex: "247a4d") : Color(createHex: "1a2c24"))
-                            )
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 13)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(index == slideIndex ? Color(createHex: "eef6f0") : Color.clear)
                         }
                         .buttonStyle(.plain)
+                        Divider().padding(.leading, 16)
                     }
                 }
             }
         }
-        .padding(10)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(Color.white)
-                .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(Color(createHex: "143a2e").opacity(0.08), lineWidth: 1)
         )
+        .shadow(color: .black.opacity(0.06), radius: 10, y: 4)
         .accessibilityIdentifier("createCanvasSlides")
     }
 
@@ -455,6 +529,7 @@ struct CreateCanvasView: View {
     private var createDock: some View {
         HStack(alignment: .top, spacing: 16) {
             Button {
+                uploadTargetIndex = nil
                 showHomeworkImporter = true
             } label: {
                 HStack(spacing: 8) {
@@ -517,11 +592,6 @@ struct CreateCanvasView: View {
                 .accessibilityIdentifier("createCanvasDock")
                 .allowsHitTesting(false)
         }
-        .sheet(isPresented: $showHomeworkImporter) {
-            HomeworkDocumentPicker { url in
-                Task { await handleHomeworkUpload(url) }
-            }
-        }
     }
 
     private func jumpOnCall() {
@@ -541,12 +611,21 @@ struct CreateCanvasView: View {
         jesseCall.end()
     }
 
+    /// Routes by uploadTargetIndex, set right before the sheet opens: a
+    /// slide index (presentationStage's per-slide button) attaches to that
+    /// slide's own `uploads`; nil (createDock's button) attaches to the
+    /// gdoc-wide `homeworkUploads` list, same as before this file's
+    /// 2026-08-25 restructure.
     private func handleHomeworkUpload(_ url: URL) async {
         homeworkError = nil
         homeworkUploading = true
         switch await HomeworkUploadPipeline.process(fileURL: url) {
         case .cards(let fileName, let cards):
-            homeworkUploads.insert(CreateHomeworkUpload(fileName: fileName, cards: cards), at: 0)
+            if let target = uploadTargetIndex, slides.indices.contains(target) {
+                slides[target].uploads.insert(CreateHomeworkUpload(fileName: fileName, cards: cards), at: 0)
+            } else {
+                homeworkUploads.insert(CreateHomeworkUpload(fileName: fileName, cards: cards), at: 0)
+            }
         case .error(let message):
             homeworkError = message
         }
@@ -577,6 +656,12 @@ private struct CreateSlide: Identifiable {
     let id = UUID()
     var title: String
     var body: String
+    /// Per-slide uploads (2026-08-25, explicit ask: "each page has its own
+    /// little button to upload files... next to +Slide" - was one shared
+    /// deck-wide list attached to the old bottom dock). gdoc's own upload
+    /// flow still uses the separate deck-wide `homeworkUploads` on
+    /// CreateCanvasView itself - a single doc has no "pages" to attach to.
+    var uploads: [CreateHomeworkUpload] = []
 }
 
 /// One solved upload's real AI cards - own copy of the shape
@@ -605,12 +690,29 @@ private enum CreateArtboard {
     static let jesseRailIdle = CGRect(x: 980, y: 48, width: 432, height: 560)
     static let liveSlide = CGRect(x: 28, y: 48, width: 739, height: 560)
     static let jesseRailLive = CGRect(x: 787, y: 48, width: 403, height: 560)
-    static let slidesRail = CGRect(x: 1210, y: 48, width: 202, height: 560)
     // Taller than the old 96pt Ask-AI bar (2026-08-18) - it now carries
     // real upload summaries, not just a single-line text field, and the
     // board has slack below it (632+150=782, still 28pt short of the true
-    // 810 edge, matching the outer margin).
+    // 810 edge, matching the outer margin). gdoc only - presentation
+    // dropped the dock entirely, see presSlidesRail below.
     static let dock = CGRect(x: 28, y: 632, width: 1384, height: 150)
+
+    // Presentation-only layout (2026-08-25, explicit ask): the slide rail
+    // moved from a right-hand column (only shown for >1 slide, height 560,
+    // matching the stage row) to a permanent full-height LEFT sidebar that
+    // also swallows the vertical span the dock used to own below the
+    // stage row (48 to 632+150=782) - one column, always there, instead of
+    // "stage row" + "dock row" stacked underneath it. presStage/
+    // presJesseRail keep the SAME 560 height as the old idle/live stage
+    // rows (a slide editor doesn't need to stretch taller just because its
+    // neighboring rail did) but are narrower and shifted right to make
+    // room: 1162pt of width remains for them (250 to 1412) vs the old
+    // idle row's 1384pt, so both are scaled down by that same ratio
+    // (~0.84x) rather than picked arbitrarily - 770+24 gap+368 = 1162,
+    // landing exactly on the right margin (1412 = 1440-28).
+    static let presSlidesRail = CGRect(x: 28, y: 48, width: 202, height: 734)
+    static let presStage = CGRect(x: 250, y: 48, width: 770, height: 560)
+    static let presJesseRail = CGRect(x: 1044, y: 48, width: 368, height: 560)
 }
 
 struct JesseMiniWaveform: View {
