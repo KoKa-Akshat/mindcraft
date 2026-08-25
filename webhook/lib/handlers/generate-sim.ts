@@ -30,12 +30,24 @@
  *
  * Two request shapes, one action (generation is genuinely async — 15-60+s
  * per attempt — so the client polls a job rather than blocking):
- *   { topic }  -> start: library check -> budget check -> enqueue on the
- *                 service -> { status: "running", jobId }
+ *   { topic, studentGeminiKey? } -> start: library check -> budget check
+ *                 (SKIPPED when studentGeminiKey is present, see below) ->
+ *                 enqueue on the service -> { status: "running", jobId }
  *   { jobId }  -> poll: relay the service's verdict; on a gate-passed
  *                 terminal result, persist it to the generated_sims
  *                 library so the next student asking about the same topic
  *                 reuses it instead of paying for regeneration.
+ *
+ * BYOK (2026-08-25): when the iOS client sends the student's own saved
+ * Gemini key (StudentAIKeyStore), it's forwarded to content-engine's
+ * /generate as student_gemini_key and the platform budget checks are
+ * skipped for the START of the job — the expensive fit_check + generate
+ * calls spend the student's own free quota, not MindCraft's account. This
+ * is a partial bypass, not total: vision_gate isn't ported yet and still
+ * spends MindCraft's Anthropic key, so recordActualSpend on the terminal
+ * poll still runs and still bills the platform budget for that smaller
+ * remaining real cost. The key is relayed to content-engine for that one
+ * job only — never persisted here, never logged.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { setCors } from '../cors'
@@ -95,7 +107,7 @@ async function persistToLibrary(result: GeneratedSimResult, jobId: string): Prom
   })
 }
 
-async function handleStart(uid: string, rawTopic: string, res: VercelResponse) {
+async function handleStart(uid: string, rawTopic: string, res: VercelResponse, studentGeminiKey?: string) {
   const topic = rawTopic.trim().slice(0, MAX_TOPIC)
   if (!topic) return res.status(400).json({ error: 'topic required' })
   const topicSlug = slugifyTopic(topic)
@@ -110,27 +122,41 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse) {
     return res.status(200).json({ status: 'passed', cached: true, result: cached })
   }
 
-  // Platform-wide dollar ceiling checked first: a global stop doesn't need
-  // to know or care which student is asking, and checking it before the
-  // per-student counter means a request that's going to be refused anyway
-  // never consumes one of that student's limited daily attempts.
-  const platformBudget = await checkPlatformBudget()
-  if (!platformBudget.allowed) {
-    return res.status(429).json({
-      status: 'rate_limited',
-      reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
-      platformBudgetExhausted: true,
-    })
-  }
+  // BYOK (2026-08-25, explicit ask: a student's own free Gemini key should
+  // power live generation instead of always billing MindCraft's shared
+  // Anthropic account, which can't scale to real student volume on a fixed
+  // monthly cap). When a key is present, skip BOTH the platform-wide
+  // dollar ceiling and the per-student daily attempt cap for the START of
+  // this job — the expensive fit_check + generate calls will spend the
+  // student's own quota, not MindCraft's. This is NOT a full bypass of
+  // platform accounting: vision_gate still isn't ported (see
+  // GeminiApiGenerator's own doc comment in the content-engine repo) and
+  // still spends MindCraft's Anthropic account, so recordActualSpend on
+  // the terminal poll below still runs and still bills the platform
+  // budget for that real, smaller remaining cost — content-engine's
+  // _Usage now tracks the two token buckets separately so that number is
+  // correct or the fix has no teeth (see content-engine's own commit
+  // fixing _Usage.to_payload from flat-pricing everything at Anthropic
+  // rates regardless of provider).
+  if (!studentGeminiKey) {
+    const platformBudget = await checkPlatformBudget()
+    if (!platformBudget.allowed) {
+      return res.status(429).json({
+        status: 'rate_limited',
+        reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
+        platformBudgetExhausted: true,
+      })
+    }
 
-  const budget = await checkAndRecordAttempt(uid)
-  if (!budget.allowed) {
-    return res.status(429).json({
-      status: 'rate_limited',
-      reason: `Daily generation limit reached (${budget.attemptsToday}/${budget.cap}).`,
-      attemptsToday: budget.attemptsToday,
-      cap: budget.cap,
-    })
+    const budget = await checkAndRecordAttempt(uid)
+    if (!budget.allowed) {
+      return res.status(429).json({
+        status: 'rate_limited',
+        reason: `Daily generation limit reached (${budget.attemptsToday}/${budget.cap}).`,
+        attemptsToday: budget.attemptsToday,
+        cap: budget.cap,
+      })
+    }
   }
 
   if (!serviceConfigured()) {
@@ -150,7 +176,11 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse) {
     const serviceRes = await fetch(`${CONTENT_ENGINE_BASE}/generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Service-Key': CONTENT_ENGINE_SECRET },
-      body: JSON.stringify({ topic, topic_slug: topicSlug }),
+      body: JSON.stringify({
+        topic,
+        topic_slug: topicSlug,
+        ...(studentGeminiKey ? { student_gemini_key: studentGeminiKey } : {}),
+      }),
     })
     const data = (await serviceRes.json().catch(() => ({}))) as { job_id?: string }
     if (!serviceRes.ok || !data.job_id) {
@@ -252,12 +282,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { topic?: string; jobId?: string }
+  const body = (req.body || {}) as { topic?: string; jobId?: string; studentGeminiKey?: string }
   if (typeof body.jobId === 'string' && body.jobId) {
     return handlePoll(body.jobId, res)
   }
   if (typeof body.topic === 'string' && body.topic) {
-    return handleStart(uid, body.topic, res)
+    const studentGeminiKey = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
+    return handleStart(uid, body.topic, res, studentGeminiKey || undefined)
   }
   return res.status(400).json({ error: 'topic (start) or jobId (poll) required' })
 }

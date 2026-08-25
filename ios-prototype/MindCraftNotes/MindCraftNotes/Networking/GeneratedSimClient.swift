@@ -75,7 +75,18 @@ enum GeneratedSimClient {
     }
 
     static func requestSim(topic: String) async -> GeneratedSimVerdict {
-        guard let envelope = await post(["topic": topic]) else {
+        // BYOK (2026-08-25): when the student has saved their own Gemini
+        // key, send it along so this job spends their free quota instead
+        // of MindCraft's shared Anthropic budget - see
+        // StudentAIKeyStore.geminiKeyForServerGeneration's own doc comment
+        // for the one-time exception this makes to "the key never leaves
+        // the device." Omitted entirely when absent, so a student with no
+        // key sees identical behavior to before this change.
+        var body = ["topic": topic]
+        if let key = await StudentAIKeyStore.shared.geminiKeyForServerGeneration() {
+            body["studentGeminiKey"] = key
+        }
+        guard let envelope = await post(body) else {
             return .unavailable("Couldn't reach the generation service.")
         }
         switch envelope.status {

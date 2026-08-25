@@ -4,9 +4,22 @@ import Security
 
 /// Student's optional bring-your-own AI key for homework help.
 /// The **raw key lives only in the Keychain** — never Firestore, UserDefaults,
-/// or logs. The only hosts this type will send the key to are the provider's
-/// own REST APIs (`api.groq.com`, `api.anthropic.com`,
-/// `generativelanguage.googleapis.com`).
+/// or logs. For every feature in this file, the only hosts this type sends
+/// the key to are the provider's own REST APIs (`api.groq.com`,
+/// `api.anthropic.com`, `generativelanguage.googleapis.com`), called
+/// directly from the device.
+///
+/// **One deliberate exception** (2026-08-25, explicit product decision):
+/// `geminiKeyForServerGeneration()` below hands a saved Gemini key to
+/// `GeneratedSimClient` so live sim generation can spend the student's own
+/// free quota instead of always billing MindCraft's shared Anthropic
+/// account, which can't scale to real student volume on a fixed monthly
+/// budget. That one key is relayed webhook -> content-engine for the
+/// duration of that one generation job only - never persisted server-side,
+/// never logged. This is a real, known narrowing of the "never leaves the
+/// device" promise above; `AccountManageView`'s and `GeminiOnboardingView`'s
+/// copy were updated in the same change to say so honestly rather than
+/// leave the old blanket claim standing.
 @MainActor
 final class StudentAIKeyStore: ObservableObject {
     static let shared = StudentAIKeyStore()
@@ -434,6 +447,17 @@ final class StudentAIKeyStore: ObservableObject {
             else { return nil }
             return (provider, key)
         }
+    }
+
+    /// See this file's own header comment for why this one accessor is a
+    /// deliberate exception to "the key never leaves the device." Only
+    /// ever returns a `.gemini` credential — content-engine's
+    /// `GeminiApiGenerator` only speaks Gemini's API, so a saved Groq or
+    /// Anthropic key would just fail server-side; better to return nil and
+    /// let `GeneratedSimClient` fall back to MindCraft's own account than
+    /// send a key that can't work.
+    func geminiKeyForServerGeneration() -> String? {
+        readAllCredentials().first { $0.provider == .gemini }?.key
     }
 
     private func deleteItem() {

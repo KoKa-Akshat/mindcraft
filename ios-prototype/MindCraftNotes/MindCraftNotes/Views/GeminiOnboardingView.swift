@@ -128,7 +128,7 @@ struct GeminiOnboardingView: View {
 
             VStack(alignment: .leading, spacing: 12) {
                 perkRow(icon: "key.fill", text: "Free for everyone - Google's own offer, about two minutes to claim.")
-                perkRow(icon: "lock.fill", text: "The key is saved only in this device's Keychain. Never on MindCraft's servers.")
+                perkRow(icon: "lock.fill", text: "Saved only in this device's Keychain. Used directly for most features, and once per job to run your sim generations on your own quota.")
                 perkRow(icon: "sparkles", text: "It unlocks homework help, study plans, and desk questions.")
             }
             .padding(18)
@@ -209,7 +209,7 @@ struct GeminiOnboardingView: View {
                 .font(.mcContent(size: 32, weight: .semibold))
                 .foregroundColor(ink)
 
-            Text("It's saved to this iPad's Keychain and sent only to Google to check it works. MindCraft never sees or stores it.")
+            Text("It's saved to this iPad's Keychain. Most features send it straight to Google; sim generation sends it once per job to run on your own quota - never stored on our servers.")
                 .font(.mcContent(size: 16))
                 .foregroundColor(ink.opacity(0.7))
                 .lineSpacing(3)
