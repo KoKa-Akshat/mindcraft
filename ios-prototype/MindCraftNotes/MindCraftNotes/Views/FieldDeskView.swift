@@ -750,6 +750,7 @@ struct FieldDeskView: View {
                         DeskPhoneDashboardView(
                             studentName: deskChromeName ?? "there",
                             knowledgeGraphClient: phoneKnowledgeGraphClient,
+                            jesseCall: jesseCall,
                             // Constellation (2026-08-24, explicit ask:
                             // "continue your work should show me my
                             // knowledge map... we don't show Dan's book we

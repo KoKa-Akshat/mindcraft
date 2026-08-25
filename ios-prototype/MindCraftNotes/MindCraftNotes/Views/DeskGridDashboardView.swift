@@ -2596,12 +2596,34 @@ struct DeskGridDashboardView: View {
             // Nepali for "destination"; Kamana itself was Nepali for
             // "good luck," renamed 2026-08-24). Same box, same action,
             // identifier kept stable.
-            mascotModuleBox("Gantabya", badgeSystem: "sparkles", identifier: "deskGridModule_Leverage", ink: ink) {
+            mascotModuleBox("Gantabya", subtitle: gantabyaSubtitle, badgeSystem: "sparkles", identifier: "deskGridModule_Leverage", ink: ink) {
                 jesseCall.end()
                 closeBinderContentViewer()
                 viewingResumeAgent = true
             }
         }
+    }
+
+    /// Phase 2 of the resume rebuild (2026-08-25, explicit ask: "it also
+    /// has an applications section... A short bio, skills, experiences
+    /// which is now blended into the dash") - real data off
+    /// `jesseCall.resumeDraft`, same "computed fact, or an inviting empty
+    /// state" shape the phone dashboard's Gurukul card already uses for
+    /// impact-weighted mastery. Headline first (the actual "short bio"
+    /// the ask names), skills/roles counts as a fallback once a headline
+    /// hasn't been written yet, and the same static line the phone card
+    /// already ships as the true empty state.
+    private var gantabyaSubtitle: String {
+        guard let draft = jesseCall.resumeDraft,
+              !draft.headline.isEmpty || !draft.skills.isEmpty || !draft.roles.isEmpty
+        else {
+            return "Build your resume, one conversation at a time."
+        }
+        if !draft.headline.isEmpty { return draft.headline }
+        var parts: [String] = []
+        if !draft.skills.isEmpty { parts.append("\(draft.skills.count) skill\(draft.skills.count == 1 ? "" : "s")") }
+        if !draft.roles.isEmpty { parts.append("\(draft.roles.count) role\(draft.roles.count == 1 ? "" : "s")") }
+        return parts.joined(separator: " · ")
     }
 
     /// Learn+Practice's box carries the raccoon itself (2026-08-23,
@@ -2677,7 +2699,7 @@ struct DeskGridDashboardView: View {
     /// each other and from a plain SF Symbol - not the final art, a real
     /// placeholder worth swapping for generated/illustrated poses once
     /// there's a plan to pay for that.
-    private func mascotModuleBox(_ title: String, badgeSystem: String, identifier: String, ink: Color, action: @escaping () -> Void) -> some View {
+    private func mascotModuleBox(_ title: String, subtitle: String? = nil, badgeSystem: String, identifier: String, ink: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 8) {
                 ZStack(alignment: .bottomTrailing) {
@@ -2695,6 +2717,18 @@ struct DeskGridDashboardView: View {
                 Text(title)
                     .font(.mcContent(size: 16, weight: .semibold))
                     .foregroundColor(ink)
+                // Live profile summary (2026-08-25, Phase 2 of the resume
+                // rebuild: "a short bio, skills, experiences... blended
+                // into the dash") - same computed-with-fallback shape the
+                // phone dashboard's own Gurukul card already established
+                // for impact-weighted mastery (ConceptImpactScore), just
+                // reused here for Gantabya's resumeDraft instead.
+                if let subtitle {
+                    Text(subtitle)
+                        .font(.mcChrome(size: 11))
+                        .foregroundColor(ink.opacity(0.6))
+                        .lineLimit(2)
+                }
                 Spacer(minLength: 0)
             }
             .padding(14)

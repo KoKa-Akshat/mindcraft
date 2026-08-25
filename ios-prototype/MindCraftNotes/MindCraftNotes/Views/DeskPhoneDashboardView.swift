@@ -22,6 +22,11 @@ struct DeskPhoneDashboardView: View {
     /// and ios") - one load, owned by FieldDeskView, read here for
     /// Gurukul's subtitle instead of a second separate fetch.
     @ObservedObject var knowledgeGraphClient: KnowledgeGraphClient
+    /// Shared with the grid dashboard's own Gantabya box (2026-08-25,
+    /// Phase 2 of the resume rebuild) - same "one owner, read here for a
+    /// live subtitle" reasoning as `knowledgeGraphClient` above, just for
+    /// `resumeDraft` instead of the knowledge graph.
+    @ObservedObject var jesseCall: JesseCallSession
     var onContinueWork: () -> Void
     var onLearn: () -> Void
     var onDesign: () -> Void
@@ -95,7 +100,7 @@ struct DeskPhoneDashboardView: View {
                 )
                 feedCard(
                     title: "Leverage",
-                    subtitle: "Build your resume, one conversation at a time.",
+                    subtitle: leverageSubtitle,
                     system: "briefcase.fill",
                     identifier: "deskPhoneCard_Leverage",
                     action: onLeverage
@@ -106,6 +111,25 @@ struct DeskPhoneDashboardView: View {
         }
         .background(cream.ignoresSafeArea())
         .accessibilityIdentifier("deskPhoneDashboard")
+    }
+
+    /// Phase 2 of the resume rebuild (2026-08-25) - same fallback shape as
+    /// the grid dashboard's `gantabyaSubtitle`; kept as two near-identical
+    /// copies rather than a shared helper since `ResumeAgentDraft` is a
+    /// small value type and each dashboard already owns its own subtitle
+    /// logic inline (Gurukul's impact-weighted-mastery text above is the
+    /// same shape, also not factored out).
+    private var leverageSubtitle: String {
+        guard let draft = jesseCall.resumeDraft,
+              !draft.headline.isEmpty || !draft.skills.isEmpty || !draft.roles.isEmpty
+        else {
+            return "Build your resume, one conversation at a time."
+        }
+        if !draft.headline.isEmpty { return draft.headline }
+        var parts: [String] = []
+        if !draft.skills.isEmpty { parts.append("\(draft.skills.count) skill\(draft.skills.count == 1 ? "" : "s")") }
+        if !draft.roles.isEmpty { parts.append("\(draft.roles.count) role\(draft.roles.count == 1 ? "" : "s")") }
+        return parts.joined(separator: " · ")
     }
 
     private func topIcon(_ system: String, identifier: String, action: @escaping () -> Void) -> some View {
