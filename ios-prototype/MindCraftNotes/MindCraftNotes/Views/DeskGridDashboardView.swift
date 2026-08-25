@@ -2559,31 +2559,25 @@ struct DeskGridDashboardView: View {
     private func moduleBoxColumn(ink: Color) -> some View {
         VStack(spacing: 12) {
             learnModuleBox(ink: ink)
-            // Renamed to PencilWork (2026-08-24, explicit ask) - same box,
-            // same action (showCreateBook), identifier kept stable
-            // (deskGridModule_Create still refers to the box's ORIGINAL
-            // name, not its current display text - same convention as
-            // deskGridModule_Design below, now displaying "Create"). Gets
-            // its own mascot treatment (see mascotModuleBox's doc comment
-            // for why this is a badge on the same raccoon rather than new
-            // artwork) instead of the plain wand.and.stars icon the other
-            // two module boxes still use.
-            mascotModuleBox("PencilWork", badgeSystem: "pencil.and.scribble", identifier: "deskGridModule_Create", ink: ink) {
-                showCreateBook = true
+            // Renamed PencilWork -> Lab (2026-08-25, explicit ask: "the
+            // pencilwork section should be the design studio... where
+            // students and teachers can design custom lessons... using
+            // AI... perfectly working on the iphone not here in ipad" -
+            // iPhone's own "Design" card already opens DesignStudioView
+            // via onDesign/showDesignStudio, confirmed working; this box
+            // now opens the SAME real destination instead of
+            // showCreateBook/CreateBookView, which loses its only trigger
+            // as a result - flagged, not silently orphaned: CreateBookView
+            // itself is untouched on disk, just unreachable from this
+            // dashboard now, a separate call if that feature still needs a
+            // home. Identifier kept stable (deskGridModule_Create still
+            // refers to the box's ORIGINAL name, not its current display
+            // text - same convention deskGridModule_Design/_Leverage
+            // below already established for their own renames).
+            mascotModuleBox("Lab", badgeSystem: "pencil.and.scribble", identifier: "deskGridModule_Create", ink: ink) {
+                closeBinderContentViewer()
+                viewingDesignStudio = true
             }
-            // "Answer" removed 2026-08-23, explicit ask: "we don't need
-            // this answer feature at all instead bring back the old design
-            // that had n8n boxes and you could write in the boxes linking
-            // them and had connectors" - that's DesignStudioView's real
-            // node-canvas (DesignBox/ContentGraphStore: Chapter/Simulation/
-            // Checkpoint/Branch boxes with connecting edges), still
-            // reachable via the sidebar's own "Design" chip
-            // (viewingDesignStudio = true at that call site, unchanged).
-            // This column's own "Create" shortcut to the same destination
-            // was removed 2026-08-25 (explicit ask: "the only Jesses on
-            // the ipad should be gurukul... we dont need create anywhere")
-            // - DesignStudioView itself is untouched, only this redundant
-            // entry point is gone.
             // Leverage (2026-08-23, explicit ask: "add a resume box...
             // called Leverage" alongside the existing four) - the EXACT
             // same action the binder utility row's Resume icon already
@@ -2592,11 +2586,11 @@ struct DeskGridDashboardView: View {
             // start a correctly-contexted call. A fifth entry point, not a
             // new destination.
             //
-            // Renamed to Kamana (2026-08-24, explicit ask - "Kamana" is
-            // Nepali for good luck). Same box, same action, identifier
-            // kept stable. Mascot treatment with a star badge (good-luck
-            // wish), same reasoning as PencilWork above.
-            mascotModuleBox("Kamana", badgeSystem: "sparkles", identifier: "deskGridModule_Leverage", ink: ink) {
+            // Renamed Kamana -> Gantabya (2026-08-25, explicit ask -
+            // Nepali for "destination"; Kamana itself was Nepali for
+            // "good luck," renamed 2026-08-24). Same box, same action,
+            // identifier kept stable.
+            mascotModuleBox("Gantabya", badgeSystem: "sparkles", identifier: "deskGridModule_Leverage", ink: ink) {
                 jesseCall.end()
                 closeBinderContentViewer()
                 viewingResumeAgent = true
