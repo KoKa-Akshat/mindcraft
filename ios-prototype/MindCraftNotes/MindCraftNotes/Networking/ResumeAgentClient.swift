@@ -81,15 +81,33 @@ enum ResumeAgentClient {
         let text: String
     }
 
-    static func ask(message: String, draft: ResumeAgentDraft, driveFiles: [DriveSourceFile] = []) async -> Reply? {
+    /// resumeText/resumeFileName (2026-08-25): the server side
+    /// (resume-agent.ts sources.resumeText/resumeFileName) has supported a
+    /// real uploaded resume's extracted text since this endpoint was first
+    /// built - this native client just never sent it, so the only way to
+    /// get resume content in was talking. Real gap, not a design choice
+    /// (see ResumeAgentView's own upload flow, which extracts real text
+    /// via PDFKit and passes it through here on the first turn only).
+    static func ask(
+        message: String, draft: ResumeAgentDraft, driveFiles: [DriveSourceFile] = [],
+        resumeText: String? = nil, resumeFileName: String? = nil
+    ) async -> Reply? {
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
-        request.timeoutInterval = 25
+        // 45s, not the original 25 (2026-08-25) - a real uploaded resume's
+        // extracted text can run up to resume-agent.ts's own 24,000-char
+        // MAX_SOURCE, a meaningfully bigger extraction call than a short
+        // spoken turn, and 25s cut it close for that case specifically.
+        request.timeoutInterval = 45
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         var sources: [String: Any] = [:]
         if !driveFiles.isEmpty {
             sources["driveFiles"] = driveFiles.map { ["name": $0.name, "text": $0.text] }
+        }
+        if let resumeText, !resumeText.isEmpty {
+            sources["resumeText"] = resumeText
+            sources["resumeFileName"] = resumeFileName ?? "resume.pdf"
         }
 
         let body: [String: Any] = [

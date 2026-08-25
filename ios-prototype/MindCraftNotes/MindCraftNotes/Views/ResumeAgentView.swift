@@ -1,5 +1,7 @@
 import SwiftUI
 import WebKit
+import PDFKit
+import UniformTypeIdentifiers
 
 /// Jesse resume agent (Assignment H, 2026-08-18 rebuild) - the native call
 /// now drives a real profile draft (`JesseCallSession.askJesseResume`,
@@ -41,26 +43,61 @@ struct ResumeAgentView: View {
     @State private var mode: ContentMode = .profile
     @StateObject private var jobOSStore = JobOSStore()
     @EnvironmentObject private var jesseCall: JesseCallSession
+    @State private var showResumeImporter = false
+    @State private var uploadError: String?
+    @State private var uploading = false
 
     private var draft: ResumeAgentDraft { jesseCall.resumeDraft ?? .empty }
+    /// Whether there's a real profile to show yet - a returning student
+    /// (resumeDraft now persists, 2026-08-25) lands straight on their
+    /// draft; a genuinely new one sees the upload-or-talk opening choice.
+    private var hasProfile: Bool {
+        !draft.name.isEmpty || !draft.headline.isEmpty || !draft.skills.isEmpty || !draft.roles.isEmpty
+    }
 
     private let artboard = CGSize(width: 1440, height: 810)
+    private let stageInk = Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255)
+    private let lime = Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)
+    private let cream = Color(red: 255 / 255, green: 248 / 255, blue: 233 / 255)
 
     var body: some View {
         GeometryReader { geo in
             let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
             ZStack {
-                Color.white.ignoresSafeArea()
-                // Same dotted-grid treatment as the Work dashboard
-                // (2026-08-18, explicit ask: "all other panels should
-                // have polka dots too") - duplicated per-file, matching
-                // this codebase's existing convention.
-                ResumeDottedGrid()
-                    .frame(width: geo.size.width, height: geo.size.height)
+                if mode == .profile {
+                    // Gurukul-style dark stage (2026-08-25, explicit ask:
+                    // "it should look like Jesse(Gurukul) feature when you
+                    // click on it") - same ink/radial-gradient treatment as
+                    // StudyCompanionView's own `stage`, replacing the old
+                    // flat white content-box + JesseRailView pairing for
+                    // this mode specifically. Applications/Import below
+                    // keep their own existing cream/white styling
+                    // untouched - JobOSShellView's paper-board look and the
+                    // web import page aren't part of this redesign.
+                    ZStack {
+                        stageInk.ignoresSafeArea()
+                        RadialGradient(
+                            colors: [Color(red: 26 / 255, green: 36 / 255, blue: 16 / 255).opacity(0.9), stageInk],
+                            center: .center, startRadius: 40, endRadius: 520
+                        ).ignoresSafeArea()
+                    }
+                } else {
+                    Color.white.ignoresSafeArea()
+                    // Same dotted-grid treatment as the Work dashboard
+                    // (2026-08-18, explicit ask: "all other panels should
+                    // have polka dots too") - duplicated per-file, matching
+                    // this codebase's existing convention.
+                    ResumeDottedGrid()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                }
                 ZStack(alignment: .topLeading) {
-                    pin(ResumeArtboard.content, scale: scale) { contentBox }
-                    pin(ResumeArtboard.jesseRail, scale: scale) {
-                        JesseRailView(studentName: studentName, context: "resume")
+                    if mode == .profile {
+                        pin(ResumeArtboard.fullStage, scale: scale) { resumeStage }
+                    } else {
+                        pin(ResumeArtboard.content, scale: scale) { contentBox }
+                        pin(ResumeArtboard.jesseRail, scale: scale) {
+                            JesseRailView(studentName: studentName, context: "resume")
+                        }
                     }
                 }
                 .frame(width: artboard.width * scale, height: artboard.height * scale)
@@ -93,12 +130,15 @@ struct ResumeAgentView: View {
         }
     }
 
+    /// Only ever rendered for .applications/.importWeb now (2026-08-25) -
+    /// .profile mode moved to `resumeStage`, a self-contained Gurukul-style
+    /// surface, not this cream box + separate JesseRailView pairing.
     private var contentBox: some View {
         ZStack(alignment: .topLeading) {
             Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255)
             switch mode {
             case .profile:
-                resumePanel
+                EmptyView()
             case .applications:
                 JobOSShellView(onClose: { mode = .profile }, resumeDraft: jesseCall.resumeDraft, fillsAvailableSpace: true)
             case .importWeb:
@@ -112,20 +152,215 @@ struct ResumeAgentView: View {
                     }
                 )
             }
-            if mode == .profile {
-                VStack {
-                    Spacer()
-                    HStack {
-                        importToggle
-                        Spacer()
-                        applicationsToggle
-                    }
-                    .padding(16)
-                }
-            }
         }
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         .shadow(color: .black.opacity(0.12), radius: 16, y: 8)
+    }
+
+    // MARK: - Gurukul-style stage (2026-08-25)
+
+    private var firstName: String {
+        let trimmed = studentName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, trimmed != "there" else { return "there" }
+        return trimmed.split(separator: " ").first.map(String.init) ?? trimmed
+    }
+
+    private var isResumeCallLive: Bool {
+        jesseCall.isActive && jesseCall.context == "resume"
+    }
+
+    private var resumeOrbState: JesseOrbView.OrbState {
+        if jesseCall.isSpeaking { return .speaking }
+        if jesseCall.isThinking { return .thinking }
+        if jesseCall.isListening { return .listening }
+        if !isResumeCallLive { return .closed }
+        return .idle
+    }
+
+    private var resumeStatusCaption: String {
+        switch resumeOrbState {
+        case .speaking: return "Jesse is talking"
+        case .thinking: return "reasoning"
+        case .listening: return "listening, go ahead"
+        case .closed: return hasProfile ? "off the line, tap to keep going" : "ready when you are"
+        case .idle: return "on the line"
+        }
+    }
+
+    /// Orb + call control (left) plus either the upload-or-talk opening
+    /// choice or the live draft (right) - same two-column shape as
+    /// StudyCompanionView's own stage, not a new layout invented for this
+    /// screen.
+    private var resumeStage: some View {
+        HStack(alignment: .top, spacing: 24) {
+            VStack(spacing: 14) {
+                JesseOrbView(state: resumeOrbState, buildFraction: nil)
+                    .frame(width: 132, height: 132)
+                Text(resumeStatusCaption)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(cream.opacity(0.55))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button {
+                    if isResumeCallLive { _ = jesseCall.end() } else { startTalking() }
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: isResumeCallLive ? "phone.down.fill" : "phone.fill")
+                        Text(isResumeCallLive ? "End call" : "Talk to Jesse")
+                    }
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Capsule().fill(isResumeCallLive ? Color(red: 176 / 255, green: 71 / 255, blue: 63 / 255) : Color.black))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("resumeAgentCallJesse")
+                Spacer(minLength: 0)
+            }
+            .frame(width: 180)
+
+            if !hasProfile && !isResumeCallLive {
+                resumeIntakeChoice
+            } else {
+                resumeDraftPanel
+            }
+        }
+        .padding(28)
+    }
+
+    /// The opening moment (explicit ask: "Hey, I need a resume to work
+    /// with, do you have one to upload... or go into conversational
+    /// mode"). Shown only once - the instant either path produces real
+    /// content (hasProfile) or a call starts, this gives way to
+    /// `resumeDraftPanel` and never comes back for a returning student
+    /// (resumeDraft persists, see that property's own doc comment).
+    private var resumeIntakeChoice: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            Spacer(minLength: 0)
+            Text("Hey \(firstName), I need a resume to work with.")
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .foregroundColor(cream)
+                .fixedSize(horizontal: false, vertical: true)
+            Text("Got one already? Upload it and I'll pull your real details from it. Or we can just talk it through - tell me what you've done and I'll build it as you go.")
+                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .foregroundColor(cream.opacity(0.7))
+                .lineSpacing(3)
+                .fixedSize(horizontal: false, vertical: true)
+            if let uploadError {
+                Text(uploadError)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(red: 232 / 255, green: 135 / 255, blue: 122 / 255))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            HStack(spacing: 12) {
+                Button {
+                    showResumeImporter = true
+                } label: {
+                    HStack(spacing: 8) {
+                        if uploading {
+                            ProgressView().tint(stageInk)
+                        } else {
+                            Image(systemName: "doc.badge.arrow.up")
+                        }
+                        Text(uploading ? "Reading\u{2026}" : "Upload my resume")
+                    }
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundColor(stageInk)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 13)
+                    .background(Capsule().fill(lime))
+                }
+                .buttonStyle(.plain)
+                .disabled(uploading)
+                .accessibilityIdentifier("resumeAgentUpload")
+
+                Button(action: startTalking) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "phone.fill")
+                        Text("Let's talk it through")
+                    }
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundColor(cream)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 13)
+                    .background(Capsule().fill(Color.white.opacity(0.12)))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("resumeAgentTalk")
+            }
+            Spacer(minLength: 0)
+        }
+        .fileImporter(isPresented: $showResumeImporter, allowedContentTypes: [.pdf, .plainText]) { result in
+            Task { await handleResumeUpload(result) }
+        }
+    }
+
+    /// Draft-in-progress + live transcript, once either exists.
+    private var resumeDraftPanel: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if isResumeCallLive {
+                if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
+                    resumeTranscriptLine(jesseCall.liveTranscript, live: true)
+                } else if let last = jesseCall.turns.last(where: { $0.speaker == "student" })?.text {
+                    resumeTranscriptLine(last, live: false)
+                }
+            }
+            resumePanel
+        }
+    }
+
+    private func resumeTranscriptLine(_ text: String, live: Bool) -> some View {
+        Text(text)
+            .font(.system(size: 13, weight: .medium, design: .rounded))
+            .foregroundColor(cream.opacity(live ? 0.75 : 0.9))
+            .lineLimit(2)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+            .background(Capsule().fill(Color.white.opacity(live ? 0.1 : 0.16)))
+            .opacity(live ? 0.85 : 1)
+    }
+
+    private func startTalking() {
+        if !jesseCall.isActive || jesseCall.context != "resume" {
+            jesseCall.begin(context: "resume", studentName: studentName)
+        }
+        jesseCall.startListening()
+    }
+
+    /// Real PDF/text extraction (2026-08-25, closing a genuine gap - see
+    /// ResumeAgentClient's own doc comment: the server has always accepted
+    /// sources.resumeText, nothing native ever sent it). PDFKit only -
+    /// DOCX needs a real parser this app doesn't have; a .docx pick here
+    /// would just fail cleanly below rather than silently mis-read it.
+    private func handleResumeUpload(_ result: Result<URL, Error>) async {
+        uploadError = nil
+        switch result {
+        case .failure(let error):
+            uploadError = "Couldn't open that file: \(error.localizedDescription)"
+        case .success(let url):
+            uploading = true
+            defer { uploading = false }
+            guard url.startAccessingSecurityScopedResource() else {
+                uploadError = "Couldn't access that file - try again."
+                return
+            }
+            defer { url.stopAccessingSecurityScopedResource() }
+            let fileName = url.lastPathComponent
+            var text = ""
+            if url.pathExtension.lowercased() == "pdf" {
+                text = PDFDocument(url: url)?.string ?? ""
+            } else {
+                text = (try? String(contentsOf: url, encoding: .utf8)) ?? ""
+            }
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else {
+                uploadError = "Couldn't read any text out of that file - try a different export, or just talk it through instead."
+                return
+            }
+            jesseCall.submitResumeUpload(text: trimmed, fileName: fileName, studentName: studentName)
+        }
     }
 
     // MARK: - Native profile panel (Assignment H)
@@ -157,7 +392,7 @@ struct ResumeAgentView: View {
             Text(draft.name.isEmpty ? "Your name" : draft.name)
                 .font(.system(size: 22, weight: .bold, design: .rounded))
                 .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-            Text("Talk to Jesse on the right - tell them about your school, skills, and roles, and this fills in as you go.")
+            Text("Keep talking to Jesse - tell them about your school, skills, and roles, and this fills in as you go.")
                 .font(.system(size: 12, weight: .medium, design: .rounded))
                 .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255).opacity(0.6))
         }
@@ -314,6 +549,10 @@ struct ResumeAgentView: View {
 private enum ResumeArtboard {
     static let content = CGRect(x: 28, y: 48, width: 920, height: 560)
     static let jesseRail = CGRect(x: 980, y: 48, width: 432, height: 560)
+    // Full-width stage (2026-08-25) - .profile mode's own orb+panel layout
+    // is self-contained (mirrors StudyCompanionView's stage), unlike the
+    // content+jesseRail two-box split the other modes still use.
+    static let fullStage = CGRect(x: 28, y: 48, width: 1384, height: 714)
 }
 
 /// Same dotted-grid treatment as `DeskGridDashboardView.DottedDeskGrid` /

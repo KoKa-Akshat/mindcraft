@@ -650,6 +650,12 @@ struct DeskGridDashboardView: View {
                     generatedBooks = [book]
                     viewingBook = book
                 }
+                // Straight into Resume/Gantabya (2026-08-25) - same
+                // no-tap-automation verification need as the flags above,
+                // for the Gurukul-style resume redesign.
+                if ProcessInfo.processInfo.arguments.contains("--ui-testing-resume") {
+                    viewingResumeAgent = true
+                }
                 // Live gated-generation state seeds (closed test,
                 // LIVE_GATED_GENERATION_TEST_SPEC.md) - a real verdict
                 // needs the deployed generation service (deliberately not

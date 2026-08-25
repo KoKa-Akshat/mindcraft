@@ -222,8 +222,23 @@ final class JesseCallSession: NSObject, ObservableObject {
     /// `bookDraft`: set only while `context == "resume"`, updated from the
     /// real `/api/resume-agent` round trip on every turn (see
     /// `askJesseResume`) so `ResumeAgentView` can render the profile live as
-    /// the student talks. Reset in `begin()`.
-    @Published private(set) var resumeDraft: ResumeAgentDraft?
+    /// the student talks.
+    ///
+    /// Real fix, 2026-08-25 (explicit ask: "automatically create a
+    /// profile... blended into the dash") - this used to be a plain
+    /// in-memory `@Published` var, reset to nil on every fresh `begin()`
+    /// of "resume" context (see that branch's own history: `jobOS` context
+    /// already carved out an exception - "a student who already built one
+    /// via the Resume rail should arrive with it intact, not blanked" -
+    /// but "resume" context itself still wiped it every time). A
+    /// dashboard-surfaced profile that vanishes both on relaunch AND on
+    /// simply reopening the Resume screen isn't a profile. Now persists
+    /// the same `didSet`-triggers-save shape `workDashboardLesson` already
+    /// uses, and `begin()`'s "resume" branch no longer resets it - see
+    /// `loadPersistedResumeDraft`/`savePersistedResumeDraft`.
+    @Published private(set) var resumeDraft: ResumeAgentDraft? = JesseCallSession.loadPersistedResumeDraft() {
+        didSet { Self.savePersistedResumeDraft(resumeDraft) }
+    }
     /// English-practice conversation state (2026-08-19) - same lightweight
     /// shape idea as `resumeDraft`/`bookDraft` but far smaller: just what
     /// goal/deadline the student stated, so the webhook's system prompt can
@@ -492,9 +507,9 @@ final class JesseCallSession: NSObject, ObservableObject {
         if context == "book" {
             bookDraft = nil
         }
-        if context == "resume" {
-            resumeDraft = nil
-        }
+        // "resume" no longer resets resumeDraft here (2026-08-25) - see
+        // that property's own doc comment. A returning student arrives
+        // with their real profile intact, same as "jobOS" already did.
         if context == "englishPractice" {
             englishPracticeState = nil
             Task { await speak("Hi, I'm Jesse. Let's practice your English together - what are you hoping to get better at, and is there a deadline you're working toward?") }
@@ -1154,12 +1169,10 @@ final class JesseCallSession: NSObject, ObservableObject {
 
     /// Real `/api/resume-agent` round trip - mirrors `agent.js`'s
     /// `askJesse()` request/response cycle the same way `askJesseBook`
-    /// mirrors the book workflow's `ask()`. `sources` stays empty here (see
-    /// `ResumeAgentClient` doc comment) - this is the voice-only path;
-    /// LinkedIn/Drive/PDF extraction are a separate, not-yet-native piece.
-    private func askJesseResume(_ message: String) async {
+    /// mirrors the book workflow's `ask()`.
+    private func askJesseResume(_ message: String, resumeText: String? = nil, resumeFileName: String? = nil) async {
         let draft = resumeDraft ?? .empty
-        guard let result = await ResumeAgentClient.ask(message: message, draft: draft) else {
+        guard let result = await ResumeAgentClient.ask(message: message, draft: draft, resumeText: resumeText, resumeFileName: resumeFileName) else {
             guard isActive else { return }
             await speak("I couldn't reach the resume desk just now. Keep talking and I'll catch up.")
             return
@@ -1167,6 +1180,24 @@ final class JesseCallSession: NSObject, ObservableObject {
         guard isActive else { return }
         resumeDraft = result.draft
         await speak(result.reply)
+    }
+
+    /// Real upload wire-up (2026-08-25, explicit ask: "Hey, I need a resume
+    /// to work with, do you have one to upload") - was a genuine gap (see
+    /// ResumeAgentClient's own doc comment): the server has always accepted
+    /// `sources.resumeText`, nothing native ever sent it. ResumeAgentView
+    /// extracts real text via PDFKit and calls this once, same
+    /// begin()-then-submit shape `submitLearnForm` uses for Gurukul's own
+    /// upload-or-talk opening. quiet: true skips the spoken "Heyy!" greeting
+    /// entirely - the upload itself is the opening move, not a call the
+    /// student initiated by talking first.
+    func submitResumeUpload(text: String, fileName: String, studentName: String) {
+        guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        if !isActive || context != "resume" {
+            begin(context: "resume", studentName: studentName, quiet: true)
+        }
+        turns.append(JesseCallTurn(id: UUID().uuidString, speaker: "student", text: "Uploaded \(fileName)", at: Date()))
+        Task { await askJesseResume("I uploaded my resume, \(fileName) - please pull my real details from it.", resumeText: text, resumeFileName: fileName) }
     }
 
     // MARK: - English practice (2026-08-19)
@@ -2294,6 +2325,26 @@ final class JesseCallSession: NSObject, ObservableObject {
         }
         guard let data = try? JSONEncoder().encode(PersistedLesson(lesson)) else { return }
         UserDefaults.standard.set(data, forKey: persistedLessonKey)
+    }
+
+    /// See `resumeDraft`'s own doc comment. No max-age expiry unlike the
+    /// lesson above - a resume profile doesn't go stale after 48 hours the
+    /// way "pick up where you left off" framing would for a lesson;
+    /// `ResumeAgentDraft` is already `Codable`, no wrapper struct needed.
+    private static let persistedResumeDraftKey = "jesseCall.resumeDraft"
+
+    private static func loadPersistedResumeDraft() -> ResumeAgentDraft? {
+        guard let data = UserDefaults.standard.data(forKey: persistedResumeDraftKey) else { return nil }
+        return try? JSONDecoder().decode(ResumeAgentDraft.self, from: data)
+    }
+
+    private static func savePersistedResumeDraft(_ draft: ResumeAgentDraft?) {
+        guard let draft else {
+            UserDefaults.standard.removeObject(forKey: persistedResumeDraftKey)
+            return
+        }
+        guard let data = try? JSONEncoder().encode(draft) else { return }
+        UserDefaults.standard.set(data, forKey: persistedResumeDraftKey)
     }
 }
 
