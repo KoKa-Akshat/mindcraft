@@ -15,7 +15,12 @@ struct JesseCallPill: View {
     var onTap: () -> Void
 
     var body: some View {
-        if call.isActive {
+        // Hidden while Gurukul (StudyCompanionView) is on screen
+        // (2026-08-25): that surface IS the call - its orb already shows
+        // every state this pill abbreviates, and the pill was landing on
+        // top of Gurukul's own header buttons (it renders at
+        // DeskShellView's root, above every overlay).
+        if call.isActive, !call.studyCompanionPresented {
             Button(action: onTap) {
                 HStack(spacing: 8) {
                     Circle()

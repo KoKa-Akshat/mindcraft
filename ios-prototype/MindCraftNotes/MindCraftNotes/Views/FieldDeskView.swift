@@ -100,6 +100,12 @@ struct FieldDeskView: View {
     // (search-routing case "design") - reused as-is, not redeclared here.
     @State private var showFriends = false
     @State private var showConstellation = false
+    /// Real "open lesson" wire-up (2026-08-25) - a concept tapped in
+    /// Constellation carries its topic through to Gurukul's initial
+    /// request. Explicitly reset to nil by the normal dashboard-card
+    /// Gurukul entry point too, so a stale concept from an earlier
+    /// Constellation visit can never leak into an ordinary open.
+    @State private var pendingConstellationTopic: String?
     // Shared between DeskPhoneDashboardView's Gurukul card subtitle and
     // ConstellationView (2026-08-24, explicit ask: "displaying the number
     // of content on Gurukul vs Dash") - one load, read from both places,
@@ -710,7 +716,8 @@ struct FieldDeskView: View {
                             },
                             onSaveSession: { topic, transcript in
                                 binderStore.addStudySession(topic: topic, transcript: transcript)
-                            }
+                            },
+                            initialTopic: pendingConstellationTopic
                         )
                         .environmentObject(jesseCall)
                         .transition(.opacity)
@@ -759,6 +766,7 @@ struct FieldDeskView: View {
                             // pre-merge LearnStudioView/EnglishPracticeView
                             // this card used to point at.
                             onLearn: {
+                                pendingConstellationTopic = nil
                                 withAnimation(.easeInOut(duration: 0.2)) {
                                     _ = openOverlays.insert(.studyCompanion)
                                 }
@@ -1431,6 +1439,21 @@ struct FieldDeskView: View {
                 onOpenArchive: {
                     showConstellation = false
                     showArchiveWorkflow = true
+                },
+                // Real "open lesson" wire-up (2026-08-25) - a tapped
+                // node's "Open lesson" button used to call an empty
+                // closure (see ConstellationView's own prior doc comment:
+                // "honest non-destination... not silently faked" - now it
+                // isn't). Closes Constellation and opens Gurukul with the
+                // concept's real display label as the initial request.
+                onOpenConcept: { conceptId in
+                    let label = TocDataLoader.loadConceptDisplays()[conceptId]?.label
+                        ?? conceptId.replacingOccurrences(of: "_", with: " ").capitalized
+                    pendingConstellationTopic = label
+                    showConstellation = false
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        _ = openOverlays.insert(.studyCompanion)
+                    }
                 },
                 knowledgeGraphClient: phoneKnowledgeGraphClient
             )
@@ -4183,6 +4206,27 @@ struct FieldDeskView: View {
         if args.contains("--ui-testing-gmail-digest") {
             GmailClient.shared.seedForTesting(messages: GmailClient.testingInbox)
             _ = openOverlays.insert(.gmailBox)
+        }
+        // Straight into Gurukul (2026-08-25) - drives the redesigned Study
+        // Companion without needing a tap, so the orb/conversation surface
+        // can be screenshot-verified on a device where tap automation
+        // doesn't exist (see IOS_SESSION_HANDOFF.md on WebDriverAgent).
+        // The optional -script variant is consumed by StudyCompanionView
+        // itself and types a real learn request through the same
+        // submitText path a student's typed message uses.
+        if args.contains("--ui-testing-gurukul") || args.contains("--ui-testing-gurukul-script") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                // Real bug found live-testing this exact flag (2026-08-25):
+                // this used to insert ONLY .studyCompanion, skipping the
+                // normal boot's .deskGridDashboard insert. Closing Gurukul
+                // then had nothing underneath it in `openOverlays`, dropping
+                // straight to the old Jesse's Kitchen fallback with no
+                // obvious way back to the dashboard - looked exactly like a
+                // real "can't exit" bug from the outside. Insert both, same
+                // as a normal tap-in from the dashboard would leave behind.
+                _ = openOverlays.insert(.deskGridDashboard)
+                _ = openOverlays.insert(.studyCompanion)
+            }
         }
     }
 }

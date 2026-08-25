@@ -74,6 +74,67 @@ struct MicroSimRecord: Decodable, Identifiable, Hashable {
                 html = html.replacingOccurrences(of: tag, with: "<script>\n\(content)\n</script>")
             }
         }
+        // Local stylesheets, same reasoning as the .js inlining above -
+        // real bug (2026-08-25, part of the "Error loading timeline data"
+        // repro): `<link rel="stylesheet" href="style.css">` resolves
+        // against MicroSimInlineWebView's dmccreary.github.io base URL,
+        // where it 404s (confirmed by hand) - the sim rendered with no
+        // styling at all even though the real CSS was sitting right here
+        // in `files`.
+        for (name, content) in files where name.hasSuffix(".css") {
+            for tag in [
+                "<link rel=\"stylesheet\" href=\"\(name)\">",
+                "<link href=\"\(name)\" rel=\"stylesheet\">",
+            ] where html.contains(tag) {
+                html = html.replacingOccurrences(of: tag, with: "<style>\n\(content)\n</style>")
+            }
+        }
+        // Data sidecars (2026-08-25, THE root cause of the founder-reported
+        // "Error loading timeline data" - the Timeline of Calculus History
+        // sim's own JS does `fetch('data.json')`, which resolved against
+        // the github.io base URL and 404'd; the sim's catch handler then
+        // painted its error message instead of the timeline). Inlining
+        // can't help here - the reference is inside arbitrary JS, not a
+        // tag - so a tiny fetch shim, injected BEFORE the sim's own
+        // scripts, serves any bundled sidecar file from memory and passes
+        // everything else through to the real network fetch untouched.
+        let sidecars = files.filter { name, _ in
+            name != "main.html" && !name.hasSuffix(".md")
+        }
+        if !sidecars.isEmpty,
+           let rawSidecarJSON = try? String(data: JSONEncoder().encode(sidecars), encoding: .utf8) {
+            // "</" -> "<\/" inside the embedded JSON: a literal "</script>"
+            // in any sidecar's content would otherwise terminate the shim's
+            // own <script> block mid-string. Valid, equivalent JS either way.
+            let sidecarJSON = rawSidecarJSON.replacingOccurrences(of: "</", with: "<\\/")
+            let shim = """
+            <script>
+            (function () {
+              var localFiles = \(sidecarJSON);
+              var realFetch = window.fetch ? window.fetch.bind(window) : null;
+              window.fetch = function (resource, options) {
+                try {
+                  var key = String(resource && resource.url ? resource.url : resource).split("?")[0].split("#")[0];
+                  key = key.replace(/^\\.\\//, "");
+                  var last = key.split("/").pop();
+                  var body = localFiles[key] !== undefined ? localFiles[key] : localFiles[last];
+                  if (body !== undefined) {
+                    var type = /\\.json$/.test(last) ? "application/json" : "text/plain";
+                    return Promise.resolve(new Response(body, { status: 200, headers: { "Content-Type": type } }));
+                  }
+                } catch (e) {}
+                if (realFetch) { return realFetch(resource, options); }
+                return Promise.reject(new TypeError("fetch unavailable"));
+              };
+            })();
+            </script>
+            """
+            if let headRange = html.range(of: "<head>") {
+                html.insert(contentsOf: "\n\(shim)", at: headRange.upperBound)
+            } else {
+                html = shim + html
+            }
+        }
         return html
     }
 }
@@ -113,12 +174,26 @@ enum MicroSimLoader {
     /// actually about what was asked (a subject/concept tag match can be
     /// shared by dozens of sims in one broad set); ties within a tier fall
     /// back to title order for determinism, not randomness.
+    /// Tags that describe a sim's FORMAT or venue, not its topic - a
+    /// concept/subject hit on one of these is meaningless for "is this sim
+    /// about what the student asked." Real live bug (2026-08-25, same
+    /// repro as `topicWordsMatch`'s doc comment): a stale lesson topic
+    /// containing the word "timeline" pulled in "Timeline of Calculus
+    /// History" purely via its 'timeline' subject tag - the calculus sim
+    /// attached itself to a hydroponics-titled lesson on a format word.
+    /// Title matches are unaffected (a student explicitly asking for a
+    /// timeline OF the sim's own subject still matches on the full title).
+    private static let genericTags: Set<String> = ["timeline", "education", "interactive", "simulation", "visualization"]
+
     static func matching(topic: String, limit: Int = 3) -> [MicroSimRecord] {
         let lowered = topic.lowercased()
+        func topicalTag(_ tag: String) -> Bool {
+            !genericTags.contains(tag.lowercased()) && topicWordsMatch(lowered, tag.lowercased())
+        }
         func matchStrength(_ sim: MicroSimRecord) -> Int {
-            if sim.title.lowercased().contains(lowered) { return 2 }
-            let conceptHit = sim.concepts.contains { $0.lowercased().contains(lowered) || lowered.contains($0.lowercased()) }
-            let subjectHit = sim.subjects.contains { $0.lowercased().contains(lowered) || lowered.contains($0.lowercased()) }
+            if topicWordsMatch(lowered, sim.title.lowercased()) { return 2 }
+            let conceptHit = sim.concepts.contains { topicalTag($0) }
+            let subjectHit = sim.subjects.contains { topicalTag($0) }
             if conceptHit { return 1 }
             if subjectHit { return 0 }
             return -1
@@ -128,5 +203,37 @@ enum MicroSimLoader {
             .filter { $0.1 >= 0 }
             .sorted { $0.1 != $1.1 ? $0.1 > $1.1 : $0.0.title < $1.0.title }
         return Array(ranked.prefix(limit).map(\.0))
+    }
+
+    /// Word-boundary-safe replacement for a bidirectional substring
+    /// `.contains` check - real live bug, found via an actual device repro
+    /// 2026-08-25: asking for "US History" matched "Timeline of Calculus
+    /// History" on the raw substring "us history", which is literally
+    /// embedded in "Calc-us History" (the "us" ending "calculus" plus the
+    /// next word) with zero topical relevance. Tokenizing both sides and
+    /// requiring a WHOLE-WORD subset match (either direction, same
+    /// "shorter topic vs a longer real title, or vice versa" shape the old
+    /// bidirectional `.contains` was already going for) keeps genuine
+    /// matches ("calculus" -> a title containing "Calculus") while
+    /// rejecting same-substring-different-word collisions like this one.
+    /// Tokenization matches `JesseCallSession.topicWordsMatch` exactly
+    /// (whitespace tokens, internal punctuation stripped, "u.s." -> "us")
+    /// - see that copy's doc comment for the "U.S. History" repair; the
+    /// two stay duplicated only because JesseCallSession is @MainActor
+    /// and this loader is not.
+    private static func topicWordsMatch(_ a: String, _ b: String) -> Bool {
+        func words(_ s: String) -> Set<String> {
+            var out = Set<String>()
+            for raw in s.lowercased().split(whereSeparator: { $0.isWhitespace }) {
+                let parts = raw.split(whereSeparator: { !$0.isLetter && !$0.isNumber }).map(String.init)
+                let joined = parts.joined()
+                if !joined.isEmpty { out.insert(joined) }
+                if parts.count > 1 { for part in parts { out.insert(part) } }
+            }
+            return out
+        }
+        let wa = words(a), wb = words(b)
+        guard !wa.isEmpty, !wb.isEmpty else { return false }
+        return wa.isSubset(of: wb) || wb.isSubset(of: wa)
     }
 }

@@ -689,6 +689,17 @@ struct DeskGridDashboardView: View {
                         ))
                     }
                 }
+                // Straight into the bundled "Timeline of Calculus History"
+                // MicroSim (2026-08-25) - the exact sim behind the
+                // founder's "Error loading timeline data" report. Presents
+                // the real MicroSimView cover with the real bundled record
+                // (no fixture HTML), so a screenshot proves whether the
+                // sim's fetch('data.json')/style.css actually resolve now
+                // - see MicroSimRecord.selfContainedHTML's sidecar shim.
+                if simArgs.contains("--ui-testing-timeline-sim"),
+                   let timeline = MicroSimLoader.all.first(where: { $0.simDir == "timeline" }) {
+                    presentedMicroSim = timeline
+                }
                 // Jesse greets the moment the dashboard is on screen
                 // (2026-08-19, explicit ask: "Jesse should say Hi Akshat the
                 // moment you land on dash") - previously this only fired
