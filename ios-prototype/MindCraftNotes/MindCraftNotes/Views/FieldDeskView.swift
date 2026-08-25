@@ -4228,16 +4228,6 @@ struct FieldDeskView: View {
                 _ = openOverlays.insert(.studyCompanion)
             }
         }
-        // Straight into Create · Presentation (2026-08-25) - same
-        // no-tap-automation verification need as --ui-testing-gurukul
-        // above, for the presentation layout redesign (full-height left
-        // slides rail, per-slide upload button).
-        if args.contains("--ui-testing-create-presentation") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                _ = openOverlays.insert(.deskGridDashboard)
-                openCreateCanvas()
-            }
-        }
     }
 }
 
