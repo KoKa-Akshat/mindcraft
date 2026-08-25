@@ -26,6 +26,7 @@ import { verifyToken } from '../verifyToken'
 import { db } from '../firebase'
 import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
 import { googleSearch, type SearchResult } from '../googleSearch'
+import { studentGeminiComplete } from '../studentGemini'
 
 const client = new Anthropic()
 const MODEL = 'claude-haiku-4-5-20251001'
@@ -137,10 +138,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { grade?: number; program?: string; interests?: string[]; location?: string }
+  const body = (req.body || {}) as { grade?: number; program?: string; interests?: string[]; location?: string; studentGeminiKey?: string }
   const interests = Array.isArray(body.interests) ? body.interests.map(String).slice(0, 5) : []
   const { grade, program, location } = await resolveProfile(uid, body)
+  const studentGeminiKey = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
 
+  // BYOK does NOT bypass these checks here (unlike generate-lesson-outline.ts) -
+  // this endpoint's real cost isn't only the LLM extraction call, it's 2-3
+  // real Google Custom Search queries first (see file header), which a
+  // student's Gemini key cannot pay for and which recordActualSpend below
+  // has never tracked in costUsd anyway (a real, pre-existing gap, not
+  // introduced or fixed here). Letting a student key skip the attempt cap
+  // would mean unlimited free-to-them Search API usage against MindCraft's
+  // own quota/billing - a real exposure the other BYOK'd handlers don't
+  // share, so the cap stays active regardless of whether a key is present.
   const platformBudget = await checkPlatformBudget()
   if (!platformBudget.allowed) {
     return res.status(429).json({
@@ -166,20 +177,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ status: 'ok', candidates: [], reason: 'No live search results this run' })
     }
 
-    const message = await client.messages.create({
-      model: MODEL,
-      max_tokens: 1800,
-      messages: [{ role: 'user', content: safeExtractionPrompt(searchBundle) }],
-    })
-    const costUsd =
-      (message.usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
-      (message.usage.output_tokens / 1_000_000) * OUTPUT_USD_PER_MTOK
-    recordActualSpend(costUsd).catch((e) => {
-      console.error('discover-internships: failed to record platform spend', e)
-    })
-
-    const textBlock = message.content.find((b) => b.type === 'text')
-    const text = textBlock && 'text' in textBlock ? textBlock.text : ''
+    let text: string
+    if (studentGeminiKey) {
+      // Search cost still lands on the platform (see the checks above,
+      // unconditionally run) - only the extraction call itself moves to
+      // the student's key, so nothing to record here.
+      text = await studentGeminiComplete(studentGeminiKey, safeExtractionPrompt(searchBundle), 1800)
+    } else {
+      const message = await client.messages.create({
+        model: MODEL,
+        max_tokens: 1800,
+        messages: [{ role: 'user', content: safeExtractionPrompt(searchBundle) }],
+      })
+      const costUsd =
+        (message.usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
+        (message.usage.output_tokens / 1_000_000) * OUTPUT_USD_PER_MTOK
+      recordActualSpend(costUsd).catch((e) => {
+        console.error('discover-internships: failed to record platform spend', e)
+      })
+      const textBlock = message.content.find((b) => b.type === 'text')
+      text = textBlock && 'text' in textBlock ? textBlock.text : ''
+    }
     const candidates = parseCandidates(text)
     return res.status(200).json({ status: 'ok', candidates })
   } catch (err) {

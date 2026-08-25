@@ -42,6 +42,13 @@ enum DiscoverInternshipsClient {
         if let grade { body["grade"] = grade }
         if let program { body["program"] = program }
         if let location { body["location"] = location }
+        // BYOK (2026-08-25) - moves only the extraction call's cost off
+        // MindCraft's account; the daily attempt cap stays active either
+        // way since this endpoint's real Search-API cost isn't something
+        // a Gemini key can pay for (see the webhook handler's own comment).
+        if let key = await StudentAIKeyStore.shared.geminiKeyForServerGeneration() {
+            body["studentGeminiKey"] = key
+        }
 
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"

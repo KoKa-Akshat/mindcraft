@@ -26,6 +26,7 @@ import { setCors } from '../cors'
 import { verifyToken } from '../verifyToken'
 import { db } from '../firebase'
 import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
+import { studentGeminiComplete } from '../studentGemini'
 
 const client = new Anthropic()
 const MODEL = 'claude-haiku-4-5-20251001'
@@ -106,7 +107,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { topic?: string; knownConceptIds?: string[]; referenceMaterial?: string; grade?: number }
+  const body = (req.body || {}) as { topic?: string; knownConceptIds?: string[]; referenceMaterial?: string; grade?: number; studentGeminiKey?: string }
+  const studentGeminiKey = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
   const topic = String(body.topic || '').trim().slice(0, 200)
   if (!topic) return res.status(400).json({ error: 'topic required' })
   const knownConceptIds = Array.isArray(body.knownConceptIds) ? body.knownConceptIds.map(String).slice(0, 200) : []
@@ -137,38 +139,58 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  const platformBudget = await checkPlatformBudget()
-  if (!platformBudget.allowed) {
-    return res.status(429).json({
-      status: 'rate_limited',
-      reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
-    })
-  }
-  const studentBudget = await checkAndRecordAttempt(uid)
-  if (!studentBudget.allowed) {
-    return res.status(429).json({
-      status: 'rate_limited',
-      reason: `Daily generation limit reached (${studentBudget.attemptsToday}/${studentBudget.cap}).`,
-    })
+  // BYOK (2026-08-25): a student key means this call is FREE to the
+  // platform (no residual judge/gate stage the way sim/book generation
+  // has - this is one plain call), so skip both budget checks AND
+  // recordActualSpend entirely rather than the partial bypass those
+  // handlers use. This doesn't reverse the 2026-08-21 fix in this file's
+  // own header (a keyless student still gets the exact same
+  // platform-funded fallback, unconditionally, below) - it's the same
+  // "prefer the student's key, fall back to the platform's" pattern
+  // GeneratedSimClient/BookGenerationClient already use.
+  if (!studentGeminiKey) {
+    const platformBudget = await checkPlatformBudget()
+    if (!platformBudget.allowed) {
+      return res.status(429).json({
+        status: 'rate_limited',
+        reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
+      })
+    }
+    const studentBudget = await checkAndRecordAttempt(uid)
+    if (!studentBudget.allowed) {
+      return res.status(429).json({
+        status: 'rate_limited',
+        reason: `Daily generation limit reached (${studentBudget.attemptsToday}/${studentBudget.cap}).`,
+      })
+    }
   }
 
   try {
-    const message = await client.messages.create({
-      model: MODEL,
-      max_tokens: 1500,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: buildUserPrompt(topic, knownConceptIds, referenceMaterial, grade) }],
-    })
+    let text: string
+    if (studentGeminiKey) {
+      text = await studentGeminiComplete(
+        studentGeminiKey,
+        `${SYSTEM_PROMPT}\n\n${buildUserPrompt(topic, knownConceptIds, referenceMaterial, grade)}`,
+        1500,
+      )
+    } else {
+      const message = await client.messages.create({
+        model: MODEL,
+        max_tokens: 1500,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: buildUserPrompt(topic, knownConceptIds, referenceMaterial, grade) }],
+      })
 
-    const costUsd =
-      (message.usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
-      (message.usage.output_tokens / 1_000_000) * OUTPUT_USD_PER_MTOK
-    recordActualSpend(costUsd).catch((e) => {
-      console.error('generate-lesson-outline: failed to record platform spend', e)
-    })
+      const costUsd =
+        (message.usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
+        (message.usage.output_tokens / 1_000_000) * OUTPUT_USD_PER_MTOK
+      recordActualSpend(costUsd).catch((e) => {
+        console.error('generate-lesson-outline: failed to record platform spend', e)
+      })
 
-    const textBlock = message.content.find((b) => b.type === 'text')
-    const text = textBlock && 'text' in textBlock ? textBlock.text : ''
+      const textBlock = message.content.find((b) => b.type === 'text')
+      text = textBlock && 'text' in textBlock ? textBlock.text : ''
+    }
     const outline = parseOutline(text)
     if (!outline) {
       return res.status(502).json({ status: 'error', reason: 'Model response was not valid outline JSON' })

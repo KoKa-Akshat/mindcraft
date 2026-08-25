@@ -24,6 +24,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { setCors } from '../cors'
 import { verifyToken } from '../verifyToken'
 import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../generationBudget'
+import { studentGeminiComplete } from '../studentGemini'
 
 const client = new Anthropic()
 const MODEL = 'claude-haiku-4-5-20251001'
@@ -126,43 +127,54 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const uid = await verifyToken(req)
   if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
-  const body = (req.body || {}) as { messages?: unknown; roles?: unknown }
+  const body = (req.body || {}) as { messages?: unknown; roles?: unknown; studentGeminiKey?: string }
   const messages = normalizeMessages(body.messages)
   const roles = normalizeRoles(body.roles)
+  const studentGeminiKey = typeof body.studentGeminiKey === 'string' ? body.studentGeminiKey.trim() : ''
   if (messages.length === 0 || roles.length === 0) {
     return res.status(200).json({ status: 'ok', suggestions: [] })
   }
 
-  const platformBudget = await checkPlatformBudget()
-  if (!platformBudget.allowed) {
-    return res.status(429).json({
-      status: 'rate_limited',
-      reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
-    })
-  }
-  const studentBudget = await checkAndRecordAttempt(uid)
-  if (!studentBudget.allowed) {
-    return res.status(429).json({
-      status: 'rate_limited',
-      reason: `Daily generation limit reached (${studentBudget.attemptsToday}/${studentBudget.cap}).`,
-    })
+  // BYOK (2026-08-25): a single plain call, no separate real-money step
+  // like discover-internships.ts's Search calls - safe to fully bypass
+  // both checks when a student key is present, same as
+  // generate-lesson-outline.ts.
+  if (!studentGeminiKey) {
+    const platformBudget = await checkPlatformBudget()
+    if (!platformBudget.allowed) {
+      return res.status(429).json({
+        status: 'rate_limited',
+        reason: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
+      })
+    }
+    const studentBudget = await checkAndRecordAttempt(uid)
+    if (!studentBudget.allowed) {
+      return res.status(429).json({
+        status: 'rate_limited',
+        reason: `Daily generation limit reached (${studentBudget.attemptsToday}/${studentBudget.cap}).`,
+      })
+    }
   }
 
   try {
-    const message = await client.messages.create({
-      model: MODEL,
-      max_tokens: 1200,
-      messages: [{ role: 'user', content: buildPrompt(messages, roles) }],
-    })
-    const costUsd =
-      (message.usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
-      (message.usage.output_tokens / 1_000_000) * OUTPUT_USD_PER_MTOK
-    recordActualSpend(costUsd).catch((e) => {
-      console.error('reconcile-applications: failed to record platform spend', e)
-    })
-
-    const textBlock = message.content.find((b) => b.type === 'text')
-    const text = textBlock && 'text' in textBlock ? textBlock.text : ''
+    let text: string
+    if (studentGeminiKey) {
+      text = await studentGeminiComplete(studentGeminiKey, buildPrompt(messages, roles), 1200)
+    } else {
+      const message = await client.messages.create({
+        model: MODEL,
+        max_tokens: 1200,
+        messages: [{ role: 'user', content: buildPrompt(messages, roles) }],
+      })
+      const costUsd =
+        (message.usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
+        (message.usage.output_tokens / 1_000_000) * OUTPUT_USD_PER_MTOK
+      recordActualSpend(costUsd).catch((e) => {
+        console.error('reconcile-applications: failed to record platform spend', e)
+      })
+      const textBlock = message.content.find((b) => b.type === 'text')
+      text = textBlock && 'text' in textBlock ? textBlock.text : ''
+    }
     const validRoleIds = new Set(roles.map((r) => r.id))
     const suggestions = parseSuggestions(text, validRoleIds)
     return res.status(200).json({ status: 'ok', suggestions })
