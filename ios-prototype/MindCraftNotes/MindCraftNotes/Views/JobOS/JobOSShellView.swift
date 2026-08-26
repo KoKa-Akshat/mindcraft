@@ -28,6 +28,7 @@ struct JobOSShellView: View {
     @State private var openRole: JobOSRole?
     @State private var confirmApplyId: String?
     @State private var showAddRole = false
+    @State private var selectedCategory = "job"
     @State private var showAddContact = false
     @State private var showSync = false
     @State private var showResumeImporter = false
@@ -54,53 +55,62 @@ struct JobOSShellView: View {
     var body: some View {
         GeometryReader { proxy in
             let canvas = proxy.size
-            ZStack(alignment: .topLeading) {
-                // Transparent pad: desk shows on the left. Board is solid cream.
-                paperBoard
-                    .frame(width: boardSize.width, height: boardSize.height)
-                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 22, style: .continuous)
-                            .stroke(
-                                boardFocused ? Color(jobHex: "247a4d") : Color(jobHex: "c4a484"),
-                                lineWidth: boardFocused ? 2.2 : 1.4
+            Group {
+                if fillsAvailableSpace {
+                    // Flush panel, not a bigger floating card (2026-08-25,
+                    // explicit ask after seeing it on-device: "make sure it
+                    // blends with the screen perfectly right now looks cut
+                    // off and ugly") - `placeFilled` used to just make the
+                    // SAME rounded/bordered/shadowed/draggable card bigger,
+                    // which still read as a card floating in a box instead
+                    // of actually blending with the Applications pane
+                    // around it. No clip/stroke/shadow/offset/drag gesture
+                    // in this mode - it just fills its container edge to
+                    // edge, same "not in a box" fix already applied to
+                    // ResumeAgentView's own profile stage.
+                    ZStack {
+                        paperBoard
+                        toastOverlay
+                    }
+                    .frame(width: canvas.width, height: canvas.height)
+                } else {
+                    ZStack(alignment: .topLeading) {
+                        // Transparent pad: desk shows on the left. Board is solid cream.
+                        paperBoard
+                            .frame(width: boardSize.width, height: boardSize.height)
+                            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                    .stroke(
+                                        boardFocused ? Color(jobHex: "247a4d") : Color(jobHex: "c4a484"),
+                                        lineWidth: boardFocused ? 2.2 : 1.4
+                                    )
                             )
-                    )
-                    .shadow(color: .black.opacity(0.18), radius: 18, y: 8)
-                    .overlay(alignment: .bottomTrailing) {
-                        if boardFocused { resizeGrip }
-                    }
-                    .offset(
-                        x: boardOrigin.x + boardDrag.width,
-                        y: boardOrigin.y + boardDrag.height
-                    )
-                    .gesture(moveGesture)
-                    .zIndex(10)
+                            .shadow(color: .black.opacity(0.18), radius: 18, y: 8)
+                            .overlay(alignment: .bottomTrailing) {
+                                if boardFocused { resizeGrip }
+                            }
+                            .offset(
+                                x: boardOrigin.x + boardDrag.width,
+                                y: boardOrigin.y + boardDrag.height
+                            )
+                            .gesture(moveGesture)
+                            .zIndex(10)
 
-                if let toast = store.toast {
-                    VStack {
-                        Spacer()
-                        Text(toast)
-                            .font(.system(size: 13, weight: .semibold, design: .rounded))
-                            .foregroundColor(Color(jobHex: "0c1207"))
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
-                            .background(Capsule().fill(Color(jobHex: "c4f547")))
-                            .padding(.bottom, 28)
+                        toastOverlay
                     }
-                    .allowsHitTesting(false)
+                    // Only the board should steal hits; empty desk space passes through.
+                    .contentShape(boardHitPath(in: canvas))
                 }
             }
-            // Only the board should steal hits; empty desk space passes through.
-            .contentShape(boardHitPath(in: canvas))
             .onAppear {
                 guard !didPlace else { return }
-                if fillsAvailableSpace { placeFilled(in: canvas) } else { placeOnRight(in: canvas) }
+                if !fillsAvailableSpace { placeOnRight(in: canvas) }
                 didPlace = true
             }
             .onChange(of: canvas) { _, newSize in
                 guard !didPlace else { return }
-                if fillsAvailableSpace { placeFilled(in: newSize) } else { placeOnRight(in: newSize) }
+                if !fillsAvailableSpace { placeOnRight(in: newSize) }
                 didPlace = true
             }
         }
@@ -140,7 +150,7 @@ struct JobOSShellView: View {
                 }
             )
         }
-        .sheet(isPresented: $showAddRole) { AddRoleSheet(store: store) }
+        .sheet(isPresented: $showAddRole) { AddRoleSheet(store: store, category: selectedCategory) }
         .sheet(isPresented: $showAddContact) { AddContactSheet(store: store) }
         .sheet(isPresented: $showSync) {
             NavigationStack {
@@ -237,6 +247,23 @@ struct JobOSShellView: View {
         Jordan,Rivera,https://www.linkedin.com/in/jordanrivera,,Wells Fargo,Analyst,02 Mar 2024
         """
 
+    @ViewBuilder
+    private var toastOverlay: some View {
+        if let toast = store.toast {
+            VStack {
+                Spacer()
+                Text(toast)
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color(jobHex: "0c1207"))
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .background(Capsule().fill(Color(jobHex: "c4f547")))
+                    .padding(.bottom, 28)
+            }
+            .allowsHitTesting(false)
+        }
+    }
+
     // MARK: - Placement / move / resize
 
     private func boardHitPath(in canvas: CGSize) -> Path {
@@ -257,18 +284,6 @@ struct JobOSShellView: View {
             x: max(24, canvas.width - w - 28),
             y: 52
         )
-        boardDrag = .zero
-        boardFocused = true
-    }
-
-    /// Nearly the whole pane, small margin all round - still draggable/
-    /// resizable afterward (the gestures are unconditional), just doesn't
-    /// start out looking like a small card lost in empty space.
-    private func placeFilled(in canvas: CGSize) {
-        let w = max(320, canvas.width - 48)
-        let h = max(420, canvas.height - 80)
-        boardSize = CGSize(width: w, height: h)
-        boardOrigin = CGPoint(x: 24, y: 40)
         boardDrag = .zero
         boardFocused = true
     }
@@ -345,7 +360,7 @@ struct JobOSShellView: View {
                 }
             }
         }
-        .background(Color(jobHex: "f7f3ee"))
+        .background(fillsAvailableSpace ? Color(jobHex: "0c1207") : Color(jobHex: "f7f3ee"))
     }
 
     private var headerBar: some View {
@@ -358,17 +373,19 @@ struct JobOSShellView: View {
                     .foregroundColor(Color(jobHex: "143a2e"))
                     .padding(.horizontal, 12)
                     .padding(.vertical, 7)
-                    .background(Capsule().fill(Color.white))
+                    .background(Capsule().fill(Color(jobHex: "c4f547")))
             }
             .buttonStyle(.plain)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("Apply today")
                     .font(.system(size: 17, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(jobHex: "1c1a17"))
-                Text(boardFocused ? "Drag to move · ↘ resize" : "Tap board to move")
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(jobHex: "8a8478"))
+                    .foregroundColor(fillsAvailableSpace ? Color(jobHex: "fff8e9") : Color(jobHex: "1c1a17"))
+                if !fillsAvailableSpace {
+                    Text(boardFocused ? "Drag to move · ↘ resize" : "Tap board to move")
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(Color(jobHex: "8a8478"))
+                }
             }
 
             Spacer()
@@ -421,14 +438,14 @@ struct JobOSShellView: View {
             } label: {
                 Image(systemName: "ellipsis.circle.fill")
                     .font(.system(size: 20))
-                    .foregroundColor(Color(jobHex: "143a2e"))
+                    .foregroundColor(fillsAvailableSpace ? Color(jobHex: "fff8e9") : Color(jobHex: "143a2e"))
             }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
-        .background(Color.white.opacity(0.88))
+        .background(fillsAvailableSpace ? Color.white.opacity(0.05) : Color.white.opacity(0.88))
         .overlay(alignment: .bottom) {
-            Rectangle().fill(Color(jobHex: "d9d2c5")).frame(height: 1)
+            Rectangle().fill(fillsAvailableSpace ? Color.white.opacity(0.14) : Color(jobHex: "d9d2c5")).frame(height: 1)
         }
     }
 
@@ -478,7 +495,7 @@ struct JobOSShellView: View {
                     .accessibilityIdentifier("jobOSAsset_\(asset.id)")
                 }
 
-                boxShell(ready: false, fill: Color(jobHex: "efe8dc")) {
+                boxShell(ready: false, fill: fillsAvailableSpace ? Color.white.opacity(0.08) : Color(jobHex: "efe8dc")) {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("note")
                             .font(.system(size: 11, weight: .heavy, design: .rounded))
@@ -495,11 +512,11 @@ struct JobOSShellView: View {
         .padding(14)
         .background(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(Color.white)
+                .fill(fillsAvailableSpace ? Color.white.opacity(0.05) : Color.white)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(Color(jobHex: "d9d2c5"), lineWidth: 1.2)
+                .stroke(fillsAvailableSpace ? Color.white.opacity(0.14) : Color(jobHex: "d9d2c5"), lineWidth: 1.2)
         )
     }
 
@@ -542,25 +559,78 @@ struct JobOSShellView: View {
         @ViewBuilder content: () -> Content
     ) -> some View {
         content()
-            .foregroundColor(Color(jobHex: "1c1a17"))
+            .foregroundColor(!ready && fillsAvailableSpace ? Color(jobHex: "fff8e9") : Color(jobHex: "1c1a17"))
             .padding(12)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(fill ?? (ready ? Color(jobHex: "c4f547") : Color(jobHex: "f7f3ee")))
+                    .fill(fill ?? (ready ? Color(jobHex: "c4f547") : (fillsAvailableSpace ? Color.white.opacity(0.08) : Color(jobHex: "f7f3ee"))))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(Color(jobHex: "d9d2c5"), lineWidth: 1.1)
+                    .stroke(fillsAvailableSpace ? Color.white.opacity(0.14) : Color(jobHex: "d9d2c5"), lineWidth: 1.1)
             )
     }
 
     // MARK: - Roles boxes (sketch bottom)
 
+    /// Jobs/Conferences/Networking tabs (2026-08-25, explicit ask: "have
+    /// tabs for conferences and networking there... not just jobs, give
+    /// it its space"). Real category on `JobOSRole` (`store.openRoles
+    /// (category:)`), not fake data - Conferences/Networking start
+    /// genuinely empty, same "nothing preloaded" honesty this board
+    /// already holds for Jobs.
+    private static let categories: [(id: String, label: String, icon: String)] = [
+        ("job", "Jobs", "briefcase.fill"),
+        ("conference", "Conferences", "person.3.fill"),
+        ("networking", "Networking", "person.line.dotted.person.fill")
+    ]
+
+    private var categorySingularLabel: String {
+        switch selectedCategory {
+        case "conference": return "conference"
+        case "networking": return "contact"
+        default: return "role"
+        }
+    }
+
+    private var categoryEmptyStateCaption: String {
+        switch selectedCategory {
+        case "conference": return "Track a conference or CFP deadline. Nothing is preloaded."
+        case "networking": return "Log someone worth reaching out to. Nothing is preloaded."
+        default: return "Add your first role. Nothing is preloaded."
+        }
+    }
+
+    private func categoryTabs() -> some View {
+        HStack(spacing: 6) {
+            ForEach(Self.categories, id: \.id) { cat in
+                let selected = selectedCategory == cat.id
+                Button { selectedCategory = cat.id } label: {
+                    Label(cat.label, systemImage: cat.icon)
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundColor(selected
+                                          ? Color(jobHex: "0c1207")
+                                          : (fillsAvailableSpace ? Color(jobHex: "fff8e9").opacity(0.7) : Color(jobHex: "8a8478")))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(
+                            Capsule().fill(selected
+                                            ? Color(jobHex: "c4f547")
+                                            : (fillsAvailableSpace ? Color.white.opacity(0.08) : Color(jobHex: "efe8dc")))
+                        )
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("jobOSCategoryTab_\(cat.id)")
+            }
+            Spacer(minLength: 0)
+        }
+    }
+
     private var rolesBoxes: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("Roles")
+                Text(Self.categories.first { $0.id == selectedCategory }?.label ?? "Roles")
                     .font(.system(size: 12, weight: .heavy, design: .rounded))
                     .foregroundColor(Color(jobHex: "8a8478"))
                 Spacer()
@@ -578,13 +648,18 @@ struct JobOSShellView: View {
                 }
             }
 
+            if store.isBoardReady {
+                categoryTabs()
+            }
+
             if !store.isBoardReady {
                 VStack(spacing: 10) {
                     Image(systemName: "tray")
                         .font(.system(size: 26, weight: .semibold))
-                        .foregroundColor(Color(jobHex: "c4a484"))
+                        .foregroundColor(fillsAvailableSpace ? Color.white.opacity(0.4) : Color(jobHex: "c4a484"))
                     Text("Nothing here yet")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundColor(fillsAvailableSpace ? Color(jobHex: "fff8e9") : Color(jobHex: "1c1a17"))
                     Text("Fill the boxes above first.")
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundColor(Color(jobHex: "8a8478"))
@@ -597,17 +672,18 @@ struct JobOSShellView: View {
                 .padding(.vertical, 28)
                 .background(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(Color(jobHex: "d9d2c5"), style: StrokeStyle(lineWidth: 1.2, dash: [6, 4]))
+                        .stroke(fillsAvailableSpace ? Color.white.opacity(0.18) : Color(jobHex: "d9d2c5"), style: StrokeStyle(lineWidth: 1.2, dash: [6, 4]))
                 )
-            } else if store.openRoles.isEmpty {
+            } else if store.openRoles(category: selectedCategory).isEmpty {
                 VStack(spacing: 8) {
                     Text("You’re set up")
                         .font(.system(size: 15, weight: .bold, design: .rounded))
-                    Text("Add your first role. Nothing is preloaded.")
+                        .foregroundColor(fillsAvailableSpace ? Color(jobHex: "fff8e9") : Color(jobHex: "1c1a17"))
+                    Text(categoryEmptyStateCaption)
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundColor(Color(jobHex: "8a8478"))
                     Button { showAddRole = true } label: {
-                        Text("Add role")
+                        Text("Add \(categorySingularLabel)")
                             .font(.system(size: 13, weight: .bold, design: .rounded))
                             .foregroundColor(Color(jobHex: "0c1207"))
                             .padding(.horizontal, 14)
@@ -620,7 +696,7 @@ struct JobOSShellView: View {
                 .padding(.vertical, 22)
             } else {
                 VStack(spacing: 8) {
-                    ForEach(Array(store.openRoles.prefix(16).enumerated()), id: \.element.id) { idx, role in
+                    ForEach(Array(store.openRoles(category: selectedCategory).prefix(16).enumerated()), id: \.element.id) { idx, role in
                         roleRow(role, index: idx)
                     }
                 }
@@ -629,11 +705,11 @@ struct JobOSShellView: View {
         .padding(14)
         .background(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(Color.white)
+                .fill(fillsAvailableSpace ? Color.white.opacity(0.05) : Color.white)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(Color(jobHex: "d9d2c5"), lineWidth: 1.2)
+                .stroke(fillsAvailableSpace ? Color.white.opacity(0.14) : Color(jobHex: "d9d2c5"), lineWidth: 1.2)
         )
     }
 
@@ -643,7 +719,7 @@ struct JobOSShellView: View {
             .foregroundColor(done ? Color(jobHex: "0c1207") : Color(jobHex: "8a8478"))
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
-            .background(Capsule().fill(done ? Color(jobHex: "c4f547") : Color(jobHex: "efe8dc")))
+            .background(Capsule().fill(done ? Color(jobHex: "c4f547") : (fillsAvailableSpace ? Color.white.opacity(0.1) : Color(jobHex: "efe8dc"))))
     }
 
     /// Row redesign (2026-08-25, explicit ask: "neatly and nice UI with
@@ -669,7 +745,7 @@ struct JobOSShellView: View {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(role.role)
                             .font(.system(size: 14, weight: .bold, design: .rounded))
-                            .foregroundColor(Color(jobHex: "143a2e"))
+                            .foregroundColor(fillsAvailableSpace ? Color(jobHex: "fff8e9") : Color(jobHex: "143a2e"))
                             .lineLimit(1)
                         Text([role.company, role.location].filter { !$0.isEmpty }.joined(separator: " · "))
                             .font(.system(size: 11, weight: .medium, design: .rounded))
@@ -716,17 +792,17 @@ struct JobOSShellView: View {
             }
         }
         .padding(12)
-        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color(jobHex: "f7f3ee")))
-        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(Color(jobHex: "e4ddd0"), lineWidth: 1))
+        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(fillsAvailableSpace ? Color.white.opacity(0.07) : Color(jobHex: "f7f3ee")))
+        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(fillsAvailableSpace ? Color.white.opacity(0.12) : Color(jobHex: "e4ddd0"), lineWidth: 1))
     }
 
     private func miniChip(_ title: String, fill: String) -> some View {
         Text(title)
             .font(.system(size: 10, weight: .heavy, design: .rounded))
-            .foregroundColor(Color(jobHex: "0c1207"))
+            .foregroundColor(fillsAvailableSpace ? Color(jobHex: "fff8e9") : Color(jobHex: "0c1207"))
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
-            .background(Capsule().fill(Color(jobHex: fill)))
+            .background(Capsule().fill(fillsAvailableSpace ? Color.white.opacity(0.12) : Color(jobHex: fill)))
     }
 
     /// Resume/cover-letter packet readiness, demoted from a labeled
@@ -736,7 +812,7 @@ struct JobOSShellView: View {
     /// stops giving it as much visual weight as real row data.
     private func packetDot(_ ready: Bool) -> some View {
         Circle()
-            .fill(ready ? Color(jobHex: "247a4d") : Color(jobHex: "d9d2c5"))
+            .fill(ready ? Color(jobHex: "247a4d") : (fillsAvailableSpace ? Color.white.opacity(0.2) : Color(jobHex: "d9d2c5")))
             .frame(width: 7, height: 7)
     }
 
@@ -1042,6 +1118,10 @@ struct DailySyncPane: View {
 
 private struct AddRoleSheet: View {
     @ObservedObject var store: JobOSStore
+    /// Jobs/Conferences/Networking tabs (2026-08-25) - which tab was open
+    /// when "Add" was tapped, so the new entry lands back on that same
+    /// tab instead of always defaulting to Jobs.
+    var category: String = "job"
     @Environment(\.dismiss) private var dismiss
     @State private var company = ""
     @State private var role = ""
@@ -1051,15 +1131,39 @@ private struct AddRoleSheet: View {
     @State private var lane = "Apply Now"
     @State private var fit = 85
 
+    private var orgLabel: String {
+        switch category {
+        case "conference": return "Conference / host"
+        case "networking": return "Company"
+        default: return "Company"
+        }
+    }
+
+    private var titleLabel: String {
+        switch category {
+        case "conference": return "Talk / track"
+        case "networking": return "Contact name"
+        default: return "Role"
+        }
+    }
+
+    private var sheetTitle: String {
+        switch category {
+        case "conference": return "Add conference"
+        case "networking": return "Add contact"
+        default: return "Add role"
+        }
+    }
+
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Company", text: $company)
+                TextField(orgLabel, text: $company)
                     .accessibilityIdentifier("jobOSAddRoleCompany")
-                TextField("Role", text: $role)
+                TextField(titleLabel, text: $role)
                     .accessibilityIdentifier("jobOSAddRoleRole")
                 TextField("Location", text: $location)
-                TextField("Role URL", text: $url)
+                TextField(category == "job" ? "Role URL" : "Link", text: $url)
                     .textInputAutocapitalization(.never)
                 Picker("Action lane", selection: $lane) {
                     ForEach(store.state.actionLanes, id: \.self) { Text($0).tag($0) }
@@ -1068,14 +1172,15 @@ private struct AddRoleSheet: View {
                 TextField("Why it fits", text: $why, axis: .vertical)
                     .lineLimit(3...6)
             }
-            .navigationTitle("Add role")
+            .navigationTitle(sheetTitle)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Add") {
                         store.addRole(
                             company: company, role: role, location: location,
-                            lane: lane, fit: fit, url: url, why: why
+                            lane: lane, fit: fit, url: url, why: why,
+                            category: category
                         )
                         dismiss()
                     }

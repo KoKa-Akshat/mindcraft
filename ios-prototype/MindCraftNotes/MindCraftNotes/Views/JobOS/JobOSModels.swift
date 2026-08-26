@@ -59,6 +59,11 @@ struct JobOSRole: Codable, Identifiable, Equatable {
     var source: String? = nil             // "manual" | "jesse" | "discovery"
     var verificationStatus: String? = nil // "link_verified" | "llm_suggested" | "unverified"
     var discoveredAt: String? = nil
+    /// Added for the Jobs/Conferences/Networking tabs (2026-08-25, explicit
+    /// ask: "have tabs for conferences and networking there... not just
+    /// jobs"). Same Optional-not-defaulted reasoning as `source` above -
+    /// nil means "job" (every role saved before this field existed).
+    var category: String? = nil // "job" | "conference" | "networking"
 }
 
 struct JobOSContact: Codable, Identifiable, Equatable {

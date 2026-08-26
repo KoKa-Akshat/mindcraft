@@ -145,6 +145,13 @@ final class JobOSStore: ObservableObject {
             .sorted { $0.rank < $1.rank }
     }
 
+    /// Jobs/Conferences/Networking tabs (2026-08-25). `category` is nil on
+    /// every role saved before this field existed, so "job" also matches
+    /// nil - old data doesn't silently disappear from the Jobs tab.
+    func openRoles(category: String) -> [JobOSRole] {
+        openRoles.filter { ($0.category ?? "job") == category }
+    }
+
     var kpiApplied: Int { state.roles.filter(\.applied).count }
     var kpiQueueLeft: Int { state.queue.filter { !$0.done }.count }
     var kpiOutreachDue: Int {
@@ -334,7 +341,8 @@ final class JobOSStore: ObservableObject {
         deadline: String? = nil,
         careerUrl: String? = nil,
         source: String = "manual",
-        verificationStatus: String? = nil
+        verificationStatus: String? = nil,
+        category: String = "job"
     ) {
         let c = company.trimmingCharacters(in: .whitespacesAndNewlines)
         let r = role.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -366,7 +374,8 @@ final class JobOSStore: ObservableObject {
             lastChecked: JobOSTime.dayStamp(),
             source: source,
             verificationStatus: verificationStatus,
-            discoveredAt: source == "discovery" ? JobOSTime.isoNow() : nil
+            discoveredAt: source == "discovery" ? JobOSTime.isoNow() : nil,
+            category: category
         )
         item.contacts = JobOSReachOutBuilder.namesLine(reachOuts(for: item))
         state.roles.append(item)

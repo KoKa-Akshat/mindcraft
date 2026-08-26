@@ -4146,9 +4146,16 @@ struct FieldDeskView: View {
         // counterpart to DeskGridDashboardView's own --ui-testing-jobos,
         // for screenshot-verifying the role-list card redesign (Phase 3
         // of the resume rebuild) on a device with no tap automation.
+        // Delayed like --ui-testing-field-desk-gmail/-add above, not fired
+        // synchronously inline - presenting a fullScreenCover immediately
+        // in this onAppear (right as FieldDeskView itself is still settling
+        // in from the AuthGate/onboarding transition) was silently dropped
+        // on repeated real-device runs; a short delay let it land reliably.
         if args.contains("--ui-testing-jobos") {
-            jobOSUiTestingStartInApplications = true
-            showResumeAgent = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                jobOSUiTestingStartInApplications = true
+                showResumeAgent = true
+            }
         }
         // Straight to a populated Gmail box - real OAuth isn't available in
         // this environment, so this exercises the digest/archive UI against

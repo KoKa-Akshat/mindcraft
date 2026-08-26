@@ -88,6 +88,18 @@ struct ResumeAgentView: View {
                     ).ignoresSafeArea()
                     resumeStage
                 }
+            } else if mode == .applications {
+                // Same full-bleed treatment as .profile above (2026-08-25,
+                // explicit ask after seeing it on-device: "make sure it
+                // blends with the screen perfectly right now looks cut
+                // off and ugly") - JobOSShellView used to sit inside the
+                // old fixed-artboard `contentBox`, scaled/pinned/rounded/
+                // shadowed next to a separate JesseRailView pairing, which
+                // is exactly what produced the visible letterboxed margins
+                // around both panels. JobOSShellView doesn't need a call
+                // rail alongside it (it has its own header/menu), so it
+                // just fills the screen on its own now, same as the stage.
+                JobOSShellView(onClose: { mode = .profile }, resumeDraft: jesseCall.resumeDraft, fillsAvailableSpace: true)
             } else {
                 GeometryReader { geo in
                     let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
@@ -114,19 +126,27 @@ struct ResumeAgentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(edges: embedded ? [] : .all)
         .overlay(alignment: .topTrailing) {
-            Button(action: onClose) {
-                Text("Done")
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255))
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)))
+            // Hidden in .applications (2026-08-25) - JobOSShellView now
+            // fills the whole pane edge to edge (see the fillsAvailableSpace
+            // branch above) and reaches this same top-right corner with its
+            // own "Close" pill, which already goes back to .profile. Two
+            // overlapping exit buttons here was a real regression from that
+            // fix, not a pre-existing design - this one now yields to it.
+            if mode != .applications {
+                Button(action: onClose) {
+                    Text("Done")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)))
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 12)
+                .padding(.trailing, 16)
+                .accessibilityIdentifier("resumeAgentBack")
+                .accessibilityLabel("Done")
             }
-            .buttonStyle(.plain)
-            .padding(.top, 12)
-            .padding(.trailing, 16)
-            .accessibilityIdentifier("resumeAgentBack")
-            .accessibilityLabel("Done")
         }
         .statusBarHidden(!embedded)
         .onAppear {
