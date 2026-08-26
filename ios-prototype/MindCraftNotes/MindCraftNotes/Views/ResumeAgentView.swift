@@ -634,6 +634,9 @@ private struct ResumeAgentWebView: UIViewRepresentable {
         var onApply: (() -> Void)?
         var onIngest: ((_ fileName: String, _ linkedin: String, _ suggestions: [(company: String, role: String, why: String, query: String)]) -> Void)?
         weak var webView: WKWebView?
+        private var tokenRefreshTask: Task<Void, Never>?
+
+        deinit { tokenRefreshTask?.cancel() }
 
         init(onApply: (() -> Void)?, onIngest: ((_ fileName: String, _ linkedin: String, _ suggestions: [(company: String, role: String, why: String, query: String)]) -> Void)?) {
             self.onApply = onApply
@@ -670,6 +673,30 @@ private struct ResumeAgentWebView: UIViewRepresentable {
                     ucc.addUserScript(script)
                 }
                 webView.load(URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData))
+            }
+            startTokenRefreshLoop()
+        }
+
+        /// A Firebase ID token is only valid ~1h - the one-time injection
+        /// above does nothing for a page that stays open past that window
+        /// (caught in PR review, 2026-08-25): every later `resume-agent`
+        /// call would silently 401 and the page would fall back to its
+        /// local-only heuristic with no visible error. Re-fetches and
+        /// re-injects well inside the token's lifetime for as long as this
+        /// webview is alive; cancelled in `deinit`.
+        private func startTokenRefreshLoop() {
+            tokenRefreshTask?.cancel()
+            tokenRefreshTask = Task { @MainActor [weak self] in
+                while !Task.isCancelled {
+                    try? await Task.sleep(nanoseconds: 20 * 60 * 1_000_000_000)
+                    if Task.isCancelled { return }
+                    guard let self, let webView = self.webView,
+                          let token = try? await Auth.auth().currentUser?.getIDToken(),
+                          let data = try? JSONEncoder().encode(token),
+                          let json = String(data: data, encoding: .utf8)
+                    else { continue }
+                    webView.evaluateJavaScript("window.__mcAuthToken = \(json);", completionHandler: nil)
+                }
             }
         }
 

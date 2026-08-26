@@ -54,10 +54,10 @@ enum KokoroTTSClient {
     /// process has no Firebase Admin SDK to verify an ID token like the
     /// Vercel handlers do - so this only raises the bar against a stray URL
     /// crawl; extractable by anyone who pulls this binary apart, like any
-    /// embedded secret. PLACEHOLDER - needs the real value once
-    /// `TTS_SHARED_SECRET` is provisioned on Fly (deliberately not done as
-    /// a silent side effect of this diff).
-    private static let sharedSecret = "REPLACE_WITH_TTS_SHARED_SECRET"
+    /// embedded secret. Only takes effect once `webhook/fly-tts/server.js`
+    /// (this same PR) is actually deployed via `fly deploy` - nothing
+    /// redeploys that Fly app automatically on merge.
+    private static let sharedSecret = "fe3040a8a59cbb54960f29c57c0128a746e90b05004854d1881f806aec7a3186"
 
     /// Returns WAV audio data, or nil on any failure (network, server
     /// error) so the caller can fall back to native AVSpeechSynthesizer
