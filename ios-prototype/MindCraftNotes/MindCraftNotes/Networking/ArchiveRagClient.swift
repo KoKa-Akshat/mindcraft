@@ -1,10 +1,12 @@
 import Foundation
+import FirebaseAuth
 
 /// Native client for `POST /api/archive-rag` - the same endpoint `agent.js`
 /// (the web Archive workflow) calls, ported so `JesseCallSession` can run a
-/// full call without a WKWebView in the loop at all. Anonymous - the
-/// webhook itself is unauthenticated (no student PII required to ask a
-/// question about a book), same as the web client.
+/// full call without a WKWebView in the loop at all. Firebase Bearer auth
+/// (2026-08-25) - was unauthenticated; every caller of this client already
+/// sits behind `AuthGate`, so this just closes an open door, same pattern
+/// as `DeskAskClient`.
 ///
 /// Real corpus (`webhook/data/dans-archive-chunks.json`, lexically indexed
 /// by `webhook/lib/handlers/archive-rag.ts`): Dan McCreary's actual open
@@ -46,9 +48,13 @@ enum ArchiveRagClient {
     /// instead of throwing them away - `ask` stays as the simple, existing
     /// entry point every other call site already uses unchanged.
     static func askDetailed(message: String, studentWeakness: (conceptId: String, label: String)?) async -> Answer? {
+        guard let user = Auth.auth().currentUser else { return nil }
+        guard let token = try? await user.getIDToken() else { return nil }
+
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         request.timeoutInterval = 20
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         var body: [String: Any] = ["message": message]

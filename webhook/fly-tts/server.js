@@ -89,6 +89,24 @@ const server = http.createServer(async (req, res) => {
     return res.end(JSON.stringify({ error: 'Method not allowed' }))
   }
 
+  // Shared-secret gate (2026-08-25, was fully open) — this process has no
+  // Firebase Admin SDK (see kokoro-js-only package.json), so it can't verify
+  // a Firebase ID token like the Vercel handlers do. A dedicated secret,
+  // same comparison style as webhook/lib/handlers/reset-student-data.ts,
+  // is the pragmatic gate here; KokoroTTSClient.swift sends it as a header.
+  // Deliberately fail-OPEN (not closed) while TTS_SHARED_SECRET is unset -
+  // unlike reset-student-data.ts, this ships before the Fly secret is
+  // provisioned (a separate `fly secrets set` step, not a silent side
+  // effect of this deploy); once that secret is set, this becomes the same
+  // fail-closed shape as reset-student-data.ts. Until then this is a no-op,
+  // identical to the pre-diff fully-open state - not a regression, but not
+  // protection either.
+  const expectedSecret = process.env.TTS_SHARED_SECRET
+  if (expectedSecret && req.headers['x-tts-secret'] !== expectedSecret) {
+    res.writeHead(401, { 'Content-Type': 'application/json' })
+    return res.end(JSON.stringify({ error: 'invalid secret' }))
+  }
+
   let body
   try {
     body = await readJsonBody(req)

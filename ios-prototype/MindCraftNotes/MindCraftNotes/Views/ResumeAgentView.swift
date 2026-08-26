@@ -2,6 +2,7 @@ import SwiftUI
 import WebKit
 import PDFKit
 import UniformTypeIdentifiers
+import FirebaseAuth
 
 /// Jesse resume agent (Assignment H, 2026-08-18 rebuild) - the native call
 /// now drives a real profile draft (`JesseCallSession.askJesseResume`,
@@ -620,7 +621,7 @@ private struct ResumeAgentWebView: UIViewRepresentable {
         view.navigationDelegate = context.coordinator
         view.uiDelegate = context.coordinator
         context.coordinator.webView = view
-        view.load(URLRequest(url: Self.resumeURL, cachePolicy: .reloadIgnoringLocalCacheData))
+        context.coordinator.load(into: view, ucc: ucc, url: Self.resumeURL)
         return view
     }
 
@@ -645,6 +646,31 @@ private struct ResumeAgentWebView: UIViewRepresentable {
 
         func webView(_ webView: WKWebView, requestMediaCapturePermissionFor origin: WKSecurityOrigin, initiatedByFrame frame: WKFrameInfo, type: WKMediaCaptureType, decisionHandler: @escaping (WKPermissionDecision) -> Void) {
             decisionHandler(.grant)
+        }
+
+        /// `/api/resume-agent` now requires a signed-in Firebase Bearer token
+        /// (2026-08-25, was fully open). Fetches the token and installs it
+        /// as a `.atDocumentStart` user script BEFORE `load()` is ever
+        /// called, same fix shape as `ArchiveWorkflowView` - a post-`didFinish`
+        /// `evaluateJavaScript` injection (the first version of this fix)
+        /// can race any load-time behavior in the page's own script, so the
+        /// token needs to exist before the page's scripts run at all, not
+        /// after the page finishes loading.
+        @MainActor
+        func load(into webView: WKWebView, ucc: WKUserContentController, url: URL) {
+            Task { @MainActor in
+                if let token = try? await Auth.auth().currentUser?.getIDToken(),
+                   let data = try? JSONEncoder().encode(token),
+                   let json = String(data: data, encoding: .utf8) {
+                    let script = WKUserScript(
+                        source: "window.__mcAuthToken = \(json);",
+                        injectionTime: .atDocumentStart,
+                        forMainFrameOnly: true
+                    )
+                    ucc.addUserScript(script)
+                }
+                webView.load(URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData))
+            }
         }
 
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

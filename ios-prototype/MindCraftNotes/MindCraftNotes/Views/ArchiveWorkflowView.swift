@@ -1,5 +1,6 @@
 import SwiftUI
 import WebKit
+import FirebaseAuth
 
 /// Jesse archive workflow — live `/desk-os/workflows/archive/`. Textbook
 /// cards, story-color workspace boxes, book reader with Dan McCreary's
@@ -447,7 +448,7 @@ private struct ArchiveWorkflowWebView: UIViewRepresentable {
         if #available(iOS 16.4, *) { view.isInspectable = true }
         view.navigationDelegate = context.coordinator
         view.uiDelegate = context.coordinator
-        view.load(URLRequest(url: Self.archiveURL, cachePolicy: .reloadIgnoringLocalCacheData))
+        context.coordinator.load(into: view, ucc: config.userContentController, url: Self.archiveURL)
         return view
     }
 
@@ -463,6 +464,34 @@ private struct ArchiveWorkflowWebView: UIViewRepresentable {
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             didFinishLoad = true
             inject(into: webView)
+        }
+
+        /// `/api/archive-rag` now requires a signed-in Firebase Bearer token
+        /// (2026-08-25, was fully open). Fetches the token and installs it as
+        /// a `.atDocumentStart` user script BEFORE `load()` is ever called,
+        /// then loads - not a post-`didFinish` `evaluateJavaScript` (the
+        /// first version of this fix): this page auto-fires a request on
+        /// load when opened via its own `?q=` deep link (`agent.js`'s
+        /// load-time `ask(q)`), which could race ahead of an async
+        /// post-load injection and silently ship with no Authorization
+        /// header. A document-start user script is present before any of
+        /// the page's own scripts run, so there's no window where that race
+        /// is possible.
+        @MainActor
+        func load(into webView: WKWebView, ucc: WKUserContentController, url: URL) {
+            Task { @MainActor in
+                if let token = try? await Auth.auth().currentUser?.getIDToken(),
+                   let data = try? JSONEncoder().encode(token),
+                   let json = String(data: data, encoding: .utf8) {
+                    let script = WKUserScript(
+                        source: "window.__mcAuthToken = \(json);",
+                        injectionTime: .atDocumentStart,
+                        forMainFrameOnly: true
+                    )
+                    ucc.addUserScript(script)
+                }
+                webView.load(URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData))
+            }
         }
 
         /// Called from `updateUIView` on every SwiftUI update - a no-op once

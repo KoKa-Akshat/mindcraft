@@ -48,6 +48,17 @@ enum KokoroTTSClient {
     // section, now answered.
     private static let endpoint = URL(string: "https://mindcraft-tts.fly.dev/")!
 
+    /// Shared-secret gate (2026-08-25, was fully open) - matches
+    /// `TTS_SHARED_SECRET` set via `fly secrets set` on the Fly app (see
+    /// `webhook/fly-tts/server.js`). Not real per-user auth - this Fly
+    /// process has no Firebase Admin SDK to verify an ID token like the
+    /// Vercel handlers do - so this only raises the bar against a stray URL
+    /// crawl; extractable by anyone who pulls this binary apart, like any
+    /// embedded secret. PLACEHOLDER - needs the real value once
+    /// `TTS_SHARED_SECRET` is provisioned on Fly (deliberately not done as
+    /// a silent side effect of this diff).
+    private static let sharedSecret = "REPLACE_WITH_TTS_SHARED_SECRET"
+
     /// Returns WAV audio data, or nil on any failure (network, server
     /// error) so the caller can fall back to native AVSpeechSynthesizer
     /// rather than the call going silent.
@@ -64,6 +75,7 @@ enum KokoroTTSClient {
         // before a student would call the app "frozen."
         request.timeoutInterval = 12
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(sharedSecret, forHTTPHeaderField: "X-TTS-Secret")
         request.httpBody = try? JSONSerialization.data(withJSONObject: [
             "text": text,
             "voice": voice.rawValue,

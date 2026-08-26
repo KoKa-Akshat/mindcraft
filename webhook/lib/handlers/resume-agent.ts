@@ -5,11 +5,13 @@
  * folder text, and uploaded resume, then speak a short guided reply.
  * Client waits ≥5s before playing voice. Does not invent employers.
  *
- * Routed through app-actions (Hobby function cap). Optional Firebase auth.
- * No Firestore write unless a verified uid is present (not in v1).
+ * Routed through app-actions (Hobby function cap). Requires a signed-in
+ * Firebase Bearer token (2026-08-25, was open) - still no Firestore write
+ * here, this endpoint only ever returns a draft (not in v1).
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { setCors } from '../cors'
+import { verifyToken } from '../verifyToken'
 import { callAnthropic, callGroq, parseModelJson, sanitizeText } from '../llmChat'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
@@ -244,6 +246,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
+
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
   const body = (req.body || {}) as ResumeAgentBody
   const message = clip(body.message, 2000).trim()

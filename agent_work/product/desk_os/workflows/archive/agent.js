@@ -240,9 +240,11 @@
     const started = Date.now();
     let hits = retrieve(text + ' ' + plan.interest, 3);
     try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (window.__mcAuthToken) headers.Authorization = `Bearer ${window.__mcAuthToken}`;
       const res = await fetch(WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           message: text,
           minutes: plan.minutes,

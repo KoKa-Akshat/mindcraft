@@ -1,4 +1,5 @@
 import Foundation
+import FirebaseAuth
 
 /// What Jesse has learned about why the student is practicing English -
 /// round-tripped every turn, same lightweight-state pattern as
@@ -39,9 +40,13 @@ enum EnglishPracticeClient {
     }
 
     static func ask(message: String, recentTurns: [EnglishPracticeTurn], state: EnglishPracticeGoal) async -> Reply? {
+        guard let user = Auth.auth().currentUser else { return nil }
+        guard let token = try? await user.getIDToken() else { return nil }
+
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         request.timeoutInterval = 25
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let body: [String: Any] = [
