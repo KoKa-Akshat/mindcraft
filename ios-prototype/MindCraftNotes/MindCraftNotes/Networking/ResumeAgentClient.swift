@@ -1,4 +1,5 @@
 import Foundation
+import FirebaseAuth
 
 /// One role in a Jesse-guided resume draft. Mirrors
 /// `webhook/lib/handlers/resume-agent.ts`'s `ResumeRole` field-for-field.
@@ -92,6 +93,9 @@ enum ResumeAgentClient {
         message: String, draft: ResumeAgentDraft, driveFiles: [DriveSourceFile] = [],
         resumeText: String? = nil, resumeFileName: String? = nil
     ) async -> Reply? {
+        guard let user = Auth.auth().currentUser else { return nil }
+        guard let token = try? await user.getIDToken() else { return nil }
+
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         // 45s, not the original 25 (2026-08-25) - a real uploaded resume's
@@ -99,6 +103,7 @@ enum ResumeAgentClient {
         // MAX_SOURCE, a meaningfully bigger extraction call than a short
         // spoken turn, and 25s cut it close for that case specifically.
         request.timeoutInterval = 45
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         var sources: [String: Any] = [:]

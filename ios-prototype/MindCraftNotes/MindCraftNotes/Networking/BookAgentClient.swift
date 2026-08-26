@@ -1,4 +1,5 @@
 import Foundation
+import FirebaseAuth
 
 /// One chapter of a Jesse-guided book draft. Mirrors
 /// `webhook/lib/handlers/book-agent.ts`'s `BookChapter` field-for-field.
@@ -23,8 +24,10 @@ struct BookAgentDraft: Codable, Equatable {
 /// `JesseCallSession`'s native call can drive the exact same book-writing
 /// loop the web page used to, without a WKWebView in the middle at all.
 /// Same self-contained pattern as `ArchiveRagClient` (this app's other
-/// native port of a web `agent.js` request/response cycle) - anonymous, no
-/// auth needed, the webhook itself never touches Firestore.
+/// native port of a web `agent.js` request/response cycle). Firebase Bearer
+/// auth (2026-08-25, was open) - the old web `agent.js` for this workflow
+/// is dead (see `BookWorkflowView.swift`), so this native client is the
+/// endpoint's only live caller.
 enum BookAgentClient {
     private static let endpoint = URL(string: "https://mindcraft-webhook.vercel.app/api/book-agent")!
 
@@ -43,9 +46,13 @@ enum BookAgentClient {
     /// Mirrors `agent.js`'s `ask()` request/response cycle exactly:
     /// `{ message, draft }` in, `{ reply, draft, readyToPublish }` out.
     static func ask(message: String, draft: BookAgentDraft) async -> Reply? {
+        guard let user = Auth.auth().currentUser else { return nil }
+        guard let token = try? await user.getIDToken() else { return nil }
+
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         request.timeoutInterval = 25
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let body: [String: Any] = [

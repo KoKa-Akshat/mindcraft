@@ -190,9 +190,11 @@
     const started = Date.now();
     let data = null;
     try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (window.__mcAuthToken) headers.Authorization = `Bearer ${window.__mcAuthToken}`;
       const res = await fetch(WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ message, draft: state, sources }),
       });
       if (res.ok) data = await res.json();

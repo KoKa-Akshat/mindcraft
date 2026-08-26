@@ -14,14 +14,13 @@
  * pipeline (generate-sim.ts), so it needs no new secret, no new deployed
  * service, and no budget cap of its own.
  *
- * Routed through app-actions (Hobby function cap). No auth requirement,
- * matching resume-agent.ts/archive-rag.ts's existing posture for Jesse
- * conversation endpoints (see CLAUDE.md's "unauthenticated webhook" note —
- * an existing, flagged, product-wide gap this inherits, not one this
- * handler introduces).
+ * Routed through app-actions (Hobby function cap). Requires a signed-in
+ * Firebase Bearer token (2026-08-25, was open) - matches
+ * resume-agent.ts/archive-rag.ts/book-agent.ts, all fixed the same session.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { setCors } from '../cors'
+import { verifyToken } from '../verifyToken'
 import { callAnthropic, callGroq, parseModelJson, sanitizeText } from '../llmChat'
 
 const ANTHROPIC_MODEL = 'claude-sonnet-4-20250514'
@@ -116,6 +115,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
+
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Sign-in required' })
 
   const body = (req.body || {}) as { message?: string; recentTurns?: Turn[]; state?: Partial<PracticeGoal> }
   const message = clip(body.message, 600).trim()
