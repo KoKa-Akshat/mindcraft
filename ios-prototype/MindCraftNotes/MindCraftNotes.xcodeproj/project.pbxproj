@@ -168,6 +168,7 @@
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
+		E1MAPDESKVIEW1A2B3C /* MapDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1MAPDESKVIEW1A2B3C /* MapDeskView.swift */; };
 		D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */; };
 		D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */; };
 		D9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CONTGRAPH01A2B3C4 /* ContentGraphStore.swift */; };
@@ -350,6 +351,7 @@
 		C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskCalendarLoader.swift; sourceTree = "<group>"; };
 		C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticGateView.swift; sourceTree = "<group>"; };
 		C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWorkflowView.swift; sourceTree = "<group>"; };
+		F1MAPDESKVIEW1A2B3C /* MapDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDeskView.swift; sourceTree = "<group>"; };
 		132484A12A692612CD7EA8C2 /* CreateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBookView.swift; sourceTree = "<group>"; };
 		C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookWorkflowView.swift; sourceTree = "<group>"; };
 		C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootMotivationClient.swift; sourceTree = "<group>"; };
@@ -589,6 +591,7 @@
 				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
 				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
+				F1MAPDESKVIEW1A2B3C /* MapDeskView.swift */,
 				132484A12A692612CD7EA8C2 /* CreateBookView.swift */,
 				C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */,
 				C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */,
@@ -921,6 +924,7 @@
 				DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */,
 				D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */,
 				D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */,
+				E1MAPDESKVIEW1A2B3C /* MapDeskView.swift in Sources */,
 				27D52955B93FE8EBF48AE218 /* CreateBookView.swift in Sources */,
 				D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */,
 				D9FRIENDSTORE01A2B3 /* FriendsStore.swift in Sources */,

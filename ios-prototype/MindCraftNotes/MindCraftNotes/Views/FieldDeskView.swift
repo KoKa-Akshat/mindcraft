@@ -229,7 +229,13 @@ struct FieldDeskView: View {
         self.onLaunchInstance = onLaunchInstance
         _showActStage = State(initialValue: initialActStage)
         _actStageMaximized = State(initialValue: true)
-        _openOverlays = State(initialValue: initialShowDashboard ? [.deskGridDashboard] : [])
+        // Seeds .mapDesk, not .deskGridDashboard (2026-08-26) - the grid
+        // dashboard is real and still fully reachable (map's own "Tiles"
+        // dock chip -> openWorkCanvas()), just no longer what boots first.
+        // On phone this doesn't change anything (see the phone-layout
+        // branch's own .mapDesk match in `body`) - DeskPhoneDashboardView
+        // still boots there regardless of which of the two is seeded here.
+        _openOverlays = State(initialValue: initialShowDashboard ? [.mapDesk] : [])
     }
 
     private enum RailTool: String, Identifiable {
@@ -248,6 +254,15 @@ struct FieldDeskView: View {
     private enum FieldDeskOverlay: Hashable, CaseIterable {
         case actFieldBook, gmailBox, applyToday, workflowLibrary, deskGridDashboard, binderOverlay, calendarOverlay, intelOverlay
         case standaloneDesk, createStudio
+        /// The new boot destination (2026-08-26) - full-screen Knowledge
+        /// Map with a small dock, same "stays mounted underneath, tools
+        /// layer on top via zIndex" shape as `.deskGridDashboard`, which it
+        /// replaces as what `initialShowDashboard` seeds. Not deleting
+        /// `.deskGridDashboard` - it's still real, just demoted to a menu
+        /// item (`MapDeskView`'s "Tiles" dock chip), same shape as Jesse's
+        /// Kitchen's own hub being demoted to "The Desk · Manage" on
+        /// 2026-08-15.
+        case mapDesk
         /// The merged Learn+Practice AI study companion (2026-08-23,
         /// explicit ask: "Learn and Practice can be merged... intelligent
         /// AI conversational thing"). Same whole-screen-replace shape as
@@ -265,7 +280,7 @@ struct FieldDeskView: View {
         /// of a silent runtime touch-swallowing bug.
         var blocksChrome: Bool {
             switch self {
-            case .actFieldBook, .gmailBox, .applyToday, .workflowLibrary, .deskGridDashboard, .binderOverlay, .calendarOverlay, .intelOverlay, .studyCompanion:
+            case .actFieldBook, .gmailBox, .applyToday, .workflowLibrary, .deskGridDashboard, .binderOverlay, .calendarOverlay, .intelOverlay, .studyCompanion, .mapDesk:
                 return true
             case .standaloneDesk, .createStudio:
                 return false
@@ -734,10 +749,14 @@ struct FieldDeskView: View {
                     )
                 }
 
-                if openOverlays.contains(.deskGridDashboard) && UIDevice.current.userInterfaceIdiom == .phone {
+                if (openOverlays.contains(.deskGridDashboard) || openOverlays.contains(.mapDesk)) && UIDevice.current.userInterfaceIdiom == .phone {
                     // Phone layout (2026-08-23) - a genuinely different
                     // screen, not a scaled DeskGridDashboardView (see
                     // DeskPhoneDashboardView's own doc comment for why).
+                    // Matches on `.mapDesk` too (2026-08-26) - the new
+                    // iPad-only map-boot destination doesn't change phone's
+                    // own boot screen at all, still `DeskPhoneDashboardView`
+                    // regardless of which of the two seeded `openOverlays`.
                     // Every card action below reuses a destination
                     // FieldDeskView already owns as a real full-screen
                     // presentation - Learn/Leverage/Create/Continue mirror
@@ -786,6 +805,40 @@ struct FieldDeskView: View {
                         )
                         .transition(.opacity)
                         .zIndex(88)
+                    )
+                } else if openOverlays.contains(.mapDesk) {
+                    AnyView(
+                    MapDeskView(
+                        onOpenBinder: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                _ = openOverlays.insert(.binderOverlay)
+                            }
+                        },
+                        onOpenCalendar: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                _ = openOverlays.insert(.calendarOverlay)
+                            }
+                            Task { await refreshDeskCalendar() }
+                        },
+                        onOpenGmail: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                _ = openOverlays.insert(.gmailBox)
+                            }
+                        },
+                        onOpenTiles: { openWorkCanvas() },
+                        onOpenConcept: { conceptId in
+                            let label = TocDataLoader.loadConceptDisplays()[conceptId]?.label
+                                ?? conceptId.replacingOccurrences(of: "_", with: " ").capitalized
+                            pendingConstellationTopic = label
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                _ = openOverlays.insert(.studyCompanion)
+                            }
+                        }
+                    )
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                    .zIndex(88)
                     )
                 } else if openOverlays.contains(.deskGridDashboard) {
                     AnyView(
@@ -1879,6 +1932,11 @@ struct FieldDeskView: View {
         dashboardStartRail = rail
         _ = openOverlays.remove(.standaloneDesk)
         _ = openOverlays.remove(.createStudio)
+        // .mapDesk (2026-08-26) - "Tiles" on the map's own dock, and every
+        // other existing call site of this function, all mean "show me the
+        // grid dashboard now," which is only meaningful if the map isn't
+        // still sitting underneath it.
+        _ = openOverlays.remove(.mapDesk)
         _ = openOverlays.insert(.deskGridDashboard)
     }
 
