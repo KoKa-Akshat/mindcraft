@@ -18,11 +18,15 @@ import { verifyToken } from '../lib/verifyToken'
 import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../lib/generationBudget'
 
 const ALLOWED_ORIGIN = 'https://mindcraft-93858.web.app'
-// Groq llama-3.3-70b-versatile published rate (verify against Groq's current
-// pricing page before trusting this for real accounting - not independently
-// confirmed live, unlike the Anthropic rates elsewhere in this codebase).
-const INPUT_USD_PER_MTOK = 0.59
-const OUTPUT_USD_PER_MTOK = 0.79
+// Groq openai/gpt-oss-120b published rate, confirmed live against
+// console.groq.com/docs/models 2026-08-27 - not llama-3.3-70b-versatile's
+// rate (that model returned "does not exist or you do not have access to
+// it" for this project's actual Groq key when tested live the same day -
+// confirmed via GET /openai/v1/models, it's absent from this key's catalog
+// entirely, most likely a Groq tier change moving it to Enterprise-only,
+// not a code regression).
+const INPUT_USD_PER_MTOK = 0.15
+const OUTPUT_USD_PER_MTOK = 0.60
 const CACHE_TTL_MS   = 24 * 60 * 60 * 1000   // 24 h
 const ALLOWED_EXAMS  = new Set(['ACT', 'SAT', 'IB', 'AP', 'General'])
 
@@ -360,7 +364,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // ── 2. Build LangChain chain ───────────────────────────────────────────────
   const model = new ChatGroq({
     apiKey:      process.env.GROQ_API_KEY ?? '',
-    model:       'llama-3.3-70b-versatile',
+    model:       'openai/gpt-oss-120b',
     temperature: 0.80,
     maxTokens:   4096,
   })
