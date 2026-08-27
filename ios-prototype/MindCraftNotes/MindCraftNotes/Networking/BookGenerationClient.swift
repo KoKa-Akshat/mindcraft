@@ -57,6 +57,9 @@ enum BookGenerationClient {
         let chaptersReady: Int?
         let totalChapters: Int?
         let costUsd: Double?
+        // Already on the wire (generate-book.ts) - this client just never
+        // decoded it until now.
+        let phase: String?
     }
 
     /// Starts a job and polls it to a terminal state. `onProgress` fires
@@ -66,7 +69,11 @@ enum BookGenerationClient {
     /// this call to the terminal response) rather than trusting server
     /// clocks to agree - it's also the more honest number for a student:
     /// how long THEY actually waited, not how long the job queue took.
-    static func generate(topic: String, onProgress: @escaping (_ chaptersReady: Int, _ totalChapters: Int) -> Void = { _, _ in }) async -> Verdict {
+    static func generate(
+        topic: String,
+        onProgress: @escaping (_ chaptersReady: Int, _ totalChapters: Int) -> Void = { _, _ in },
+        onPhase: @escaping (String) -> Void = { _ in }
+    ) async -> Verdict {
         let start = Date()
         // BYOK (2026-08-25) - same wiring as GeneratedSimClient.requestSim,
         // see StudentAIKeyStore.geminiKeyForServerGeneration's own doc
@@ -90,7 +97,7 @@ enum BookGenerationClient {
             guard let jobId = envelope.jobId else {
                 return .unavailable("The service accepted the job but returned no job id.")
             }
-            return await poll(jobId: jobId, start: start, onProgress: onProgress)
+            return await poll(jobId: jobId, start: start, onProgress: onProgress, onPhase: onPhase)
         case "rate_limited":
             return .rateLimited(reason: envelope.reason)
         default:
@@ -98,7 +105,11 @@ enum BookGenerationClient {
         }
     }
 
-    private static func poll(jobId: String, start: Date, onProgress: @escaping (Int, Int) -> Void) async -> Verdict {
+    private static func poll(
+        jobId: String, start: Date,
+        onProgress: @escaping (Int, Int) -> Void,
+        onPhase: @escaping (String) -> Void = { _ in }
+    ) async -> Verdict {
         let deadline = Date().addingTimeInterval(maxWaitSeconds)
         while Date() < deadline {
             guard (try? await Task.sleep(nanoseconds: pollIntervalSeconds * 1_000_000_000)) != nil else {
@@ -110,6 +121,7 @@ enum BookGenerationClient {
             switch envelope.status {
             case "running":
                 onProgress(envelope.chaptersReady ?? 0, envelope.totalChapters ?? 0)
+                onPhase(envelope.phase ?? "running")
                 continue
             case "passed":
                 guard let book = envelope.book else {

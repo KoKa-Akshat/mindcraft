@@ -72,9 +72,14 @@ enum GeneratedSimClient {
         let result: GeneratedSimResult?
         let reason: String?
         let suggestedRetryTopic: String?
+        // fit_check | generating | rendering | scoring | vision_gate - the
+        // webhook already sends this on every running poll
+        // (generatedSimContract.ts); this client just never decoded it
+        // until now.
+        let phase: String?
     }
 
-    static func requestSim(topic: String) async -> GeneratedSimVerdict {
+    static func requestSim(topic: String, onPhase: @escaping (String) -> Void = { _ in }) async -> GeneratedSimVerdict {
         // BYOK (2026-08-25): when the student has saved their own Gemini
         // key, send it along so this job spends their free quota instead
         // of MindCraft's shared Anthropic budget - see
@@ -102,7 +107,7 @@ enum GeneratedSimClient {
             guard let jobId = envelope.jobId else {
                 return .unavailable("The service accepted the job but returned no job id.")
             }
-            return await poll(jobId: jobId)
+            return await poll(jobId: jobId, onPhase: onPhase)
         case "rate_limited":
             return .rateLimited(reason: envelope.reason)
         default:
@@ -110,7 +115,7 @@ enum GeneratedSimClient {
         }
     }
 
-    private static func poll(jobId: String) async -> GeneratedSimVerdict {
+    private static func poll(jobId: String, onPhase: @escaping (String) -> Void) async -> GeneratedSimVerdict {
         let deadline = Date().addingTimeInterval(maxWaitSeconds)
         while Date() < deadline {
             guard (try? await Task.sleep(nanoseconds: pollIntervalSeconds * 1_000_000_000)) != nil else {
@@ -121,6 +126,7 @@ enum GeneratedSimClient {
             }
             switch envelope.status {
             case "running":
+                onPhase(envelope.phase ?? "running")
                 continue
             case "passed":
                 guard let result = envelope.result else {

@@ -51,6 +51,12 @@ struct KnowledgeMapView: View {
 
     private var horizontalPad: CGFloat { embedded ? 4 : (phoneFullScreen ? 8 : 20) }
 
+    // Observed directly off the shared singleton (2026-08-27, same
+    // subscription shape DeskGridDashboardView already uses for
+    // DeskBoxBus) rather than threaded in as an init parameter - every one
+    // of this view's 4 existing call sites keeps compiling unchanged.
+    @ObservedObject private var activityBus = GenerationActivityBus.shared
+
     @State private var zoom: CGFloat = 1
     @State private var zoomAnchor: CGFloat = 1
     @State private var pan: CGSize = .zero
@@ -547,6 +553,20 @@ struct KnowledgeMapView: View {
                 Circle()
                     .strokeBorder(MapColor.zpdReady.opacity(0.35), style: StrokeStyle(lineWidth: 1, dash: [2, 3]))
                     .frame(width: (radius + 9) * 2, height: (radius + 9) * 2)
+            }
+
+            // Generation-complete flash (2026-08-27) - same ring shape/
+            // transition as the route-reveal ring above, reused rather
+            // than a new visual invented for this. GenerationActivityBus
+            // self-clears this after a few seconds, so it's a pop-in-then-
+            // fade moment, not a persistent state.
+            if activityBus.activity[node.id] == .ready {
+                Circle()
+                    .fill(MapColor.zpdReady.opacity(0.3))
+                    .frame(width: (radius + 12) * 2, height: (radius + 12) * 2)
+                    .overlay(Circle().stroke(MapColor.zpdReady, lineWidth: 2))
+                    .transition(.scale(scale: 0.6).combined(with: .opacity))
+                    .animation(.easeOut(duration: 0.4), value: activityBus.activity[node.id])
             }
 
             if isSelected {

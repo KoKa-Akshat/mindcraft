@@ -19,6 +19,10 @@ final class GeneratedPracticeStore: ObservableObject {
         questions = []
         errorMessage = nil
         isLoadingMore = total > 1
+        // conceptId here is always a real Knowledge Map node id (unlike
+        // sim/book generation's freeform topic strings), so this is the one
+        // guaranteed-correct source for GenerationActivityBus right now.
+        GenerationActivityBus.shared.setRunning("generating", for: conceptId)
 
         loadTask = Task {
             let result = await GeneratedQuestionsClient.requestProgressive(
@@ -29,8 +33,10 @@ final class GeneratedPracticeStore: ObservableObject {
             guard !Task.isCancelled else { return }
             if let result {
                 questions = result
+                GenerationActivityBus.shared.markReady(conceptId)
             } else if questions.isEmpty {
                 errorMessage = "Couldn't generate questions for this topic right now - try again in a moment."
+                GenerationActivityBus.shared.clear(conceptId)
             }
             isLoadingMore = false
         }
