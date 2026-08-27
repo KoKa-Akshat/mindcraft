@@ -168,6 +168,10 @@
 		D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */; };
 		D8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */; };
 		D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */; };
+		G1GENQUESTCLI1A2B /* GeneratedQuestionsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = H1GENQUESTCLI1A2B /* GeneratedQuestionsClient.swift */; };
+		G2GENPRACSTORE1A2B /* GeneratedPracticeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = H2GENPRACSTORE1A2B /* GeneratedPracticeStore.swift */; };
+		G3GENQUESTVIEW1A2B /* GeneratedQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = H3GENQUESTVIEW1A2B /* GeneratedQuestionView.swift */; };
+		G4GENPRACVIEW1A2B /* GeneratedPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = H4GENPRACVIEW1A2B /* GeneratedPracticeView.swift */; };
 		E1MAPDESKVIEW1A2B3C /* MapDeskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1MAPDESKVIEW1A2B3C /* MapDeskView.swift */; };
 		D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */; };
 		D9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BOOTMOTIV01A2B3C4 /* BootMotivationClient.swift */; };
@@ -351,6 +355,10 @@
 		C8DESKCALLOAD01A2B3 /* DeskCalendarLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeskCalendarLoader.swift; sourceTree = "<group>"; };
 		C9818B2D6693B4381129CB08 /* DiagnosticGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticGateView.swift; sourceTree = "<group>"; };
 		C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWorkflowView.swift; sourceTree = "<group>"; };
+		H1GENQUESTCLI1A2B /* GeneratedQuestionsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedQuestionsClient.swift; sourceTree = "<group>"; };
+		H2GENPRACSTORE1A2B /* GeneratedPracticeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedPracticeStore.swift; sourceTree = "<group>"; };
+		H3GENQUESTVIEW1A2B /* GeneratedQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedQuestionView.swift; sourceTree = "<group>"; };
+		H4GENPRACVIEW1A2B /* GeneratedPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratedPracticeView.swift; sourceTree = "<group>"; };
 		F1MAPDESKVIEW1A2B3C /* MapDeskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDeskView.swift; sourceTree = "<group>"; };
 		132484A12A692612CD7EA8C2 /* CreateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBookView.swift; sourceTree = "<group>"; };
 		C9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookWorkflowView.swift; sourceTree = "<group>"; };
@@ -516,6 +524,7 @@
 				C7MOODLECLIENT01A2 /* MoodleClient.swift */,
 				C7DESKBOXBUS01A2 /* DeskBoxBus.swift */,
 				C8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift */,
+				H1GENQUESTCLI1A2B /* GeneratedQuestionsClient.swift */,
 				C0KOKOROTTS01A2 /* KokoroTTSClient.swift */,
 				B0BOOKAGENTCLIENT01 /* BookAgentClient.swift */,
 				CABEC5240A99216D0BB8059C /* ResumeAgentClient.swift */,
@@ -591,6 +600,9 @@
 				B89B08C8A6E7F8091B2C3D4E /* SpeechCaptureController.swift */,
 				C9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift */,
 				C9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift */,
+				H2GENPRACSTORE1A2B /* GeneratedPracticeStore.swift */,
+				H3GENQUESTVIEW1A2B /* GeneratedQuestionView.swift */,
+				H4GENPRACVIEW1A2B /* GeneratedPracticeView.swift */,
 				F1MAPDESKVIEW1A2B3C /* MapDeskView.swift */,
 				132484A12A692612CD7EA8C2 /* CreateBookView.swift */,
 				C9JESSEOVERLAY01A2 /* JesseCallOverlay.swift */,
@@ -907,6 +919,7 @@
 				D7DESKBOXBUS01A2 /* DeskBoxBus.swift in Sources */,
 				D0KOKOROTTS01A2 /* KokoroTTSClient.swift in Sources */,
 				D8ARCHIVERAG01A2B3 /* ArchiveRagClient.swift in Sources */,
+				G1GENQUESTCLI1A2B /* GeneratedQuestionsClient.swift in Sources */,
 				D9JESSEOVERLAY01A2 /* JesseCallOverlay.swift in Sources */,
 				0488FF0AF1C04DCCB33C8ED2 /* OutcomeClient.swift in Sources */,
 				0FB945513AC3BD9B9D898CF2 /* SVGImageView.swift in Sources */,
@@ -924,6 +937,9 @@
 				DAE6F420718293B4C5D6E7F8 /* FieldDeskView.swift in Sources */,
 				D9SCHEDWORKF01A2B3C4 /* SchedulingWorkflowsView.swift in Sources */,
 				D9ARCHWORKF01A2B3C4 /* ArchiveWorkflowView.swift in Sources */,
+				G2GENPRACSTORE1A2B /* GeneratedPracticeStore.swift in Sources */,
+				G3GENQUESTVIEW1A2B /* GeneratedQuestionView.swift in Sources */,
+				G4GENPRACVIEW1A2B /* GeneratedPracticeView.swift in Sources */,
 				E1MAPDESKVIEW1A2B3C /* MapDeskView.swift in Sources */,
 				27D52955B93FE8EBF48AE218 /* CreateBookView.swift in Sources */,
 				D9BOOKWORKF01A2B3C4 /* BookWorkflowView.swift in Sources */,

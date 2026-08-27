@@ -50,6 +50,7 @@ struct DashboardView: View {
     // button then calls openWork(with:). Previously tapping a dot jumped
     // straight into Work with no narrative framing at all.
     @State private var chapterConceptId: String?
+    @State private var generatedPracticeItem: GeneratedPracticeItem?
     private enum DiagnosticGate { case checking, needed, done }
     @State private var diagnosticGate: DiagnosticGate = .checking
     @StateObject private var studentStore = FirestoreStudentStore()
@@ -140,6 +141,12 @@ struct DashboardView: View {
                                     chapterConceptId = nil
                                     openWork(with: [chapterId])
                                 },
+                                onBeginLivePractice: {
+                                    let label = conceptDisplays[chapterId]?.label
+                                        ?? chapterId.replacingOccurrences(of: "_", with: " ").capitalized
+                                    chapterConceptId = nil
+                                    openGeneratedPractice(conceptId: chapterId, label: label)
+                                },
                                 embeddedInDesk: true,
                                 onClose: { chapterConceptId = nil }
                             )
@@ -214,7 +221,22 @@ struct DashboardView: View {
                     ConceptChapterView(
                         conceptId: item.conceptId,
                         conceptLabel: conceptDisplays[item.conceptId]?.label ?? item.conceptId.replacingOccurrences(of: "_", with: " ").capitalized,
-                        onBeginPractice: { openWork(with: [item.conceptId]) }
+                        onBeginPractice: { openWork(with: [item.conceptId]) },
+                        onBeginLivePractice: {
+                            let label = conceptDisplays[item.conceptId]?.label
+                                ?? item.conceptId.replacingOccurrences(of: "_", with: " ").capitalized
+                            openGeneratedPractice(conceptId: item.conceptId, label: label)
+                        }
+                    )
+                }
+                .fullScreenCover(item: $generatedPracticeItem) { item in
+                    GeneratedPracticeView(
+                        conceptId: item.conceptId,
+                        conceptLabel: item.label,
+                        // Same status -> level mapping openWork's own
+                        // PracticeSessionView call site uses.
+                        level: QuestionBankLoader.recommendedLevel(forStatus: graphClient.progress[item.conceptId]?.status),
+                        onClose: { generatedPracticeItem = nil }
                     )
                 }
                 // Wizard sprite tap -> Stickers in "pick mascot" mode, same
@@ -398,6 +420,14 @@ struct DashboardView: View {
         workTargetConceptIds = conceptIds
         showPracticeSession = true
         persistPracticeResume()
+    }
+
+    /// Live-generated practice (2026-08-27) - a genuinely separate flow
+    /// from `openWork(with:)`'s static-bank session, not a mode switch on
+    /// it. Single concept only (unlike `openWork`'s array) - live
+    /// generation targets one concept per session.
+    private func openGeneratedPractice(conceptId: String, label: String) {
+        generatedPracticeItem = GeneratedPracticeItem(conceptId: conceptId, label: label)
     }
 
     private func closePracticeSession() {
@@ -931,6 +961,14 @@ private struct DeskBackground: View {
 /// can present `ConceptChapterView` for whichever concept was last tapped.
 private struct ChapterSheetItem: Identifiable {
     let conceptId: String
+    var id: String { conceptId }
+}
+
+/// Same shape/purpose as `ChapterSheetItem`, for `GeneratedPracticeView`'s
+/// `.fullScreenCover(item:)` (2026-08-27).
+private struct GeneratedPracticeItem: Identifiable {
+    let conceptId: String
+    let label: String
     var id: String { conceptId }
 }
 

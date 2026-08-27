@@ -14,8 +14,15 @@ import { ChatGroq }            from '@langchain/groq'
 import { ChatPromptTemplate }  from '@langchain/core/prompts'
 import { JsonOutputParser }    from '@langchain/core/output_parsers'
 import { db }                  from '../lib/firebase'
+import { verifyToken } from '../lib/verifyToken'
+import { checkAndRecordAttempt, checkPlatformBudget, recordActualSpend } from '../lib/generationBudget'
 
 const ALLOWED_ORIGIN = 'https://mindcraft-93858.web.app'
+// Groq llama-3.3-70b-versatile published rate (verify against Groq's current
+// pricing page before trusting this for real accounting - not independently
+// confirmed live, unlike the Anthropic rates elsewhere in this codebase).
+const INPUT_USD_PER_MTOK = 0.59
+const OUTPUT_USD_PER_MTOK = 0.79
 const CACHE_TTL_MS   = 24 * 60 * 60 * 1000   // 24 h
 const ALLOWED_EXAMS  = new Set(['ACT', 'SAT', 'IB', 'AP', 'General'])
 
@@ -288,6 +295,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST')   return res.status(405).json({ error: 'Method not allowed' })
 
+  // Was fully unauthenticated and unbudgeted (2026-08-27, same class of gap
+  // fixed on archive-rag/book-agent/resume-agent/english-practice earlier
+  // this session) - closing it now specifically because iOS is about to
+  // become this endpoint's first native caller.
+  const uid = await verifyToken(req)
+  if (!uid) return res.status(401).json({ error: 'Sign-in required' })
+
   const { conceptId, level, examType: rawExamType = 'General', count: rawCount = 8, bridgeFrom } = (req.body ?? {}) as {
     conceptId?: string
     level?: number
@@ -327,6 +341,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Firestore unavailable — proceed to generate
   }
 
+  // Cache miss - only a real generation attempt counts against the daily
+  // cap (a placeholder of 3/day, see generationBudget.ts - a cache hit
+  // above already returned and never reaches here).
+  const platformBudget = await checkPlatformBudget()
+  if (!platformBudget.allowed) {
+    return res.status(429).json({
+      error: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,
+    })
+  }
+  const studentBudget = await checkAndRecordAttempt(uid)
+  if (!studentBudget.allowed) {
+    return res.status(429).json({
+      error: `Daily generation limit reached (${studentBudget.attemptsToday}/${studentBudget.cap}).`,
+    })
+  }
+
   // ── 2. Build LangChain chain ───────────────────────────────────────────────
   const model = new ChatGroq({
     apiKey:      process.env.GROQ_API_KEY ?? '',
@@ -339,7 +369,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ['system', SYSTEM_TEMPLATE],
   ])
 
-  const chain = prompt.pipe(model).pipe(new JsonOutputParser())
+  // Split rather than one prompt.pipe(model).pipe(parser) chain - this way
+  // the raw AIMessage (with real usage_metadata) is available for
+  // recordActualSpend below, instead of a flat cost guess.
+  const jsonParser = new JsonOutputParser()
 
   const conceptLabel = labelForConcept(conceptId)
   const conceptShort = conceptId.split('_').map((w: string) => w[0]).join('')
@@ -350,7 +383,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // ── 3. Generate ────────────────────────────────────────────────────────────
   let questions: unknown[]
   try {
-    questions = await chain.invoke({
+    const promptModel = prompt.pipe(model)
+    const aiMessage = await promptModel.invoke({
       count:             String(count),
       concept_label:     conceptLabel,
       concept_id:        conceptId,
@@ -367,7 +401,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ? 'one of "ACT","SAT","IB","AP" or null — only tag when the question genuinely reflects that exam style'
         : `"${examType}" for every question`,
       level_num:         String(level),
-    }) as unknown[]
+    })
+    questions = await jsonParser.invoke(aiMessage) as unknown[]
+
+    const usage = aiMessage.usage_metadata
+    if (usage) {
+      const costUsd =
+        (usage.input_tokens / 1_000_000) * INPUT_USD_PER_MTOK +
+        (usage.output_tokens / 1_000_000) * OUTPUT_USD_PER_MTOK
+      recordActualSpend(costUsd).catch((e) => {
+        console.error('generate-questions: failed to record platform spend', e)
+      })
+    }
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Question generation failed'
     return res.status(500).json({ error: msg })

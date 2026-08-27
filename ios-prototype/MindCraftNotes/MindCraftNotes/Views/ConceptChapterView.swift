@@ -11,6 +11,10 @@ struct ConceptChapterView: View {
     let conceptId: String
     let conceptLabel: String
     let onBeginPractice: () -> Void
+    /// Live-generated practice (2026-08-27) - optional and additive, not a
+    /// replacement for `onBeginPractice`'s static-bank flow. Nil at any call
+    /// site that hasn't opted in yet, which just hides the second button.
+    var onBeginLivePractice: (() -> Void)? = nil
     /// When true, fills the ACT desk stage only (not a device-full cover).
     var embeddedInDesk: Bool = false
     var onClose: (() -> Void)? = nil
@@ -34,6 +38,11 @@ struct ConceptChapterView: View {
         // Embedded: parent swaps overlays - don't dismiss the desk shell.
         if !embeddedInDesk { dismiss() }
         onBeginPractice()
+    }
+
+    private func beginLivePractice() {
+        if !embeddedInDesk { dismiss() }
+        onBeginLivePractice?()
     }
 
     var body: some View {
@@ -97,13 +106,24 @@ struct ConceptChapterView: View {
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("chapterNextPageButton")
                 } else {
-                    Button("Begin practice \u{2192}") {
-                        beginPractice()
+                    HStack(spacing: 8) {
+                        if onBeginLivePractice != nil {
+                            Button("Practice with Jesse") {
+                                beginLivePractice()
+                            }
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
+                            .buttonStyle(.bordered)
+                            .tint(ChapterColor.accent)
+                            .accessibilityIdentifier("beginLivePracticeButton")
+                        }
+                        Button("Begin practice \u{2192}") {
+                            beginPractice()
+                        }
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .buttonStyle(.borderedProminent)
+                        .tint(ChapterColor.accent)
+                        .accessibilityIdentifier("beginPracticeButton")
                     }
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
-                    .buttonStyle(.borderedProminent)
-                    .tint(ChapterColor.accent)
-                    .accessibilityIdentifier("beginPracticeButton")
                 }
             }
         }
