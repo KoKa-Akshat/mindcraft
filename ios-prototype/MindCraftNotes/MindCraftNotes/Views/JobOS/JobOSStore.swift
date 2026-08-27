@@ -255,38 +255,6 @@ final class JobOSStore: ObservableObject {
         flash("LinkedIn connected")
     }
 
-    /// Jesse resume agent → Apply today board. Local UserDefaults; no fake postings.
-    func ingestFromJesse(fileName: String, linkedinUrl: String, suggestions: [(company: String, role: String, why: String, query: String)]) {
-        if !fileName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            markResumeUploaded(fileName: fileName)
-        } else if !hasResume {
-            markResumeUploaded(fileName: "Jesse draft")
-        }
-        let li = linkedinUrl.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !li.isEmpty {
-            connectLinkedIn(profileUrl: li)
-        }
-        for (idx, row) in suggestions.prefix(3).enumerated() {
-            let company = row.company.trimmingCharacters(in: .whitespacesAndNewlines)
-            let role = row.role.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !company.isEmpty, !role.isEmpty else { continue }
-            let already = state.roles.contains {
-                $0.company.localizedCaseInsensitiveCompare(company) == .orderedSame
-                    && $0.role.localizedCaseInsensitiveCompare(role) == .orderedSame
-            }
-            guard !already else { continue }
-            addRole(
-                company: company,
-                role: role,
-                location: "",
-                lane: "Prepare",
-                fit: 84 - idx * 4,
-                url: "",
-                why: row.why.isEmpty ? row.query : row.why
-            )
-        }
-        flash("Jesse handed this to Apply today")
-    }
 
     func disconnectLinkedIn() {
         guard let i = state.assets.firstIndex(where: { $0.id == "link_linkedin" }) else { return }

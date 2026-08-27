@@ -4,23 +4,26 @@ import PDFKit
 import UniformTypeIdentifiers
 
 /// Jesse resume agent (Assignment H, 2026-08-18 rebuild) - the native call
-/// now drives a real profile draft (`JesseCallSession.askJesseResume`,
-/// `context == "resume"`, hits the same `/api/resume-agent` webhook the old
-/// web page's own `askJesse()` used). Explicit ask: "as you talk your
-/// profile gets created on the left." Content box defaults to that native
-/// panel; the old web page (LinkedIn paste / Drive folder / PDF upload -
-/// real extraction the native voice-only path doesn't do yet) stays reachable
-/// via the "Import" toggle rather than deleted, same pattern Applications
-/// already uses. `JesseRailView` on the right, same shared card every
-/// screen with Jesse carries.
+/// drives a real profile draft (`JesseCallSession.askJesseResume`,
+/// `context == "resume"`, hits `/api/resume-agent`). The old web-page import
+/// path (LinkedIn paste / Drive folder / PDF upload via a WKWebView, and its
+/// `ingestFromJesse` bridge into `JobOSStore`) is gone (2026-08-27) - its own
+/// UI entry point (`importToggle`) had already been silently dropped from
+/// `body` on 2026-08-25, leaving the WKWebView bridge live but unreachable,
+/// which is how a student ended up with stale, ungrounded "suggested roles"
+/// (real professional job postings, not something a high schooler is
+/// eligible for) sitting on their board with no way to have generated them
+/// through the current UI. Removed rather than re-wired: native voice +
+/// PDFKit upload (`handleResumeUpload` below) already cover real extraction,
+/// and `resume-agent.ts`'s prompt is now fixed to only suggest high-school-
+/// appropriate roles regardless. `JesseRailView` on the right, same shared
+/// card every screen with Jesse carries.
 ///
 /// Apply Today/JobOS folded in here rather than staying a separate
 /// top-level Flow (explicit ask - "that box should be in the resume box").
 /// `JobOSStore`/`JobOSShellView` themselves are untouched - full
 /// role/contact/application-tracking depth stays real, just reached from
-/// inside Resume now instead of as a peer entry point. The web page's own
-/// "apply" ingest message still feeds `JobOSStore` when reached via Import;
-/// nothing about that pipe changed, only how a student gets to it.
+/// inside Resume now instead of as a peer entry point.
 struct ResumeAgentView: View {
     var onClose: () -> Void
     var studentName: String = "there"
@@ -42,7 +45,7 @@ struct ResumeAgentView: View {
     /// same no-tap-automation need as `--ui-testing-resume` itself.
     var startInApplications: Bool = false
 
-    private enum ContentMode { case profile, applications, importWeb }
+    private enum ContentMode { case profile, applications }
 
     @State private var mode: ContentMode = .profile
     @StateObject private var jobOSStore = JobOSStore()
@@ -59,7 +62,6 @@ struct ResumeAgentView: View {
         !draft.name.isEmpty || !draft.headline.isEmpty || !draft.skills.isEmpty || !draft.roles.isEmpty
     }
 
-    private let artboard = CGSize(width: 1440, height: 810)
     private let stageInk = Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255)
     private let lime = Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)
     private let cream = Color(red: 255 / 255, green: 248 / 255, blue: 233 / 255)
@@ -100,27 +102,6 @@ struct ResumeAgentView: View {
                 // rail alongside it (it has its own header/menu), so it
                 // just fills the screen on its own now, same as the stage.
                 JobOSShellView(onClose: { mode = .profile }, resumeDraft: jesseCall.resumeDraft, fillsAvailableSpace: true)
-            } else {
-                GeometryReader { geo in
-                    let scale = min(geo.size.width / artboard.width, geo.size.height / artboard.height)
-                    ZStack {
-                        Color.white.ignoresSafeArea()
-                        // Same dotted-grid treatment as the Work dashboard
-                        // (2026-08-18, explicit ask: "all other panels should
-                        // have polka dots too") - duplicated per-file, matching
-                        // this codebase's existing convention.
-                        ResumeDottedGrid()
-                            .frame(width: geo.size.width, height: geo.size.height)
-                        ZStack(alignment: .topLeading) {
-                            pin(ResumeArtboard.content, scale: scale) { contentBox }
-                            pin(ResumeArtboard.jesseRail, scale: scale) {
-                                JesseRailView(studentName: studentName, context: "resume")
-                            }
-                        }
-                        .frame(width: artboard.width * scale, height: artboard.height * scale)
-                    }
-                    .frame(width: geo.size.width, height: geo.size.height)
-                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -158,33 +139,6 @@ struct ResumeAgentView: View {
                 .accessibilityIdentifier("resumeAgentRoot")
                 .allowsHitTesting(false)
         }
-    }
-
-    /// Only ever rendered for .applications/.importWeb now (2026-08-25) -
-    /// .profile mode moved to `resumeStage`, a self-contained Gurukul-style
-    /// surface, not this cream box + separate JesseRailView pairing.
-    private var contentBox: some View {
-        ZStack(alignment: .topLeading) {
-            Color(red: 244 / 255, green: 239 / 255, blue: 230 / 255)
-            switch mode {
-            case .profile:
-                EmptyView()
-            case .applications:
-                JobOSShellView(onClose: { mode = .profile }, resumeDraft: jesseCall.resumeDraft, fillsAvailableSpace: true)
-            case .importWeb:
-                ResumeAgentWebView(
-                    onApply: {
-                        onApply?()
-                        mode = .applications
-                    },
-                    onIngest: { fileName, linkedin, suggestions in
-                        jobOSStore.ingestFromJesse(fileName: fileName, linkedinUrl: linkedin, suggestions: suggestions)
-                    }
-                )
-            }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .shadow(color: .black.opacity(0.12), radius: 16, y: 8)
     }
 
     // MARK: - Gurukul-style stage (2026-08-25)
@@ -514,198 +468,5 @@ struct ResumeAgentView: View {
         .accessibilityIdentifier("resumeAgentDraft")
     }
 
-    private var applicationsToggle: some View {
-        Button {
-            mode = mode == .applications ? .profile : .applications
-        } label: {
-            HStack(spacing: 8) {
-                Image(systemName: "briefcase.fill")
-                Text(mode == .applications ? "Back to draft" : (jobOSStore.state.roles.isEmpty ? "Applications" : "\(jobOSStore.state.roles.count) tracked roles"))
-                Image(systemName: mode == .applications ? "arrow.uturn.left" : "chevron.right")
-            }
-            .font(.system(size: 13, weight: .bold, design: .rounded))
-            .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(
-                Capsule().fill(Color.white)
-                    .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
-            )
-        }
-        .buttonStyle(.plain)
-        .accessibilityIdentifier("resumeOpenApplyToday")
-    }
-
-    /// LinkedIn paste / Drive folder / PDF upload - real extraction the
-    /// native voice-only path above doesn't do yet (see CURSOR_HANDOFF.md
-    /// Assignment H). Kept reachable, not deleted, same toggle shape as
-    /// Applications.
-    private var importToggle: some View {
-        Button {
-            mode = .importWeb
-        } label: {
-            HStack(spacing: 8) {
-                Image(systemName: "square.and.arrow.down")
-                Text("Import (LinkedIn, Drive, PDF)")
-            }
-            .font(.system(size: 13, weight: .bold, design: .rounded))
-            .foregroundColor(Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255))
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(
-                Capsule().fill(Color.white)
-                    .shadow(color: .black.opacity(0.14), radius: 10, y: 4)
-            )
-        }
-        .buttonStyle(.plain)
-        .accessibilityIdentifier("resumeOpenImport")
-    }
-
-    private func pin<Content: View>(_ box: CGRect, scale: CGFloat, @ViewBuilder content: () -> Content) -> some View {
-        content()
-            .frame(width: box.width * scale, height: box.height * scale)
-            .position(
-                x: (box.minX + box.width / 2) * scale,
-                y: (box.minY + box.height / 2) * scale
-            )
-    }
 }
 
-/// Same content/jesseRail proportions as `CreateCanvasView`'s GDoc idle
-/// state (`CreateArtboard.idleStage`/`.jesseRailIdle`) - explicit ask:
-/// "Jesse occupies same space as in GDoc... left space box... occupying
-/// same space as it does currently." Values duplicated rather than shared
-/// cross-file, same convention as `DottedLearnGrid`/`DottedDesignGrid`.
-private enum ResumeArtboard {
-    static let content = CGRect(x: 28, y: 48, width: 920, height: 560)
-    static let jesseRail = CGRect(x: 980, y: 48, width: 432, height: 560)
-}
-
-/// Same dotted-grid treatment as `DeskGridDashboardView.DottedDeskGrid` /
-/// `LearnStudioView.DottedLearnGrid` / `DesignStudioView.DottedDesignGrid` -
-/// duplicated per-file by convention in this codebase rather than shared,
-/// same step/size/color (this file has no local hex-string Color
-/// initializer, so the color is spelled out as `Color(red:green:blue:)`
-/// like the rest of this file already does).
-private struct ResumeDottedGrid: View {
-    var body: some View {
-        Canvas { context, size in
-            let step: CGFloat = 16
-            for x in stride(from: 8, through: size.width, by: step) {
-                for y in stride(from: 8, through: size.height, by: step) {
-                    let dot = Path(ellipseIn: CGRect(x: x, y: y, width: 1.4, height: 1.4))
-                    context.fill(dot, with: .color(Color(red: 215 / 255, green: 208 / 255, blue: 194 / 255)))
-                }
-            }
-        }
-        .allowsHitTesting(false)
-    }
-}
-
-private struct ResumeAgentWebView: UIViewRepresentable {
-    var onApply: (() -> Void)?
-    /// Real bug fix (2026-08-22): the bridge's "apply" handler used to
-    /// construct its OWN fresh `JobOSStore()` instead of reaching the
-    /// view's real `@StateObject` one - two disconnected in-memory store
-    /// instances, so an import here could silently fail to show up on the
-    /// board the student is looking at. Threaded as a callback instead of
-    /// passing the store object itself, matching this file's existing
-    /// `onApply` closure convention exactly.
-    var onIngest: ((_ fileName: String, _ linkedin: String, _ suggestions: [(company: String, role: String, why: String, query: String)]) -> Void)?
-
-    static var resumeURL: URL {
-        if let override = UserDefaults.standard.string(forKey: "deskOs.resumeAgentURL"),
-           let url = URL(string: override) {
-            return url
-        }
-        return URL(string: "https://mindcraft-93858.web.app/desk-os/workflows/resume/?v=r8")!
-    }
-
-    func makeCoordinator() -> Coord { Coord(onApply: onApply, onIngest: onIngest) }
-
-    func makeUIView(context: Context) -> WKWebView {
-        let ucc = WKUserContentController()
-        ucc.add(context.coordinator, name: "deskResume")
-        let config = WKWebViewConfiguration()
-        config.userContentController = ucc
-        config.allowsInlineMediaPlayback = true
-        config.mediaTypesRequiringUserActionForPlayback = []
-        let view = WKWebView(frame: .zero, configuration: config)
-        view.isOpaque = false
-        view.backgroundColor = .clear
-        view.scrollView.backgroundColor = .clear
-        view.scrollView.bounces = false
-        view.scrollView.contentInsetAdjustmentBehavior = .never
-        if #available(iOS 16.4, *) { view.isInspectable = true }
-        view.navigationDelegate = context.coordinator
-        view.uiDelegate = context.coordinator
-        context.coordinator.webView = view
-        view.load(URLRequest(url: Self.resumeURL, cachePolicy: .reloadIgnoringLocalCacheData))
-        return view
-    }
-
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        context.coordinator.onApply = onApply
-        context.coordinator.onIngest = onIngest
-    }
-
-    final class Coord: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
-        var onApply: (() -> Void)?
-        var onIngest: ((_ fileName: String, _ linkedin: String, _ suggestions: [(company: String, role: String, why: String, query: String)]) -> Void)?
-        weak var webView: WKWebView?
-
-        init(onApply: (() -> Void)?, onIngest: ((_ fileName: String, _ linkedin: String, _ suggestions: [(company: String, role: String, why: String, query: String)]) -> Void)?) {
-            self.onApply = onApply
-            self.onIngest = onIngest
-        }
-
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            decisionHandler(.allow)
-        }
-
-        func webView(_ webView: WKWebView, requestMediaCapturePermissionFor origin: WKSecurityOrigin, initiatedByFrame frame: WKFrameInfo, type: WKMediaCaptureType, decisionHandler: @escaping (WKPermissionDecision) -> Void) {
-            decisionHandler(.grant)
-        }
-
-        func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-            guard message.name == "deskResume" else { return }
-            let body = message.body as? [String: Any] ?? [:]
-            let type = body["type"] as? String ?? ""
-            if type == "drive" {
-                Task { @MainActor in
-                    let files = await DriveClient.shared.connectAndReadFolder()
-                    let payload: [[String: String]] = files.map { ["name": $0.name, "text": $0.text] }
-                    let data = (try? JSONSerialization.data(withJSONObject: payload)) ?? Data("[]".utf8)
-                    let json = String(data: data, encoding: .utf8) ?? "[]"
-                    let err = DriveClient.shared.lastError ?? ""
-                    let js = "window.__deskResumeFromNative && window.__deskResumeFromNative({type:'driveFiles', files:\(json), error:\(Self.jsString(err))})"
-                    self.webView?.evaluateJavaScript(js, completionHandler: nil)
-                }
-            } else if type == "apply" {
-                let fileName = body["fileName"] as? String ?? "Jesse draft"
-                let linkedin = body["linkedinUrl"] as? String ?? ""
-                let raw = body["suggestions"] as? [[String: Any]] ?? []
-                let suggestions: [(company: String, role: String, why: String, query: String)] = raw.map {
-                    (
-                        company: $0["company"] as? String ?? "",
-                        role: $0["role"] as? String ?? "",
-                        why: $0["why"] as? String ?? "",
-                        query: $0["query"] as? String ?? ""
-                    )
-                }
-                Task { @MainActor in
-                    self.onIngest?(fileName, linkedin, suggestions)
-                    self.onApply?()
-                }
-            }
-        }
-
-        private static func jsString(_ s: String) -> String {
-            let escaped = s
-                .replacingOccurrences(of: "\\", with: "\\\\")
-                .replacingOccurrences(of: "'", with: "\\'")
-                .replacingOccurrences(of: "\n", with: "\\n")
-            return "'\(escaped)'"
-        }
-    }
-}

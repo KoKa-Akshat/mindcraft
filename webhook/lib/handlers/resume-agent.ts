@@ -186,37 +186,42 @@ function heuristicReply(draft: ResumeDraft, message: string): { reply: string; s
   }
 }
 
+// High-school-appropriate phrasing, matching discover-internships.ts's own
+// buildQueries() - was assuming a college applicant ("college" fallback,
+// "research assistant", "Handshake") with no entry-level/no-experience
+// constraint anywhere, which is how a high schooler ended up with
+// suggestions phrased like real professional job postings.
 function suggestFromDraft(d: ResumeDraft): SuggestedRole[] {
   const skills = d.skills.slice(0, 3).join(' ')
-  const school = d.school || 'college'
+  const school = d.school || 'high school'
   const out: SuggestedRole[] = []
   if (/R\b|Excel|SQL|Stata|Python|research/i.test(skills + JSON.stringify(d.roles))) {
     out.push({
-      company: 'Research / data internships',
-      role: 'Research assistant or data intern',
+      company: 'Teen research programs',
+      role: 'Teen research internship or summer program',
       why: 'Matches methods and tools already on the draft.',
-      query: `${school} research assistant intern ${skills}`.trim(),
+      query: `teen research internship high schoolers ${skills}`.trim(),
     })
   }
   if (/tutor|teaching|writing/i.test(skills + JSON.stringify(d.roles))) {
     out.push({
-      company: 'Education / tutoring',
-      role: 'Tutor or academic support',
+      company: 'Local tutoring / education',
+      role: 'Peer or junior tutoring role',
       why: 'You already teach or write on the page.',
-      query: `tutor intern ${school}`.trim(),
+      query: `high school student tutor volunteer ${school}`.trim(),
     })
   }
   out.push({
-    company: 'Handshake / LinkedIn jobs',
-    role: 'Internship matching your headline',
+    company: 'Pre-college / summer programs',
+    role: 'Summer program matching your headline',
     why: 'Search from the draft, then log Applied on the board.',
-    query: `${d.headline || 'internship'} ${school}`.trim(),
+    query: `${d.headline || 'summer program'} high school student apply`.trim(),
   })
   return out.slice(0, 3)
 }
 
 const SYSTEM = `You are Jesse, the resume agent on The Desk by MindCraft.
-You help a student build a resume that sounds like them. Friendly, certain, short. Like a calm older sibling on a call. Not peppy. Not a recruiter bot.
+You help a HIGH SCHOOL student build a resume that sounds like them. Friendly, certain, short. Like a calm older sibling on a call. Not peppy. Not a recruiter bot.
 
 Rules:
 - Reply in 1-3 spoken sentences. No emoji. No exclamation marks. No em dashes.
@@ -226,6 +231,11 @@ Rules:
 - Drive is folder-scoped: only files from The Desk folder. Say that when Drive is used.
 - The draft is private on their desk. Data stays in accounts they already own.
 - If the draft has a name plus at least one role or two skills, set readyToApply true and suggest up to 3 role DIRECTIONS (search queries), not fake job postings with fake URLs.
+  This student is a HIGH SCHOOLER with no professional work history - every suggested role MUST be something a
+  high schooler is actually eligible for: a summer program, a pre-college program, a teen research internship,
+  a local volunteer/junior role, or similar. NEVER suggest a role that would realistically require a college
+  degree, prior professional experience, or years of experience (e.g. never "Research Assistant," "Software
+  Engineer," "Analyst" phrased as a real job posting) - those are not opportunities this student can apply to.
 - If they ask to apply, set action open_apply.
 - If sources are thin, ask for one next step: LinkedIn paste, Drive folder, or PDF.
 
