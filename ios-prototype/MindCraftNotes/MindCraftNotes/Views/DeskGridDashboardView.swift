@@ -143,6 +143,11 @@ struct DeskGridDashboardView: View {
     /// this screen's embedded map). nil (from learnModuleBox, the plain
     /// Gurukul tile) opens idle, same as before this change.
     var onOpenStudyCompanion: (_ topic: String?) -> Void = { _ in }
+    /// Opens the concept's real pre-authored chapter/book (2026-08-27,
+    /// reversing the 2026-08-25 "route the map into Gurukul" ask -
+    /// explicit new direction: "these are already ready made books...
+    /// instead taking me to Jesse's screen. We really don't need that").
+    var onOpenConceptChapter: (_ conceptId: String) -> Void = { _ in }
     /// The left sidebar's gear icon now opens the same Manage page the
     /// top-left logo used to (2026-08-18, explicit ask - the mark itself
     /// moved to top-right, see FieldDeskView's chrome overlay).
@@ -464,6 +469,7 @@ struct DeskGridDashboardView: View {
         onOpenLearnStudio: @escaping () -> Void = {},
         onOpenArchive: @escaping () -> Void = {},
         onOpenStudyCompanion: @escaping (_ topic: String?) -> Void = { _ in },
+        onOpenConceptChapter: @escaping (_ conceptId: String) -> Void = { _ in },
         onOpenManage: @escaping () -> Void = {},
         studentName: String = "there"
     ) {
@@ -492,6 +498,7 @@ struct DeskGridDashboardView: View {
         self.onOpenLearnStudio = onOpenLearnStudio
         self.onOpenArchive = onOpenArchive
         self.onOpenStudyCompanion = onOpenStudyCompanion
+        self.onOpenConceptChapter = onOpenConceptChapter
         self.onOpenManage = onOpenManage
         self.studentName = studentName
         _rail = State(initialValue: initialRail)
@@ -2877,9 +2884,7 @@ struct DeskGridDashboardView: View {
                     // hand off to, and silently routing it into Gurukul
                     // too would misrepresent what tapping it does.
                     onOpenConcept: { conceptId in
-                        let label = conceptDisplays[conceptId]?.label
-                            ?? conceptId.replacingOccurrences(of: "_", with: " ").capitalized
-                        onOpenStudyCompanion(label)
+                        onOpenConceptChapter(conceptId)
                     },
                     onQuickPractice: { _ in },
                     // 2026-08-19, real complaint: "the display of fonts is

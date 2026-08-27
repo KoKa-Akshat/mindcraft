@@ -229,13 +229,13 @@ struct FieldDeskView: View {
         self.onLaunchInstance = onLaunchInstance
         _showActStage = State(initialValue: initialActStage)
         _actStageMaximized = State(initialValue: true)
-        // Seeds .mapDesk, not .deskGridDashboard (2026-08-26) - the grid
-        // dashboard is real and still fully reachable (map's own "Tiles"
-        // dock chip -> openWorkCanvas()), just no longer what boots first.
-        // On phone this doesn't change anything (see the phone-layout
-        // branch's own .mapDesk match in `body`) - DeskPhoneDashboardView
-        // still boots there regardless of which of the two is seeded here.
-        _openOverlays = State(initialValue: initialShowDashboard ? [.mapDesk] : [])
+        // Reverted 2026-08-27: .mapDesk was the boot screen for one day
+        // (2026-08-26) - explicit ask to undo, "unnecessarily opening an
+        // extra map page before I can get to the main dash... I love [the
+        // main dash]." .mapDesk/MapDeskView.swift stay in the codebase
+        // (still reachable, still useful for the map-as-overlaid-panel
+        // redesign this is feeding into) - just no longer what boots first.
+        _openOverlays = State(initialValue: initialShowDashboard ? [.deskGridDashboard] : [])
     }
 
     private enum RailTool: String, Identifiable {
@@ -826,12 +826,18 @@ struct FieldDeskView: View {
                             }
                         },
                         onOpenTiles: { openWorkCanvas() },
+                        // Opens the real pre-authored chapter/book for this
+                        // concept (2026-08-27, explicit fix: "these are
+                        // already ready made books... it should take me
+                        // directly to the books... instead taking me to
+                        // Jesse's screen") - same pendingStudyConceptId ->
+                        // .actFieldBook route the study_concept desk-ask
+                        // action already uses (FieldDeskView.swift ~4164),
+                        // not StudyCompanion.
                         onOpenConcept: { conceptId in
-                            let label = TocDataLoader.loadConceptDisplays()[conceptId]?.label
-                                ?? conceptId.replacingOccurrences(of: "_", with: " ").capitalized
-                            pendingConstellationTopic = label
+                            pendingStudyConceptId = conceptId
                             withAnimation(.easeInOut(duration: 0.2)) {
-                                _ = openOverlays.insert(.studyCompanion)
+                                _ = openOverlays.insert(.actFieldBook)
                             }
                         }
                     )
@@ -950,16 +956,22 @@ struct FieldDeskView: View {
                         // shape as onOpenBinder above, not a
                         // column-only swap - "whatever we have on the dash
                         // changes" per the explicit ask.
-                        // Gained an optional topic (2026-08-25) - a tapped
-                        // Knowledge Map concept passes its resolved label
-                        // through here (see DeskGridDashboardView's own
-                        // onOpenConcept), same pendingConstellationTopic ->
-                        // StudyCompanionView.initialTopic pipe
-                        // ConstellationView's own concept tap already uses.
                         onOpenStudyCompanion: { topic in
                             pendingConstellationTopic = topic
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 _ = openOverlays.insert(.studyCompanion)
+                            }
+                        },
+                        // Map's own concept tap moved off onOpenStudyCompanion
+                        // onto this (2026-08-27) - a tapped node now opens
+                        // the real pre-authored chapter/book, same
+                        // pendingStudyConceptId -> .actFieldBook route
+                        // MapDesk's own onOpenConcept and the study_concept
+                        // desk-ask action already use.
+                        onOpenConceptChapter: { conceptId in
+                            pendingStudyConceptId = conceptId
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                _ = openOverlays.insert(.actFieldBook)
                             }
                         },
                         // Real bug fix (2026-08-23): was openManageFromChrome(),
