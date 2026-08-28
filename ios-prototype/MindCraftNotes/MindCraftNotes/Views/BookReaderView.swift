@@ -272,6 +272,25 @@ struct BookReaderView: View {
                         .font(.system(size: 11, weight: .medium, design: .rounded))
                         .foregroundColor(ink.opacity(0.4))
                 }
+            } else if let svg = section.imageSvg {
+                // Tier 0 image fallback (2026-08-27) - content-engine's
+                // visual_composer.py only ever sets this when there's no
+                // passing sim, so this is genuinely else-if, not a second
+                // visual stacked under a sim. Reuses InlineSVGView
+                // (GeneratedQuestionView.swift) - same "model-produced SVG
+                // string, not a bundled asset" shape, JS disabled.
+                VStack(alignment: .leading, spacing: 6) {
+                    InlineSVGView(svg: svg)
+                        .frame(height: 220)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(ink.opacity(0.1)))
+                    if let caption = section.imageCaption, !caption.isEmpty {
+                        Text(caption)
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(ink.opacity(0.55))
+                            .italic()
+                    }
+                }
             }
 
             if let discussionTitle = section.discussionTitle {

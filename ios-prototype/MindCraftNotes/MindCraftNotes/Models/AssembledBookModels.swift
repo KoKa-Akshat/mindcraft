@@ -28,6 +28,16 @@ struct AssembledBookSection: Decodable, Identifiable, Hashable {
     let simHtml: String?
     let discussionTitle: String?
     let qualityScore: Double?
+    /// Tier 0 of the image ladder (content-engine's visual_composer.py,
+    /// 2026-08-27) - a small, self-contained, deterministic SVG for a
+    /// section with no passing sim, so a sim-less section isn't text-only
+    /// anymore. Only ever set alongside a nil simHtml (the sim IS the
+    /// visual once one exists) - render one or the other, never both.
+    /// Named `imageSvg` not `imageUrl` since it's inlined markup, same
+    /// "the real content, not a link to nothing" shape simHtml already
+    /// established.
+    let imageSvg: String?
+    let imageCaption: String?
 
     var id: String { conceptId }
 
@@ -44,6 +54,8 @@ struct AssembledBookSection: Decodable, Identifiable, Hashable {
         case simHtml = "sim_html"
         case discussionTitle = "discussion_title"
         case qualityScore = "quality_score"
+        case imageSvg = "image_svg"
+        case imageCaption = "image_caption"
     }
 }
 

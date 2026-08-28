@@ -185,7 +185,10 @@ struct GeneratedQuestionView: View {
 /// explicitly disabled - an SVG visual has no legitimate need for it, and
 /// `loadHTMLString` with no baseURL already sandboxes into a unique,
 /// non-persistent origin with no access to app storage regardless.
-private struct InlineSVGView: UIViewRepresentable {
+/// Not `private` (2026-08-27): BookReaderView reuses this for
+/// AssembledBookSection.imageSvg - same "model-generated SVG string, not a
+/// bundled asset" shape, no reason to duplicate this view for a second file.
+struct InlineSVGView: UIViewRepresentable {
     let svg: String
 
     func makeUIView(context: Context) -> WKWebView {

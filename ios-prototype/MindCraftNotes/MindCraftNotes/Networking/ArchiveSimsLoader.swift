@@ -188,7 +188,9 @@ enum ArchiveSimsLoader {
             simFilesDir: nil,
             simHtml: simHtml,
             discussionTitle: nil,
-            qualityScore: qualityScore
+            qualityScore: qualityScore,
+            imageSvg: nil,
+            imageCaption: nil
         )
     }
 
