@@ -941,6 +941,7 @@ struct FieldDeskView: View {
                             _ = store.markConnected("gmail")
                             if calendarToo { _ = store.markConnected("gcal") }
                         },
+                        onGmailDisconnected: { _ = store.disconnect("gmail") },
                         onMoodleLinked: { _ = store.markConnected("moodle") },
                         onMoodleDisconnected: { _ = store.disconnect("moodle") },
                         intelLines: Array(store.intelLines.prefix(8)),

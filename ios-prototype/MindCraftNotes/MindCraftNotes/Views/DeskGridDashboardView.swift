@@ -117,6 +117,7 @@ struct DeskGridDashboardView: View {
     var intelHasData: Bool = false
     var binderHasData: Bool = false
     var onGmailLinked: (_ calendarToo: Bool) -> Void = { _ in }
+    var onGmailDisconnected: () -> Void = {}
     var onMoodleLinked: () -> Void = {}
     var onMoodleDisconnected: () -> Void = {}
     var intelLines: [String] = []
@@ -284,6 +285,13 @@ struct DeskGridDashboardView: View {
     @State private var viewingResumeAgent = false
     @State private var resumeStartInApplications = false
     @State private var viewingSessionReports = false
+    /// Same "inside the binder's content-viewer, not a separate screen"
+    /// treatment as Design Studio/Resume above, now applied to Gmail
+    /// (2026-08-27, explicit ask: "Gmail... opens on its own... blend it
+    /// into the page neatly") - replaces the floating, semi-transparent
+    /// GmailWorkflowBoxView overlay this dock icon used to open via the
+    /// external onOpenGmail() closure (FieldDeskView's `.gmailBox`).
+    @State private var viewingGmail = false
     /// The lesson currently shown as a summary + "what you'll learn" card
     /// in Homework Help WHILE browsing the archive (2026-08-19, explicit
     /// ask: "per click homework help shows you a book summary and what you
@@ -333,7 +341,7 @@ struct DeskGridDashboardView: View {
     /// a new mode is exactly the kind of bug this centralizes away).
     private var binderContentViewerActive: Bool {
         viewingUpload != nil || viewingBook != nil || viewingKnowledgeGraphInBinder || viewingArchiveBrowser
-            || viewingDesignStudio || viewingResumeAgent || viewingSessionReports || viewingFriends
+            || viewingDesignStudio || viewingResumeAgent || viewingSessionReports || viewingFriends || viewingGmail
     }
 
     private func closeBinderContentViewer() {
@@ -345,6 +353,7 @@ struct DeskGridDashboardView: View {
         viewingResumeAgent = false
         viewingSessionReports = false
         viewingFriends = false
+        viewingGmail = false
         archiveSummaryLesson = nil
         // A live-sim request/verdict belongs to the Study Session that
         // asked for it - clearing here (which also drops any in-flight
@@ -467,6 +476,7 @@ struct DeskGridDashboardView: View {
         intelHasData: Bool = false,
         binderHasData: Bool = false,
         onGmailLinked: @escaping (_ calendarToo: Bool) -> Void = { _ in },
+        onGmailDisconnected: @escaping () -> Void = {},
         onMoodleLinked: @escaping () -> Void = {},
         onMoodleDisconnected: @escaping () -> Void = {},
         intelLines: [String] = [],
@@ -496,6 +506,7 @@ struct DeskGridDashboardView: View {
         self.intelHasData = intelHasData
         self.binderHasData = binderHasData
         self.onGmailLinked = onGmailLinked
+        self.onGmailDisconnected = onGmailDisconnected
         self.onMoodleLinked = onMoodleLinked
         self.onMoodleDisconnected = onMoodleDisconnected
         self.intelLines = intelLines
@@ -1267,11 +1278,18 @@ struct DeskGridDashboardView: View {
         } else if query.contains("calendar") || query.contains("gcal") {
             onOpenCalendar()
         } else if query.contains("gmail") || query.contains("email") {
-            onOpenGmail()
+            if gmail.hasGmailScope {
+                closeBinderContentViewer()
+                viewingGmail = true
+            } else {
+                onOpenGmail()
+            }
         } else if query.contains("homework") {
             handleTile(.homeworkHelp)
         } else if query.contains("memo") {
             setRail(rail == .memo ? .none : .memo)
+        } else if query.contains("transcribe") {
+            setRail(rail == .transcribe ? .none : .transcribe)
         } else if query.contains("flows")
             || query.contains("resume") || query.contains("archive") || query.contains("book") || query.contains("apply") {
             setRail(rail == .flows ? .none : .flows)
@@ -1865,6 +1883,14 @@ struct DeskGridDashboardView: View {
         if viewingResumeAgent {
             return AnyView(ResumeAgentView(onClose: closeBinderContentViewer, studentName: studentName, embedded: true, startInApplications: resumeStartInApplications))
         }
+        if viewingGmail {
+            return AnyView(GmailWorkflowBoxView(
+                onClose: closeBinderContentViewer,
+                onConnected: onGmailLinked,
+                onDisconnected: onGmailDisconnected,
+                embedded: true
+            ))
+        }
         if viewingSessionReports {
             return AnyView(tileInnerCard { SessionReportsView(onClose: closeBinderContentViewer) })
         }
@@ -1952,7 +1978,11 @@ struct DeskGridDashboardView: View {
                 .accessibilityIdentifier("deskGridJesseIcon_Transcribe")
             jesseBoxIcon(gmail.hasGmailScope ? "envelope.fill" : "envelope") {
                 if gmail.hasGmailScope {
-                    onOpenGmail()
+                    // Blended content-viewer swap (2026-08-27), not the old
+                    // onOpenGmail() -> FieldDeskView's floating .gmailBox
+                    // overlay - see viewingGmail's own doc comment.
+                    closeBinderContentViewer()
+                    viewingGmail = true
                 } else {
                     Task {
                         await gmail.connectGoogleMailAndCalendar()

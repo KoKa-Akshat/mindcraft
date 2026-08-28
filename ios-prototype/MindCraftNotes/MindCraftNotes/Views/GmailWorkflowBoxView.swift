@@ -11,6 +11,14 @@ struct GmailWorkflowBoxView: View {
     var startInReconnect: Bool = false
     /// When true, after inbox loads open a ready-to-send reply for the top mail.
     var startWithTopReply: Bool = false
+    /// Fills its given frame instead of floating as a draggable/resizable
+    /// desk card (2026-08-27, same convention DesignStudioView/
+    /// ResumeAgentView already use for their own content-viewer slot) - for
+    /// DeskGridDashboardView's Binder content-viewer, which replaced the
+    /// floating GmailWorkflowBoxView overlay that used to sit on top of
+    /// everything ("Gmail same opens on its own... blend it into the page
+    /// neatly").
+    var embedded: Bool = false
 
     @StateObject private var client = GmailClient.shared
     @StateObject private var digestClient = GmailDigestClient.shared
@@ -29,6 +37,71 @@ struct GmailWorkflowBoxView: View {
     @State private var sending = false
 
     var body: some View {
+        if embedded {
+            embeddedBody
+        } else {
+            floatingBody
+        }
+    }
+
+    /// Just the inbox card, filling whatever frame it's given - no
+    /// boardOrigin/boardDrag/resize math, since there's nothing to drag
+    /// inside a fixed content-viewer slot.
+    private var embeddedBody: some View {
+        paperBoard
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .strokeBorder(Color(gmHex: "c4a484"), lineWidth: 1.4)
+            )
+            .overlay(alignment: .bottom) {
+                if let toast = client.toast {
+                    Text(toast)
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundColor(Color(gmHex: "0c1207"))
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(Color(gmHex: "c4f547")))
+                        .padding(.bottom, 16)
+                        .allowsHitTesting(false)
+                }
+            }
+            .onAppear {
+                client.onInboxLoaded = { msgs in
+                    onInboxLoaded?(msgs)
+                    openTopReplyIfNeeded(msgs)
+                }
+                client.refreshScopeStatus()
+                if startInReconnect {
+                    client.disconnectForReconnect()
+                    onDisconnected?()
+                }
+                if client.hasGmailScope {
+                    Task {
+                        await client.fetchInbox()
+                        openTopReplyIfNeeded(client.messages)
+                    }
+                } else if startInReconnect {
+                    Task { await client.connectGoogleMailAndCalendar(force: true) }
+                }
+            }
+            .onChange(of: client.messages) { _, msgs in
+                openTopReplyIfNeeded(msgs)
+                guard !msgs.isEmpty else { return }
+                Task {
+                    await digestClient.summarize(msgs)
+                    if let digest = digestClient.digest {
+                        digestStore.save(digest, messageCount: msgs.count)
+                    }
+                }
+            }
+            .sheet(item: $selected) { msg in
+                replySheet(msg).presentationDetents([.large, .medium])
+            }
+            .accessibilityIdentifier("gmailWorkflowRoot")
+    }
+
+    private var floatingBody: some View {
         GeometryReader { proxy in
             let canvas = proxy.size
             ZStack(alignment: .topLeading) {
