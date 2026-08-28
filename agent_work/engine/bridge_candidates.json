@@ -1,0 +1,506 @@
+{
+  "s1_threshold": 0.40272635221481323,
+  "pool_size": 186,
+  "candidates": [
+    {
+      "pair": [
+        "measurement_units",
+        "representation_translation"
+      ],
+      "names": [
+        "Units, Measurement, and Dimensional Reasoning",
+        "Representation Translation and Mathematical Modeling"
+      ],
+      "s1_similarity": 0.505,
+      "s2_archetype_count": 6,
+      "score": 14.43,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "measurement_units__unit_rate_per_one",
+        "to_ingredient_id": "representation_translation__graph_to_rate",
+        "bridge_description": "Students who don't understand unit rates per one cannot translate a graph of a linear relationship into a verbal rate description.",
+        "card_hint": "Practice extracting the unit rate from a graph and writing the corresponding rate equation or sentence.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "area_volume",
+        "representation_translation"
+      ],
+      "names": [
+        "Area and Volume",
+        "Representation Translation and Mathematical Modeling"
+      ],
+      "s1_similarity": 0.42,
+      "s2_archetype_count": 6,
+      "score": 12.923,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "area_volume__volume_as_base_times_height",
+        "to_ingredient_id": "representation_translation__words_to_equation",
+        "bridge_description": "Students cannot translate word problems about volume into algebraic equations without recalling the base\u2011times\u2011height formula.",
+        "card_hint": "Use concrete volume word problems and explicitly map the language to the equation V = base\u202f\u00d7\u202fheight.",
+        "difficulty": 0.55
+      }
+    },
+    {
+      "pair": [
+        "fractions_decimals",
+        "measurement_units"
+      ],
+      "names": [
+        "Fractions and Decimals",
+        "Units, Measurement, and Dimensional Reasoning"
+      ],
+      "s1_similarity": 0.654,
+      "s2_archetype_count": 3,
+      "score": 9.858,
+      "cluster": "cross_cluster",
+      "cycle_risk": "measurement_units->fractions_decimals",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "to_ingredient_id": "measurement_units__unit_rate_per_one",
+        "bridge_description": "Students who cannot convert fractions to decimals often fail to express a quantity as a unit rate per one unit.",
+        "card_hint": "Practice converting fractional measurements to decimal form before forming unit\u2011rate statements (e.g., 3/4\u202fm \u00f7 2\u202fs \u2192 0.375\u202fm per 1\u202fs).",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "area_volume",
+        "measurement_units"
+      ],
+      "names": [
+        "Area and Volume",
+        "Units, Measurement, and Dimensional Reasoning"
+      ],
+      "s1_similarity": 0.569,
+      "s2_archetype_count": 3,
+      "score": 8.352,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "area_volume__standard_formulas",
+        "to_ingredient_id": "measurement_units__linear_vs_square_units",
+        "bridge_description": "Students can apply area formulas but often forget that the result is expressed in square units, causing unit\u2011mismatch errors when moving to volume or unit conversion problems.",
+        "card_hint": "Explicitly link each area formula to its unit label (e.g., \"cm\u00b2\") and contrast it with linear units, then practice converting between linear, square, and cubic units.",
+        "difficulty": 0.62
+      }
+    },
+    {
+      "pair": [
+        "fractions_decimals",
+        "representation_translation"
+      ],
+      "names": [
+        "Fractions and Decimals",
+        "Representation Translation and Mathematical Modeling"
+      ],
+      "s1_similarity": 0.476,
+      "s2_archetype_count": 3,
+      "score": 6.721,
+      "cluster": "cross_cluster",
+      "cycle_risk": "representation_translation->fractions_decimals",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "fractions_decimals__part_whole_meaning",
+        "to_ingredient_id": "representation_translation__diagram_to_ratio",
+        "bridge_description": "Without grasping the part\u2011whole meaning of fractions, a student cannot interpret a visual diagram as a ratio.",
+        "card_hint": "Use concrete area models to show how a diagram\u2019s sections correspond to fractional parts and then to ratio language.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "algebraic_manipulation",
+        "representation_translation"
+      ],
+      "names": [
+        "Algebraic Structure and Symbolic Manipulation",
+        "Representation Translation and Mathematical Modeling"
+      ],
+      "s1_similarity": 0.456,
+      "s2_archetype_count": 3,
+      "score": 6.362,
+      "cluster": "cross_cluster",
+      "cycle_risk": "algebraic_manipulation->representation_translation",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "algebraic_manipulation__equivalent_forms",
+        "to_ingredient_id": "representation_translation__words_to_equation",
+        "bridge_description": "Without recognizing equivalent algebraic forms, students cannot correctly map verbal relationships into the appropriate equation structure.",
+        "card_hint": "Practice rewriting simple word statements into several algebraically equivalent equations and discuss the reasoning behind each form.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "algebraic_manipulation",
+        "linear_equations"
+      ],
+      "names": [
+        "Algebraic Structure and Symbolic Manipulation",
+        "Linear Equations"
+      ],
+      "s1_similarity": 0.439,
+      "s2_archetype_count": 3,
+      "score": 6.069,
+      "cluster": "same_cluster",
+      "cycle_risk": "algebraic_manipulation->linear_equations",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "algebraic_manipulation__equivalent_forms",
+        "to_ingredient_id": "linear_equations__slope_intercept_form",
+        "bridge_description": "Students who can create equivalent algebraic expressions often fail to see that rewriting a linear equation into slope\u2011intercept form is just another equivalent transformation.",
+        "card_hint": "Guide learners through systematic steps to isolate y in a general linear equation, emphasizing each algebraic manipulation as a move toward the slope\u2011intercept form.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "linear_equations",
+        "measurement_units"
+      ],
+      "names": [
+        "Linear Equations",
+        "Units, Measurement, and Dimensional Reasoning"
+      ],
+      "s1_similarity": 0.68,
+      "s2_archetype_count": 1,
+      "score": 5.512,
+      "cluster": "cross_cluster",
+      "cycle_risk": "none",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "B_TO_A",
+        "from_ingredient_id": "measurement_units__unit_rate_per_one",
+        "to_ingredient_id": "linear_equations__slope_meaning",
+        "bridge_description": "When a student lacks the concept of a unit rate per one, they cannot interpret the slope of a line as a meaningful rate with consistent units.",
+        "card_hint": "Show slope as \"rise over run\" expressed as a unit\u2011per\u2011unit rate (e.g., meters per second) and practice converting slopes to unit\u2011rate language.",
+        "difficulty": 0.42
+      }
+    },
+    {
+      "pair": [
+        "basic_equations",
+        "fractions_decimals"
+      ],
+      "names": [
+        "Basic One-Variable Equations",
+        "Fractions and Decimals"
+      ],
+      "s1_similarity": 0.46,
+      "s2_archetype_count": 2,
+      "score": 4.029,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "basic_equations__do_same_to_both_sides",
+        "to_ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "bridge_description": "Students who can apply the same operation to both sides of an equation often fail to apply a common scaling factor to both numerators and denominators when adding or subtracting fractions.",
+        "card_hint": "Show that finding a common denominator is like multiplying both sides of an equation by the same number: multiply each fraction's numerator and denominator by the needed factor before combining them.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "descriptive_statistics",
+        "measurement_units"
+      ],
+      "names": [
+        "Descriptive Statistics",
+        "Units, Measurement, and Dimensional Reasoning"
+      ],
+      "s1_similarity": 0.426,
+      "s2_archetype_count": 2,
+      "score": 3.438,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "B_TO_A",
+        "from_ingredient_id": "measurement_units__linear_vs_square_units",
+        "to_ingredient_id": "descriptive_statistics__spread_measures",
+        "bridge_description": "Students who ignore that variance and standard deviation have squared units misinterpret the magnitude of spread measures.",
+        "card_hint": "Highlight that variance is expressed in units squared and show how to convert back to original units via the standard deviation.",
+        "difficulty": 0.55
+      }
+    },
+    {
+      "pair": [
+        "fractions_decimals",
+        "functions_basics"
+      ],
+      "names": [
+        "Fractions and Decimals",
+        "Basics of Functions"
+      ],
+      "s1_similarity": 0.549,
+      "s2_archetype_count": 1,
+      "score": 3.211,
+      "cluster": "same_cluster",
+      "cycle_risk": "functions_basics->fractions_decimals",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "fractions_decimals__decimal_place_value",
+        "to_ingredient_id": "functions_basics__piecewise_context_threshold",
+        "bridge_description": "If a student lacks decimal place\u2011value understanding, they cannot correctly interpret the numeric thresholds that separate the pieces of a piecewise function.",
+        "card_hint": "Teach decimal place value using real\u2011world thresholds (e.g., $0.99, 0.5\u202fkg) and then map those thresholds to the break\u2011points in a piecewise function.",
+        "difficulty": 0.4
+      }
+    },
+    {
+      "pair": [
+        "functions_basics",
+        "logarithmic_functions"
+      ],
+      "names": [
+        "Basics of Functions",
+        "Logarithmic Functions"
+      ],
+      "s1_similarity": 0.547,
+      "s2_archetype_count": 1,
+      "score": 3.166,
+      "cluster": "same_cluster",
+      "cycle_risk": "logarithmic_functions->functions_basics",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "functions_basics__one_to_one_invertibility",
+        "to_ingredient_id": "logarithmic_functions__log_as_inverse_exp",
+        "bridge_description": "Without grasping one-to-one invertibility, a student cannot see why logarithms serve as the inverse of exponentials.",
+        "card_hint": "Teach invertibility using the horizontal line test on the exponential function, then define the logarithm as its inverse.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "fractions_decimals",
+        "systems_of_linear_equations"
+      ],
+      "names": [
+        "Fractions and Decimals",
+        "Systems of Linear Equations"
+      ],
+      "s1_similarity": 0.544,
+      "s2_archetype_count": 1,
+      "score": 3.123,
+      "cluster": "same_cluster",
+      "cycle_risk": "systems_of_linear_equations->fractions_decimals",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "fractions_decimals__fraction_decimal_conversion",
+        "to_ingredient_id": "systems__elimination_method",
+        "bridge_description": "Students cannot eliminate variables in a system when coefficients are fractions because they lack fluency converting fractions to decimals or common denominators.",
+        "card_hint": "Practice converting fractional coefficients to decimals or finding a common denominator before applying the elimination method.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "area_volume",
+        "fractions_decimals"
+      ],
+      "names": [
+        "Area and Volume",
+        "Fractions and Decimals"
+      ],
+      "s1_similarity": 0.543,
+      "s2_archetype_count": 1,
+      "score": 3.101,
+      "cluster": "cross_cluster",
+      "cycle_risk": "area_volume->fractions_decimals",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "B_TO_A",
+        "from_ingredient_id": "fractions_decimals__fraction_arithmetic",
+        "to_ingredient_id": "area_volume__rectangular_prism_face_areas",
+        "bridge_description": "Students who can multiply fractions still miscalculate face areas when the prism's dimensions are given as fractions, leading to wrong volume results.",
+        "card_hint": "Use real\u2011world rectangular\u2011prism problems that require multiplying fractional lengths to reinforce the connection between fraction arithmetic and face\u2011area calculations.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "algebraic_manipulation",
+        "measurement_units"
+      ],
+      "names": [
+        "Algebraic Structure and Symbolic Manipulation",
+        "Units, Measurement, and Dimensional Reasoning"
+      ],
+      "s1_similarity": 0.517,
+      "s2_archetype_count": 1,
+      "score": 2.635,
+      "cluster": "cross_cluster",
+      "cycle_risk": "none",
+      "cross_validated": true,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "algebraic_manipulation__literal_equation_rearrangement",
+        "to_ingredient_id": "measurement_units__unit_rate_per_one",
+        "bridge_description": "Students who can rearrange equations often fail to express a quantity as a unit rate per one, breaking the link between algebraic manipulation and correct unit interpretation.",
+        "card_hint": "Teach students to isolate the 'per one' quantity in word problems by explicitly rewriting the equation to solve for that variable.",
+        "difficulty": 0.6
+      }
+    },
+    {
+      "pair": [
+        "right_triangle_geometry",
+        "triangles_congruence"
+      ],
+      "names": [
+        "Right Triangle Geometry",
+        "Triangles and Congruence"
+      ],
+      "s1_similarity": 0.645,
+      "s2_archetype_count": 0,
+      "score": 2.502,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": false,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "right_triangle__pythagorean_theorem",
+        "to_ingredient_id": "triangles__congruence_criteria",
+        "bridge_description": "Without linking the Pythagorean relationship of legs and hypotenuse to the RHS congruence rule, students cannot recognize when two right triangles are congruent by side\u2011hypotenuse\u2011side.",
+        "card_hint": "Introduce the RHS (right\u2011angle\u2011hypotenuse\u2011side) criterion as a direct application of the Pythagorean theorem within the broader SAS congruence framework.",
+        "difficulty": 0.55
+      }
+    },
+    {
+      "pair": [
+        "circles_geometry",
+        "triangles_congruence"
+      ],
+      "names": [
+        "Geometry of Circles",
+        "Triangles and Congruence"
+      ],
+      "s1_similarity": 0.616,
+      "s2_archetype_count": 0,
+      "score": 1.986,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": false,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "circles__inscribed_angle",
+        "to_ingredient_id": "triangles__congruence_criteria",
+        "bridge_description": "Without the inscribed angle theorem, students cannot recognize that a triangle formed with a circle's diameter is a right triangle, blocking the use of the HL congruence criterion.",
+        "card_hint": "Teach Thales' theorem (an angle subtended by a diameter is a right angle) and show how it identifies right triangles for applying HL congruence.",
+        "difficulty": 0.45
+      }
+    },
+    {
+      "pair": [
+        "circles_geometry",
+        "geometric_transformations"
+      ],
+      "names": [
+        "Geometry of Circles",
+        "Geometric Transformations"
+      ],
+      "s1_similarity": 0.611,
+      "s2_archetype_count": 0,
+      "score": 1.897,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": false,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "B_TO_A",
+        "from_ingredient_id": "transformations__rotation_rules",
+        "to_ingredient_id": "circles__arc_length_sector",
+        "bridge_description": "Without the rotation rule, a student cannot connect angle measure to the length of an arc on a circle.",
+        "card_hint": "Demonstrate that rotating a radius through an angle \u03b8 sweeps an arc of length s = r\u00b7\u03b8, linking rotation to arc length.",
+        "difficulty": 0.45
+      }
+    },
+    {
+      "pair": [
+        "circles_geometry",
+        "right_triangle_geometry"
+      ],
+      "names": [
+        "Geometry of Circles",
+        "Right Triangle Geometry"
+      ],
+      "s1_similarity": 0.61,
+      "s2_archetype_count": 0,
+      "score": 1.88,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": false,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "circles__inscribed_angle",
+        "to_ingredient_id": "right_triangle__pythagorean_theorem",
+        "bridge_description": "If students don't connect the inscribed angle theorem to Thales' theorem, they miss that a triangle formed by a diameter and any point on the circle is a right triangle, so they can't apply the Pythagorean theorem.",
+        "card_hint": "Demonstrate with a diagram that an angle subtended by a diameter is 90\u00b0, then label the sides and use the Pythagorean theorem.",
+        "difficulty": 0.55
+      }
+    },
+    {
+      "pair": [
+        "circles_geometry",
+        "trigonometry_basics"
+      ],
+      "names": [
+        "Geometry of Circles",
+        "Trigonometry Basics"
+      ],
+      "s1_similarity": 0.607,
+      "s2_archetype_count": 0,
+      "score": 1.837,
+      "cluster": "same_cluster",
+      "cycle_risk": "none",
+      "cross_validated": false,
+      "draft": {
+        "verdict": "BRIDGE",
+        "direction": "A_TO_B",
+        "from_ingredient_id": "circles__arc_length_sector",
+        "to_ingredient_id": "trig_basics__angle_as_rotation",
+        "bridge_description": "Students cannot compute a sector's arc length because they fail to treat the sector's central angle as a rotation measured in radians.",
+        "card_hint": "Show that the central angle of a sector is an angular displacement just like any rotation on the unit circle, linking arc length = r\u00b7\u03b8 to the radian definition of angle.",
+        "difficulty": 0.45
+      }
+    }
+  ]
+}
