@@ -124,12 +124,23 @@ const PLATFORM_BUDGET_DOC = db.collection('generation_budgets').doc('_platform')
  * (unlike checkAndRecordAttempt, a job's real cost isn't known until it
  * finishes), so this alone can't prevent every possible overshoot from
  * jobs that are already in flight when the month is close to the cap —
- * see recordActualSpend for why that's an accepted, bounded gap. */
-export async function checkPlatformBudget(): Promise<PlatformBudgetVerdict> {
+ * see recordActualSpend for why that's an accepted, bounded gap.
+ *
+ * uid (2026-08-27, explicit ask: "there's a budget quota right now, and I
+ * can't really test it. Remove all that shit for this account, while I'm
+ * testing and building... let's go into dev mode"): when given and in
+ * UNLIMITED_ATTEMPT_UIDS, skips the ALLOWED comparison the same way
+ * checkAndRecordAttempt already skips the daily cap for this uid - spend is
+ * still tracked (recordActualSpend still runs, still bills the real
+ * platform total) so the number stays honest, only the block is lifted for
+ * dev/testing. Every other uid is unaffected; this does not touch the cap
+ * for real students. */
+export async function checkPlatformBudget(uid?: string): Promise<PlatformBudgetVerdict> {
   const snap = await PLATFORM_BUDGET_DOC.get()
   const data = snap.exists ? (snap.data() as { monthKey?: string; spentUsd?: number }) : {}
   const spent = data.monthKey === monthKey() ? data.spentUsd ?? 0 : 0
-  return { allowed: spent < PLATFORM_MONTHLY_BUDGET_USD, spentThisMonthUsd: spent, capUsd: PLATFORM_MONTHLY_BUDGET_USD }
+  const unlimited = uid !== undefined && UNLIMITED_ATTEMPT_UIDS.has(uid)
+  return { allowed: unlimited || spent < PLATFORM_MONTHLY_BUDGET_USD, spentThisMonthUsd: spent, capUsd: PLATFORM_MONTHLY_BUDGET_USD }
 }
 
 /**

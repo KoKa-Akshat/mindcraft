@@ -149,7 +149,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // "prefer the student's key, fall back to the platform's" pattern
   // GeneratedSimClient/BookGenerationClient already use.
   if (!studentGeminiKey) {
-    const platformBudget = await checkPlatformBudget()
+    const platformBudget = await checkPlatformBudget(uid)
     if (!platformBudget.allowed) {
       return res.status(429).json({
         status: 'rate_limited',

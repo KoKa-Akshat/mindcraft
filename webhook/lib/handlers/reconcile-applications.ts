@@ -140,7 +140,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // both checks when a student key is present, same as
   // generate-lesson-outline.ts.
   if (!studentGeminiKey) {
-    const platformBudget = await checkPlatformBudget()
+    const platformBudget = await checkPlatformBudget(uid)
     if (!platformBudget.allowed) {
       return res.status(429).json({
         status: 'rate_limited',

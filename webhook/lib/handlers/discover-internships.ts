@@ -152,7 +152,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // would mean unlimited free-to-them Search API usage against MindCraft's
   // own quota/billing - a real exposure the other BYOK'd handlers don't
   // share, so the cap stays active regardless of whether a key is present.
-  const platformBudget = await checkPlatformBudget()
+  const platformBudget = await checkPlatformBudget(uid)
   if (!platformBudget.allowed) {
     return res.status(429).json({
       status: 'rate_limited',

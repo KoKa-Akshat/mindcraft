@@ -348,7 +348,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Cache miss - only a real generation attempt counts against the daily
   // cap (a placeholder of 3/day, see generationBudget.ts - a cache hit
   // above already returned and never reaches here).
-  const platformBudget = await checkPlatformBudget()
+  const platformBudget = await checkPlatformBudget(uid)
   if (!platformBudget.allowed) {
     return res.status(429).json({
       error: `This closed test's monthly generation budget is used up ($${platformBudget.spentThisMonthUsd.toFixed(2)}/$${platformBudget.capUsd}). It resets next month.`,

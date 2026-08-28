@@ -110,7 +110,7 @@ async function handleStart(uid: string, rawTopic: string, res: VercelResponse, s
   // terminal poll below still runs and still bills the platform budget
   // for that real, smaller remaining cost.
   if (!studentGeminiKey) {
-    const platformBudget = await checkPlatformBudget()
+    const platformBudget = await checkPlatformBudget(uid)
     if (!platformBudget.allowed) {
       return res.status(429).json({
         status: 'rate_limited',
