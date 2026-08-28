@@ -83,6 +83,7 @@ struct DeskGridDashboardView: View {
         case none
         case memo
         case flows
+        case transcribe
     }
 
     var initialRail: Rail = .none
@@ -105,7 +106,14 @@ struct DeskGridDashboardView: View {
     var onFileHomeworkToBinder: (_ title: String, _ body: String) -> Void = { _, _ in }
     var onOpenFlow: (String) -> Void = { _ in }
     var onSaveMemo: (String) -> Void = { _ in }
-    var onTranscribe: () -> Void = {}
+    /// Same "side effect this view doesn't own" shape as onSaveMemo -
+    /// archiving (FieldDeskStore.fileJesseTranscript) + the workDashboard
+    /// session-report kick-off both live in FieldDeskView, not here. Fires
+    /// when transcribeRail's Stop button ends the ambient session
+    /// (2026-08-27) - was FieldDeskView's own now-dead showJesseCallSheet
+    /// .sheet(onEnd:), moved here so ending a transcript from the blended
+    /// rail still gets filed the same way ending it from that old drawer did.
+    var onFileTranscript: (_ turns: [JesseCallTurn], _ context: String?, _ ambient: Bool) -> Void = { _, _, _ in }
     var intelHasData: Bool = false
     var binderHasData: Bool = false
     var onGmailLinked: (_ calendarToo: Bool) -> Void = { _ in }
@@ -455,7 +463,7 @@ struct DeskGridDashboardView: View {
         onFileHomeworkToBinder: @escaping (_ title: String, _ body: String) -> Void = { _, _ in },
         onOpenFlow: @escaping (String) -> Void = { _ in },
         onSaveMemo: @escaping (String) -> Void = { _ in },
-        onTranscribe: @escaping () -> Void = {},
+        onFileTranscript: @escaping (_ turns: [JesseCallTurn], _ context: String?, _ ambient: Bool) -> Void = { _, _, _ in },
         intelHasData: Bool = false,
         binderHasData: Bool = false,
         onGmailLinked: @escaping (_ calendarToo: Bool) -> Void = { _ in },
@@ -484,7 +492,7 @@ struct DeskGridDashboardView: View {
         self.onFileHomeworkToBinder = onFileHomeworkToBinder
         self.onOpenFlow = onOpenFlow
         self.onSaveMemo = onSaveMemo
-        self.onTranscribe = onTranscribe
+        self.onFileTranscript = onFileTranscript
         self.intelHasData = intelHasData
         self.binderHasData = binderHasData
         self.onGmailLinked = onGmailLinked
@@ -936,8 +944,13 @@ struct DeskGridDashboardView: View {
                 }
             }
             if expanded {
-                pin(rail == .memo ? WorkArtboard.memoRail : WorkArtboard.flowsRail, scale: scale) {
-                    if rail == .memo { memoRail } else { flowsRail }
+                switch rail {
+                case .memo:
+                    pin(WorkArtboard.memoRail, scale: scale) { memoRail }
+                case .transcribe:
+                    pin(WorkArtboard.transcribeRail, scale: scale) { transcribeRail }
+                case .flows, .none:
+                    pin(WorkArtboard.flowsRail, scale: scale) { flowsRail }
                 }
             }
         }
@@ -1932,7 +1945,10 @@ struct DeskGridDashboardView: View {
         HStack(spacing: 10) {
             jesseBoxIcon("note.text") { setRail(rail == .memo ? .none : .memo) }
                 .accessibilityIdentifier("deskGridJesseIcon_Memo")
-            jesseBoxIcon("waveform", action: onTranscribe)
+            // Blended rail (2026-08-27), not the old onTranscribe ->
+            // showJesseCallSheet bottom drawer - see transcribeRail's own
+            // doc comment.
+            jesseBoxIcon("waveform") { setRail(rail == .transcribe ? .none : .transcribe) }
                 .accessibilityIdentifier("deskGridJesseIcon_Transcribe")
             jesseBoxIcon(gmail.hasGmailScope ? "envelope.fill" : "envelope") {
                 if gmail.hasGmailScope {
@@ -2652,19 +2668,27 @@ struct DeskGridDashboardView: View {
     /// helper would leak this one box's special case into every call site.
     private func learnModuleBox(ink: Color) -> some View {
         Button {
-            onOpenStudyCompanion(nil)
+            // Retargeted off StudyCompanionView's full-screen takeover
+            // (2026-08-27, explicit ask: "Gurukul, we don't need because
+            // it's ask anything... I still have to go to Gurukul to learn
+            // something. This should be possible from the Jesse ask
+            // anything section right there"). Opens the SAME inline
+            // agent-takeover panel the "Ask anything…" search field
+            // already drives (startAgentTakeover/agentTakeoverActive,
+            // borrowing Binder+Intel in place) instead of navigating to a
+            // separate screen - identifier kept stable (deskGridModule_Learn).
+            closeBinderContentViewer()
+            withAnimation(.easeInOut(duration: 0.2)) {
+                agentTakeoverActive = true
+            }
+            resetAgentTakeoverFields()
         } label: {
             VStack(alignment: .leading, spacing: 8) {
                 JesseRailView.raccoonImage
                     .resizable()
                     .scaledToFit()
                     .frame(height: 42)
-                // Renamed to Gurukul (2026-08-24, explicit ask - a
-                // traditional term for a place of learning/mentorship).
-                // Same box, same action (onOpenStudyCompanion), same
-                // raccoon art the founder confirmed liking here already -
-                // identifier kept stable (deskGridModule_Learn).
-                Text("Gurukul")
+                Text("Ask anything")
                     .font(.mcContent(size: 16, weight: .semibold))
                     .foregroundColor(ink)
                 Spacer(minLength: 0)
@@ -3224,7 +3248,7 @@ struct DeskGridDashboardView: View {
 
     private func agentIntelReplyBody() -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            agentTakeoverLabel("Agent", ink: .white)
+            agentTakeoverLabel("Ask anything", ink: .white)
             if agentAskBusy {
                 HStack(spacing: 8) {
                     ProgressView().tint(.white)
@@ -3232,14 +3256,23 @@ struct DeskGridDashboardView: View {
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundColor(.white.opacity(0.85))
                 }
-            } else {
+            } else if let reply = agentReplyText {
                 ScrollView(showsIndicators: false) {
-                    Text(agentReplyText ?? "")
+                    Text(reply)
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundColor(.white)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+            } else {
+                // The reply-in-progress states above already carry their
+                // own copy - this is only the true "just opened, nothing
+                // asked yet" state, which used to render as a blank Text("").
+                Text("Type a question in \u{201C}Ask anything\u{2026}\u{201D} below - what to learn, what to build, anything.")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundColor(.white.opacity(0.75))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .accessibilityIdentifier("deskGridAgentDraft")
@@ -3653,7 +3686,7 @@ struct DeskGridDashboardView: View {
             // already on the dashboard's own dock. Just Memo + Transcribe
             // (ambient room recording, not a Jesse call) + the flow search.
             dockChip("Memo", system: "note.text", identifier: "deskGridFlowsMemo") { setRail(.memo) }
-            dockChip("Transcribe", system: "waveform", identifier: "deskGridFlowsTranscribe", action: onTranscribe)
+            dockChip("Transcribe", system: "waveform", identifier: "deskGridFlowsTranscribe") { setRail(.transcribe) }
             // Resume + Settings here too (2026-08-19, explicit ask: "add the
             // settings and resume to the search bar dock too across the
             // flows") - same chips workDock got, so they're reachable no
@@ -3817,6 +3850,84 @@ struct DeskGridDashboardView: View {
         .accessibilityElement(children: .contain)
     }
 
+    /// Blended replacement for the old `showJesseCallSheet` bottom drawer
+    /// (2026-08-27, explicit ask: "transcribe opens its own fucking
+    /// window... immediately start taking notes... blend it into the page
+    /// neatly"). Same white-card rail chrome as `memoRail`, same
+    /// turns+liveTranscript rendering `JesseCallSheetView` already proved,
+    /// just restyled for this light background instead of that dark one.
+    /// Starts listening the moment the rail appears - no separate "start"
+    /// tap - and only ends the session on an explicit Stop, so navigating
+    /// away leaves it recording (the existing `JesseCallPill` already
+    /// surfaces that state everywhere else in the app).
+    private var transcribeRail: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Transcribe")
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(gridHex: "143a2e"))
+                Spacer(minLength: 0)
+                if jesseCall.isActive, jesseCall.isAmbient {
+                    Button {
+                        let ambient = jesseCall.isAmbient
+                        let ctx = jesseCall.context
+                        let turns = jesseCall.end()
+                        onFileTranscript(turns, ctx, ambient)
+                    } label: {
+                        Text("Stop")
+                            .font(.system(size: 11, weight: .heavy, design: .rounded))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(Capsule().fill(Color(gridHex: "b0473f")))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("deskGridTranscribeStop")
+                }
+            }
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ForEach(jesseCall.currentSessionTurns) { turn in
+                            Text(turn.text)
+                                .font(.system(size: 12, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(gridHex: "3a362c"))
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
+                            Text(jesseCall.liveTranscript)
+                                .font(.system(size: 12, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(gridHex: "3a362c").opacity(0.5))
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        if jesseCall.currentSessionTurns.isEmpty, jesseCall.liveTranscript.isEmpty {
+                            Text("Listening\u{2026} start talking and it'll show up here.")
+                                .font(.system(size: 12, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(gridHex: "8a8478"))
+                        }
+                        Color.clear.frame(height: 1).id("bottom")
+                    }
+                }
+                .onChange(of: jesseCall.turns.count) { _, _ in withAnimation { proxy.scrollTo("bottom") } }
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.white)
+                .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
+        )
+        .accessibilityIdentifier("deskGridTile_Transcribe")
+        .accessibilityElement(children: .contain)
+        .onAppear {
+            if !jesseCall.isActive {
+                jesseCall.beginAmbientTranscription(context: "flows")
+            }
+        }
+    }
+
     private var flowsRail: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Flows")
@@ -3937,6 +4048,9 @@ private enum WorkArtboard {
     static let p5Intel = CGRect(x: 825, y: 35, width: 340, height: 525)
     static let memoRail = CGRect(x: 1231, y: 193, width: 199, height: 194)
     static let flowsRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
+    // Same tall footprint as flowsRail - a scrolling transcript needs the
+    // room, not the memoRail's 3-line box.
+    static let transcribeRail = CGRect(x: 1231, y: 54, width: 199, height: 566)
     /// Content-viewer mode (2026-08-18, explicit ask: tap an uploaded
     /// file, Binder "mixes with Intel to get all that space on the
     /// right"). Went through two real widenings the same night: first to

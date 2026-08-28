@@ -300,21 +300,34 @@ struct KnowledgeMapView: View {
                     zoomControls.padding(10)
                 }
 
-                // Side panel on phone (2026-08-24, explicit ask: "when you
-                // click on any individual dots it should open a tab on the
-                // right not below shrinking the graph") - a fixed-width
-                // column next to the canvas instead of a section below it
-                // that ate into the canvas's own height budget every time
-                // a node was tapped. iPad keeps the original below-canvas
-                // stack untouched.
+                // Detail panel as a floating overlay, not a layout sibling
+                // (2026-08-27, real bug fix: "if I press on something, the
+                // dots on the screen move... is it logical?"). It wasn't -
+                // canvasCard sat in the same HStack/VStack as the panel, so
+                // inserting the panel shrank canvasCard's own width (phone)
+                // or height (iPad), and EVERY node's screen position is
+                // computed from that shrunk size (graphCanvas's own
+                // GeometryReader) - the whole graph visibly resettled around
+                // whichever node was tapped, which reads as random motion,
+                // not a bug in any one node. canvasCard's frame is now fixed
+                // regardless of selection; the panel floats on top with its
+                // own card chrome (MapColor.cardPaper, same shadow language
+                // as canvasCard) instead of taking space from it.
                 if phoneFullScreen {
-                    HStack(spacing: 10) {
-                        canvasCard.frame(maxWidth: .infinity, maxHeight: .infinity)
+                    ZStack(alignment: .trailing) {
+                        canvasCard
                         if let id = selectedId {
-                            ScrollView {
+                            ScrollView(showsIndicators: false) {
                                 detailOrRoutePanel(for: id)
                             }
-                            .frame(width: 240)
+                            .frame(width: 240, height: 340)
+                            .padding(12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                    .fill(MapColor.cardPaper)
+                                    .shadow(color: .black.opacity(0.16), radius: 16, y: 6)
+                            )
+                            .padding(.trailing, 8)
                             .transition(.move(edge: .trailing).combined(with: .opacity))
                         }
                     }
@@ -322,15 +335,28 @@ struct KnowledgeMapView: View {
                     .padding(.horizontal, horizontalPad)
                     .animation(.easeInOut(duration: 0.22), value: selectedId)
                 } else {
-                    canvasCard
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.horizontal, horizontalPad)
+                    ZStack(alignment: .bottom) {
+                        canvasCard
+                        if let id = selectedId {
+                            ScrollView(showsIndicators: false) {
+                                detailOrRoutePanel(for: id)
+                            }
+                            .frame(maxHeight: 260)
+                            .padding(14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                    .fill(MapColor.cardPaper)
+                                    .shadow(color: .black.opacity(0.16), radius: 18, y: -4)
+                            )
+                            .padding(.bottom, 6)
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.horizontal, horizontalPad)
+                    .animation(.easeInOut(duration: 0.22), value: selectedId)
 
                     legendRow.padding(.horizontal, horizontalPad)
-
-                    if let id = selectedId {
-                        detailOrRoutePanel(for: id).padding(.horizontal, horizontalPad).padding(.bottom, 4)
-                    }
                 }
             }
         }

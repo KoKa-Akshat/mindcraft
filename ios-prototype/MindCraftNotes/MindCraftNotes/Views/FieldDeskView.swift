@@ -136,10 +136,6 @@ struct FieldDeskView: View {
     @State private var schedulingWorkflowsMinimized = false
     @State private var gmailStartReconnect = false
     @State private var gmailOpenTopReply = false
-    /// "Transcribe" from the Flows dock — ambient room recording via
-    /// `JesseCallSession.beginAmbientTranscription()`, not a two-way call.
-    /// Same sheet + pill as a Jesse call; `isAmbient` suppresses replies.
-    @State private var showJesseCallSheet = false
     /// BYOB "Cook a Field Book" from the Binder popup.
     @State private var showByobStudio = false
     /// A tapped Study Session row from the Binder popup's new section
@@ -924,11 +920,16 @@ struct FieldDeskView: View {
                             }
                         },
                         onSaveMemo: { store.saveMemo($0) },
-                        onTranscribe: {
-                            if !jesseCall.isActive {
-                                jesseCall.beginAmbientTranscription(context: "flows")
+                        // Moved off the old showJesseCallSheet .sheet(onEnd:)
+                        // (2026-08-27, dead now that transcribeRail's Stop
+                        // button ends the session directly) - same archive +
+                        // session-report side effects, just triggered from
+                        // the blended rail instead of that drawer.
+                        onFileTranscript: { turns, ctx, ambient in
+                            store.fileJesseTranscript(turns, context: ctx, ambient: ambient)
+                            if ctx == "workDashboard" {
+                                SessionReportClient.generate(transcript: turns, context: ctx)
                             }
-                            showJesseCallSheet = true
                         },
                         intelHasData: !store.intelLines.isEmpty,
                         // BinderStore, not FieldDeskStore.FiledItem - same
@@ -1530,31 +1531,6 @@ struct FieldDeskView: View {
             openBinderBookGenerationInfo = jesseCall.openedChapterBookGenerationInfo
             openBinderBookFocusConceptIds = jesseCall.openedChapterBookFocusConceptIds
             jesseCall.closeChapterBook()
-        }
-        .sheet(isPresented: $showJesseCallSheet) {
-            JesseCallSheetView(
-                call: jesseCall,
-                onClose: { showJesseCallSheet = false },
-                onEnd: {
-                    let ambient = jesseCall.isAmbient
-                    let ctx = jesseCall.context
-                    let turns = jesseCall.end()
-                    store.fileJesseTranscript(turns, context: ctx, ambient: ambient)
-                    // Session report generation (2026-08-21) - scoped to
-                    // workDashboard specifically, since that's the flow the
-                    // ZPD/sim-telemetry design is about (lessons + sims);
-                    // other call contexts (resume help, English practice,
-                    // free-form kitchen chat) don't have the same
-                    // engagement signal to report on.
-                    if ctx == "workDashboard" {
-                        SessionReportClient.generate(transcript: turns, context: ctx)
-                    }
-                    showJesseCallSheet = false
-                }
-            )
-            // Explicit small-drawer size (2026-08-21 design pass) - see
-            // DeskShellView's matching call site for the same reasoning.
-            .presentationDetents([.medium])
         }
         .fullScreenCover(isPresented: $showByobStudio) {
             CreateInstanceStudioView(binderStore: binderStore) { _ in }
@@ -3814,13 +3790,22 @@ struct FieldDeskView: View {
                 }
                 .accessibilityIdentifier("fieldDeskAddCalendar")
 
+                // Blended dashboard rail (2026-08-27, real bug fix: this
+                // used to placeWidget(.memo) - the old free-drag canvas's
+                // bare, unstyled TextField, reported as "went to the old
+                // test design, looks completely fucked up." memoRail on
+                // the dashboard (DeskGridDashboardView) is the real, live
+                // Memo experience now - same redirect pattern Flows/
+                // Dashboard rows above already use.
                 addMenuRow(
                     title: "Memo",
-                    subtitle: placedWidgets.contains(.memo) ? "Already on desk" : "Quick note card",
+                    subtitle: "Quick note card",
                     system: "note.text",
                     enabled: true
                 ) {
-                    placeWidget(.memo)
+                    showAddPanel = false
+                    dashboardStartRail = .memo
+                    _ = openOverlays.insert(.deskGridDashboard)
                 }
                 .accessibilityIdentifier("fieldDeskAddMemo")
 
@@ -3834,13 +3819,17 @@ struct FieldDeskView: View {
                 }
                 .accessibilityIdentifier("fieldDeskAddGmail")
 
+                // Same redirect as Memo above (2026-08-27) - was
+                // placeWidget(.notes), the old free-drag canvas's card.
                 addMenuRow(
                     title: "Transcribe Notes",
-                    subtitle: placedWidgets.contains(.notes) ? "Already on desk" : "Live transcribe card",
+                    subtitle: "Live transcribe card",
                     system: "waveform",
                     enabled: true
                 ) {
-                    placeWidget(.notes)
+                    showAddPanel = false
+                    dashboardStartRail = .transcribe
+                    _ = openOverlays.insert(.deskGridDashboard)
                 }
                 .accessibilityIdentifier("fieldDeskAddNotes")
 

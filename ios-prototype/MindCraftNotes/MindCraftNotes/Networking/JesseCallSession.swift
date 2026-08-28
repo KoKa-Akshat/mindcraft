@@ -668,6 +668,14 @@ final class JesseCallSession: NSObject, ObservableObject {
         workDashboardLesson = lesson
     }
 
+    /// This session's own turns only, the same slice `end()` computes -
+    /// exposed so a live view (DeskGridDashboardView's Transcribe rail) can
+    /// render an in-progress ambient transcript without ending the session
+    /// first just to read it.
+    var currentSessionTurns: [JesseCallTurn] {
+        Array(turns.suffix(max(0, turns.count - sessionTurnOrigin)))
+    }
+
     /// Ends the call and returns the final transcript for the caller to
     /// summarize/archive - the session itself doesn't decide where a
     /// transcript goes (Firestore, Drive, both), it just hands over what
