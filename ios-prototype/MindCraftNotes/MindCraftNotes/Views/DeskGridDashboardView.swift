@@ -2002,17 +2002,6 @@ struct DeskGridDashboardView: View {
                 }
             }
             .accessibilityIdentifier("deskGridJesseIcon_Calendar")
-            // "Lab...can move next to calendar as a dot" (2026-08-27) - same
-            // destination as the Lab module box (mascotModuleBox("Lab", ...)
-            // in moduleBoxColumn), just also reachable as a quick icon here
-            // now that Gurukul's old spot in this row's neighborhood is
-            // freed up by the Ask-anything retarget. Module box left in
-            // place, not removed - this is additive, not a relocation.
-            jesseBoxIcon("pencil.and.scribble") {
-                closeBinderContentViewer()
-                viewingDesignStudio = true
-            }
-            .accessibilityIdentifier("deskGridJesseIcon_Lab")
         }
     }
 
@@ -3893,14 +3882,21 @@ struct DeskGridDashboardView: View {
 
     /// Blended replacement for the old `showJesseCallSheet` bottom drawer
     /// (2026-08-27, explicit ask: "transcribe opens its own fucking
-    /// window... immediately start taking notes... blend it into the page
-    /// neatly"). Same white-card rail chrome as `memoRail`, same
-    /// turns+liveTranscript rendering `JesseCallSheetView` already proved,
-    /// just restyled for this light background instead of that dark one.
-    /// Starts listening the moment the rail appears - no separate "start"
-    /// tap - and only ends the session on an explicit Stop, so navigating
-    /// away leaves it recording (the existing `JesseCallPill` already
-    /// surfaces that state everywhere else in the app).
+    /// window... blend it into the page neatly"). Same white-card rail
+    /// chrome as `memoRail`, same turns+liveTranscript rendering
+    /// `JesseCallSheetView` already proved, just restyled for this light
+    /// background instead of that dark one.
+    ///
+    /// Does NOT auto-start listening on appear (reverted 2026-08-27, same
+    /// message: "it's so weird it's just listening to me on random times...
+    /// only happens on simulations where there's a necessity... interactive
+    /// like you talk, you answer questions" - the mic should turn on
+    /// because the student asked it to, never because a panel opened).
+    /// Idle state shows a real Start button; only ends the session on an
+    /// explicit Stop once started, so navigating away leaves it recording
+    /// (the existing `JesseCallPill` already surfaces that state everywhere
+    /// else in the app) - that half of the original design still holds,
+    /// only the auto-start was wrong.
     private var transcribeRail: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -3926,32 +3922,55 @@ struct DeskGridDashboardView: View {
                     .accessibilityIdentifier("deskGridTranscribeStop")
                 }
             }
-            ScrollViewReader { proxy in
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        ForEach(jesseCall.currentSessionTurns) { turn in
-                            Text(turn.text)
-                                .font(.system(size: 12, weight: .medium, design: .rounded))
-                                .foregroundColor(Color(gridHex: "3a362c"))
-                                .fixedSize(horizontal: false, vertical: true)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+            if jesseCall.isActive, jesseCall.isAmbient {
+                ScrollViewReader { proxy in
+                    ScrollView(showsIndicators: false) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            ForEach(jesseCall.currentSessionTurns) { turn in
+                                Text(turn.text)
+                                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                                    .foregroundColor(Color(gridHex: "3a362c"))
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
+                                Text(jesseCall.liveTranscript)
+                                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                                    .foregroundColor(Color(gridHex: "3a362c").opacity(0.5))
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            if jesseCall.currentSessionTurns.isEmpty, jesseCall.liveTranscript.isEmpty {
+                                Text("Listening\u{2026} start talking and it'll show up here.")
+                                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                                    .foregroundColor(Color(gridHex: "8a8478"))
+                            }
+                            Color.clear.frame(height: 1).id("bottom")
                         }
-                        if jesseCall.isListening, !jesseCall.liveTranscript.isEmpty {
-                            Text(jesseCall.liveTranscript)
-                                .font(.system(size: 12, weight: .medium, design: .rounded))
-                                .foregroundColor(Color(gridHex: "3a362c").opacity(0.5))
-                                .fixedSize(horizontal: false, vertical: true)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        if jesseCall.currentSessionTurns.isEmpty, jesseCall.liveTranscript.isEmpty {
-                            Text("Listening\u{2026} start talking and it'll show up here.")
-                                .font(.system(size: 12, weight: .medium, design: .rounded))
-                                .foregroundColor(Color(gridHex: "8a8478"))
-                        }
-                        Color.clear.frame(height: 1).id("bottom")
                     }
+                    .onChange(of: jesseCall.turns.count) { _, _ in withAnimation { proxy.scrollTo("bottom") } }
                 }
-                .onChange(of: jesseCall.turns.count) { _, _ in withAnimation { proxy.scrollTo("bottom") } }
+            } else {
+                Spacer(minLength: 12)
+                Button {
+                    jesseCall.beginAmbientTranscription(context: "flows")
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "mic.fill")
+                        Text("Start listening")
+                    }
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(gridHex: "143a2e"))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Capsule().fill(Color(gridHex: "c4f547")))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("deskGridTranscribeStart")
+                Text("Records the room until you tap Stop.")
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(Color(gridHex: "8a8478"))
+                Spacer(minLength: 12)
             }
         }
         .padding(12)
@@ -3962,11 +3981,6 @@ struct DeskGridDashboardView: View {
         )
         .accessibilityIdentifier("deskGridTile_Transcribe")
         .accessibilityElement(children: .contain)
-        .onAppear {
-            if !jesseCall.isActive {
-                jesseCall.beginAmbientTranscription(context: "flows")
-            }
-        }
     }
 
     private var flowsRail: some View {
