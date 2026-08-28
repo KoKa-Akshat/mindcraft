@@ -2002,6 +2002,17 @@ struct DeskGridDashboardView: View {
                 }
             }
             .accessibilityIdentifier("deskGridJesseIcon_Calendar")
+            // "Lab...can move next to calendar as a dot" (2026-08-27) - same
+            // destination as the Lab module box (mascotModuleBox("Lab", ...)
+            // in moduleBoxColumn), just also reachable as a quick icon here
+            // now that Gurukul's old spot in this row's neighborhood is
+            // freed up by the Ask-anything retarget. Module box left in
+            // place, not removed - this is additive, not a relocation.
+            jesseBoxIcon("pencil.and.scribble") {
+                closeBinderContentViewer()
+                viewingDesignStudio = true
+            }
+            .accessibilityIdentifier("deskGridJesseIcon_Lab")
         }
     }
 
