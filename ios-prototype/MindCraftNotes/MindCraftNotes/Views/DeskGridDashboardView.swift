@@ -3656,9 +3656,13 @@ struct DeskGridDashboardView: View {
             // "Ask anything" (2026-08-22, explicit ask) - `submitSearch`
             // already does real keyword routing + a full agent takeover
             // for anything longer. Fixed width so it can't stretch across
-            // the whole row.
+            // the whole row. Widened 240 -> 420 (2026-08-27, explicit ask:
+            // "make the search bar next to Jesse bigger, and that's our
+            // ask anything now" - this field IS the primary entry point
+            // now that Gurukul retargets here instead of its own screen,
+            // so it needs real visual weight, not a token search box.
             searchField(placeholder: "Ask anything…", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
-                .frame(width: 240)
+                .frame(width: 420)
         }
         // NOT .accessibilityIdentifier() directly on this container - that
         // clobbers every child dockChip's own identifier with this one

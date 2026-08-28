@@ -65,6 +65,23 @@ struct ResumeAgentView: View {
     private let stageInk = Color(red: 12 / 255, green: 18 / 255, blue: 7 / 255)
     private let lime = Color(red: 196 / 255, green: 245 / 255, blue: 71 / 255)
     private let cream = Color(red: 255 / 255, green: 248 / 255, blue: 233 / 255)
+    /// Text meant to sit DIRECTLY on the stage background (no local pill/
+    /// card fill of its own) - `cream` reads fine on the dark stage, but
+    /// the same cream text on the embedded cream PAGE (see the background
+    /// swap above) would be nearly invisible. Buttons with their own opaque
+    /// fill (the lime "Upload" pill, the black/red "Talk to Jesse" pill)
+    /// don't use this - their own fill provides contrast regardless of the
+    /// page behind them.
+    private var stageOnPageText: Color {
+        embedded ? Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255) : cream
+    }
+    /// Same reasoning as stageOnPageText, for the two subtle white-wash
+    /// pills ("Let's talk it through", transcript lines) that read as a
+    /// faint lighter patch against the dark stage but would be nearly
+    /// invisible against the cream page.
+    private var stageWashFill: Color {
+        embedded ? Color(red: 20 / 255, green: 58 / 255, blue: 46 / 255).opacity(0.08) : Color.white.opacity(0.12)
+    }
 
     var body: some View {
         Group {
@@ -83,11 +100,27 @@ struct ResumeAgentView: View {
                 // JobOSShellView's paper-board look and the web import
                 // page aren't part of this redesign.
                 ZStack {
-                    stageInk.ignoresSafeArea()
-                    RadialGradient(
-                        colors: [Color(red: 26 / 255, green: 36 / 255, blue: 16 / 255).opacity(0.9), stageInk],
-                        center: .center, startRadius: 40, endRadius: 520
-                    ).ignoresSafeArea()
+                    if embedded {
+                        // Real bug, live testing 2026-08-27: "Gantabya does
+                        // not blend in either. Like, it's just a black
+                        // screen." The dark Gurukul-stage treatment below
+                        // was built for a full-screen destination
+                        // (2026-08-25 ask: "expand the dark all over the
+                        // screen like gurukul") - Gantabya isn't one
+                        // anymore, it renders inside the cream dashboard's
+                        // own Binder content-viewer slot, so painting a
+                        // near-black stage there is exactly what "doesn't
+                        // blend" looks like. Same cream the dashboard's own
+                        // page uses (DeskGridDashboardView's
+                        // Color(gridHex: "fff8e9")), not a new color.
+                        Color(red: 255 / 255, green: 248 / 255, blue: 233 / 255).ignoresSafeArea()
+                    } else {
+                        stageInk.ignoresSafeArea()
+                        RadialGradient(
+                            colors: [Color(red: 26 / 255, green: 36 / 255, blue: 16 / 255).opacity(0.9), stageInk],
+                            center: .center, startRadius: 40, endRadius: 520
+                        ).ignoresSafeArea()
+                    }
                     resumeStage
                 }
             } else if mode == .applications {
@@ -182,7 +215,7 @@ struct ResumeAgentView: View {
                     .frame(width: 132, height: 132)
                 Text(resumeStatusCaption)
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    .foregroundColor(cream.opacity(0.55))
+                    .foregroundColor(stageOnPageText.opacity(0.55))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .fixedSize(horizontal: false, vertical: true)
@@ -225,17 +258,17 @@ struct ResumeAgentView: View {
             Spacer(minLength: 0)
             Text("Hey \(firstName), I need a resume to work with.")
                 .font(.system(size: 28, weight: .bold, design: .rounded))
-                .foregroundColor(cream)
+                .foregroundColor(stageOnPageText)
                 .fixedSize(horizontal: false, vertical: true)
             Text("Got one already? Upload it and I'll pull your real details from it. Or we can just talk it through - tell me what you've done and I'll build it as you go.")
                 .font(.system(size: 15, weight: .medium, design: .rounded))
-                .foregroundColor(cream.opacity(0.7))
+                .foregroundColor(stageOnPageText.opacity(0.7))
                 .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
             if let uploadError {
                 Text(uploadError)
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    .foregroundColor(Color(red: 232 / 255, green: 135 / 255, blue: 122 / 255))
+                    .foregroundColor(embedded ? Color(red: 176 / 255, green: 71 / 255, blue: 63 / 255) : Color(red: 232 / 255, green: 135 / 255, blue: 122 / 255))
                     .fixedSize(horizontal: false, vertical: true)
             }
             HStack(spacing: 12) {
@@ -266,10 +299,10 @@ struct ResumeAgentView: View {
                         Text("Let's talk it through")
                     }
                     .font(.system(size: 14, weight: .bold, design: .rounded))
-                    .foregroundColor(cream)
+                    .foregroundColor(stageOnPageText)
                     .padding(.horizontal, 18)
                     .padding(.vertical, 13)
-                    .background(Capsule().fill(Color.white.opacity(0.12)))
+                    .background(Capsule().fill(stageWashFill))
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("resumeAgentTalk")
@@ -298,11 +331,11 @@ struct ResumeAgentView: View {
     private func resumeTranscriptLine(_ text: String, live: Bool) -> some View {
         Text(text)
             .font(.system(size: 13, weight: .medium, design: .rounded))
-            .foregroundColor(cream.opacity(live ? 0.75 : 0.9))
+            .foregroundColor(stageOnPageText.opacity(live ? 0.75 : 0.9))
             .lineLimit(2)
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
-            .background(Capsule().fill(Color.white.opacity(live ? 0.1 : 0.16)))
+            .background(Capsule().fill(embedded ? stageWashFill : Color.white.opacity(live ? 0.1 : 0.16)))
             .opacity(live ? 0.85 : 1)
     }
 
