@@ -925,9 +925,20 @@ Sources:
   client writes to `role`, `childId`, `tutorId`, and `classroomId`. After rule
   deployment, run `webhook/scripts/audit-user-privileges.ts` and clean any stale
   privilege/link fields via Admin SDK.
-- **Bridge-gap fields not in UI** — in `/knowledge-graph` response only (`isBridgeGap`,
-  `bridgeEvidence`, `severity`). `worstWeakness()` consumes severity from
-  `/recommend` gaps; the knowledge-graph bridge visualisation is open.
+- **Bridge-gap fields**: correction (2026-08-27) — they live on `/recommend`'s
+  `recommendations[]` (`isBridgeGap`, `gapType`, `bridgeId`,
+  `bridgeFromConcept`/`bridgeToConcept`, `bridgeEvidence`, `severity`; set by
+  `_detect_bridge_gaps` in `ml/mindcraft_graph/api/recommend.py`), NOT on
+  `/knowledge-graph` — that endpoint's edges only ever carry
+  `from`/`to`/`weight`/`relation`, checked directly against `serve.py`. Gaps
+  are detected walking adjacent pairs in whatever chain the call already
+  computed (curriculum toward one target, or the exam-mode `canonicalChain`),
+  not an exhaustive scan of all concept pairs — there's no single call that
+  returns "every bridge gap in the graph." iOS now renders these on the Map:
+  `RouteClient.plotRoute`'s `RouteStep.isBridgeGap` drives a dashed red
+  segment on the route trail (`KnowledgeMapView.swift`'s canvas) and a "WEAK
+  LINK" badge in the text route panel. `worstWeakness()` (web) still consumes
+  severity from `/recommend` gaps the same way it always did.
 - **Tutor view**: empty graph without a student selector (still open).
 - **Concept-layer pathfinder** spot-checked SOUND on 42-concept ontology.
 - **Recall headroom** (~0.19 on 15-question harness) — data/alignment work.

@@ -446,8 +446,18 @@ struct KnowledgeMapView: View {
                     // overlay. Glow is a wide blurred pass under a crisp core
                     // stroke - Canvas has no native shadow-on-stroke.
                     if showingRoute, let steps = routeSteps, steps.count > 1 {
+                        // Split into normal vs. bridge-gap segments (2026-08-27,
+                        // real bridge-gap data: RouteStep.isBridgeGap, from
+                        // /recommend's own gap detection - a segment INTO a
+                        // bridge-gap step is exactly the transition the engine
+                        // thinks the student knows both sides of but can't
+                        // connect, per CLAUDE.md's own description of what a
+                        // bridge is for). Two separate paths since Canvas
+                        // strokes one Path with one style - can't mix dashed/
+                        // solid within a single stroke call.
                         var trail = Path()
-                        var any = false
+                        var gapTrail = Path()
+                        var anyTrail = false, anyGap = false
                         for i in 0..<min(pathRevealCount, steps.count - 1) {
                             guard
                                 let a = bundle.positions[steps[i].conceptId],
@@ -455,15 +465,28 @@ struct KnowledgeMapView: View {
                             else { continue }
                             let pa = transformed(screenPoint(a))
                             let pb = transformed(screenPoint(b))
-                            trail.addPath(curvedEdgePath(from: pa, to: pb, sign: 1))
-                            any = true
+                            let segment = curvedEdgePath(from: pa, to: pb, sign: 1)
+                            if steps[i + 1].isBridgeGap {
+                                gapTrail.addPath(segment)
+                                anyGap = true
+                            } else {
+                                trail.addPath(segment)
+                                anyTrail = true
+                            }
                         }
-                        if any {
+                        if anyTrail {
                             context.drawLayer { glow in
                                 glow.addFilter(.blur(radius: 5))
                                 glow.stroke(trail, with: .color(MapColor.zpdReady.opacity(0.85)), lineWidth: 5)
                             }
                             context.stroke(trail, with: .color(MapColor.zpdReady), lineWidth: 2)
+                        }
+                        if anyGap {
+                            context.drawLayer { glow in
+                                glow.addFilter(.blur(radius: 5))
+                                glow.stroke(gapTrail, with: .color(MapColor.gap.opacity(0.7)), lineWidth: 5)
+                            }
+                            context.stroke(gapTrail, with: .color(MapColor.gap), style: StrokeStyle(lineWidth: 2.5, dash: [6, 4]))
                         }
                     }
                 }
@@ -927,13 +950,30 @@ struct KnowledgeMapView: View {
                                 // would leave the white numeral unreadable
                                 // (that trick only worked on the old dark
                                 // theme, where `ink` was near-white).
-                                .background(step.isTarget ? MapColor.ink : MapColor.violetDeep)
+                                .background(step.isBridgeGap ? MapColor.gap : (step.isTarget ? MapColor.ink : MapColor.violetDeep))
                                 .foregroundColor(.white)
                                 .clipShape(Circle())
                             VStack(alignment: .leading, spacing: 1) {
-                                Text(label(for: step.conceptId))
-                                    .font(.system(size: 13, weight: step.isTarget ? .bold : .medium, design: .rounded))
-                                    .foregroundColor(MapColor.ink)
+                                HStack(spacing: 5) {
+                                    Text(label(for: step.conceptId))
+                                        .font(.system(size: 13, weight: step.isTarget ? .bold : .medium, design: .rounded))
+                                        .foregroundColor(MapColor.ink)
+                                    // Real bridge-gap signal (2026-08-27,
+                                    // closing CLAUDE.md's own "Bridge-gap
+                                    // fields not in UI" note) - the dashed
+                                    // map trail carries the same info
+                                    // visually; this is the text-list twin
+                                    // for when the route panel is what's
+                                    // showing, not the canvas.
+                                    if step.isBridgeGap {
+                                        Text("WEAK LINK")
+                                            .font(.system(size: 9, weight: .heavy, design: .rounded))
+                                            .foregroundColor(.white)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 2)
+                                            .background(Capsule().fill(MapColor.gap))
+                                    }
+                                }
                                 Text(step.reason)
                                     .font(.system(size: 11, design: .rounded))
                                     .foregroundColor(MapColor.inkSoft.opacity(0.7))

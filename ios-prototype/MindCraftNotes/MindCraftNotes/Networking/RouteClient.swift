@@ -9,12 +9,23 @@ struct RouteStep: Identifiable {
     let conceptId: String
     let reason: String
     let isTarget: Bool
+    /// True when the transition INTO this step is a real bridge gap -
+    /// ml/mindcraft_graph/api/recommend.py's `_detect_bridge_gaps`, walking
+    /// adjacent pairs in this exact chain (evidence tier: attempted and
+    /// weak; hypothesis tier: mastered on one side, weak on the other, a
+    /// structurally hard bridge). `reason` already carries the human-
+    /// readable explanation for a bridge-gap step (see `_make_bridge_gap`) -
+    /// this flag is what lets the UI mark that segment as a weak link
+    /// instead of a normal step (2026-08-27, closing CLAUDE.md's own
+    /// "Bridge-gap fields not in UI" gap).
+    let isBridgeGap: Bool
 }
 
 private struct RecommendResponseWire: Decodable {
     struct Recommendation: Decodable {
         let conceptId: String
         let reason: String?
+        let isBridgeGap: Bool?
     }
     struct StudentProfileWire: Decodable {
         struct Weakness: Decodable { let conceptId: String; let strength: Double }
@@ -64,8 +75,8 @@ enum RouteClient {
         if ProcessInfo.processInfo.arguments.contains("--ui-testing-force-map") {
             try? await Task.sleep(nanoseconds: 300_000_000) // real network calls aren't instant either - let the loading state actually show
             return [
-                RouteStep(conceptId: "linear_equations", reason: "Already mastered - the foundation this rests on.", isTarget: false),
-                RouteStep(conceptId: targetConceptId, reason: "This is your target. Focus your practice here.", isTarget: true),
+                RouteStep(conceptId: "linear_equations", reason: "Already mastered - the foundation this rests on.", isTarget: false, isBridgeGap: false),
+                RouteStep(conceptId: targetConceptId, reason: "This is your target. Focus your practice here.", isTarget: true, isBridgeGap: false),
             ]
         }
         guard let user = Auth.auth().currentUser,
@@ -91,15 +102,17 @@ enum RouteClient {
 
         let chain = (decoded.canonicalChain?.isEmpty == false) ? decoded.canonicalChain! : [targetConceptId]
         var reasonById: [String: String] = [:]
+        var bridgeGapById: [String: Bool] = [:]
         for rec in decoded.recommendations ?? [] {
             if let reason = rec.reason { reasonById[rec.conceptId] = reason }
+            if rec.isBridgeGap == true { bridgeGapById[rec.conceptId] = true }
         }
         return chain.enumerated().map { i, id in
             let isTarget = id == targetConceptId
             let reason = reasonById[id] ?? (isTarget
                 ? "This is your target. Focus your practice here."
                 : "Step \(i + 1): strengthen this prerequisite first.")
-            return RouteStep(conceptId: id, reason: reason, isTarget: isTarget)
+            return RouteStep(conceptId: id, reason: reason, isTarget: isTarget, isBridgeGap: bridgeGapById[id] ?? false)
         }
     }
 
