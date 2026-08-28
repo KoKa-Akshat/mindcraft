@@ -166,6 +166,10 @@ struct DeskGridDashboardView: View {
     var studentName: String = "there"
 
     @ObservedObject private var gmail = GmailClient.shared
+    /// Drives `activityTicker` in the dock (2026-08-27) - same singleton-
+    /// ObservedObject subscription KnowledgeMapView already uses for the
+    /// same bus, for its own map-lighting purpose.
+    @ObservedObject private var activityBus = GenerationActivityBus.shared
     @ObservedObject private var moodle = MoodleClient.shared
     @ObservedObject private var digest = GmailDigestClient.shared
     @ObservedObject private var digestStore = GmailDigestStore.shared
@@ -207,6 +211,16 @@ struct DeskGridDashboardView: View {
 
     // MARK: - Homework Help (the tile itself is the upload target now)
     @State private var showHomeworkImporter = false
+    // MARK: - Ask anything upload (2026-08-27, explicit ask: "ask anything
+    // features should be built into the toolbar under with upload features
+    // too, and students can chat, talk... upload their homework and get the
+    // answer to"). Own picker/state, not homeworkUploading/homeworkError -
+    // those drive the separate Homework Help tile's own solveHomeworkProblem
+    // flow (practice-session side effects this doesn't want); this answers
+    // through the SAME agent-takeover panel a typed question already uses.
+    @State private var showAskUploadPicker = false
+    @State private var askUploadBusy = false
+    @State private var askUploadError: String?
     // MARK: - Co-Work (2026-08-24, explicit ask - renamed from the tile's
     // old single-purpose upload). Own document picker instance rather than
     // reusing showHomeworkImporter, since that one's onPick is wired to
@@ -1460,6 +1474,74 @@ struct DeskGridDashboardView: View {
             }
             agentAskBusy = false
         }
+    }
+
+    /// Same agent-takeover panel a typed "Ask anything…" question already
+    /// uses, seeded from an uploaded file's extracted text instead of typed
+    /// text (2026-08-27, explicit ask: "ask anything... upload files...
+    /// upload their homework and get the answer to"). Requires a connected
+    /// AI key - the no-key fallback path (DeskAskClient) is tuned for short
+    /// navigational asks, not a multi-page document's worth of context, so
+    /// this doesn't attempt that fallback the way a typed question does.
+    private func startUploadTakeover(fileName: String, text: String) {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            agentTakeoverActive = true
+        }
+        resetAgentTakeoverFields()
+        guard aiKeys.hasKey else {
+            agentReplyText = "Connect your AI key from Manage to ask about an uploaded file."
+            return
+        }
+        agentAskBusy = true
+        Task {
+            let context = buildAskContextText() + "\n\nUploaded file (\(fileName)):\n\(text)"
+            switch await aiKeys.answerDeskQuestion(
+                question: "Help me with this uploaded document - answer any questions in it, explain what it's teaching, or work through the problems, whichever actually fits what's in it. Don't just hand me a final answer with no reasoning - walk me through it.",
+                context: context
+            ) {
+            case .success(let answer):
+                agentReplyText = answer
+            case .failure(.rejected), .failure(.noKey):
+                agentReplyText = "That AI key was rejected. Open Settings to update it."
+            case .failure(.unavailable):
+                agentReplyText = "Couldn\u{2019}t get an answer - try again in a bit."
+            }
+            agentAskBusy = false
+        }
+    }
+
+    /// PDF-only for now (real text layer via PDFKit, no network call needed)
+    /// - a scanned/photo PDF or a bare image needs OCR first
+    /// (HomeworkClient.parseAndCreateSession does this for the separate
+    /// Homework Help tile, but that call also creates a practice session as
+    /// a side effect, which isn't what a general Ask-anything upload wants).
+    /// Real, working v1 rather than a half-built OCR path; image support is
+    /// a clean follow-up once this proves out.
+    private func handleAskUpload(_ url: URL) async {
+        askUploadError = nil
+        askUploadBusy = true
+        defer { askUploadBusy = false }
+        let accessed = url.startAccessingSecurityScopedResource()
+        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+        guard let data = try? Data(contentsOf: url) else {
+            askUploadError = "Couldn\u{2019}t read that file. Try again."
+            return
+        }
+        guard url.pathExtension.lowercased() == "pdf", let doc = PDFDocument(data: data) else {
+            askUploadError = "For now, upload a PDF with real text (not a scanned photo) - image support is coming."
+            return
+        }
+        var text = ""
+        for i in 0..<doc.pageCount {
+            text += (doc.page(at: i)?.string ?? "") + "\n"
+            if text.count > 6000 { break }
+        }
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            askUploadError = "Couldn\u{2019}t find any text in that PDF - it may be a scanned photo with no text layer."
+            return
+        }
+        startUploadTakeover(fileName: url.lastPathComponent, text: trimmed)
     }
 
     /// Plain-text context for the student's own key (`StudentAIKeyStore`) -
@@ -3652,6 +3734,7 @@ struct DeskGridDashboardView: View {
             }
             binderUtilityIcon("gearshape.fill", identifier: "deskGridDock_Settings", action: onOpenManage)
             Spacer(minLength: 0)
+            activityTicker
             jesseDockCenter
             // "Ask anything" (2026-08-22, explicit ask) - `submitSearch`
             // already does real keyword routing + a full agent takeover
@@ -3663,6 +3746,26 @@ struct DeskGridDashboardView: View {
             // so it needs real visual weight, not a token search box.
             searchField(placeholder: "Ask anything…", identifier: "deskGridDashboardSearch", onSubmit: submitSearch)
                 .frame(width: 420)
+            // Upload into Ask-anything (2026-08-27) - same button shape as
+            // the other dock icons, right beside the field it feeds.
+            Button {
+                askUploadError = nil
+                showAskUploadPicker = true
+            } label: {
+                if askUploadBusy {
+                    ProgressView().frame(width: 34, height: 34)
+                } else {
+                    Image(systemName: "paperclip")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(Color(gridHex: "143a2e"))
+                        .frame(width: 34, height: 34)
+                        .background(Circle().fill(Color(white: 0.985)))
+                }
+            }
+            .buttonStyle(.plain)
+            .disabled(askUploadBusy)
+            .accessibilityIdentifier("deskGridDashboardAskUpload")
+            .accessibilityLabel("Upload a file to Ask anything")
         }
         // NOT .accessibilityIdentifier() directly on this container - that
         // clobbers every child dockChip's own identifier with this one
@@ -3677,6 +3780,75 @@ struct DeskGridDashboardView: View {
             Text(verbatim: "toolbar").font(.system(size: 1)).foregroundColor(.clear)
                 .accessibilityIdentifier("deskGridDashboardToolbar")
                 .allowsHitTesting(false)
+        }
+        .sheet(isPresented: $showAskUploadPicker) {
+            HomeworkDocumentPicker { url in
+                Task { await handleAskUpload(url) }
+            }
+        }
+        .overlay(alignment: .top) {
+            if let askUploadError {
+                Text(askUploadError)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .background(Capsule().fill(Color(gridHex: "b0473f")))
+                    .offset(y: -36)
+                    .transition(.opacity)
+                    .accessibilityIdentifier("deskGridDashboardAskUploadError")
+            }
+        }
+        .animation(.easeInOut(duration: 0.2), value: askUploadError)
+    }
+
+    /// Live "what's generating right now" feed (2026-08-27, explicit ask:
+    /// "I don't see a transcript of what's happening... how's knowledge
+    /// being generated... a little transcript showing summaries... as
+    /// these independent neurons fire up"). Sits right next to Jesse/
+    /// Ask-anything, same spot the ask named ("as I talked to Jesse").
+    /// Empty when nothing's in GenerationActivityBus.shared.log - doesn't
+    /// reserve space or show placeholder chrome when quiet.
+    @ViewBuilder
+    private var activityTicker: some View {
+        if !activityBus.log.isEmpty {
+            HStack(spacing: 6) {
+                ForEach(activityBus.log.prefix(2)) { entry in
+                    activityChip(entry)
+                }
+            }
+            .transition(.opacity)
+            .animation(.easeInOut(duration: 0.25), value: activityBus.log)
+        }
+    }
+
+    private func activityChip(_ entry: ActivityLogEntry) -> some View {
+        HStack(spacing: 5) {
+            switch entry.status {
+            case .running:
+                ProgressView().scaleEffect(0.6).frame(width: 10, height: 10)
+            case .ready:
+                Circle().fill(Color(gridHex: "c4f547")).frame(width: 7, height: 7)
+            case .failed:
+                Circle().fill(Color(gridHex: "b0473f")).frame(width: 7, height: 7)
+            }
+            Text(activityChipLabel(entry))
+                .font(.system(size: 10.5, weight: .semibold, design: .rounded))
+                .foregroundColor(Color(gridHex: "143a2e").opacity(0.75))
+                .lineLimit(1)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(Capsule().fill(Color(white: 0.985)).shadow(color: .black.opacity(0.06), radius: 4, y: 2))
+        .frame(maxWidth: 150)
+        .accessibilityIdentifier("deskGridActivityChip_\(entry.id)")
+    }
+
+    private func activityChipLabel(_ entry: ActivityLogEntry) -> String {
+        switch entry.status {
+        case .running: return "\(entry.title)\u{2026}"
+        case .ready: return "\u{2713} \(entry.title)"
+        case .failed: return "\u{26a0} \(entry.title)"
         }
     }
 

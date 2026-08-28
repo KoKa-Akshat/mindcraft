@@ -1956,6 +1956,14 @@ final class JesseCallSession: NSObject, ObservableObject {
                 }
             }
         }
+        // Activity feed (2026-08-27, explicit ask: "a little transcript
+        // showing summaries of what's happening... how's knowledge being
+        // generated"). One stable id for the whole attempt (first try +
+        // retry both count as one row, not two) - `topic` isn't a real
+        // ontology concept id, so this only ever drives the log, never
+        // Map node-lighting (see ActivityLogEntry's own doc comment).
+        let activityId = UUID().uuidString
+        GenerationActivityBus.shared.logStart(id: activityId, title: topic, phase: "generating")
         lastSpokenGenerationReady = 0
         var bookVerdict = await BookGenerationClient.generate(topic: topic, onProgress: onProgress)
         print("[JesseDebug] First BookGenerationClient attempt verdict=\(Self.debugDescribe(bookVerdict))")
@@ -1966,9 +1974,15 @@ final class JesseCallSession: NSObject, ObservableObject {
             // silently downgraded the whole experience to the old sim-less
             // outline. A second attempt is cheap insurance; the fallbacks
             // below stay the real last resort for a sustained outage.
+            GenerationActivityBus.shared.logStart(id: activityId, title: topic, phase: "retrying")
             lastSpokenGenerationReady = 0
             bookVerdict = await BookGenerationClient.generate(topic: topic, onProgress: onProgress)
             print("[JesseDebug] Retry BookGenerationClient attempt verdict=\(Self.debugDescribe(bookVerdict))")
+        }
+        if case .verified = bookVerdict {
+            GenerationActivityBus.shared.logFinish(id: activityId, title: topic)
+        } else {
+            GenerationActivityBus.shared.logFail(id: activityId, title: topic, reason: "no usable result")
         }
         guard delivery == learnDeliveryGeneration else { return }
         generationProgress = nil
@@ -2166,6 +2180,11 @@ final class JesseCallSession: NSObject, ObservableObject {
         isThinking = true
         defer { isThinking = false }
 
+        // Activity feed (2026-08-27) - see BookGenerationClient's own call
+        // site in this file for the full reasoning; same "log-only, no map
+        // node id available" shape.
+        let activityId = UUID().uuidString
+        GenerationActivityBus.shared.logStart(id: activityId, title: topic, phase: "generating")
         liveSimState = .running(topic: topic, attemptTopic: nil)
         let verdict = await GeneratedSimClient.requestSim(topic: topic)
         guard generation == liveSimGeneration else { return }
@@ -2198,6 +2217,11 @@ final class JesseCallSession: NSObject, ObservableObject {
                 // student's answer - the first attempt's honest reason is.
                 liveSimState = .noGoodResult(topic: topic, reason: reason, alsoTried: nil)
             }
+        }
+        if case .verified = liveSimState {
+            GenerationActivityBus.shared.logFinish(id: activityId, title: topic)
+        } else {
+            GenerationActivityBus.shared.logFail(id: activityId, title: topic, reason: "no usable result")
         }
     }
 

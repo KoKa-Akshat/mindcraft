@@ -402,6 +402,10 @@ struct ArchiveGenerateSimSheet: View {
     private func generate() async {
         isGenerating = true
         errorMessage = nil
+        // Activity feed (2026-08-27) - same log-only shape as
+        // JesseCallSession's own BookGenerationClient call sites.
+        let activityId = UUID().uuidString
+        GenerationActivityBus.shared.logStart(id: activityId, title: topic, phase: "generating")
         let verdict = await BookGenerationClient.generate(topic: topic) { ready, total in
             chaptersReady = ready
             totalChapters = total
@@ -411,12 +415,16 @@ struct ArchiveGenerateSimSheet: View {
         case .verified(let book, _, _, _):
             onGenerated(book)
             dismiss()
+            GenerationActivityBus.shared.logFinish(id: activityId, title: topic)
         case .noGoodResult(let reason):
             errorMessage = reason ?? "Couldn't build a good lesson from that topic \u{2014} try rephrasing it."
+            GenerationActivityBus.shared.logFail(id: activityId, title: topic, reason: reason ?? "no good result")
         case .rateLimited(let reason):
             errorMessage = reason ?? "Generation is rate-limited right now \u{2014} try again shortly."
+            GenerationActivityBus.shared.logFail(id: activityId, title: topic, reason: reason ?? "rate limited")
         case .unavailable(let reason):
             errorMessage = reason ?? "Couldn't reach the generation service."
+            GenerationActivityBus.shared.logFail(id: activityId, title: topic, reason: reason ?? "unavailable")
         }
     }
 }

@@ -848,6 +848,10 @@ struct DesignStudioView: View {
         }
         generatingSimBoxId = box.id
         simGenerationError = nil
+        // Activity feed (2026-08-27) - same log-only shape as
+        // JesseCallSession's own GeneratedSimClient call site.
+        let activityId = UUID().uuidString
+        GenerationActivityBus.shared.logStart(id: activityId, title: topic, phase: "generating")
         Task {
             let verdict = await GeneratedSimClient.requestSim(topic: topic)
             await MainActor.run {
@@ -858,14 +862,18 @@ struct DesignStudioView: View {
                         $0.generatedSimHTML = result.html
                         $0.generatedSimTitle = result.title
                     }
+                    GenerationActivityBus.shared.logFinish(id: activityId, title: topic)
                 case .noGoodResult(let reason, let suggestedRetryTopic):
                     var message = reason ?? "Couldn't make a good sim for that prompt."
                     if let suggestedRetryTopic { message += " Try: \u{201c}\(suggestedRetryTopic)\u{201d}" }
                     simGenerationError = message
+                    GenerationActivityBus.shared.logFail(id: activityId, title: topic, reason: reason ?? "no good result")
                 case .rateLimited(let reason):
                     simGenerationError = reason ?? "Sim generation is rate-limited right now - try again shortly."
+                    GenerationActivityBus.shared.logFail(id: activityId, title: topic, reason: reason ?? "rate limited")
                 case .unavailable(let reason):
                     simGenerationError = reason ?? "Sim generation isn't available right now."
+                    GenerationActivityBus.shared.logFail(id: activityId, title: topic, reason: reason ?? "unavailable")
                 }
             }
         }
