@@ -176,7 +176,10 @@
     color:var(--chalk-dim); animation:rise .9s .16s var(--ease) both;
   }
   .hero .lead .serif{color:var(--chalk);}
-  .hero-actions{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:34px; animation:rise .9s .22s var(--ease) both;}
+  .hero-logo{display:flex; align-items:center; justify-content:center; gap:18px; margin:56px auto 0; animation:rise .9s .22s var(--ease) both;}
+  .hero-logo img{height:clamp(64px,9vw,110px); width:auto;}
+  .hero-logo span{font-family:var(--disp); font-weight:700; letter-spacing:-.02em; font-size:clamp(40px,6vw,72px); color:var(--chalk);}
+  .hero-logo span em{font-style:normal; color:var(--lime);}
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
   /* ---------- the question ticker ---------- */
@@ -580,10 +583,9 @@
     <span class="hero-tag"><i>Early access</i> free right now &middot; a few seats each round</span>
     <h1>Interact With the <em>World.</em></h1>
     <p class="sub">Hands-on simulations that build the instincts 2028's workforce will actually need.</p>
-    <p class="lead">Learn anything through live simulations and interactive lessons that reshape themselves around the way <span class="serif">your</span> brain works. No walls of text. No one-size-fits-all.</p>
-    <div class="hero-actions">
-      <a class="btn primary" href="https://mindcraft-93858.web.app">Claim your desk</a>
-      <a class="btn soft" href="#desk">Open the library</a>
+    <div class="hero-logo">
+      <img src="img/raccoon-logo.png" alt="" aria-hidden="true">
+      <span>Mind<em>Craft</em></span>
     </div>
   </div>
 </section>
@@ -700,16 +702,24 @@
 </section>
 
 <!-- ================= CONCEPT MAP ================= -->
+<section class="frontier" id="frontier">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker reveal">The frontier graph</div>
+    <h2 class="h2 reveal">Learning works in mysterious ways. Not really.</h2>
+    <div class="frontier-frame reveal">
+      <iframe src="sims/zpd/index.html" title="Watch the frontier move, a Zone of Proximal Development explorer" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
 <section class="conceptmap" id="conceptmap">
   <div class="grid-bg" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker reveal">The concept map</div>
     <h2 class="h2 reveal">Every concept has a place.</h2>
-    <p class="lede reveal">4,118 concepts across 13 subjects, connected by the real prerequisites between them, not a syllabus someone guessed at. 3,746 already have a full written lesson, and interactive sims are filling in the rest, mapped honestly as they land, not hidden until they are done.</p>
     <div class="conceptmap-frame reveal">
       <iframe src="full-graph-viewer.html" title="The full MindCraft concept map, every subject's concepts and how they build on each other" loading="lazy"></iframe>
     </div>
-    <p class="conceptmap-foot reveal">Live and explorable: drag, zoom, and see exactly how one idea builds on the next.</p>
   </div>
 </section>
 
