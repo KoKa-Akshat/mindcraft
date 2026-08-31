@@ -5,11 +5,14 @@
  * plus the optional intake fields the #claim form on joinmindcraft.com sends:
  * { parentFirstName?, parentLastName?, phone?, howHeard?, studentFirstName?,
  *   studentLastName?, school?, grade?, subject?, message? }
+ * plus the optional studio fields the #desk build-a-world flow sends:
+ * { worldName?, idea?, lever?, simTitle?, simUrl? }
  * All additive: the original shape still works unchanged, and unknown
  * callers sending only the original fields are unaffected.
  *
  * Stores Firestore marketing_leads/{emailLower}, emails founders@joinmindcraft.com,
- * and schedules a 1-hour follow-up (sent by cron-marketing-followup).
+ * schedules a 1-hour follow-up (sent by cron-marketing-followup), and, when the
+ * studio fields are present, immediately emails the visitor their world back.
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
@@ -63,6 +66,43 @@ async function notifyFounders(input: {
   }
 }
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
+async function notifyVisitor(input: { email: string; worldName: string; idea: string; lever: string; simTitle: string; simUrl: string }) {
+  const subject = `Your world "${input.worldName}" · MindCraft`
+  const lines = [
+    `Hi,`,
+    ``,
+    `Here is the world you just built on the MindCraft desk: "${input.worldName}."`,
+    ``,
+    `You started from the idea "${input.idea}," chose to make players change ${input.lever.toLowerCase()}, and it ran on our "${input.simTitle}" sim.`,
+    ``,
+    `Open it again any time: ${input.simUrl}`,
+    ``,
+    `A founder saw this too and will be in touch about building the real thing for you.`,
+    ``,
+    `Talk soon,`,
+    `Akshat + the MindCraft desk`,
+    `founders@joinmindcraft.com`,
+  ]
+  const text = lines.join('\n')
+  const html = lines
+    .map((line) => (line.trim() ? `<p style="margin:0 0 12px;font:16px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;color:#143a2e;">${escapeHtml(line)}</p>` : '<br/>'))
+    .join('')
+  try {
+    const result = await sendMarketingEmail({ to: input.email, subject, text, html })
+    if (!result.ok) console.error('[marketing-lead] visitor notify', result.error)
+  } catch (err) {
+    console.error('[marketing-lead] visitor notify', err)
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res)
   if (req.method === 'OPTIONS') return res.status(200).send('')
@@ -99,6 +139,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (value) intake[key] = value
     }
 
+    // Optional studio fields from the #desk build-a-world flow. Only sent
+    // when a visitor finishes a world, so presence of worldName is the
+    // signal to fire the visitor confirmation email below.
+    const worldName = String(body.worldName || '').trim().slice(0, 120)
+    const studioIdea = String(body.idea || '').trim().slice(0, 200)
+    const studioLever = String(body.lever || '').trim().slice(0, 200)
+    const simTitle = String(body.simTitle || '').trim().slice(0, 200)
+    const simUrl = String(body.simUrl || '').trim().slice(0, 500)
+    const studio: Record<string, string> = {}
+    if (worldName) studio.worldName = worldName
+    if (studioIdea) studio.studioIdea = studioIdea
+    if (studioLever) studio.studioLever = studioLever
+    if (simTitle) studio.simTitle = simTitle
+    if (simUrl) studio.simUrl = simUrl
+
     if (honey) return res.status(200).json({ ok: true, ignored: true })
     if (!EMAIL_RE.test(email)) return res.status(400).json({ error: 'Valid email required' })
 
@@ -121,6 +176,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           // merge:true keeps any previously stored intake value a resubmission
           // left blank, same policy as the fields above.
           ...intake,
+          ...studio,
           visitCount: (prev.visitCount || 1) + 1,
           lastSeenAt: now,
           updatedAt: FieldValue.serverTimestamp(),
@@ -135,6 +191,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         { merge: true },
       )
       await notifyFounders({ email, name: name || String(prev.name || ''), role, source, note, page, returning: true, intake })
+      if (worldName) await notifyVisitor({ email, worldName, idea: studioIdea, lever: studioLever, simTitle, simUrl })
       return res.status(200).json({ ok: true, id, returning: true })
     }
 
@@ -146,6 +203,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       note,
       page,
       ...intake,
+      ...studio,
       visitCount: 1,
       createdAt: FieldValue.serverTimestamp(),
       lastSeenAt: now,
@@ -169,6 +227,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     await notifyFounders({ email, name, role, source, note, page, returning: false, intake })
+    if (worldName) await notifyVisitor({ email, worldName, idea: studioIdea, lever: studioLever, simTitle, simUrl })
     return res.status(200).json({ ok: true, id, returning: false })
   } catch (err: any) {
     console.error('[marketing-lead]', err)

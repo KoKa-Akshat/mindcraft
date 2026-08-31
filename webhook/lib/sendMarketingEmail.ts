@@ -1,7 +1,7 @@
 /**
  * Thin email sender for marketing follow-ups.
- * Prefers Resend (RESEND_API_KEY). Falls back to Gmail SMTP-over-HTTPS
- * style is not available here — without Resend we return a clear error so
+ * Prefers Resend (RESEND_API_KEY). A Gmail SMTP-over-HTTPS fallback is not
+ * available here, so without Resend we return a clear error instead, and
  * the cron can leave the lead queued for admin mailto.
  */
 
@@ -68,12 +68,12 @@ export const DEFAULT_FOLLOWUP = {
 
 Thanks for stopping by MindCraft.
 
-School scatters everything into screenshots, planners, and late-night tabs. MindCraft is the operating system for that knowledge — a desk that files what you drop, maps the exact gaps, and turns practice into training you can feel. Think gym membership for math, not another homework chat.
+School scatters everything into screenshots, planners, and late-night tabs. MindCraft is the operating system for that knowledge, a desk that files what you drop, maps the exact gaps, and turns practice into training you can feel. Think gym membership for math, not another homework chat.
 
 What we keep hearing from families and students: good help looks like an exact gap map, practice that transfers when the question looks different, and an honest note for parents. Not another green streak.
 
 While beta is free, you can claim a seat here:
-https://joinmindcraft.com/#start
+https://joinmindcraft.com/#claim
 
 Or just reply with your grade (or your student's grade) and what should feel easier in two weeks. A real human reads every note.
 
