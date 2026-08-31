@@ -105,8 +105,12 @@
      section: the bottom of #desk (the frontier below it is dark) and both
      edges of #claim. The hero and #desk are BOTH cream and sit back to back,
      so the hero's bottom fade and the desk's top fade were painting a black
-     band across a seam with nothing dark on either side of it. Off. */
-  #top::after, #desk::before{content:none;}
+     band across a seam with nothing dark on either side of it. Off. #top's
+     own top edge has the same problem for a different reason: it is the
+     first section on the page, nothing dark sits above it either, so that
+     fade was painting an equally pointless black band at the very top of
+     the site on every load. Off too. */
+  #top::before, #top::after, #desk::before{content:none;}
 
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px;
@@ -203,20 +207,22 @@
      horizontal wordmark, so the two shapes are sized separately rather than
      forced onto one height, which is what made the old band look lumpy. */
   .hero-cred{
-    margin-top:clamp(40px,6.5vh,68px); display:flex; flex-direction:column; align-items:center; gap:15px;
+    margin-top:clamp(40px,6.5vh,68px); display:flex; flex-direction:column; align-items:flex-start; gap:16px;
     animation:rise .9s .3s var(--ease) both;
   }
   .hero-cred > span{
     font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.2em;
     text-transform:uppercase; color:rgba(20,58,46,.4);
   }
-  .hero-cred-row{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:16px clamp(22px,4vw,44px);}
-  .hero-cred img{width:auto; height:44px; opacity:.88; transition:opacity .25s var(--ease);}
-  .hero-cred img.wordmark{height:31px;}
+  .hero-cred-row{display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-start; gap:20px clamp(28px,4.6vw,52px);}
+  .hero-cred img{width:auto; height:56px; opacity:.88; transition:opacity .25s var(--ease);}
+  .hero-cred img.wordmark{height:39px;}
   .hero-cred-row:hover img{opacity:1;}
   @media (max-width:640px){
-    .hero-cred img{height:34px;}
-    .hero-cred img.wordmark{height:24px;}
+    .hero-cred{align-items:center;}
+    .hero-cred-row{justify-content:center;}
+    .hero-cred img{height:38px;}
+    .hero-cred img.wordmark{height:27px;}
   }
 
 
@@ -985,9 +991,6 @@
   <div class="hero-stage">
     <h1>Interact With the <em>World.</em></h1>
     <p class="sub">Hands-on simulations that build the instincts 2028's workforce will actually need.</p>
-    <div class="cta-row hero-cta">
-      <a class="btn primary" href="#claim">Claim your desk</a>
-    </div>
     <div class="hero-cred">
       <span>Built with students from</span>
       <div class="hero-cred-row">
@@ -997,6 +1000,9 @@
         <img class="wordmark" src="img/logos/hero/uwc.png" alt="United World Colleges" width="582" height="132">
         <img src="img/logos/hero/kenyon.png" alt="Kenyon College" width="132" height="132">
       </div>
+    </div>
+    <div class="cta-row hero-cta">
+      <a class="btn primary" href="#claim">Claim your desk</a>
     </div>
   </div>
 </section>
@@ -1143,7 +1149,7 @@
     <p class="desk-more reveal">
       <a class="btn soft" href="https://mindcraft-93858.web.app/desk">Browse all 722 in SimCraft</a>
       <em>&middot;</em>
-      <span>Prefer pages? 113 free, open books, loaded with sims.</span>
+      <span>Prefer a much more extensive lesson?</span>
       <a class="btn soft" href="https://joinmindcraft.com/dans-archive.html">BookCraft</a>
     </p>
   </div>
@@ -1882,7 +1888,12 @@
             role: 'studio_builder',
             source: 'joinmindcraft_desk_studio',
             note: 'Studio world "' + worldName + '". Idea: ' + idea + '. Players change: ' + lever + '. Library sim matched: ' + d.sim.title + '.',
-            page: location.pathname + '#desk'
+            page: location.pathname + '#desk',
+            worldName: worldName,
+            idea: idea,
+            lever: lever,
+            simTitle: d.sim.title,
+            simUrl: new URL(d.sim.src, location.href).href
           })
         }).then(function(res){
           return res.json().catch(function(){ return {}; }).then(function(data){
