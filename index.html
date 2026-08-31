@@ -146,6 +146,30 @@
   .nav-links .join{background:var(--lime); color:var(--lime-ink); font-weight:700; margin-left:6px;}
   .nav-links .join:hover{background:#d8ff72;}
   @media (max-width:900px){.nav-links a:not(.join){display:none;}}
+  /* A thin line of positioning that sits directly under the nav pill on load.
+     Deliberately absolute inside the hero rather than fixed like the nav: a
+     strip that follows the whole page down lands on top of the ZPD header and
+     the search results further down, and a tagline is a first-impression
+     line, not persistent chrome. It reads as quiet type on a hairline strip
+     because the hero's own `hero-tag` pill is the loud badge on this screen
+     and two competing badges cancel each other out. */
+  .nav-tag{
+    position:absolute; z-index:3; top:calc(max(14px,env(safe-area-inset-top,0px)) + 72px);
+    left:max(14px,env(safe-area-inset-left,0px)); right:max(14px,env(safe-area-inset-right,0px));
+    display:flex; justify-content:center; pointer-events:none;
+    animation:rise .9s .12s var(--ease) both;
+  }
+  .nav-tag p{
+    max-width:min(760px,100%); margin:0; padding:7px 18px; border-radius:999px;
+    border:1px solid rgba(20,58,46,.13); background:rgba(255,255,255,.72);
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    font-size:12.5px; line-height:1.45; text-align:center; color:rgba(20,58,46,.66);
+  }
+  .nav-tag b{color:var(--ink); font-weight:600;}
+  @media (max-width:720px){
+    .nav-tag{top:calc(max(14px,env(safe-area-inset-top,0px)) + 66px);}
+    .nav-tag p{font-size:11.5px; padding:6px 14px;}
+  }
 
   /* ---------- hero ---------- */
   /* light stage, same cream-stage variable trick as .stage-desk, so the dark
@@ -179,29 +203,31 @@
   .hero-cta{justify-content:center; animation:rise .9s .22s var(--ease) both;}
   @keyframes rise{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;}}
 
-  /* ---------- the question ticker ---------- */
-  .ticker-band{padding:0; border-top:1px solid var(--edge); border-bottom:1px solid var(--edge); background:var(--field-1); overflow:hidden;}
-  .ticker-label{
-    text-align:center; padding:26px 20px 0;
-    font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--chalk-faint);
+  /* ---------- hero credibility strip ----------
+     This used to be its own full-bleed white band between the hero and the
+     desk, which read as a stray slab of somebody else's page: a hard white
+     rectangle with its own fades, wedged between two designed sections. The
+     schools are credibility, not a section, so they now sit inside the hero
+     itself, small and quiet, under the CTA where there was already open
+     space. Crests carry more optical weight per pixel of height than a
+     horizontal wordmark, so the two shapes are sized separately rather than
+     forced onto one height, which is what made the old band look lumpy. */
+  .hero-cred{
+    margin-top:clamp(40px,6.5vh,68px); display:flex; flex-direction:column; align-items:center; gap:15px;
+    animation:rise .9s .3s var(--ease) both;
   }
-  .ticker{display:flex; gap:0; width:max-content; padding:20px 0 30px; animation:tick 90s linear infinite;}
-  .ticker:hover{animation-play-state:paused;}
-  @keyframes tick{from{transform:translateX(0);} to{transform:translateX(-50%);}}
-  .tick-item{display:flex; align-items:baseline; gap:14px; padding:0 clamp(22px,3vw,44px); white-space:nowrap;}
-  .tick-item .q{font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(17px,2vw,24px); color:var(--chalk);}
-  .tick-item .a{font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--lime);}
-  .tick-item .dot{width:5px; height:5px; border-radius:50%; background:var(--chalk-faint); align-self:center;}
-  @media (prefers-reduced-motion:reduce){
-    .ticker{animation:none; flex-wrap:wrap; width:auto; justify-content:center;}
-    .ticker > .tick-item:nth-child(n+6){display:none;}
+  .hero-cred > span{
+    font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.2em;
+    text-transform:uppercase; color:rgba(20,58,46,.4);
   }
-  /* logo band variant, static and centered rather than a scrolling marquee */
-  .ticker-band.logos{background:#fff;}
-  .ticker-band.logos .ticker-label{color:rgba(20,58,46,.5);}
-  .ticker-band.logos .ticker{animation:none; width:auto; flex-wrap:wrap; justify-content:center; padding:24px 0 32px; align-items:center;}
-  .ticker-band.logos .tick-item{padding:0 clamp(30px,4vw,64px); align-items:center;}
-  .logo-mark{height:clamp(44px,5.4vw,64px); width:auto; max-width:220px; object-fit:contain; display:block;}
+  .hero-cred-row{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:16px clamp(22px,4vw,44px);}
+  .hero-cred img{width:auto; height:44px; opacity:.88; transition:opacity .25s var(--ease);}
+  .hero-cred img.wordmark{height:31px;}
+  .hero-cred-row:hover img{opacity:1;}
+  @media (max-width:640px){
+    .hero-cred img{height:34px;}
+    .hero-cred img.wordmark{height:24px;}
+  }
 
 
   /* ---------- sim library, top picks (cream) ---------- */
@@ -327,6 +353,13 @@
      the :hover and .is-picked ones below) can paint the invisible hit target
      by accident. */
   .zpd-hit{fill:transparent; stroke:none;}
+  /* Recenter animation. The concepts the new middle drops off the rings are
+     cloned into this layer and faded out from where they stood, so they leave
+     the picture instead of blinking out between two frames. While the graph is
+     travelling the concepts stop taking clicks: a dot sliding under a cursor
+     is not a dot anybody meant to pick. */
+  #zpdGhosts{pointer-events:none;}
+  .zpd-stage svg.moving .zpd-node{pointer-events:none;}
   .zpd-node:hover circle, .zpd-node:focus-visible circle{stroke-width:12;}
   .zpd-node:focus{outline:none;}
   .zpd-node:focus-visible circle{stroke:rgba(196,245,71,.75);}
@@ -380,9 +413,19 @@
      pattern as the frontier graph above but showing the whole library's
      real prerequisite structure rather than one ZPD demo ---------- */
   .conceptmap{background:#070f0a; border-top:1px solid var(--edge); border-bottom:1px solid var(--edge);}
-  .conceptmap-frame{margin-top:clamp(30px,4.5vh,44px); border-radius:18px; overflow:hidden; background:#050a08; border:1px solid var(--edge); box-shadow:var(--shadow);}
-  .conceptmap-frame iframe{display:block; width:100%; height:min(74vh,660px); border:0;}
+  .conceptmap-frame{border-radius:18px; overflow:hidden; background:#050a08; border:1px solid var(--edge); box-shadow:var(--shadow);}
+  /* Taller than the 660px this used to be. The rectangle now has to hold a
+     whole MicroSim as well as the graph, and Dan's sims put their controls
+     under the drawing, so at 660 the last row of buttons sat on the crop. */
+  .conceptmap-frame iframe{display:block; width:100%; height:min(82vh,760px); border:0;}
   .conceptmap-foot{margin-top:14px; font-size:12.5px; color:var(--chalk-faint);}
+  /* The stage is one rectangle that two things take turns owning: the full 3D
+     graph, and the chapter a search resolved to. Same rectangle, never both
+     stacked, which is what app/src/pages/Learn.tsx does with its graph iframe
+     and its panels. */
+  .cm-stage{position:relative; margin-top:clamp(30px,4.5vh,44px);}
+  .cm-stage .conceptmap-frame{transition:opacity .6s var(--ease);}
+  .cm-stage.is-open .conceptmap-frame{opacity:.55; pointer-events:none;}
 
 
   /* ---------- the desk (cream, three surfaces) ---------- */
@@ -693,45 +736,82 @@
   .cs-alt b{font-weight:600; color:var(--chalk);}
   .cs-alt i{font-style:normal; font-family:var(--mono); font-size:10px; color:var(--chalk-faint); margin-left:7px;}
   .cs-alt[aria-pressed="true"]{background:rgba(196,245,71,.14); border-color:rgba(196,245,71,.4);}
+  /* The result takes the graph's rectangle over rather than stacking under it.
+     It is in the DOM (and transparent) for the length of the highlight beat,
+     so the visitor watches the graph fly to the concept first and only then
+     gets the chapter, which is the same two-stage reveal Learn.tsx runs. */
   .cs-result{
-    margin-top:18px; border-radius:18px; border:1px solid var(--edge); background:var(--field-1);
+    position:absolute; inset:0; z-index:2; display:flex; flex-direction:column;
+    border-radius:18px; border:1px solid var(--edge); background:rgba(7,15,10,.94);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
     overflow:hidden; box-shadow:var(--shadow);
+    opacity:0; transform:translateY(14px); pointer-events:none;
+    transition:opacity .55s var(--ease), transform .55s var(--ease);
   }
   .cs-result[hidden]{display:none;}
-  .cs-res-head{padding:22px 24px 0;}
+  .cm-stage.is-open .cs-result{opacity:1; transform:none; pointer-events:auto;}
+  .cs-res-top{display:flex; align-items:flex-start; gap:16px; flex:none; padding:16px 20px 14px; border-bottom:1px solid var(--edge);}
+  .cs-res-head{min-width:0;}
   .cs-res-head .zpd-sub{font-family:var(--mono); font-size:11px; color:var(--chalk-faint); letter-spacing:.04em;}
-  .cs-res-head h3{font-size:clamp(20px,2.4vw,27px); margin-top:8px; color:var(--chalk);}
-  .cs-summary{margin-top:12px; font-family:var(--serif); font-style:italic; font-size:clamp(15px,1.7vw,18px); line-height:1.55; color:var(--chalk);}
-  .cs-lesson{padding:16px 24px 4px; max-height:340px; overflow-y:auto;}
+  .cs-res-head h3{font-size:clamp(18px,2.1vw,24px); margin-top:6px; color:var(--chalk);}
+  .cs-back{
+    flex:none; margin-left:auto; border:1px solid var(--edge); border-radius:999px; padding:9px 17px; cursor:pointer;
+    background:rgba(245,245,244,.05); color:var(--chalk-dim);
+    font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    transition:color .2s, border-color .2s, background .2s;
+  }
+  .cs-back:hover{color:var(--chalk); border-color:var(--chalk-faint); background:rgba(245,245,244,.1);}
+  .cs-back:focus-visible{outline:3px solid rgba(196,245,71,.6); outline-offset:2px;}
+  /* Two columns, the way the signed-in Learn view splits chapter from sim:
+     the reading scrolls in its own column so the simulation never gets pushed
+     off the bottom of the panel and never needs a page scroll to reach. */
+  .cs-res-body{flex:1; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.72fr);}
+  .cs-res-body.has-sim{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);}
+  .cs-res-read{min-height:0; overflow-y:auto; padding:18px 22px 22px;}
+  .cs-summary{font-family:var(--serif); font-style:italic; font-size:clamp(15px,1.7vw,18px); line-height:1.55; color:var(--chalk);}
+  .cs-lesson{margin-top:14px;}
   .cs-lesson p{font-size:14.5px; line-height:1.72; color:var(--chalk-dim); margin-bottom:14px;}
   .cs-more{
-    margin:0 24px 18px; border:1px solid var(--edge); border-radius:999px; padding:8px 16px; cursor:pointer;
+    border:1px solid var(--edge); border-radius:999px; padding:8px 16px; cursor:pointer;
     background:transparent; color:var(--chalk-dim); font-family:var(--mono); font-size:10.5px; font-weight:600;
     letter-spacing:.1em; text-transform:uppercase;
   }
   .cs-more:hover{color:var(--chalk); border-color:var(--chalk-faint);}
-  .cs-chips{display:flex; flex-wrap:wrap; gap:7px; padding:0 24px 18px;}
+  .cs-chips{display:flex; flex-wrap:wrap; gap:7px; margin-top:16px;}
   .cs-chip{
     font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
     border-radius:999px; padding:5px 11px; color:var(--leaf2); background:rgba(36,122,77,.16);
   }
   .cs-chip.up{color:var(--lime); background:rgba(196,245,71,.12);}
-  .cs-sim{border-top:1px solid var(--edge); background:#0a1210;}
-  .cs-sim-head{display:flex; align-items:center; gap:10px 14px; flex-wrap:wrap; padding:13px 24px;}
+  /* The sim column lands a beat after the panel, the way Learn.tsx staggers
+     its sim card behind its reading card. */
+  .cs-res-sim{min-height:0; display:flex; flex-direction:column; border-left:1px solid var(--edge); opacity:0; transition:opacity .45s var(--ease);}
+  .cm-stage.is-settled .cs-res-sim{opacity:1;}
+  .cs-sim{flex:1; min-height:0; display:flex; flex-direction:column; background:#0a1210;}
+  .cs-sim-head{display:flex; align-items:center; gap:10px 14px; flex-wrap:wrap; flex:none; padding:12px 18px; border-bottom:1px solid var(--edge);}
   .cs-sim-head b{font-family:var(--disp); font-size:13px; font-weight:600; color:var(--chalk);}
   .cs-sim-head span{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--chalk-faint);}
   .cs-sim-head a{margin-left:auto; font-family:var(--mono); font-size:11px; font-weight:600; color:var(--lime);}
   .cs-sim-head a:hover{text-decoration:underline;}
-  .cs-sim iframe{display:block; width:100%; height:min(58vh,480px); border:0; background:#fff;}
+  .cs-sim iframe{flex:1; min-height:0; display:block; width:100%; border:0; background:#fff;}
   .cs-nosim{
-    display:flex; align-items:flex-start; gap:12px; padding:16px 24px 20px; border-top:1px solid var(--edge);
-    font-size:13.5px; line-height:1.55; color:var(--chalk-dim);
+    flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; gap:14px; padding:30px 34px;
+    font-size:13.5px; line-height:1.6; color:var(--chalk-dim);
   }
   .cs-nosim i{
     font-style:normal; flex:none; font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.1em;
-    text-transform:uppercase; color:var(--chalk-faint); border:1px dashed var(--edge); border-radius:8px; padding:5px 9px;
+    text-transform:uppercase; color:var(--chalk-faint); border:1px dashed var(--edge); border-radius:8px; padding:6px 11px;
   }
+  .cs-nosim p{max-width:38ch;}
   .cs-nosim b{color:var(--chalk); font-weight:600;}
+  @media (max-width:860px){
+    /* Too narrow for two columns, so the panel itself scrolls and the sim gets
+       a real height rather than being squeezed into a sliver. */
+    .cs-res-body, .cs-res-body.has-sim{grid-template-columns:1fr; overflow-y:auto;}
+    .cs-res-read{overflow:visible;}
+    .cs-res-sim{border-left:0; border-top:1px solid var(--edge); min-height:340px;}
+  }
 
   /* ---------- claim your desk (cream) ---------- */
   .claim{background:var(--cream); color:var(--ink); border-top:1px solid var(--edge); scroll-margin-top:80px;}
@@ -772,7 +852,7 @@
   <div class="nav-links">
     <a href="#desk">The Desk</a>
     <a href="#conceptmap">The Concept Map</a>
-    <a class="join" href="#claim">Claim Your Desk</a>
+    <a class="join" href="https://mindcraft-93858.web.app/login">Login</a>
   </div>
 </nav>
 
@@ -780,6 +860,9 @@
 <section class="hero stage-desk" id="top">
   <div class="grid-bg" aria-hidden="true"></div>
   <canvas id="heroMap" aria-hidden="true"></canvas>
+  <div class="nav-tag">
+    <p>We are building AI that refuses to rush your learning. <b>Students also get live workshops and 1:1 tutoring in person.</b></p>
+  </div>
   <div class="hero-stage">
     <span class="hero-tag"><i>Early access</i> free right now &middot; a few seats each round</span>
     <h1>Interact With the <em>World.</em></h1>
@@ -787,21 +870,18 @@
     <div class="cta-row hero-cta">
       <a class="btn primary" href="#claim">Claim your desk</a>
     </div>
+    <div class="hero-cred">
+      <span>Built with students from</span>
+      <div class="hero-cred-row">
+        <img class="wordmark" src="img/logos/hero/oxford.png" alt="University of Oxford" width="459" height="132">
+        <img src="img/logos/hero/unc.png" alt="UNC Chapel Hill" width="165" height="132">
+        <img src="img/logos/hero/macalester.png" alt="Macalester College" width="132" height="132">
+        <img class="wordmark" src="img/logos/hero/uwc.png" alt="United World Colleges" width="582" height="132">
+        <img src="img/logos/hero/kenyon.png" alt="Kenyon College" width="132" height="132">
+      </div>
+    </div>
   </div>
 </section>
-
-<!-- ================= COLLEGE LOGO MARQUEE ================= -->
-<div class="ticker-band logos" aria-label="Built with students from these colleges">
-  <p class="ticker-label">Built with students from</p>
-  <div class="ticker" id="ticker">
-    <!-- items duplicated in JS for the seamless loop -->
-    <div class="tick-item"><img class="logo-mark" src="img/logos/oxford.svg" alt="University of Oxford" loading="lazy"></div>
-    <div class="tick-item"><img class="logo-mark" src="img/logos/unc.svg" alt="UNC Chapel Hill" loading="lazy"></div>
-    <div class="tick-item"><img class="logo-mark" src="img/logos/macalester.png" alt="Macalester College" loading="lazy"></div>
-    <div class="tick-item"><img class="logo-mark" src="img/logos/kenyon.svg" alt="Kenyon College" loading="lazy"></div>
-    <div class="tick-item"><img class="logo-mark" src="img/logos/uwc.png" alt="United World Colleges" loading="lazy"></div>
-  </div>
-</div>
 
 <!-- ================= THE DESK: SIM LIBRARY ================= -->
 <section class="stage-desk" id="desk">
@@ -919,6 +999,7 @@
             <g id="zpdPan">
               <g id="zpdRings"></g>
               <g id="zpdLinks"></g>
+              <g id="zpdGhosts" aria-hidden="true"></g>
               <g id="zpdNodes"></g>
             </g>
           </svg>
@@ -964,22 +1045,35 @@
       <p class="cs-status" id="csStatus">Free and private. The search model runs in your browser, not on our servers, so this costs nothing and needs no account.</p>
       <div class="cs-bar" id="csBar" hidden><i></i></div>
       <div class="cs-alts" id="csAlts"></div>
-
-      <article class="cs-result" id="csResult" hidden>
-        <div class="cs-res-head">
-          <div class="zpd-sub" id="csSubject"></div>
-          <h3 id="csTitle"></h3>
-          <p class="cs-summary" id="csSummary"></p>
-        </div>
-        <div class="cs-lesson" id="csLesson"></div>
-        <button class="cs-more" id="csMore" type="button" hidden>Read the whole chapter</button>
-        <div class="cs-chips" id="csChips"></div>
-        <div id="csSimSlot"></div>
-      </article>
     </div>
 
-    <div class="conceptmap-frame reveal">
-      <iframe src="full-graph-viewer.html" title="The full MindCraft concept map, every subject's concepts and how they build on each other" loading="lazy"></iframe>
+    <!-- One rectangle, two occupants. The graph owns it until a search
+         resolves; then the concept lights up inside the graph, and a beat
+         later the chapter takes the same rectangle over. Back to graph hands
+         it back. -->
+    <div class="cm-stage reveal" id="cmStage">
+      <div class="conceptmap-frame">
+        <iframe id="cmGraph" src="full-graph-viewer.html" title="The full MindCraft concept map, every subject's concepts and how they build on each other" loading="lazy"></iframe>
+      </div>
+
+      <article class="cs-result" id="csResult" hidden aria-live="polite">
+        <div class="cs-res-top">
+          <div class="cs-res-head">
+            <div class="zpd-sub" id="csSubject"></div>
+            <h3 id="csTitle"></h3>
+          </div>
+          <button class="cs-back" id="csBack" type="button">&#8592; Back to graph</button>
+        </div>
+        <div class="cs-res-body" id="csResBody">
+          <div class="cs-res-read" id="csRead">
+            <p class="cs-summary" id="csSummary"></p>
+            <div class="cs-lesson" id="csLesson"></div>
+            <button class="cs-more" id="csMore" type="button" hidden>Read the whole chapter</button>
+            <div class="cs-chips" id="csChips"></div>
+          </div>
+          <div class="cs-res-sim" id="csSimSlot"></div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -1271,6 +1365,7 @@
     var ringsG = document.getElementById('zpdRings');
     var linksG = document.getElementById('zpdLinks');
     var nodesG = document.getElementById('zpdNodes');
+    var ghostsG = document.getElementById('zpdGhosts');
     var panG   = document.getElementById('zpdPan');
     var seedsBox = document.getElementById('zpdSeeds');
     var elZone = document.getElementById('zpdZone');
@@ -1396,8 +1491,10 @@
         (n.unlocks || []).forEach(function(u){
           var q = pos[u];
           if(!q) return;
+          // The endpoint ids ride on the line so the recenter animation can
+          // re-stretch it every frame without rebuilding the edge list.
           linksG.appendChild(el('line', {
-            x1:p.x, y1:p.y, x2:q.x, y2:q.y,
+            x1:p.x, y1:p.y, x2:q.x, y2:q.y, 'data-a':p.id, 'data-b':u,
             class:'zpd-link' + (q.zone === 2 ? ' to-r2' : '')
           }));
         });
@@ -1407,9 +1504,10 @@
         var n = node(p.id);
         var open = p.zone === 0 || (p.zone < 3 && n.full);
         var g = el('g', {
-          class:'zpd-node z' + p.zone, transform:'translate(' + p.x.toFixed(1) + ',' + p.y.toFixed(1) + ')',
+          class:'zpd-node z' + p.zone,
           tabindex:'0', role:'button', 'data-id':p.id, 'data-open':open ? 'true' : 'false'
         });
+        setPos(g, p.x, p.y);
         // Invisible hit target first. A frustration-zone dot is 12 units
         // across, which is an unfair thing to ask anyone to hit, and an SVG
         // <g> has no surface of its own so a near miss falls straight through
@@ -1473,14 +1571,165 @@
 
     function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
 
+    // -------------------------------------------------------------------
+    // Moving the graph, rather than swapping it.
+    //
+    // Recentering used to be an instant repaint: clear the svg, redraw the
+    // same three rings around a different middle. Correct, and completely
+    // static, so nothing about it said "you moved". Now every concept that
+    // survives the move slides from where it stood to where it now belongs,
+    // the concept you stepped onto travels into the middle, whatever it
+    // opens up grows outward from it, and the concepts it leaves behind fade
+    // out from where they were.
+    //
+    // Interpolated per frame instead of through a CSS transition on purpose:
+    // a second click, or a drag, has to be able to take over from wherever
+    // the graph actually is at that instant, and a CSS transition will not
+    // hand that position back mid-flight.
+    // -------------------------------------------------------------------
+    var MOVE_MS = 760;
+    var moveRaf = null, moveFinish = null;
+
+    function reduced(){ return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+    // The single writer of a node's position, so the DOM always carries the
+    // numbers the next move needs to read back.
+    function setPos(g, x, y){
+      g.setAttribute('transform', 'translate(' + x.toFixed(1) + ',' + y.toFixed(1) + ')');
+      g.setAttribute('data-x', x.toFixed(1));
+      g.setAttribute('data-y', y.toFixed(1));
+    }
+    function livePositions(){
+      var out = {};
+      nodesG.querySelectorAll('.zpd-node').forEach(function(g){
+        out[g.getAttribute('data-id')] = {
+          x: parseFloat(g.getAttribute('data-x')),
+          y: parseFloat(g.getAttribute('data-y'))
+        };
+      });
+      return out;
+    }
+    function stretchLinks(pos){
+      linksG.querySelectorAll('line').forEach(function(l){
+        var a = pos[l.getAttribute('data-a')], b = pos[l.getAttribute('data-b')];
+        if(!a || !b) return;
+        l.setAttribute('x1', a.x.toFixed(1)); l.setAttribute('y1', a.y.toFixed(1));
+        l.setAttribute('x2', b.x.toFixed(1)); l.setAttribute('y2', b.y.toFixed(1));
+      });
+    }
+    // Jump whatever is in flight straight to its end state. Called before a
+    // new move and before a drag, so neither ever fights the animation.
+    function settleMove(){
+      if(moveRaf){ cancelAnimationFrame(moveRaf); moveRaf = null; }
+      if(moveFinish){ var f = moveFinish; moveFinish = null; f(); }
+    }
+
+    /**
+     * from    where each concept stood a moment ago, by id
+     * origin  where a concept with no previous position starts, which is the
+     *         spot the concept you clicked was standing on, so the new ring
+     *         reads as opening out of your own step rather than appearing
+     * panFrom the drag offset to ease back to zero over the same beat
+     * ghosts  the concepts this move drops, to fade out where they stood
+     */
+    function animateMove(from, origin, panFrom, ghosts){
+      var nodes = [];
+      nodesG.querySelectorAll('.zpd-node').forEach(function(g){
+        var id = g.getAttribute('data-id'), prev = from[id];
+        nodes.push({
+          g:g, id:id, fresh:!prev,
+          fx: prev ? prev.x : origin.x, fy: prev ? prev.y : origin.y,
+          tx: parseFloat(g.getAttribute('data-x')), ty: parseFloat(g.getAttribute('data-y'))
+        });
+      });
+
+      function finish(){
+        var pos = {};
+        nodes.forEach(function(n){ setPos(n.g, n.tx, n.ty); n.g.style.opacity = ''; pos[n.id] = {x:n.tx, y:n.ty}; });
+        stretchLinks(pos);
+        panG.setAttribute('transform', 'translate(' + tx.toFixed(1) + ',' + ty.toFixed(1) + ')');
+        ghosts.forEach(function(h){ if(h.g.parentNode) h.g.parentNode.removeChild(h.g); });
+        svg.classList.remove('moving');
+      }
+
+      if(reduced()){ finish(); return; }
+
+      svg.classList.add('moving');
+      nodes.forEach(function(n){
+        setPos(n.g, n.fx, n.fy);
+        if(n.fresh) n.g.style.opacity = '0';
+      });
+      ghosts.forEach(function(h){ setPos(h.g, h.x, h.y); });
+      moveFinish = finish;
+
+      var t0 = 0;
+      function frame(ts){
+        if(!t0) t0 = ts;
+        var t = Math.min(1, (ts - t0) / MOVE_MS);
+        var e = 1 - Math.pow(1 - t, 3);   // ease out, the same settle var(--ease) gives CSS
+        var pos = {};
+        nodes.forEach(function(n){
+          var x = n.fx + (n.tx - n.fx) * e, y = n.fy + (n.ty - n.fy) * e;
+          setPos(n.g, x, y);
+          pos[n.id] = {x:x, y:y};
+          // A new concept holds off until the move is clearly underway, so it
+          // reads as being uncovered by the step rather than crossfaded in.
+          if(n.fresh) n.g.style.opacity = Math.max(0, Math.min(1, (e - 0.2) / 0.5)).toFixed(3);
+        });
+        stretchLinks(pos);
+        panG.setAttribute('transform',
+          'translate(' + (panFrom.x * (1 - e)).toFixed(1) + ',' + (panFrom.y * (1 - e)).toFixed(1) + ')');
+        ghosts.forEach(function(h){
+          setPos(h.g, h.x + h.dx * e, h.y + h.dy * e);
+          h.g.style.opacity = (1 - e).toFixed(3);
+        });
+        if(t < 1){ moveRaf = requestAnimationFrame(frame); return; }
+        moveRaf = null; moveFinish = null;
+        finish();
+      }
+      moveRaf = requestAnimationFrame(frame);
+    }
+
+    // Recenter on a concept, with the travel shown.
+    function goTo(id){
+      if(!node(id)) return;
+      settleMove();
+      var from = livePositions();
+      var origin = from[id] || {x:CX, y:CY};
+      var panFrom = {x:tx, y:ty};
+
+      var wasOnScreen = {};
+      nodesG.querySelectorAll('.zpd-node').forEach(function(g){ wasOnScreen[g.getAttribute('data-id')] = g; });
+
+      tx = 0; ty = 0;
+      rebuild(id);
+
+      // Anything the new middle no longer has room for leaves as a ghost:
+      // a copy of the dot it was, drifting a little further out as it fades.
+      clear(ghostsG);
+      var kept = {};
+      layout.forEach(function(p){ kept[p.id] = 1; });
+      var ghosts = [];
+      Object.keys(wasOnScreen).forEach(function(gid){
+        if(kept[gid] || !from[gid]) return;
+        var c = wasOnScreen[gid].cloneNode(true);
+        c.removeAttribute('tabindex');
+        c.removeAttribute('role');
+        var p = from[gid], a = Math.atan2(p.y - CY, p.x - CX);
+        ghosts.push({g:c, x:p.x, y:p.y, dx:Math.cos(a) * 26, dy:Math.sin(a) * 26});
+        ghostsG.appendChild(c);
+      });
+
+      animateMove(from, origin, panFrom, ghosts);
+      seedsBox.querySelectorAll('.zpd-seed').forEach(function(b){
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-id') === id));
+      });
+    }
+
     function step(){
       var n = node(pickedId);
       if(!n || !n.full || pickedId === centerId) return;
-      tx = 0; ty = 0; panG.setAttribute('transform', 'translate(0,0)');
-      rebuild(pickedId);
-      seedsBox.querySelectorAll('.zpd-seed').forEach(function(b){
-        b.setAttribute('aria-pressed', String(b.getAttribute('data-id') === pickedId));
-      });
+      goTo(pickedId);
     }
 
     nodesG.addEventListener('click', function(e){
@@ -1505,7 +1754,12 @@
     window.addEventListener('resize', function(){
       if(!layout.length) return;
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function(){ render(); select(pickedId); }, 180);
+      resizeTimer = setTimeout(function(){
+        settleMove();   // a re-render mid-move would strand nodes at interpolated spots
+        clear(ghostsG);
+        render();
+        select(pickedId);
+      }, 180);
     });
 
     // Drag to pan. Deliberately NOT using setPointerCapture: capturing on the
@@ -1536,6 +1790,9 @@
         window.removeEventListener('pointerup', up);
       }
       svg.addEventListener('pointerdown', function(e){
+        // A recenter still in flight owns the pan transform. Land it first so
+        // the drag starts from a settled graph, exactly as it always has.
+        settleMove();
         down = true; moved = false;
         sx = e.clientX; sy = e.clientY; ox = tx; oy = ty;
         window.addEventListener('pointermove', move);
@@ -1556,13 +1813,9 @@
           b.setAttribute('data-id', id);
           b.setAttribute('aria-pressed', String(i === 0));
           b.textContent = clip(d.nodes[id].name, 22);
-          b.addEventListener('click', function(){
-            tx = 0; ty = 0; panG.setAttribute('transform', 'translate(0,0)');
-            rebuild(id);
-            seedsBox.querySelectorAll('.zpd-seed').forEach(function(o){
-              o.setAttribute('aria-pressed', String(o === b));
-            });
-          });
+          // Same animated recenter as stepping onto a concept: a seed is just
+          // a jump to a middle further away, and it should read as travel too.
+          b.addEventListener('click', function(){ goTo(id); });
           seedsBox.appendChild(b);
         });
         rebuild(d.seeds[0]);
@@ -1613,6 +1866,96 @@
     var elMore = document.getElementById('csMore');
     var elChips = document.getElementById('csChips');
     var simSlot = document.getElementById('csSimSlot');
+    var stage = document.getElementById('cmStage');
+    var resBody = document.getElementById('csResBody');
+    var readCol = document.getElementById('csRead');
+    var graphFrame = document.getElementById('cmGraph');
+    var backBtn = document.getElementById('csBack');
+
+    // -------------------------------------------------------------------
+    // Resolving a concept is choreographed, not dumped on the page.
+    //
+    // The result used to render as more page below the 3D graph, which meant
+    // the graph pushed it most of a screen down and a tall sim (with its own
+    // toolbar and its own "back to lesson plan" chrome) turned reading it into
+    // a scrolling exercise. app/src/pages/Learn.tsx already solved this for the
+    // signed-in product, so this is the same two stages and the same numbers:
+    //
+    //   stage 1  the resolved concept lights up in the graph that is ALREADY
+    //            on screen and the camera flies to it (the viewer's own
+    //            postMessage protocol, unchanged: {type:'highlight', nodeId,
+    //            neighborIds})
+    //   stage 2  REVEAL_DELAY_MS later the chapter takes that same rectangle
+    //            over, chapter left and sim right, so nothing stacks and
+    //            nothing needs a page scroll
+    //   stage 3  SETTLE_DELAY_MS after that the sim is attached and faded in,
+    //            so its boot does not compete with the camera move
+    //
+    // Back to graph posts {type:'clear'} and hands the rectangle back.
+    //
+    // The ids line up with no translation: library/concept-index.json and
+    // full-concept-graph.json were both written from the same migrated
+    // library, and all 3746 searchable concepts exist as nodes in the graph.
+    // -------------------------------------------------------------------
+    var REVEAL_DELAY_MS = 1400;   // Learn.tsx REVEAL_DELAY_MS
+    var SETTLE_DELAY_MS = 600;    // Learn.tsx SETTLE_DELAY_MS
+    var revealTimer = null, settleTimer = null, closeTimer = null, hlTimers = [];
+
+    function postToGraph(msg){
+      var w = graphFrame && graphFrame.contentWindow;
+      if(w) w.postMessage(msg, '*');
+    }
+    // The viewer silently drops a highlight that lands before its own 1.5 MB
+    // graph fetch resolves, and its iframe is lazy, so a fast search can beat
+    // it. Re-applying the same highlight is idempotent, so it is simply posted
+    // again across the reveal beat instead of being lost.
+    function highlightInGraph(nodeId, neighborIds){
+      hlTimers.forEach(clearTimeout);
+      hlTimers = [];
+      var msg = {type:'highlight', nodeId:nodeId, neighborIds:neighborIds || []};
+      postToGraph(msg);
+      [450, 1000, 2200].forEach(function(ms){
+        hlTimers.push(setTimeout(function(){ postToGraph(msg); }, ms));
+      });
+    }
+    // Bring the whole rectangle on screen. Deliberately not scrollIntoView:
+    // its block:'end' lands a dozen-odd pixels off here, and a panel whose
+    // last inch of simulation sits under the fold is exactly the scrolling
+    // this change exists to remove. The stage is parked low in the viewport
+    // rather than dead centre so the search box and the alternative matches
+    // stay readable above it.
+    function frameStage(){
+      var r = stage.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var top = window.scrollY + r.top;
+      var slack = vh - r.height;
+      var target = slack > 0 ? top - slack * 0.72 : top - 12;
+      window.scrollTo({top: Math.max(0, Math.round(target)), behavior:'smooth'});
+    }
+    function settleStage(){
+      stage.classList.add('is-settled');
+      var f = simSlot.querySelector('iframe[data-src]');
+      if(f){ f.src = f.getAttribute('data-src'); f.removeAttribute('data-src'); }
+    }
+    function backToGraph(){
+      clearTimeout(revealTimer); clearTimeout(settleTimer); clearTimeout(closeTimer);
+      hlTimers.forEach(clearTimeout); hlTimers = [];
+      stage.classList.remove('is-open', 'is-settled');
+      postToGraph({type:'clear'});
+      alts.querySelectorAll('.cs-alt').forEach(function(o){ o.setAttribute('aria-pressed', 'false'); });
+      // Let the fade play out before pulling the panel out of the layout, and
+      // stop the sim rather than leaving it running behind a graph nobody can
+      // see it through.
+      closeTimer = setTimeout(function(){
+        if(stage.classList.contains('is-open')) return;   // a new search reopened it
+        result.hidden = true;
+        simSlot.innerHTML = '';
+      }, 620);
+    }
+    backBtn.addEventListener('click', backToGraph);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && stage.classList.contains('is-open')) backToGraph();
+    });
 
     // The contract with app/src/lib/queryEmbedder.ts and
     // webhook/lib/conceptLibrary.ts. If library/concept-index.json ever
@@ -1765,9 +2108,11 @@
     function openConcept(cat){
       say('Loading "' + cat.name + '"...');
       return getJson('library/concepts/' + conceptSlug(cat.id) + '.json').then(function(c){
+        clearTimeout(closeTimer);
         elSubject.textContent = c.subjectTitle + '  ·  ' + c.level.replace(/_/g, ' ') + '  ·  ' + c.id;
         elTitle.textContent = c.lesson.title;
         elSummary.textContent = c.lesson.summary;
+        readCol.scrollTop = 0;
 
         var paras = String(c.lesson.body || '').split(/\n{2,}/).filter(function(p){ return p.trim(); });
         var shown = 2;
@@ -1799,6 +2144,7 @@
         });
 
         simSlot.innerHTML = '';
+        resBody.classList.toggle('has-sim', !!(c.hasSim && c.sim));
         if(c.hasSim && c.sim){
           var wrap = document.createElement('div');
           wrap.className = 'cs-sim';
@@ -1815,9 +2161,10 @@
           open.textContent = 'Open full screen ↗';
           head.appendChild(b); head.appendChild(meta2); head.appendChild(open);
           var frame = document.createElement('iframe');
-          frame.src = 'library/' + c.sim.file;
+          // src is attached at the settle stage, not now: a sim booting its own
+          // p5 sketch while the graph camera is still flying makes both stutter.
+          frame.setAttribute('data-src', 'library/' + c.sim.file);
           frame.title = c.sim.title;
-          frame.loading = 'lazy';
           wrap.appendChild(head); wrap.appendChild(frame);
           simSlot.appendChild(wrap);
         } else {
@@ -1838,7 +2185,31 @@
           simSlot.appendChild(no);
         }
 
+        // The panel joins the DOM now but stays transparent over the graph,
+        // so the highlight beat has something to hand off to.
         result.hidden = false;
+
+        // Real graph neighbours, so the highlight keeps this concept's own
+        // prerequisites and unlocks lit while everything else dims.
+        var neighborIds = c.prereqs.concat(c.unlocks).slice(0, 12).map(function(x){ return x.id; });
+        highlightInGraph(c.id, neighborIds);
+
+        clearTimeout(revealTimer); clearTimeout(settleTimer);
+        if(stage.classList.contains('is-open')){
+          // Already covering the graph (a second pick off the alternatives
+          // row). Swap the content in place, the way Learn.tsx does when a
+          // related concept is clicked, instead of replaying the whole reveal.
+          stage.classList.remove('is-settled');
+          settleTimer = setTimeout(settleStage, 220);
+        } else {
+          // Put the graph on screen first, so the camera move is actually
+          // watched rather than happening off screen behind the fold.
+          frameStage();
+          revealTimer = setTimeout(function(){
+            stage.classList.add('is-open');
+            settleTimer = setTimeout(settleStage, SETTLE_DELAY_MS);
+          }, REVEAL_DELAY_MS);
+        }
         return c;
       });
     }
@@ -1874,7 +2245,7 @@
         var mode = r.hits ? 'semantic' : 'lexical';
         var hits = r.hits || lexical(query, meta);
         if(!hits.length){
-          result.hidden = true;
+          backToGraph();   // nothing to show, so the graph gets its rectangle back
           alts.innerHTML = '';
           say('Nothing in the ' + meta.count + '-concept library matched "' + query + '". That is a real answer, not an error.', true);
           busy = false; go.disabled = false;
@@ -1883,7 +2254,7 @@
         showAlts(hits, meta, mode);
         return openConcept(meta.concepts[hits[0].i]).then(function(){
           if(mode === 'semantic'){
-            say('Matched against ' + meta.count + ' concepts with ' + meta.model + ' running in your browser. No API call, no account, nothing billed.');
+            say('Matched against ' + meta.count + ' concepts with ' + meta.model + ' running in your browser. No API call, no account, nothing billed. Watch the map light it up, then read it in place.');
           } else {
             say('Word matching only: the in-browser search model could not load (' + (lexicalWhy || 'unknown reason') + '), so these results are weaker than the real semantic search.', true);
           }
